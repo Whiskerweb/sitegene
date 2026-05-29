@@ -22,6 +22,15 @@ const admin = createClient(
 
 const log = (...a) => console.log(new Date().toISOString().slice(11, 19), ...a);
 
+/** Écrit l'étape en cours dans le job (lu en temps réel par /admin/new). */
+async function setProgress(jobId, msg) {
+  log("  ▸ " + msg);
+  await admin
+    .from("jobs")
+    .update({ progress: msg, progress_at: new Date().toISOString() })
+    .eq("id", jobId);
+}
+
 /** Lance `claude -p` en headless (prompt en argument → les @refs images sont prises en compte). */
 function runClaude(prompt) {
   return new Promise((resolve, reject) => {
@@ -161,9 +170,12 @@ async function processCreateSite(job) {
   const { collectImageSlots } = await import(join(ROOT, "lib/content-overlay.ts"));
   const slotUrls = collectImageSlots(baseContent, templateId);
 
-  log(`  → Claude structure le texte (${(rawText || "").length} car.)`);
+  await setProgress(job.id, "Structuration du texte par Claude…");
   const textOverrides = await claudeFillText(templateId, rawText);
-  log(`  → ${Object.keys(textOverrides).length} champs remplis`);
+  await setProgress(
+    job.id,
+    `Texte prêt (${Object.keys(textOverrides).length} champs) · préparation des photos…`,
+  );
 
   // Télécharge les photos de staging (ordonnées).
   const buffers = [];
@@ -176,7 +188,10 @@ async function processCreateSite(job) {
   // Assignation auto photo → emplacement.
   let photoUploads = [];
   if (buffers.length > 0) {
-    log(`  → Claude assigne ${buffers.length} photos sur ${slotUrls.length} emplacements`);
+    await setProgress(
+      job.id,
+      `Placement de ${buffers.length} photos (analyse visuelle Claude)…`,
+    );
     const assign = await claudeAssignPhotos(job.id, manifest, slotUrls, buffers);
     photoUploads = slotUrls
       .map((url) => {
@@ -186,6 +201,7 @@ async function processCreateSite(job) {
       .filter(Boolean);
   }
 
+  await setProgress(job.id, "Assemblage et publication du site…");
   const { generateSite } = await import(join(ROOT, "lib/generate.ts"));
   return generateSite({
     templateId,
@@ -219,6 +235,7 @@ ${JSON.stringify(sc.content_json)}
 Demande de modification du client : "${instruction}"
 
 Consigne : applique la demande et renvoie UNIQUEMENT le contenu JSON COMPLET modifié (même structure exacte). Ne touche pas aux champs structurels (arcPhotos, couleurs, scrollAccents, cards, galleryOrder) ni aux URLs d'images. Aucune autre sortie que le JSON.`;
+  await setProgress(job.id, "Application de la modification par Claude…");
   const text = await runClaude(prompt);
   const newContent = extractJson(text);
   if (!newContent) throw new Error("Claude n'a pas renvoyé de JSON valide.");

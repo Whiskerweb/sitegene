@@ -23,7 +23,15 @@ export default function NewSitePage() {
   const [phase, setPhase] = useState<Phase>("form");
   const [message, setMessage] = useState("");
   const [revealPath, setRevealPath] = useState("");
+  const [progress, setProgress] = useState("");
+  const [jobStatus, setJobStatus] = useState("");
+  const [elapsed, setElapsed] = useState(0);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const tickRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const clearTimers = () => {
+    if (pollRef.current) clearInterval(pollRef.current);
+    if (tickRef.current) clearInterval(tickRef.current);
+  };
 
   useEffect(() => {
     setDefaultContent(null);
@@ -33,7 +41,13 @@ export default function NewSitePage() {
       .catch(() => {});
   }, [templateId]);
 
-  useEffect(() => () => { if (pollRef.current) clearInterval(pollRef.current); }, []);
+  useEffect(
+    () => () => {
+      if (pollRef.current) clearInterval(pollRef.current);
+      if (tickRef.current) clearInterval(tickRef.current);
+    },
+    [],
+  );
 
   const required = defaultContent ? collectImageSlots(defaultContent, templateId).length : 0;
   const countOk = required > 0 && photos.length === required;
@@ -49,16 +63,18 @@ export default function NewSitePage() {
     pollRef.current = setInterval(async () => {
       const { data } = await supabase
         .from("jobs")
-        .select("status, result, error")
+        .select("status, progress, result, error")
         .eq("id", jobId)
         .maybeSingle();
       if (!data) return;
+      setJobStatus((data.status as string) ?? "");
+      setProgress((data.progress as string) ?? "");
       if (data.status === "done") {
-        clearInterval(pollRef.current!);
+        clearTimers();
         setRevealPath((data.result as { revealPath?: string })?.revealPath ?? "");
         setPhase("done");
       } else if (data.status === "error") {
-        clearInterval(pollRef.current!);
+        clearTimers();
         setMessage(data.error ?? "Erreur de génération.");
         setPhase("error");
       }
@@ -69,6 +85,10 @@ export default function NewSitePage() {
     e.preventDefault();
     setPhase("pending");
     setMessage("");
+    setProgress("");
+    setJobStatus("pending");
+    setElapsed(0);
+    tickRef.current = setInterval(() => setElapsed((x) => x + 1), 1000);
     const fd = new FormData();
     fd.set("templateId", templateId);
     fd.set("firstName", firstName);
@@ -80,6 +100,7 @@ export default function NewSitePage() {
     try {
       res = await fetch("/api/operator/intake", { method: "POST", body: fd });
     } catch {
+      clearTimers();
       setMessage("Connexion au serveur impossible. Le dev server tourne-t-il ?");
       setPhase("error");
       return;
@@ -92,11 +113,13 @@ export default function NewSitePage() {
       json = {};
     }
     if (!res.ok) {
+      clearTimers();
       setMessage(json.error ?? `Erreur serveur (${res.status}).`);
       setPhase("error");
       return;
     }
     if (!json.jobId) {
+      clearTimers();
       setMessage("Réponse inattendue du serveur (pas de jobId).");
       setPhase("error");
       return;
@@ -105,13 +128,38 @@ export default function NewSitePage() {
   }
 
   if (phase === "pending") {
+    const stalled = jobStatus === "pending" && elapsed > 8;
     return (
-      <div className="mx-auto max-w-[520px] py-16 text-center">
+      <div className="mx-auto max-w-[560px] py-16 text-center">
         <div className="mx-auto mb-6 h-10 w-10 animate-spin rounded-full border-2 border-line border-t-violet-500" />
         <h1 className="font-display text-[24px] font-medium">Claude fabrique le site…</h1>
-        <p className="mt-2 text-sm text-muted">
-          Le worker structure le texte, place les photos et assemble le site. Quelques secondes.
+        <p className="mt-3 text-sm text-paper">
+          {progress ||
+            (jobStatus === "running"
+              ? "Traitement en cours…"
+              : "Job en file, en attente du worker…")}
         </p>
+        <p className="mt-1 text-xs text-faint">
+          {elapsed}s · statut : {jobStatus || "…"}
+        </p>
+
+        {stalled && (
+          <div className="mt-7 rounded-xl border border-gold-400/40 bg-ink-700 p-4 text-left text-sm text-muted">
+            <p className="font-semibold text-gold-400">
+              ⚠ Le worker ne semble pas démarré.
+            </p>
+            <p className="mt-1.5">
+              Le job attend depuis {elapsed}s sans être pris en charge. Ouvre un
+              terminal, lance la commande ci-dessous et laisse-la tourner :
+            </p>
+            <code className="mt-2 block rounded-lg bg-ink-900 px-3 py-2 text-paper">
+              cd sitegene &amp;&amp; npm run worker
+            </code>
+            <p className="mt-2 text-xs">
+              Dès qu'il tourne, il traitera ce job automatiquement (et les suivants).
+            </p>
+          </div>
+        )}
       </div>
     );
   }
