@@ -35,10 +35,32 @@
   --color-gold-400: #e8b468;
   --color-gold-300: #f2d2a0;
 
+  /* ---- DA Cloud (dashboards + app) ---- */
+  --color-sky-50: #f8fbff;
+  --color-sky-100: #f0f5ff;
+  --color-sky-200: #e8f1fa;
+  --color-sky-300: #dce9f7;
+  --color-surface: #ffffff;
+  --color-surface-2: #f4f8fe;
+  --color-lav: #e9e6fb;
+  --color-pink: #fbe6f0;
+  --color-mint: #e2f3e6;
+  --color-blue: #e2eefb;
+  --color-night: #0e0e12;   /* titres */
+  --color-slate: #4a5568;   /* corps */
+  --color-mist: #8b95a7;    /* légendes / placeholders */
+  --color-brand: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-success: #10b981;
+  --color-success-50: #ecfdf5;
+  --color-warn: #d97706;
+  --color-danger: #dc2626;
+
   /* ---- Polices ---- */
   --font-display: var(--font-fraunces), Georgia, serif;
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-hand: var(--font-caveat), cursive;
+  --font-archivo: var(--ff-archivo), system-ui, sans-serif;
 
   /* ---- Rayons ---- */
   --radius-md: 18px;
@@ -148,6 +170,71 @@ body {
 }
 .dot-live {
   animation: pulse-soft 2s var(--ease-out-soft) infinite;
+}
+
+/* ---- DA Cloud : utilitaires ---- */
+.cloud-bg {
+  background: linear-gradient(180deg, #f8fbff, #f0f5ff, #e8f1fa, #f0f5ff, #f8fbff);
+}
+
+/* Liquid glass clair — RÉSERVÉ aux éléments flottants (topbar, badges, carte hero, modals). */
+.glass {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px) saturate(1.4);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6), 0 4px 16px rgba(100, 150, 200, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.2px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0.2) 25%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(255, 255, 255, 0.2) 75%,
+    rgba(255, 255, 255, 0.6) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass { background: rgba(255, 255, 255, 0.92); }
+}
+
+.shadow-cloud {
+  box-shadow: 0 8px 24px rgba(100, 150, 200, 0.08), 0 16px 48px rgba(37, 99, 235, 0.04);
+}
+.shadow-cloud-sm {
+  box-shadow: 0 4px 12px rgba(100, 150, 200, 0.08);
+}
+
+/* Blobs flous très subtils (fond aérien, pas de glow violet) */
+.blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(64px);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.blob-blue {
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.16), transparent 70%);
+}
+.blob-mint {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.13), transparent 70%);
+}
+
+/* Wordmark contour décoratif (façon wizzchat) */
+.cloud-outline {
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(14, 14, 18, 0.06);
 }
 
 @media (prefers-reduced-motion: reduce) {

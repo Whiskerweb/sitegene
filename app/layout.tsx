@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, Caveat } from "next/font/google";
+import { Fraunces, Inter, Caveat, Archivo } from "next/font/google";
 import "./globals.css";
+
+const archivo = Archivo({
+  variable: "--ff-archivo",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+});
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -36,7 +42,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${fraunces.variable} ${inter.variable} ${caveat.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${inter.variable} ${caveat.variable} ${archivo.variable} h-full antialiased`}
     >
       <body className="grain min-h-full bg-paper text-ink">{children}</body>
     </html>

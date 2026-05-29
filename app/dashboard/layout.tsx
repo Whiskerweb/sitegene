@@ -1,28 +1,92 @@
-import Link from "next/link";
 import { requireUser } from "@/lib/auth";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { getBalance } from "@/lib/credits-server";
+import { AppShell } from "@/components/ui/AppShell";
+import type { NavItem } from "@/components/ui/NavItem";
+import {
+  IconCloud,
+  IconEdit,
+  IconCredit,
+  IconSettings,
+  IconLogout,
+} from "@/components/ui/icons";
+
+export const dynamic = "force-dynamic";
+
+const titleMap = {
+  "/dashboard": "Mon site",
+  "/dashboard/modifications": "Modifications",
+  "/dashboard/credits": "Crédits & facturation",
+  "/dashboard/settings": "Paramètres",
+};
 
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  await requireUser();
+  const user = await requireUser();
+  const admin = createAdminClient();
+
+  const { data: site } = await admin
+    .from("sites")
+    .select("id")
+    .eq("owner_user_id", user.id)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  const balance = await getBalance(admin, user.id);
+
+  let openCount = 0;
+  if (site) {
+    const { count } = await admin
+      .from("notes")
+      .select("id", { count: "exact", head: true })
+      .eq("site_id", site.id)
+      .eq("status", "open");
+    openCount = count ?? 0;
+  }
+
+  const nav: NavItem[] = [
+    { href: "/dashboard", label: "Mon site", icon: <IconCloud size={18} /> },
+    {
+      href: "/dashboard/modifications",
+      label: "Modifications",
+      icon: <IconEdit size={18} />,
+      badge: openCount || null,
+    },
+    {
+      href: "/dashboard/credits",
+      label: "Crédits",
+      icon: <IconCredit size={18} />,
+      badge: balance,
+    },
+    { href: "/dashboard/settings", label: "Paramètres", icon: <IconSettings size={18} /> },
+  ];
+
+  const right = (
+    <>
+      <a
+        href="/dashboard/credits"
+        className="hidden items-center gap-1.5 rounded-full bg-blue px-3 py-1.5 text-sm font-semibold text-brand sm:inline-flex"
+      >
+        {balance} crédits
+      </a>
+      <span className="hidden text-sm text-mist md:inline">{user.email}</span>
+      <form action="/auth/signout" method="post">
+        <button
+          className="grid h-9 w-9 place-items-center rounded-xl text-slate transition-colors hover:bg-sky-100 hover:text-night"
+          aria-label="Déconnexion"
+        >
+          <IconLogout size={18} />
+        </button>
+      </form>
+    </>
+  );
+
   return (
-    <div className="min-h-screen bg-ink-900">
-      <header className="sticky top-0 z-40 border-b border-line bg-ink-900/80 backdrop-blur">
-        <div className="mx-auto flex max-w-[900px] items-center justify-between px-6 py-4">
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <span className="grid h-7 w-7 place-items-center rounded-full btn-violet text-xs font-bold text-white">S</span>
-            <span className="font-display text-lg font-semibold tracking-tight">Sitegene</span>
-          </Link>
-          <form action="/auth/signout" method="post">
-            <button className="rounded-full border border-line px-3 py-1.5 text-sm text-muted transition-colors hover:text-paper">
-              Déconnexion
-            </button>
-          </form>
-        </div>
-      </header>
-      <main className="mx-auto max-w-[900px] px-6 py-10">{children}</main>
-    </div>
+    <AppShell nav={nav} titleMap={titleMap} right={right}>
+      {children}
+    </AppShell>
   );
 }

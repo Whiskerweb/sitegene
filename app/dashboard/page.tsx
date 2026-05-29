@@ -1,98 +1,189 @@
 import { requireUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getBalance } from "@/lib/credits-server";
-import NewNote from "./NewNote";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { GlassCard } from "@/components/ui/GlassCard";
+import { Card } from "@/components/ui/Card";
+import { StatCard } from "@/components/ui/StatCard";
+import { StatusPill } from "@/components/ui/StatusPill";
+import { Button } from "@/components/ui/Button";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { CopyButton } from "@/components/ui/CopyButton";
+import { Spinner } from "@/components/ui/Spinner";
+import { IconCloud, IconExternal, IconEdit } from "@/components/ui/icons";
 
 export const dynamic = "force-dynamic";
 
-const noteStatus: Record<string, { label: string; color: string }> = {
-  open: { label: "En attente", color: "text-gold-400" },
-  in_progress: { label: "En cours", color: "text-violet-400" },
-  done: { label: "Fait", color: "text-mint-400" },
-  rejected: { label: "Refusé", color: "text-faint" },
-};
+const fmtDate = (d?: string | null) =>
+  d ? new Date(d).toLocaleDateString("fr-FR", { day: "2-digit", month: "long" }) : "—";
 
-export default async function Dashboard() {
+export default async function MonSite() {
   const user = await requireUser();
   const admin = createAdminClient();
 
-  const { data: sites } = await admin
+  const { data: site } = await admin
     .from("sites")
-    .select("id, slug, status, template_id")
+    .select("id, slug, status, template_id, published_at, created_at")
     .eq("owner_user_id", user.id)
-    .order("created_at", { ascending: false });
-  const site = sites?.[0] ?? null;
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
   const balance = await getBalance(admin, user.id);
 
-  const { data: notes } = site
-    ? await admin
-        .from("notes")
-        .select("id, message, status, created_at")
-        .eq("site_id", site.id)
-        .order("created_at", { ascending: false })
-        .limit(50)
-    : { data: [] };
+  if (!site) {
+    return (
+      <>
+        <PageHeader title="Mon site" subtitle="Votre portfolio, en un coup d'œil." />
+        <EmptyState
+          icon={<IconCloud />}
+          title="Votre site arrive bientôt"
+          description="Notre équipe prépare votre portfolio. Vous recevrez un lien dès qu'il est prêt."
+        />
+      </>
+    );
+  }
+
+  const [{ data: notes }, { data: job }, { data: lastContent }] = await Promise.all([
+    admin
+      .from("notes")
+      .select("id, message, status, created_at, resulting_content_version")
+      .eq("site_id", site.id)
+      .order("created_at", { ascending: false })
+      .limit(50),
+    admin
+      .from("jobs")
+      .select("status")
+      .eq("site_id", site.id)
+      .in("status", ["pending", "running"])
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+    admin
+      .from("site_content")
+      .select("version, created_at")
+      .eq("site_id", site.id)
+      .order("version", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+  ]);
+
+  const allNotes = notes ?? [];
+  const inProgress = allNotes.filter((n) => n.status === "open" || n.status === "in_progress").length;
+  const isLive = site.status === "live" && !!site.slug;
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
+  const fullUrl = site.slug ? `${appUrl}/s/${site.slug}` : "";
 
   return (
-    <div>
-      <div className="flex items-center justify-between">
-        <h1 className="font-display text-[28px] font-semibold tracking-[-0.02em]">Mon site</h1>
-        <div className="rounded-full border border-line bg-ink-700 px-4 py-2 text-sm">
-          <span className="text-faint">Crédits : </span>
-          <span className="font-semibold text-mint-400">{balance}</span>
+    <>
+      <PageHeader
+        title="Mon site"
+        subtitle="Votre portfolio, en un coup d'œil."
+        action={
+          isLive ? (
+            <Button href={`/s/${site.slug}`} target="_blank">
+              <IconExternal size={16} /> Voir mon site
+            </Button>
+          ) : null
+        }
+      />
+
+      {job && (
+        <GlassCard className="mb-6 flex items-center gap-3 border border-sky-300 p-4">
+          <Spinner size={18} />
+          <span className="text-[15px] font-medium text-night">
+            Claude travaille sur votre site… La mise à jour apparaîtra dans un instant.
+          </span>
+        </GlassCard>
+      )}
+
+      {/* Hero site */}
+      <GlassCard className="border border-sky-300 p-6 md:p-7">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <StatusPill status={site.status} kind="site" />
+          {site.slug && (
+            <div className="flex items-center gap-2">
+              <code className="rounded-lg bg-white/70 px-3 py-1.5 text-sm text-slate">
+                /s/{site.slug}
+              </code>
+              {fullUrl && <CopyButton text={fullUrl} />}
+            </div>
+          )}
         </div>
+
+        <div className="mt-5 overflow-hidden rounded-[18px] border border-sky-300 bg-white">
+          {isLive ? (
+            <div className="relative aspect-[16/10] w-full overflow-hidden">
+              <iframe
+                src={`/s/${site.slug}`}
+                title="Aperçu de votre site"
+                loading="lazy"
+                tabIndex={-1}
+                aria-hidden
+                className="pointer-events-none absolute left-0 top-0 origin-top-left"
+                style={{ width: 1440, height: 900, transform: "scale(0.5)" }}
+              />
+            </div>
+          ) : (
+            <div className="flex aspect-[16/10] items-center justify-center bg-surface-2 text-center text-sm text-mist">
+              {site.status === "revealed"
+                ? "Votre aperçu est prêt — mettez-le en ligne pour le rendre public."
+                : "Votre site est en préparation."}
+            </div>
+          )}
+        </div>
+
+        <div className="mt-5 flex flex-wrap gap-3">
+          {isLive ? (
+            <Button href={`/s/${site.slug}`} target="_blank">
+              <IconExternal size={16} /> Voir mon site
+            </Button>
+          ) : (
+            <Button href="/dashboard/modifications" variant="subtle">
+              Voir mes options
+            </Button>
+          )}
+          <Button href="/dashboard/modifications" variant="ghost">
+            <IconEdit size={16} /> Demander une modification
+          </Button>
+        </div>
+      </GlassCard>
+
+      {/* Stats */}
+      <div className="mt-6 grid gap-4 sm:grid-cols-3">
+        <StatCard label="Crédits disponibles" value={balance} tone="blue" />
+        <StatCard label="Modifications en cours" value={inProgress} tone="lav" />
+        <StatCard
+          label="Dernière mise à jour"
+          value={<span className="text-[20px]">{fmtDate(lastContent?.created_at)}</span>}
+          tone="mint"
+        />
       </div>
 
-      {!site ? (
-        <p className="mt-8 text-muted">Aucun site associé à votre compte pour l'instant.</p>
-      ) : (
-        <>
-          <div className="mt-6 rounded-[20px] border border-line bg-ink-700 p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className={`text-sm ${site.status === "live" ? "text-mint-400" : "text-faint"}`}>
-                    ● {site.status === "live" ? "En ligne" : site.status}
-                  </span>
-                </div>
-                <div className="mt-1 font-display text-[22px] font-medium">
-                  {site.slug ? `/s/${site.slug}` : "Site en préparation"}
-                </div>
-              </div>
-              {site.slug && (
-                <a href={`/s/${site.slug}`} target="_blank" rel="noreferrer"
-                  className="btn-violet rounded-full px-5 py-2.5 text-sm font-semibold text-white">
-                  Voir mon site
-                </a>
-              )}
-            </div>
-          </div>
-
-          <div className="mt-6">
-            <NewNote siteId={site.id} />
-          </div>
-
-          <h2 className="mb-3 mt-10 text-sm font-semibold text-paper">
-            Mes demandes ({notes?.length ?? 0})
-          </h2>
+      {/* Activité récente */}
+      <div className="mt-8">
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="font-archivo text-lg font-semibold text-night">Activité récente</h2>
+          {allNotes.length > 0 && (
+            <a href="/dashboard/modifications" className="text-sm font-semibold text-brand hover:text-brand-700">
+              Tout voir →
+            </a>
+          )}
+        </div>
+        {allNotes.length === 0 ? (
+          <Card className="p-6 text-sm text-slate">
+            Aucune demande pour l'instant. Quand vous demanderez une modification, son suivi apparaîtra ici.
+          </Card>
+        ) : (
           <div className="space-y-2">
-            {(notes ?? []).map((n) => {
-              const s = noteStatus[n.status] ?? noteStatus.open;
-              return (
-                <div key={n.id} className="rounded-[14px] border border-line bg-ink-800 p-4">
-                  <div className="flex items-start justify-between gap-4">
-                    <p className="text-sm text-paper/90">{n.message}</p>
-                    <span className={`shrink-0 text-xs ${s.color}`}>{s.label}</span>
-                  </div>
-                </div>
-              );
-            })}
-            {(!notes || notes.length === 0) && (
-              <p className="text-sm text-faint">Aucune demande pour l'instant.</p>
-            )}
+            {allNotes.slice(0, 3).map((n) => (
+              <Card key={n.id} className="flex items-start justify-between gap-4 p-4">
+                <p className="line-clamp-2 text-sm text-slate">{n.message}</p>
+                <StatusPill status={n.status} kind="note" />
+              </Card>
+            ))}
           </div>
-        </>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }
