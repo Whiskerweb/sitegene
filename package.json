@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "worker": "node --import tsx --env-file=.env.local scripts/worker.mjs",
+    "worker:once": "node --import tsx --env-file=.env.local scripts/worker.mjs --once",
+    "templates:dump": "node --import tsx --env-file=.env.local scripts/dump-default-content.mjs"
   },
   "dependencies": {
     "@stripe/stripe-js": "^9.7.0",
