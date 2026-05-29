@@ -2,7 +2,7 @@
 // de chaque template. Les chemins d'images relatifs (img/pN.jpg) sont réécrits en
 // absolus (/_templates/<id>/img/pN.jpg) pour servir un site SANS dépendre de l'URL.
 // Lancer avec : node --import tsx scripts/dump-default-content.mjs
-import { writeFileSync } from "node:fs";
+import { writeFileSync, copyFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -39,5 +39,11 @@ for (const id of TEMPLATES) {
   }
   const out = join(ROOT, "public", "_templates", id, "default-content.json");
   writeFileSync(out, JSON.stringify(content, null, 2));
-  console.log(`✓ ${id}: ${Object.keys(content).length} champs → ${out}`);
+
+  // Copie le manifest source dans public/ (consommé par le formulaire opérateur).
+  const manifestSrc = join(ROOT, "templates", id, "manifest.json");
+  if (existsSync(manifestSrc)) {
+    copyFileSync(manifestSrc, join(ROOT, "public", "_templates", id, "manifest.json"));
+  }
+  console.log(`✓ ${id}: ${Object.keys(content).length} champs + manifest → ${out}`);
 }

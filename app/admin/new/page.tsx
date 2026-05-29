@@ -38,13 +38,25 @@ export default function NewSitePage() {
     setDefaultContent(null);
     setValues({});
     setFiles({});
-    Promise.all([
-      fetch(`/_templates/${templateId}/manifest.json`).then((r) => r.json()),
-      fetch(`/_templates/${templateId}/default-content.json`).then((r) => r.json()),
-    ]).then(([m, d]) => {
-      setManifest(m);
-      setDefaultContent(d);
-    });
+    // Chargements indépendants : un échec n'empêche pas l'autre de s'afficher.
+    let cancelled = false;
+    (async () => {
+      try {
+        const r = await fetch(`/_templates/${templateId}/manifest.json`);
+        if (r.ok && !cancelled) setManifest(await r.json());
+      } catch {
+        /* ignore */
+      }
+      try {
+        const r = await fetch(`/_templates/${templateId}/default-content.json`);
+        if (r.ok && !cancelled) setDefaultContent(await r.json());
+      } catch {
+        /* ignore */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, [templateId]);
 
   const scalarFields = (manifest?.fields?.editable ?? []).filter(
