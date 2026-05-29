@@ -18,7 +18,8 @@ export default function NewSitePage() {
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [rawText, setRawText] = useState("");
-  const [files, setFiles] = useState<Record<string, File>>({});
+  const [photos, setPhotos] = useState<File[]>([]);
+  const [dragOver, setDragOver] = useState(false);
   const [phase, setPhase] = useState<Phase>("form");
   const [message, setMessage] = useState("");
   const [revealPath, setRevealPath] = useState("");
@@ -26,7 +27,6 @@ export default function NewSitePage() {
 
   useEffect(() => {
     setDefaultContent(null);
-    setFiles({});
     fetch(`/_templates/${templateId}/default-content.json`)
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => d && setDefaultContent(d))
@@ -35,7 +35,14 @@ export default function NewSitePage() {
 
   useEffect(() => () => { if (pollRef.current) clearInterval(pollRef.current); }, []);
 
-  const imageSlots = defaultContent ? collectImageSlots(defaultContent, templateId) : [];
+  const required = defaultContent ? collectImageSlots(defaultContent, templateId).length : 0;
+  const countOk = required > 0 && photos.length === required;
+
+  function addFiles(list: FileList | null) {
+    if (!list) return;
+    const imgs = Array.from(list).filter((f) => f.type.startsWith("image/"));
+    setPhotos((prev) => [...prev, ...imgs]);
+  }
 
   function pollJob(jobId: string) {
     const supabase = createClient();
@@ -67,7 +74,7 @@ export default function NewSitePage() {
     fd.set("firstName", firstName);
     fd.set("email", email);
     fd.set("rawText", rawText);
-    for (const [slot, file] of Object.entries(files)) fd.append(`photo:${slot}`, file);
+    photos.forEach((f) => fd.append("photos", f));
 
     const res = await fetch("/api/operator/intake", { method: "POST", body: fd });
     const json = await res.json();
@@ -85,7 +92,7 @@ export default function NewSitePage() {
         <div className="mx-auto mb-6 h-10 w-10 animate-spin rounded-full border-2 border-line border-t-violet-500" />
         <h1 className="font-display text-[24px] font-medium">Claude fabrique le site…</h1>
         <p className="mt-2 text-sm text-muted">
-          Le worker structure le texte et assemble le contenu. Ça prend quelques secondes.
+          Le worker structure le texte, place les photos et assemble le site. Quelques secondes.
         </p>
       </div>
     );
@@ -114,14 +121,14 @@ export default function NewSitePage() {
     <form onSubmit={submit} className="mx-auto max-w-[720px]">
       <h1 className="font-display text-[28px] font-semibold tracking-[-0.02em]">Nouveau site</h1>
       <p className="mt-1 text-sm text-muted">
-        Choisis un template, colle les infos brutes du photographe et dépose ses photos. Claude structure tout.
+        Choisis un template, colle les infos brutes et dépose les photos. Claude structure le texte et place les photos au bon endroit.
       </p>
 
       <section className="mt-8">
         <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-faint">Template</label>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           {TEMPLATES.map((t) => (
-            <button type="button" key={t.id} onClick={() => setTemplateId(t.id)}
+            <button type="button" key={t.id} onClick={() => { setTemplateId(t.id); setPhotos([]); }}
               className={`rounded-xl border p-4 text-left text-sm transition-colors ${templateId === t.id ? "border-violet-500 bg-ink-700 text-paper" : "border-line bg-ink-800 text-muted hover:text-paper"}`}>
               {t.name}
             </button>
@@ -143,41 +150,64 @@ export default function NewSitePage() {
       </section>
 
       <section className="mt-8">
-        <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-faint">
-          Infos brutes du photographe
-        </label>
-        <textarea
-          rows={7}
-          value={rawText}
-          onChange={(e) => setRawText(e.target.value)}
-          placeholder="Colle ici tout ce que tu sais : nom/marque, style, prestations, ville, bio, tarifs, citations… Claude s'occupe de structurer le tout dans le site."
-          className="w-full rounded-xl border border-line bg-ink-900 px-4 py-3 text-sm leading-relaxed text-paper outline-none focus:border-violet-500"
-        />
+        <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-faint">Infos brutes du photographe</label>
+        <textarea rows={6} value={rawText} onChange={(e) => setRawText(e.target.value)}
+          placeholder="Nom/marque, style, prestations, ville, bio, tarifs… Claude structure tout dans le site."
+          className="w-full rounded-xl border border-line bg-ink-900 px-4 py-3 text-sm leading-relaxed text-paper outline-none focus:border-violet-500" />
       </section>
 
       <section className="mt-8">
-        <h2 className="mb-1 text-sm font-semibold text-paper">Photos ({imageSlots.length} emplacements)</h2>
-        <p className="mb-3 text-xs text-faint">Clique une vignette pour déposer la photo du client. Non remplacée = image de démo.</p>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {imageSlots.map((slot) => (
-            <label key={slot} className="group relative aspect-square cursor-pointer overflow-hidden rounded-xl border border-line bg-ink-800">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={files[slot] ? URL.createObjectURL(files[slot]) : slot} alt=""
-                className="h-full w-full object-cover opacity-80 transition-opacity group-hover:opacity-100" />
-              <span className="absolute inset-x-0 bottom-0 bg-ink-900/70 py-1 text-center text-[11px] text-paper">
-                {files[slot] ? "✓ déposée" : "déposer"}
-              </span>
-              <input type="file" accept="image/*" className="hidden"
-                onChange={(e) => { const f = e.target.files?.[0]; if (f) setFiles((s) => ({ ...s, [slot]: f })); }} />
-            </label>
-          ))}
+        <div className="mb-2 flex items-center justify-between">
+          <label className="text-xs font-semibold uppercase tracking-wider text-faint">Photos</label>
+          <span className={`text-[13px] ${countOk ? "text-mint-400" : photos.length > required ? "text-gold-400" : "text-faint"}`}>
+            {photos.length} / {required || "—"} requises
+          </span>
         </div>
+
+        <div
+          onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+          onDragLeave={() => setDragOver(false)}
+          onDrop={(e) => { e.preventDefault(); setDragOver(false); addFiles(e.dataTransfer.files); }}
+          className={`relative rounded-2xl border-2 border-dashed p-8 text-center transition-colors ${dragOver ? "border-violet-500 bg-ink-700" : "border-line bg-ink-800"}`}
+        >
+          <input id="photo-input" type="file" accept="image/*" multiple className="hidden"
+            onChange={(e) => addFiles(e.target.files)} />
+          <p className="text-sm text-muted">
+            Glisse-dépose {required ? `les ${required} photos` : "les photos"} ici, ou{" "}
+            <label htmlFor="photo-input" className="cursor-pointer font-semibold text-violet-400 hover:text-violet-500">parcours tes fichiers</label>.
+          </p>
+          <p className="mt-1 text-xs text-faint">Claude choisit automatiquement la meilleure photo pour chaque emplacement.</p>
+        </div>
+
+        {photos.length > 0 && (
+          <>
+            <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-6">
+              {photos.map((f, i) => (
+                <div key={i} className="group relative aspect-square overflow-hidden rounded-lg border border-line">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={URL.createObjectURL(f)} alt="" className="h-full w-full object-cover" />
+                  <button type="button" onClick={() => setPhotos((p) => p.filter((_, j) => j !== i))}
+                    className="absolute right-1 top-1 grid h-5 w-5 place-items-center rounded-full bg-ink-900/80 text-xs text-paper opacity-0 transition-opacity group-hover:opacity-100">✕</button>
+                </div>
+              ))}
+            </div>
+            <button type="button" onClick={() => setPhotos([])} className="mt-2 text-xs text-faint hover:text-paper">Tout retirer</button>
+          </>
+        )}
+
+        {photos.length > 0 && !countOk && (
+          <p className="mt-3 text-[13px] text-gold-400">
+            {photos.length < required
+              ? `Il manque ${required - photos.length} photo(s).`
+              : `Retire ${photos.length - required} photo(s) — il en faut exactement ${required}.`}
+          </p>
+        )}
       </section>
 
       {phase === "error" && <p className="mt-6 text-sm text-gold-400">{message}</p>}
 
-      <button type="submit" disabled={!firstName}
-        className="btn-violet mt-8 w-full rounded-full px-6 py-4 text-[15px] font-semibold text-white disabled:opacity-60">
+      <button type="submit" disabled={!firstName || !countOk}
+        className="btn-violet mt-8 w-full rounded-full px-6 py-4 text-[15px] font-semibold text-white disabled:opacity-50">
         Générer le site (via Claude)
       </button>
     </form>

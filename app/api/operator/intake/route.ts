@@ -38,22 +38,25 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: jErr?.message ?? "Job." }, { status: 500 });
   }
 
-  // Upload des photos brutes dans le bucket intake (staging).
-  const photos: { slotUrl: string; path: string; contentType: string }[] = [];
-  for (const [key, value] of form.entries()) {
-    if (!key.startsWith("photo:")) continue;
-    if (!(value instanceof File) || value.size === 0) continue;
-    const slotUrl = key.slice(6);
-    const base = slotUrl.split("/").pop() || "photo.jpg";
-    const path = `${job.id}/${base}`;
+  // Upload des photos brutes (sélection ordonnée) dans le bucket intake (staging).
+  // L'assignation photo → emplacement est faite automatiquement par le worker (Claude vision).
+  const photos: { path: string; contentType: string }[] = [];
+  const files = form
+    .getAll("photos")
+    .filter((v): v is File => v instanceof File && v.size > 0);
+  let i = 0;
+  for (const file of files) {
+    const ext = (file.name.split(".").pop() || "jpg").toLowerCase().slice(0, 5);
+    const path = `${job.id}/${i}.${ext}`;
     const { error: upErr } = await admin.storage
       .from("intake")
-      .upload(path, await value.arrayBuffer(), {
-        contentType: value.type || "image/jpeg",
+      .upload(path, await file.arrayBuffer(), {
+        contentType: file.type || "image/jpeg",
         upsert: true,
       });
     if (!upErr) {
-      photos.push({ slotUrl, path, contentType: value.type || "image/jpeg" });
+      photos.push({ path, contentType: file.type || "image/jpeg" });
+      i++;
     }
   }
 

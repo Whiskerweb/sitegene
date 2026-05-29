@@ -5,7 +5,7 @@
 //   npm run worker        → boucle (poll toutes les 3 s)
 //   npm run worker:once   → traite les jobs en attente puis s'arrête
 import { spawn } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createClient } from "@supabase/supabase-js";
@@ -22,10 +22,12 @@ const admin = createClient(
 
 const log = (...a) => console.log(new Date().toISOString().slice(11, 19), ...a);
 
-/** Lance `claude -p` en headless, renvoie le texte de réponse. */
+/** Lance `claude -p` en headless (prompt en argument → les @refs images sont prises en compte). */
 function runClaude(prompt) {
   return new Promise((resolve, reject) => {
-    const p = spawn("claude", ["-p", "--output-format", "json"], { cwd: ROOT });
+    const p = spawn("claude", ["-p", prompt, "--output-format", "json"], {
+      cwd: ROOT,
+    });
     let out = "";
     let err = "";
     p.stdout.on("data", (d) => (out += d));
@@ -40,8 +42,6 @@ function runClaude(prompt) {
         resolve(out);
       }
     });
-    p.stdin.write(prompt);
-    p.stdin.end();
   });
 }
 
@@ -97,28 +97,97 @@ Consigne : renvoie UNIQUEMENT un objet JSON { "chemin": "valeur" } pour les cham
   return out;
 }
 
+/** Claude (vision) assigne chaque emplacement à l'index de la meilleure photo. */
+async function claudeAssignPhotos(jobId, manifest, slotUrls, buffers) {
+  const fallback = {};
+  slotUrls.forEach((u, i) => (fallback[u] = Math.min(i, buffers.length - 1)));
+  if (buffers.length === 0) return fallback;
+
+  const tmpRel = `.intake-tmp/${jobId}`;
+  const tmpAbs = join(ROOT, tmpRel);
+  try {
+    mkdirSync(tmpAbs, { recursive: true });
+    const refs = [];
+    buffers.forEach((b, i) => {
+      writeFileSync(join(ROOT, `${tmpRel}/${i}.jpg`), Buffer.from(b.data));
+      refs.push(`Photo ${i} : @${tmpRel}/${i}.jpg`);
+    });
+    const roleBySlot = {};
+    (manifest.photos || []).forEach((p) => {
+      roleBySlot[p.slot] = p.role + (p.note ? ` (${p.note})` : "");
+    });
+    const slotList = slotUrls
+      .map((u) => {
+        const name = (u.split("/").pop() || "").replace(/\.\w+$/, "");
+        return `- ${name} — ${roleBySlot[name] || "image"}`;
+      })
+      .join("\n");
+    const prompt = `Tu places les photos d'un photographe sur les emplacements de son site.
+Emplacements (nom — rôle) :
+${slotList}
+
+Photos disponibles (index → image) :
+${refs.join("\n")}
+
+Regarde chaque photo et assigne à CHAQUE emplacement l'index de la photo la plus adaptée (visage/portrait serré → avatars ; photo large et marquante → hero ; variété pour la galerie ; cohérence du sujet selon le rôle). Une même photo peut servir plusieurs emplacements. Renvoie UNIQUEMENT un JSON { "<nom_emplacement>": <index_photo_entier> }.`;
+    const obj = extractJson(await runClaude(prompt));
+    if (!obj) return fallback;
+    const out = {};
+    for (const u of slotUrls) {
+      const name = (u.split("/").pop() || "").replace(/\.\w+$/, "");
+      const idx = obj[name];
+      out[u] =
+        Number.isInteger(idx) && idx >= 0 && idx < buffers.length
+          ? idx
+          : fallback[u];
+    }
+    return out;
+  } catch (e) {
+    log(`  ⚠ assignation vision échouée (${e?.message ?? e}) — ordre par défaut.`);
+    return fallback;
+  } finally {
+    try {
+      rmSync(tmpAbs, { recursive: true, force: true });
+    } catch {
+      /* ignore */
+    }
+  }
+}
+
 async function processCreateSite(job) {
   const { templateId, firstName, email, rawText, photos = [] } = job.payload;
   const baseContent = loadTemplateFile(templateId, "default-content.json");
+  const manifest = loadTemplateFile(templateId, "manifest.json");
+  const { collectImageSlots } = await import(join(ROOT, "lib/content-overlay.ts"));
+  const slotUrls = collectImageSlots(baseContent, templateId);
 
   log(`  → Claude structure le texte (${(rawText || "").length} car.)`);
   const textOverrides = await claudeFillText(templateId, rawText);
-  log(`  → ${Object.keys(textOverrides).length} champs remplis par Claude`);
+  log(`  → ${Object.keys(textOverrides).length} champs remplis`);
 
-  // Télécharge les photos de staging.
-  const photoUploads = [];
+  // Télécharge les photos de staging (ordonnées).
+  const buffers = [];
   for (const ph of photos) {
     const { data, error } = await admin.storage.from("intake").download(ph.path);
     if (error || !data) continue;
-    photoUploads.push({
-      slotUrl: ph.slotUrl,
-      data: await data.arrayBuffer(),
-      contentType: ph.contentType,
-    });
+    buffers.push({ data: await data.arrayBuffer(), contentType: ph.contentType });
+  }
+
+  // Assignation auto photo → emplacement.
+  let photoUploads = [];
+  if (buffers.length > 0) {
+    log(`  → Claude assigne ${buffers.length} photos sur ${slotUrls.length} emplacements`);
+    const assign = await claudeAssignPhotos(job.id, manifest, slotUrls, buffers);
+    photoUploads = slotUrls
+      .map((url) => {
+        const b = buffers[assign[url]];
+        return b ? { slotUrl: url, data: b.data, contentType: b.contentType } : null;
+      })
+      .filter(Boolean);
   }
 
   const { generateSite } = await import(join(ROOT, "lib/generate.ts"));
-  const result = await generateSite({
+  return generateSite({
     templateId,
     firstName,
     email,
@@ -127,7 +196,6 @@ async function processCreateSite(job) {
     baseContent,
     createdBy: job.created_by,
   });
-  return result;
 }
 
 async function processModifySite(job) {
