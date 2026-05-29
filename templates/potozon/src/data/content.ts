@@ -194,6 +194,9 @@ const C =
     ? ((window as any).__SITE_CONTENT__ as typeof DEFAULT_CONTENT)
     : DEFAULT_CONTENT
 
+// Exposé pour la plateforme (dump des contenus par défaut → default-content.json).
+export const __DEFAULT_CONTENT__ = DEFAULT_CONTENT
+
 /* ------------------------------------------------------------------ */
 /* Re-exports (noms/types identiques à l'origine)                      */
 /* ------------------------------------------------------------------ */

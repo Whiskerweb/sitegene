@@ -164,6 +164,9 @@ const C =
     ? ((window as any).__SITE_CONTENT__ as typeof DEFAULT_CONTENT)
     : DEFAULT_CONTENT
 
+// Exposé pour la plateforme (dump des contenus par défaut → default-content.json).
+export const __DEFAULT_CONTENT__ = DEFAULT_CONTENT
+
 /* ------------------------------------------------------------------ */
 /* Re-exports (noms/types identiques à l'origine + ajouts)             */
 /* ------------------------------------------------------------------ */
@@ -182,4 +185,5 @@ export const faqs: Faq[] = C.faqs
 export const footer = C.footer
 
 // COMPUTED : la galerie est dérivée de l'ordre d'index via le helper img().
-export const gallery = (C.galleryOrder ?? DEFAULT_CONTENT.galleryOrder).map(img)
+export const gallery: string[] =
+  (C as any).gallery ?? (C.galleryOrder ?? DEFAULT_CONTENT.galleryOrder).map(img)
