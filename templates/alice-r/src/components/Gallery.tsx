@@ -4,6 +4,7 @@ import { gallery } from '../data/content'
 const EASE = [0.22, 1, 0.36, 1] as const
 
 export default function Gallery() {
+  if (!gallery || gallery.length === 0) return null
   return (
     <section id="journal" className="relative z-10 mx-auto max-w-6xl px-6 py-20 md:px-10 md:py-28">
       <h2 className="mb-12 text-3xl font-medium text-white sm:text-4xl md:text-5xl">

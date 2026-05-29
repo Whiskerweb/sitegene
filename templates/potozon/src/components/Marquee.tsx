@@ -9,6 +9,7 @@ function Sparkle() {
 }
 
 export default function Marquee() {
+  if (!collaborations || collaborations.length === 0) return null
   const row = [...collaborations, ...collaborations]
   return (
     <section className="border-y-2 border-poto-ink/10 py-12">

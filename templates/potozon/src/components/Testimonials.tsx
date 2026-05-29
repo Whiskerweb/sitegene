@@ -5,6 +5,7 @@ import { testimonials } from '../data/content'
 const AVATAR_COLORS = ['#E5412A', '#8B7CF6', '#F15A24']
 
 export default function Testimonials() {
+  if (!testimonials || testimonials.length === 0) return null
   return (
     <section className="mx-auto max-w-6xl py-20 md:py-28">
       <FadeIn

@@ -3,6 +3,7 @@ import FadeIn from './FadeIn'
 import { featuredQuote } from '../data/content'
 
 export default function FeaturedQuote() {
+  if (!featuredQuote || !featuredQuote.text) return null
   return (
     <section className="mx-auto max-w-6xl py-20 md:py-28">
       <div className="grid items-center gap-12 md:grid-cols-2">

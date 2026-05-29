@@ -8,6 +8,7 @@ const EASE = [0.22, 1, 0.36, 1] as const
 
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0)
+  if (!faqs || faqs.length === 0) return null
   return (
     <section className="mx-auto max-w-3xl py-20 md:py-28">
       <FadeIn

@@ -29,6 +29,7 @@ function Card({ card, delay }: { card: GalleryCard; delay: number }) {
 }
 
 export default function Gallery() {
+  if (!cards || cards.length === 0) return null
   return (
     <section id="portfolio" className="relative mt-6 md:mt-10">
       {/* Rangée cartes + textes — 2×2 sur mobile (order), rangée intercalée desktop */}

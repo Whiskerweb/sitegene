@@ -2,6 +2,7 @@ import FadeIn from './FadeIn'
 import { collaborations } from '../data/content'
 
 export default function Collaborations() {
+  if (!collaborations || collaborations.length === 0) return null
   const row = [...collaborations, ...collaborations]
   return (
     <section className="border-y border-tg-line py-14">

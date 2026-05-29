@@ -6,6 +6,7 @@ import { faqs } from '../data/content'
 
 export default function FAQs() {
   const [open, setOpen] = useState<number | null>(0)
+  if (!faqs || faqs.length === 0) return null
   return (
     <section className="mx-auto max-w-3xl px-5 py-20 md:py-28">
       <FadeIn as="h2" className="tg-head mb-12 text-center text-4xl font-bold md:text-6xl">

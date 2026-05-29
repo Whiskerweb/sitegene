@@ -2,6 +2,7 @@ import FadeIn from './FadeIn'
 import { works } from '../data/content'
 
 export default function Works() {
+  if (!works || works.length === 0) return null
   return (
     <section id="works" className="mx-auto max-w-6xl px-5 py-20 md:px-10 md:py-28">
       <FadeIn as="h2" className="tg-head mb-12 text-4xl font-bold md:text-6xl">

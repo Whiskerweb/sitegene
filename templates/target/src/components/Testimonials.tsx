@@ -3,6 +3,7 @@ import FadeIn from './FadeIn'
 import { testimonials } from '../data/content'
 
 export default function Testimonials() {
+  if (!testimonials || testimonials.length === 0) return null
   return (
     <section className="mx-auto max-w-6xl px-5 py-20 md:px-10 md:py-28">
       <FadeIn as="h2" className="tg-head mb-12 text-4xl font-bold md:text-6xl">

@@ -1,6 +1,7 @@
 import { collaborations } from '../data/content'
 
 export default function Marquee() {
+  if (!collaborations || collaborations.length === 0) return null
   const row = [...collaborations, ...collaborations]
   return (
     <section className="relative z-10 border-y border-white/12 py-12">
