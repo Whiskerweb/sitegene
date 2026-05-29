@@ -14,10 +14,13 @@ const origin = process.argv[3] || "http://localhost:3000";
 const { data, error } = await admin.auth.admin.generateLink({
   type: "magiclink",
   email,
-  options: { redirectTo: `${origin}/auth/callback?next=/admin` },
+  options: { redirectTo: `${origin}/auth/confirm?next=/admin` },
 });
 if (error) throw error;
 
+// Lien sans PKCE : on confirme par token_hash côté serveur (route /auth/confirm).
+const url = `${origin}/auth/confirm?token_hash=${data.properties.hashed_token}&type=magiclink&next=/admin`;
+
 console.log("\n👉 Lien de connexion opérateur (clique pour entrer dans /admin) :\n");
-console.log(data.properties.action_link);
+console.log(url);
 console.log("");

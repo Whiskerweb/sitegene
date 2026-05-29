@@ -24,7 +24,14 @@ function injectRevealChrome(html: string, token: string): string {
   <input type="hidden" name="token" value="${token}" />
   <span class="sg-l">Voici <b>votre site</b>. Mettez-le en ligne en 30 secondes.</span>
   <button type="submit">Mettre en ligne — 50 €</button>
-</form>`;
+</form>
+<script>
+(function(){var T=${JSON.stringify(token)};
+function ping(t,l){try{var b=new Blob([JSON.stringify({token:T,type:t,label:l||null})],{type:'application/json'});if(!navigator.sendBeacon('/api/track',b))throw 0;}catch(e){fetch('/api/track',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({token:T,type:t,label:l||null}),keepalive:true});}}
+ping('reveal_opened');
+document.addEventListener('click',function(e){var el=e.target&&e.target.closest&&e.target.closest('a,button');if(!el)return;if(el.closest('#sg-bar')){ping('go_live_clicked','Mettre en ligne');return;}ping('button_click',(el.textContent||'').trim().slice(0,60));},true);
+})();
+</script>`;
   if (html.includes("</body>")) return html.replace("</body>", `${chrome}</body>`);
   return html + chrome;
 }
