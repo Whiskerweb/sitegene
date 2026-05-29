@@ -38,7 +38,8 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Tout sauf : assets _next, favicon, bundles _templates, sites publics /s/, et fichiers à extension.
-    "/((?!_next/static|_next/image|favicon.ico|_templates|s/|robots.txt|.*\\.[\\w]+$).*)",
+    // Pages uniquement. On EXCLUT api/ (les routes gèrent leur propre auth + le proxy
+    // casse les corps multipart en flux), les assets _next, _templates, sites /s/, fichiers.
+    "/((?!api/|_next/static|_next/image|favicon.ico|_templates|s/|robots.txt|.*\\.[\\w]+$).*)",
   ],
 };
