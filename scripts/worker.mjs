@@ -199,10 +199,10 @@ async function processCreateSite(job) {
 }
 
 async function processModifySite(job) {
-  const { siteId, instruction } = job.payload;
+  const { siteId, instruction, noteId } = job.payload;
   const { data: site } = await admin
     .from("sites")
-    .select("id, template_id, status")
+    .select("id, template_id, status, owner_user_id")
     .eq("id", siteId)
     .single();
   const { data: sc } = await admin
@@ -231,6 +231,25 @@ Consigne : applique la demande et renvoie UNIQUEMENT le contenu JSON COMPLET mod
     is_published: site.status === "live",
     created_by: "ai",
   });
+
+  // Note résolue + décompte d'un crédit au propriétaire.
+  if (noteId) {
+    await admin
+      .from("notes")
+      .update({
+        status: "done",
+        credits_charged: true,
+        resulting_content_version: nextVersion,
+        resolved_at: new Date().toISOString(),
+      })
+      .eq("id", noteId);
+    if (site.owner_user_id) {
+      const { grantCredits } = await import(join(ROOT, "lib/credits-server.ts"));
+      await grantCredits(admin, site.owner_user_id, -1, "note_spend", {
+        note_id: noteId,
+      });
+    }
+  }
   return { siteId, version: nextVersion };
 }
 
