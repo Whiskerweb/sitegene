@@ -40,3 +40,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# template bundles (copies Vite autonomes) — on versionne la SOURCE,
+# pas les deps/builds régénérables. Les bundles servis vivent dans public/_templates/.
+templates/*/node_modules/
+templates/*/dist/
+templates/*/.vite/
+templates/**/.DS_Store

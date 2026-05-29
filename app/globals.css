@@ -1,26 +1,209 @@
 @import "tailwindcss";
 
+@theme {
+  /* ---- Base sombre (galerie de nuit) ---- */
+  --color-ink-900: #08080c;
+  --color-ink-800: #0e0e14;
+  --color-ink-700: #16161f;
+  --color-ink-600: #1f1f2b;
+
+  /* ---- Accent primaire (violet électrique) ---- */
+  --color-violet-400: #8b6bff;
+  --color-violet-500: #6d4aff;
+  --color-violet-600: #5226e0;
+
+  /* ---- Accent secondaire (or éditorial) ---- */
+  --color-gold-300: #f2d2a0;
+  --color-gold-400: #e8b468;
+
+  /* ---- Statut ---- */
+  --color-mint-400: #3de0a0;
+
+  /* ---- Texte ---- */
+  --color-paper: #f5f6fa;
+  --color-muted: #a6a8b8;
+  --color-faint: #6c6e80;
+
+  /* ---- Polices ---- */
+  --font-display: "Clash Display", var(--font-geist-sans), "Inter", sans-serif;
+  --font-sans: var(--font-geist-sans), "Inter", sans-serif;
+  --font-hand: var(--font-caveat), cursive;
+
+  /* ---- Rayons ---- */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+
+  /* ---- Easing signature ---- */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: var(--color-ink-900);
+  --foreground: var(--color-paper);
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Mot accentué dans un titre */
+.accent {
+  color: var(--color-violet-400);
+}
+.accent-gold {
+  color: var(--color-gold-400);
+}
+
+/* Hairlines */
+.border-line {
+  border-color: var(--line);
+}
+.border-line-strong {
+  border-color: var(--line-strong);
+}
+
+/* ---- Glass (navbar flottante, badges, footer) ---- */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* ---- Glow d'ambiance derrière le hero ---- */
+.glow-violet {
+  background: radial-gradient(
+    50% 50% at 50% 0%,
+    rgba(109, 74, 255, 0.22),
+    transparent 70%
+  );
+}
+.glow-gold {
+  background: radial-gradient(
+    40% 40% at 50% 50%,
+    rgba(232, 180, 104, 0.18),
+    transparent 70%
+  );
+}
+
+/* ---- Dégradé bouton primaire ---- */
+.btn-violet {
+  background: linear-gradient(180deg, #8b6bff 0%, #6d4aff 55%, #5226e0 100%);
+  box-shadow: 0 18px 50px -12px rgba(82, 38, 224, 0.45);
+}
+
+/* ---- Titre en dégradé (option) ---- */
+.text-gradient {
+  background: linear-gradient(180deg, #f5f6fa 0%, #a6a8b8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---- Grain (texture de tirage) ---- */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.12;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---- Marquee CSS (logos) ---- */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+}
+.marquee-paused:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ---- Dot "en ligne" pulsé ---- */
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(0.9);
+  }
+}
+.dot-live {
+  animation: pulse-soft 2s var(--ease-out-soft) infinite;
+}
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+.pulse-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--color-mint-400);
+  animation: pulse-ring 2s var(--ease-out-soft) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .marquee-track {
+    animation: none;
+  }
 }

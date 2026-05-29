@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #f1f1ef; color: #111113; }
+.tg-head { font-family: 'Geist', sans-serif; }
+@keyframes tg-marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+.tg-marquee { animation: tg-marquee 22s linear infinite; }

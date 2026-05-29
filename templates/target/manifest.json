@@ -1,0 +1,84 @@
+{
+  "id": "target",
+  "name": "Target — Photographer (editorial, motion-blur hero)",
+  "photoSlots": 15,
+  "photos": [
+    { "slot": "hero", "role": "hero", "required": true, "note": "Full-bleed hero portrait (img/hero.jpg), color-blended." },
+    { "slot": "p1", "role": "service", "required": true, "note": "Service 01 Portrait" },
+    { "slot": "p2", "role": "service", "required": true, "note": "Service 04 Retouching" },
+    { "slot": "p3", "role": "work", "required": true, "note": "Work 'Denim Reimagined'" },
+    { "slot": "p4", "role": "service", "required": true, "note": "Service 03 Family + Work 'Zoe' + featuredQuote image 1" },
+    { "slot": "p5", "role": "service", "required": true, "note": "Service 02 Events + Work 'Morning in Motion'" },
+    { "slot": "p6", "role": "service", "required": true, "note": "Service 05 Brand + Work 'Gaia Essence'" },
+    { "slot": "p7", "role": "avatar", "required": true, "note": "featuredQuote avatar + testimonial 1 avatar" },
+    { "slot": "p8", "role": "avatar", "required": true, "note": "testimonial 2 avatar" },
+    { "slot": "p9", "role": "avatar", "required": true, "note": "testimonial 3 avatar" },
+    { "slot": "p10", "role": "gallery", "required": true, "note": "gallery thumbnail" },
+    { "slot": "p11", "role": "gallery", "required": true, "note": "gallery thumbnail" },
+    { "slot": "p12", "role": "gallery", "required": true, "note": "featuredQuote image 2 + gallery thumbnail" },
+    { "slot": "p13", "role": "gallery", "required": true, "note": "hero 'Recent Work' vignette + gallery thumbnail" },
+    { "slot": "p14", "role": "gallery", "required": true, "note": "gallery thumbnail" }
+  ],
+  "fields": {
+    "editable": [
+      { "path": "nav", "label": "Navigation labels", "type": "list", "maxLen": 16, "note": "Labels are editable; their in-page anchors are fixed by navAnchors (locked, same index)." },
+
+      { "path": "hero.tagline", "label": "Hero tagline", "type": "text", "maxLen": 40 },
+      { "path": "hero.title", "label": "Hero big title", "type": "text", "maxLen": 24 },
+      { "path": "hero.blurb", "label": "Hero blurb", "type": "textarea", "maxLen": 160 },
+      { "path": "hero.email", "label": "Hero contact email", "type": "text", "maxLen": 80 },
+      { "path": "hero.phone", "label": "Hero phone", "type": "text", "maxLen": 32 },
+      { "path": "hero.role", "label": "Hero role label", "type": "text", "maxLen": 32 },
+      { "path": "hero.location", "label": "Hero location", "type": "text", "maxLen": 48 },
+      { "path": "hero.badge", "label": "Hero award badge", "type": "text", "maxLen": 40 },
+      { "path": "hero.badgeYears", "label": "Hero award years", "type": "text", "maxLen": 24 },
+      { "path": "hero.socials", "label": "Hero social labels (rendered inert, no link)", "type": "list", "maxLen": 24 },
+
+      { "path": "featuredQuote.text", "label": "Featured quote", "type": "textarea", "maxLen": 280 },
+      { "path": "featuredQuote.name", "label": "Quote author name", "type": "text", "maxLen": 40 },
+      { "path": "featuredQuote.role", "label": "Quote author role", "type": "text", "maxLen": 40 },
+
+      { "path": "intro", "label": "Big scroll-reveal intro (emojis OK)", "type": "textarea", "maxLen": 320 },
+
+      { "path": "servicesIntro", "label": "Services intro line", "type": "textarea", "maxLen": 140 },
+      { "path": "services[].n", "label": "Service number (01..05)", "type": "text", "maxLen": 4 },
+      { "path": "services[].name", "label": "Service name", "type": "text", "maxLen": 48 },
+      { "path": "services[].desc", "label": "Service description", "type": "textarea", "maxLen": 200 },
+      { "path": "services[].tags", "label": "Service tags", "type": "list", "maxLen": 28 },
+
+      { "path": "collaborations", "label": "Marquee brand names", "type": "list", "maxLen": 20 },
+
+      { "path": "works[].date", "label": "Work date", "type": "text", "maxLen": 24 },
+      { "path": "works[].category", "label": "Work category", "type": "text", "maxLen": 40 },
+      { "path": "works[].title", "label": "Work title", "type": "text", "maxLen": 48 },
+      { "path": "works[].desc", "label": "Work description", "type": "textarea", "maxLen": 200 },
+
+      { "path": "beyond.title", "label": "Stats section title", "type": "text", "maxLen": 40 },
+      { "path": "beyond.body", "label": "Stats section body", "type": "textarea", "maxLen": 220 },
+      { "path": "beyond.cta", "label": "Stats button label", "type": "text", "maxLen": 24 },
+      { "path": "beyond.stats[].v", "label": "Stat value", "type": "text", "maxLen": 8 },
+      { "path": "beyond.stats[].l", "label": "Stat label", "type": "text", "maxLen": 40 },
+
+      { "path": "testimonials[].text", "label": "Testimonial text", "type": "textarea", "maxLen": 220 },
+      { "path": "testimonials[].name", "label": "Testimonial author", "type": "text", "maxLen": 40 },
+      { "path": "testimonials[].role", "label": "Testimonial role", "type": "text", "maxLen": 40 },
+
+      { "path": "faqs[].q", "label": "FAQ question", "type": "text", "maxLen": 100 },
+      { "path": "faqs[].a", "label": "FAQ answer", "type": "textarea", "maxLen": 300 },
+
+      { "path": "footer.title", "label": "Footer headline", "type": "textarea", "maxLen": 80 },
+      { "path": "footer.email", "label": "Contact email (mailto)", "type": "text", "maxLen": 80 },
+      { "path": "footer.socials", "label": "Footer social labels (rendered inert, no link)", "type": "list", "maxLen": 24 }
+    ],
+    "locked": [
+      { "path": "navAnchors", "reason": "Structural: in-page anchor targets for each nav label (same index). Must match existing section ids: #works, #about, #gallery, #contact." },
+      { "path": "galleryOrder", "reason": "Structural ordering of the 12 gallery thumbnails (index sequence into the photo set)." },
+      { "path": "hero.recentWork", "reason": "Bound to photo slot p13." },
+      { "path": "featuredQuote.avatar", "reason": "Bound to photo slot p7." },
+      { "path": "featuredQuote.images", "reason": "Bound to photo slots p4/p12." },
+      { "path": "services[].img", "reason": "Bound to photo slots." },
+      { "path": "works[].img", "reason": "Bound to photo slots." },
+      { "path": "testimonials[].avatar", "reason": "Bound to photo slots p7/p8/p9." }
+    ]
+  }
+}

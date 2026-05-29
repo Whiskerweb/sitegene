@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #fcfcfc;
+  color: #111111;
+  overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Texte contour « OurGallery » — stroke épaissi pour mieux ressortir */
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 2.5px rgba(17, 17, 17, 0.9);
+}
+
+/* Marquee infini (collaborations) */
+@keyframes poto-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.poto-marquee {
+  animation: poto-marquee 24s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poto-marquee {
+    animation: none;
+  }
+}
