@@ -76,10 +76,28 @@ export default function NewSitePage() {
     fd.set("rawText", rawText);
     photos.forEach((f) => fd.append("photos", f));
 
-    const res = await fetch("/api/operator/intake", { method: "POST", body: fd });
-    const json = await res.json();
+    let res: Response;
+    try {
+      res = await fetch("/api/operator/intake", { method: "POST", body: fd });
+    } catch {
+      setMessage("Connexion au serveur impossible. Le dev server tourne-t-il ?");
+      setPhase("error");
+      return;
+    }
+    const text = await res.text();
+    let json: { jobId?: string; error?: string } = {};
+    try {
+      json = text ? JSON.parse(text) : {};
+    } catch {
+      json = {};
+    }
     if (!res.ok) {
-      setMessage(json.error ?? "Erreur.");
+      setMessage(json.error ?? `Erreur serveur (${res.status}).`);
+      setPhase("error");
+      return;
+    }
+    if (!json.jobId) {
+      setMessage("Réponse inattendue du serveur (pas de jobId).");
       setPhase("error");
       return;
     }
