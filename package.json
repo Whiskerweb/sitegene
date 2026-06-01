@@ -9,7 +9,9 @@
     "lint": "eslint",
     "worker": "node --import tsx --env-file=.env.local scripts/worker.mjs",
     "worker:once": "node --import tsx --env-file=.env.local scripts/worker.mjs --once",
-    "templates:dump": "node --import tsx --env-file=.env.local scripts/dump-default-content.mjs"
+    "templates:dump": "node --import tsx --env-file=.env.local scripts/dump-default-content.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
@@ -41,6 +43,7 @@
     "eslint-config-next": "16.2.6",
     "tailwindcss": "^4",
     "tsx": "^4.22.3",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^2.1.9"
   }
 }
