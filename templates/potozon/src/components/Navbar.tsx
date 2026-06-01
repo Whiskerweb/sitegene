@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { navItems, brand } from '../data/content'
+import { useSite } from '../site/PageContext'
+import { Link } from '../site/router'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -20,6 +21,7 @@ function LogoMark() {
 }
 
 export default function Navbar() {
+  const { brand, nav = [] } = useSite()
   const [open, setOpen] = useState(false)
 
   return (
@@ -30,23 +32,43 @@ export default function Navbar() {
       className="relative z-50 flex items-center justify-between gap-4 py-1"
     >
       {/* Logo */}
-      <a href="#about" className="flex items-center gap-1.5">
+      <Link to="/" className="flex items-center gap-1.5">
         <LogoMark />
         <span className="text-2xl font-extrabold tracking-tight text-poto-ink">
           <span data-sg-path="brand" data-sg-edit="panel">{brand}</span>
         </span>
-      </a>
+      </Link>
 
-      {/* Menu desktop */}
+      {/* Menu desktop — liens internes + menus déroulants (children) */}
       <div className="hidden items-center gap-8 md:flex">
-        {navItems.map((item) => (
-          <a
-            key={item}
-            href={`#${item.toLowerCase()}`}
-            className="text-base font-semibold text-poto-ink transition-opacity hover:opacity-60"
-          >
-            {item}
-          </a>
+        {nav.map((item) => (
+          <div key={item.label} className="group relative">
+            {item.to ? (
+              <Link
+                to={item.to}
+                className="text-base font-semibold text-poto-ink transition-opacity hover:opacity-60"
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <span className="cursor-default text-base font-semibold text-poto-ink transition-opacity group-hover:opacity-60">
+                {item.label}
+              </span>
+            )}
+            {item.children?.length ? (
+              <div className="absolute left-1/2 top-full hidden min-w-[180px] -translate-x-1/2 rounded-2xl border-2 border-poto-ink/10 bg-white p-2 shadow-2xl group-hover:block">
+                {item.children.map((c) => (
+                  <Link
+                    key={c.label}
+                    to={c.to!}
+                    className="flex min-h-[40px] items-center rounded-xl px-4 text-sm font-bold text-poto-ink transition-colors hover:bg-poto-ink/5"
+                  >
+                    {c.label}
+                  </Link>
+                ))}
+              </div>
+            ) : null}
+          </div>
         ))}
       </div>
 
@@ -83,15 +105,22 @@ export default function Navbar() {
             className="absolute left-0 right-0 top-[calc(100%+12px)] z-50 rounded-3xl border-2 border-poto-ink/10 bg-white p-3 shadow-2xl md:hidden"
           >
             <div className="flex flex-col">
-              {navItems.map((item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
+              {nav.flatMap((item) => {
+                const links = item.to ? [{ label: item.label, to: item.to }] : []
+                const children = (item.children ?? []).map((c) => ({
+                  label: c.label,
+                  to: c.to!,
+                }))
+                return [...links, ...children]
+              }).map((l) => (
+                <Link
+                  key={l.label}
+                  to={l.to}
                   onClick={() => setOpen(false)}
                   className="flex min-h-[48px] items-center rounded-2xl px-4 text-lg font-bold text-poto-ink transition-colors hover:bg-poto-ink/5"
                 >
-                  {item}
-                </a>
+                  {l.label}
+                </Link>
               ))}
             </div>
           </motion.div>

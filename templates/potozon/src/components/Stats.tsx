@@ -1,10 +1,18 @@
 import FadeIn from './FadeIn'
-import { beyond } from '../data/content'
 
 // Texte lisible (foncé ou clair) selon la couleur de fond de la carte.
 const DARK_TEXT = new Set(['#FFC400'])
 
-export default function Stats() {
+interface Stat { v: string; l: string; color: string }
+interface BeyondData {
+  title: string
+  body: string
+  cta: string
+  stats: Stat[]
+}
+
+export default function Stats({ data: beyond }: { data?: BeyondData }) {
+  if (!beyond) return null
   return (
     <section className="mx-auto max-w-6xl py-20 md:py-28">
       <div className="grid items-center gap-12 md:grid-cols-2">

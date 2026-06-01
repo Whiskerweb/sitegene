@@ -1,7 +1,14 @@
 import { motion } from 'framer-motion'
-import { hero } from '../data/content'
 
 const EASE = [0.22, 1, 0.36, 1] as const
+
+interface HeroData {
+  line1: string
+  line2: string
+  sticker: string
+  ribbon: string
+  subtitle: string
+}
 
 function Sparkle() {
   // Astérisque/étincelle jaune à 4 branches.
@@ -15,7 +22,7 @@ function Sparkle() {
 const titleClass =
   'text-center text-[15vw] font-extrabold leading-[0.92] tracking-tighter text-poto-ink md:text-left md:text-[12vw] md:leading-[0.9] lg:text-[10.5vw]'
 
-export default function Hero() {
+export default function Hero({ data: hero }: { data: HeroData }) {
   return (
     <section id="about" className="relative pt-6 md:pt-10">
       {/* Ligne 1 */}

@@ -1,5 +1,3 @@
-import { collaborations } from '../data/content'
-
 function Sparkle() {
   return (
     <svg viewBox="0 0 24 24" fill="#FFC400" className="h-7 w-7 shrink-0" aria-hidden>
@@ -8,7 +6,7 @@ function Sparkle() {
   )
 }
 
-export default function Marquee() {
+export default function Marquee({ items: collaborations = [] }: { items?: string[] }) {
   if (!collaborations || collaborations.length === 0) return null
   const row = [...collaborations, ...collaborations]
   return (

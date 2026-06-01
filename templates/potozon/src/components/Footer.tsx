@@ -1,6 +1,6 @@
 import { ArrowUpRight } from 'lucide-react'
 import FadeIn from './FadeIn'
-import { footer, brand } from '../data/content'
+import { useSite } from '../site/PageContext'
 
 function LogoMark() {
   return (
@@ -17,6 +17,9 @@ function LogoMark() {
 }
 
 export default function Footer() {
+  const { brand, footer } = useSite()
+  const f = footer ?? {}
+  const socials: string[] = Array.isArray(f.socials) ? f.socials : []
   return (
     <footer id="contact" className="border-t-2 border-poto-ink/10 py-20 md:py-28">
       <FadeIn
@@ -24,15 +27,15 @@ export default function Footer() {
         data-sg-path="footer.title"
         className="max-w-3xl text-4xl font-extrabold leading-[1.0] tracking-tight text-poto-ink md:text-7xl"
       >
-        {footer.title}
+        {f.title}
       </FadeIn>
 
       <FadeIn delay={0.1}>
         <a
-          href={`mailto:${footer.email}`}
+          href={`mailto:${f.email}`}
           className="mt-8 inline-flex items-center gap-2 rounded-full bg-poto-purple px-7 py-3.5 text-sm font-bold text-white shadow-md transition-transform hover:scale-[1.04]"
         >
-          <span data-sg-path="footer.email" data-sg-edit="panel">{footer.email}</span>
+          <span data-sg-path="footer.email" data-sg-edit="panel">{f.email}</span>
           <ArrowUpRight size={18} />
         </a>
       </FadeIn>
@@ -43,7 +46,7 @@ export default function Footer() {
           <span className="text-xl font-extrabold tracking-tight text-poto-ink"><span data-sg-path="brand" data-sg-edit="panel">{brand}</span></span>
         </div>
         <div className="flex gap-5">
-          {footer.socials.map((s) => (
+          {socials.map((s) => (
             <span
               key={s}
               className="inline-flex min-h-[44px] items-center text-sm font-semibold text-poto-ink/65 transition-colors hover:text-poto-orange"

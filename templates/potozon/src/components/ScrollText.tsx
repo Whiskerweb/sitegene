@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion'
-import { scrollText, scrollAccents } from '../data/content'
+
+type Accent = 'red' | 'yellow' | 'orange' | 'purple'
 
 const ACCENT: Record<string, string> = {
   red: '#E5412A',
@@ -13,13 +14,15 @@ function Word({
   children,
   progress,
   range,
+  accents,
 }: {
   children: string
   progress: MotionValue<number>
   range: [number, number]
+  accents: Record<string, Accent>
 }) {
   const opacity = useTransform(progress, range, [0.15, 1])
-  const accent = scrollAccents[children]
+  const accent = accents[children]
   return (
     <motion.span
       style={{ opacity, color: accent ? ACCENT[accent] : undefined }}
@@ -30,13 +33,20 @@ function Word({
   )
 }
 
-export default function ScrollText() {
+export default function ScrollText({
+  text = '',
+  accents = {},
+}: {
+  text?: string
+  accents?: Record<string, Accent>
+}) {
   const ref = useRef<HTMLParagraphElement>(null)
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start 0.85', 'end 0.5'],
   })
-  const words = scrollText.split(' ')
+  if (!text) return null
+  const words = text.split(' ')
   return (
     <section className="mx-auto max-w-5xl py-24 md:py-36">
       <p
@@ -49,7 +59,7 @@ export default function ScrollText() {
           const start = i / words.length
           const end = start + 1 / words.length
           return (
-            <Word key={i} progress={scrollYProgress} range={[start, end]}>
+            <Word key={i} progress={scrollYProgress} range={[start, end]} accents={accents}>
               {w}
             </Word>
           )

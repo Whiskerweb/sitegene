@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
-import { cards, textLeft, textRight, type GalleryCard } from '../data/content'
+import type { GalleryCard } from '../data/content'
 
 const EASE = [0.22, 1, 0.36, 1] as const
+
+interface TextRight { body: string; cta: string }
 
 function Card({ card, delay, index }: { card: GalleryCard; delay: number; index: number }) {
   return (
@@ -29,8 +31,16 @@ function Card({ card, delay, index }: { card: GalleryCard; delay: number; index:
   )
 }
 
-export default function Gallery() {
-  if (!cards || cards.length === 0) return null
+export default function Gallery({
+  cards = [],
+  textLeft = '',
+  textRight = { body: '', cta: '' },
+}: {
+  cards?: GalleryCard[]
+  textLeft?: string
+  textRight?: TextRight
+}) {
+  if (!cards || cards.length < 4) return null
   return (
     <section id="portfolio" className="relative mt-6 md:mt-10">
       {/* Rangée cartes + textes — 2×2 sur mobile (order), rangée intercalée desktop */}
