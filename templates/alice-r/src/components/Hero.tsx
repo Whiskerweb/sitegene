@@ -1,11 +1,17 @@
 import { motion } from 'framer-motion'
-import Navbar from './Navbar'
 import PhotoArc from './PhotoArc'
-import { hero, features, arcPhotos } from '../data/content'
+import type { ArcPhoto, Feature } from '../data/content'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
-export default function Hero() {
+interface HeroData {
+  hero: { brand?: string; title: string[]; subtitle: string; cta: string }
+  features: Feature[]
+  arcPhotos: ArcPhoto[]
+}
+
+export default function Hero({ data }: { data: HeroData }) {
+  const { hero, features, arcPhotos } = data
   return (
     <section
       id="top"
@@ -14,11 +20,9 @@ export default function Hero() {
       {/* Traînée arc-en-ciel diffuse (scopée au hero) */}
       <div className="rainbow-streak" />
 
-      <Navbar />
-
       {/* Zone centrale : dôme de photos AU-DESSUS du texte, l'ensemble centré */}
       <div className="relative flex flex-1 flex-col items-center justify-center">
-        <PhotoArc />
+        <PhotoArc arcPhotos={arcPhotos} />
 
         {/* Contenu central — ancré (desktop) pour tomber au centre du cercle */}
         <div className="relative z-20 flex flex-col items-center px-6 py-10 text-center md:absolute md:bottom-[26%] md:left-[48%] md:w-[720px] md:max-w-[88vw] md:-translate-x-1/2 md:px-0 md:py-0">

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { arcPhotos } from '../data/content'
+import type { ArcPhoto } from '../data/content'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -10,10 +10,10 @@ const EASE = [0.22, 1, 0.36, 1] as const
 export const ARC_CX = 48 // % horizontal du centre (un peu à gauche)
 export const ARC_CY = 74 // % vertical du centre (= bas du bouton)
 const R = 58 // rayon en vmin (grand)
-const photos = arcPhotos.slice(0, 13)
-const N = photos.length
 
-export default function PhotoArc() {
+export default function PhotoArc({ arcPhotos }: { arcPhotos: ArcPhoto[] }) {
+  const photos = arcPhotos.slice(0, 13)
+  const N = photos.length
   return (
     <div className="pointer-events-none absolute inset-0 z-10 hidden md:block">
       {photos.map((photo, i) => {

@@ -1,17 +1,22 @@
 import { motion } from 'framer-motion'
-import { gallery } from '../data/content'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
-export default function Gallery() {
-  if (!gallery || gallery.length === 0) return null
+export default function Gallery({
+  images = [],
+  heading = 'Through my lens',
+}: {
+  images?: string[]
+  heading?: string
+}) {
+  if (!images.length) return null
   return (
     <section id="journal" className="relative z-10 mx-auto max-w-6xl px-6 py-20 md:px-10 md:py-28">
       <h2 className="mb-12 text-3xl font-medium text-white sm:text-4xl md:text-5xl">
-        Through my lens
+        {heading}
       </h2>
       <div className="columns-2 gap-3 md:columns-4 md:gap-4">
-        {gallery.map((src, i) => (
+        {images.map((src, i) => (
           <motion.div
             key={src + i}
             initial={{ opacity: 0, y: 24 }}

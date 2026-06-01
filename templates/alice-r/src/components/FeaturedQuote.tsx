@@ -1,8 +1,15 @@
 import { ArrowUpRight } from 'lucide-react'
 import FadeIn from './FadeIn'
-import { featuredQuote } from '../data/content'
 
-export default function FeaturedQuote() {
+interface FeaturedQuoteData {
+  text: string
+  name: string
+  role: string
+  avatar: string
+  images: string[]
+}
+
+export default function FeaturedQuote({ data: featuredQuote }: { data?: FeaturedQuoteData }) {
   if (!featuredQuote || !featuredQuote.text) return null
   return (
     <section className="relative z-10 mx-auto max-w-6xl px-6 py-20 md:px-10 md:py-28">

@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import FadeIn from './FadeIn'
-import { services, servicesIntro } from '../data/content'
+import type { Service } from '../data/content'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
-export default function Services() {
+export default function Services({ intro: servicesIntro, items: services = [] }: { intro?: string; items?: Service[] }) {
   const [active, setActive] = useState(0)
+  if (!services.length) return null
   return (
     <section id="services" className="relative z-10 mx-auto max-w-6xl px-6 py-20 md:px-10 md:py-28">
       <div className="mb-12 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">

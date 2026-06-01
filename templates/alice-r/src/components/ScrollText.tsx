@@ -1,6 +1,5 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion'
-import { scrollText } from '../data/content'
 
 function Word({
   children,
@@ -19,13 +18,14 @@ function Word({
   )
 }
 
-export default function ScrollText() {
+export default function ScrollText({ text }: { text?: string }) {
   const ref = useRef<HTMLParagraphElement>(null)
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start 0.85', 'end 0.5'],
   })
-  const words = scrollText.split(' ')
+  if (!text) return null
+  const words = text.split(' ')
   return (
     <section className="relative z-10 mx-auto max-w-5xl px-6 py-24 md:py-36">
       <p

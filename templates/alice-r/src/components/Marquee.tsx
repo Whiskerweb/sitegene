@@ -1,6 +1,4 @@
-import { collaborations } from '../data/content'
-
-export default function Marquee() {
+export default function Marquee({ items: collaborations = [] }: { items?: string[] }) {
   if (!collaborations || collaborations.length === 0) return null
   const row = [...collaborations, ...collaborations]
   return (
