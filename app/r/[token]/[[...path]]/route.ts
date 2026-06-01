@@ -50,9 +50,11 @@ document.addEventListener('click',function(e){var el=e.target&&e.target.closest&
 
 export async function GET(
   request: Request,
-  { params }: { params: Promise<{ token: string }> },
+  { params }: { params: Promise<{ token: string; path?: string[] }> },
 ) {
-  const { token } = await params;
+  const { token, path } = await params;
+  // URL profonde : /r/<token>/portfolio → pagePath = "/portfolio".
+  const pagePath = "/" + (path ?? []).join("/");
   const url = new URL(request.url);
   const origin = url.origin;
   const embed = url.searchParams.get("embed") === "1";
@@ -88,14 +90,15 @@ export async function GET(
     .limit(1)
     .maybeSingle();
 
-  // Le reveal sert la page d'accueil ; la navigation interne du site est gérée
-  // par le routeur client du template (SPA). Contenu normalisé v2 + meta home.
+  // Le reveal sert la page demandée (catch-all) ; la navigation interne reste
+  // gérée par le routeur client du template (SPA), agnostique au préfixe
+  // /r/<token>. Contenu normalisé v2 + meta de la page ciblée par l'URL.
   const content = normalizeContent(sc?.content_json);
   const html = await buildSiteHtml(
     origin,
     site.template_id,
     content,
-    pageMeta(content, "/"),
+    pageMeta(content, pagePath),
   );
   if (!html) return new Response("Template indisponible.", { status: 500 });
 
