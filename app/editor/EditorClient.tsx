@@ -189,19 +189,28 @@ export default function EditorClient({
   const flushSave = useCallback(async () => {
     if (Object.keys(changesRef.current).length === 0) return;
     setSaveState("saving");
+    const snapshot = changesRef.current;
+    // Vide le buffer AVANT l'envoi : tout changement enregistré pendant le fetch
+    // appartient à la prochaine itération et ne doit pas être re-soumis.
+    changesRef.current = {};
     try {
       const res = await fetch("/api/site/draft", {
         method: "PATCH",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ siteId, changes: changesRef.current }),
+        body: JSON.stringify({ siteId, changes: snapshot, pageIndex: currentPageIndex }),
       });
-      if (!res.ok) throw new Error();
+      if (!res.ok) {
+        // Échec : on remet les changements non sauvegardés dans le buffer
+        // (merge : les changements survenus pendant le fetch ont priorité).
+        changesRef.current = { ...snapshot, ...changesRef.current };
+        throw new Error();
+      }
       setSaveState("saved");
       setHasUnpub(true);
     } catch {
       setSaveState("error");
     }
-  }, [siteId]);
+  }, [siteId, currentPageIndex]);
 
   const scheduleSave = useCallback(() => {
     setTouched(true);
@@ -239,15 +248,20 @@ export default function EditorClient({
     [pages, siteId],
   );
 
-  // Changement de page depuis le sélecteur : MAJ de l'index + rechargement de
-  // l'iframe vers la nouvelle page. sg:ready (re)poussera ensuite le mode courant.
+  // Changement de page depuis le sélecteur : flush les changements en attente
+  // AVANT de changer de page (un lot autosave doit appartenir à une seule page),
+  // puis MAJ de l'index + rechargement de l'iframe vers la nouvelle page.
+  // sg:ready (re)poussera ensuite le mode courant.
   const changePage = useCallback(
-    (idx: number) => {
+    async (idx: number) => {
       if (idx === currentPageIndex || !pages[idx]) return;
+      if (Object.keys(changesRef.current).length > 0) {
+        await flushSave();
+      }
       setCurrentPageIndex(idx);
       if (iframeRef.current) iframeRef.current.src = previewUrl(idx);
     },
-    [currentPageIndex, pages, previewUrl],
+    [currentPageIndex, pages, previewUrl, flushSave],
   );
 
   const switchTool = useCallback(
@@ -465,7 +479,7 @@ export default function EditorClient({
               <select
                 className="max-w-[44vw] truncate rounded-lg border border-white/60 bg-white/80 px-2.5 py-1.5 text-sm font-medium text-night shadow-cloud outline-none focus:border-[#2563eb] sm:max-w-[220px]"
                 value={currentPageIndex}
-                onChange={(e) => changePage(Number(e.target.value))}
+                onChange={(e) => void changePage(Number(e.target.value))}
                 aria-label="Page à modifier"
               >
                 {pages.map((p, i) => (

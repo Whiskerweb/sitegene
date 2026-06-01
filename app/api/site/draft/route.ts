@@ -20,6 +20,7 @@ export async function PATCH(request: Request) {
   const body = await request.json().catch(() => null);
   const siteId = body?.siteId;
   const changes = body?.changes;
+  const pageIndex = Number.isInteger(body?.pageIndex) ? (body.pageIndex as number) : 0;
   if (!siteId || !changes || typeof changes !== "object") {
     return NextResponse.json({ error: "Requête invalide." }, { status: 400 });
   }
@@ -53,17 +54,37 @@ export async function PATCH(request: Request) {
   if (!top) return NextResponse.json({ error: "Contenu introuvable." }, { status: 404 });
 
   const content = structuredClone((top.content_json as Record<string, unknown>) ?? {});
+
+  // Détermine la cible des changements :
+  //   - v2 (multi-pages) → pages[pageIndex].content (la page ciblée)
+  //   - v1 plat (legacy)  → la racine du content (comportement antérieur inchangé)
+  const isV2 = (content as Record<string, unknown>)?.version === 2;
+  let changeTarget: Record<string, unknown>;
+  if (isV2) {
+    const pages = (content as Record<string, unknown>).pages as Array<Record<string, unknown>> | undefined;
+    const targetPage = pages?.[pageIndex];
+    if (!targetPage) {
+      return NextResponse.json({ error: "Page cible introuvable." }, { status: 400 });
+    }
+    if (!targetPage.content || typeof targetPage.content !== "object") {
+      targetPage.content = {};
+    }
+    changeTarget = targetPage.content as Record<string, unknown>;
+  } else {
+    changeTarget = content;
+  }
+
   let applied = 0;
   const rejected: string[] = [];
   for (const [path, value] of Object.entries(changes as Record<string, unknown>)) {
-    const cls = classifyChange(manifest, content, siteId, path, value);
+    const cls = classifyChange(manifest, changeTarget, siteId, path, value);
     if (cls.kind === "reject") {
       rejected.push(path);
       continue;
     }
     let v = value as string;
     if (cls.kind === "text" && v.length > cls.maxLen) v = v.slice(0, cls.maxLen);
-    setPath(content, path, v);
+    setPath(changeTarget, path, v);
     applied++;
   }
 
