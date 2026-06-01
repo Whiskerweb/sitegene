@@ -1,5 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { buildSiteHtml } from "@/lib/site-server";
+import { normalizeContent, pageMeta } from "@/lib/site-content";
 
 /**
  * Reveal pré-paiement : /r/<token>. Token-gated (secret). Rend le site (draft)
@@ -87,7 +88,15 @@ export async function GET(
     .limit(1)
     .maybeSingle();
 
-  const html = await buildSiteHtml(origin, site.template_id, sc?.content_json);
+  // Le reveal sert la page d'accueil ; la navigation interne du site est gérée
+  // par le routeur client du template (SPA). Contenu normalisé v2 + meta home.
+  const content = normalizeContent(sc?.content_json);
+  const html = await buildSiteHtml(
+    origin,
+    site.template_id,
+    content,
+    pageMeta(content, "/"),
+  );
   if (!html) return new Response("Template indisponible.", { status: 500 });
 
   // Best-effort : marquer le reveal comme vu.
