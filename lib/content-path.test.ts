@@ -1,7 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { getAtPath, setAtPath, pageIndexForPath } from "./content-path";
+import type { SiteContentV2 } from "./site-content";
 
-const v2 = {
+const v2: SiteContentV2 = {
   version: 2, site: {},
   pages: [
     { slug: "/", type: "home", content: { hero: { title: ["A", "B"] } } },
