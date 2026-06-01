@@ -69,6 +69,10 @@ if (photosDir && existsSync(photosDir)) {
 }
 
 // 2) Lecture du contenu + réécriture des images (par nom de fichier).
+// `rewrite` est entièrement récursif (objets + tableaux, profondeur arbitraire) :
+// il parcourt aussi bien le contenu v1 (objet plat) que le contenu v2
+// ({ version:2, site:{…}, pages:[{slug, content:{…}}] }), en remplaçant
+// tout basename correspondant à un fichier uploadé par son URL publique.
 function rewrite(node) {
   if (typeof node === "string") {
     const b = node.split("/").pop();
