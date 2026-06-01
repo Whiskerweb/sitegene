@@ -169,8 +169,8 @@ const HOME_CONTENT = {
     { q: 'Can I order prints?', a: 'Yes, fine-art prints and albums are available as add-ons in premium quality, hand-checked before shipping.' },
   ] as Faq[],
 
-  // Galerie — ORDRE des photos (les vignettes sont calculées via img()).
-  galleryOrder: [10, 11, 12, 13, 1, 2, 3, 4, 5, 6, 7, 8] as number[],
+  // Galerie — liste des vignettes (chemins relatifs réécrits en absolus au dump).
+  gallery: [10, 11, 12, 13, 1, 2, 3, 4, 5, 6, 7, 8].map(img) as string[],
 }
 
 /* ------------------------------------------------------------------ */
@@ -210,7 +210,8 @@ const DEFAULT_CONTENT = {
         title: 'Through my lens',
         intro: 'A selection of recent stories — portraits, weddings, editorials.',
         galleries: [
-          { category: 'Selected work', order: [10, 11, 12, 13, 1, 2, 3, 4, 5, 6, 7, 8] },
+          { category: 'Selected work', images: [10, 11, 12, 13, 1, 2, 3, 4, 5, 6, 7, 8].map(img) },
+          { category: 'Portraits', images: [1, 7, 8, 9, 4].map(img) },
         ],
       },
     },
