@@ -1,23 +1,25 @@
 import { createPublicClient } from "@/lib/supabase/public";
 import { buildSiteHtml, fetchDefaultContent } from "@/lib/site-server";
+import { normalizeContent, pageMeta } from "@/lib/site-content";
 import { isTemplateId } from "@/lib/templates";
 
 /**
- * Serveur de sites clients : /s/<slug>.
- * Récupère le site `live` + son contenu publié depuis Supabase, puis sert le
- * bundle template avec le contenu injecté. En dev, /s/<templateId> rend le
- * template avec son contenu par défaut (mode démo).
+ * Serveur de sites clients multi-pages : /s/<slug>/<...path>.
+ * Récupère le site `live` + son contenu publié, normalise en v2, sélectionne la
+ * page courante d'après le path, et sert le bundle template avec le contenu +
+ * les meta de cette page injectés. En dev, /s/<templateId>/... = mode démo.
  */
 export async function GET(
   request: Request,
-  { params }: { params: Promise<{ slug: string }> },
+  { params }: { params: Promise<{ slug: string; path?: string[] }> },
 ) {
-  const { slug } = await params;
+  const { slug, path } = await params;
+  const pagePath = "/" + (path ?? []).join("/");
   const origin = new URL(request.url).origin;
   const supabase = createPublicClient();
 
   let templateId: string | null = null;
-  let content: unknown = null;
+  let rawContent: unknown = null;
 
   const { data: site } = await supabase
     .from("sites")
@@ -36,11 +38,10 @@ export async function GET(
       .order("version", { ascending: false })
       .limit(1)
       .maybeSingle();
-    content =
-      sc?.content_json ?? (await fetchDefaultContent(origin, site.template_id));
+    rawContent = sc?.content_json ?? (await fetchDefaultContent(origin, site.template_id));
   } else if (process.env.NODE_ENV !== "production" && isTemplateId(slug)) {
     templateId = slug;
-    content = await fetchDefaultContent(origin, slug);
+    rawContent = await fetchDefaultContent(origin, slug);
   }
 
   if (!templateId) {
@@ -50,16 +51,15 @@ export async function GET(
     });
   }
 
-  const html = await buildSiteHtml(origin, templateId, content);
-  if (!html) {
-    return new Response("Template indisponible.", { status: 500 });
-  }
+  const content = normalizeContent(rawContent);
+  const meta = pageMeta(content, pagePath);
+  const html = await buildSiteHtml(origin, templateId, content, meta);
+  if (!html) return new Response("Template indisponible.", { status: 500 });
 
   return new Response(html, {
     headers: {
       "content-type": "text/html; charset=utf-8",
-      // noindex au lancement (cf. robots global) — à ouvrir quand on indexera les sites clients.
-      "x-robots-tag": "noindex",
+      "x-robots-tag": "noindex", // à lever quand on ouvrira l'indexation
     },
   });
 }
