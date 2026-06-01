@@ -1,29 +1,37 @@
-import Hero from './components/Hero'
-import FeaturedQuote from './components/FeaturedQuote'
-import IntroText from './components/IntroText'
-import Services from './components/Services'
-import Collaborations from './components/Collaborations'
-import Works from './components/Works'
-import BeyondFrame from './components/BeyondFrame'
-import Testimonials from './components/Testimonials'
-import FAQs from './components/FAQs'
-import Gallery from './components/Gallery'
+import type { ComponentType } from 'react'
+import { SITE } from './data/content'
+import { PageProvider } from './site/PageContext'
+import { useRoute } from './site/router'
+import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import HomePage from './pages/HomePage'
+import PortfolioPage from './pages/PortfolioPage'
+import AboutPage from './pages/AboutPage'
+import ContactPage from './pages/ContactPage'
+import ServicePage from './pages/ServicePage'
+import GenericPage from './pages/GenericPage'
+
+const RENDERERS: Record<string, ComponentType> = {
+  home: HomePage,
+  portfolio: PortfolioPage,
+  about: AboutPage,
+  contact: ContactPage,
+  service: ServicePage,
+  generic: GenericPage,
+}
 
 export default function App() {
+  const page = useRoute(SITE)
+  const Renderer = RENDERERS[page.type] ?? HomePage
+  // Sur la home, le hero plein écran est sombre → navbar en overlay clair.
+  const isHome = page.type === 'home'
   return (
-    <div className="min-h-screen w-full bg-tg-bg text-tg-ink">
-      <Hero />
-      <FeaturedQuote />
-      <IntroText />
-      <Services />
-      <Collaborations />
-      <Works />
-      <BeyondFrame />
-      <Testimonials />
-      <FAQs />
-      <Gallery />
-      <Footer />
-    </div>
+    <PageProvider value={{ site: SITE.site, page }}>
+      <div className="min-h-screen w-full bg-tg-bg text-tg-ink">
+        <Navbar overlay={isHome} />
+        <Renderer />
+        <Footer />
+      </div>
+    </PageProvider>
   )
 }
