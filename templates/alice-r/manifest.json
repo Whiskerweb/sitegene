@@ -1,6 +1,16 @@
 {
   "id": "alice-r",
   "name": "Alice R — Photography (dark, warm, editorial)",
+  "schema": 2,
+  "pageTypes": ["home", "portfolio", "about", "service", "contact", "generic"],
+  "sections": {
+    "home": ["hero", "features", "featuredQuote", "scrollText", "services", "collaborations", "works", "beyond", "testimonials", "faqs", "gallery"],
+    "portfolio": ["galleries"],
+    "about": ["scrollText", "featuredQuote", "beyond", "testimonials"],
+    "service": ["hero", "description", "gallery", "pricing", "faqs", "cta"],
+    "contact": ["email", "zones", "pricing", "faqs"],
+    "generic": ["blocks"]
+  },
   "photoSlots": 13,
   "photos": [
     { "slot": "p1", "role": "service", "required": true, "note": "Service 01 Portrait + arc photo" },
