@@ -3,6 +3,7 @@ import { getUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getBalance, grantCredits } from "@/lib/credits-server";
 import { hasActiveSubscription } from "@/lib/subscription";
+import { validateContentV2 } from "@/lib/validate-content";
 
 const PUBLISH_COST = 1;
 
@@ -30,7 +31,7 @@ export async function POST(request: Request) {
 
   const { data: top } = await admin
     .from("site_content")
-    .select("id, version, is_published")
+    .select("id, version, is_published, content_json")
     .eq("site_id", siteId)
     .order("version", { ascending: false })
     .limit(1)
@@ -38,6 +39,15 @@ export async function POST(request: Request) {
   if (!top) return NextResponse.json({ error: "Contenu introuvable." }, { status: 404 });
   if (top.is_published) {
     return NextResponse.json({ ok: true, nothingToPublish: true });
+  }
+
+  // Valide le contenu v2 avant publication.
+  const contentJson = top.content_json as Record<string, unknown> | null;
+  if (contentJson?.version === 2) {
+    const validation = validateContentV2(contentJson);
+    if (!validation.ok) {
+      return NextResponse.json({ error: validation.error }, { status: 400 });
+    }
   }
 
   // Abonné « tout illimité » : aucune vérif de solde ni débit.

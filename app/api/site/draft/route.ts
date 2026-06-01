@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { fetchTemplateManifest } from "@/lib/site-server";
 import { classifyChange, type TemplateManifest } from "@/lib/editable";
 import { setPath } from "@/lib/content-overlay";
+import { validateContentV2 } from "@/lib/validate-content";
 
 /**
  * Autosave GRATUIT des modifications de l'éditeur dans un brouillon non publié.
@@ -68,6 +69,14 @@ export async function PATCH(request: Request) {
 
   if (applied === 0) {
     return NextResponse.json({ ok: true, applied: 0, rejected });
+  }
+
+  // Valide le contenu v2 avant de sauvegarder.
+  if ((content as Record<string, unknown>)?.version === 2) {
+    const validation = validateContentV2(content);
+    if (!validation.ok) {
+      return NextResponse.json({ error: validation.error }, { status: 400 });
+    }
   }
 
   let version = top.version;
