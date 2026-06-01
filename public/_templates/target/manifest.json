@@ -1,6 +1,16 @@
 {
   "id": "target",
   "name": "Target — Photographer (editorial, motion-blur hero)",
+  "schema": 2,
+  "pageTypes": ["home", "portfolio", "about", "service", "contact", "generic"],
+  "sections": {
+    "home": ["hero", "featuredQuote", "intro", "services", "collaborations", "works", "beyond", "testimonials", "faqs", "gallery"],
+    "portfolio": ["works", "gallery"],
+    "about": ["intro", "featuredQuote", "beyond", "testimonials"],
+    "service": ["services", "pricing", "faqs", "cta"],
+    "contact": ["email", "zones", "pricing", "faqs"],
+    "generic": ["blocks"]
+  },
   "photoSlots": 15,
   "photos": [
     { "slot": "hero", "role": "hero", "required": true, "note": "Full-bleed hero portrait (img/hero.jpg), color-blended." },
@@ -21,7 +31,8 @@
   ],
   "fields": {
     "editable": [
-      { "path": "nav", "label": "Navigation labels", "type": "list", "maxLen": 16, "note": "Labels are editable; their in-page anchors are fixed by navAnchors (locked, same index)." },
+      { "path": "brand", "label": "Nom de marque (navbar + footer + copyright)", "type": "text", "maxLen": 28 },
+      { "path": "nav[].label", "label": "Navigation labels (each maps to a page: /, /portfolio, /a-propos, /contact)", "type": "list", "maxLen": 16, "note": "Labels editable; their target route (nav[].to) is structural/locked." },
 
       { "path": "hero.tagline", "label": "Hero tagline", "type": "text", "maxLen": 40 },
       { "path": "hero.title", "label": "Hero big title", "type": "text", "maxLen": 24 },
@@ -71,7 +82,7 @@
       { "path": "footer.socials", "label": "Footer social labels (rendered inert, no link)", "type": "list", "maxLen": 24 }
     ],
     "locked": [
-      { "path": "navAnchors", "reason": "Structural: in-page anchor targets for each nav label (same index). Must match existing section ids: #works, #about, #gallery, #contact." },
+      { "path": "nav[].to", "reason": "Structural: target route for each nav label. Must match existing page slugs: /, /portfolio, /a-propos, /contact." },
       { "path": "galleryOrder", "reason": "Structural ordering of the 12 gallery thumbnails (index sequence into the photo set)." },
       { "path": "hero.recentWork", "reason": "Bound to photo slot p13." },
       { "path": "featuredQuote.avatar", "reason": "Bound to photo slot p7." },
