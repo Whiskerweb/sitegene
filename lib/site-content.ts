@@ -69,3 +69,33 @@ export function normalizeContent(raw: unknown): SiteContentV2 {
     ...(css ? { __css: css } : {}),
   };
 }
+
+/** Normalise un path en chemin de page : "" → "/", retire le slash final. */
+function normPath(path: string): string {
+  if (!path || path === "/") return "/";
+  const p = path.startsWith("/") ? path : `/${path}`;
+  return p.length > 1 && p.endsWith("/") ? p.slice(0, -1) : p;
+}
+
+/** Page correspondant au chemin ; à défaut, la home ("/"). */
+export function findPage(content: SiteContentV2, path: string): Page | undefined {
+  const want = normPath(path);
+  return (
+    content.pages.find((p) => normPath(p.slug) === want) ??
+    content.pages.find((p) => normPath(p.slug) === "/")
+  );
+}
+
+/** Meta SEO de la page (titre, description, ogImage), avec repli sur la marque. */
+export function pageMeta(
+  content: SiteContentV2,
+  path: string,
+): { title: string; description?: string; ogImage?: string } {
+  const page = findPage(content, path);
+  const brand = content.site.brand ?? "";
+  return {
+    title: page?.title ?? brand,
+    description: page?.meta?.description,
+    ogImage: page?.meta?.ogImage,
+  };
+}
