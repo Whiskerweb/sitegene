@@ -1,10 +1,13 @@
 // Contenu centralisé du site Potozon — studio créatif « a new dimension ».
 // DA : pop / éditorial / kinetic brutalism. Palette poto, fond clair, titres oversized.
 //
-// RUNTIME ADAPTER : tout le contenu vit dans DEFAULT_CONTENT. À l'exécution, si
-// `window.__SITE_CONTENT__` existe (injecté par la plateforme), il REMPLACE
-// DEFAULT_CONTENT (même forme exacte). Les composants importent les exports
-// nommés ci-dessous — aucun changement de composant n'est nécessaire.
+// SCHÉMA v2 : un site = un shell (`site`) + des pages typées (`pages[]`).
+// À l'exécution, si `window.__SITE_CONTENT__` existe (injecté par la plateforme),
+// il REMPLACE DEFAULT_CONTENT (même forme v2). Le contenu effectif, normalisé,
+// est exposé via `SITE` ; les composants le lisent via le contexte de page
+// (`usePage()` / `useSite()`).
+
+import { normalizeDefault } from '../site/normalize'
 
 const img = (n: number) => `img/p${n}.jpg`
 
@@ -41,16 +44,9 @@ export interface GalleryCard {
 }
 
 /* ------------------------------------------------------------------ */
-/* Contenu par défaut (forme = objet injecté par la plateforme)        */
+/* Contenu de la home (objet historique, valeurs réelles potozon)      */
 /* ------------------------------------------------------------------ */
-const DEFAULT_CONTENT = {
-  // Nom de marque affiché (navbar, footer, copyright). Personnalisé par site.
-  brand: 'Potozon',
-
-  // Navigation. Chaque libellé pointe vers #<libellé en minuscules>.
-  // Sections présentes : about, portfolio, projects, studio, contact.
-  navItems: ['About', 'Portfolio', 'Projects', 'Studio'] as string[],
-
+const HOME_CONTENT = {
   // Hero (wording conservé)
   hero: {
     line1: 'Experience',
@@ -59,6 +55,20 @@ const DEFAULT_CONTENT = {
     ribbon: 'Beautifull',
     subtitle: 'Capturing timeless moments in a whole new dimension.',
   },
+
+  // Galerie « OurGallery » (cartes teintées)
+  textLeft:
+    'Photography is the art, application, and practice of creating durable images.',
+  textRight: {
+    body: "The International Center of Photography in New York City is the world's.",
+    cta: 'READ MORE',
+  },
+  cards: [
+    { img: 'img/c1.jpg', color: '#E5412A', rotate: '-3deg', marginTop: '0px' },
+    { img: 'img/c2.jpg', color: '#FFC400', rotate: '2deg', marginTop: '40px' },
+    { img: 'img/c3.jpg', color: '#F15A24', rotate: '-2deg', marginTop: '8px' },
+    { img: 'img/c4.jpg', color: '#A99BE8', rotate: '3deg', marginTop: '48px' },
+  ] as GalleryCard[],
 
   // Citation mise en avant
   featuredQuote: {
@@ -167,28 +177,83 @@ const DEFAULT_CONTENT = {
     { q: 'Do you travel for shoots?', a: 'Absolutely — we work everywhere and are available worldwide for the right project.' },
     { q: 'Can I order prints?', a: 'Yes, fine-art prints and albums are available as add-ons in premium quality, hand-checked before shipping.' },
   ] as Faq[],
-
-  // Galerie « OurGallery » (cartes teintées)
-  textLeft:
-    'Photography is the art, application, and practice of creating durable images.',
-  textRight: {
-    body: "The International Center of Photography in New York City is the world's.",
-    cta: 'READ MORE',
-  },
-  cards: [
-    { img: 'img/c1.jpg', color: '#E5412A', rotate: '-3deg', marginTop: '0px' },
-    { img: 'img/c2.jpg', color: '#FFC400', rotate: '2deg', marginTop: '40px' },
-    { img: 'img/c3.jpg', color: '#F15A24', rotate: '-2deg', marginTop: '8px' },
-    { img: 'img/c4.jpg', color: '#A99BE8', rotate: '3deg', marginTop: '48px' },
-  ] as GalleryCard[],
-
-  // Footer
-  footer: {
-    title: 'Every Frame Tells a Story. Let’s Talk.',
-    email: 'hello@potozon.studio',
-    socials: ['Instagram', 'Dribbble', 'Behance'],
-  },
 }
+
+/* ------------------------------------------------------------------ */
+/* Contenu par défaut v2 (site + pages)                                */
+/* ------------------------------------------------------------------ */
+const DEFAULT_CONTENT = {
+  version: 2,
+  site: {
+    brand: 'Potozon',
+    nav: [
+      { label: 'Accueil', to: '/' },
+      { label: 'Portfolio', to: '/portfolio' },
+      { label: 'À propos', to: '/a-propos' },
+      { label: 'Contact', to: '/contact' },
+    ],
+    footer: {
+      title: 'Every Frame Tells a Story. Let’s Talk.',
+      email: 'hello@potozon.studio',
+      socials: ['Instagram', 'Dribbble', 'Behance'],
+    },
+    theme: {}, // accents/géométrie/palette DA restent dans les composants
+  },
+  pages: [
+    {
+      slug: '/',
+      type: 'home',
+      title: 'Potozon — Experience Photography',
+      meta: { description: 'Studio photo pop & coloré : portraits, événements et marques en pleine dimension.' },
+      content: HOME_CONTENT,
+    },
+    {
+      slug: '/portfolio',
+      type: 'portfolio',
+      title: 'Portfolio — Potozon',
+      meta: { description: 'Une sélection de projets Potozon : éditoriaux mode, lifestyle outdoor et marques.' },
+      content: {
+        title: 'Selected works',
+        intro: 'A loud, colorful selection of recent projects — editorials, outdoor lifestyle and brand worlds.',
+        works: HOME_CONTENT.works,
+        textLeft: HOME_CONTENT.textLeft,
+        textRight: HOME_CONTENT.textRight,
+        cards: HOME_CONTENT.cards,
+      },
+    },
+    {
+      slug: '/a-propos',
+      type: 'about',
+      title: 'À propos — Potozon',
+      meta: { description: 'Potozon, studio photo : approche, démarche colorée et chiffres clés.' },
+      content: {
+        scrollText: HOME_CONTENT.scrollText,
+        scrollAccents: HOME_CONTENT.scrollAccents,
+        featuredQuote: HOME_CONTENT.featuredQuote,
+        beyond: HOME_CONTENT.beyond,
+        testimonials: HOME_CONTENT.testimonials,
+      },
+    },
+    {
+      slug: '/contact',
+      type: 'contact',
+      title: 'Contact — Potozon',
+      meta: { description: 'Lancez votre projet photo avec Potozon. Réponse sous 48 heures.' },
+      content: {
+        title: 'Let’s start a project',
+        intro: 'Tell us about your project and preferred dates — we reply within 48 hours.',
+        email: 'hello@potozon.studio',
+        zones: ['Studio', 'Worldwide on request'],
+        pricing: [
+          { name: 'Portrait Session', price: 'from €350', detail: '1h studio or outdoor, 20 graded photos' },
+          { name: 'Events & Outdoor', price: 'from €1 500', detail: 'Half/full-day coverage, private gallery' },
+          { name: 'Brand & Commercial', price: 'on quote', detail: 'Shoot, retouch & color grade, usage rights' },
+        ],
+        faqs: HOME_CONTENT.faqs,
+      },
+    },
+  ],
+} as const
 
 /* ------------------------------------------------------------------ */
 /* Sélection runtime : global injecté > défaut                         */
@@ -201,23 +266,5 @@ const C =
 // Exposé pour la plateforme (dump des contenus par défaut → default-content.json).
 export const __DEFAULT_CONTENT__ = DEFAULT_CONTENT
 
-/* ------------------------------------------------------------------ */
-/* Re-exports (noms/types identiques à l'origine)                      */
-/* ------------------------------------------------------------------ */
-export const brand = C.brand
-export const navItems = C.navItems
-export const hero = C.hero
-export const featuredQuote = C.featuredQuote
-export const scrollText = C.scrollText
-export const scrollAccents: Record<string, 'red' | 'yellow' | 'orange' | 'purple'> = C.scrollAccents
-export const servicesIntro = C.servicesIntro
-export const services: Service[] = C.services
-export const collaborations = C.collaborations
-export const works: Work[] = C.works
-export const beyond = C.beyond
-export const testimonials: Testimonial[] = C.testimonials
-export const faqs: Faq[] = C.faqs
-export const textLeft = C.textLeft
-export const textRight = C.textRight
-export const cards: GalleryCard[] = C.cards
-export const footer = C.footer
+// Contenu v2 effectif (injecté > défaut), normalisé.
+export const SITE = normalizeDefault(C)
