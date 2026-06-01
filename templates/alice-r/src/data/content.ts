@@ -1,9 +1,12 @@
 // Contenu centralisé du site Alice R — photographe (DA sombre, chaude, élégante).
 //
-// RUNTIME ADAPTER : tout le contenu vit dans DEFAULT_CONTENT. À l'exécution, si
-// `window.__SITE_CONTENT__` existe (injecté par la plateforme), il REMPLACE
-// DEFAULT_CONTENT (même forme exacte). Les composants importent les exports
-// nommés ci-dessous — aucun changement de composant n'est nécessaire.
+// SCHÉMA v2 : un site = un shell (`site`) + des pages typées (`pages[]`).
+// À l'exécution, si `window.__SITE_CONTENT__` existe (injecté par la plateforme),
+// il REMPLACE DEFAULT_CONTENT (même forme v2). Le contenu effectif, normalisé,
+// est exposé via `SITE` ; les composants le lisent via le contexte de page
+// (`usePage()` / `useSite()`), plus via des globals de module.
+
+import { normalizeDefault } from '../site/normalize'
 
 const img = (n: number) => `img/p${n}.jpg`
 
@@ -44,12 +47,9 @@ export interface Testimonial { text: string; name: string; role: string; avatar:
 export interface Faq { q: string; a: string }
 
 /* ------------------------------------------------------------------ */
-/* Contenu par défaut (forme = objet injecté par la plateforme)        */
+/* Contenu de la home (objet historique, réutilisé tel quel)           */
 /* ------------------------------------------------------------------ */
-const DEFAULT_CONTENT = {
-  // Navigation
-  navItems: ['Work', 'Services', 'About', 'Journal', 'Contact'] as string[],
-
+const HOME_CONTENT = {
   // Hero — arc de photos. 13 photos disposées en arc/éventail autour du texte.
   arcPhotos: [
     { img: 'img/p1.jpg', top: '20%', left: '17%', rotate: 10, size: 150 },
@@ -171,14 +171,81 @@ const DEFAULT_CONTENT = {
 
   // Galerie — ORDRE des photos (les vignettes sont calculées via img()).
   galleryOrder: [10, 11, 12, 13, 1, 2, 3, 4, 5, 6, 7, 8] as number[],
-
-  // Footer
-  footer: {
-    title: 'Every Frame Tells a Story. Let’s Create Yours.',
-    email: 'hello@alicer.studio',
-    socials: ['Instagram', 'Pinterest', 'Behance'],
-  },
 }
+
+/* ------------------------------------------------------------------ */
+/* Contenu par défaut v2 (site + pages)                                */
+/* ------------------------------------------------------------------ */
+const DEFAULT_CONTENT = {
+  version: 2,
+  site: {
+    brand: 'Alice R',
+    nav: [
+      { label: 'Accueil', to: '/' },
+      { label: 'Portfolio', to: '/portfolio' },
+      { label: 'À propos', to: '/a-propos' },
+      { label: 'Contact', to: '/contact' },
+    ],
+    footer: {
+      title: 'Every Frame Tells a Story. Let’s Create Yours.',
+      email: 'hello@alicer.studio',
+      socials: ['Instagram', 'Pinterest', 'Behance'],
+    },
+    theme: {}, // accents/géométrie structurels restent dans les composants
+  },
+  pages: [
+    {
+      slug: '/',
+      type: 'home',
+      title: 'Alice R — Photographe',
+      meta: { description: 'Photographie de portraits, mariages et marques.' },
+      content: HOME_CONTENT,
+    },
+    {
+      slug: '/portfolio',
+      type: 'portfolio',
+      title: 'Portfolio — Alice R',
+      meta: { description: 'Une sélection de séances portraits, mariages et éditoriaux.' },
+      content: {
+        title: 'Through my lens',
+        intro: 'A selection of recent stories — portraits, weddings, editorials.',
+        galleries: [
+          { category: 'Selected work', order: [10, 11, 12, 13, 1, 2, 3, 4, 5, 6, 7, 8] },
+        ],
+      },
+    },
+    {
+      slug: '/a-propos',
+      type: 'about',
+      title: 'À propos — Alice R',
+      meta: { description: 'Alice R, photographe : approche, démarche et chiffres.' },
+      content: {
+        scrollText: HOME_CONTENT.scrollText,
+        featuredQuote: HOME_CONTENT.featuredQuote,
+        beyond: HOME_CONTENT.beyond,
+        testimonials: HOME_CONTENT.testimonials,
+      },
+    },
+    {
+      slug: '/contact',
+      type: 'contact',
+      title: 'Contact — Alice R',
+      meta: { description: 'Réservez votre séance photo avec Alice R.' },
+      content: {
+        title: 'Let’s create something together',
+        intro: 'Tell me about your project and preferred dates — I reply within 48 hours.',
+        email: 'hello@alicer.studio',
+        zones: ['Paris', 'Worldwide on request'],
+        pricing: [
+          { name: 'Portrait Session', price: 'from €350', detail: '1h studio or outdoor, 20 edited photos' },
+          { name: 'Weddings & Events', price: 'from €1 800', detail: 'Full-day coverage, private gallery' },
+          { name: 'Brand & Editorial', price: 'on quote', detail: 'Half or full-day shoot, usage rights' },
+        ],
+        faqs: HOME_CONTENT.faqs,
+      },
+    },
+  ],
+} as const
 
 /* ------------------------------------------------------------------ */
 /* Sélection runtime : global injecté > défaut                         */
@@ -191,24 +258,5 @@ const C =
 // Exposé pour la plateforme (dump des contenus par défaut → default-content.json).
 export const __DEFAULT_CONTENT__ = DEFAULT_CONTENT
 
-/* ------------------------------------------------------------------ */
-/* Re-exports (noms/types identiques à l'origine)                      */
-/* ------------------------------------------------------------------ */
-export const navItems = C.navItems
-export const arcPhotos: ArcPhoto[] = C.arcPhotos
-export const hero = C.hero
-export const features: Feature[] = C.features
-export const featuredQuote = C.featuredQuote
-export const scrollText = C.scrollText
-export const servicesIntro = C.servicesIntro
-export const services: Service[] = C.services
-export const collaborations = C.collaborations
-export const works: Work[] = C.works
-export const beyond = C.beyond
-export const testimonials: Testimonial[] = C.testimonials
-export const faqs: Faq[] = C.faqs
-export const footer = C.footer
-
-// COMPUTED : la galerie est dérivée de l'ordre d'index via le helper img().
-export const gallery: string[] =
-  (C as any).gallery ?? (C.galleryOrder ?? DEFAULT_CONTENT.galleryOrder).map(img)
+// Contenu v2 effectif (injecté > défaut), normalisé.
+export const SITE = normalizeDefault(C)
