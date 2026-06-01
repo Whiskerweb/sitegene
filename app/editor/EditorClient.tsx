@@ -20,7 +20,8 @@ import {
   IconStar4,
   IconTablet,
 } from "@/components/ui/icons";
-import { getPath, setPath } from "@/lib/content-overlay";
+import { getAtPath, setAtPath, pageIndexForPath } from "@/lib/content-path";
+import { normalizeContent, type SiteContentV2 } from "@/lib/site-content";
 import { useDictation } from "@/lib/use-dictation";
 import type { PinSelector } from "@/lib/notes-selector";
 
@@ -65,7 +66,10 @@ export default function EditorClient({
   content,
 }: Props) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const contentRef = useRef<Record<string, unknown>>(structuredClone(content));
+  // On stocke le contenu sous sa forme NORMALISÉE v2 (idempotent sur un contenu
+  // déjà v2 ; promeut un ancien contenu v1 plat en page unique « / », index 0).
+  // L'éditeur lit/écrit donc toujours via les helpers page-aware getAtPath/setAtPath.
+  const contentRef = useRef<SiteContentV2>(normalizeContent(structuredClone(content)));
   const changesRef = useRef<Record<string, unknown>>({});
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const noticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -73,6 +77,12 @@ export default function EditorClient({
   const fileRef = useRef<HTMLInputElement>(null);
   const pendingPhoto = useRef<string | null>(null);
   const aiInputRef = useRef<HTMLTextAreaElement | null>(null);
+
+  // Pages du site (forme v2). Le sélecteur de page pilote currentPageIndex et
+  // l'URL ?path= de l'iframe d'aperçu. Mémoïsé à partir du contenu initial : la
+  // structure des pages (slug/title) ne change pas pendant une session d'édition.
+  const pages = contentRef.current.pages;
+  const [currentPageIndex, setCurrentPageIndex] = useState(0);
 
   const [balance, setBalance] = useState(initialBalance);
   const [hasUnpub, setHasUnpub] = useState(initialHasUnpub);
@@ -161,6 +171,10 @@ export default function EditorClient({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [aiDraft, aiProposal]);
 
+  // Champs éditables : UNION PLATE de tous les champs connus du manifest (E3).
+  // Pour cette v1 multi-pages on ne segmente PAS les champs par type de page : un
+  // chemin matche s'il figure dans `editableFields`, sinon l'éditeur retombe sur
+  // un champ générique (textarea). Tolérant par construction — suffisant ici.
   const specFor = useCallback(
     (path: string): EditableField | null => {
       for (const f of editableFields) {
@@ -199,15 +213,42 @@ export default function EditorClient({
   const recordChange = useCallback(
     (path: string, value: string) => {
       changesRef.current[path] = value;
-      setPath(contentRef.current, path, value);
+      // Écriture page-aware : on pose la valeur dans pages[currentPageIndex].content.
+      // setAtPath renvoie une COPIE immuable → on réaffecte le ref.
+      contentRef.current = setAtPath(contentRef.current, currentPageIndex, path, value);
       scheduleSave();
     },
-    [scheduleSave],
+    [scheduleSave, currentPageIndex],
   );
 
   const post = useCallback((msg: unknown) => {
     iframeRef.current?.contentWindow?.postMessage(msg, window.location.origin);
   }, []);
+
+  // Construction UNIQUE de l'URL d'aperçu. ?path=<slug de la page> cible la page
+  // courante (multi-pages) ; la home ("/") n'a pas besoin du paramètre. `bust`
+  // ajoute un cache-buster (rechargement forcé après commit IA / publication).
+  const previewUrl = useCallback(
+    (pageIndex: number, bust = false) => {
+      const slug = pages[pageIndex]?.slug ?? "/";
+      const params = new URLSearchParams({ siteId, edit: "1" });
+      if (slug && slug !== "/") params.set("path", slug);
+      if (bust) params.set("t", String(Date.now()));
+      return `/api/preview?${params.toString()}`;
+    },
+    [pages, siteId],
+  );
+
+  // Changement de page depuis le sélecteur : MAJ de l'index + rechargement de
+  // l'iframe vers la nouvelle page. sg:ready (re)poussera ensuite le mode courant.
+  const changePage = useCallback(
+    (idx: number) => {
+      if (idx === currentPageIndex || !pages[idx]) return;
+      setCurrentPageIndex(idx);
+      if (iframeRef.current) iframeRef.current.src = previewUrl(idx);
+    },
+    [currentPageIndex, pages, previewUrl],
+  );
 
   const switchTool = useCallback(
     (t: "edit" | "note") => {
@@ -231,7 +272,8 @@ export default function EditorClient({
           recordChange(d.path, String(d.value ?? ""));
         } else {
           const spec = specFor(d.path);
-          const cur = getPath(contentRef.current, d.path);
+          // Lecture page-aware dans pages[currentPageIndex].content.
+          const cur = getAtPath(contentRef.current, currentPageIndex, d.path);
           setPanel({
             path: d.path,
             label: spec?.label ?? d.path,
@@ -263,7 +305,7 @@ export default function EditorClient({
     }
     window.addEventListener("message", onMsg);
     return () => window.removeEventListener("message", onMsg);
-  }, [recordChange, specFor, post, tool]);
+  }, [recordChange, specFor, post, tool, currentPageIndex]);
 
   function savePanel() {
     if (!panel) return;
@@ -362,7 +404,7 @@ export default function EditorClient({
         setAiDraft(null);
         notify("Modification appliquée", "success");
         if (iframeRef.current) {
-          iframeRef.current.src = `/api/preview?siteId=${siteId}&edit=1&t=${Date.now()}`;
+          iframeRef.current.src = previewUrl(currentPageIndex, true);
         }
       }
     } catch {
@@ -394,7 +436,7 @@ export default function EditorClient({
         setSaveState("idle");
         notify("Votre site est à jour", "success");
         if (iframeRef.current) {
-          iframeRef.current.src = `/api/preview?siteId=${siteId}&edit=1&t=${Date.now()}`;
+          iframeRef.current.src = previewUrl(currentPageIndex, true);
         }
       }
     } catch {
@@ -407,12 +449,34 @@ export default function EditorClient({
     <div className="cloud-bg relative flex h-[100dvh] flex-col">
       {/* Barre du haut — minimale */}
       <header className="z-20 flex flex-none items-center justify-between gap-2 px-3 py-2.5 md:px-5">
-        <Button href="/dashboard" variant="ghost" size="sm">
-          <span className="inline-flex rotate-180">
-            <IconChevron size={16} />
-          </span>
-          <span className="hidden sm:inline">Quitter</span>
-        </Button>
+        <div className="flex min-w-0 items-center gap-2">
+          <Button href="/dashboard" variant="ghost" size="sm">
+            <span className="inline-flex rotate-180">
+              <IconChevron size={16} />
+            </span>
+            <span className="hidden sm:inline">Quitter</span>
+          </Button>
+
+          {/* Sélecteur de page — visible seulement pour un site multi-pages (v2).
+              Change la page éditée et recharge l'aperçu sur ?path=<slug>. */}
+          {pages.length > 1 && (
+            <label className="flex min-w-0 items-center">
+              <span className="sr-only">Page à modifier</span>
+              <select
+                className="max-w-[44vw] truncate rounded-lg border border-white/60 bg-white/80 px-2.5 py-1.5 text-sm font-medium text-night shadow-cloud outline-none focus:border-[#2563eb] sm:max-w-[220px]"
+                value={currentPageIndex}
+                onChange={(e) => changePage(Number(e.target.value))}
+                aria-label="Page à modifier"
+              >
+                {pages.map((p, i) => (
+                  <option key={p.slug ?? i} value={i}>
+                    {p.title ?? p.slug}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
+        </div>
 
         {/* Aperçu responsive */}
         <div className="gem-dev hidden sm:flex" role="group" aria-label="Aperçu responsive">
@@ -460,7 +524,7 @@ export default function EditorClient({
         >
           <iframe
             ref={iframeRef}
-            src={`/api/preview?siteId=${siteId}&edit=1`}
+            src={previewUrl(0)}
             title="Éditeur de votre site"
             className="h-full w-full border-0"
           />
