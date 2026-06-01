@@ -9,7 +9,12 @@ export default function Navbar() {
 
   return (
     <nav className="relative z-40 flex items-center justify-between px-6 py-6 md:absolute md:inset-x-0 md:top-0 md:px-10">
-      <a href="#top" className="text-xl font-medium tracking-tight text-white/90">
+      <a
+        href="#top"
+        data-sg-path="hero.brand"
+        data-sg-edit="panel"
+        className="text-xl font-medium tracking-tight text-white/90"
+      >
         {hero.brand}
       </a>
 

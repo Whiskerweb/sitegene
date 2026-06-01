@@ -13,18 +13,19 @@ export default function FeaturedQuote() {
             as="blockquote"
             className="text-2xl font-medium leading-[1.3] text-white sm:text-3xl md:text-4xl"
           >
-            “{featuredQuote.text}”
+            “<span data-sg-path="featuredQuote.text" data-sg-edit="panel">{featuredQuote.text}</span>”
           </FadeIn>
 
           <FadeIn delay={0.1} className="mt-8 flex items-center gap-3">
             <img
               src={featuredQuote.avatar}
               alt={featuredQuote.name}
+              data-sg-img="featuredQuote.avatar"
               className="h-11 w-11 rounded-full object-cover ring-1 ring-white/15"
             />
             <div>
-              <p className="text-sm font-medium text-white">{featuredQuote.name}</p>
-              <p className="text-sm text-white/55">{featuredQuote.role}</p>
+              <p data-sg-path="featuredQuote.name" className="text-sm font-medium text-white">{featuredQuote.name}</p>
+              <p data-sg-path="featuredQuote.role" className="text-sm text-white/55">{featuredQuote.role}</p>
             </div>
           </FadeIn>
 
@@ -46,6 +47,7 @@ export default function FeaturedQuote() {
               src={featuredQuote.images[0]}
               alt=""
               loading="lazy"
+              data-sg-img="featuredQuote.images[0]"
               className="aspect-square w-full rounded-3xl object-cover ring-1 ring-white/10"
             />
           </FadeIn>
@@ -54,6 +56,7 @@ export default function FeaturedQuote() {
               src={featuredQuote.images[1]}
               alt=""
               loading="lazy"
+              data-sg-img="featuredQuote.images[1]"
               className="aspect-[3/4] w-full rounded-3xl object-cover ring-1 ring-white/10"
             />
           </FadeIn>

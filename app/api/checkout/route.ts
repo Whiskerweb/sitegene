@@ -30,7 +30,7 @@ export async function POST(request: Request) {
           currency: "eur",
           unit_amount: LAUNCH_PRICE_CENTS,
           product_data: {
-            name: "Mise en ligne de votre site — Sitegene",
+            name: "Mise en ligne de votre site — Akyra",
             description: "Lancement de votre site professionnel.",
           },
         },

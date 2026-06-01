@@ -1,10 +1,10 @@
 import { requireUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getBalance } from "@/lib/credits-server";
+import { reconcileBillingSession } from "@/lib/billing";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { Badge } from "@/components/ui/Badge";
+import { BillingPanel } from "@/components/billing/BillingPanel";
 import { creditReasonLabel } from "@/lib/ui/status";
 
 export const dynamic = "force-dynamic";
@@ -12,9 +12,21 @@ export const dynamic = "force-dynamic";
 const fmtDate = (d: string) =>
   new Date(d).toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" });
 
-export default async function Credits() {
+export default async function Credits({
+  searchParams,
+}: {
+  searchParams: Promise<{ sub?: string; topup?: string; session_id?: string }>;
+}) {
+  const sp = await searchParams;
   const user = await requireUser();
   const admin = createAdminClient();
+
+  // Filet de sécurité : si on revient d'un paiement, on réconcilie la session
+  // (crédite/active) immédiatement, sans attendre le webhook. Idempotent.
+  if (sp.session_id && (sp.topup === "success" || sp.sub === "success")) {
+    await reconcileBillingSession(sp.session_id, user.id);
+  }
+
   const balance = await getBalance(admin, user.id);
 
   const [{ data: ledger }, { data: sub }] = await Promise.all([
@@ -26,51 +38,39 @@ export default async function Credits() {
       .limit(100),
     admin
       .from("subscriptions")
-      .select("status, monthly_credit_allowance, current_period_end")
+      .select("status, current_period_end")
       .eq("user_id", user.id)
-      .eq("status", "active")
+      .in("status", ["active", "trialing"])
+      .order("created_at", { ascending: false })
+      .limit(1)
       .maybeSingle(),
   ]);
   const moves = ledger ?? [];
+  // Abonné si une ligne active existe ET (période inconnue OU non expirée).
+  const isSub =
+    !!sub &&
+    (!sub.current_period_end ||
+      new Date(sub.current_period_end as string).getTime() > Date.now());
+  const justPaid = sp.sub === "success" || sp.topup === "success";
 
   return (
     <>
       <PageHeader
         title="Crédits & facturation"
-        subtitle="Vos crédits servent à faire évoluer votre site."
+        subtitle="Faites évoluer votre site autant que vous voulez."
       />
 
-      <div className="grid gap-5 md:grid-cols-2">
-        <GlassCard className="border border-sky-300 p-7">
-          <p className="text-sm font-medium text-slate">Solde actuel</p>
-          <p className="mt-1 font-archivo text-[52px] font-bold leading-none text-brand">
-            {balance}
-          </p>
-          <p className="mt-2 text-sm text-mist">1 crédit = 1 modification de votre site.</p>
-        </GlassCard>
+      {justPaid && (
+        <div className="mb-6 rounded-2xl border border-success/30 bg-success-50 px-5 py-4 text-sm font-medium text-success">
+          Paiement reçu — votre compte se met à jour dans un instant. Actualisez la page si besoin.
+        </div>
+      )}
 
-        <Card tone="lav" className="p-7">
-          <div className="flex items-center justify-between">
-            <p className="text-sm font-medium text-slate">Abonnement</p>
-            {sub ? <Badge tone="success">Actif</Badge> : <Badge tone="neutral">Bientôt</Badge>}
-          </div>
-          {sub ? (
-            <>
-              <p className="mt-2 font-archivo text-xl font-bold text-night">
-                {sub.monthly_credit_allowance} crédits / mois
-              </p>
-              <p className="mt-1 text-sm text-mist">
-                Renouvelé le {fmtDate(sub.current_period_end as string)}
-              </p>
-            </>
-          ) : (
-            <p className="mt-2 text-sm leading-relaxed text-slate">
-              Un abonnement pour recharger vos crédits automatiquement chaque mois arrive très
-              bientôt. En attendant, on vous offre des crédits à l'inscription.
-            </p>
-          )}
-        </Card>
-      </div>
+      <BillingPanel
+        isSub={isSub}
+        balance={balance}
+        periodEnd={(sub?.current_period_end as string) ?? null}
+      />
 
       <h2 className="mb-3 mt-10 font-archivo text-lg font-semibold text-night">Historique</h2>
       <Card className="overflow-hidden">

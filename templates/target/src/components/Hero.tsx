@@ -24,13 +24,13 @@ export default function Hero() {
         >
           {/* email/phone : desktop uniquement (évite le chevauchement avec ✦ TARGET) */}
           <div className="hidden text-[11px] leading-tight text-white/85 md:block md:text-sm">
-            <p>{hero.email}</p>
-            <p>{hero.phone}</p>
+            <p><span data-sg-path="hero.email" data-sg-edit="panel">{hero.email}</span></p>
+            <p><span data-sg-path="hero.phone" data-sg-edit="panel">{hero.phone}</span></p>
           </div>
           <span className="tg-head left-1/2 -translate-x-1/2 text-sm font-bold tracking-[0.2em] max-md:mx-auto md:absolute md:text-lg md:tracking-[0.25em]">✦ TARGET</span>
           <div className="hidden text-right md:block">
-            <p className="text-sm font-medium">{hero.role}</p>
-            <p className="mb-5 text-sm text-white/70">{hero.location}</p>
+            <p className="text-sm font-medium"><span data-sg-path="hero.role" data-sg-edit="panel">{hero.role}</span></p>
+            <p className="mb-5 text-sm text-white/70"><span data-sg-path="hero.location" data-sg-edit="panel">{hero.location}</span></p>
             <div className="hidden flex-col items-end gap-3 md:flex">
               {nav.map((n, i) => (
                 <a key={n} href={navAnchors[i] ?? '#contact'} className="text-sm font-medium uppercase tracking-wide underline underline-offset-4 transition-opacity hover:opacity-70">
@@ -48,7 +48,7 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.2, ease: EASE }}
             className="w-36 overflow-hidden rounded-2xl border border-white/15 bg-white/5 p-1.5 backdrop-blur"
           >
-            <img src={hero.recentWork} alt="" className="h-24 w-full rounded-xl object-cover" />
+            <img src={hero.recentWork} alt="" data-sg-img="hero.recentWork" className="h-24 w-full rounded-xl object-cover" />
             <p className="px-1 py-1 text-[11px] text-white/85">Recent Work</p>
           </motion.div>
 
@@ -57,7 +57,7 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
             className="tg-head mt-7 text-2xl font-medium"
           >
-            {hero.tagline}
+            <span data-sg-path="hero.tagline" data-sg-edit="panel">{hero.tagline}</span>
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -65,7 +65,7 @@ export default function Hero() {
             className="tg-head font-bold uppercase leading-[0.9] tracking-tighter text-white"
             style={{ fontSize: 'clamp(2rem, 10.5vw, 4rem)' }}
           >
-            {hero.title}
+            <span data-sg-path="hero.title" data-sg-edit="panel">{hero.title}</span>
           </motion.h1>
 
           <motion.p
@@ -73,7 +73,7 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="mt-5 max-w-xs text-sm leading-snug text-white/85"
           >
-            {hero.blurb}
+            <span data-sg-path="hero.blurb" data-sg-edit="panel">{hero.blurb}</span>
           </motion.p>
 
           <motion.div
@@ -97,7 +97,7 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.25, ease: EASE }}
             className="mt-6 w-40 overflow-hidden rounded-2xl border border-white/15 bg-white/5 p-1.5 backdrop-blur"
           >
-            <img src={hero.recentWork} alt="" className="h-28 w-full rounded-xl object-cover" />
+            <img src={hero.recentWork} alt="" data-sg-img="hero.recentWork" className="h-28 w-full rounded-xl object-cover" />
             <p className="px-1 py-1.5 text-xs text-white/85">Recent Work</p>
           </motion.div>
 
@@ -107,7 +107,7 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="mt-8 max-w-xs self-start text-sm leading-snug text-white/90 md:ml-[42%]"
           >
-            {hero.blurb}
+            <span data-sg-path="hero.blurb" data-sg-edit="panel">{hero.blurb}</span>
           </motion.p>
 
           {/* Bas : titre */}
@@ -117,7 +117,7 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.2, ease: EASE }}
               className="tg-head mb-1 text-3xl font-medium md:text-5xl"
             >
-              {hero.tagline}
+              <span data-sg-path="hero.tagline" data-sg-edit="panel">{hero.tagline}</span>
             </motion.p>
             <div className="overflow-hidden">
               <motion.h1
@@ -126,7 +126,7 @@ export default function Hero() {
                 className="tg-head font-bold uppercase leading-[0.8] tracking-tighter text-white"
                 style={{ fontSize: 'clamp(2.4rem, 11.5vw, 16rem)' }}
               >
-                {hero.title}
+                <span data-sg-path="hero.title" data-sg-edit="panel">{hero.title}</span>
               </motion.h1>
             </div>
 
@@ -139,8 +139,8 @@ export default function Hero() {
                 ))}
               </div>
               <div className="text-right">
-                <p className="text-sm font-medium">🏆 {hero.badge}</p>
-                <p className="text-xs text-white/60">{hero.badgeYears}</p>
+                <p className="text-sm font-medium">🏆 <span data-sg-path="hero.badge" data-sg-edit="panel">{hero.badge}</span></p>
+                <p className="text-xs text-white/60"><span data-sg-path="hero.badgeYears" data-sg-edit="panel">{hero.badgeYears}</span></p>
               </div>
             </div>
           </div>

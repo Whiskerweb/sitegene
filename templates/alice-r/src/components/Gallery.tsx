@@ -24,6 +24,7 @@ export default function Gallery() {
               src={src}
               alt=""
               loading="lazy"
+              data-sg-img={`gallery[${i}]`}
               className="w-full object-cover transition-transform duration-700 group-hover:scale-105"
               style={{ aspectRatio: i % 3 === 0 ? '3/4' : i % 3 === 1 ? '1/1' : '4/5' }}
             />

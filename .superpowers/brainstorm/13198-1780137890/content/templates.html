@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Les 3 templates de base</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,sans-serif;background:#0e0e12;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+  .bar{display:flex;gap:8px;padding:11px 16px;background:#16161c;align-items:center;flex:none;flex-wrap:wrap}
+  .bar b{color:#fff;margin-right:10px;font-size:13px;font-weight:600}
+  .bar button{border:0;cursor:pointer;border-radius:999px;padding:9px 18px;font-size:13px;font-weight:600;color:#cfd2dc;background:#23232c;transition:.15s}
+  .bar button:hover{color:#fff}
+  .bar button.on{background:#fff;color:#111}
+  .bar .meta{color:#8b8f9e;font-size:12px;margin-left:auto}
+  .wrap{flex:1;position:relative;background:#fff}
+  iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:none;background:#fff}
+  iframe.on{display:block}
+</style>
+</head>
+<body>
+<div class="bar">
+  <b>3 templates de base</b>
+  <button class="t on" data-i="0">1 · Aurelia <span style="opacity:.6">(sombre/chaud)</span></button>
+  <button class="t" data-i="1">2 · Potozon <span style="opacity:.6">(pop/coloré)</span></button>
+  <button class="t" data-i="2">3 · Target <span style="opacity:.6">(éditorial/net)</span></button>
+  <span class="meta">contenu démo · rendu live du dev</span>
+</div>
+<div class="wrap">
+  <iframe class="f on" src="http://localhost:3000/s/alice-r" title="Aurelia"></iframe>
+  <iframe class="f" src="http://localhost:3000/s/potozon" title="Potozon"></iframe>
+  <iframe class="f" src="http://localhost:3000/s/target" title="Target"></iframe>
+</div>
+<script>
+  var t=document.querySelectorAll('.t'),f=document.querySelectorAll('.f');
+  t.forEach(function(b){b.onclick=function(){var i=+b.dataset.i;t.forEach(function(x){x.classList.remove('on')});f.forEach(function(x){x.classList.remove('on')});b.classList.add('on');f[i].classList.add('on')}});
+</script>
+</body>
+</html>

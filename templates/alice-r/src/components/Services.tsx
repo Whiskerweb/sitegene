@@ -16,7 +16,7 @@ export default function Services() {
         >
           Services I offer
         </FadeIn>
-        <FadeIn delay={0.1} className="max-w-xs text-sm leading-relaxed text-white/55">
+        <FadeIn delay={0.1} data-sg-path="servicesIntro" className="max-w-xs text-sm leading-relaxed text-white/55">
           {servicesIntro}
         </FadeIn>
       </div>
@@ -32,13 +32,14 @@ export default function Services() {
                 className="flex w-full items-center gap-5 py-7 text-left md:gap-10 md:py-8"
               >
                 <span
+                  data-sg-path={`services[${i}].n`}
                   className={`text-2xl font-medium tabular-nums transition-colors md:text-4xl ${
                     isOpen ? 'text-white' : 'text-white/30'
                   }`}
                 >
                   {s.n}
                 </span>
-                <span className="text-xl font-medium text-white sm:text-2xl md:text-3xl">
+                <span data-sg-path={`services[${i}].name`} className="text-xl font-medium text-white sm:text-2xl md:text-3xl">
                   {s.name}
                 </span>
                 <span
@@ -59,7 +60,7 @@ export default function Services() {
                   >
                     <div className="grid items-end gap-6 pb-9 md:grid-cols-2 md:pl-[4.4rem]">
                       <div>
-                        <p className="max-w-md text-sm leading-relaxed text-white/65 md:text-base">
+                        <p data-sg-path={`services[${i}].desc`} className="max-w-md text-sm leading-relaxed text-white/65 md:text-base">
                           {s.desc}
                         </p>
                         <div className="mt-5 flex flex-wrap gap-2">
@@ -77,6 +78,7 @@ export default function Services() {
                         src={s.img}
                         alt={s.name}
                         loading="lazy"
+                        data-sg-img={`services[${i}].img`}
                         className="ml-auto aspect-[16/10] w-full max-w-sm rounded-2xl object-cover ring-1 ring-white/10"
                       />
                     </div>

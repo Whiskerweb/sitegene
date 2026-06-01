@@ -21,7 +21,9 @@ type Reason =
   | "subscription_refill"
   | "topup_purchase"
   | "refund"
-  | "adjustment";
+  | "adjustment"
+  | "edit_publish"
+  | "ai_edit";
 
 /** Écrit une ligne de ledger (append-only) avec le nouveau solde. SERVEUR/admin. */
 export async function grantCredits(

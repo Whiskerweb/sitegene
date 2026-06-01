@@ -8,16 +8,18 @@ export default function Stats() {
         <div>
           <FadeIn
             as="h2"
+            data-sg-path="beyond.title"
             className="text-3xl font-medium leading-[1.1] text-white sm:text-4xl md:text-5xl"
           >
             {beyond.title}
           </FadeIn>
           <FadeIn delay={0.1}>
-            <p className="mt-6 max-w-md text-sm leading-relaxed text-white/65 md:text-base">
+            <p data-sg-path="beyond.body" className="mt-6 max-w-md text-sm leading-relaxed text-white/65 md:text-base">
               {beyond.body}
             </p>
             <a
               href="#contact"
+              data-sg-path="beyond.cta"
               className="mt-8 inline-flex min-h-[48px] items-center rounded-full bg-white px-7 py-3 text-sm font-medium text-[#1a1108] transition-transform hover:scale-[1.04]"
             >
               {beyond.cta}
@@ -32,10 +34,10 @@ export default function Stats() {
               delay={i * 0.1}
               className="rounded-3xl border border-white/12 bg-white/[0.04] p-4 text-center backdrop-blur md:p-6"
             >
-              <p className="text-2xl font-medium tabular-nums text-white sm:text-3xl md:text-5xl">
+              <p data-sg-path={`beyond.stats[${i}].v`} className="text-2xl font-medium tabular-nums text-white sm:text-3xl md:text-5xl">
                 {s.v}
               </p>
-              <p className="mt-1.5 text-[11px] leading-tight text-white/55 sm:text-xs">{s.l}</p>
+              <p data-sg-path={`beyond.stats[${i}].l`} className="mt-1.5 text-[11px] leading-tight text-white/55 sm:text-xs">{s.l}</p>
             </FadeIn>
           ))}
         </div>

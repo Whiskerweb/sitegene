@@ -5,7 +5,7 @@ import { AppShell } from "@/components/ui/AppShell";
 import type { NavItem } from "@/components/ui/NavItem";
 import {
   IconCloud,
-  IconEdit,
+  IconStar4,
   IconCredit,
   IconSettings,
   IconLogout,
@@ -16,6 +16,7 @@ export const dynamic = "force-dynamic";
 const titleMap = {
   "/dashboard": "Mon site",
   "/dashboard/modifications": "Modifications",
+  "/dashboard/marketplace": "Formules",
   "/dashboard/credits": "Crédits & facturation",
   "/dashboard/settings": "Paramètres",
 };
@@ -27,33 +28,15 @@ export default async function DashboardLayout({
 }) {
   const user = await requireUser();
   const admin = createAdminClient();
-
-  const { data: site } = await admin
-    .from("sites")
-    .select("id")
-    .eq("owner_user_id", user.id)
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
   const balance = await getBalance(admin, user.id);
-
-  let openCount = 0;
-  if (site) {
-    const { count } = await admin
-      .from("notes")
-      .select("id", { count: "exact", head: true })
-      .eq("site_id", site.id)
-      .eq("status", "open");
-    openCount = count ?? 0;
-  }
 
   const nav: NavItem[] = [
     { href: "/dashboard", label: "Mon site", icon: <IconCloud size={18} /> },
     {
-      href: "/dashboard/modifications",
-      label: "Modifications",
-      icon: <IconEdit size={18} />,
-      badge: openCount || null,
+      href: "/dashboard/marketplace",
+      label: "Formules",
+      icon: <IconStar4 size={18} />,
+      badge: "Bientôt",
     },
     {
       href: "/dashboard/credits",

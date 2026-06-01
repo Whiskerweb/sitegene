@@ -13,7 +13,7 @@ export default function FeaturedQuote() {
             as="blockquote"
             className="text-3xl font-extrabold leading-[1.08] tracking-tight text-poto-ink md:text-[2.7rem]"
           >
-            “{featuredQuote.text}”
+            “<span data-sg-path="featuredQuote.text" data-sg-edit="panel">{featuredQuote.text}</span>”
           </FadeIn>
 
           <FadeIn delay={0.1} className="mt-8 flex items-center gap-3">
@@ -23,13 +23,14 @@ export default function FeaturedQuote() {
             >
               <img
                 src={featuredQuote.avatar}
+                data-sg-img="featuredQuote.avatar"
                 alt={featuredQuote.name}
                 className="h-full w-full object-cover mix-blend-luminosity"
               />
             </span>
             <div>
-              <p className="text-base font-bold text-poto-ink">{featuredQuote.name}</p>
-              <p className="text-sm font-medium text-poto-ink/60">{featuredQuote.role}</p>
+              <p data-sg-path="featuredQuote.name" className="text-base font-bold text-poto-ink">{featuredQuote.name}</p>
+              <p data-sg-path="featuredQuote.role" className="text-sm font-medium text-poto-ink/60">{featuredQuote.role}</p>
             </div>
           </FadeIn>
 
@@ -50,6 +51,7 @@ export default function FeaturedQuote() {
             <div className="overflow-hidden rounded-2xl" style={{ backgroundColor: '#E5412A' }}>
               <img
                 src={featuredQuote.images[0]}
+                data-sg-img="featuredQuote.images[0]"
                 alt=""
                 className="aspect-square w-full object-cover mix-blend-luminosity"
               />
@@ -59,6 +61,7 @@ export default function FeaturedQuote() {
             <div className="overflow-hidden rounded-2xl" style={{ backgroundColor: '#FFC400' }}>
               <img
                 src={featuredQuote.images[1]}
+                data-sg-img="featuredQuote.images[1]"
                 alt=""
                 className="aspect-[3/4] w-full object-cover mix-blend-luminosity"
               />

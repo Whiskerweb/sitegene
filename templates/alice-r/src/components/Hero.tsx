@@ -28,15 +28,16 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.3, ease: EASE }}
             className="max-w-3xl text-4xl font-medium leading-[1.1] text-white sm:text-5xl md:text-6xl"
           >
-            {hero.title[0]}
+            <span data-sg-path="hero.title[0]" data-sg-edit="panel">{hero.title[0]}</span>
             <br />
-            {hero.title[1]}
+            <span data-sg-path="hero.title[1]" data-sg-edit="panel">{hero.title[1]}</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5, ease: EASE }}
+            data-sg-path="hero.subtitle"
             className="mt-5 max-w-md text-sm font-normal leading-relaxed text-white/70 md:text-base"
           >
             {hero.subtitle}
@@ -49,6 +50,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.65, ease: EASE }}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
+            data-sg-path="hero.cta"
             className="mt-9 inline-flex min-h-[48px] items-center rounded-full border border-white/40 px-9 py-3.5 text-sm font-medium text-white transition-colors hover:bg-white/10 md:text-base"
           >
             {hero.cta}
@@ -56,12 +58,12 @@ export default function Hero() {
 
           {/* Galerie mobile (l'arc est masqué) */}
           <div className="mt-10 grid grid-cols-3 gap-2.5 md:hidden">
-            {arcPhotos.slice(0, 6).map((p) => (
+            {arcPhotos.slice(0, 6).map((p, i) => (
               <div
                 key={p.img}
                 className="aspect-square overflow-hidden rounded-2xl ring-1 ring-white/10"
               >
-                <img src={p.img} alt="" loading="lazy" className="h-full w-full object-cover" />
+                <img src={p.img} alt="" loading="lazy" data-sg-img={`arcPhotos[${i}].img`} className="h-full w-full object-cover" />
               </div>
             ))}
           </div>
@@ -79,8 +81,8 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.8 + i * 0.1, ease: EASE }}
               className={`px-6 text-center ${i > 0 ? 'sm:border-l sm:border-white/15' : ''}`}
             >
-              <h3 className="text-lg font-medium text-white">{f.title}</h3>
-              <p className="mt-1.5 text-xs leading-relaxed text-white/55 md:text-sm">
+              <h3 data-sg-path={`features[${i}].title`} className="text-lg font-medium text-white">{f.title}</h3>
+              <p data-sg-path={`features[${i}].body`} className="mt-1.5 text-xs leading-relaxed text-white/55 md:text-sm">
                 {f.body}
               </p>
             </motion.div>

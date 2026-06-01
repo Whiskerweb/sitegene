@@ -28,9 +28,9 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: "Sitegene — Votre site photo, déjà prêt",
+  title: "Akyra · Votre site pro, prêt en 10 secondes",
   description:
-    "Des sites pensés pour les photographes, déjà construits. Vous choisissez, on publie. En ligne en 30 secondes, 50 € une fois.",
+    "Des sites pros déjà construits pour photographes, musiciens et artisans. Vous décrivez, on publie. En ligne en 30 secondes, 50 €/an tout compris.",
   robots: { index: false, follow: false },
 };
 

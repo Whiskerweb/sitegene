@@ -1,5 +1,6 @@
 import { stripe } from "@/lib/stripe";
-import { fulfillPayment } from "@/lib/fulfill";
+import { fulfillPayment, fulfillTopup } from "@/lib/fulfill";
+import { syncSubscription, setSubscriptionStatus } from "@/lib/subscription";
 import { createAdminClient } from "@/lib/supabase/admin";
 import type Stripe from "stripe";
 
@@ -32,8 +33,43 @@ export async function POST(request: Request) {
   }
 
   try {
-    if (event.type === "checkout.session.completed") {
-      await fulfillPayment(event.data.object as Stripe.Checkout.Session);
+    switch (event.type) {
+      case "checkout.session.completed": {
+        const s = event.data.object as Stripe.Checkout.Session;
+        if (s.mode === "subscription" && s.subscription) {
+          // Abonnement : on récupère l'objet complet (period_end au niveau item).
+          const sub = await stripe.subscriptions.retrieve(s.subscription as string);
+          await syncSubscription(sub);
+        } else if (s.metadata?.kind === "topup") {
+          await fulfillTopup(s);
+        } else {
+          // Flux historique : mise en ligne 50 €.
+          await fulfillPayment(s);
+        }
+        break;
+      }
+      case "customer.subscription.created":
+      case "customer.subscription.updated": {
+        await syncSubscription(event.data.object as Stripe.Subscription);
+        break;
+      }
+      case "customer.subscription.deleted": {
+        await setSubscriptionStatus(event.data.object as Stripe.Subscription, "canceled");
+        break;
+      }
+      case "invoice.paid": {
+        // Renouvellement : rafraîchit current_period_end.
+        const inv = event.data.object as Stripe.Invoice;
+        const ref = inv.parent?.subscription_details?.subscription;
+        const subId = typeof ref === "string" ? ref : ref?.id;
+        if (subId) {
+          const sub = await stripe.subscriptions.retrieve(subId);
+          await syncSubscription(sub);
+        }
+        break;
+      }
+      default:
+        break;
     }
     await admin
       .from("webhook_events")

@@ -1,0 +1,65 @@
+<h2>Côté opérateur : on voit où la note est collée</h2>
+<p class="subtitle">Dans /admin, on ouvre les notes d'un client : son site s'affiche avec les pins exactement là où il les a posés, et la demande à côté. On sait quoi viser, sans deviner.</p>
+
+<div class="mockup">
+  <div class="mockup-header">/admin · Notes de « Olivier Roué »</div>
+  <div class="mockup-body" style="padding:0;display:flex;background:#0f0e14;min-height:340px;">
+
+    <!-- LEFT: the client's site with pins -->
+    <div style="flex:1;position:relative;background:#16121d;padding:24px;overflow:hidden;">
+      <div style="color:#fff;font-weight:700;font-size:22px;margin-bottom:16px;">Olivier Roué</div>
+      <div style="position:relative;border-radius:12px;overflow:hidden;height:110px;width:72%;margin-bottom:18px;">
+        <div style="height:100%;background:linear-gradient(135deg,#3a2f4d,#7a4b8a);"></div>
+        <!-- pin 2 on photo -->
+        <div style="position:absolute;top:34px;left:150px;"><div style="background:#e5412a;color:#fff;width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:grid;place-items:center;box-shadow:0 5px 12px rgba(0,0,0,.5);outline:2px solid #fff;"><span style="transform:rotate(45deg);font-size:13px;font-weight:800;">2</span></div></div>
+      </div>
+      <!-- a CTA button with pin 1 -->
+      <div style="position:relative;display:inline-block;">
+        <div style="background:#fff;color:#16121d;border-radius:24px;padding:9px 20px;font-weight:700;font-size:13px;">Réserver une séance</div>
+        <div style="position:absolute;top:-12px;right:-14px;"><div style="background:#e5412a;color:#fff;width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:grid;place-items:center;box-shadow:0 5px 12px rgba(0,0,0,.5);outline:2px solid #fff;"><span style="transform:rotate(45deg);font-size:13px;font-weight:800;">1</span></div></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: notes panel -->
+    <div style="width:290px;flex:none;background:#fff;padding:16px;overflow:auto;">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#8b95a7;margin-bottom:10px;">2 demandes · 1 crédit chacune</div>
+
+      <div style="border:1px solid #e7edf6;border-left:3px solid #e5412a;border-radius:12px;padding:12px;margin-bottom:10px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <span style="background:#e5412a;color:#fff;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;">1</span>
+          <span style="font-size:11px;color:#8b95a7;">cible : <b style="color:#2563eb;">bouton « Réserver »</b></span>
+        </div>
+        <div style="font-size:13px;color:#0e0e12;">Mets une couleur plus chaude sur ce bouton, genre orange.</div>
+        <div style="display:flex;gap:6px;margin-top:10px;">
+          <span style="font-size:11px;background:#2563eb;color:#fff;border-radius:14px;padding:4px 10px;font-weight:700;">Ouvrir dans l'éditeur</span>
+          <span style="font-size:11px;background:#ecfdf5;color:#10b981;border-radius:14px;padding:4px 10px;font-weight:700;">✓ Fait</span>
+        </div>
+      </div>
+
+      <div style="border:1px solid #e7edf6;border-left:3px solid #e5412a;border-radius:12px;padding:12px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <span style="background:#e5412a;color:#fff;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;">2</span>
+          <span style="font-size:11px;color:#8b95a7;">cible : <b style="color:#2563eb;">photo hero</b></span>
+        </div>
+        <div style="font-size:13px;color:#0e0e12;">Cette photo est un peu floue, peux-tu la remplacer ?</div>
+        <div style="display:flex;gap:6px;margin-top:10px;">
+          <span style="font-size:11px;background:#2563eb;color:#fff;border-radius:14px;padding:4px 10px;font-weight:700;">Ouvrir dans l'éditeur</span>
+          <span style="font-size:11px;background:#ecfdf5;color:#10b981;border-radius:14px;padding:4px 10px;font-weight:700;">✓ Fait</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="ok" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div class="content"><h3>Parfait</h3><p>Site + pins numérotés à leur place exacte, chaque note dit la cible (« bouton Réserver ») + la demande. On ouvre, on corrige, on marque « Fait ».</p></div>
+  </div>
+  <div class="option" data-choice="shot" onclick="toggleSelect(this)">
+    <div class="letter">+</div>
+    <div class="content"><h3>+ capture d'écran au moment de la note</h3><p>En plus du site live, garder une photo de l'écran tel que le client le voyait (utile si le site change ensuite).</p></div>
+  </div>
+</div>
+<p class="subtitle">Mon conseil : <b>✓</b> — on rejoue le site live + on superpose les pins par leur position/élément. Pas de capture à stocker, toujours à jour. (capture = option plus tard si besoin)</p>

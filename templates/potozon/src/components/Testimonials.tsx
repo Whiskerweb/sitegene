@@ -27,7 +27,7 @@ export default function Testimonials() {
                 <Star key={s} size={16} className="fill-poto-yellow text-poto-yellow" />
               ))}
             </div>
-            <p className="flex-1 text-base font-medium leading-relaxed text-poto-ink/90">
+            <p data-sg-path={`testimonials[${i}].text`} className="flex-1 text-base font-medium leading-relaxed text-poto-ink/90">
               {t.text}
             </p>
             <div className="mt-6 flex items-center gap-3">
@@ -37,13 +37,14 @@ export default function Testimonials() {
               >
                 <img
                   src={t.avatar}
+                  data-sg-img={`testimonials[${i}].avatar`}
                   alt={t.name}
                   className="h-full w-full object-cover mix-blend-luminosity"
                 />
               </span>
               <div>
-                <p className="text-sm font-bold text-poto-ink">{t.name}</p>
-                <p className="text-xs font-medium text-poto-ink/60">{t.role}</p>
+                <p data-sg-path={`testimonials[${i}].name`} className="text-sm font-bold text-poto-ink">{t.name}</p>
+                <p data-sg-path={`testimonials[${i}].role`} className="text-xs font-medium text-poto-ink/60">{t.role}</p>
               </div>
             </div>
           </FadeIn>

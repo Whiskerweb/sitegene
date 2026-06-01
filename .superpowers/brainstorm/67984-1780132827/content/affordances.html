@@ -1,0 +1,57 @@
+<h2>À quoi ressemblent les zones modifiables ?</h2>
+<p class="subtitle">Quand le client clique « Modifier mon site », il atterrit sur SON site. Comment lui montrer ce qu'il peut changer ? (même mini-site rendu de 3 façons)</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#16121d;padding:18px;">
+      <div style="position:relative;border:1.5px dashed #6aa3ff;border-radius:8px;padding:8px 10px;margin-bottom:12px;color:#fff;font-weight:700;font-size:18px;">Olivier Roué
+        <span style="position:absolute;top:-9px;right:-9px;background:#2563eb;color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;display:grid;place-items:center;">✎</span>
+      </div>
+      <div style="position:relative;border:1.5px dashed #6aa3ff;border-radius:8px;overflow:hidden;height:70px;">
+        <div style="height:100%;background:linear-gradient(135deg,#3a2f4d,#7a4b8a);"></div>
+        <span style="position:absolute;top:6px;right:6px;background:#2563eb;color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;display:grid;place-items:center;">✎</span>
+      </div>
+      <div style="border:1.5px dashed #6aa3ff;border-radius:8px;padding:6px 9px;margin-top:12px;color:#cbb8e0;font-size:12px;">Concerts &amp; lives — la fosse, la lumière…</div>
+    </div>
+    <div class="card-body">
+      <h3>A · Cadres discrets (recommandé)</h3>
+      <p>Fin liseré pointillé bleu autour de chaque texte/photo + petite pastille ✎. Toujours visible, propre, peu intrusif.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#16121d;padding:18px;">
+      <div style="position:relative;background:rgba(37,99,235,.14);border:2px solid #2563eb;border-radius:8px;padding:8px 10px;margin-bottom:12px;color:#fff;font-weight:700;font-size:18px;">Olivier Roué
+        <span style="position:absolute;top:-10px;left:8px;background:#2563eb;color:#fff;border-radius:5px;padding:1px 6px;font-size:10px;font-weight:700;">TEXTE ✎</span>
+      </div>
+      <div style="position:relative;border:2px solid #2563eb;border-radius:8px;overflow:hidden;height:70px;">
+        <div style="height:100%;background:linear-gradient(135deg,#3a2f4d,#7a4b8a);"></div>
+        <span style="position:absolute;top:-10px;left:8px;background:#2563eb;color:#fff;border-radius:5px;padding:1px 6px;font-size:10px;font-weight:700;">PHOTO ↺</span>
+      </div>
+      <div style="position:relative;background:rgba(37,99,235,.14);border:2px solid #2563eb;border-radius:8px;padding:8px 9px;margin-top:14px;color:#cbb8e0;font-size:12px;">Concerts &amp; lives…
+        <span style="position:absolute;top:-10px;left:8px;background:#2563eb;color:#fff;border-radius:5px;padding:1px 6px;font-size:10px;font-weight:700;">TEXTE ✎</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B · Cadres marqués + étiquettes</h3>
+      <p>Boîtes bleutées pleines avec étiquette « TEXTE / PHOTO ». Très explicite, façon WordPress « gros boutons » — mais plus chargé visuellement.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#16121d;padding:18px;">
+      <div style="padding:8px 10px;margin-bottom:12px;color:#fff;font-weight:700;font-size:18px;">Olivier Roué</div>
+      <div style="position:relative;border:2px solid #2563eb;border-radius:8px;overflow:hidden;height:70px;box-shadow:0 0 0 4px rgba(37,99,235,.25);">
+        <div style="height:100%;background:linear-gradient(135deg,#3a2f4d,#7a4b8a);"></div>
+        <span style="position:absolute;bottom:6px;left:50%;transform:translateX(-50%);background:#111;color:#fff;border-radius:20px;padding:3px 10px;font-size:11px;white-space:nowrap;">Cliquez pour changer la photo</span>
+      </div>
+      <div style="padding:6px 9px;margin-top:12px;color:#cbb8e0;font-size:12px;">Concerts &amp; lives — la fosse, la lumière…</div>
+    </div>
+    <div class="card-body">
+      <h3>C · Rien, sauf au survol</h3>
+      <p>Aucun cadre par défaut ; le contour bleu + bulle « cliquez pour modifier » n'apparaît qu'au passage de la souris. Le plus épuré, mais moins « évident » au premier regard. (état actuel)</p>
+    </div>
+  </div>
+
+</div>

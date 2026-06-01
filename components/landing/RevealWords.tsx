@@ -5,10 +5,12 @@ import { headingWord } from "@/lib/motion";
 
 type Props = {
   text: string;
-  /** Indices de mots (0-based) à colorer en accent violet. */
+  /** Indices de mots (0-based) à colorer en accent. */
   accent?: number[];
   /** Indices de mots à colorer en or. */
   gold?: number[];
+  /** Classe appliquée aux mots `accent` (défaut: `.accent`). Ex: "text-brand". */
+  accentClass?: string;
   className?: string;
   /** "load" anime au montage, "view" au scroll. */
   trigger?: "load" | "view";
@@ -19,6 +21,7 @@ export default function RevealWords({
   text,
   accent = [],
   gold = [],
+  accentClass = "accent",
   className = "",
   trigger = "view",
   as = "h2",
@@ -47,7 +50,7 @@ export default function RevealWords({
             variants={headingWord}
             className={
               accent.includes(i)
-                ? "accent"
+                ? accentClass
                 : gold.includes(i)
                   ? "accent-gold"
                   : undefined

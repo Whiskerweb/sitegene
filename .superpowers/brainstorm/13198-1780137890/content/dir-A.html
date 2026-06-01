@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sitegene · Édition IA — Direction A (Apple Intelligence)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#0c0d12;
+    --ink-soft:#5a5e6b;
+    --ink-faint:#9aa0ad;
+    --paper:#f6f4f0;
+    --glass:rgba(255,255,255,.66);
+    --glass-strong:rgba(255,255,255,.82);
+    --line:rgba(18,20,30,.08);
+    --c-blue:#2b6dff;
+    --c-indigo:#6a45ff;
+    --c-violet:#9b4dff;
+    --c-pink:#ff5db1;
+    --ease:cubic-bezier(.22,1,.36,1);
+    --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Archivo",system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+
+  /* ============ FOND : faux hero photographe (sombre) ============ */
+  .stage{
+    position:relative;
+    min-height:100vh;
+    isolation:isolate;
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute; inset:0; z-index:0;
+    background:
+      radial-gradient(120% 80% at 78% -8%, rgba(120,110,160,.30), transparent 55%),
+      radial-gradient(90% 70% at 8% 4%, rgba(40,60,110,.30), transparent 60%),
+      linear-gradient(165deg,#16161e 0%,#1d1c28 38%,#13131b 72%,#0b0b10 100%);
+  }
+  /* "photo" texturée façon grain argentique + vignette */
+  .hero-bg::after{
+    content:""; position:absolute; inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity:.06; mix-blend-mode:screen;
+  }
+  .hero-vignette{
+    position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:radial-gradient(130% 110% at 50% 35%, transparent 48%, rgba(0,0,0,.55) 100%);
+  }
+  /* nuage de couleur qui dérive très lentement dans le hero */
+  .hero-aurora{
+    position:absolute; z-index:0; pointer-events:none;
+    width:60vw; height:60vw; left:-10vw; top:-12vw;
+    background:radial-gradient(circle, rgba(120,90,255,.22), transparent 65%);
+    filter:blur(40px);
+    animation:aurora-drift 26s ease-in-out infinite alternate;
+  }
+  .hero-aurora.two{
+    left:auto; right:-14vw; top:auto; bottom:-18vw;
+    width:52vw; height:52vw;
+    background:radial-gradient(circle, rgba(255,93,177,.16), transparent 65%);
+    animation-duration:32s; animation-delay:-6s;
+  }
+  @keyframes aurora-drift{
+    from{transform:translate(0,0) scale(1)}
+    to{transform:translate(60px,40px) scale(1.12)}
+  }
+
+  /* hero topbar + typo */
+  .hero-nav{
+    position:relative; z-index:3;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:26px clamp(20px,5vw,64px);
+    color:rgba(255,255,255,.92);
+  }
+  .hero-brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-.02em;font-size:18px}
+  .hero-brand .mark{
+    width:24px;height:24px;border-radius:7px;
+    background:conic-gradient(from 200deg,var(--c-blue),var(--c-indigo),var(--c-pink),var(--c-blue));
+    box-shadow:0 0 18px rgba(120,90,255,.6);
+  }
+  .hero-links{display:flex;gap:30px;font-size:14px;font-weight:500;color:rgba(255,255,255,.62)}
+  .hero-links span{cursor:pointer;transition:color .25s var(--ease)}
+  .hero-links span:hover{color:#fff}
+  .hero-mode{
+    font-size:12.5px;font-weight:600;color:rgba(255,255,255,.85);
+    padding:8px 15px;border-radius:999px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.16);
+    display:flex;align-items:center;gap:8px;backdrop-filter:blur(8px);
+  }
+  .hero-mode .ping{
+    width:7px;height:7px;border-radius:50%;
+    background:linear-gradient(var(--c-blue),var(--c-violet));
+    box-shadow:0 0 0 0 rgba(120,90,255,.6);
+    animation:ping 2.4s var(--ease) infinite;
+  }
+  @keyframes ping{
+    0%{box-shadow:0 0 0 0 rgba(120,90,255,.55)}
+    70%,100%{box-shadow:0 0 0 9px rgba(120,90,255,0)}
+  }
+
+  .hero-content{
+    position:relative; z-index:3;
+    padding:clamp(28px,6vh,70px) clamp(20px,5vw,64px) 0;
+    max-width:1180px; margin:0 auto;
+  }
+  .hero-kicker{
+    font-size:12.5px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;
+    color:rgba(255,255,255,.5);margin-bottom:18px;
+  }
+  .hero-title{
+    font-size:clamp(46px,8.5vw,108px);
+    line-height:.92;font-weight:800;letter-spacing:-.045em;
+    color:#fff;max-width:14ch;
+  }
+  .hero-title .it{font-style:italic;font-weight:500;color:transparent;
+    background:linear-gradient(100deg,#fff,#c8c2ff 55%,#ffc6e8);
+    -webkit-background-clip:text;background-clip:text;}
+  .hero-sub{
+    margin-top:24px;font-size:clamp(15px,1.6vw,18px);font-weight:400;
+    color:rgba(255,255,255,.6);max-width:46ch;line-height:1.55;
+  }
+  /* zone "cliquée" sur le site — encadré sélection */
+  .selected-block{
+    position:relative; z-index:3;
+    margin:34px auto 0; max-width:1180px;
+    padding:0 clamp(20px,5vw,64px);
+  }
+  .selected-frame{
+    position:relative;
+    display:inline-flex;align-items:center;gap:14px;
+    padding:16px 22px;border-radius:16px;
+    color:rgba(255,255,255,.92);font-weight:600;font-size:15px;
+    background:rgba(255,255,255,.04);
+    outline:1.5px dashed rgba(120,150,255,.55);
+    outline-offset:3px;
+  }
+  .selected-frame::before{
+    content:""; position:absolute; inset:-3px; border-radius:18px;
+    background:linear-gradient(120deg,var(--c-blue),var(--c-violet),var(--c-pink));
+    opacity:.0; filter:blur(10px); z-index:-1;
+    animation:sel-breathe 4s ease-in-out infinite;
+  }
+  @keyframes sel-breathe{0%,100%{opacity:.18}50%{opacity:.4}}
+  .selected-tag{
+    position:absolute;top:-12px;left:14px;
+    font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+    padding:3px 9px;border-radius:7px;color:#fff;
+    background:linear-gradient(120deg,var(--c-blue),var(--c-indigo));
+    box-shadow:0 6px 16px -4px rgba(60,40,200,.55);
+  }
+  .selected-frame .dot{width:9px;height:9px;border-radius:50%;background:#fff;opacity:.5}
+
+  /* ============ PANNEAU FLOTTANT IA ============ */
+  .ai-deck{
+    position:relative; z-index:5;
+    max-width:1240px; margin:0 auto;
+    padding:clamp(40px,7vh,90px) clamp(20px,5vw,64px) 80px;
+  }
+  .deck-head{
+    text-align:center; margin-bottom:38px; color:#fff;
+  }
+  .deck-head h2{
+    font-size:clamp(22px,3vw,30px);font-weight:700;letter-spacing:-.03em;
+    color:rgba(255,255,255,.96);
+  }
+  .deck-head p{
+    margin-top:10px;font-size:14.5px;color:rgba(255,255,255,.52);font-weight:400;
+  }
+
+  /* onglets */
+  .tabs{
+    display:inline-flex;gap:5px;padding:5px;margin:22px auto 0;
+    border-radius:999px;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.12);
+    backdrop-filter:blur(10px);
+  }
+  .tab{
+    border:0;cursor:pointer;font-family:inherit;
+    font-size:13.5px;font-weight:600;color:rgba(255,255,255,.6);
+    padding:9px 20px;border-radius:999px;
+    background:transparent;transition:all .3s var(--ease);
+  }
+  .tab:hover{color:rgba(255,255,255,.9)}
+  .tab.active{
+    color:var(--ink);
+    background:#fff;
+    box-shadow:0 6px 18px -6px rgba(0,0,0,.4);
+  }
+
+  /* grille des 3 cartes */
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;margin-top:40px;align-items:start;
+  }
+  @media(max-width:980px){.cards{grid-template-columns:1fr;max-width:440px;margin-inline:auto}}
+
+  .panel{
+    position:relative;
+    border-radius:28px;
+    background:var(--glass);
+    backdrop-filter:blur(26px) saturate(1.5);
+    -webkit-backdrop-filter:blur(26px) saturate(1.5);
+    border:1px solid rgba(255,255,255,.6);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.7) inset,
+      0 30px 70px -28px rgba(20,18,60,.55),
+      0 8px 24px -16px rgba(20,18,60,.35);
+    padding:26px 24px 24px;
+    overflow:hidden;
+    transition:transform .5s var(--ease), box-shadow .5s var(--ease);
+  }
+  .panel:hover{transform:translateY(-4px)}
+  .panel .step{
+    display:flex;align-items:center;gap:9px;
+    font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:20px;
+  }
+  .panel .step b{
+    width:22px;height:22px;border-radius:7px;display:grid;place-items:center;
+    color:#fff;font-size:12px;font-weight:800;letter-spacing:0;
+    background:linear-gradient(135deg,var(--c-blue),var(--c-indigo));
+    box-shadow:0 4px 10px -3px rgba(60,40,200,.5);
+  }
+
+  /* ---------- ÉTAT 1 : SAISIE + halo animé ---------- */
+  .prompt-wrap{position:relative;padding:14px 6px 6px}
+  /* l'AURA dégradée qui tourne autour de la barre */
+  .prompt-aura{
+    position:absolute; inset:2px; border-radius:20px; z-index:0;
+    background:conic-gradient(from 0deg,
+      var(--c-blue),var(--c-violet),var(--c-pink),var(--c-indigo),var(--c-blue));
+    filter:blur(13px); opacity:.55;
+    animation:spin 7s linear infinite;
+  }
+  .prompt-aura.soft{
+    inset:-2px; filter:blur(26px); opacity:.28;
+    animation-duration:11s; animation-direction:reverse;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .prompt-bar{
+    position:relative; z-index:2;
+    display:flex; align-items:center; gap:12px;
+    background:#fff; border-radius:16px;
+    padding:7px 7px 7px 18px;
+    box-shadow:0 10px 28px -14px rgba(30,20,90,.45);
+  }
+  .prompt-bar .spark{
+    color:var(--c-indigo);font-size:17px;flex-shrink:0;
+    animation:twinkle 3.2s var(--ease) infinite;
+  }
+  @keyframes twinkle{0%,100%{opacity:.55;transform:scale(.9) rotate(0)}50%{opacity:1;transform:scale(1.15) rotate(20deg)}}
+  .prompt-input{
+    flex:1;border:0;outline:0;font-family:inherit;
+    font-size:15px;font-weight:500;color:var(--ink);background:transparent;
+  }
+  .prompt-input::placeholder{color:var(--ink-faint);font-weight:400}
+  .prompt-send{
+    flex-shrink:0;border:0;cursor:pointer;font-family:inherit;
+    width:40px;height:40px;border-radius:12px;display:grid;place-items:center;
+    color:#fff;font-size:17px;
+    background:linear-gradient(135deg,#171622,#26243a);
+    box-shadow:0 8px 20px -8px rgba(0,0,0,.6);
+    transition:transform .25s var(--ease-spring),box-shadow .25s var(--ease);
+    position:relative;overflow:hidden;
+  }
+  .prompt-send::after{
+    content:"";position:absolute;inset:0;border-radius:inherit;
+    background:radial-gradient(circle at 30% 25%,rgba(155,130,255,.7),transparent 60%);
+    opacity:0;transition:opacity .3s var(--ease);
+  }
+  .prompt-send:hover{transform:translateY(-2px) scale(1.05);box-shadow:0 12px 26px -8px rgba(80,40,200,.6)}
+  .prompt-send:hover::after{opacity:1}
+  .prompt-hint{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-top:16px;padding:0 4px;font-size:12.5px;color:var(--ink-soft);
+  }
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;padding:0 4px}
+  .chip{
+    font-size:12.5px;font-weight:500;color:var(--ink-soft);
+    padding:7px 13px;border-radius:999px;cursor:pointer;
+    background:rgba(120,110,160,.07);
+    border:1px solid var(--line);
+    transition:all .25s var(--ease);
+  }
+  .chip:hover{color:var(--c-indigo);border-color:rgba(120,90,255,.4);background:rgba(120,90,255,.07);transform:translateY(-1px)}
+  .credit-note{
+    display:flex;align-items:center;gap:7px;
+    margin-top:20px;padding-top:16px;border-top:1px solid var(--line);
+    font-size:12.5px;color:var(--ink-faint);
+  }
+  .credit-note b{color:var(--ink);font-weight:700}
+
+  /* ---------- ÉTAT 2 : ORBE Apple Intelligence ---------- */
+  .loading-body{
+    display:flex;flex-direction:column;align-items:center;
+    padding:18px 0 6px;text-align:center;
+  }
+  .orb-stage{
+    position:relative;width:168px;height:168px;
+    display:grid;place-items:center;margin:6px 0 30px;
+  }
+  /* halo derrière l'orbe qui pulse */
+  .orb-glow{
+    position:absolute;inset:-34px;border-radius:50%;
+    background:radial-gradient(circle,rgba(130,90,255,.45),transparent 62%);
+    filter:blur(20px);
+    animation:orb-pulse 4.5s ease-in-out infinite;
+  }
+  @keyframes orb-pulse{0%,100%{opacity:.6;transform:scale(.92)}50%{opacity:1;transform:scale(1.12)}}
+
+  .orb{
+    position:relative;width:146px;height:146px;border-radius:50%;
+    overflow:hidden;
+    background:#0c0c14;
+    box-shadow:
+      inset 0 0 30px rgba(255,255,255,.12),
+      0 18px 44px -16px rgba(60,30,160,.65);
+    animation:orb-breathe 5.5s ease-in-out infinite;
+  }
+  @keyframes orb-breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  /* couches de couleur floues qui tournent, désynchronisées, en mix-blend */
+  .orb i{position:absolute;border-radius:50%;mix-blend-mode:screen;filter:blur(15px)}
+  .orb .b1{
+    inset:-18%;
+    background:conic-gradient(from 0deg,#2b6dff,#6a45ff,#9b4dff,#ff5db1,#2b6dff);
+    animation:spin 6s linear infinite;
+  }
+  .orb .b2{
+    inset:6%;
+    background:radial-gradient(circle at 32% 30%,#ff5db1,transparent 55%),
+               radial-gradient(circle at 70% 72%,#2b6dff,transparent 55%);
+    animation:spin 9s linear infinite reverse;
+  }
+  .orb .b3{
+    inset:18%;
+    background:radial-gradient(circle at 60% 35%,#b98bff,transparent 60%),
+               radial-gradient(circle at 30% 75%,#5ad1ff,transparent 55%);
+    animation:orb-wander 7s ease-in-out infinite;
+  }
+  @keyframes orb-wander{
+    0%,100%{transform:translate(0,0) scale(1)}
+    33%{transform:translate(14px,-10px) scale(1.1)}
+    66%{transform:translate(-12px,12px) scale(.95)}
+  }
+  /* reflet vitreux fixe en surface */
+  .orb .gloss{
+    inset:0;mix-blend-mode:normal;filter:none;
+    background:radial-gradient(circle at 34% 26%,rgba(255,255,255,.5),transparent 38%);
+  }
+  /* anneau fin qui tourne autour */
+  .orb-ring{
+    position:absolute;inset:-9px;border-radius:50%;
+    border:1.5px solid transparent;
+    background:conic-gradient(from 90deg,transparent,rgba(180,150,255,.8),transparent 55%) border-box;
+    -webkit-mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;
+    animation:spin 4.5s linear infinite;
+  }
+
+  .loading-title{font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+  .loading-title .gradtext{
+    background:linear-gradient(100deg,var(--c-blue),var(--c-violet),var(--c-pink));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    background-size:200% auto;animation:shift 4s linear infinite;
+  }
+  @keyframes shift{to{background-position:200% center}}
+  /* sous-texte qui change façon "étapes" */
+  .loading-steps{height:20px;margin-top:9px;overflow:hidden;position:relative;width:100%}
+  .loading-steps ul{list-style:none;animation:roll 9s steps(1) infinite}
+  .loading-steps li{height:20px;font-size:13px;color:var(--ink-soft);font-weight:500}
+  @keyframes roll{0%,30%{transform:translateY(0)}33%,63%{transform:translateY(-20px)}66%,96%{transform:translateY(-40px)}}
+  /* barre de progression fluide */
+  .loading-prog{
+    margin-top:24px;width:78%;height:5px;border-radius:99px;overflow:hidden;
+    background:rgba(120,110,160,.14);
+  }
+  .loading-prog span{
+    display:block;height:100%;border-radius:99px;width:40%;
+    background:linear-gradient(90deg,var(--c-blue),var(--c-violet),var(--c-pink));
+    background-size:200% auto;
+    animation:prog 2.6s var(--ease) infinite,shift 3s linear infinite;
+  }
+  @keyframes prog{0%{width:8%;margin-left:0}50%{width:62%}100%{width:96%;margin-left:4%}}
+
+  /* ---------- ÉTAT 3 : PROPOSITION ---------- */
+  .result-preview{
+    position:relative;border-radius:18px;overflow:hidden;
+    height:128px;margin-bottom:18px;
+    background:linear-gradient(150deg,#101a3a,#1b1340 55%,#2a1230);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+    display:flex;align-items:flex-end;padding:16px;
+  }
+  .result-preview::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(80% 60% at 75% 10%,rgba(120,90,255,.5),transparent 60%),
+              radial-gradient(70% 60% at 15% 90%,rgba(255,93,177,.32),transparent 60%);
+    animation:aurora-drift 14s ease-in-out infinite alternate;
+  }
+  .result-preview .pv-title{
+    position:relative;color:#fff;font-weight:700;font-size:17px;letter-spacing:-.02em;
+  }
+  .result-preview .pv-sub{position:relative;color:rgba(255,255,255,.6);font-size:11.5px;margin-top:3px}
+  .result-badge{
+    position:absolute;top:12px;right:12px;z-index:2;
+    font-size:11px;font-weight:700;letter-spacing:.04em;
+    padding:5px 11px;border-radius:999px;color:#fff;
+    background:rgba(255,255,255,.12);backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,.22);
+    display:flex;align-items:center;gap:6px;
+  }
+  .result-badge .gd{width:7px;height:7px;border-radius:50%;
+    background:conic-gradient(var(--c-blue),var(--c-pink),var(--c-blue));}
+
+  .result-summary{font-size:13.5px;line-height:1.5;color:var(--ink-soft);padding:0 2px}
+  .result-summary b{color:var(--ink);font-weight:600}
+  .diff{
+    display:flex;align-items:center;gap:10px;margin:16px 0 4px;padding:0 2px;
+    font-size:12.5px;
+  }
+  .swatch{width:26px;height:26px;border-radius:8px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+  .sw-old{background:#0b1320}
+  .arrow{color:var(--ink-faint)}
+  .sw-new{background:linear-gradient(135deg,#0a1230,#1a1148)}
+  .diff-label{color:var(--ink-faint);font-weight:500}
+  .diff-label b{color:var(--ink);font-weight:700}
+
+  /* actions */
+  .actions{margin-top:22px;display:flex;flex-direction:column;gap:10px}
+  .btn{
+    font-family:inherit;border:0;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:9px;
+    font-size:14.5px;font-weight:600;
+    padding:14px 18px;border-radius:14px;
+    transition:transform .25s var(--ease-spring),box-shadow .3s var(--ease),background .3s var(--ease);
+  }
+  .btn-primary{
+    color:#fff;position:relative;overflow:hidden;
+    background:linear-gradient(120deg,var(--c-blue),var(--c-indigo) 55%,var(--c-violet));
+    background-size:160% auto;
+    box-shadow:0 14px 30px -12px rgba(80,40,220,.6);
+  }
+  .btn-primary:hover{transform:translateY(-2px);background-position:right center;box-shadow:0 18px 38px -12px rgba(80,40,220,.7)}
+  .btn-primary .credit-pill{
+    font-size:11.5px;font-weight:700;
+    padding:3px 9px;border-radius:999px;
+    background:rgba(255,255,255,.22);
+  }
+  .btn-primary::before{
+    content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);
+    transform:skewX(-18deg);
+    animation:sheen 4.5s var(--ease) infinite;
+  }
+  @keyframes sheen{0%,72%{left:-60%}86%{left:130%}100%{left:130%}}
+
+  .btn-row{display:flex;gap:10px}
+  .btn-row .btn{flex:1}
+  .btn-ghost{
+    background:rgba(120,110,160,.06);
+    color:var(--ink);
+    border:1px solid var(--line);
+  }
+  .btn-ghost:hover{transform:translateY(-2px);background:rgba(120,90,255,.08);border-color:rgba(120,90,255,.3);color:var(--c-indigo)}
+  .btn-quiet{
+    background:transparent;color:var(--ink-faint);font-weight:500;padding:10px;
+  }
+  .btn-quiet:hover{color:var(--ink)}
+
+  /* footer flottant */
+  .deck-foot{
+    text-align:center;margin-top:46px;
+    font-size:12.5px;color:rgba(255,255,255,.4);font-weight:400;
+  }
+  .deck-foot b{color:rgba(255,255,255,.7);font-weight:600}
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  }
+</style>
+</head>
+<body>
+  <main class="stage">
+    <div class="hero-bg"></div>
+    <div class="hero-aurora"></div>
+    <div class="hero-aurora two"></div>
+    <div class="hero-vignette"></div>
+
+    <!-- NAV du faux site photographe -->
+    <nav class="hero-nav">
+      <div class="hero-brand"><span class="mark"></span> Camille Aubert</div>
+      <div class="hero-links"><span>Portfolio</span><span>Mariages</span><span>À propos</span><span>Contact</span></div>
+      <div class="hero-mode"><span class="ping"></span> Mode édition</div>
+    </nav>
+
+    <!-- HERO du faux site -->
+    <header class="hero-content">
+      <div class="hero-kicker">Photographe · Lyon</div>
+      <h1 class="hero-title">La lumière, <span class="it">juste avant</span> qu'elle parte.</h1>
+      <p class="hero-sub">Mariages, portraits et reportages argentiques. Des images qui gardent la chaleur de l'instant, longtemps après.</p>
+    </header>
+
+    <div class="selected-block">
+      <div class="selected-frame">
+        <span class="selected-tag">Sélection</span>
+        <span class="dot"></span> Section Hero · fond
+      </div>
+    </div>
+
+    <!-- DECK IA : les 3 états -->
+    <section class="ai-deck">
+      <div class="deck-head">
+        <h2>Modifiez votre site, à la voix ou à la main.</h2>
+        <p>Vous cliquez une zone, vous décrivez l'envie — l'IA propose, vous validez. Voici les trois moments.</p>
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-tab="all">Tout voir</button>
+          <button class="tab" data-tab="1">1 · Saisie</button>
+          <button class="tab" data-tab="2">2 · L'IA travaille</button>
+          <button class="tab" data-tab="3">3 · Proposition</button>
+        </div>
+      </div>
+
+      <div class="cards">
+
+        <!-- ====== ÉTAT 1 : SAISIE ====== -->
+        <article class="panel" data-card="1">
+          <div class="step"><b>1</b> Décrivez votre envie</div>
+
+          <div class="prompt-wrap">
+            <div class="prompt-aura soft"></div>
+            <div class="prompt-aura"></div>
+            <div class="prompt-bar">
+              <span class="spark">&#10022;</span>
+              <input class="prompt-input" type="text" value="Mets le fond en bleu nuit, plus profond" aria-label="Demande à l'IA" />
+              <button class="prompt-send" aria-label="Envoyer à l'IA">&#10022;</button>
+            </div>
+          </div>
+
+          <div class="chips">
+            <span class="chip">Rendre plus chaleureux</span>
+            <span class="chip">Texte plus court</span>
+            <span class="chip">Fond bleu nuit</span>
+          </div>
+
+          <div class="credit-note">
+            <span class="spark" style="font-size:13px">&#10022;</span>
+            La saisie est gratuite — vous ne payez que si vous acceptez. <b>1 crédit</b>.
+          </div>
+        </article>
+
+        <!-- ====== ÉTAT 2 : CHARGEMENT (ORBE) ====== -->
+        <article class="panel" data-card="2">
+          <div class="step"><b>2</b> L'IA travaille</div>
+
+          <div class="loading-body">
+            <div class="orb-stage">
+              <div class="orb-glow"></div>
+              <div class="orb-ring"></div>
+              <div class="orb">
+                <i class="b1"></i>
+                <i class="b2"></i>
+                <i class="b3"></i>
+                <i class="gloss"></i>
+              </div>
+            </div>
+
+            <div class="loading-title"><span class="gradtext">L'intelligence imagine&hellip;</span></div>
+
+            <div class="loading-steps" aria-hidden="true">
+              <ul>
+                <li>Lecture de votre section&hellip;</li>
+                <li>Recherche de la bonne teinte&hellip;</li>
+                <li>Préparation de l'aperçu&hellip;</li>
+              </ul>
+            </div>
+
+            <div class="loading-prog"><span></span></div>
+          </div>
+        </article>
+
+        <!-- ====== ÉTAT 3 : PROPOSITION ====== -->
+        <article class="panel" data-card="3">
+          <div class="step"><b>3</b> Voici la proposition</div>
+
+          <div class="result-preview">
+            <div class="result-badge"><span class="gd"></span> Aperçu</div>
+            <div>
+              <div class="pv-title">La lumière, juste avant&hellip;</div>
+              <div class="pv-sub">Fond bleu nuit appliqué</div>
+            </div>
+          </div>
+
+          <p class="result-summary">
+            J'ai assombri le fond du hero vers un <b>bleu nuit profond</b> et renforcé le contraste du titre pour garder la lisibilité.
+          </p>
+
+          <div class="diff">
+            <span class="swatch sw-old"></span>
+            <span class="arrow">&rarr;</span>
+            <span class="swatch sw-new"></span>
+            <span class="diff-label">Fond&nbsp;: <b>#0A1230</b> · bleu nuit</span>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary">
+              <span>&#10003; Accepter et publier</span>
+              <span class="credit-pill">1 crédit</span>
+            </button>
+            <div class="btn-row">
+              <button class="btn btn-ghost">&#10022; Affiner</button>
+              <button class="btn btn-ghost">&#8635; Réessayer</button>
+            </div>
+            <button class="btn btn-quiet">Annuler</button>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="deck-foot">Édition simple, à la main ou avec l'IA — <b>sans surcharge</b>. Vous gardez la main à chaque étape.</p>
+    </section>
+  </main>
+
+  <script>
+    // Bascule entre "tout voir" et un état isolé (focus animation)
+    const tabs = document.querySelectorAll('.tab');
+    const cards = document.querySelectorAll('[data-card]');
+    tabs.forEach(t=>{
+      t.addEventListener('click',()=>{
+        tabs.forEach(x=>x.classList.remove('active'));
+        t.classList.add('active');
+        const v = t.dataset.tab;
+        cards.forEach(c=>{
+          const show = v==='all' || c.dataset.card===v;
+          c.style.display = show ? '' : 'none';
+        });
+        // centre la carte isolée
+        document.querySelector('.cards').style.gridTemplateColumns =
+          v==='all' ? '' : 'minmax(0,420px)';
+        document.querySelector('.cards').style.justifyContent = v==='all' ? '' : 'center';
+      });
+    });
+  </script>
+</body>
+</html>

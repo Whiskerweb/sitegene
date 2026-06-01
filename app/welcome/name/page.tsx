@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function NameSitePage() {
+  const router = useRouter();
   const [token, setToken] = useState("");
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
@@ -13,6 +15,16 @@ export default function NameSitePage() {
     const p = new URLSearchParams(window.location.search);
     setToken(p.get("token") ?? "");
   }, []);
+
+  // Une fois le site en ligne, on emmène le client DIRECTEMENT sur son dashboard.
+  useEffect(() => {
+    if (!liveSlug) return;
+    const t = setTimeout(() => {
+      router.push("/dashboard");
+      router.refresh();
+    }, 1600);
+    return () => clearTimeout(t);
+  }, [liveSlug, router]);
 
   const slug = name
     .toLowerCase()
@@ -48,7 +60,10 @@ export default function NameSitePage() {
           <h1 className="font-display text-[32px] font-semibold tracking-[-0.02em]">
             Votre site est en ligne 🎉
           </h1>
-          <p className="mt-3 text-muted">Votre portfolio est joignable ici :</p>
+          <p className="mt-3 text-muted">
+            Redirection vers votre tableau de bord… Vous pourrez y voir votre site
+            et le modifier vous-même.
+          </p>
           <a
             href={`/s/${liveSlug}`}
             className="mt-5 inline-block rounded-xl border border-line bg-ink-700 px-5 py-3 font-medium text-violet-400 hover:text-violet-500"
@@ -57,10 +72,10 @@ export default function NameSitePage() {
           </a>
           <div className="mt-8">
             <a
-              href={`/s/${liveSlug}`}
+              href="/dashboard"
               className="btn-violet rounded-full px-6 py-3.5 text-[15px] font-semibold text-white"
             >
-              Voir mon site
+              Accéder à mon tableau de bord
             </a>
           </div>
         </div>
@@ -87,6 +102,7 @@ export default function NameSitePage() {
           <input
             autoFocus
             required
+            suppressHydrationWarning
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="ex : studio-lumen"

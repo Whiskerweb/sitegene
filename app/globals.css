@@ -69,6 +69,57 @@
 
   /* ---- Easing ---- */
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ---- BorderBeam (faisceau lumineux le long de la bordure) ---- */
+  --animate-border-beam: border-beam calc(var(--duration) * 1s) infinite linear;
+
+  /* ---- Compat shadcn (requis par components/ui/sign-up.tsx) ----
+     Valeurs shadcn par défaut (thème clair). N'écrase PAS --color-card
+     ni --color-muted qui existent déjà (utilisés par le thème sombre). */
+  --color-background: #ffffff;
+  --color-foreground: #0a0a0a;
+  --color-card-foreground: #0a0a0a;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #0a0a0a;
+  --color-primary: #18181b;
+  --color-primary-foreground: #fafafa;
+  --color-secondary: #f4f4f5;
+  --color-secondary-foreground: #18181b;
+  --color-muted-foreground: #71717a;
+  --color-accent: #f4f4f5;
+  --color-accent-foreground: #18181b;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #fafafa;
+  --color-border: #e4e4e7;
+  --color-input: #e4e4e7;
+  --color-ring: #18181b;
+  --color-chart-1: #e76e50;
+  --color-chart-2: #2a9d90;
+  --color-chart-3: #274754;
+  --color-chart-4: #e8c468;
+  --color-chart-5: #f4a462;
+}
+
+@property --border-beam-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* Masque « anneau de bordure » : ne garde que l'épaisseur de padding.
+   L'ordre compte — le composite doit être posé APRÈS le raccourci mask,
+   sinon le raccourci le réinitialise à `add` (le masque ne découpe plus). */
+.beam-ring-mask {
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+@keyframes border-beam {
+  to {
+    --border-beam-angle: 360deg;
+  }
 }
 
 :root {
@@ -216,6 +267,243 @@ body {
   box-shadow: 0 4px 12px rgba(100, 150, 200, 0.08);
 }
 
+/* ============================================================
+   Ciel vivant (SkyBackground) — fond animé du hero
+   ============================================================ */
+
+/* Dégradé ciel qui respire (saturation + position lentes) */
+.sky-anim {
+  background:
+    radial-gradient(120% 80% at 78% -8%, rgba(255, 255, 255, 0.32), transparent 52%),
+    radial-gradient(90% 60% at 12% 4%, rgba(255, 255, 255, 0.2), transparent 60%),
+    linear-gradient(180deg, #5b8fd6 0%, #6f9fdd 22%, #93b9e8 46%, #c4ddf5 70%, #eef5fc 88%, #f8fbff 100%);
+  background-size: 100% 100%, 100% 100%, 100% 220%;
+  background-position: 0 0, 0 0, 0 0;
+  animation: sky-drift 26s ease-in-out infinite alternate;
+}
+@keyframes sky-drift {
+  0% { background-position: 0% 0%, 0% 0%, 0% 8%; filter: saturate(1); }
+  100% { background-position: 6% 2%, -4% 1%, 0% 0%; filter: saturate(1.08); }
+}
+
+/* Parallaxe des bancs de nuages (dérive horizontale, vitesses distinctes) */
+.cloud-layer { will-change: transform; transform-origin: center; }
+.cloud-far { animation: cloud-pan-far 80s linear infinite; }
+.cloud-mid { animation: cloud-pan-mid 54s linear infinite; }
+.cloud-near { animation: cloud-pan-near 38s linear infinite; }
+@keyframes cloud-pan-far {
+  from { transform: translateX(0); } to { transform: translateX(-120px); }
+}
+@keyframes cloud-pan-mid {
+  from { transform: translateX(0); } to { transform: translateX(-220px); }
+}
+@keyframes cloud-pan-near {
+  from { transform: translateX(0); } to { transform: translateX(-360px); }
+}
+
+/* Poussière de lumière : petits points qui montent doucement */
+.sky-motes {
+  background-image:
+    radial-gradient(2px 2px at 20% 80%, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1.5px 1.5px at 60% 60%, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1.5px 1.5px at 80% 90%, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 35% 50%, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 90% 40%, rgba(255, 255, 255, 0.7), transparent);
+  background-size: 100% 100%;
+  opacity: 0.6;
+  animation: motes-rise 14s linear infinite;
+}
+@keyframes motes-rise {
+  from { transform: translateY(0); opacity: 0.55; }
+  50% { opacity: 0.8; }
+  to { transform: translateY(-40px); opacity: 0.55; }
+}
+
+/* ============================================================
+   Liquid glass premium (cartes flottantes) — distorsion réelle
+   via filtre SVG #sg-liquid (défini dans LiquidGlass.tsx)
+   ============================================================ */
+.liquid-glass {
+  position: relative;
+  border-radius: 28px;
+  isolation: isolate;
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(8px) saturate(1.6);
+  -webkit-backdrop-filter: blur(8px) saturate(1.6);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.75) inset,
+    0 2px 12px -2px rgba(255, 255, 255, 0.5) inset,
+    0 24px 60px -24px rgba(31, 78, 150, 0.5),
+    0 8px 24px -12px rgba(20, 40, 80, 0.25);
+}
+/* Liseré lumineux qui court sur le bord (cf. .glass::before mais plus marqué) */
+.liquid-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.4px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.1) 30%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(160, 200, 255, 0.25) 70%,
+    rgba(255, 255, 255, 0.85) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .liquid-glass { background: rgba(255, 255, 255, 0.9); }
+}
+
+/* Indice de défilement (chevron qui rebondit doucement) */
+@keyframes nudge-down {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+.nudge-down { animation: nudge-down 1.8s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sky-anim, .cloud-far, .cloud-mid, .cloud-near, .sky-motes, .nudge-down {
+    animation: none !important;
+  }
+}
+
+/* ============================================================
+   Cosmic parallax background (étoiles GPU) — teinté ciel nuit Akyra
+   box-shadow + translateY → 1 seul transform animé = fluide.
+   ============================================================ */
+:root { --animation-iteration: infinite; }
+
+.cosmic-parallax-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: radial-gradient(140% 100% at 50% 0%, #2a4f7f 0%, #1f3a5f 38%, #142a47 70%, #0e2138 100%);
+}
+.cosmic-bg-only { pointer-events: none; }
+
+.cosmic-stars,
+.cosmic-stars-medium,
+.cosmic-stars-large {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: transparent;
+  border-radius: 50%;
+  will-change: transform;
+  animation: animStar 60s linear var(--animation-iteration);
+}
+.cosmic-stars { width: 1px; height: 1px; }
+.cosmic-stars-medium { width: 2px; height: 2px; animation-duration: 120s; }
+.cosmic-stars-large { width: 3px; height: 3px; animation-duration: 180s; }
+/* duplicat sous le viewport pour boucle sans couture */
+.cosmic-stars::after,
+.cosmic-stars-medium::after,
+.cosmic-stars-large::after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: inherit;
+  height: inherit;
+  background: transparent;
+  box-shadow: inherit;
+  border-radius: 50%;
+}
+
+/* Lueur d'horizon (soleil bas) + sol bleu profond */
+#horizon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 30%;
+}
+#horizon .glow {
+  position: absolute;
+  left: 50%;
+  bottom: -60%;
+  width: 160%;
+  height: 100%;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side, rgba(248, 207, 85, 0.55), rgba(111, 159, 221, 0.18) 45%, transparent 72%);
+  filter: blur(8px);
+}
+#earth {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: -52%;
+  height: 70%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #1b3a5f 0%, #0c1f36 60%);
+  box-shadow: 0 -8px 60px -10px rgba(150, 190, 240, 0.5), inset 0 6px 40px rgba(200, 225, 255, 0.25);
+}
+
+/* Titre / sous-titre intégrés (optionnels, masqués en bgOnly) */
+#title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 38%;
+  text-align: center;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: clamp(40px, 9vw, 110px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 40px rgba(180, 210, 255, 0.45);
+  animation: animGravity 8s ease-out var(--animation-iteration);
+}
+#subtitle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 56%;
+  text-align: center;
+  color: rgba(220, 233, 247, 0.85);
+  font-family: var(--font-sans);
+  font-size: clamp(12px, 1.6vw, 18px);
+  font-weight: 600;
+}
+#subtitle .subtitle-part-1 { animation: animDont 8s ease-out var(--animation-iteration); display: inline-block; }
+#subtitle .subtitle-part-2 { animation: animLet 8s ease-out var(--animation-iteration); display: inline-block; }
+#subtitle .subtitle-part-3 { animation: animGo 8s ease-out var(--animation-iteration); display: inline-block; }
+
+@keyframes animStar {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-2000px); }
+}
+@keyframes animGravity {
+  0% { transform: translateY(-26px); opacity: 0; }
+  30%, 80% { letter-spacing: 40px; padding-left: 40px; transform: translateY(0px); opacity: 1; }
+  92%, 100% { letter-spacing: 35px; padding-left: 35px; transform: translateY(-4px); opacity: 0; }
+}
+@keyframes animDont {
+  0%, 15% { transform: translateY(-26px); opacity: 0; }
+  35%, 80% { transform: translateY(0px); opacity: 1; }
+  92%, 100% { transform: translateY(-4px); opacity: 0; }
+}
+@keyframes animLet {
+  0%, 25% { transform: translateY(-26px); opacity: 0; }
+  45%, 80% { transform: translateY(0px); opacity: 1; }
+  92%, 100% { transform: translateY(-4px); opacity: 0; }
+}
+@keyframes animGo {
+  0%, 35% { transform: translateY(-26px); opacity: 0; }
+  55%, 80% { transform: translateY(0px); opacity: 1; }
+  92%, 100% { transform: translateY(-4px); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cosmic-stars, .cosmic-stars-medium, .cosmic-stars-large, #title { animation: none !important; }
+}
+
 /* Blobs flous très subtils (fond aérien, pas de glow violet) */
 .blob {
   position: absolute;
@@ -237,6 +525,124 @@ body {
   -webkit-text-stroke: 2px rgba(14, 14, 18, 0.06);
 }
 
+/* ===== DA Cloud — Landing (réf. fluxor) ===== */
+
+/* Ciel saturé du hero, fondu vers les nuages blancs en bas */
+.sky-hero {
+  background:
+    radial-gradient(125% 85% at 78% -10%, rgba(255, 255, 255, 0.28), transparent 52%),
+    radial-gradient(80% 60% at 12% 8%, rgba(255, 255, 255, 0.18), transparent 60%),
+    linear-gradient(180deg, #5b8fd6 0%, #6f9fdd 24%, #93b9e8 50%, #c4ddf5 74%, #eef5fc 90%, #f8fbff 100%);
+}
+
+/* Halo solaire doux (coin haut) */
+.sun-halo {
+  background: radial-gradient(closest-side, rgba(255, 248, 227, 0.9), rgba(255, 236, 189, 0.32) 46%, transparent 76%);
+}
+
+/* Bouton CTA ambre — signature (jaune fluxor sur ciel bleu) */
+.btn-gold {
+  background: linear-gradient(180deg, #f8cf55 0%, #f0b429 100%);
+  color: #3a2a00;
+  box-shadow: 0 16px 34px -12px rgba(240, 180, 41, 0.62), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+.btn-gold:hover {
+  background: linear-gradient(180deg, #fad766 0%, #f5b820 100%);
+}
+
+/* Carte flottante (site / dashboard) qui sort des nuages */
+.float-card {
+  box-shadow:
+    0 36px 90px -30px rgba(31, 78, 150, 0.5),
+    0 10px 30px -16px rgba(20, 40, 80, 0.22);
+}
+
+/* Avion en papier : flottement doux (--rot pilote l'inclinaison) */
+@keyframes plane-float {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, -8deg)); }
+  50% { transform: translateY(-14px) rotate(calc(var(--rot, -8deg) + 4deg)); }
+}
+.plane-float { animation: plane-float 6.5s var(--ease-out-soft) infinite; }
+
+/* Dérive lente des nuages décoratifs */
+@keyframes cloud-drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(46px); }
+}
+.cloud-drift { animation: cloud-drift 26s ease-in-out infinite alternate; }
+.cloud-drift-slow { animation: cloud-drift 44s ease-in-out infinite alternate; }
+
+/* Halo blanc sous le titre serif du hero (lisibilité + profondeur) */
+.hero-serif { text-shadow: 0 2px 36px rgba(255, 255, 255, 0.32); }
+
+/* Trait pointillé de traînée d'avion */
+.dash-trail {
+  stroke-dasharray: 2 7;
+  stroke-linecap: round;
+}
+
+/* Pop récompensant (badge "en ligne") */
+@keyframes pop-in {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.pop-in { animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+/* Avion qui vole : translation douce sur une trajectoire (plus vivant) */
+@keyframes plane-fly {
+  0%   { transform: translate(0, 0) rotate(var(--rot, -6deg)); }
+  50%  { transform: translate(22px, -14px) rotate(calc(var(--rot, -6deg) + 6deg)); }
+  100% { transform: translate(0, 0) rotate(var(--rot, -6deg)); }
+}
+.plane-fly { animation: plane-fly 7s var(--ease-out-soft) infinite; }
+
+/* Respiration douce (soleil, halos) */
+@keyframes breathe {
+  0%, 100% { opacity: 0.82; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+.breathe { animation: breathe 9s ease-in-out infinite; }
+
+/* Banc de nuages photo qui dérive lentement en boucle (hero immersif) */
+@keyframes cloud-pan {
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
+}
+
+/* Voile bleu sur la photo de ciel : sature le bleu + lisibilité du titre blanc.
+   Le bas fond vers un bleu ciel clair (#dce9f7) = MÊME couleur que le haut du
+   Starter → aucune marche au raccord. Les nuages SVG (blancs) ressortent sur ce
+   bleu puis se dissolvent dans le blanc plus bas. */
+.sky-veil {
+  background: linear-gradient(
+    180deg,
+    rgba(58, 110, 190, 0.62) 0%,
+    rgba(72, 124, 200, 0.42) 26%,
+    rgba(120, 165, 220, 0.16) 48%,
+    rgba(196, 221, 245, 0.3) 64%,
+    rgba(210, 227, 246, 0.8) 82%,
+    rgba(220, 233, 247, 1) 94%,
+    #dce9f7 100%
+  );
+}
+
+/* Dérive horizontale lente des nuages superposés (profondeur / parallaxe) */
+@keyframes float-x {
+  0% { transform: translateX(-22px); }
+  100% { transform: translateX(22px); }
+}
+.float-x { animation: float-x 34s ease-in-out infinite alternate; }
+.float-x-2 { animation: float-x 52s ease-in-out infinite alternate; }
+.float-x-3 { animation: float-x 42s ease-in-out infinite alternate; }
+
+/* Flottement vertical générique (cartes photo, badges) */
+@keyframes drift-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.drift-y { animation: drift-y 6s ease-in-out infinite; }
+.drift-y-slow { animation: drift-y 9s ease-in-out infinite; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -245,4 +651,233 @@ body {
     scroll-behavior: auto !important;
   }
   .marquee-track { animation: none; }
+  .plane-float, .cloud-drift, .cloud-drift-slow,
+  .plane-fly, .breathe, .drift-y, .drift-y-slow,
+  .float-x, .float-x-2, .float-x-3 { animation: none; }
+  .sgai-card, .sgai-orb, .sgai-orb::before, .sgai-orb-glow,
+  .sgai-shell::before, .sgai-spark, .sgai-primary::after, .sgai-prog i,
+  .sgai-mic.is-on::after { animation: none !important; }
 }
+
+/* ============================================================
+   Éditeur — moment « IA » (direction Pastel Glass)
+   ============================================================ */
+@keyframes sgai-mesh{
+  0%{background-position:0% 0%,100% 30%,100% 70%,0% 100%}
+  25%{background-position:30% 20%,70% 50%,80% 50%,20% 80%}
+  50%{background-position:60% 40%,40% 70%,60% 80%,40% 60%}
+  75%{background-position:30% 60%,60% 40%,40% 60%,60% 80%}
+  100%{background-position:0% 0%,100% 30%,100% 70%,0% 100%}
+}
+@keyframes sgai-spin{to{transform:rotate(360deg)}}
+@keyframes sgai-spin-rev{to{transform:rotate(-360deg)}}
+@keyframes sgai-breath{0%,100%{transform:scale(.94)}50%{transform:scale(1.06)}}
+@keyframes sgai-twinkle{0%,100%{opacity:.55;transform:scale(.9)}50%{opacity:1;transform:scale(1.15)}}
+@keyframes sgai-sheen{0%{left:-60%}55%,100%{left:130%}}
+@keyframes sgai-prog{0%{margin-left:-40%}100%{margin-left:100%}}
+@keyframes sgai-mic-pulse{0%{transform:scale(1);opacity:.55}70%{transform:scale(2.1);opacity:0}100%{transform:scale(2.1);opacity:0}}
+
+.sgai-ink{color:#2a2340}
+.sgai-soft{color:#5a5170}
+
+.sgai-card{
+  position:relative;border-radius:28px;padding:24px;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(24px) saturate(150%);
+  -webkit-backdrop-filter:blur(24px) saturate(150%);
+  border:1px solid rgba(255,255,255,.95);
+  box-shadow:0 30px 70px -30px rgba(60,70,120,.45), inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+.sgai-shell{position:relative;padding:3px;border-radius:26px}
+.sgai-shell::before{
+  content:"";position:absolute;inset:-1.5px;border-radius:24px;z-index:0;
+  background:linear-gradient(120deg,#4285F4,#9b72cb 55%,#d96570);
+  opacity:.55;
+}
+/* Fenêtre de saisie IA qui grandit avec le texte (façon ChatGPT) */
+.sgai-promptbox{
+  position:relative;z-index:1;background:rgba(255,255,255,.96);border-radius:22px;
+  padding:14px 16px 12px;display:flex;flex-direction:column;gap:10px;
+  box-shadow:0 18px 44px -20px rgba(120,70,170,.5),inset 0 1px 0 #fff;
+}
+.sgai-input{
+  width:100%;border:none;outline:none;background:transparent;font:inherit;font-size:15px;
+  font-weight:500;color:#2a2340;resize:none;line-height:1.55;min-height:48px;max-height:260px;
+  overflow-y:auto;padding:0;
+}
+.sgai-input::placeholder{color:#9b90b5}
+.sgai-input:focus-visible{outline:2px solid rgba(155,114,203,.7);outline-offset:3px;border-radius:8px}
+.sgai-promptbar{display:flex;align-items:center;gap:8px;min-height:44px}
+
+/* Bouton micro (dictée) — discret, devient actif quand on dicte */
+.sgai-mic{
+  position:relative;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;
+  border:1px solid rgba(120,90,160,.18);background:rgba(255,255,255,.6);color:#5a5170;
+  cursor:pointer;flex:none;transition:.2s;
+}
+.sgai-mic:hover{background:#fff;color:#2a2340;border-color:rgba(120,90,160,.32)}
+.sgai-mic:focus-visible,.sgai-send:focus-visible{outline:2px solid #4285F4;outline-offset:2px}
+.sgai-mic.is-on{
+  background:linear-gradient(120deg,#4285F4,#9b72cb 55%,#d96570);color:#fff;border-color:transparent;
+  box-shadow:0 10px 22px -10px rgba(120,90,210,.8);
+}
+.sgai-mic.is-on::after{
+  content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #d96570;
+  animation:sgai-mic-pulse 1.5s ease-out infinite;
+}
+
+/* Bouton envoyer — petit, rond, conventionnel (n'apparaît qu'avec du texte) */
+.sgai-send{
+  display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;
+  color:#fff;flex:none;
+  background:linear-gradient(120deg,#4285F4,#9b72cb 55%,#d96570);
+  box-shadow:0 12px 26px -12px rgba(120,90,210,.85),inset 0 1px 0 rgba(255,255,255,.45);
+  transition:.2s;
+}
+.sgai-send:hover{transform:translateY(-1px)}
+.sgai-send:active{transform:translateY(0)}
+.sgai-spark{color:#b07ee0;animation:sgai-twinkle 2.4s ease-in-out infinite;flex:none}
+
+.sgai-orb-wrap{position:relative;width:120px;height:120px;display:grid;place-items:center;margin:4px auto}
+.sgai-orb-glow{
+  position:absolute;width:116px;height:116px;border-radius:50%;
+  background:radial-gradient(circle,rgba(212,196,255,.7),transparent 70%);
+  filter:blur(18px);animation:sgai-breath 3.4s ease-in-out infinite;
+}
+.sgai-orb{
+  position:relative;width:96px;height:96px;border-radius:50%;
+  background:
+    radial-gradient(circle at 30% 28%,#fff 0%,rgba(255,255,255,0) 28%),
+    conic-gradient(from 0deg,#4285F4,#7c6cf0,#9b72cb,#d96570,#9b72cb,#4285F4);
+  filter:saturate(140%);
+  box-shadow:0 22px 50px -18px rgba(150,110,210,.7),inset 0 0 36px rgba(255,255,255,.35);
+  animation:sgai-spin 5.5s linear infinite,sgai-breath 3.4s ease-in-out infinite;
+}
+.sgai-orb::before{
+  content:"";position:absolute;inset:7px;border-radius:50%;
+  background:conic-gradient(from 180deg,#d96570,#9b72cb,#4285F4,#7c6cf0,#d96570);
+  mix-blend-mode:screen;opacity:.7;filter:blur(6px);animation:sgai-spin-rev 7s linear infinite;
+}
+.sgai-orb::after{
+  content:"";position:absolute;top:18%;left:22%;width:34%;height:26%;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.95),transparent 70%);filter:blur(3px);
+}
+
+.sgai-prog{width:100%;max-width:280px;height:6px;border-radius:99px;background:rgba(255,255,255,.6);overflow:hidden;border:1px solid rgba(255,255,255,.85);margin:0 auto}
+.sgai-prog i{display:block;height:100%;width:40%;border-radius:99px;background:linear-gradient(90deg,#bfe3ff,#d4c4ff,#ffb3d1);animation:sgai-prog 2.6s ease-in-out infinite}
+
+.sgai-primary{
+  position:relative;overflow:hidden;color:#fff;border:none;cursor:pointer;font:inherit;font-weight:700;
+  border-radius:16px;padding:12px 16px;
+  background:linear-gradient(120deg,#4285F4,#9b72cb 55%,#d96570);
+  box-shadow:0 16px 34px -12px rgba(120,90,210,.8),inset 0 1px 0 rgba(255,255,255,.4);transition:.25s;
+}
+.sgai-primary::after{content:"";position:absolute;top:0;left:-60%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);animation:sgai-sheen 3.2s ease-in-out infinite}
+.sgai-primary:hover{transform:translateY(-1px)}
+.sgai-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.sgai-ghost{color:#2a2340;background:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.85);cursor:pointer;font:inherit;font-weight:700;border-radius:16px;padding:12px 16px;backdrop-filter:blur(10px);transition:.25s}
+.sgai-ghost:hover{background:#fff}
+.sgai-cancel{color:#5a5170;background:transparent;border:1px solid rgba(120,90,160,.25);cursor:pointer;font:inherit;font-weight:700;border-radius:16px;padding:12px 16px;transition:.25s}
+.sgai-cancel:hover{color:#2a2340;border-color:rgba(120,90,160,.45)}
+.sgai-badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:800;background:linear-gradient(135deg,#bff3dd,#bfe3ff);color:#1d5b4a;padding:5px 10px;border-radius:10px;box-shadow:0 8px 16px -8px rgba(60,180,140,.6)}
+
+/* ============================================================
+   Éditeur — chrome « liquid glass » (top-bar, rail, segmented)
+   ============================================================ */
+.lg-bar{
+  background:rgba(255,255,255,.6);
+  backdrop-filter:blur(20px) saturate(170%);
+  -webkit-backdrop-filter:blur(20px) saturate(170%);
+  border:1px solid rgba(255,255,255,.75);
+  box-shadow:0 12px 40px -20px rgba(70,90,160,.4), inset 0 1px 0 rgba(255,255,255,.9);
+}
+.lg-rail{
+  background:rgba(255,255,255,.5);
+  backdrop-filter:blur(22px) saturate(160%);
+  -webkit-backdrop-filter:blur(22px) saturate(160%);
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 16px 50px -24px rgba(70,90,160,.4), inset 0 1px 0 rgba(255,255,255,.85);
+}
+.lg-seg{position:relative;display:flex;padding:4px;border-radius:14px;background:rgba(120,140,190,.12);border:1px solid rgba(255,255,255,.6)}
+.lg-seg > button{position:relative;z-index:1;flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 6px;font-size:13px;font-weight:600;color:#4a5568;border-radius:11px;cursor:pointer;transition:color .25s ease}
+.lg-seg > button[data-on="true"]{color:#2563eb}
+.lg-thumb{position:absolute;z-index:0;top:4px;bottom:4px;border-radius:11px;background:#fff;box-shadow:0 6px 16px -8px rgba(70,90,160,.5),inset 0 1px 0 #fff;transition:left .34s cubic-bezier(.34,1.3,.5,1)}
+.lg-note{display:block;width:100%;text-align:left;border-radius:14px;padding:10px;background:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.8);box-shadow:0 6px 16px -12px rgba(70,90,160,.4);transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.lg-note:hover{background:#fff;transform:translateY(-1px);box-shadow:0 12px 24px -14px rgba(70,90,160,.6)}
+.lg-pin{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:999px;background:#e5412a;color:#fff;font-size:11px;font-weight:800;flex:none}
+
+/* ============================================================
+   Éditeur ultra-minimal — accent Gemini (bleu→violet→magenta)
+   ============================================================ */
+.gem-text{
+  background:linear-gradient(120deg,#4285F4,#9b72cb 55%,#d96570);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* Dock du bas (Modifier / Sélectionner) — verre, très en évidence */
+.gem-dock{
+  position:relative;display:flex;padding:4px;border-radius:16px;isolation:isolate;
+  background:rgba(255,255,255,.5);
+  backdrop-filter:blur(14px) saturate(150%);
+  -webkit-backdrop-filter:blur(14px) saturate(150%);
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 18px 50px -18px rgba(60,80,160,.45),inset 0 1px 0 rgba(255,255,255,.8);
+}
+.gem-distort{position:absolute;inset:0;z-index:0;border-radius:16px;overflow:hidden;pointer-events:none;background:rgba(255,255,255,.14)}
+.gem-dock > button{
+  position:relative;z-index:2;flex:1;display:flex;align-items:center;justify-content:center;gap:8px;
+  min-height:44px;padding:11px 16px;font-size:14px;font-weight:600;color:#8b95a7;border-radius:12px;
+  cursor:pointer;white-space:nowrap;transition:color .25s ease;
+}
+.gem-dock > button[data-on="true"]{color:#2a2340}
+.gem-thumb{
+  position:absolute;z-index:1;top:4px;bottom:4px;border-radius:12px;background:rgba(255,255,255,.92);
+  box-shadow:
+    0 0 6px rgba(0,0,0,.03),0 2px 6px rgba(0,0,0,.08),
+    inset 3px 3px .5px -3px rgba(0,0,0,.5),inset -3px -3px .5px -3px rgba(0,0,0,.45),
+    inset 1px 1px 1px -.5px rgba(0,0,0,.3),inset -1px -1px 1px -.5px rgba(0,0,0,.3),
+    inset 0 0 6px 6px rgba(0,0,0,.05),0 0 12px rgba(255,255,255,.2);
+  transition:left .4s cubic-bezier(.16,1,.3,1);
+}
+
+/* Toggle d'aperçu responsive (PC / tablette / téléphone) */
+.gem-dev{display:flex;gap:2px;padding:3px;border-radius:12px;background:rgba(120,140,190,.12);border:1px solid rgba(255,255,255,.7)}
+.gem-dev > button{display:grid;place-items:center;width:36px;height:30px;border-radius:9px;color:#8b95a7;cursor:pointer;transition:.2s ease}
+.gem-dev > button:hover{color:#4a5568}
+.gem-dev > button[data-on="true"]{background:#fff;color:#2563eb;box-shadow:0 4px 10px -4px rgba(70,90,160,.4)}
+
+/* Crédits en étoiles */
+.gem-stars{display:inline-flex;align-items:center;gap:5px;padding:6px 11px;border-radius:999px;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.85);font-weight:800;font-size:14px;color:#2a2340;box-shadow:0 6px 16px -10px rgba(70,90,160,.4)}
+
+/* ============================================================
+   Notifications (toast) — verre, au-dessus de tout (z-100)
+   ============================================================ */
+.sg-toast{
+  position:relative;display:flex;align-items:center;gap:11px;overflow:hidden;
+  max-width:min(92vw,460px);padding:11px 12px 11px 13px;border-radius:16px;
+  font-size:14px;font-weight:600;color:#2a2340;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(22px) saturate(170%);-webkit-backdrop-filter:blur(22px) saturate(170%);
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 24px 54px -22px rgba(40,35,64,.55),0 8px 20px -12px rgba(40,35,64,.32),inset 0 1px 0 #fff;
+}
+.sg-toast__icon{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;flex:none}
+.sg-toast__msg{flex:1;min-width:0;line-height:1.35}
+.sg-toast__close{
+  position:relative;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;flex:none;
+  color:#8b8298;background:transparent;border:none;cursor:pointer;transition:.2s;
+}
+/* Zone tactile élargie à ~44px sans changer le visuel */
+.sg-toast__close::before{content:"";position:absolute;inset:-8px}
+.sg-toast__close:hover{background:rgba(120,90,160,.12);color:#2a2340}
+.sg-toast__close:focus-visible{outline:2px solid #4285F4;outline-offset:2px}
+/* Barre d'auto-fermeture (succès/erreur) */
+.sg-toast__bar{position:absolute;left:0;bottom:0;height:3px;width:100%;transform-origin:left;border-radius:0 0 0 16px}
+/* Variantes */
+.sg-toast--success .sg-toast__icon{background:rgba(52,168,83,.16);color:#1e8e4e}
+.sg-toast--success .sg-toast__bar{background:linear-gradient(90deg,#34a853,#9fe6b4)}
+.sg-toast--error{border-color:rgba(217,101,96,.34)}
+.sg-toast--error .sg-toast__icon{background:rgba(217,101,96,.16);color:#cc3b32}
+.sg-toast--error .sg-toast__bar{background:linear-gradient(90deg,#d96570,#f2a6a0)}
+.sg-toast--info .sg-toast__icon{background:linear-gradient(120deg,#4285F4,#9b72cb 55%,#d96570);color:#fff}

@@ -11,6 +11,7 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl">
         <FadeIn
           as="h2"
+          data-sg-path="footer.title"
           className="max-w-3xl text-3xl font-medium leading-[1.1] text-white sm:text-4xl md:text-6xl"
         >
           {footer.title}
@@ -21,13 +22,13 @@ export default function Footer() {
             href={`mailto:${footer.email}`}
             className="mt-8 inline-flex min-h-[48px] items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-medium text-[#1a1108] transition-transform hover:scale-[1.04]"
           >
-            {footer.email}
+            <span data-sg-path="footer.email" data-sg-edit="panel">{footer.email}</span>
             <ArrowUpRight size={18} />
           </a>
         </FadeIn>
 
         <div className="mt-16 flex flex-col items-start justify-between gap-6 border-t border-white/12 pt-8 md:flex-row md:items-center">
-          <span className="text-lg font-medium tracking-tight text-white">{hero.brand}</span>
+          <span data-sg-path="hero.brand" data-sg-edit="panel" className="text-lg font-medium tracking-tight text-white">{hero.brand}</span>
           <div className="flex gap-5">
             {footer.socials.map((s) => (
               <span
@@ -38,7 +39,7 @@ export default function Footer() {
               </span>
             ))}
           </div>
-          <p className="text-sm text-white/40">© 2026 {hero.brand}. All rights reserved.</p>
+          <p className="text-sm text-white/40">© 2026 <span data-sg-path="hero.brand" data-sg-edit="panel">{hero.brand}</span>. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -18,7 +18,7 @@ export default function Services() {
           <span className="h-3.5 w-3.5 rounded-sm bg-poto-red" />
           Services we offer
         </FadeIn>
-        <FadeIn delay={0.1} className="max-w-xs text-sm font-medium text-poto-ink/65">
+        <FadeIn delay={0.1} data-sg-path="servicesIntro" className="max-w-xs text-sm font-medium text-poto-ink/65">
           {servicesIntro}
         </FadeIn>
       </div>
@@ -34,6 +34,7 @@ export default function Services() {
                 className="flex w-full cursor-pointer items-center gap-5 py-7 text-left md:gap-10 md:py-8"
               >
                 <span
+                  data-sg-path={`services[${i}].n`}
                   className="text-3xl font-extrabold tabular-nums transition-colors md:text-5xl"
                   style={{
                     color: 'transparent',
@@ -42,7 +43,7 @@ export default function Services() {
                 >
                   {s.n}
                 </span>
-                <span className="text-2xl font-extrabold tracking-tight text-poto-ink md:text-4xl">
+                <span data-sg-path={`services[${i}].name`} className="text-2xl font-extrabold tracking-tight text-poto-ink md:text-4xl">
                   {s.name}
                 </span>
                 <span
@@ -65,7 +66,7 @@ export default function Services() {
                   >
                     <div className="grid items-end gap-6 pb-9 pl-[3.6rem] md:grid-cols-2 md:pl-[6.4rem]">
                       <div>
-                        <p className="max-w-md text-base font-medium leading-relaxed text-poto-ink/75">
+                        <p data-sg-path={`services[${i}].desc`} className="max-w-md text-base font-medium leading-relaxed text-poto-ink/75">
                           {s.desc}
                         </p>
                         <div className="mt-5 flex flex-wrap gap-2">
@@ -86,6 +87,7 @@ export default function Services() {
                       >
                         <img
                           src={s.img}
+                          data-sg-img={`services[${i}].img`}
                           alt={s.name}
                           className="aspect-[16/10] w-full object-cover mix-blend-luminosity"
                         />

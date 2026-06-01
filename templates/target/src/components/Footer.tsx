@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer id="contact" className="border-t border-tg-line px-5 py-20 md:px-10 md:py-28">
       <div className="mx-auto max-w-6xl">
-        <FadeIn as="h2" className="tg-head max-w-3xl text-4xl font-bold leading-[1.05] md:text-7xl">
+        <FadeIn as="h2" className="tg-head max-w-3xl text-4xl font-bold leading-[1.05] md:text-7xl" data-sg-path="footer.title">
           {footer.title}
         </FadeIn>
         <FadeIn delay={0.1}>
@@ -14,7 +14,7 @@ export default function Footer() {
             href={`mailto:${footer.email}`}
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-tg-ink px-7 py-3.5 text-sm font-semibold text-white transition-transform hover:scale-[1.04]"
           >
-            {footer.email}
+            <span data-sg-path="footer.email" data-sg-edit="panel">{footer.email}</span>
             <ArrowUpRight size={18} />
           </a>
         </FadeIn>

@@ -1,0 +1,71 @@
+<h2>L'écran « Modifier » avec le menu de gauche + les notes</h2>
+<p class="subtitle">Deux outils dans la barre de gauche : <b>Modifier</b> (changer texte/photo soi-même) et <b>Note</b> (coller une demande à un endroit précis, qu'on reçoit côté opérateur). Voici l'outil Note actif.</p>
+
+<div class="mockup">
+  <div class="mockup-header">/editor — outil « Note » sélectionné</div>
+  <div class="mockup-body" style="padding:0;background:#eef4fc;">
+
+    <!-- top bar -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:rgba(255,255,255,.7);border-bottom:1px solid #dce9f7;font-size:12px;">
+      <span style="color:#4a5568;">← Quitter</span>
+      <span style="color:#10b981;font-weight:600;">✓ Enregistré</span>
+      <span style="background:#2563eb;color:#fff;border-radius:20px;padding:4px 12px;font-weight:700;">Publier (1 crédit)</span>
+    </div>
+
+    <div style="display:flex;min-height:300px;">
+      <!-- LEFT RAIL -->
+      <div style="width:124px;flex:none;background:rgba(255,255,255,.8);border-right:1px solid #dce9f7;padding:10px 8px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;align-items:center;gap:7px;padding:8px;border-radius:10px;color:#4a5568;font-size:12px;font-weight:600;">✎ Modifier</div>
+          <div style="display:flex;align-items:center;gap:7px;padding:8px;border-radius:10px;background:#e2eefb;color:#2563eb;font-size:12px;font-weight:700;">📌 Note</div>
+        </div>
+        <div style="margin-top:14px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#8b95a7;">Mes notes (2)</div>
+        <div style="margin-top:7px;display:flex;flex-direction:column;gap:6px;">
+          <div style="background:#fff;border:1px solid #dce9f7;border-radius:9px;padding:6px 7px;font-size:11px;color:#4a5568;">📌 1 · « couleur plus chaude »</div>
+          <div style="background:#fff;border:1px solid #dce9f7;border-radius:9px;padding:6px 7px;font-size:11px;color:#4a5568;">📌 2 · « cette photo est floue »</div>
+        </div>
+      </div>
+
+      <!-- CANVAS = the site -->
+      <div style="flex:1;position:relative;background:#16121d;padding:22px;overflow:hidden;">
+        <div style="color:#fff;font-weight:700;font-size:20px;margin-bottom:14px;">Olivier Roué</div>
+
+        <!-- a photo with pin #2 -->
+        <div style="position:relative;border-radius:10px;overflow:hidden;height:96px;width:70%;">
+          <div style="height:100%;background:linear-gradient(135deg,#3a2f4d,#7a4b8a);"></div>
+          <!-- PIN 2 -->
+          <div style="position:absolute;top:30px;left:120px;">
+            <div style="background:#e5412a;color:#fff;width:26px;height:26px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:grid;place-items:center;box-shadow:0 4px 10px rgba(0,0,0,.4);"><span style="transform:rotate(45deg);font-size:12px;font-weight:700;">2</span></div>
+          </div>
+        </div>
+
+        <!-- PIN 1 being placed + bubble -->
+        <div style="position:absolute;top:150px;left:60px;">
+          <div style="background:#e5412a;color:#fff;width:26px;height:26px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:grid;place-items:center;box-shadow:0 4px 10px rgba(0,0,0,.4);"><span style="transform:rotate(45deg);font-size:12px;font-weight:700;">1</span></div>
+        </div>
+        <div style="position:absolute;top:140px;left:96px;width:230px;background:#fff;border-radius:14px;padding:12px;box-shadow:0 14px 30px rgba(0,0,0,.35);">
+          <div style="font-size:11px;color:#8b95a7;margin-bottom:6px;">Note épinglée ici · sur « bouton CTA »</div>
+          <div style="font-size:13px;color:#0e0e12;">Mets une couleur plus chaude sur ce bouton, genre orange.</div>
+          <div style="display:flex;justify-content:flex-end;gap:6px;margin-top:9px;">
+            <span style="font-size:11px;color:#8b95a7;">Annuler</span>
+            <span style="font-size:11px;background:#2563eb;color:#fff;border-radius:14px;padding:3px 10px;font-weight:700;">Envoyer</span>
+          </div>
+        </div>
+
+        <div style="position:absolute;bottom:10px;left:22px;color:#8b95a7;font-size:11px;">Cliquez n'importe où sur le site pour poser une note 📌</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="ok" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div class="content"><h3>Oui, c'est ça</h3><p>Outil Note dans la barre de gauche, clic = pose un pin n'importe où, on tape la demande, ça part chez l'opérateur avec sa position.</p></div>
+  </div>
+  <div class="option" data-choice="elem" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content"><h3>Plutôt : note attachée à un élément précis</h3><p>Au lieu de poser le pin « dans le vide », on clique sur un élément (un texte, une photo, un bouton) et la note s'y rattache directement.</p></div>
+  </div>
+</div>
+<p class="subtitle">Mon conseil : un mélange — clic n'importe où, mais on <b>rattache automatiquement le pin à l'élément le plus proche</b> (ici « bouton CTA ») pour que l'opérateur sache exactement quoi viser. Dis-moi.</p>

@@ -12,7 +12,7 @@ export default function Services() {
           <span className="h-3 w-3 rounded-sm bg-tg-accent" />
           Services I offer
         </FadeIn>
-        <FadeIn delay={0.1} className="max-w-xs text-sm text-tg-mut">
+        <FadeIn delay={0.1} className="max-w-xs text-sm text-tg-mut" data-sg-path="servicesIntro">
           {servicesIntro}
         </FadeIn>
       </div>
@@ -27,11 +27,12 @@ export default function Services() {
                 className="flex w-full items-center gap-5 py-7 text-left md:gap-10 md:py-9"
               >
                 <span
+                  data-sg-path={`services[${i}].n`}
                   className={`tg-head text-3xl font-bold tabular-nums transition-colors md:text-5xl ${isOpen ? 'text-tg-accent' : 'text-tg-ink/20'}`}
                 >
                   {s.n}
                 </span>
-                <span className="tg-head text-2xl font-medium md:text-4xl">{s.name}</span>
+                <span data-sg-path={`services[${i}].name`} className="tg-head text-2xl font-medium md:text-4xl">{s.name}</span>
               </button>
 
               <AnimatePresence initial={false}>
@@ -45,7 +46,7 @@ export default function Services() {
                   >
                     <div className="grid items-end gap-6 pb-9 pl-[3.6rem] md:grid-cols-2 md:pl-[6.2rem]">
                       <div>
-                        <p className="max-w-md text-sm leading-relaxed text-tg-mut">{s.desc}</p>
+                        <p data-sg-path={`services[${i}].desc`} className="max-w-md text-sm leading-relaxed text-tg-mut">{s.desc}</p>
                         <div className="mt-5 flex flex-wrap gap-2">
                           {s.tags.map((t) => (
                             <span key={t} className="rounded-full bg-tg-ink px-4 py-1.5 text-xs font-medium text-white">
@@ -54,7 +55,7 @@ export default function Services() {
                           ))}
                         </div>
                       </div>
-                      <img src={s.img} alt={s.name} className="ml-auto aspect-[16/10] w-full max-w-sm rounded-2xl object-cover" />
+                      <img src={s.img} alt={s.name} data-sg-img={`services[${i}].img`} className="ml-auto aspect-[16/10] w-full max-w-sm rounded-2xl object-cover" />
                     </div>
                   </motion.div>
                 )}

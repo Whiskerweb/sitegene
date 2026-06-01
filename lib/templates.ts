@@ -18,6 +18,8 @@ export const RESERVED_SLUGS = new Set([
   "dashboard",
   "login",
   "welcome",
+  "editor",
+  "apercu",
   "robots.txt",
   "sitemap.xml",
   "demo",

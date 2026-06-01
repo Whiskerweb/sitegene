@@ -8,9 +8,11 @@ import { StatCard } from "@/components/ui/StatCard";
 import { StatusPill } from "@/components/ui/StatusPill";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
-import { CopyButton } from "@/components/ui/CopyButton";
 import { Spinner } from "@/components/ui/Spinner";
-import { IconCloud, IconExternal, IconEdit } from "@/components/ui/icons";
+import { BorderBeam } from "@/components/ui/border-beam";
+import { SitePreview } from "@/components/ui/SitePreview";
+import { SiteActions } from "@/components/ui/SiteActions";
+import { IconCloud } from "@/components/ui/icons";
 
 export const dynamic = "force-dynamic";
 
@@ -78,13 +80,6 @@ export default async function MonSite() {
       <PageHeader
         title="Mon site"
         subtitle="Votre portfolio, en un coup d'œil."
-        action={
-          isLive ? (
-            <Button href={`/s/${site.slug}`} target="_blank">
-              <IconExternal size={16} /> Voir mon site
-            </Button>
-          ) : null
-        }
       />
 
       {job && (
@@ -97,32 +92,26 @@ export default async function MonSite() {
       )}
 
       {/* Hero site */}
-      <GlassCard className="border border-sky-300 p-6 md:p-7">
+      <GlassCard className="relative overflow-hidden border border-sky-300 p-6 md:p-7">
+        <BorderBeam size={320} duration={8} borderWidth={2.5} colorFrom="#2563eb" colorTo="#22d3ee" />
+        <BorderBeam size={320} duration={8} delay={4} borderWidth={2.5} colorFrom="#7c3aed" colorTo="#22d3ee" />
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <StatusPill status={site.status} kind="site" />
-          {site.slug && (
-            <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
+            <StatusPill status={site.status} kind="site" />
+            {site.slug && (
               <code className="rounded-lg bg-white/70 px-3 py-1.5 text-sm text-slate">
                 /s/{site.slug}
               </code>
-              {fullUrl && <CopyButton text={fullUrl} />}
-            </div>
+            )}
+          </div>
+          {isLive && (
+            <SiteActions editHref="/editor" viewHref="/apercu" link={fullUrl} />
           )}
         </div>
 
         <div className="mt-5 overflow-hidden rounded-[18px] border border-sky-300 bg-white">
           {isLive ? (
-            <div className="relative aspect-[16/10] w-full overflow-hidden">
-              <iframe
-                src={`/s/${site.slug}`}
-                title="Aperçu de votre site"
-                loading="lazy"
-                tabIndex={-1}
-                aria-hidden
-                className="pointer-events-none absolute left-0 top-0 origin-top-left"
-                style={{ width: 1440, height: 900, transform: "scale(0.5)" }}
-              />
-            </div>
+            <SitePreview slug={site.slug!} />
           ) : (
             <div className="flex aspect-[16/10] items-center justify-center bg-surface-2 text-center text-sm text-mist">
               {site.status === "revealed"
@@ -132,20 +121,13 @@ export default async function MonSite() {
           )}
         </div>
 
-        <div className="mt-5 flex flex-wrap gap-3">
-          {isLive ? (
-            <Button href={`/s/${site.slug}`} target="_blank">
-              <IconExternal size={16} /> Voir mon site
-            </Button>
-          ) : (
+        {!isLive && (
+          <div className="mt-5 flex flex-wrap gap-3">
             <Button href="/dashboard/modifications" variant="subtle">
               Voir mes options
             </Button>
-          )}
-          <Button href="/dashboard/modifications" variant="ghost">
-            <IconEdit size={16} /> Demander une modification
-          </Button>
-        </div>
+          </div>
+        )}
       </GlassCard>
 
       {/* Stats */}

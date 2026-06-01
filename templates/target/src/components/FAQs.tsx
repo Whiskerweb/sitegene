@@ -21,7 +21,7 @@ export default function FAQs() {
                 onClick={() => setOpen(isOpen ? null : i)}
                 className="flex w-full items-center justify-between gap-4 py-5 text-left"
               >
-                <span className="tg-head text-lg font-medium md:text-xl">{f.q}</span>
+                <span data-sg-path={`faqs[${i}].q`} className="tg-head text-lg font-medium md:text-xl">{f.q}</span>
                 <Plus
                   size={22}
                   className={`shrink-0 text-tg-mut transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}
@@ -36,7 +36,7 @@ export default function FAQs() {
                     transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                     className="overflow-hidden"
                   >
-                    <p className="pb-5 pr-8 text-sm leading-relaxed text-tg-mut">{f.a}</p>
+                    <p data-sg-path={`faqs[${i}].a`} className="pb-5 pr-8 text-sm leading-relaxed text-tg-mut">{f.a}</p>
                   </motion.div>
                 )}
               </AnimatePresence>

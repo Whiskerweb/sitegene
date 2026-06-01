@@ -20,15 +20,16 @@ export default function Works() {
                 src={w.img}
                 alt={w.title}
                 loading="lazy"
+                data-sg-img={`works[${i}].img`}
                 className="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/40 px-3 py-1 text-xs font-medium text-white backdrop-blur">
+              <span data-sg-path={`works[${i}].category`} className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/40 px-3 py-1 text-xs font-medium text-white backdrop-blur">
                 {w.category}
               </span>
             </div>
-            <p className="mt-4 text-xs uppercase tracking-[0.2em] text-white/45">{w.date}</p>
-            <h3 className="mt-1.5 text-2xl font-medium text-white">{w.title}</h3>
-            <p className="mt-2 max-w-md text-sm leading-relaxed text-white/60">{w.desc}</p>
+            <p data-sg-path={`works[${i}].date`} className="mt-4 text-xs uppercase tracking-[0.2em] text-white/45">{w.date}</p>
+            <h3 data-sg-path={`works[${i}].title`} className="mt-1.5 text-2xl font-medium text-white">{w.title}</h3>
+            <p data-sg-path={`works[${i}].desc`} className="mt-2 max-w-md text-sm leading-relaxed text-white/60">{w.desc}</p>
           </FadeIn>
         ))}
       </div>

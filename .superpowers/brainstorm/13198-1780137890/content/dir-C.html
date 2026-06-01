@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sitegene — IA · Pastel Glass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300..900;1,400..700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#ffb3d1; --peach:#ffd6b0; --mint:#bff3dd; --lav:#d4c4ff; --sky:#bfe3ff;
+    --ink:#2a2340; --ink-soft:#5a5170;
+    --glass:rgba(255,255,255,.55);
+    --glass-strong:rgba(255,255,255,.72);
+    --stroke:rgba(255,255,255,.85);
+    --radius:30px;
+    --shadow:0 30px 70px -30px rgba(90,70,140,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Archivo',system-ui,sans-serif;
+    color:var(--ink);
+    background:#1a1530;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  /* ============ FOND : HERO PHOTOGRAPHE SOMBRE ============ */
+  .stage{position:relative;min-height:100vh;width:100%;overflow:hidden}
+  .hero-bg{
+    position:fixed;inset:0;z-index:0;
+    background:
+      radial-gradient(120% 90% at 80% -10%, rgba(120,90,200,.5), transparent 55%),
+      radial-gradient(100% 80% at 10% 110%, rgba(40,30,70,.9), transparent 60%),
+      linear-gradient(160deg,#1e1838 0%,#120e26 60%,#0c0a1c 100%);
+  }
+  .hero-photo{
+    position:fixed;inset:0;z-index:0;
+    background:
+      radial-gradient(60% 70% at 70% 30%, rgba(255,180,140,.18), transparent 60%),
+      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="none"/><circle cx="20" cy="20" r=".6" fill="white" opacity=".06"/></svg>');
+    opacity:.9;
+  }
+  /* fausse silhouette / grande typo hero */
+  .hero-content{
+    position:fixed;z-index:1;inset:0;
+    display:flex;flex-direction:column;justify-content:space-between;
+    padding:42px clamp(28px,5vw,80px);
+    pointer-events:none;
+  }
+  .hero-top{display:flex;justify-content:space-between;align-items:center;color:rgba(255,255,255,.82);font-weight:600;letter-spacing:.04em}
+  .hero-top .nav{display:flex;gap:30px;font-size:14px;opacity:.8}
+  .hero-title{
+    font-size:clamp(64px,13vw,200px);
+    font-weight:800;line-height:.86;letter-spacing:-.04em;
+    color:transparent;
+    background:linear-gradient(180deg,#fff 0%, rgba(255,255,255,.35) 130%);
+    -webkit-background-clip:text;background-clip:text;
+    text-shadow:0 30px 80px rgba(0,0,0,.4);
+  }
+  .hero-title small{display:block;font-size:.16em;letter-spacing:.5em;font-weight:600;color:rgba(255,255,255,.6);margin-bottom:.5em;-webkit-text-fill-color:rgba(255,255,255,.6)}
+  .hero-foot{display:flex;justify-content:space-between;align-items:flex-end;color:rgba(255,255,255,.55);font-size:13px}
+  .hero-foot .big{font-size:15px;color:rgba(255,255,255,.85);font-weight:600}
+
+  /* élément édité (cible cliquée) */
+  .edit-target{
+    position:fixed;z-index:2;left:clamp(28px,5vw,80px);top:46%;
+    transform:translateY(-50%);
+    padding:14px 22px;border-radius:18px;
+    border:1.5px dashed rgba(255,180,220,.9);
+    background:rgba(255,180,220,.08);
+    backdrop-filter:blur(4px);
+    color:#fff;font-weight:600;font-size:14px;
+    box-shadow:0 0 0 6px rgba(255,180,220,.08);
+    animation:targetPulse 3s ease-in-out infinite;
+    pointer-events:none;
+  }
+  .edit-target .tag{
+    position:absolute;top:-13px;left:14px;
+    background:linear-gradient(120deg,var(--pink),var(--lav));
+    color:#3a2350;font-size:11px;font-weight:800;letter-spacing:.05em;
+    padding:3px 9px;border-radius:8px;box-shadow:0 6px 14px rgba(150,80,180,.4);
+  }
+  @keyframes targetPulse{0%,100%{box-shadow:0 0 0 6px rgba(255,180,220,.08)}50%{box-shadow:0 0 0 12px rgba(255,180,220,.16)}}
+
+  /* ============ PANNEAU MESH PASTEL ============ */
+  .panel{
+    position:relative;z-index:5;
+    margin-left:auto;
+    min-height:100vh;width:min(560px,100%);
+    padding:38px clamp(24px,3vw,46px) 60px;
+    background:
+      radial-gradient(90% 60% at 100% 0%, rgba(212,196,255,.95), transparent 60%),
+      radial-gradient(80% 60% at 0% 30%, rgba(191,243,221,.9), transparent 55%),
+      radial-gradient(90% 70% at 100% 75%, rgba(255,214,176,.9), transparent 55%),
+      radial-gradient(100% 80% at 0% 110%, rgba(255,179,209,.95), transparent 55%),
+      linear-gradient(160deg,#fdf6ff,#f3fbff);
+    background-size:200% 200%,200% 200%,200% 200%,200% 200%,100% 100%;
+    animation:meshDrift 22s ease-in-out infinite;
+    box-shadow:-40px 0 100px -40px rgba(40,20,70,.7);
+    border-left:1px solid rgba(255,255,255,.5);
+    display:flex;flex-direction:column;gap:26px;
+  }
+  @keyframes meshDrift{
+    0%{background-position:0% 0%,100% 30%,100% 70%,0% 100%,0 0}
+    25%{background-position:30% 20%,70% 50%,80% 50%,20% 80%,0 0}
+    50%{background-position:60% 40%,40% 70%,60% 80%,40% 60%,0 0}
+    75%{background-position:30% 60%,60% 40%,40% 60%,60% 80%,0 0}
+    100%{background-position:0% 0%,100% 30%,100% 70%,0% 100%,0 0}
+  }
+
+  .panel-head{display:flex;align-items:center;justify-content:space-between}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.02em;font-size:18px}
+  .brand .dot{
+    width:30px;height:30px;border-radius:10px;
+    background:conic-gradient(from 0deg,var(--pink),var(--lav),var(--sky),var(--mint),var(--peach),var(--pink));
+    box-shadow:0 8px 18px rgba(170,120,220,.45);
+    animation:spin 9s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .credits{
+    display:flex;align-items:center;gap:7px;
+    background:var(--glass);backdrop-filter:blur(12px);
+    border:1px solid var(--stroke);
+    padding:7px 13px;border-radius:14px;font-size:13px;font-weight:700;color:var(--ink-soft);
+    box-shadow:0 8px 20px -12px rgba(120,80,160,.5);
+  }
+  .credits b{color:var(--ink)}
+
+  /* onglets états */
+  .tabs{display:flex;gap:8px;background:rgba(255,255,255,.4);padding:6px;border-radius:18px;border:1px solid var(--stroke);backdrop-filter:blur(10px);box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+  .tab{
+    flex:1;text-align:center;padding:10px 8px;border-radius:13px;
+    font-size:13px;font-weight:700;color:var(--ink-soft);cursor:pointer;
+    border:none;background:transparent;transition:.35s cubic-bezier(.2,.8,.2,1);font-family:inherit;
+  }
+  .tab.active{
+    background:linear-gradient(135deg,#fff,rgba(255,255,255,.7));
+    color:var(--ink);box-shadow:0 10px 24px -12px rgba(140,90,180,.6),inset 0 1px 0 #fff;
+  }
+
+  /* conteneur états */
+  .states{position:relative;flex:1;display:flex;flex-direction:column;gap:24px}
+  .state{display:none;animation:stateIn .55s cubic-bezier(.2,.9,.2,1) both}
+  .state.show{display:flex;flex-direction:column;gap:22px}
+  @keyframes stateIn{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+
+  .state-label{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+  .state-label .num{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.7);color:var(--ink);font-size:11px;box-shadow:0 4px 10px -4px rgba(120,80,160,.5)}
+
+  /* ====== CARTE VERRE GÉNÉRIQUE ====== */
+  .glass-card{
+    position:relative;
+    background:var(--glass-strong);
+    backdrop-filter:blur(26px) saturate(160%);
+    -webkit-backdrop-filter:blur(26px) saturate(160%);
+    border:1px solid var(--stroke);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.8);
+    padding:24px;
+  }
+
+  /* ====== ÉTAT 1 : SAISIE — AURA ANIMÉE ====== */
+  .prompt-shell{position:relative;padding:4px;border-radius:34px}
+  .prompt-shell::before{
+    content:"";position:absolute;inset:-8px;border-radius:42px;z-index:0;
+    background:conic-gradient(from 0deg,var(--pink),var(--lav),var(--sky),var(--mint),var(--peach),var(--pink));
+    filter:blur(22px);opacity:.9;
+    animation:auraSpin 7s linear infinite,auraBreath 4s ease-in-out infinite;
+  }
+  @keyframes auraSpin{to{transform:rotate(360deg)}}
+  @keyframes auraBreath{0%,100%{filter:blur(22px);opacity:.78}50%{filter:blur(30px);opacity:1}}
+  .prompt-bar{
+    position:relative;z-index:1;
+    background:rgba(255,255,255,.92);
+    border-radius:30px;
+    padding:10px 10px 10px 20px;
+    display:flex;align-items:center;gap:12px;
+    box-shadow:0 20px 50px -20px rgba(120,70,170,.5),inset 0 1px 0 #fff;
+  }
+  .prompt-bar .spark{font-size:18px;color:#b07ee0;animation:twinkle 2.4s ease-in-out infinite}
+  @keyframes twinkle{0%,100%{opacity:.55;transform:scale(.9)}50%{opacity:1;transform:scale(1.15)}}
+  .prompt-bar input{
+    flex:1;border:none;outline:none;background:transparent;
+    font-family:inherit;font-size:15px;font-weight:500;color:var(--ink);
+  }
+  .prompt-bar input::placeholder{color:#9b90b5}
+  .send-btn{
+    display:flex;align-items:center;gap:7px;
+    border:none;cursor:pointer;font-family:inherit;
+    padding:12px 18px;border-radius:22px;
+    background:linear-gradient(135deg,#2a2340,#473a66);
+    color:#fff;font-weight:700;font-size:14px;
+    box-shadow:0 12px 26px -10px rgba(40,25,70,.8);
+    transition:.3s cubic-bezier(.2,.8,.2,1);
+  }
+  .send-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px -12px rgba(40,25,70,.9)}
+  .send-btn .s{animation:twinkle 2s ease-in-out infinite}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+  .chip{
+    font-size:12.5px;font-weight:600;color:var(--ink-soft);
+    background:rgba(255,255,255,.55);border:1px solid var(--stroke);
+    padding:8px 13px;border-radius:14px;cursor:pointer;
+    backdrop-filter:blur(8px);transition:.25s;
+  }
+  .chip:hover{background:#fff;color:var(--ink);transform:translateY(-1px);box-shadow:0 8px 18px -10px rgba(120,80,160,.6)}
+  .hint{font-size:12.5px;color:var(--ink-soft);display:flex;align-items:center;gap:8px;padding-left:4px}
+  .hint .k{background:rgba(255,255,255,.7);border:1px solid var(--stroke);padding:2px 7px;border-radius:7px;font-size:11px;font-weight:700;color:var(--ink)}
+
+  /* ====== ÉTAT 2 : CHARGEMENT — ORBE PASTEL ====== */
+  .loading-card{align-items:center;text-align:center;gap:8px;padding:42px 24px 36px;display:flex;flex-direction:column}
+  .orb-wrap{position:relative;width:160px;height:160px;display:grid;place-items:center;margin-bottom:8px}
+  .orb-glow{
+    position:absolute;width:150px;height:150px;border-radius:50%;
+    background:radial-gradient(circle at 50% 50%,rgba(212,196,255,.7),transparent 70%);
+    filter:blur(20px);animation:orbBreath 3.4s ease-in-out infinite;
+  }
+  .orb{
+    position:relative;width:120px;height:120px;border-radius:50%;
+    background:
+      radial-gradient(circle at 30% 28%, #fff 0%, rgba(255,255,255,0) 28%),
+      conic-gradient(from 0deg, #bfe3ff, #d4c4ff, #ffb3d1, #ffd6b0, #bff3dd, #bfe3ff);
+    filter:blur(.4px) saturate(150%);
+    box-shadow:0 22px 50px -18px rgba(150,110,210,.7),inset 0 0 40px rgba(255,255,255,.35);
+    animation:orbSpin 5.5s linear infinite,orbBreath 3.4s ease-in-out infinite;
+  }
+  .orb::before{
+    content:"";position:absolute;inset:8px;border-radius:50%;
+    background:conic-gradient(from 180deg,#ffb3d1,#d4c4ff,#bfe3ff,#bff3dd,#ffd6b0,#ffb3d1);
+    mix-blend-mode:screen;opacity:.7;filter:blur(6px);
+    animation:orbSpinRev 7s linear infinite;
+  }
+  .orb::after{
+    content:"";position:absolute;top:18%;left:22%;width:34%;height:26%;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,255,255,.95),transparent 70%);
+    filter:blur(3px);animation:orbBreath 3.4s ease-in-out infinite;
+  }
+  @keyframes orbSpin{to{transform:rotate(360deg)}}
+  @keyframes orbSpinRev{to{transform:rotate(-360deg)}}
+  @keyframes orbBreath{0%,100%{transform:scale(.94)}50%{transform:scale(1.06)}}
+  .orb-ring{
+    position:absolute;width:148px;height:148px;border-radius:50%;
+    border:1.5px solid transparent;
+    background:linear-gradient(#fff0,#fff0) padding-box,
+      conic-gradient(from 0deg,transparent 0deg,rgba(212,196,255,.9) 90deg,transparent 200deg) border-box;
+    -webkit-mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);
+    animation:spin 3s linear infinite;
+  }
+  .loading-card h3{font-size:20px;font-weight:800;letter-spacing:-.02em}
+  .loading-card p{font-size:14px;color:var(--ink-soft);max-width:300px;line-height:1.5}
+  .loading-steps{display:flex;gap:14px;margin-top:10px;font-size:12px;font-weight:600;color:var(--ink-soft)}
+  .loading-steps span{display:flex;align-items:center;gap:6px;opacity:.45;animation:stepGlow 3.6s ease-in-out infinite}
+  .loading-steps span:nth-child(2){animation-delay:1.2s}
+  .loading-steps span:nth-child(3){animation-delay:2.4s}
+  .loading-steps i{width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,var(--lav),var(--pink));display:inline-block}
+  @keyframes stepGlow{0%,100%{opacity:.4}33%{opacity:1;color:var(--ink)}}
+  .progress{width:100%;max-width:300px;height:6px;border-radius:99px;background:rgba(255,255,255,.6);overflow:hidden;margin-top:14px;border:1px solid var(--stroke)}
+  .progress i{display:block;height:100%;width:40%;border-radius:99px;background:linear-gradient(90deg,var(--sky),var(--lav),var(--pink));animation:prog 2.6s ease-in-out infinite}
+  @keyframes prog{0%{margin-left:-40%}100%{margin-left:100%}}
+
+  /* ====== ÉTAT 3 : PROPOSITION ====== */
+  .result-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+  .result-head .badge{
+    display:flex;align-items:center;gap:6px;font-size:12px;font-weight:800;
+    background:linear-gradient(135deg,var(--mint),var(--sky));
+    color:#1d5b4a;padding:6px 11px;border-radius:11px;box-shadow:0 8px 16px -8px rgba(60,180,140,.6)
+  }
+  .result-head h3{font-size:18px;font-weight:800;letter-spacing:-.02em;flex:1}
+  /* aperçu avant/après */
+  .preview{display:flex;gap:12px;margin-bottom:16px}
+  .swatch{flex:1;border-radius:18px;padding:14px;color:#fff;position:relative;overflow:hidden;min-height:92px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid rgba(255,255,255,.5)}
+  .swatch span{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+  .swatch b{font-size:14px;font-weight:700}
+  .sw-before{background:linear-gradient(135deg,#3a3550,#262138)}
+  .sw-after{background:linear-gradient(135deg,#1b2a5e,#0e1742);box-shadow:0 16px 34px -16px rgba(20,40,120,.9)}
+  .sw-after::after{content:"";position:absolute;inset:0;background:radial-gradient(80% 60% at 70% 10%,rgba(120,140,255,.4),transparent 60%);animation:orbBreath 4s ease-in-out infinite}
+  .arrow{align-self:center;font-size:18px;color:var(--ink-soft)}
+  .result-desc{font-size:13.5px;line-height:1.55;color:var(--ink-soft);background:rgba(255,255,255,.45);border:1px solid var(--stroke);padding:13px 15px;border-radius:16px;margin-bottom:18px}
+  .result-desc b{color:var(--ink)}
+
+  .actions{display:flex;flex-direction:column;gap:10px}
+  .actions-row{display:flex;gap:10px}
+  .btn{
+    border:none;cursor:pointer;font-family:inherit;font-weight:700;
+    border-radius:18px;padding:14px 16px;font-size:14px;
+    transition:.3s cubic-bezier(.2,.8,.2,1);display:flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .btn-primary{
+    flex:1;color:#fff;position:relative;overflow:hidden;
+    background:linear-gradient(135deg,#7d5be0,#b06ad8 55%,#e07db0);
+    box-shadow:0 16px 34px -12px rgba(150,90,210,.85),inset 0 1px 0 rgba(255,255,255,.4);
+  }
+  .btn-primary::after{content:"";position:absolute;top:0;left:-60%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);animation:sheen 3.2s ease-in-out infinite}
+  @keyframes sheen{0%{left:-60%}55%,100%{left:130%}}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 22px 42px -14px rgba(150,90,210,.95)}
+  .btn-primary .cost{font-size:11px;font-weight:800;background:rgba(255,255,255,.25);padding:3px 8px;border-radius:9px;backdrop-filter:blur(4px)}
+  .btn-ghost{
+    flex:1;color:var(--ink);background:rgba(255,255,255,.6);
+    border:1px solid var(--stroke);backdrop-filter:blur(10px);
+    box-shadow:0 8px 18px -12px rgba(120,80,160,.5);
+  }
+  .btn-ghost:hover{background:#fff;transform:translateY(-2px);box-shadow:0 14px 26px -12px rgba(120,80,160,.7)}
+  .btn-cancel{color:var(--ink-soft);background:transparent;border:1px solid rgba(120,90,160,.25)}
+  .btn-cancel:hover{color:var(--ink);border-color:rgba(120,90,160,.45)}
+
+  .foot-note{font-size:11.5px;color:var(--ink-soft);text-align:center;opacity:.8;margin-top:4px}
+
+  @media(max-width:680px){
+    .panel{width:100%;margin-left:0}
+    .edit-target,.hero-content{display:none}
+    .hero-photo,.hero-bg{position:absolute}
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- ===== FOND HERO PHOTOGRAPHE ===== -->
+  <div class="hero-bg"></div>
+  <div class="hero-photo"></div>
+  <div class="hero-content">
+    <div class="hero-top">
+      <span>ALICE&nbsp;R.&nbsp;·&nbsp;STUDIO</span>
+      <span class="nav"><span>Galerie</span><span>À propos</span><span>Contact</span></span>
+    </div>
+    <h1 class="hero-title"><small>PHOTOGRAPHE — PARIS</small>Lumière<br>vivante.</h1>
+    <div class="hero-foot">
+      <span class="big">Portraits · Mariages · Éditorial</span>
+      <span>©2026 — Défiler ↓</span>
+    </div>
+  </div>
+
+  <!-- cible cliquée -->
+  <div class="edit-target">
+    <span class="tag">✦ sélectionné</span>
+    Section Héro — fond
+  </div>
+
+  <!-- ===== PANNEAU IA (MESH PASTEL) ===== -->
+  <aside class="panel">
+    <div class="panel-head">
+      <div class="brand"><span class="dot"></span>Sitegene</div>
+      <div class="credits">✦ <b>12</b>&nbsp;crédits</div>
+    </div>
+
+    <!-- onglets pour juger chaque état -->
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-state="0">1 · Saisie</button>
+      <button class="tab" data-state="1">2 · Chargement</button>
+      <button class="tab" data-state="2">3 · Proposition</button>
+    </div>
+
+    <div class="states">
+
+      <!-- ÉTAT 1 — SAISIE -->
+      <section class="state show" data-state="0">
+        <div class="state-label"><span class="num">1</span> Dis à l'IA ce que tu veux changer</div>
+
+        <div class="prompt-shell">
+          <div class="prompt-bar">
+            <span class="spark">✦</span>
+            <input type="text" value="Mets le fond du héro en bleu nuit profond" aria-label="Demande à l'IA">
+            <button class="send-btn"><span class="s">✦</span> Générer</button>
+          </div>
+        </div>
+
+        <div class="chips">
+          <span class="chip">🌙 Fond bleu nuit</span>
+          <span class="chip">✨ Plus lumineux</span>
+          <span class="chip">🎞️ Ambiance argentique</span>
+          <span class="chip">🔤 Titre plus grand</span>
+        </div>
+
+        <div class="hint"><span class="k">⌘</span><span class="k">↵</span> pour lancer · ou clique un élément du site pour le cibler</div>
+      </section>
+
+      <!-- ÉTAT 2 — CHARGEMENT -->
+      <section class="state" data-state="1">
+        <div class="state-label"><span class="num">2</span> L'IA travaille</div>
+        <div class="glass-card loading-card">
+          <div class="orb-wrap">
+            <div class="orb-glow"></div>
+            <div class="orb-ring"></div>
+            <div class="orb"></div>
+          </div>
+          <h3>L'IA compose ta nouvelle version…</h3>
+          <p>Elle ajuste les couleurs, les contrastes et la lumière du héro. Quelques secondes.</p>
+          <div class="loading-steps">
+            <span><i></i>Analyse</span>
+            <span><i></i>Couleurs</span>
+            <span><i></i>Rendu</span>
+          </div>
+          <div class="progress"><i></i></div>
+        </div>
+      </section>
+
+      <!-- ÉTAT 3 — PROPOSITION -->
+      <section class="state" data-state="2">
+        <div class="state-label"><span class="num">3</span> Voici la proposition</div>
+        <div class="glass-card">
+          <div class="result-head">
+            <span class="badge">✓ Prêt</span>
+            <h3>Fond bleu nuit profond</h3>
+          </div>
+
+          <div class="preview">
+            <div class="swatch sw-before"><span>Avant</span><b>Violet sombre</b></div>
+            <div class="arrow">→</div>
+            <div class="swatch sw-after"><span>Après</span><b>Bleu nuit</b></div>
+          </div>
+
+          <p class="result-desc">J'ai remplacé le fond du héro par un <b>dégradé bleu nuit</b> (#0e1742 → #1b2a5e), renforcé le contraste du titre et ajouté un léger halo lumineux en haut à droite pour garder de la profondeur.</p>
+
+          <div class="actions">
+            <div class="actions-row">
+              <button class="btn btn-primary">Accepter <span class="cost">1 crédit</span></button>
+              <button class="btn btn-ghost">Affiner ✎</button>
+            </div>
+            <div class="actions-row">
+              <button class="btn btn-ghost">Réessayer ↻</button>
+              <button class="btn btn-cancel">Annuler</button>
+            </div>
+          </div>
+          <p class="foot-note">Accepter applique le changement en direct sur ton site.</p>
+        </div>
+      </section>
+
+    </div>
+  </aside>
+</div>
+
+<script>
+  const tabs=document.querySelectorAll('.tab');
+  const states=document.querySelectorAll('.state');
+  function go(i){
+    tabs.forEach((t,k)=>t.classList.toggle('active',k==i));
+    states.forEach(s=>{
+      const on=+s.dataset.state===i;
+      s.classList.toggle('show',on);
+    });
+  }
+  tabs.forEach(t=>t.addEventListener('click',()=>go(+t.dataset.state)));
+  // petit cycle auto (démo) — passe d'un état à l'autre toutes les 4s
+  let i=0; setInterval(()=>{ i=(i+1)%3; go(i); }, 4200);
+</script>
+</body>
+</html>

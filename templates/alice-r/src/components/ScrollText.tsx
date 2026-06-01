@@ -30,6 +30,8 @@ export default function ScrollText() {
     <section className="relative z-10 mx-auto max-w-5xl px-6 py-24 md:py-36">
       <p
         ref={ref}
+        data-sg-path="scrollText"
+        data-sg-edit="panel"
         className="text-center text-2xl font-medium leading-[1.3] text-white sm:text-3xl md:text-[2.6rem]"
       >
         {words.map((w, i) => {

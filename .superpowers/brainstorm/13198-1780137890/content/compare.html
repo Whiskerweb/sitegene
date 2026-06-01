@@ -1,0 +1,1759 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><title>3 directions IA</title><style>
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,sans-serif;background:#0e0e12;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+.bar{display:flex;gap:8px;padding:11px 16px;background:#16161c;align-items:center;flex:none}
+.bar b{color:#fff;margin-right:12px;font-size:13px;font-weight:600}
+.bar button{border:0;cursor:pointer;border-radius:999px;padding:9px 18px;font-size:13px;font-weight:600;color:#cfd2dc;background:#23232c;transition:.15s}
+.bar button:hover{color:#fff}
+.bar button.on{background:#fff;color:#111}
+.wrap{flex:1;position:relative}
+iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:none;background:#fff}
+iframe.on{display:block}
+</style></head><body>
+<div class="bar"><b>3 directions · clique pour comparer</b>
+<button class="t on" data-i="0">A · Apple Intelligence</button>
+<button class="t" data-i="1">B · Aurora Glow</button>
+<button class="t" data-i="2">C · Pastel Glass</button></div>
+<div class="wrap">
+<iframe class="f on" srcdoc="<!DOCTYPE html>
+<html lang=&quot;fr&quot;>
+<head>
+<meta charset=&quot;UTF-8&quot; />
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; />
+<title>Sitegene · Édition IA — Direction A (Apple Intelligence)</title>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot; />
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin />
+<link href=&quot;https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&amp;display=swap&quot; rel=&quot;stylesheet&quot; />
+<style>
+  :root{
+    --ink:#0c0d12;
+    --ink-soft:#5a5e6b;
+    --ink-faint:#9aa0ad;
+    --paper:#f6f4f0;
+    --glass:rgba(255,255,255,.66);
+    --glass-strong:rgba(255,255,255,.82);
+    --line:rgba(18,20,30,.08);
+    --c-blue:#2b6dff;
+    --c-indigo:#6a45ff;
+    --c-violet:#9b4dff;
+    --c-pink:#ff5db1;
+    --ease:cubic-bezier(.22,1,.36,1);
+    --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:&quot;Archivo&quot;,system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+
+  /* ============ FOND : faux hero photographe (sombre) ============ */
+  .stage{
+    position:relative;
+    min-height:100vh;
+    isolation:isolate;
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute; inset:0; z-index:0;
+    background:
+      radial-gradient(120% 80% at 78% -8%, rgba(120,110,160,.30), transparent 55%),
+      radial-gradient(90% 70% at 8% 4%, rgba(40,60,110,.30), transparent 60%),
+      linear-gradient(165deg,#16161e 0%,#1d1c28 38%,#13131b 72%,#0b0b10 100%);
+  }
+  /* &quot;photo&quot; texturée façon grain argentique + vignette */
+  .hero-bg::after{
+    content:&quot;&quot;; position:absolute; inset:0;
+    background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;);
+    opacity:.06; mix-blend-mode:screen;
+  }
+  .hero-vignette{
+    position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:radial-gradient(130% 110% at 50% 35%, transparent 48%, rgba(0,0,0,.55) 100%);
+  }
+  /* nuage de couleur qui dérive très lentement dans le hero */
+  .hero-aurora{
+    position:absolute; z-index:0; pointer-events:none;
+    width:60vw; height:60vw; left:-10vw; top:-12vw;
+    background:radial-gradient(circle, rgba(120,90,255,.22), transparent 65%);
+    filter:blur(40px);
+    animation:aurora-drift 26s ease-in-out infinite alternate;
+  }
+  .hero-aurora.two{
+    left:auto; right:-14vw; top:auto; bottom:-18vw;
+    width:52vw; height:52vw;
+    background:radial-gradient(circle, rgba(255,93,177,.16), transparent 65%);
+    animation-duration:32s; animation-delay:-6s;
+  }
+  @keyframes aurora-drift{
+    from{transform:translate(0,0) scale(1)}
+    to{transform:translate(60px,40px) scale(1.12)}
+  }
+
+  /* hero topbar + typo */
+  .hero-nav{
+    position:relative; z-index:3;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:26px clamp(20px,5vw,64px);
+    color:rgba(255,255,255,.92);
+  }
+  .hero-brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-.02em;font-size:18px}
+  .hero-brand .mark{
+    width:24px;height:24px;border-radius:7px;
+    background:conic-gradient(from 200deg,var(--c-blue),var(--c-indigo),var(--c-pink),var(--c-blue));
+    box-shadow:0 0 18px rgba(120,90,255,.6);
+  }
+  .hero-links{display:flex;gap:30px;font-size:14px;font-weight:500;color:rgba(255,255,255,.62)}
+  .hero-links span{cursor:pointer;transition:color .25s var(--ease)}
+  .hero-links span:hover{color:#fff}
+  .hero-mode{
+    font-size:12.5px;font-weight:600;color:rgba(255,255,255,.85);
+    padding:8px 15px;border-radius:999px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.16);
+    display:flex;align-items:center;gap:8px;backdrop-filter:blur(8px);
+  }
+  .hero-mode .ping{
+    width:7px;height:7px;border-radius:50%;
+    background:linear-gradient(var(--c-blue),var(--c-violet));
+    box-shadow:0 0 0 0 rgba(120,90,255,.6);
+    animation:ping 2.4s var(--ease) infinite;
+  }
+  @keyframes ping{
+    0%{box-shadow:0 0 0 0 rgba(120,90,255,.55)}
+    70%,100%{box-shadow:0 0 0 9px rgba(120,90,255,0)}
+  }
+
+  .hero-content{
+    position:relative; z-index:3;
+    padding:clamp(28px,6vh,70px) clamp(20px,5vw,64px) 0;
+    max-width:1180px; margin:0 auto;
+  }
+  .hero-kicker{
+    font-size:12.5px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;
+    color:rgba(255,255,255,.5);margin-bottom:18px;
+  }
+  .hero-title{
+    font-size:clamp(46px,8.5vw,108px);
+    line-height:.92;font-weight:800;letter-spacing:-.045em;
+    color:#fff;max-width:14ch;
+  }
+  .hero-title .it{font-style:italic;font-weight:500;color:transparent;
+    background:linear-gradient(100deg,#fff,#c8c2ff 55%,#ffc6e8);
+    -webkit-background-clip:text;background-clip:text;}
+  .hero-sub{
+    margin-top:24px;font-size:clamp(15px,1.6vw,18px);font-weight:400;
+    color:rgba(255,255,255,.6);max-width:46ch;line-height:1.55;
+  }
+  /* zone &quot;cliquée&quot; sur le site — encadré sélection */
+  .selected-block{
+    position:relative; z-index:3;
+    margin:34px auto 0; max-width:1180px;
+    padding:0 clamp(20px,5vw,64px);
+  }
+  .selected-frame{
+    position:relative;
+    display:inline-flex;align-items:center;gap:14px;
+    padding:16px 22px;border-radius:16px;
+    color:rgba(255,255,255,.92);font-weight:600;font-size:15px;
+    background:rgba(255,255,255,.04);
+    outline:1.5px dashed rgba(120,150,255,.55);
+    outline-offset:3px;
+  }
+  .selected-frame::before{
+    content:&quot;&quot;; position:absolute; inset:-3px; border-radius:18px;
+    background:linear-gradient(120deg,var(--c-blue),var(--c-violet),var(--c-pink));
+    opacity:.0; filter:blur(10px); z-index:-1;
+    animation:sel-breathe 4s ease-in-out infinite;
+  }
+  @keyframes sel-breathe{0%,100%{opacity:.18}50%{opacity:.4}}
+  .selected-tag{
+    position:absolute;top:-12px;left:14px;
+    font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+    padding:3px 9px;border-radius:7px;color:#fff;
+    background:linear-gradient(120deg,var(--c-blue),var(--c-indigo));
+    box-shadow:0 6px 16px -4px rgba(60,40,200,.55);
+  }
+  .selected-frame .dot{width:9px;height:9px;border-radius:50%;background:#fff;opacity:.5}
+
+  /* ============ PANNEAU FLOTTANT IA ============ */
+  .ai-deck{
+    position:relative; z-index:5;
+    max-width:1240px; margin:0 auto;
+    padding:clamp(40px,7vh,90px) clamp(20px,5vw,64px) 80px;
+  }
+  .deck-head{
+    text-align:center; margin-bottom:38px; color:#fff;
+  }
+  .deck-head h2{
+    font-size:clamp(22px,3vw,30px);font-weight:700;letter-spacing:-.03em;
+    color:rgba(255,255,255,.96);
+  }
+  .deck-head p{
+    margin-top:10px;font-size:14.5px;color:rgba(255,255,255,.52);font-weight:400;
+  }
+
+  /* onglets */
+  .tabs{
+    display:inline-flex;gap:5px;padding:5px;margin:22px auto 0;
+    border-radius:999px;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.12);
+    backdrop-filter:blur(10px);
+  }
+  .tab{
+    border:0;cursor:pointer;font-family:inherit;
+    font-size:13.5px;font-weight:600;color:rgba(255,255,255,.6);
+    padding:9px 20px;border-radius:999px;
+    background:transparent;transition:all .3s var(--ease);
+  }
+  .tab:hover{color:rgba(255,255,255,.9)}
+  .tab.active{
+    color:var(--ink);
+    background:#fff;
+    box-shadow:0 6px 18px -6px rgba(0,0,0,.4);
+  }
+
+  /* grille des 3 cartes */
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;margin-top:40px;align-items:start;
+  }
+  @media(max-width:980px){.cards{grid-template-columns:1fr;max-width:440px;margin-inline:auto}}
+
+  .panel{
+    position:relative;
+    border-radius:28px;
+    background:var(--glass);
+    backdrop-filter:blur(26px) saturate(1.5);
+    -webkit-backdrop-filter:blur(26px) saturate(1.5);
+    border:1px solid rgba(255,255,255,.6);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.7) inset,
+      0 30px 70px -28px rgba(20,18,60,.55),
+      0 8px 24px -16px rgba(20,18,60,.35);
+    padding:26px 24px 24px;
+    overflow:hidden;
+    transition:transform .5s var(--ease), box-shadow .5s var(--ease);
+  }
+  .panel:hover{transform:translateY(-4px)}
+  .panel .step{
+    display:flex;align-items:center;gap:9px;
+    font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:20px;
+  }
+  .panel .step b{
+    width:22px;height:22px;border-radius:7px;display:grid;place-items:center;
+    color:#fff;font-size:12px;font-weight:800;letter-spacing:0;
+    background:linear-gradient(135deg,var(--c-blue),var(--c-indigo));
+    box-shadow:0 4px 10px -3px rgba(60,40,200,.5);
+  }
+
+  /* ---------- ÉTAT 1 : SAISIE + halo animé ---------- */
+  .prompt-wrap{position:relative;padding:14px 6px 6px}
+  /* l'AURA dégradée qui tourne autour de la barre */
+  .prompt-aura{
+    position:absolute; inset:2px; border-radius:20px; z-index:0;
+    background:conic-gradient(from 0deg,
+      var(--c-blue),var(--c-violet),var(--c-pink),var(--c-indigo),var(--c-blue));
+    filter:blur(13px); opacity:.55;
+    animation:spin 7s linear infinite;
+  }
+  .prompt-aura.soft{
+    inset:-2px; filter:blur(26px); opacity:.28;
+    animation-duration:11s; animation-direction:reverse;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .prompt-bar{
+    position:relative; z-index:2;
+    display:flex; align-items:center; gap:12px;
+    background:#fff; border-radius:16px;
+    padding:7px 7px 7px 18px;
+    box-shadow:0 10px 28px -14px rgba(30,20,90,.45);
+  }
+  .prompt-bar .spark{
+    color:var(--c-indigo);font-size:17px;flex-shrink:0;
+    animation:twinkle 3.2s var(--ease) infinite;
+  }
+  @keyframes twinkle{0%,100%{opacity:.55;transform:scale(.9) rotate(0)}50%{opacity:1;transform:scale(1.15) rotate(20deg)}}
+  .prompt-input{
+    flex:1;border:0;outline:0;font-family:inherit;
+    font-size:15px;font-weight:500;color:var(--ink);background:transparent;
+  }
+  .prompt-input::placeholder{color:var(--ink-faint);font-weight:400}
+  .prompt-send{
+    flex-shrink:0;border:0;cursor:pointer;font-family:inherit;
+    width:40px;height:40px;border-radius:12px;display:grid;place-items:center;
+    color:#fff;font-size:17px;
+    background:linear-gradient(135deg,#171622,#26243a);
+    box-shadow:0 8px 20px -8px rgba(0,0,0,.6);
+    transition:transform .25s var(--ease-spring),box-shadow .25s var(--ease);
+    position:relative;overflow:hidden;
+  }
+  .prompt-send::after{
+    content:&quot;&quot;;position:absolute;inset:0;border-radius:inherit;
+    background:radial-gradient(circle at 30% 25%,rgba(155,130,255,.7),transparent 60%);
+    opacity:0;transition:opacity .3s var(--ease);
+  }
+  .prompt-send:hover{transform:translateY(-2px) scale(1.05);box-shadow:0 12px 26px -8px rgba(80,40,200,.6)}
+  .prompt-send:hover::after{opacity:1}
+  .prompt-hint{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-top:16px;padding:0 4px;font-size:12.5px;color:var(--ink-soft);
+  }
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;padding:0 4px}
+  .chip{
+    font-size:12.5px;font-weight:500;color:var(--ink-soft);
+    padding:7px 13px;border-radius:999px;cursor:pointer;
+    background:rgba(120,110,160,.07);
+    border:1px solid var(--line);
+    transition:all .25s var(--ease);
+  }
+  .chip:hover{color:var(--c-indigo);border-color:rgba(120,90,255,.4);background:rgba(120,90,255,.07);transform:translateY(-1px)}
+  .credit-note{
+    display:flex;align-items:center;gap:7px;
+    margin-top:20px;padding-top:16px;border-top:1px solid var(--line);
+    font-size:12.5px;color:var(--ink-faint);
+  }
+  .credit-note b{color:var(--ink);font-weight:700}
+
+  /* ---------- ÉTAT 2 : ORBE Apple Intelligence ---------- */
+  .loading-body{
+    display:flex;flex-direction:column;align-items:center;
+    padding:18px 0 6px;text-align:center;
+  }
+  .orb-stage{
+    position:relative;width:168px;height:168px;
+    display:grid;place-items:center;margin:6px 0 30px;
+  }
+  /* halo derrière l'orbe qui pulse */
+  .orb-glow{
+    position:absolute;inset:-34px;border-radius:50%;
+    background:radial-gradient(circle,rgba(130,90,255,.45),transparent 62%);
+    filter:blur(20px);
+    animation:orb-pulse 4.5s ease-in-out infinite;
+  }
+  @keyframes orb-pulse{0%,100%{opacity:.6;transform:scale(.92)}50%{opacity:1;transform:scale(1.12)}}
+
+  .orb{
+    position:relative;width:146px;height:146px;border-radius:50%;
+    overflow:hidden;
+    background:#0c0c14;
+    box-shadow:
+      inset 0 0 30px rgba(255,255,255,.12),
+      0 18px 44px -16px rgba(60,30,160,.65);
+    animation:orb-breathe 5.5s ease-in-out infinite;
+  }
+  @keyframes orb-breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  /* couches de couleur floues qui tournent, désynchronisées, en mix-blend */
+  .orb i{position:absolute;border-radius:50%;mix-blend-mode:screen;filter:blur(15px)}
+  .orb .b1{
+    inset:-18%;
+    background:conic-gradient(from 0deg,#2b6dff,#6a45ff,#9b4dff,#ff5db1,#2b6dff);
+    animation:spin 6s linear infinite;
+  }
+  .orb .b2{
+    inset:6%;
+    background:radial-gradient(circle at 32% 30%,#ff5db1,transparent 55%),
+               radial-gradient(circle at 70% 72%,#2b6dff,transparent 55%);
+    animation:spin 9s linear infinite reverse;
+  }
+  .orb .b3{
+    inset:18%;
+    background:radial-gradient(circle at 60% 35%,#b98bff,transparent 60%),
+               radial-gradient(circle at 30% 75%,#5ad1ff,transparent 55%);
+    animation:orb-wander 7s ease-in-out infinite;
+  }
+  @keyframes orb-wander{
+    0%,100%{transform:translate(0,0) scale(1)}
+    33%{transform:translate(14px,-10px) scale(1.1)}
+    66%{transform:translate(-12px,12px) scale(.95)}
+  }
+  /* reflet vitreux fixe en surface */
+  .orb .gloss{
+    inset:0;mix-blend-mode:normal;filter:none;
+    background:radial-gradient(circle at 34% 26%,rgba(255,255,255,.5),transparent 38%);
+  }
+  /* anneau fin qui tourne autour */
+  .orb-ring{
+    position:absolute;inset:-9px;border-radius:50%;
+    border:1.5px solid transparent;
+    background:conic-gradient(from 90deg,transparent,rgba(180,150,255,.8),transparent 55%) border-box;
+    -webkit-mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;
+    animation:spin 4.5s linear infinite;
+  }
+
+  .loading-title{font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+  .loading-title .gradtext{
+    background:linear-gradient(100deg,var(--c-blue),var(--c-violet),var(--c-pink));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    background-size:200% auto;animation:shift 4s linear infinite;
+  }
+  @keyframes shift{to{background-position:200% center}}
+  /* sous-texte qui change façon &quot;étapes&quot; */
+  .loading-steps{height:20px;margin-top:9px;overflow:hidden;position:relative;width:100%}
+  .loading-steps ul{list-style:none;animation:roll 9s steps(1) infinite}
+  .loading-steps li{height:20px;font-size:13px;color:var(--ink-soft);font-weight:500}
+  @keyframes roll{0%,30%{transform:translateY(0)}33%,63%{transform:translateY(-20px)}66%,96%{transform:translateY(-40px)}}
+  /* barre de progression fluide */
+  .loading-prog{
+    margin-top:24px;width:78%;height:5px;border-radius:99px;overflow:hidden;
+    background:rgba(120,110,160,.14);
+  }
+  .loading-prog span{
+    display:block;height:100%;border-radius:99px;width:40%;
+    background:linear-gradient(90deg,var(--c-blue),var(--c-violet),var(--c-pink));
+    background-size:200% auto;
+    animation:prog 2.6s var(--ease) infinite,shift 3s linear infinite;
+  }
+  @keyframes prog{0%{width:8%;margin-left:0}50%{width:62%}100%{width:96%;margin-left:4%}}
+
+  /* ---------- ÉTAT 3 : PROPOSITION ---------- */
+  .result-preview{
+    position:relative;border-radius:18px;overflow:hidden;
+    height:128px;margin-bottom:18px;
+    background:linear-gradient(150deg,#101a3a,#1b1340 55%,#2a1230);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+    display:flex;align-items:flex-end;padding:16px;
+  }
+  .result-preview::before{
+    content:&quot;&quot;;position:absolute;inset:0;
+    background:radial-gradient(80% 60% at 75% 10%,rgba(120,90,255,.5),transparent 60%),
+              radial-gradient(70% 60% at 15% 90%,rgba(255,93,177,.32),transparent 60%);
+    animation:aurora-drift 14s ease-in-out infinite alternate;
+  }
+  .result-preview .pv-title{
+    position:relative;color:#fff;font-weight:700;font-size:17px;letter-spacing:-.02em;
+  }
+  .result-preview .pv-sub{position:relative;color:rgba(255,255,255,.6);font-size:11.5px;margin-top:3px}
+  .result-badge{
+    position:absolute;top:12px;right:12px;z-index:2;
+    font-size:11px;font-weight:700;letter-spacing:.04em;
+    padding:5px 11px;border-radius:999px;color:#fff;
+    background:rgba(255,255,255,.12);backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,.22);
+    display:flex;align-items:center;gap:6px;
+  }
+  .result-badge .gd{width:7px;height:7px;border-radius:50%;
+    background:conic-gradient(var(--c-blue),var(--c-pink),var(--c-blue));}
+
+  .result-summary{font-size:13.5px;line-height:1.5;color:var(--ink-soft);padding:0 2px}
+  .result-summary b{color:var(--ink);font-weight:600}
+  .diff{
+    display:flex;align-items:center;gap:10px;margin:16px 0 4px;padding:0 2px;
+    font-size:12.5px;
+  }
+  .swatch{width:26px;height:26px;border-radius:8px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+  .sw-old{background:#0b1320}
+  .arrow{color:var(--ink-faint)}
+  .sw-new{background:linear-gradient(135deg,#0a1230,#1a1148)}
+  .diff-label{color:var(--ink-faint);font-weight:500}
+  .diff-label b{color:var(--ink);font-weight:700}
+
+  /* actions */
+  .actions{margin-top:22px;display:flex;flex-direction:column;gap:10px}
+  .btn{
+    font-family:inherit;border:0;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:9px;
+    font-size:14.5px;font-weight:600;
+    padding:14px 18px;border-radius:14px;
+    transition:transform .25s var(--ease-spring),box-shadow .3s var(--ease),background .3s var(--ease);
+  }
+  .btn-primary{
+    color:#fff;position:relative;overflow:hidden;
+    background:linear-gradient(120deg,var(--c-blue),var(--c-indigo) 55%,var(--c-violet));
+    background-size:160% auto;
+    box-shadow:0 14px 30px -12px rgba(80,40,220,.6);
+  }
+  .btn-primary:hover{transform:translateY(-2px);background-position:right center;box-shadow:0 18px 38px -12px rgba(80,40,220,.7)}
+  .btn-primary .credit-pill{
+    font-size:11.5px;font-weight:700;
+    padding:3px 9px;border-radius:999px;
+    background:rgba(255,255,255,.22);
+  }
+  .btn-primary::before{
+    content:&quot;&quot;;position:absolute;top:0;left:-60%;width:40%;height:100%;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);
+    transform:skewX(-18deg);
+    animation:sheen 4.5s var(--ease) infinite;
+  }
+  @keyframes sheen{0%,72%{left:-60%}86%{left:130%}100%{left:130%}}
+
+  .btn-row{display:flex;gap:10px}
+  .btn-row .btn{flex:1}
+  .btn-ghost{
+    background:rgba(120,110,160,.06);
+    color:var(--ink);
+    border:1px solid var(--line);
+  }
+  .btn-ghost:hover{transform:translateY(-2px);background:rgba(120,90,255,.08);border-color:rgba(120,90,255,.3);color:var(--c-indigo)}
+  .btn-quiet{
+    background:transparent;color:var(--ink-faint);font-weight:500;padding:10px;
+  }
+  .btn-quiet:hover{color:var(--ink)}
+
+  /* footer flottant */
+  .deck-foot{
+    text-align:center;margin-top:46px;
+    font-size:12.5px;color:rgba(255,255,255,.4);font-weight:400;
+  }
+  .deck-foot b{color:rgba(255,255,255,.7);font-weight:600}
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  }
+</style>
+</head>
+<body>
+  <main class=&quot;stage&quot;>
+    <div class=&quot;hero-bg&quot;></div>
+    <div class=&quot;hero-aurora&quot;></div>
+    <div class=&quot;hero-aurora two&quot;></div>
+    <div class=&quot;hero-vignette&quot;></div>
+
+    <!-- NAV du faux site photographe -->
+    <nav class=&quot;hero-nav&quot;>
+      <div class=&quot;hero-brand&quot;><span class=&quot;mark&quot;></span> Camille Aubert</div>
+      <div class=&quot;hero-links&quot;><span>Portfolio</span><span>Mariages</span><span>À propos</span><span>Contact</span></div>
+      <div class=&quot;hero-mode&quot;><span class=&quot;ping&quot;></span> Mode édition</div>
+    </nav>
+
+    <!-- HERO du faux site -->
+    <header class=&quot;hero-content&quot;>
+      <div class=&quot;hero-kicker&quot;>Photographe · Lyon</div>
+      <h1 class=&quot;hero-title&quot;>La lumière, <span class=&quot;it&quot;>juste avant</span> qu'elle parte.</h1>
+      <p class=&quot;hero-sub&quot;>Mariages, portraits et reportages argentiques. Des images qui gardent la chaleur de l'instant, longtemps après.</p>
+    </header>
+
+    <div class=&quot;selected-block&quot;>
+      <div class=&quot;selected-frame&quot;>
+        <span class=&quot;selected-tag&quot;>Sélection</span>
+        <span class=&quot;dot&quot;></span> Section Hero · fond
+      </div>
+    </div>
+
+    <!-- DECK IA : les 3 états -->
+    <section class=&quot;ai-deck&quot;>
+      <div class=&quot;deck-head&quot;>
+        <h2>Modifiez votre site, à la voix ou à la main.</h2>
+        <p>Vous cliquez une zone, vous décrivez l'envie — l'IA propose, vous validez. Voici les trois moments.</p>
+        <div class=&quot;tabs&quot; role=&quot;tablist&quot;>
+          <button class=&quot;tab active&quot; data-tab=&quot;all&quot;>Tout voir</button>
+          <button class=&quot;tab&quot; data-tab=&quot;1&quot;>1 · Saisie</button>
+          <button class=&quot;tab&quot; data-tab=&quot;2&quot;>2 · L'IA travaille</button>
+          <button class=&quot;tab&quot; data-tab=&quot;3&quot;>3 · Proposition</button>
+        </div>
+      </div>
+
+      <div class=&quot;cards&quot;>
+
+        <!-- ====== ÉTAT 1 : SAISIE ====== -->
+        <article class=&quot;panel&quot; data-card=&quot;1&quot;>
+          <div class=&quot;step&quot;><b>1</b> Décrivez votre envie</div>
+
+          <div class=&quot;prompt-wrap&quot;>
+            <div class=&quot;prompt-aura soft&quot;></div>
+            <div class=&quot;prompt-aura&quot;></div>
+            <div class=&quot;prompt-bar&quot;>
+              <span class=&quot;spark&quot;>&amp;#10022;</span>
+              <input class=&quot;prompt-input&quot; type=&quot;text&quot; value=&quot;Mets le fond en bleu nuit, plus profond&quot; aria-label=&quot;Demande à l'IA&quot; />
+              <button class=&quot;prompt-send&quot; aria-label=&quot;Envoyer à l'IA&quot;>&amp;#10022;</button>
+            </div>
+          </div>
+
+          <div class=&quot;chips&quot;>
+            <span class=&quot;chip&quot;>Rendre plus chaleureux</span>
+            <span class=&quot;chip&quot;>Texte plus court</span>
+            <span class=&quot;chip&quot;>Fond bleu nuit</span>
+          </div>
+
+          <div class=&quot;credit-note&quot;>
+            <span class=&quot;spark&quot; style=&quot;font-size:13px&quot;>&amp;#10022;</span>
+            La saisie est gratuite — vous ne payez que si vous acceptez. <b>1 crédit</b>.
+          </div>
+        </article>
+
+        <!-- ====== ÉTAT 2 : CHARGEMENT (ORBE) ====== -->
+        <article class=&quot;panel&quot; data-card=&quot;2&quot;>
+          <div class=&quot;step&quot;><b>2</b> L'IA travaille</div>
+
+          <div class=&quot;loading-body&quot;>
+            <div class=&quot;orb-stage&quot;>
+              <div class=&quot;orb-glow&quot;></div>
+              <div class=&quot;orb-ring&quot;></div>
+              <div class=&quot;orb&quot;>
+                <i class=&quot;b1&quot;></i>
+                <i class=&quot;b2&quot;></i>
+                <i class=&quot;b3&quot;></i>
+                <i class=&quot;gloss&quot;></i>
+              </div>
+            </div>
+
+            <div class=&quot;loading-title&quot;><span class=&quot;gradtext&quot;>L'intelligence imagine&amp;hellip;</span></div>
+
+            <div class=&quot;loading-steps&quot; aria-hidden=&quot;true&quot;>
+              <ul>
+                <li>Lecture de votre section&amp;hellip;</li>
+                <li>Recherche de la bonne teinte&amp;hellip;</li>
+                <li>Préparation de l'aperçu&amp;hellip;</li>
+              </ul>
+            </div>
+
+            <div class=&quot;loading-prog&quot;><span></span></div>
+          </div>
+        </article>
+
+        <!-- ====== ÉTAT 3 : PROPOSITION ====== -->
+        <article class=&quot;panel&quot; data-card=&quot;3&quot;>
+          <div class=&quot;step&quot;><b>3</b> Voici la proposition</div>
+
+          <div class=&quot;result-preview&quot;>
+            <div class=&quot;result-badge&quot;><span class=&quot;gd&quot;></span> Aperçu</div>
+            <div>
+              <div class=&quot;pv-title&quot;>La lumière, juste avant&amp;hellip;</div>
+              <div class=&quot;pv-sub&quot;>Fond bleu nuit appliqué</div>
+            </div>
+          </div>
+
+          <p class=&quot;result-summary&quot;>
+            J'ai assombri le fond du hero vers un <b>bleu nuit profond</b> et renforcé le contraste du titre pour garder la lisibilité.
+          </p>
+
+          <div class=&quot;diff&quot;>
+            <span class=&quot;swatch sw-old&quot;></span>
+            <span class=&quot;arrow&quot;>&amp;rarr;</span>
+            <span class=&quot;swatch sw-new&quot;></span>
+            <span class=&quot;diff-label&quot;>Fond&amp;nbsp;: <b>#0A1230</b> · bleu nuit</span>
+          </div>
+
+          <div class=&quot;actions&quot;>
+            <button class=&quot;btn btn-primary&quot;>
+              <span>&amp;#10003; Accepter et publier</span>
+              <span class=&quot;credit-pill&quot;>1 crédit</span>
+            </button>
+            <div class=&quot;btn-row&quot;>
+              <button class=&quot;btn btn-ghost&quot;>&amp;#10022; Affiner</button>
+              <button class=&quot;btn btn-ghost&quot;>&amp;#8635; Réessayer</button>
+            </div>
+            <button class=&quot;btn btn-quiet&quot;>Annuler</button>
+          </div>
+        </article>
+
+      </div>
+
+      <p class=&quot;deck-foot&quot;>Édition simple, à la main ou avec l'IA — <b>sans surcharge</b>. Vous gardez la main à chaque étape.</p>
+    </section>
+  </main>
+
+  <script>
+    // Bascule entre &quot;tout voir&quot; et un état isolé (focus animation)
+    const tabs = document.querySelectorAll('.tab');
+    const cards = document.querySelectorAll('[data-card]');
+    tabs.forEach(t=>{
+      t.addEventListener('click',()=>{
+        tabs.forEach(x=>x.classList.remove('active'));
+        t.classList.add('active');
+        const v = t.dataset.tab;
+        cards.forEach(c=>{
+          const show = v==='all' || c.dataset.card===v;
+          c.style.display = show ? '' : 'none';
+        });
+        // centre la carte isolée
+        document.querySelector('.cards').style.gridTemplateColumns =
+          v==='all' ? '' : 'minmax(0,420px)';
+        document.querySelector('.cards').style.justifyContent = v==='all' ? '' : 'center';
+      });
+    });
+  </script>
+</body>
+</html>"></iframe>
+<iframe class="f" srcdoc="<!DOCTYPE html>
+<html lang=&quot;fr&quot;>
+<head>
+<meta charset=&quot;UTF-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;>
+<title>Sitegene — Aurora Glow</title>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&amp;family=Archivo+Expanded:wght@600;700;800&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+  :root{
+    --ink-900:#06070f;
+    --ink-800:#0b0d1a;
+    --ink-700:#121527;
+    --ink-600:#1b1f36;
+    --paper:#f4f6ff;
+    --muted:#a6acc9;
+    --faint:#6a7099;
+    --blue:#2563eb;
+    --blue-bright:#3b82f6;
+    --green:#10b981;
+    --aurora-pink:#ff5ea8;
+    --aurora-magenta:#c026d3;
+    --aurora-violet:#7c3aed;
+    --aurora-blue:#2563eb;
+    --aurora-cyan:#22d3ee;
+    --glass:rgba(255,255,255,.07);
+    --glass-line:rgba(255,255,255,.14);
+    --radius-pill:999px;
+    --shadow-soft:0 30px 80px -30px rgba(0,0,0,.7);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:&quot;Archivo&quot;,sans-serif;
+    background:var(--ink-900);
+    color:var(--paper);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+    min-height:100vh;
+  }
+
+  /* ===== FOND : HERO PHOTOGRAPHE SOMBRE ===== */
+  .stage{
+    position:relative;
+    min-height:100vh;
+    padding:0;
+    isolation:isolate;
+  }
+  .hero-bg{
+    position:fixed;
+    inset:0;
+    z-index:-3;
+    background:
+      radial-gradient(120% 90% at 15% 5%, rgba(37,99,235,.18), transparent 55%),
+      radial-gradient(100% 100% at 95% 95%, rgba(192,38,211,.16), transparent 55%),
+      linear-gradient(160deg,#08091a 0%, #06070f 55%, #050608 100%);
+  }
+  /* dégradé mesh animé qui dérive en fond */
+  .mesh{
+    position:fixed;inset:-20%;z-index:-2;
+    background:
+      radial-gradient(35% 35% at 20% 30%, rgba(124,58,237,.30), transparent 70%),
+      radial-gradient(30% 30% at 80% 20%, rgba(34,211,238,.18), transparent 70%),
+      radial-gradient(40% 40% at 70% 80%, rgba(255,94,168,.22), transparent 70%),
+      radial-gradient(30% 30% at 30% 85%, rgba(37,99,235,.22), transparent 70%);
+    filter:blur(40px);
+    animation:meshDrift 24s ease-in-out infinite alternate;
+    opacity:.85;
+  }
+  @keyframes meshDrift{
+    0%{transform:translate(0,0) scale(1)}
+    50%{transform:translate(3%,-2%) scale(1.08)}
+    100%{transform:translate(-2%,2%) scale(1.04)}
+  }
+  /* faux portrait / grain photographe */
+  .photo-frame{
+    position:fixed;
+    right:-4%;top:50%;
+    transform:translateY(-50%);
+    width:46vw;max-width:760px;height:78vh;
+    z-index:-1;
+    border-radius:32px;
+    background:
+      radial-gradient(60% 70% at 60% 35%, rgba(255,255,255,.10), transparent 60%),
+      linear-gradient(200deg,#1a1d33 0%, #0c0e1d 60%, #070811 100%);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 50px 120px -40px #000;
+    overflow:hidden;
+    opacity:.5;
+    -webkit-mask-image:linear-gradient(270deg,#000 40%,transparent 100%);
+            mask-image:linear-gradient(270deg,#000 40%,transparent 100%);
+  }
+  .photo-frame::after{
+    content:&quot;&quot;;position:absolute;inset:0;
+    background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E&quot;);
+    opacity:.06;mix-blend-mode:overlay;
+  }
+
+  /* faux navbar du site photographe */
+  .site-nav{
+    position:relative;z-index:2;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:26px clamp(20px,5vw,64px);
+  }
+  .site-brand{
+    font-family:&quot;Archivo Expanded&quot;,&quot;Archivo&quot;,sans-serif;
+    font-weight:800;letter-spacing:-.5px;font-size:20px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .site-brand .dot{
+    width:10px;height:10px;border-radius:50%;
+    background:conic-gradient(from 0deg,var(--aurora-pink),var(--aurora-violet),var(--aurora-blue),var(--aurora-cyan),var(--aurora-pink));
+    box-shadow:0 0 16px rgba(124,58,237,.8);
+    animation:spin 6s linear infinite;
+  }
+  .site-links{display:flex;gap:30px;font-size:14px;color:var(--muted);font-weight:500}
+  .site-links span{cursor:default;transition:color .3s}
+  .site-links span:hover{color:var(--paper)}
+  .site-cta{
+    font-size:13px;font-weight:600;padding:11px 20px;border-radius:var(--radius-pill);
+    border:1px solid var(--glass-line);background:var(--glass);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    color:var(--paper);
+  }
+
+  /* gros titre éditorial photographe */
+  .hero-headline{
+    position:relative;z-index:1;
+    padding:clamp(24px,4vw,40px) clamp(20px,5vw,64px) 0;
+    max-width:1100px;
+  }
+  .hero-eyebrow{
+    font-size:12px;letter-spacing:3px;text-transform:uppercase;
+    color:var(--aurora-pink);font-weight:700;margin-bottom:18px;
+  }
+  .hero-title{
+    font-family:&quot;Archivo Expanded&quot;,&quot;Archivo&quot;,sans-serif;
+    font-weight:800;
+    font-size:clamp(44px,8vw,108px);
+    line-height:.92;letter-spacing:-.03em;
+    background:linear-gradient(180deg,#fff 30%, #c9cef0 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero-title em{
+    font-style:italic;font-weight:400;
+    background:linear-gradient(110deg,var(--aurora-pink),var(--aurora-violet) 50%,var(--aurora-cyan));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero-sub{margin-top:22px;color:var(--muted);max-width:440px;font-size:16px;line-height:1.6}
+
+  /* ===== ÉTIQUETTE DU PRODUIT ===== */
+  .ui-band{
+    position:relative;z-index:3;
+    margin-top:clamp(36px,6vw,64px);
+    padding:0 clamp(20px,5vw,64px) 80px;
+  }
+  .band-head{
+    display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;
+    margin-bottom:34px;
+  }
+  .band-kicker{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+    color:var(--muted);
+    padding:9px 16px;border-radius:var(--radius-pill);
+    background:var(--glass);border:1px solid var(--glass-line);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  }
+  .band-kicker b{
+    color:var(--paper);
+    background:linear-gradient(100deg,var(--aurora-pink),var(--aurora-cyan));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    font-weight:800;
+  }
+  .band-title{
+    font-family:&quot;Archivo Expanded&quot;,&quot;Archivo&quot;,sans-serif;
+    font-size:clamp(24px,3.5vw,40px);font-weight:800;letter-spacing:-.02em;line-height:1.05;
+  }
+  .band-note{color:var(--faint);font-size:14px;max-width:340px;text-align:right;line-height:1.5}
+
+  /* onglets pour rejouer une étape */
+  .tabs{display:flex;gap:8px;margin-bottom:30px;flex-wrap:wrap}
+  .tab{
+    font-family:&quot;Archivo&quot;,sans-serif;font-size:13px;font-weight:600;
+    padding:10px 18px;border-radius:var(--radius-pill);cursor:pointer;
+    background:var(--glass);border:1px solid var(--glass-line);color:var(--muted);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    transition:all .35s cubic-bezier(.22,1,.36,1);
+  }
+  .tab:hover{color:var(--paper);transform:translateY(-2px)}
+  .tab.active{
+    color:#fff;border-color:transparent;
+    background:linear-gradient(100deg,var(--aurora-magenta),var(--aurora-violet) 55%,var(--aurora-blue));
+    box-shadow:0 12px 30px -10px rgba(124,58,237,.7);
+  }
+
+  /* grille des 3 cartes d'état */
+  .states{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:clamp(18px,2.4vw,32px);
+    align-items:stretch;
+  }
+  @media(max-width:1080px){.states{grid-template-columns:1fr;max-width:560px}}
+
+  .state-col{
+    position:relative;
+    display:flex;flex-direction:column;
+    transition:opacity .5s ease, filter .5s ease, transform .5s ease;
+  }
+  .state-col.dim{opacity:.32;filter:saturate(.6) brightness(.85);transform:scale(.985)}
+
+  .state-tag{
+    display:flex;align-items:center;gap:10px;margin-bottom:16px;font-size:12px;
+    letter-spacing:1.5px;text-transform:uppercase;font-weight:700;color:var(--faint);
+  }
+  .state-tag .num{
+    width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
+    font-size:12px;color:#fff;font-weight:800;
+    background:linear-gradient(135deg,var(--aurora-violet),var(--aurora-blue));
+    box-shadow:0 6px 16px -6px rgba(37,99,235,.8);
+  }
+
+  /* ====== CARTE GLASS COMMUNE ====== */
+  .card{
+    position:relative;
+    flex:1;
+    border-radius:28px;
+    padding:26px;
+    background:linear-gradient(165deg,rgba(255,255,255,.085),rgba(255,255,255,.025));
+    border:1px solid var(--glass-line);
+    backdrop-filter:blur(26px) saturate(160%);
+    -webkit-backdrop-filter:blur(26px) saturate(160%);
+    box-shadow:var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,.16);
+    display:flex;flex-direction:column;
+    overflow:hidden;
+    min-height:330px;
+  }
+  .card::before{ /* reflet supérieur */
+    content:&quot;&quot;;position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:radial-gradient(120% 60% at 50% -10%, rgba(255,255,255,.12), transparent 60%);
+  }
+
+  /* ============================================= */
+  /* ÉTAT 1 — SAISIE + HALO AURORE                 */
+  /* ============================================= */
+  .pin{
+    display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+    font-size:12px;font-weight:600;color:var(--muted);
+    padding:7px 13px;border-radius:var(--radius-pill);
+    background:rgba(255,94,168,.10);border:1px solid rgba(255,94,168,.25);
+    margin-bottom:auto;
+  }
+  .pin .ring{
+    width:9px;height:9px;border-radius:50%;background:var(--aurora-pink);
+    box-shadow:0 0 0 0 rgba(255,94,168,.6);
+    animation:ping 1.8s ease-out infinite;
+  }
+  @keyframes ping{
+    0%{box-shadow:0 0 0 0 rgba(255,94,168,.55)}
+    100%{box-shadow:0 0 0 12px rgba(255,94,168,0)}
+  }
+
+  .prompt-wrap{position:relative;margin-top:26px}
+  /* AURORE qui tourne autour de l'input */
+  .aurora{
+    position:absolute;inset:-3px;border-radius:var(--radius-pill);
+    padding:3px;
+    background:conic-gradient(from 0deg,
+      var(--aurora-pink),
+      var(--aurora-magenta),
+      var(--aurora-violet),
+      var(--aurora-blue),
+      var(--aurora-cyan),
+      var(--aurora-pink));
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;
+    animation:spin 4s linear infinite;
+    z-index:1;
+  }
+  .aurora-glow{ /* halo flou ambiant derrière qui respire */
+    position:absolute;inset:-18px;border-radius:var(--radius-pill);
+    background:conic-gradient(from 90deg,
+      var(--aurora-pink),var(--aurora-violet),var(--aurora-blue),var(--aurora-cyan),var(--aurora-pink));
+    filter:blur(26px);
+    opacity:.55;
+    animation:spin 6s linear infinite reverse, breathe 3.4s ease-in-out infinite;
+    z-index:0;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes breathe{
+    0%,100%{opacity:.45;transform:scale(1)}
+    50%{opacity:.8;transform:scale(1.06)}
+  }
+  .prompt-input{
+    position:relative;z-index:2;
+    display:flex;align-items:center;gap:12px;
+    background:rgba(8,9,20,.82);
+    border-radius:var(--radius-pill);
+    padding:8px 8px 8px 20px;
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  }
+  .prompt-spark{font-size:16px;color:var(--aurora-pink);animation:twinkle 2.4s ease-in-out infinite}
+  @keyframes twinkle{0%,100%{opacity:.5;transform:scale(.9) rotate(0)}50%{opacity:1;transform:scale(1.15) rotate(90deg)}}
+  .prompt-text{
+    flex:1;font-size:15px;color:var(--paper);font-weight:500;
+    white-space:nowrap;overflow:hidden;
+  }
+  .prompt-text .typed{border-right:2px solid var(--aurora-pink);padding-right:3px;
+    animation:caret 1s step-end infinite}
+  @keyframes caret{50%{border-color:transparent}}
+  .ai-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:&quot;Archivo&quot;,sans-serif;font-weight:700;font-size:14px;color:#fff;
+    padding:12px 20px;border:none;border-radius:var(--radius-pill);cursor:pointer;
+    background:linear-gradient(140deg,#15172b,#0a0b16);
+    box-shadow:0 10px 26px -10px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.12);
+    position:relative;overflow:hidden;transition:transform .3s, box-shadow .3s;
+  }
+  .ai-btn::after{ /* étincelle qui balaie */
+    content:&quot;&quot;;position:absolute;top:0;left:-60%;width:50%;height:100%;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);
+    transform:skewX(-20deg);
+    animation:sweep 3.4s ease-in-out infinite;
+  }
+  @keyframes sweep{0%{left:-60%}40%,100%{left:140%}}
+  .ai-btn:hover{transform:translateY(-2px);box-shadow:0 16px 34px -10px rgba(124,58,237,.6)}
+  .ai-btn .star{
+    color:transparent;
+    background:linear-gradient(120deg,var(--aurora-pink),var(--aurora-cyan));
+    -webkit-background-clip:text;background-clip:text;
+    font-size:15px;animation:twinkle 2.2s ease-in-out infinite;
+  }
+  .hint{margin-top:18px;font-size:12.5px;color:var(--faint);display:flex;gap:8px;flex-wrap:wrap}
+  .chip{
+    padding:6px 12px;border-radius:var(--radius-pill);
+    background:rgba(255,255,255,.05);border:1px solid var(--glass-line);
+    color:var(--muted);font-size:12px;cursor:default;transition:.3s;
+  }
+  .chip:hover{color:#fff;border-color:rgba(255,94,168,.5);transform:translateY(-1px)}
+
+  /* ============================================= */
+  /* ÉTAT 2 — CHARGEMENT + ORBE                     */
+  /* ============================================= */
+  .loading-card{align-items:center;justify-content:center;text-align:center}
+  .orb-stage{position:relative;width:170px;height:170px;display:grid;place-items:center;margin:6px 0 6px}
+  .orb-halo{
+    position:absolute;inset:-30px;border-radius:50%;
+    background:radial-gradient(circle,rgba(124,58,237,.5),transparent 60%);
+    filter:blur(24px);animation:breathe 3s ease-in-out infinite;
+  }
+  .orb{
+    position:relative;width:128px;height:128px;border-radius:50%;
+    overflow:hidden;
+    box-shadow:0 0 60px -8px rgba(124,58,237,.7), inset 0 0 30px rgba(255,255,255,.1);
+    animation:orbBreath 3.2s ease-in-out infinite;
+  }
+  @keyframes orbBreath{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  /* couches multicolores qui tournent à des vitesses différentes = sphère Apple Intelligence */
+  .orb-layer{position:absolute;inset:-25%;border-radius:50%;mix-blend-mode:screen;filter:blur(8px)}
+  .orb-l1{
+    background:conic-gradient(from 0deg,#ff5ea8,#c026d3,#7c3aed,#2563eb,#22d3ee,#ff5ea8);
+    animation:spin 5s linear infinite;
+  }
+  .orb-l2{
+    background:radial-gradient(circle at 35% 30%,#22d3ee,transparent 55%),
+              radial-gradient(circle at 70% 65%,#ff5ea8,transparent 55%);
+    animation:spin 7s linear infinite reverse;
+  }
+  .orb-l3{
+    background:radial-gradient(circle at 60% 25%,#7c3aed,transparent 50%),
+              radial-gradient(circle at 30% 75%,#2563eb,transparent 55%);
+    animation:spin 9s linear infinite;
+  }
+  .orb-gloss{
+    position:absolute;inset:0;border-radius:50%;
+    background:radial-gradient(60% 50% at 40% 28%,rgba(255,255,255,.7),transparent 60%);
+    mix-blend-mode:overlay;
+  }
+  .orb-inner{ /* noyau plus sombre pour donner du volume */
+    position:absolute;inset:18%;border-radius:50%;
+    background:radial-gradient(circle at 50% 60%,rgba(6,7,15,.0),rgba(6,7,15,.45));
+  }
+  .loading-title{
+    font-family:&quot;Archivo Expanded&quot;,&quot;Archivo&quot;,sans-serif;font-weight:700;font-size:20px;margin-top:14px;
+    background:linear-gradient(100deg,#fff,#c9cef0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .loading-sub{color:var(--muted);font-size:13.5px;margin-top:8px;min-height:18px}
+  .loading-sub .dots::after{content:&quot;&quot;;animation:dots 1.6s steps(4,end) infinite}
+  @keyframes dots{0%{content:&quot;&quot;}25%{content:&quot;.&quot;}50%{content:&quot;..&quot;}75%{content:&quot;...&quot;}100%{content:&quot;&quot;}}
+  .progress{
+    width:80%;height:5px;border-radius:99px;margin-top:20px;overflow:hidden;
+    background:rgba(255,255,255,.08);
+  }
+  .progress span{
+    display:block;height:100%;width:40%;border-radius:99px;
+    background:linear-gradient(100deg,var(--aurora-pink),var(--aurora-violet),var(--aurora-cyan));
+    animation:slide 1.8s ease-in-out infinite;
+  }
+  @keyframes slide{0%{margin-left:-40%}100%{margin-left:100%}}
+
+  /* ============================================= */
+  /* ÉTAT 3 — PROPOSITION                           */
+  /* ============================================= */
+  .prop-head{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+  .prop-badge{
+    display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;
+    padding:7px 13px;border-radius:var(--radius-pill);color:#062b1e;
+    background:linear-gradient(100deg,#34e0a5,#10b981);
+    box-shadow:0 8px 20px -8px rgba(16,185,129,.7);
+  }
+  .prop-credit{margin-left:auto;font-size:12px;color:var(--faint)}
+  /* aperçu avant/après */
+  .preview{
+    border-radius:18px;overflow:hidden;border:1px solid var(--glass-line);
+    background:rgba(0,0,0,.25);display:flex;
+  }
+  .preview .half{flex:1;padding:14px;position:relative}
+  .preview .half.before{background:linear-gradient(160deg,#1a1d33,#0c0e1d)}
+  .preview .half.after{
+    background:linear-gradient(160deg,#0a1b3d,#071028);
+    border-left:1px solid var(--glass-line);
+  }
+  .preview .lbl{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;color:var(--faint)}
+  .preview .after .lbl{color:var(--aurora-cyan)}
+  .preview .swatch{height:46px;border-radius:10px;margin-top:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+  .preview .before .swatch{background:linear-gradient(120deg,#23263f,#171a2c)}
+  .preview .after .swatch{
+    background:linear-gradient(120deg,#0b1e4a,#08132f);
+    position:relative;overflow:hidden;
+  }
+  .preview .after .swatch::after{
+    content:&quot;&quot;;position:absolute;inset:0;
+    background:linear-gradient(100deg,transparent,rgba(59,130,246,.5),transparent);
+    transform:skewX(-20deg);animation:sweep 2.6s ease-in-out infinite;
+  }
+  .prop-summary{font-size:13.5px;color:var(--muted);line-height:1.55;margin:16px 0 20px}
+  .prop-summary b{color:var(--paper);font-weight:600}
+
+  .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto}
+  .btn{
+    font-family:&quot;Archivo&quot;,sans-serif;font-weight:600;font-size:13.5px;
+    padding:13px 16px;border-radius:14px;cursor:pointer;border:1px solid var(--glass-line);
+    background:rgba(255,255,255,.05);color:var(--paper);
+    transition:transform .25s, box-shadow .25s, background .25s, border-color .25s;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.09)}
+  .btn-accept{
+    grid-column:1 / -1;
+    border:none;color:#fff;font-weight:700;font-size:14.5px;padding:15px;
+    background:linear-gradient(100deg,var(--aurora-magenta),var(--aurora-violet) 45%,var(--aurora-blue));
+    box-shadow:0 16px 34px -12px rgba(124,58,237,.8), inset 0 1px 0 rgba(255,255,255,.2);
+    position:relative;overflow:hidden;
+  }
+  .btn-accept::after{
+    content:&quot;&quot;;position:absolute;top:0;left:-60%;width:55%;height:100%;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.4),transparent);
+    transform:skewX(-20deg);animation:sweep 3s ease-in-out infinite;
+  }
+  .btn-accept:hover{transform:translateY(-3px);box-shadow:0 22px 44px -12px rgba(124,58,237,.9)}
+  .btn-accept .credit{
+    font-size:11.5px;font-weight:600;opacity:.85;
+    padding:3px 9px;border-radius:99px;background:rgba(0,0,0,.22);
+  }
+  .btn .ic{font-size:14px}
+  .btn-cancel:hover{border-color:rgba(255,120,120,.5);color:#ffd3d3}
+
+  /* pied de page léger */
+  .foot{
+    text-align:center;color:var(--faint);font-size:12.5px;
+    padding:10px 0 50px;letter-spacing:.3px;
+  }
+  .foot b{color:var(--muted)}
+
+  /* respect du mouvement réduit */
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important}
+  }
+</style>
+</head>
+<body>
+  <div class=&quot;hero-bg&quot;></div>
+  <div class=&quot;mesh&quot;></div>
+  <div class=&quot;photo-frame&quot;></div>
+
+  <main class=&quot;stage&quot;>
+
+    <!-- FAUX SITE PHOTOGRAPHE EN FOND -->
+    <nav class=&quot;site-nav&quot;>
+      <div class=&quot;site-brand&quot;><span class=&quot;dot&quot;></span> ALICE&amp;nbsp;R. <span style=&quot;color:var(--faint);font-weight:500&quot;>studio</span></div>
+      <div class=&quot;site-links&quot;><span>Accueil</span><span>Galeries</span><span>À propos</span><span>Contact</span></div>
+      <div class=&quot;site-cta&quot;>Réserver une séance</div>
+    </nav>
+
+    <header class=&quot;hero-headline&quot;>
+      <div class=&quot;hero-eyebrow&quot;>Photographe · Mariage &amp;amp; Portrait · Lyon</div>
+      <h1 class=&quot;hero-title&quot;>La lumière<br>raconte vos <em>histoires</em></h1>
+      <p class=&quot;hero-sub&quot;>Des images sensibles, sans pose figée. Argentique &amp;amp; numérique, partout en France.</p>
+    </header>
+
+    <!-- ====== BANDEAU UI DE L'IA QUI FLOTTE PAR-DESSUS ====== -->
+    <section class=&quot;ui-band&quot;>
+      <div class=&quot;band-head&quot;>
+        <div>
+          <div class=&quot;band-kicker&quot;>✦ Édition <b>assistée par l'IA</b></div>
+          <h2 class=&quot;band-title&quot; style=&quot;margin-top:18px&quot;>Cliquez. Décrivez. <span style=&quot;background:linear-gradient(100deg,var(--aurora-pink),var(--aurora-cyan));-webkit-background-clip:text;background-clip:text;color:transparent&quot;>L'IA s'occupe du reste.</span></h2>
+        </div>
+        <p class=&quot;band-note&quot;>Modifiez à la main ou demandez à l'IA. Trois temps : la saisie, l'orbe qui réfléchit, la proposition à valider.</p>
+      </div>
+
+      <!-- onglets pour focaliser une étape (l'animation reste visible partout) -->
+      <div class=&quot;tabs&quot; id=&quot;tabs&quot;>
+        <button class=&quot;tab active&quot; data-step=&quot;all&quot;>Vue d'ensemble</button>
+        <button class=&quot;tab&quot; data-step=&quot;0&quot;>1 · Saisie</button>
+        <button class=&quot;tab&quot; data-step=&quot;1&quot;>2 · L'IA travaille</button>
+        <button class=&quot;tab&quot; data-step=&quot;2&quot;>3 · Proposition</button>
+      </div>
+
+      <div class=&quot;states&quot; id=&quot;states&quot;>
+
+        <!-- ÉTAT 1 -->
+        <div class=&quot;state-col&quot; data-col=&quot;0&quot;>
+          <div class=&quot;state-tag&quot;><span class=&quot;num&quot;>1</span> Saisie</div>
+          <div class=&quot;card&quot;>
+            <span class=&quot;pin&quot;><span class=&quot;ring&quot;></span> Section sélectionnée · <b style=&quot;color:var(--paper);font-weight:600;margin-left:4px&quot;>Fond du Hero</b></span>
+
+            <div class=&quot;prompt-wrap&quot;>
+              <div class=&quot;aurora-glow&quot;></div>
+              <div class=&quot;aurora&quot;></div>
+              <div class=&quot;prompt-input&quot;>
+                <span class=&quot;prompt-spark&quot;>✦</span>
+                <span class=&quot;prompt-text&quot;><span class=&quot;typed&quot;>Mets le fond en bleu nuit profond</span></span>
+                <button class=&quot;ai-btn&quot;><span class=&quot;star&quot;>✦</span> Générer</button>
+              </div>
+            </div>
+
+            <div class=&quot;hint&quot;>
+              <span class=&quot;chip&quot;>+ contraste</span>
+              <span class=&quot;chip&quot;>police plus douce</span>
+              <span class=&quot;chip&quot;>aère le texte</span>
+            </div>
+            <p style=&quot;margin-top:auto;font-size:12.5px;color:var(--faint);line-height:1.5&quot;>
+              L'aura colorée respire tant que le champ est actif — l'IA est à l'écoute.
+            </p>
+          </div>
+        </div>
+
+        <!-- ÉTAT 2 -->
+        <div class=&quot;state-col&quot; data-col=&quot;1&quot;>
+          <div class=&quot;state-tag&quot;><span class=&quot;num&quot;>2</span> Génération</div>
+          <div class=&quot;card loading-card&quot;>
+            <div class=&quot;orb-stage&quot;>
+              <div class=&quot;orb-halo&quot;></div>
+              <div class=&quot;orb&quot;>
+                <div class=&quot;orb-layer orb-l1&quot;></div>
+                <div class=&quot;orb-layer orb-l2&quot;></div>
+                <div class=&quot;orb-layer orb-l3&quot;></div>
+                <div class=&quot;orb-inner&quot;></div>
+                <div class=&quot;orb-gloss&quot;></div>
+              </div>
+            </div>
+            <div class=&quot;loading-title&quot;>L'IA compose votre variation</div>
+            <div class=&quot;loading-sub&quot;>Analyse de la section<span class=&quot;dots&quot;></span></div>
+            <div class=&quot;progress&quot;><span></span></div>
+            <p style=&quot;font-size:12px;color:var(--faint);margin-top:18px&quot;>Habituellement&amp;nbsp;~&amp;nbsp;4&amp;nbsp;secondes.</p>
+          </div>
+        </div>
+
+        <!-- ÉTAT 3 -->
+        <div class=&quot;state-col&quot; data-col=&quot;2&quot;>
+          <div class=&quot;state-tag&quot;><span class=&quot;num&quot;>3</span> Proposition</div>
+          <div class=&quot;card&quot;>
+            <div class=&quot;prop-head&quot;>
+              <span class=&quot;prop-badge&quot;>✓ Prête</span>
+              <span class=&quot;prop-credit&quot;>Variation 1 / 1</span>
+            </div>
+
+            <div class=&quot;preview&quot;>
+              <div class=&quot;half before&quot;><div class=&quot;lbl&quot;>Avant</div><div class=&quot;swatch&quot;></div></div>
+              <div class=&quot;half after&quot;><div class=&quot;lbl&quot;>Après</div><div class=&quot;swatch&quot;></div></div>
+            </div>
+
+            <p class=&quot;prop-summary&quot;>Le fond du Hero passe en <b>bleu nuit&amp;nbsp;#0A132F</b>, le texte gagne en contraste et le titre reste lisible. <b>Rien d'autre n'a bougé.</b></p>
+
+            <div class=&quot;actions&quot;>
+              <button class=&quot;btn btn-accept&quot;>
+                <span>✦ Accepter</span>
+                <span class=&quot;credit&quot;>1 crédit</span>
+              </button>
+              <button class=&quot;btn&quot;><span class=&quot;ic&quot;>✎</span> Affiner</button>
+              <button class=&quot;btn&quot;><span class=&quot;ic&quot;>↻</span> Réessayer</button>
+              <button class=&quot;btn btn-cancel&quot; style=&quot;grid-column:1 / -1&quot;><span class=&quot;ic&quot;>✕</span> Annuler</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <p class=&quot;foot&quot;>Sitegene — <b>Aurora Glow</b> · Archivo · L'effet « waouh » vient de l'orbe, du halo qui tourne et du verre, pas de la densité.</p>
+    </section>
+  </main>
+
+<script>
+  // Onglets : met en avant une étape, atténue les autres. L'animation continue partout.
+  const tabs = document.querySelectorAll('.tab');
+  const cols = document.querySelectorAll('.state-col');
+  tabs.forEach(tab=>{
+    tab.addEventListener('click',()=>{
+      tabs.forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      const step = tab.dataset.step;
+      cols.forEach(col=>{
+        if(step==='all'){ col.classList.remove('dim'); }
+        else { col.classList.toggle('dim', col.dataset.col!==step); }
+      });
+      // relance l'animation de typing quand on cible l'étape 1
+      if(step==='0'||step==='all'){
+        const typed=document.querySelector('.typed');
+        if(typed){typed.style.animation='none';void typed.offsetWidth;typed.style.animation='';}
+      }
+    });
+  });
+</script>
+</body>
+</html>"></iframe>
+<iframe class="f" srcdoc="<!DOCTYPE html>
+<html lang=&quot;fr&quot;>
+<head>
+<meta charset=&quot;UTF-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;>
+<title>Sitegene — IA · Pastel Glass</title>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300..900;1,400..700&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+  :root{
+    --pink:#ffb3d1; --peach:#ffd6b0; --mint:#bff3dd; --lav:#d4c4ff; --sky:#bfe3ff;
+    --ink:#2a2340; --ink-soft:#5a5170;
+    --glass:rgba(255,255,255,.55);
+    --glass-strong:rgba(255,255,255,.72);
+    --stroke:rgba(255,255,255,.85);
+    --radius:30px;
+    --shadow:0 30px 70px -30px rgba(90,70,140,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Archivo',system-ui,sans-serif;
+    color:var(--ink);
+    background:#1a1530;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  /* ============ FOND : HERO PHOTOGRAPHE SOMBRE ============ */
+  .stage{position:relative;min-height:100vh;width:100%;overflow:hidden}
+  .hero-bg{
+    position:fixed;inset:0;z-index:0;
+    background:
+      radial-gradient(120% 90% at 80% -10%, rgba(120,90,200,.5), transparent 55%),
+      radial-gradient(100% 80% at 10% 110%, rgba(40,30,70,.9), transparent 60%),
+      linear-gradient(160deg,#1e1838 0%,#120e26 60%,#0c0a1c 100%);
+  }
+  .hero-photo{
+    position:fixed;inset:0;z-index:0;
+    background:
+      radial-gradient(60% 70% at 70% 30%, rgba(255,180,140,.18), transparent 60%),
+      url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;40&quot; height=&quot;40&quot;><rect width=&quot;40&quot; height=&quot;40&quot; fill=&quot;none&quot;/><circle cx=&quot;20&quot; cy=&quot;20&quot; r=&quot;.6&quot; fill=&quot;white&quot; opacity=&quot;.06&quot;/></svg>');
+    opacity:.9;
+  }
+  /* fausse silhouette / grande typo hero */
+  .hero-content{
+    position:fixed;z-index:1;inset:0;
+    display:flex;flex-direction:column;justify-content:space-between;
+    padding:42px clamp(28px,5vw,80px);
+    pointer-events:none;
+  }
+  .hero-top{display:flex;justify-content:space-between;align-items:center;color:rgba(255,255,255,.82);font-weight:600;letter-spacing:.04em}
+  .hero-top .nav{display:flex;gap:30px;font-size:14px;opacity:.8}
+  .hero-title{
+    font-size:clamp(64px,13vw,200px);
+    font-weight:800;line-height:.86;letter-spacing:-.04em;
+    color:transparent;
+    background:linear-gradient(180deg,#fff 0%, rgba(255,255,255,.35) 130%);
+    -webkit-background-clip:text;background-clip:text;
+    text-shadow:0 30px 80px rgba(0,0,0,.4);
+  }
+  .hero-title small{display:block;font-size:.16em;letter-spacing:.5em;font-weight:600;color:rgba(255,255,255,.6);margin-bottom:.5em;-webkit-text-fill-color:rgba(255,255,255,.6)}
+  .hero-foot{display:flex;justify-content:space-between;align-items:flex-end;color:rgba(255,255,255,.55);font-size:13px}
+  .hero-foot .big{font-size:15px;color:rgba(255,255,255,.85);font-weight:600}
+
+  /* élément édité (cible cliquée) */
+  .edit-target{
+    position:fixed;z-index:2;left:clamp(28px,5vw,80px);top:46%;
+    transform:translateY(-50%);
+    padding:14px 22px;border-radius:18px;
+    border:1.5px dashed rgba(255,180,220,.9);
+    background:rgba(255,180,220,.08);
+    backdrop-filter:blur(4px);
+    color:#fff;font-weight:600;font-size:14px;
+    box-shadow:0 0 0 6px rgba(255,180,220,.08);
+    animation:targetPulse 3s ease-in-out infinite;
+    pointer-events:none;
+  }
+  .edit-target .tag{
+    position:absolute;top:-13px;left:14px;
+    background:linear-gradient(120deg,var(--pink),var(--lav));
+    color:#3a2350;font-size:11px;font-weight:800;letter-spacing:.05em;
+    padding:3px 9px;border-radius:8px;box-shadow:0 6px 14px rgba(150,80,180,.4);
+  }
+  @keyframes targetPulse{0%,100%{box-shadow:0 0 0 6px rgba(255,180,220,.08)}50%{box-shadow:0 0 0 12px rgba(255,180,220,.16)}}
+
+  /* ============ PANNEAU MESH PASTEL ============ */
+  .panel{
+    position:relative;z-index:5;
+    margin-left:auto;
+    min-height:100vh;width:min(560px,100%);
+    padding:38px clamp(24px,3vw,46px) 60px;
+    background:
+      radial-gradient(90% 60% at 100% 0%, rgba(212,196,255,.95), transparent 60%),
+      radial-gradient(80% 60% at 0% 30%, rgba(191,243,221,.9), transparent 55%),
+      radial-gradient(90% 70% at 100% 75%, rgba(255,214,176,.9), transparent 55%),
+      radial-gradient(100% 80% at 0% 110%, rgba(255,179,209,.95), transparent 55%),
+      linear-gradient(160deg,#fdf6ff,#f3fbff);
+    background-size:200% 200%,200% 200%,200% 200%,200% 200%,100% 100%;
+    animation:meshDrift 22s ease-in-out infinite;
+    box-shadow:-40px 0 100px -40px rgba(40,20,70,.7);
+    border-left:1px solid rgba(255,255,255,.5);
+    display:flex;flex-direction:column;gap:26px;
+  }
+  @keyframes meshDrift{
+    0%{background-position:0% 0%,100% 30%,100% 70%,0% 100%,0 0}
+    25%{background-position:30% 20%,70% 50%,80% 50%,20% 80%,0 0}
+    50%{background-position:60% 40%,40% 70%,60% 80%,40% 60%,0 0}
+    75%{background-position:30% 60%,60% 40%,40% 60%,60% 80%,0 0}
+    100%{background-position:0% 0%,100% 30%,100% 70%,0% 100%,0 0}
+  }
+
+  .panel-head{display:flex;align-items:center;justify-content:space-between}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.02em;font-size:18px}
+  .brand .dot{
+    width:30px;height:30px;border-radius:10px;
+    background:conic-gradient(from 0deg,var(--pink),var(--lav),var(--sky),var(--mint),var(--peach),var(--pink));
+    box-shadow:0 8px 18px rgba(170,120,220,.45);
+    animation:spin 9s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .credits{
+    display:flex;align-items:center;gap:7px;
+    background:var(--glass);backdrop-filter:blur(12px);
+    border:1px solid var(--stroke);
+    padding:7px 13px;border-radius:14px;font-size:13px;font-weight:700;color:var(--ink-soft);
+    box-shadow:0 8px 20px -12px rgba(120,80,160,.5);
+  }
+  .credits b{color:var(--ink)}
+
+  /* onglets états */
+  .tabs{display:flex;gap:8px;background:rgba(255,255,255,.4);padding:6px;border-radius:18px;border:1px solid var(--stroke);backdrop-filter:blur(10px);box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+  .tab{
+    flex:1;text-align:center;padding:10px 8px;border-radius:13px;
+    font-size:13px;font-weight:700;color:var(--ink-soft);cursor:pointer;
+    border:none;background:transparent;transition:.35s cubic-bezier(.2,.8,.2,1);font-family:inherit;
+  }
+  .tab.active{
+    background:linear-gradient(135deg,#fff,rgba(255,255,255,.7));
+    color:var(--ink);box-shadow:0 10px 24px -12px rgba(140,90,180,.6),inset 0 1px 0 #fff;
+  }
+
+  /* conteneur états */
+  .states{position:relative;flex:1;display:flex;flex-direction:column;gap:24px}
+  .state{display:none;animation:stateIn .55s cubic-bezier(.2,.9,.2,1) both}
+  .state.show{display:flex;flex-direction:column;gap:22px}
+  @keyframes stateIn{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+
+  .state-label{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+  .state-label .num{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.7);color:var(--ink);font-size:11px;box-shadow:0 4px 10px -4px rgba(120,80,160,.5)}
+
+  /* ====== CARTE VERRE GÉNÉRIQUE ====== */
+  .glass-card{
+    position:relative;
+    background:var(--glass-strong);
+    backdrop-filter:blur(26px) saturate(160%);
+    -webkit-backdrop-filter:blur(26px) saturate(160%);
+    border:1px solid var(--stroke);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.8);
+    padding:24px;
+  }
+
+  /* ====== ÉTAT 1 : SAISIE — AURA ANIMÉE ====== */
+  .prompt-shell{position:relative;padding:4px;border-radius:34px}
+  .prompt-shell::before{
+    content:&quot;&quot;;position:absolute;inset:-8px;border-radius:42px;z-index:0;
+    background:conic-gradient(from 0deg,var(--pink),var(--lav),var(--sky),var(--mint),var(--peach),var(--pink));
+    filter:blur(22px);opacity:.9;
+    animation:auraSpin 7s linear infinite,auraBreath 4s ease-in-out infinite;
+  }
+  @keyframes auraSpin{to{transform:rotate(360deg)}}
+  @keyframes auraBreath{0%,100%{filter:blur(22px);opacity:.78}50%{filter:blur(30px);opacity:1}}
+  .prompt-bar{
+    position:relative;z-index:1;
+    background:rgba(255,255,255,.92);
+    border-radius:30px;
+    padding:10px 10px 10px 20px;
+    display:flex;align-items:center;gap:12px;
+    box-shadow:0 20px 50px -20px rgba(120,70,170,.5),inset 0 1px 0 #fff;
+  }
+  .prompt-bar .spark{font-size:18px;color:#b07ee0;animation:twinkle 2.4s ease-in-out infinite}
+  @keyframes twinkle{0%,100%{opacity:.55;transform:scale(.9)}50%{opacity:1;transform:scale(1.15)}}
+  .prompt-bar input{
+    flex:1;border:none;outline:none;background:transparent;
+    font-family:inherit;font-size:15px;font-weight:500;color:var(--ink);
+  }
+  .prompt-bar input::placeholder{color:#9b90b5}
+  .send-btn{
+    display:flex;align-items:center;gap:7px;
+    border:none;cursor:pointer;font-family:inherit;
+    padding:12px 18px;border-radius:22px;
+    background:linear-gradient(135deg,#2a2340,#473a66);
+    color:#fff;font-weight:700;font-size:14px;
+    box-shadow:0 12px 26px -10px rgba(40,25,70,.8);
+    transition:.3s cubic-bezier(.2,.8,.2,1);
+  }
+  .send-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px -12px rgba(40,25,70,.9)}
+  .send-btn .s{animation:twinkle 2s ease-in-out infinite}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+  .chip{
+    font-size:12.5px;font-weight:600;color:var(--ink-soft);
+    background:rgba(255,255,255,.55);border:1px solid var(--stroke);
+    padding:8px 13px;border-radius:14px;cursor:pointer;
+    backdrop-filter:blur(8px);transition:.25s;
+  }
+  .chip:hover{background:#fff;color:var(--ink);transform:translateY(-1px);box-shadow:0 8px 18px -10px rgba(120,80,160,.6)}
+  .hint{font-size:12.5px;color:var(--ink-soft);display:flex;align-items:center;gap:8px;padding-left:4px}
+  .hint .k{background:rgba(255,255,255,.7);border:1px solid var(--stroke);padding:2px 7px;border-radius:7px;font-size:11px;font-weight:700;color:var(--ink)}
+
+  /* ====== ÉTAT 2 : CHARGEMENT — ORBE PASTEL ====== */
+  .loading-card{align-items:center;text-align:center;gap:8px;padding:42px 24px 36px;display:flex;flex-direction:column}
+  .orb-wrap{position:relative;width:160px;height:160px;display:grid;place-items:center;margin-bottom:8px}
+  .orb-glow{
+    position:absolute;width:150px;height:150px;border-radius:50%;
+    background:radial-gradient(circle at 50% 50%,rgba(212,196,255,.7),transparent 70%);
+    filter:blur(20px);animation:orbBreath 3.4s ease-in-out infinite;
+  }
+  .orb{
+    position:relative;width:120px;height:120px;border-radius:50%;
+    background:
+      radial-gradient(circle at 30% 28%, #fff 0%, rgba(255,255,255,0) 28%),
+      conic-gradient(from 0deg, #bfe3ff, #d4c4ff, #ffb3d1, #ffd6b0, #bff3dd, #bfe3ff);
+    filter:blur(.4px) saturate(150%);
+    box-shadow:0 22px 50px -18px rgba(150,110,210,.7),inset 0 0 40px rgba(255,255,255,.35);
+    animation:orbSpin 5.5s linear infinite,orbBreath 3.4s ease-in-out infinite;
+  }
+  .orb::before{
+    content:&quot;&quot;;position:absolute;inset:8px;border-radius:50%;
+    background:conic-gradient(from 180deg,#ffb3d1,#d4c4ff,#bfe3ff,#bff3dd,#ffd6b0,#ffb3d1);
+    mix-blend-mode:screen;opacity:.7;filter:blur(6px);
+    animation:orbSpinRev 7s linear infinite;
+  }
+  .orb::after{
+    content:&quot;&quot;;position:absolute;top:18%;left:22%;width:34%;height:26%;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,255,255,.95),transparent 70%);
+    filter:blur(3px);animation:orbBreath 3.4s ease-in-out infinite;
+  }
+  @keyframes orbSpin{to{transform:rotate(360deg)}}
+  @keyframes orbSpinRev{to{transform:rotate(-360deg)}}
+  @keyframes orbBreath{0%,100%{transform:scale(.94)}50%{transform:scale(1.06)}}
+  .orb-ring{
+    position:absolute;width:148px;height:148px;border-radius:50%;
+    border:1.5px solid transparent;
+    background:linear-gradient(#fff0,#fff0) padding-box,
+      conic-gradient(from 0deg,transparent 0deg,rgba(212,196,255,.9) 90deg,transparent 200deg) border-box;
+    -webkit-mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);
+    animation:spin 3s linear infinite;
+  }
+  .loading-card h3{font-size:20px;font-weight:800;letter-spacing:-.02em}
+  .loading-card p{font-size:14px;color:var(--ink-soft);max-width:300px;line-height:1.5}
+  .loading-steps{display:flex;gap:14px;margin-top:10px;font-size:12px;font-weight:600;color:var(--ink-soft)}
+  .loading-steps span{display:flex;align-items:center;gap:6px;opacity:.45;animation:stepGlow 3.6s ease-in-out infinite}
+  .loading-steps span:nth-child(2){animation-delay:1.2s}
+  .loading-steps span:nth-child(3){animation-delay:2.4s}
+  .loading-steps i{width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,var(--lav),var(--pink));display:inline-block}
+  @keyframes stepGlow{0%,100%{opacity:.4}33%{opacity:1;color:var(--ink)}}
+  .progress{width:100%;max-width:300px;height:6px;border-radius:99px;background:rgba(255,255,255,.6);overflow:hidden;margin-top:14px;border:1px solid var(--stroke)}
+  .progress i{display:block;height:100%;width:40%;border-radius:99px;background:linear-gradient(90deg,var(--sky),var(--lav),var(--pink));animation:prog 2.6s ease-in-out infinite}
+  @keyframes prog{0%{margin-left:-40%}100%{margin-left:100%}}
+
+  /* ====== ÉTAT 3 : PROPOSITION ====== */
+  .result-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+  .result-head .badge{
+    display:flex;align-items:center;gap:6px;font-size:12px;font-weight:800;
+    background:linear-gradient(135deg,var(--mint),var(--sky));
+    color:#1d5b4a;padding:6px 11px;border-radius:11px;box-shadow:0 8px 16px -8px rgba(60,180,140,.6)
+  }
+  .result-head h3{font-size:18px;font-weight:800;letter-spacing:-.02em;flex:1}
+  /* aperçu avant/après */
+  .preview{display:flex;gap:12px;margin-bottom:16px}
+  .swatch{flex:1;border-radius:18px;padding:14px;color:#fff;position:relative;overflow:hidden;min-height:92px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid rgba(255,255,255,.5)}
+  .swatch span{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+  .swatch b{font-size:14px;font-weight:700}
+  .sw-before{background:linear-gradient(135deg,#3a3550,#262138)}
+  .sw-after{background:linear-gradient(135deg,#1b2a5e,#0e1742);box-shadow:0 16px 34px -16px rgba(20,40,120,.9)}
+  .sw-after::after{content:&quot;&quot;;position:absolute;inset:0;background:radial-gradient(80% 60% at 70% 10%,rgba(120,140,255,.4),transparent 60%);animation:orbBreath 4s ease-in-out infinite}
+  .arrow{align-self:center;font-size:18px;color:var(--ink-soft)}
+  .result-desc{font-size:13.5px;line-height:1.55;color:var(--ink-soft);background:rgba(255,255,255,.45);border:1px solid var(--stroke);padding:13px 15px;border-radius:16px;margin-bottom:18px}
+  .result-desc b{color:var(--ink)}
+
+  .actions{display:flex;flex-direction:column;gap:10px}
+  .actions-row{display:flex;gap:10px}
+  .btn{
+    border:none;cursor:pointer;font-family:inherit;font-weight:700;
+    border-radius:18px;padding:14px 16px;font-size:14px;
+    transition:.3s cubic-bezier(.2,.8,.2,1);display:flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .btn-primary{
+    flex:1;color:#fff;position:relative;overflow:hidden;
+    background:linear-gradient(135deg,#7d5be0,#b06ad8 55%,#e07db0);
+    box-shadow:0 16px 34px -12px rgba(150,90,210,.85),inset 0 1px 0 rgba(255,255,255,.4);
+  }
+  .btn-primary::after{content:&quot;&quot;;position:absolute;top:0;left:-60%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);animation:sheen 3.2s ease-in-out infinite}
+  @keyframes sheen{0%{left:-60%}55%,100%{left:130%}}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 22px 42px -14px rgba(150,90,210,.95)}
+  .btn-primary .cost{font-size:11px;font-weight:800;background:rgba(255,255,255,.25);padding:3px 8px;border-radius:9px;backdrop-filter:blur(4px)}
+  .btn-ghost{
+    flex:1;color:var(--ink);background:rgba(255,255,255,.6);
+    border:1px solid var(--stroke);backdrop-filter:blur(10px);
+    box-shadow:0 8px 18px -12px rgba(120,80,160,.5);
+  }
+  .btn-ghost:hover{background:#fff;transform:translateY(-2px);box-shadow:0 14px 26px -12px rgba(120,80,160,.7)}
+  .btn-cancel{color:var(--ink-soft);background:transparent;border:1px solid rgba(120,90,160,.25)}
+  .btn-cancel:hover{color:var(--ink);border-color:rgba(120,90,160,.45)}
+
+  .foot-note{font-size:11.5px;color:var(--ink-soft);text-align:center;opacity:.8;margin-top:4px}
+
+  @media(max-width:680px){
+    .panel{width:100%;margin-left:0}
+    .edit-target,.hero-content{display:none}
+    .hero-photo,.hero-bg{position:absolute}
+  }
+</style>
+</head>
+<body>
+<div class=&quot;stage&quot;>
+
+  <!-- ===== FOND HERO PHOTOGRAPHE ===== -->
+  <div class=&quot;hero-bg&quot;></div>
+  <div class=&quot;hero-photo&quot;></div>
+  <div class=&quot;hero-content&quot;>
+    <div class=&quot;hero-top&quot;>
+      <span>ALICE&amp;nbsp;R.&amp;nbsp;·&amp;nbsp;STUDIO</span>
+      <span class=&quot;nav&quot;><span>Galerie</span><span>À propos</span><span>Contact</span></span>
+    </div>
+    <h1 class=&quot;hero-title&quot;><small>PHOTOGRAPHE — PARIS</small>Lumière<br>vivante.</h1>
+    <div class=&quot;hero-foot&quot;>
+      <span class=&quot;big&quot;>Portraits · Mariages · Éditorial</span>
+      <span>©2026 — Défiler ↓</span>
+    </div>
+  </div>
+
+  <!-- cible cliquée -->
+  <div class=&quot;edit-target&quot;>
+    <span class=&quot;tag&quot;>✦ sélectionné</span>
+    Section Héro — fond
+  </div>
+
+  <!-- ===== PANNEAU IA (MESH PASTEL) ===== -->
+  <aside class=&quot;panel&quot;>
+    <div class=&quot;panel-head&quot;>
+      <div class=&quot;brand&quot;><span class=&quot;dot&quot;></span>Sitegene</div>
+      <div class=&quot;credits&quot;>✦ <b>12</b>&amp;nbsp;crédits</div>
+    </div>
+
+    <!-- onglets pour juger chaque état -->
+    <div class=&quot;tabs&quot; role=&quot;tablist&quot;>
+      <button class=&quot;tab active&quot; data-state=&quot;0&quot;>1 · Saisie</button>
+      <button class=&quot;tab&quot; data-state=&quot;1&quot;>2 · Chargement</button>
+      <button class=&quot;tab&quot; data-state=&quot;2&quot;>3 · Proposition</button>
+    </div>
+
+    <div class=&quot;states&quot;>
+
+      <!-- ÉTAT 1 — SAISIE -->
+      <section class=&quot;state show&quot; data-state=&quot;0&quot;>
+        <div class=&quot;state-label&quot;><span class=&quot;num&quot;>1</span> Dis à l'IA ce que tu veux changer</div>
+
+        <div class=&quot;prompt-shell&quot;>
+          <div class=&quot;prompt-bar&quot;>
+            <span class=&quot;spark&quot;>✦</span>
+            <input type=&quot;text&quot; value=&quot;Mets le fond du héro en bleu nuit profond&quot; aria-label=&quot;Demande à l'IA&quot;>
+            <button class=&quot;send-btn&quot;><span class=&quot;s&quot;>✦</span> Générer</button>
+          </div>
+        </div>
+
+        <div class=&quot;chips&quot;>
+          <span class=&quot;chip&quot;>🌙 Fond bleu nuit</span>
+          <span class=&quot;chip&quot;>✨ Plus lumineux</span>
+          <span class=&quot;chip&quot;>🎞️ Ambiance argentique</span>
+          <span class=&quot;chip&quot;>🔤 Titre plus grand</span>
+        </div>
+
+        <div class=&quot;hint&quot;><span class=&quot;k&quot;>⌘</span><span class=&quot;k&quot;>↵</span> pour lancer · ou clique un élément du site pour le cibler</div>
+      </section>
+
+      <!-- ÉTAT 2 — CHARGEMENT -->
+      <section class=&quot;state&quot; data-state=&quot;1&quot;>
+        <div class=&quot;state-label&quot;><span class=&quot;num&quot;>2</span> L'IA travaille</div>
+        <div class=&quot;glass-card loading-card&quot;>
+          <div class=&quot;orb-wrap&quot;>
+            <div class=&quot;orb-glow&quot;></div>
+            <div class=&quot;orb-ring&quot;></div>
+            <div class=&quot;orb&quot;></div>
+          </div>
+          <h3>L'IA compose ta nouvelle version…</h3>
+          <p>Elle ajuste les couleurs, les contrastes et la lumière du héro. Quelques secondes.</p>
+          <div class=&quot;loading-steps&quot;>
+            <span><i></i>Analyse</span>
+            <span><i></i>Couleurs</span>
+            <span><i></i>Rendu</span>
+          </div>
+          <div class=&quot;progress&quot;><i></i></div>
+        </div>
+      </section>
+
+      <!-- ÉTAT 3 — PROPOSITION -->
+      <section class=&quot;state&quot; data-state=&quot;2&quot;>
+        <div class=&quot;state-label&quot;><span class=&quot;num&quot;>3</span> Voici la proposition</div>
+        <div class=&quot;glass-card&quot;>
+          <div class=&quot;result-head&quot;>
+            <span class=&quot;badge&quot;>✓ Prêt</span>
+            <h3>Fond bleu nuit profond</h3>
+          </div>
+
+          <div class=&quot;preview&quot;>
+            <div class=&quot;swatch sw-before&quot;><span>Avant</span><b>Violet sombre</b></div>
+            <div class=&quot;arrow&quot;>→</div>
+            <div class=&quot;swatch sw-after&quot;><span>Après</span><b>Bleu nuit</b></div>
+          </div>
+
+          <p class=&quot;result-desc&quot;>J'ai remplacé le fond du héro par un <b>dégradé bleu nuit</b> (#0e1742 → #1b2a5e), renforcé le contraste du titre et ajouté un léger halo lumineux en haut à droite pour garder de la profondeur.</p>
+
+          <div class=&quot;actions&quot;>
+            <div class=&quot;actions-row&quot;>
+              <button class=&quot;btn btn-primary&quot;>Accepter <span class=&quot;cost&quot;>1 crédit</span></button>
+              <button class=&quot;btn btn-ghost&quot;>Affiner ✎</button>
+            </div>
+            <div class=&quot;actions-row&quot;>
+              <button class=&quot;btn btn-ghost&quot;>Réessayer ↻</button>
+              <button class=&quot;btn btn-cancel&quot;>Annuler</button>
+            </div>
+          </div>
+          <p class=&quot;foot-note&quot;>Accepter applique le changement en direct sur ton site.</p>
+        </div>
+      </section>
+
+    </div>
+  </aside>
+</div>
+
+<script>
+  const tabs=document.querySelectorAll('.tab');
+  const states=document.querySelectorAll('.state');
+  function go(i){
+    tabs.forEach((t,k)=>t.classList.toggle('active',k==i));
+    states.forEach(s=>{
+      const on=+s.dataset.state===i;
+      s.classList.toggle('show',on);
+    });
+  }
+  tabs.forEach(t=>t.addEventListener('click',()=>go(+t.dataset.state)));
+  // petit cycle auto (démo) — passe d'un état à l'autre toutes les 4s
+  let i=0; setInterval(()=>{ i=(i+1)%3; go(i); }, 4200);
+</script>
+</body>
+</html>"></iframe></div>
+<script>
+var t=document.querySelectorAll('.t'),f=document.querySelectorAll('.f');
+t.forEach(function(b){b.onclick=function(){var i=+b.dataset.i;t.forEach(function(x){x.classList.remove('on')});f.forEach(function(x){x.classList.remove('on')});b.classList.add('on');f[i].classList.add('on')}});
+</script></body></html>

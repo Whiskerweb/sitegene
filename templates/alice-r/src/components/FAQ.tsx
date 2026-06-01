@@ -28,7 +28,7 @@ export default function FAQ() {
                 aria-expanded={isOpen}
                 className="flex w-full items-center justify-between gap-4 py-5 text-left"
               >
-                <span className="text-base font-medium text-white md:text-lg">{f.q}</span>
+                <span data-sg-path={`faqs[${i}].q`} className="text-base font-medium text-white md:text-lg">{f.q}</span>
                 <Plus
                   size={22}
                   className={`shrink-0 transition-transform duration-300 ${
@@ -45,7 +45,7 @@ export default function FAQ() {
                     transition={{ duration: 0.3, ease: EASE }}
                     className="overflow-hidden"
                   >
-                    <p className="pb-5 pr-8 text-sm leading-relaxed text-white/60">{f.a}</p>
+                    <p data-sg-path={`faqs[${i}].a`} className="pb-5 pr-8 text-sm leading-relaxed text-white/60">{f.a}</p>
                   </motion.div>
                 )}
               </AnimatePresence>

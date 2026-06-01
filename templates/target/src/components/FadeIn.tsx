@@ -9,6 +9,7 @@ interface FadeInProps {
   y?: number
   className?: string
   style?: React.CSSProperties
+  [dataAttr: `data-${string}`]: string | undefined
 }
 
 const EASE = [0.22, 1, 0.36, 1] as const
@@ -21,6 +22,7 @@ export default function FadeIn({
   y = 30,
   className,
   style,
+  ...rest
 }: FadeInProps) {
   const MotionTag = useMemo(() => motion.create(as), [as])
   return (
@@ -31,6 +33,7 @@ export default function FadeIn({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration, delay, ease: EASE }}
+      {...rest}
     >
       {children}
     </MotionTag>

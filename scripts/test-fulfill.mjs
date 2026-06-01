@@ -18,7 +18,7 @@ const session = await stripe.checkout.sessions.create({
       price_data: {
         currency: "eur",
         unit_amount: LAUNCH_PRICE_CENTS,
-        product_data: { name: "Mise en ligne — Sitegene (test)" },
+        product_data: { name: "Mise en ligne — Akyra (test)" },
       },
     },
   ],

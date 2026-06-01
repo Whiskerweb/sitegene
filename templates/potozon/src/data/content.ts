@@ -44,6 +44,9 @@ export interface GalleryCard {
 /* Contenu par défaut (forme = objet injecté par la plateforme)        */
 /* ------------------------------------------------------------------ */
 const DEFAULT_CONTENT = {
+  // Nom de marque affiché (navbar, footer, copyright). Personnalisé par site.
+  brand: 'Potozon',
+
   // Navigation. Chaque libellé pointe vers #<libellé en minuscules>.
   // Sections présentes : about, portfolio, projects, studio, contact.
   navItems: ['About', 'Portfolio', 'Projects', 'Studio'] as string[],
@@ -54,6 +57,7 @@ const DEFAULT_CONTENT = {
     line2: 'Photography',
     sticker: 'A new dimension',
     ribbon: 'Beautifull',
+    subtitle: 'Capturing timeless moments in a whole new dimension.',
   },
 
   // Citation mise en avant
@@ -200,6 +204,7 @@ export const __DEFAULT_CONTENT__ = DEFAULT_CONTENT
 /* ------------------------------------------------------------------ */
 /* Re-exports (noms/types identiques à l'origine)                      */
 /* ------------------------------------------------------------------ */
+export const brand = C.brand
 export const navItems = C.navItems
 export const hero = C.hero
 export const featuredQuote = C.featuredQuote

@@ -42,7 +42,7 @@ export default function PhotoArc() {
               transition={{ duration: 0.7, delay: 0.08 + i * 0.05, ease: EASE }}
               className="h-[12vmin] max-h-[140px] w-[12vmin] max-w-[140px] overflow-hidden rounded-[18px] shadow-2xl ring-1 ring-white/10"
             >
-              <img src={photo.img} alt="" className="h-full w-full object-cover" />
+              <img src={photo.img} alt="" data-sg-img={`arcPhotos[${i}].img`} className="h-full w-full object-cover" />
             </motion.div>
           </div>
         )

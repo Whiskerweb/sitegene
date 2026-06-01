@@ -21,12 +21,12 @@ export default function Testimonials() {
                 <Star key={s} size={15} className="fill-tg-accent text-tg-accent" />
               ))}
             </div>
-            <p className="flex-1 text-sm leading-relaxed text-tg-ink/85">{t.text}</p>
+            <p data-sg-path={`testimonials[${i}].text`} className="flex-1 text-sm leading-relaxed text-tg-ink/85">{t.text}</p>
             <div className="mt-6 flex items-center gap-3">
-              <img src={t.avatar} alt={t.name} className="h-10 w-10 rounded-full object-cover" />
+              <img src={t.avatar} alt={t.name} data-sg-img={`testimonials[${i}].avatar`} className="h-10 w-10 rounded-full object-cover" />
               <div>
-                <p className="text-sm font-semibold">{t.name}</p>
-                <p className="text-xs text-tg-mut">{t.role}</p>
+                <p data-sg-path={`testimonials[${i}].name`} className="text-sm font-semibold">{t.name}</p>
+                <p data-sg-path={`testimonials[${i}].role`} className="text-xs text-tg-mut">{t.role}</p>
               </div>
             </div>
           </FadeIn>

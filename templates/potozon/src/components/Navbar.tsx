@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { navItems } from '../data/content'
+import { navItems, brand } from '../data/content'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -33,7 +33,7 @@ export default function Navbar() {
       <a href="#about" className="flex items-center gap-1.5">
         <LogoMark />
         <span className="text-2xl font-extrabold tracking-tight text-poto-ink">
-          Potozon
+          <span data-sg-path="brand" data-sg-edit="panel">{brand}</span>
         </span>
       </a>
 

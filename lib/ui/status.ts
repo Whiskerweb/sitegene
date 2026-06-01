@@ -32,4 +32,6 @@ export const creditReasonLabel: Record<string, string> = {
   topup_purchase: "Achat de crédits",
   refund: "Remboursement",
   adjustment: "Ajustement",
+  edit_publish: "Modification publiée",
+  ai_edit: "Modification IA",
 };

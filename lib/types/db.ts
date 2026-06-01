@@ -20,6 +20,8 @@ export type CreditReason =
   | 'topup_purchase'
   | 'refund'
   | 'adjustment'
+  | 'edit_publish'
+  | 'ai_edit'
 export type PaymentKind = 'initial_50' | 'topup'
 
 // ISO 8601 timestamp string (Postgres timestamptz serialized by PostgREST).
@@ -43,6 +45,7 @@ export interface Profile {
   id: UUID // references auth.users(id)
   email: string | null
   is_operator: boolean
+  stripe_customer_id: string | null
   created_at: Timestamptz
   last_login_at: Timestamptz | null
 }
@@ -171,8 +174,11 @@ export interface WebhookEvent {
 // ---------------------------------------------------------------------------
 // Insert helper types (columns with defaults / generated values are optional)
 // ---------------------------------------------------------------------------
-export type ProfileInsert = Omit<Profile, 'is_operator' | 'created_at' | 'last_login_at'> &
-  Partial<Pick<Profile, 'is_operator' | 'created_at' | 'last_login_at'>>
+export type ProfileInsert = Omit<
+  Profile,
+  'is_operator' | 'stripe_customer_id' | 'created_at' | 'last_login_at'
+> &
+  Partial<Pick<Profile, 'is_operator' | 'stripe_customer_id' | 'created_at' | 'last_login_at'>>
 
 export type ProspectInsert = Omit<Prospect, 'id' | 'created_at'> &
   Partial<Pick<Prospect, 'id' | 'created_at'>>

@@ -87,3 +87,50 @@ export async function fulfillPayment(
 
   return { email, token, siteId, userId };
 }
+
+/**
+ * Fulfillment d'un achat de crédits à l'unité (top-up) — IDEMPOTENT
+ * (clé = stripe_session_id). Le user est déjà authentifié à l'achat : on lit
+ * user_id / credits dans les metadata de la session (jamais le prix côté client).
+ */
+export async function fulfillTopup(session: Stripe.Checkout.Session): Promise<void> {
+  const admin = createAdminClient();
+  const userId = (session.metadata?.user_id as string) || null;
+  const credits = Number.parseInt((session.metadata?.credits as string) ?? "", 10);
+  if (!userId || !Number.isFinite(credits) || credits <= 0) return;
+
+  // Idempotence : si la session est déjà enregistrée, ne rien refaire.
+  const { data: existing } = await admin
+    .from("payments")
+    .select("id")
+    .eq("stripe_session_id", session.id)
+    .maybeSingle();
+  if (existing) return;
+
+  const { data: payment } = await admin
+    .from("payments")
+    .insert({
+      user_id: userId,
+      stripe_session_id: session.id,
+      stripe_payment_intent: (session.payment_intent as string) ?? null,
+      amount_cents: session.amount_total ?? null,
+      currency: session.currency ?? "eur",
+      kind: "topup",
+      status: "paid",
+    })
+    .select("id")
+    .single();
+
+  await grantCredits(admin, userId, credits, "topup_purchase", { payment_id: payment?.id });
+
+  // Back-fill du customer id Stripe si absent.
+  const customerId =
+    typeof session.customer === "string" ? session.customer : session.customer?.id;
+  if (customerId) {
+    await admin
+      .from("profiles")
+      .update({ stripe_customer_id: customerId })
+      .eq("id", userId)
+      .is("stripe_customer_id", null);
+  }
+}

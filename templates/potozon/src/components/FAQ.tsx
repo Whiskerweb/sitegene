@@ -28,7 +28,7 @@ export default function FAQ() {
                 aria-expanded={isOpen}
                 className="flex w-full cursor-pointer items-center justify-between gap-4 py-5 text-left"
               >
-                <span className="text-lg font-bold text-poto-ink md:text-xl">{f.q}</span>
+                <span data-sg-path={`faqs[${i}].q`} className="text-lg font-bold text-poto-ink md:text-xl">{f.q}</span>
                 <Plus
                   size={22}
                   className={`shrink-0 transition-transform duration-300 ${
@@ -45,7 +45,7 @@ export default function FAQ() {
                     transition={{ duration: 0.3, ease: EASE }}
                     className="overflow-hidden"
                   >
-                    <p className="pb-5 pr-8 text-base font-medium leading-relaxed text-poto-ink/70">
+                    <p data-sg-path={`faqs[${i}].a`} className="pb-5 pr-8 text-base font-medium leading-relaxed text-poto-ink/70">
                       {f.a}
                     </p>
                   </motion.div>

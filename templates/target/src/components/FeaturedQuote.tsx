@@ -10,13 +10,13 @@ export default function FeaturedQuote() {
         {/* Citation */}
         <div className="flex flex-col">
           <FadeIn as="blockquote" className="tg-head text-3xl font-medium leading-[1.15] md:text-5xl">
-            “{featuredQuote.text}”
+            “<span data-sg-path="featuredQuote.text" data-sg-edit="panel">{featuredQuote.text}</span>”
           </FadeIn>
           <FadeIn delay={0.1} className="mt-8 flex items-center gap-3">
-            <img src={featuredQuote.avatar} alt={featuredQuote.name} className="h-10 w-10 rounded-lg object-cover" />
+            <img src={featuredQuote.avatar} alt={featuredQuote.name} data-sg-img="featuredQuote.avatar" className="h-10 w-10 rounded-lg object-cover" />
             <div>
-              <p className="text-sm font-semibold">{featuredQuote.name}</p>
-              <p className="text-sm text-tg-mut">{featuredQuote.role}</p>
+              <p data-sg-path="featuredQuote.name" className="text-sm font-semibold">{featuredQuote.name}</p>
+              <p data-sg-path="featuredQuote.role" className="text-sm text-tg-mut">{featuredQuote.role}</p>
             </div>
           </FadeIn>
           <FadeIn delay={0.2}>
@@ -29,10 +29,10 @@ export default function FeaturedQuote() {
         {/* 2 images */}
         <div className="flex items-end gap-4">
           <FadeIn delay={0.1} className="w-1/2">
-            <img src={featuredQuote.images[0]} alt="" className="aspect-square w-full rounded-2xl object-cover" />
+            <img src={featuredQuote.images[0]} alt="" data-sg-img="featuredQuote.images[0]" className="aspect-square w-full rounded-2xl object-cover" />
           </FadeIn>
           <FadeIn delay={0.2} className="w-1/2">
-            <img src={featuredQuote.images[1]} alt="" className="aspect-[3/4] w-full rounded-2xl object-cover" />
+            <img src={featuredQuote.images[1]} alt="" data-sg-img="featuredQuote.images[1]" className="aspect-[3/4] w-full rounded-2xl object-cover" />
           </FadeIn>
         </div>
       </div>

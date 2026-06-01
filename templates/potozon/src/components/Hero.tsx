@@ -21,6 +21,7 @@ export default function Hero() {
       {/* Ligne 1 */}
       <div className="relative">
         <motion.h1
+          data-sg-path="hero.line1"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1, ease: EASE }}
@@ -40,7 +41,7 @@ export default function Hero() {
             <div className="absolute inset-0 translate-x-2 translate-y-2 rounded-3xl border-2 border-dashed border-poto-purple/40" />
             <div className="relative overflow-hidden rounded-3xl bg-poto-purple px-8 py-5 shadow-xl">
               <span className="text-3xl font-extrabold text-white lg:text-4xl">
-                {hero.sticker}
+                <span data-sg-path="hero.sticker" data-sg-edit="panel">{hero.sticker}</span>
               </span>
               <div className="pointer-events-none absolute -bottom-px -right-px h-9 w-9 rounded-tl-2xl bg-[#fcfcfc] shadow-[-3px_-3px_6px_rgba(0,0,0,0.12)]" />
             </div>
@@ -51,6 +52,7 @@ export default function Hero() {
       {/* Ligne 2 */}
       <div className="relative md:-mt-2">
         <motion.h1
+          data-sg-path="hero.line2"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2, ease: EASE }}
@@ -66,7 +68,7 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.6, ease: EASE }}
           className="absolute left-[24%] top-1/2 hidden -translate-y-1/2 rounded-full bg-poto-orange px-5 py-1.5 shadow-md md:block"
         >
-          <span className="text-sm font-bold uppercase tracking-widest text-white md:text-base">
+          <span data-sg-path="hero.ribbon" className="text-sm font-bold uppercase tracking-widest text-white md:text-base">
             {hero.ribbon}
           </span>
         </motion.div>
@@ -90,17 +92,17 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.4, ease: EASE }}
           className="rounded-2xl bg-poto-purple px-5 py-2.5 shadow-lg"
         >
-          <span className="text-lg font-extrabold text-white">{hero.sticker}</span>
+          <span className="text-lg font-extrabold text-white"><span data-sg-path="hero.sticker" data-sg-edit="panel">{hero.sticker}</span></span>
         </motion.div>
 
         <motion.p
+          data-sg-path="hero.subtitle"
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5, ease: EASE }}
           className="max-w-xs text-center text-base font-medium leading-snug text-poto-ink/80"
         >
-          Capturing timeless moments in a whole{' '}
-          <span className="font-extrabold text-poto-orange">new dimension</span>.
+          {hero.subtitle}
         </motion.p>
       </div>
     </section>

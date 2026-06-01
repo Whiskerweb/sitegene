@@ -25,6 +25,20 @@ export function setPath(obj: Record<string, unknown>, path: string, value: unkno
   cur[parts[parts.length - 1]] = value;
 }
 
+/** Lit la valeur à un chemin concret type "hero.title[0]" ou "services[2].name". */
+export function getPath(obj: unknown, path: string): unknown {
+  const parts = path
+    .replace(/\[(\d+)\]/g, ".$1")
+    .split(".")
+    .filter(Boolean);
+  let cur: unknown = obj;
+  for (const key of parts) {
+    if (cur == null || typeof cur !== "object") return undefined;
+    cur = (cur as Record<string, unknown>)[key];
+  }
+  return cur;
+}
+
 /** Remplace récursivement toutes les chaînes égales à une clé de `map`. */
 export function replaceImageUrls<T extends Json>(node: T, map: Record<string, string>): T {
   if (typeof node === "string") {

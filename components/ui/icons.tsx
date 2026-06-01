@@ -61,3 +61,29 @@ export const IconClose = (p: IconProps) => (
 export const IconCopy = (p: IconProps) => (
   <svg {...base(p)}><rect x="9" y="9" width="12" height="12" rx="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
 );
+export const IconPin = (p: IconProps) => (
+  <svg {...base(p)}><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10Z" /><circle cx="12" cy="11" r="2.2" /></svg>
+);
+export const IconDesktop = (p: IconProps) => (
+  <svg {...base(p)}><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M8 20h8M12 16v4" /></svg>
+);
+export const IconTablet = (p: IconProps) => (
+  <svg {...base(p)}><rect x="6" y="3" width="12" height="18" rx="2.5" /><path d="M11 18h2" /></svg>
+);
+export const IconPhone = (p: IconProps) => (
+  <svg {...base(p)}><rect x="8" y="3" width="8" height="18" rx="2.5" /><path d="M11 18h2" /></svg>
+);
+export const IconAlert = (p: IconProps) => (
+  <svg {...base(p)}><circle cx="12" cy="12" r="9" /><path d="M12 8v5" /><path d="M12 16h.01" /></svg>
+);
+export const IconMic = (p: IconProps) => (
+  <svg {...base(p)}><rect x="9" y="2.5" width="6" height="11" rx="3" /><path d="M5 11a7 7 0 0 0 14 0" /><path d="M12 18v3" /></svg>
+);
+export const IconArrowUp = (p: IconProps) => (
+  <svg {...base(p)}><path d="M12 19V5" /><path d="m5 12 7-7 7 7" /></svg>
+);
+export const IconStar4 = ({ size = 20, ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M12 1.5c.3 3.3 1.1 5.6 2.5 7s3.7 2.2 7 2.5c-3.3.3-5.6 1.1-7 2.5s-2.2 3.7-2.5 7c-.3-3.3-1.1-5.6-2.5-7s-3.7-2.2-7-2.5c3.3-.3 5.6-1.1 7-2.5s2.2-3.7 2.5-7Z" />
+  </svg>
+);

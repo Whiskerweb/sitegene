@@ -11,16 +11,18 @@ export default function Stats() {
         <div>
           <FadeIn
             as="h2"
+            data-sg-path="beyond.title"
             className="text-4xl font-extrabold leading-[1.02] tracking-tight text-poto-ink md:text-6xl"
           >
             {beyond.title}
           </FadeIn>
           <FadeIn delay={0.1}>
-            <p className="mt-6 max-w-md text-base font-medium leading-relaxed text-poto-ink/75">
+            <p data-sg-path="beyond.body" className="mt-6 max-w-md text-base font-medium leading-relaxed text-poto-ink/75">
               {beyond.body}
             </p>
             <a
               href="#contact"
+              data-sg-path="beyond.cta"
               className="mt-8 inline-flex rounded-full bg-poto-ink px-7 py-3.5 text-sm font-bold text-white transition-transform hover:scale-[1.04]"
             >
               {beyond.cta}
@@ -39,12 +41,14 @@ export default function Stats() {
                 style={{ backgroundColor: s.color }}
               >
                 <p
+                  data-sg-path={`beyond.stats[${i}].v`}
                   className="text-2xl font-extrabold tabular-nums sm:text-3xl md:text-5xl"
                   style={{ color: dark ? '#111111' : '#ffffff' }}
                 >
                   {s.v}
                 </p>
                 <p
+                  data-sg-path={`beyond.stats[${i}].l`}
                   className="mt-1.5 text-[11px] font-semibold leading-tight sm:text-xs"
                   style={{ color: dark ? 'rgba(17,17,17,0.7)' : 'rgba(255,255,255,0.85)' }}
                 >

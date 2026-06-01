@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import ApproveNote from "./ApproveNote";
+import NotesBoard from "./NotesBoard";
 
 export const dynamic = "force-dynamic";
 
@@ -8,24 +8,34 @@ type Note = {
   message: string;
   status: string;
   created_at: string;
-  sites: { slug: string | null; template_id: string | null } | null;
-};
-
-const statusLabel: Record<string, { label: string; color: string }> = {
-  open: { label: "À traiter", color: "text-gold-400" },
-  in_progress: { label: "En cours (Claude)", color: "text-violet-400" },
-  done: { label: "Fait", color: "text-mint-400" },
-  rejected: { label: "Refusé", color: "text-faint" },
+  selector: {
+    path?: string;
+    cssSelector: string;
+    label: string;
+    xPct: number;
+    yPct: number;
+    offset?: { dx: number; dy: number };
+  } | null;
+  sites: { id: string; slug: string | null; status: string | null } | null;
 };
 
 export default async function AdminNotes() {
   const supabase = await createClient();
   const { data } = await supabase
     .from("notes")
-    .select("id, message, status, created_at, sites(slug, template_id)")
+    .select("id, message, status, created_at, selector, sites(id, slug, status)")
     .order("created_at", { ascending: false })
-    .limit(100);
+    .limit(200);
   const notes = (data ?? []) as unknown as Note[];
+
+  // Regroupe par site.
+  const bySite = new Map<string, { slug: string | null; status: string | null; notes: Note[] }>();
+  for (const n of notes) {
+    if (!n.sites?.id) continue;
+    const k = n.sites.id;
+    if (!bySite.has(k)) bySite.set(k, { slug: n.sites.slug, status: n.sites.status, notes: [] });
+    bySite.get(k)!.notes.push(n);
+  }
 
   return (
     <div>
@@ -33,35 +43,29 @@ export default async function AdminNotes() {
         Demandes de modification
       </h1>
       <p className="mt-1 text-sm text-muted">
-        Valide une demande → un job part au worker, Claude applique la modif et republie.
+        Les notes épinglées apparaissent sur le site du client, là où il les a posées. Valide → le
+        worker applique.
       </p>
 
-      <div className="mt-8 space-y-3">
-        {notes.length === 0 && (
+      <div className="mt-8 space-y-10">
+        {bySite.size === 0 && (
           <p className="rounded-[16px] border border-dashed border-line bg-ink-800 p-8 text-center text-muted">
             Aucune demande pour l'instant.
           </p>
         )}
-        {notes.map((n) => {
-          const s = statusLabel[n.status] ?? statusLabel.open;
-          return (
-            <div key={n.id} className="rounded-[16px] border border-line bg-ink-700 p-5">
-              <div className="flex items-start justify-between gap-4">
-                <div className="min-w-0">
-                  <div className="mb-1 flex items-center gap-2 text-xs">
-                    <span className={s.color}>{s.label}</span>
-                    <span className="text-faint">·</span>
-                    <span className="text-faint">
-                      {n.sites?.slug ? `/s/${n.sites.slug}` : (n.sites?.template_id ?? "—")}
-                    </span>
-                  </div>
-                  <p className="text-sm text-paper/90">{n.message}</p>
-                </div>
-                {n.status === "open" && <ApproveNote noteId={n.id} />}
-              </div>
-            </div>
-          );
-        })}
+        {[...bySite.entries()].map(([siteId, g]) => (
+          <NotesBoard
+            key={siteId}
+            slug={g.slug}
+            isLive={g.status === "live"}
+            notes={g.notes.map((n) => ({
+              id: n.id,
+              message: n.message,
+              status: n.status,
+              selector: n.selector,
+            }))}
+          />
+        ))}
       </div>
     </div>
   );

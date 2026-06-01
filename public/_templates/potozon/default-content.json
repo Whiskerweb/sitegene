@@ -1,4 +1,5 @@
 {
+  "brand": "Potozon",
   "navItems": [
     "About",
     "Portfolio",
@@ -9,7 +10,8 @@
     "line1": "Experience",
     "line2": "Photography",
     "sticker": "A new dimension",
-    "ribbon": "Beautifull"
+    "ribbon": "Beautifull",
+    "subtitle": "Capturing timeless moments in a whole new dimension."
   },
   "featuredQuote": {
     "text": "Potozon turned our shoot into a whole new dimension. Every frame feels loud, alive and unmistakably ours.",

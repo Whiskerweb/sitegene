@@ -19,6 +19,8 @@ export default function IntroText() {
     <section id="about" className="mx-auto max-w-5xl px-5 py-20 md:py-32">
       <p
         ref={ref}
+        data-sg-path="intro"
+        data-sg-edit="panel"
         className="tg-head text-center text-3xl font-medium leading-[1.25] md:text-[2.7rem]"
       >
         {words.map((w, i) => {

@@ -15,10 +15,10 @@ export default async function AdminLayout({
           <div className="flex items-center gap-6">
             <Link href="/admin" className="flex items-center gap-2">
               <span className="grid h-7 w-7 place-items-center rounded-full btn-violet text-xs font-bold text-white">
-                S
+                A
               </span>
               <span className="font-display text-lg font-semibold tracking-tight">
-                Sitegene
+                Akyra
               </span>
               <span className="rounded-full border border-line bg-ink-700 px-2 py-0.5 text-[11px] uppercase tracking-wider text-faint">
                 Opérateur

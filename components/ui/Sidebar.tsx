@@ -7,7 +7,7 @@ import type { NavItem } from "./NavItem";
 
 export function Sidebar({
   items,
-  brand = "Sitegene",
+  brand = "Akyra",
   roleLabel,
   footer,
   onNavigate,

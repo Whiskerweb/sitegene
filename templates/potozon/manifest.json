@@ -24,10 +24,12 @@
   ],
   "fields": {
     "editable": [
+      { "path": "brand", "label": "Nom de marque (navbar + footer + copyright)", "type": "text", "maxLen": 28 },
       { "path": "hero.line1", "label": "Hero title line 1", "type": "text", "maxLen": 20 },
       { "path": "hero.line2", "label": "Hero title line 2", "type": "text", "maxLen": 20 },
       { "path": "hero.sticker", "label": "Hero sticker text", "type": "text", "maxLen": 24 },
       { "path": "hero.ribbon", "label": "Hero ribbon word", "type": "text", "maxLen": 16 },
+      { "path": "hero.subtitle", "label": "Hero mobile subtitle (1 sentence)", "type": "text", "maxLen": 90 },
 
       { "path": "navItems", "label": "Navigation labels (each must map to a section: about/portfolio/projects/studio/contact)", "type": "list", "maxLen": 16, "note": "Anchor = #<label lowercased>. Sections present: about, portfolio, projects, studio, contact. Do not add labels with no matching section (e.g. 'Blog' was removed)." },
 
