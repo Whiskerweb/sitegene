@@ -1,7 +1,7 @@
 import FadeIn from './FadeIn'
-import { collaborations } from '../data/content'
 
-export default function Collaborations() {
+export default function Collaborations({ items = [] }: { items?: string[] }) {
+  const collaborations = items
   if (!collaborations || collaborations.length === 0) return null
   const row = [...collaborations, ...collaborations]
   return (

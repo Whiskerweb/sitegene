@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
 import FadeIn from './FadeIn'
-import { gallery } from '../data/content'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
-export default function Gallery() {
+export default function Gallery({ items = [] }: { items?: string[] }) {
+  const gallery = items
   if (!gallery || gallery.length === 0) return null
   return (
     <section id="gallery" className="mx-auto max-w-6xl px-5 py-20 md:px-10 md:py-28">

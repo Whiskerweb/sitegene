@@ -1,6 +1,5 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion'
-import { intro } from '../data/content'
 
 function Word({ children, progress, range }: { children: string; progress: MotionValue<number>; range: [number, number] }) {
   const opacity = useTransform(progress, range, [0.18, 1])
@@ -11,10 +10,11 @@ function Word({ children, progress, range }: { children: string; progress: Motio
   )
 }
 
-export default function IntroText() {
+export default function IntroText({ text = '' }: { text?: string }) {
   const ref = useRef<HTMLParagraphElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.85', 'end 0.55'] })
-  const words = intro.split(' ')
+  if (!text) return null
+  const words = text.split(' ')
   return (
     <section id="about" className="mx-auto max-w-5xl px-5 py-20 md:py-32">
       <p

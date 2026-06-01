@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Plus } from 'lucide-react'
 import FadeIn from './FadeIn'
-import { faqs } from '../data/content'
+import type { Faq } from '../data/content'
 
-export default function FAQs() {
+export default function FAQs({ items = [] }: { items?: Faq[] }) {
+  const faqs = items
   const [open, setOpen] = useState<number | null>(0)
   if (!faqs || faqs.length === 0) return null
   return (

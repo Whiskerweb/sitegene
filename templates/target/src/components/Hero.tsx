@@ -1,10 +1,24 @@
 import { motion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
-import { hero, nav, navAnchors } from '../data/content'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
-export default function Hero() {
+interface HeroData {
+  tagline: string
+  title: string
+  blurb: string
+  email: string
+  phone: string
+  role: string
+  location: string
+  recentWork: string
+  badge: string
+  badgeYears: string
+  socials: string[]
+}
+
+export default function Hero({ data }: { data: HeroData }) {
+  const hero = data
   return (
     <section className="relative h-screen min-h-[640px] w-full overflow-hidden bg-tg-dark text-white md:min-h-[720px]">
       {/* Portrait motion-blur + voiles */}
@@ -16,28 +30,19 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-t from-tg-dark via-transparent to-tg-dark/40" />
 
       <div className="relative z-10 flex h-full flex-col px-5 py-5 md:px-10 md:py-7">
-        {/* Top bar */}
+        {/* Top bar — coordonnées (la navigation est gérée par la Navbar globale) */}
         <motion.div
           initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: EASE }}
-          className="relative flex items-start justify-between"
+          className="relative flex items-start justify-between pt-14 md:pt-16"
         >
-          {/* email/phone : desktop uniquement (évite le chevauchement avec ✦ TARGET) */}
           <div className="hidden text-[11px] leading-tight text-white/85 md:block md:text-sm">
             <p><span data-sg-path="hero.email" data-sg-edit="panel">{hero.email}</span></p>
             <p><span data-sg-path="hero.phone" data-sg-edit="panel">{hero.phone}</span></p>
           </div>
-          <span className="tg-head left-1/2 -translate-x-1/2 text-sm font-bold tracking-[0.2em] max-md:mx-auto md:absolute md:text-lg md:tracking-[0.25em]">✦ TARGET</span>
           <div className="hidden text-right md:block">
             <p className="text-sm font-medium"><span data-sg-path="hero.role" data-sg-edit="panel">{hero.role}</span></p>
-            <p className="mb-5 text-sm text-white/70"><span data-sg-path="hero.location" data-sg-edit="panel">{hero.location}</span></p>
-            <div className="hidden flex-col items-end gap-3 md:flex">
-              {nav.map((n, i) => (
-                <a key={n} href={navAnchors[i] ?? '#contact'} className="text-sm font-medium uppercase tracking-wide underline underline-offset-4 transition-opacity hover:opacity-70">
-                  {n}
-                </a>
-              ))}
-            </div>
+            <p className="text-sm text-white/70"><span data-sg-path="hero.location" data-sg-edit="panel">{hero.location}</span></p>
           </div>
         </motion.div>
 
@@ -89,7 +94,7 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* ---------- DESKTOP : layout original (inchangé) ---------- */}
+        {/* ---------- DESKTOP : layout original ---------- */}
         <div className="hidden md:flex md:h-full md:flex-col">
           {/* Recent Work vignette */}
           <motion.div

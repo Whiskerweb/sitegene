@@ -1,8 +1,16 @@
 import { Aperture } from 'lucide-react'
 import FadeIn from './FadeIn'
-import { featuredQuote } from '../data/content'
 
-export default function FeaturedQuote() {
+interface QuoteData {
+  text: string
+  name: string
+  role: string
+  avatar: string
+  images: string[]
+}
+
+export default function FeaturedQuote({ data }: { data?: QuoteData }) {
+  const featuredQuote = data
   if (!featuredQuote || !featuredQuote.text) return null
   return (
     <section className="mx-auto max-w-6xl px-5 py-20 md:px-10 md:py-28">

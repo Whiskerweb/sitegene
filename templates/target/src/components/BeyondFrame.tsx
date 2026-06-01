@@ -1,7 +1,11 @@
 import FadeIn from './FadeIn'
-import { beyond } from '../data/content'
 
-export default function BeyondFrame() {
+interface Stat { v: string; l: string }
+interface BeyondData { title: string; body: string; cta: string; stats: Stat[] }
+
+export default function BeyondFrame({ data }: { data?: BeyondData }) {
+  const beyond = data
+  if (!beyond) return null
   return (
     <section className="mx-auto max-w-6xl px-5 py-20 md:px-10 md:py-28">
       <div className="grid items-center gap-10 md:grid-cols-2">

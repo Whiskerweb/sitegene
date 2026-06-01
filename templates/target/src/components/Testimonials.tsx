@@ -1,8 +1,9 @@
 import { Star } from 'lucide-react'
 import FadeIn from './FadeIn'
-import { testimonials } from '../data/content'
+import type { Testimonial } from '../data/content'
 
-export default function Testimonials() {
+export default function Testimonials({ items = [] }: { items?: Testimonial[] }) {
+  const testimonials = items
   if (!testimonials || testimonials.length === 0) return null
   return (
     <section className="mx-auto max-w-6xl px-5 py-20 md:px-10 md:py-28">

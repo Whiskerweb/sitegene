@@ -1,7 +1,8 @@
 import FadeIn from './FadeIn'
-import { works } from '../data/content'
+import type { Work } from '../data/content'
 
-export default function Works() {
+export default function Works({ items = [] }: { items?: Work[] }) {
+  const works = items
   if (!works || works.length === 0) return null
   return (
     <section id="works" className="mx-auto max-w-6xl px-5 py-20 md:px-10 md:py-28">
