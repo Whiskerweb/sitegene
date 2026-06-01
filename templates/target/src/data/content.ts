@@ -1,9 +1,12 @@
 // Contenu centralisé du template photographe « Target » (recréation).
 //
-// RUNTIME ADAPTER : tout le contenu vit dans DEFAULT_CONTENT. À l'exécution, si
-// `window.__SITE_CONTENT__` existe (injecté par la plateforme), il REMPLACE
-// DEFAULT_CONTENT (même forme exacte). Les composants importent les exports
-// nommés ci-dessous — aucun changement de composant n'est nécessaire.
+// SCHÉMA v2 : un site = un shell (`site`) + des pages typées (`pages[]`).
+// À l'exécution, si `window.__SITE_CONTENT__` existe (injecté par la plateforme),
+// il REMPLACE DEFAULT_CONTENT (même forme v2). Le contenu effectif, normalisé,
+// est exposé via `SITE` ; les composants le lisent via le contexte de page
+// (`usePage()` / `useSite()`).
+
+import { normalizeDefault } from '../site/normalize'
 
 const img = (n: number) => `img/p${n}.jpg`
 
@@ -31,15 +34,9 @@ export interface Testimonial { text: string; name: string; role: string; avatar:
 export interface Faq { q: string; a: string }
 
 /* ------------------------------------------------------------------ */
-/* Contenu par défaut (forme = objet injecté par la plateforme)        */
+/* Contenu de la home (valeurs réelles target)                         */
 /* ------------------------------------------------------------------ */
-const DEFAULT_CONTENT = {
-  // Libellés de navigation (texte éditable).
-  nav: ['Portfolio', 'About me', 'My shots', 'Contact'] as string[],
-  // STRUCTUREL : ancre in-page pour chaque entrée de `nav` (même index).
-  // Sections présentes : #about (intro), #works, #gallery, #contact (footer).
-  navAnchors: ['#works', '#about', '#gallery', '#contact'] as string[],
-
+const HOME_CONTENT = {
   hero: {
     tagline: 'Award-winning creative',
     title: 'PHOTOGRAPHER',
@@ -68,6 +65,8 @@ const DEFAULT_CONTENT = {
   intro:
     "Hallo, I'm Timi Joel, a professional portrait 🏞️ and lifestyle photographer 📸 with a deep passion for capturing moments ✨ that feel real, timeless ⏱️, and full of life. Photography is what I love to do. 🧡",
 
+  servicesIntro:
+    'From portraits to events, I offer professional photography crafted to match your vision.',
   services: [
     {
       n: '01',
@@ -106,9 +105,6 @@ const DEFAULT_CONTENT = {
     },
   ] as Service[],
 
-  servicesIntro:
-    'From portraits to events, I offer professional photography crafted to match your vision.',
-
   collaborations: [
     'VOGUE', 'NIKE', 'AIRBNB', 'SPOTIFY', 'CANON', 'GUCCI', 'APPLE', 'LEICA',
   ] as string[],
@@ -120,7 +116,7 @@ const DEFAULT_CONTENT = {
     { date: 'October 2025', category: 'Brand & Commercial', title: 'Gaia Essence Skincare', desc: 'A brand-focused editorial inspired by nature, warmth and organic beauty.', img: img(6) },
   ] as Work[],
 
-  // Stats + CTA « beyond the frame » (déplacé hors du composant BeyondFrame).
+  // Stats + CTA « beyond the frame »
   beyond: {
     title: 'Capture Beyond the Frame',
     body: 'Photography, for me, is more than an image — it is a feeling preserved. I chase light, emotion and the unrepeatable in-between moments that make a story worth telling.',
@@ -148,13 +144,86 @@ const DEFAULT_CONTENT = {
 
   // Galerie — ORDRE des photos (les vignettes sont calculées via img()).
   galleryOrder: [10, 11, 12, 13, 14, 1, 2, 3, 4, 5, 6, 7] as number[],
-
-  footer: {
-    title: 'Every Frame Tells a Story: Let’s Talk',
-    email: 'hello@timijoel.com',
-    socials: ['Instagram', 'Dribbble', 'Behance'],
-  },
 }
+
+// Galerie dérivée (chemins relatifs) — partagée home + portfolio.
+const GALLERY = HOME_CONTENT.galleryOrder.map(img)
+
+/* ------------------------------------------------------------------ */
+/* Contenu par défaut v2 (site + pages)                                */
+/* ------------------------------------------------------------------ */
+const DEFAULT_CONTENT = {
+  version: 2,
+  site: {
+    brand: '✦ TARGET',
+    nav: [
+      { label: 'Accueil', to: '/' },
+      { label: 'Portfolio', to: '/portfolio' },
+      { label: 'À propos', to: '/a-propos' },
+      { label: 'Contact', to: '/contact' },
+    ],
+    footer: {
+      title: 'Every Frame Tells a Story: Let’s Talk',
+      email: 'hello@timijoel.com',
+      socials: ['Instagram', 'Dribbble', 'Behance'],
+    },
+    theme: {}, // accents/géométrie/palette DA restent dans les composants
+  },
+  pages: [
+    {
+      slug: '/',
+      type: 'home',
+      title: 'Target — Photographer',
+      meta: { description: 'Photographe portrait & lifestyle : moments réels, intemporels et pleins de vie.' },
+      content: {
+        ...HOME_CONTENT,
+        gallery: GALLERY,
+      },
+    },
+    {
+      slug: '/portfolio',
+      type: 'portfolio',
+      title: 'Portfolio — Target',
+      meta: { description: 'Une sélection de projets : éditoriaux mode, lifestyle outdoor et marques.' },
+      content: {
+        title: 'My Works',
+        intro: 'A selected body of recent work — editorials, outdoor lifestyle and brand stories.',
+        works: HOME_CONTENT.works,
+        gallery: GALLERY,
+      },
+    },
+    {
+      slug: '/a-propos',
+      type: 'about',
+      title: 'À propos — Target',
+      meta: { description: 'Approche, démarche et chiffres clés du photographe Timi Joel.' },
+      content: {
+        intro: HOME_CONTENT.intro,
+        featuredQuote: HOME_CONTENT.featuredQuote,
+        beyond: HOME_CONTENT.beyond,
+        testimonials: HOME_CONTENT.testimonials,
+      },
+    },
+    {
+      slug: '/contact',
+      type: 'contact',
+      title: 'Contact — Target',
+      meta: { description: 'Lancez votre projet photo. Réponse sous 48 heures.' },
+      content: {
+        title: 'Let’s start a project',
+        intro: 'Tell me about your project and preferred dates — I reply within 48 hours.',
+        email: 'hello@timijoel.com',
+        zones: ['Nigeria', 'Netherlands', 'Worldwide on request'],
+        pricing: [
+          { name: 'Portrait Session', price: 'from €350', detail: '1h studio or outdoor, 20 retouched photos' },
+          { name: 'Events & Outdoor', price: 'from €1 500', detail: 'Half/full-day coverage, private gallery' },
+          { name: 'Brand & Commercial', price: 'on quote', detail: 'Shoot, retouch & color grade, usage rights' },
+        ],
+        faqs: HOME_CONTENT.faqs,
+      },
+    },
+  ],
+} as const
 
 /* ------------------------------------------------------------------ */
 /* Sélection runtime : global injecté > défaut                         */
@@ -167,23 +236,5 @@ const C =
 // Exposé pour la plateforme (dump des contenus par défaut → default-content.json).
 export const __DEFAULT_CONTENT__ = DEFAULT_CONTENT
 
-/* ------------------------------------------------------------------ */
-/* Re-exports (noms/types identiques à l'origine + ajouts)             */
-/* ------------------------------------------------------------------ */
-export const nav = C.nav
-export const navAnchors = C.navAnchors
-export const hero = C.hero
-export const featuredQuote = C.featuredQuote
-export const intro = C.intro
-export const services: Service[] = C.services
-export const servicesIntro = C.servicesIntro
-export const collaborations = C.collaborations
-export const works: Work[] = C.works
-export const beyond = C.beyond
-export const testimonials: Testimonial[] = C.testimonials
-export const faqs: Faq[] = C.faqs
-export const footer = C.footer
-
-// COMPUTED : la galerie est dérivée de l'ordre d'index via le helper img().
-export const gallery: string[] =
-  (C as any).gallery ?? (C.galleryOrder ?? DEFAULT_CONTENT.galleryOrder).map(img)
+// Contenu v2 effectif (injecté > défaut), normalisé.
+export const SITE = normalizeDefault(C)
