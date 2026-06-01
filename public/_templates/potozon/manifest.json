@@ -1,6 +1,16 @@
 {
   "id": "potozon",
   "name": "Potozon — Experience Photography (pop / kinetic brutalism)",
+  "schema": 2,
+  "pageTypes": ["home", "portfolio", "about", "service", "contact", "generic"],
+  "sections": {
+    "home": ["hero", "cards", "featuredQuote", "scrollText", "services", "collaborations", "works", "beyond", "testimonials", "faqs"],
+    "portfolio": ["cards", "works"],
+    "about": ["scrollText", "featuredQuote", "beyond", "testimonials"],
+    "service": ["services", "pricing", "faqs", "cta"],
+    "contact": ["email", "zones", "pricing", "faqs"],
+    "generic": ["blocks"]
+  },
   "photoSlots": 18,
   "photos": [
     { "slot": "p1", "role": "service", "required": true, "note": "Service 01 Portrait" },
