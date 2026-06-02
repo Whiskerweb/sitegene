@@ -77,11 +77,11 @@ export default function LoadingSteps({
                   x: 0,
                 }}
                 transition={{ duration: 0.35, ease: EASE }}
-                className={`flex items-center gap-3 rounded-2xl border px-4 py-3 backdrop-blur transition-all duration-300 ${
+                className={`flex items-center gap-3 rounded-xl border px-4 py-3 backdrop-blur transition-all duration-300 ${
                   inProgress
                     ? "border-violet-500/30 bg-ink-800"
                     : done
-                    ? "border-[var(--line)] bg-ink-800/40"
+                    ? "border-[var(--line-strong)] bg-ink-800/40"
                     : "border-transparent bg-ink-800/10"
                 }`}
               >

@@ -23,17 +23,23 @@ function injectRevealChrome(
     : `
 <form id="sg-bar" method="post" action="/api/checkout">
   <input type="hidden" name="token" value="${token}" />
+  <span class="sg-brand"><span class="sg-dot"></span>Akyra · aperçu</span>
   <span class="sg-l">Voici <b>votre site</b>. Mettez-le en ligne en 30 secondes.</span>
   <button type="submit">Mettre en ligne — 50 €</button>
 </form>`;
+  // Chrome Akyra (DA sombre, tokens @theme). Couleurs en dur car le HTML est
+  // une page autonome (template client) sans accès aux utilitaires Tailwind.
   const chrome = `
 <style>
   #sg-watermark{position:fixed;inset:0;z-index:2147483646;pointer-events:none;background-image:url("data:image/svg+xml,${wm}");background-repeat:repeat;mix-blend-mode:overlay}
-  #sg-bar{position:fixed;left:0;right:0;bottom:0;z-index:2147483647;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 20px;background:rgba(8,8,12,0.82);backdrop-filter:blur(14px);border-top:1px solid rgba(255,255,255,0.12);font-family:ui-sans-serif,system-ui,sans-serif;color:#f5f6fa}
-  #sg-bar .sg-l{font-size:14px;color:#a6a8b8}
-  #sg-bar .sg-l b{color:#f5f6fa}
-  #sg-bar button{border:0;cursor:pointer;border-radius:999px;padding:12px 22px;font-size:15px;font-weight:600;color:#fff;background:linear-gradient(180deg,#8b6bff,#5226e0);box-shadow:0 12px 30px -10px rgba(82,38,224,0.6)}
-  @media(max-width:560px){#sg-bar{flex-direction:column;gap:10px;align-items:stretch;text-align:center}}
+  #sg-bar{position:fixed;left:0;right:0;bottom:0;z-index:2147483647;display:flex;align-items:center;gap:16px;padding:14px 22px;background:rgba(8,8,12,0.86);backdrop-filter:blur(16px);border-top:1px solid rgba(245,246,250,0.10);font-family:ui-sans-serif,system-ui,sans-serif;color:#f5f6fa}
+  #sg-bar .sg-brand{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#a6a8b8}
+  #sg-bar .sg-dot{width:7px;height:7px;border-radius:999px;background:#8b6bff;box-shadow:0 0 10px 1px rgba(139,107,255,0.7)}
+  #sg-bar .sg-l{flex:1;font-size:14px;color:#a6a8b8}
+  #sg-bar .sg-l b{color:#f5f6fa;font-weight:600}
+  #sg-bar button{flex-shrink:0;border:1.5px solid transparent;cursor:pointer;border-radius:999px;padding:12px 24px;font-size:15px;font-weight:700;color:#fff;background:linear-gradient(180deg,#6d4aff 0%,#5226e0 100%);box-shadow:0 12px 36px -8px rgba(109,74,255,0.55);transition:transform .15s ease,box-shadow .15s ease}
+  #sg-bar button:hover{transform:translateY(-1px);box-shadow:0 16px 40px -8px rgba(109,74,255,0.7)}
+  @media(max-width:640px){#sg-bar{flex-wrap:wrap;gap:10px;padding:12px 16px}#sg-bar .sg-l{flex-basis:100%;order:3;text-align:center}#sg-bar button{flex:1}}
 </style>
 <div id="sg-watermark"></div>${bar}
 <script>

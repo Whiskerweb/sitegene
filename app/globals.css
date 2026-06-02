@@ -63,10 +63,10 @@
   --color-warn: #d97706;
   --color-danger: #dc2626;
 
-  /* ---- Polices ---- */
-  --font-display: "Outfit", "Geist", sans-serif;
-  --font-sans: "Geist", "Inter", sans-serif;
-  --font-hand: "Caveat", cursive;
+  /* ---- Polices (verrouillées sur les fontes next/font réellement chargées) ---- */
+  --font-display: var(--font-inter), system-ui, sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-hand: var(--font-caveat), cursive;
   --font-archivo: var(--ff-archivo), system-ui, sans-serif;
 
   /* ---- Rayons ---- */

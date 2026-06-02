@@ -152,7 +152,7 @@ export default function CreateDashboard({
           {/* PANNEAU DE CONTRÔLE GAUCHE (Brief & Photos) */}
           <div className="lg:col-span-7 space-y-6">
             {/* 1. Sélection Catégorie */}
-            <div className="rounded-3xl border border-[var(--line)] bg-ink-800 p-6">
+            <div className="rounded-2xl border border-[var(--line-strong)] bg-ink-800 p-6">
               <label className="block text-[14px] font-semibold uppercase tracking-[0.1em] text-violet-400 mb-4">
                 1. Votre Métier
               </label>
@@ -164,17 +164,17 @@ export default function CreateDashboard({
                       key={c.id}
                       type="button"
                       onClick={() => c.active && setCategoryId(c.id)}
-                      className={`relative flex items-center gap-2 rounded-2xl px-5 py-3 text-[14px] font-semibold transition ${
+                      className={`relative flex items-center gap-2 rounded-full px-5 py-3 text-[14px] font-semibold transition ${
                         active
                           ? "bg-violet-500 text-white shadow-[0_4px_14px_-2px_rgba(109,74,255,0.4)]"
                           : c.active
-                          ? "bg-ink-700 hover:bg-ink-600 text-muted hover:text-white border border-[var(--line)]"
-                          : "bg-ink-800 opacity-40 text-faint border border-[var(--line)] cursor-not-allowed"
+                          ? "bg-ink-700 hover:bg-ink-600 text-muted hover:text-white border border-[var(--line-strong)]"
+                          : "bg-ink-800 opacity-40 text-faint border border-[var(--line-strong)] cursor-not-allowed"
                       }`}
                     >
                       {c.label}
                       {!c.active && (
-                        <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-ink-900 text-gold-400">
+                        <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-ink-900 text-gold-400">
                           Bientôt
                         </span>
                       )}
@@ -186,13 +186,13 @@ export default function CreateDashboard({
             </div>
 
             {/* 2. Le Brief (Prompt) */}
-            <div className="rounded-3xl border border-[var(--line)] bg-ink-800 p-6 relative overflow-hidden">
+            <div className="rounded-2xl border border-[var(--line-strong)] bg-ink-800 p-6 relative overflow-hidden">
               <div className="absolute right-0 top-0 -z-10 h-32 w-32 bg-violet-500/5 blur-[50px] pointer-events-none" />
               <label className="block text-[14px] font-semibold uppercase tracking-[0.1em] text-violet-400 mb-4">
                 2. Racontez votre projet
               </label>
 
-              <div className="relative rounded-2xl border border-[var(--line-strong)] bg-ink-900 focus-within:border-violet-500/50 transition-colors p-4">
+              <div className="relative rounded-2xl border border-[var(--line-strong)] bg-ink-900 focus-within:border-violet-500/60 focus-within:ring-1 focus-within:ring-violet-500/30 transition-colors p-4">
                 <textarea
                   value={brief}
                   onChange={(e) => setBrief(e.target.value)}
@@ -215,7 +215,7 @@ export default function CreateDashboard({
                       key={idx}
                       type="button"
                       onClick={() => setBrief(sample)}
-                      className="text-left text-[12.5px] text-faint hover:text-gold-300 transition line-clamp-1 py-1 px-2.5 rounded-lg hover:bg-ink-700/60"
+                      className="text-left text-[12.5px] text-faint hover:text-gold-300 transition line-clamp-1 py-1.5 px-3 rounded-full border border-transparent hover:border-[var(--line-strong)] hover:bg-ink-700/60"
                     >
                       💡 &ldquo;{sample}&rdquo;
                     </button>
@@ -225,7 +225,7 @@ export default function CreateDashboard({
             </div>
 
             {/* 3. Téléversement Photos */}
-            <div className="rounded-3xl border border-[var(--line)] bg-ink-800 p-6">
+            <div className="rounded-2xl border border-[var(--line-strong)] bg-ink-800 p-6">
               <label className="block text-[14px] font-semibold uppercase tracking-[0.1em] text-violet-400 mb-3">
                 3. Glissez vos photos (Optionnel)
               </label>
@@ -253,7 +253,7 @@ export default function CreateDashboard({
                     : "border-[var(--line-strong)] hover:border-violet-500/40 bg-ink-900/60 hover:bg-ink-900/90"
                 }`}
               >
-                <div className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-ink-800 text-muted border border-[var(--line)] mb-3">
+                <div className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-ink-800 text-muted border border-[var(--line-strong)] mb-3">
                   <IconPhoto size={22} className="text-violet-400" />
                 </div>
                 <p className="text-[14px] font-semibold text-paper">
@@ -297,7 +297,7 @@ export default function CreateDashboard({
 
           {/* PANNEAU DE MODÈLES DROITE (Modèles de référence) */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="rounded-3xl border border-[var(--line)] bg-ink-800 p-6 relative overflow-hidden h-full flex flex-col justify-between">
+            <div className="rounded-2xl border border-[var(--line-strong)] bg-ink-800 p-6 relative overflow-hidden h-full flex flex-col justify-between">
               <div>
                 <label className="block text-[14px] font-semibold uppercase tracking-[0.1em] text-violet-400 mb-4">
                   4. Modèle de référence
@@ -311,10 +311,10 @@ export default function CreateDashboard({
                   {/* Modèle 1: Alice R */}
                   <div
                     onClick={() => setTemplateId("alice-r")}
-                    className={`group cursor-pointer rounded-2xl border p-4 transition-all duration-300 ${
+                    className={`group cursor-pointer rounded-xl border p-4 transition-all duration-300 ${
                       templateId === "alice-r"
                         ? "border-gold-400 bg-ink-700 shadow-[0_12px_32px_-8px_rgba(232,180,104,0.15)]"
-                        : "border-[var(--line)] hover:border-white/20 bg-ink-900/60"
+                        : "border-[var(--line-strong)] hover:border-white/20 bg-ink-900/60"
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -342,10 +342,10 @@ export default function CreateDashboard({
                   {/* Modèle 2: Potozon */}
                   <div
                     onClick={() => setTemplateId("potozon")}
-                    className={`group cursor-pointer rounded-2xl border p-4 transition-all duration-300 ${
+                    className={`group cursor-pointer rounded-xl border p-4 transition-all duration-300 ${
                       templateId === "potozon"
                         ? "border-violet-400 bg-ink-700 shadow-[0_12px_32px_-8px_rgba(109,74,255,0.15)]"
-                        : "border-[var(--line)] hover:border-white/20 bg-ink-900/60"
+                        : "border-[var(--line-strong)] hover:border-white/20 bg-ink-900/60"
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -373,10 +373,10 @@ export default function CreateDashboard({
                   {/* Modèle 3: Target */}
                   <div
                     onClick={() => setTemplateId("target")}
-                    className={`group cursor-pointer rounded-2xl border p-4 transition-all duration-300 ${
+                    className={`group cursor-pointer rounded-xl border p-4 transition-all duration-300 ${
                       templateId === "target"
                         ? "border-mint-400 bg-ink-700 shadow-[0_12px_32px_-8px_rgba(61,224,160,0.15)]"
-                        : "border-[var(--line)] hover:border-white/20 bg-ink-900/60"
+                        : "border-[var(--line-strong)] hover:border-white/20 bg-ink-900/60"
                     }`}
                   >
                     <div className="flex items-center justify-between">

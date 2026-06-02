@@ -399,3 +399,98 @@ Composants (`components/marketing/`) :
 Données réutilisables : `lib/showcase.ts` (réalisations + filtres catégorie), `lib/faq.ts`, `lib/pricing.ts`, `lib/categories.ts`.
 
 > Note : `lucide-react` (1.17.0) de ce repo **n'expose pas** les icônes de marque (Instagram, Linkedin, Twitter…). Utiliser des icônes génériques ou des pastilles à initiale.
+
+---
+
+## 14. RÉFÉRENCE CENTRALE — à suivre pour TOUTE nouvelle page
+
+> Cette section est la **source de vérité unique**. Toute page créée après ça doit
+> en sortir. Si un choix n'y est pas, on l'y ajoute avant de coder.
+
+### 14.1 Tokens couleur (deux façons de styler, une seule palette)
+
+**A. Surfaces marketing & app — tokens scopés `--m-*`** (clair/sombre togglable),
+définis dans `app/globals.css` (`.akyra` clair par défaut, `.akyra.dark`). Usage :
+`bg-[rgb(var(--m-page))]`, `bg-[rgb(var(--m-surface))]`, `bg-[rgb(var(--m-elevated))]`,
+`text-[rgb(var(--m-ink))] | (--m-muted) | (--m-faint)`, `border-[rgb(var(--m-line))]`,
+overlays/hovers `bg-[rgb(var(--m-overlay)/0.04…0.10)]`,
+accent `text-/bg-[rgb(var(--m-accent))]` (+ `--m-on-accent` pour le texte sur accent).
+
+| token | clair | sombre |
+|---|---|---|
+| `--m-page` | #fff | #0a0a0a |
+| `--m-surface` | #fff | #141414 |
+| `--m-elevated` | #fafafa | #1a1a1a |
+| `--m-line` | #ebebeb | #262626 |
+| `--m-ink` | #171717 | #f5f5f5 |
+| `--m-muted` | #666 | #a3a3a3 |
+| `--m-faint` | #999 | #6e6e6e |
+| `--m-overlay` | 17 17 17 | 255 255 255 |
+| `--m-accent` | #2563eb | #9dc1fb |
+
+**B. Surfaces toujours sombres (tunnel `/create`, `/login`, `/welcome`, `/editor`,
+`/admin`) — tokens fixes** `@theme` : `bg-ink-900/800/700`, `text-paper/muted/faint`,
+`border-[var(--line)]`, accents `violet-400/500/600`, `gold-400/300`, `mint-400`.
+
+> Le **dashboard** combine les deux : il vit dans `.akyra.dash` qui **remappe** les
+> tokens DA-Cloud legacy (`text-night`, `bg-surface`, `border-sky-300`…) sur `--m-*`,
+> donc le markup existant suit le thème. Voir `.akyra.dash` dans `globals.css`.
+
+### 14.2 Accents (vifs, lisibles sur clair ET sombre)
+- **Violet** = action / actif / marque tech. Primaire : `violet-500 #6d4aff`, vif `violet-400 #8b6bff`.
+- **Or** = éditorial / highlight / prix. `gold-400 #e8b468`.
+- **Mint** = « en ligne » / succès. `mint-400 #3de0a0`.
+
+### 14.3 Typographie (verrouillée)
+- Fontes chargées via `next/font` dans `app/layout.tsx` : **Inter** (`--font-inter`),
+  Fraunces (`--font-fraunces`), Caveat (`--font-caveat`), Archivo (`--ff-archivo`).
+- Tokens `@theme` : `--font-sans` & `--font-display` = **Inter** ; `--font-hand` = Caveat ;
+  `--font-archivo` = Archivo (chrome dashboard). **Corps & titres = Inter** (sans),
+  touche manuscrite = Caveat, accent éditorial possible en Fraunces si besoin.
+- Titres : `font-medium/semibold`, `tracking-[-0.02em → -0.04em]`, `leading-[1.05]`.
+- Échelle hero : `text-[38px] sm:text-[56px] md:text-[64px]`.
+
+### 14.4 Rayons (cohérence stricte)
+- **Cartes / vignettes** : `rounded-xl` (12px).
+- **Grands blocs / champ de prompt / panneaux** : `rounded-2xl` (16px).
+- **Boutons & pills / chips / badges** : `rounded-full`.
+- **Inputs** : `rounded-xl`.
+
+### 14.5 Boutons
+- **Primaire** = classe `.btn-violet` (gradient violet + border-beam), `rounded-full`,
+  `text-white`, `font-bold`, `hover:scale-[1.02]`. (Composant `Button` variant `primary`
+  l'utilise déjà.)
+- **Secondaire/ghost** : `border border-[rgb(var(--m-line))] bg-[rgb(var(--m-overlay)/0.03)]
+  text-[rgb(var(--m-ink))] hover:bg-[rgb(var(--m-overlay)/0.06)]`, `rounded-full`.
+- **Lien-action** : `text-violet-400 hover:…`.
+- Or `.btn-gold` réservé à un CTA chaud exceptionnel (pas le défaut).
+
+### 14.6 Composants réutilisables
+- Marketing (`components/marketing/`) : `MarketingShell` (provider thème + nav + footer +
+  quadrillage), `MarketingNav`, `MarketingFooter`, `Hero`, `Gallery`, `TemplateCard`,
+  `ModelesGrid` (browse), `FaqAccordion`, `PricingPanel`, `LegalPage`, `ThemeToggle`,
+  `theme.tsx` (provider).
+- App/dashboard (`components/ui/`) : `AppShell`, `Sidebar`, `Topbar`, `Card`, `StatCard`,
+  `GlassCard`, `Badge`/`StatusPill`, `PageHeader`, `EmptyState`, `Button`.
+- **Réutiliser** avant de créer. Données partagées : `lib/showcase.ts`, `lib/faq.ts`,
+  `lib/pricing.ts`, `lib/categories.ts`, `lib/intake-store.ts`.
+
+### 14.7 Thème clair/sombre
+- Provider `components/marketing/theme.tsx` (`MarketingThemeProvider` + `useMarketingTheme`),
+  clé `localStorage 'akyra-theme'`, défaut **sombre**, respecte le système.
+- Toggle = `components/marketing/ThemeToggle` (soleil/écran/lune). Présent nav + footer +
+  topbar dashboard. **Préférence unique pour tout le site.**
+
+### 14.8 Signature visuelle
+- **Quadrillage** : lignes verticales encadrant la colonne centrale (`max-w` + `border-l/r`
+  à `rgb(var(--m-overlay)/0.05)`) + hairlines horizontales `.akyra-hline` entre blocs.
+- **Halo violet** discret en haut des héros (`glow-violet` ou radial `rgba(109,74,255,0.10)`).
+- Mouvement sobre, `--ease-out-soft`, reveals `lib/motion.ts`.
+
+### 14.9 Recette « nouvelle page »
+1. Marketing → la mettre sous `app/(marketing)/` (hérite shell + thème + quadrillage).
+2. App sombre → fond `bg-ink-900 text-paper`, tokens fixes.
+3. Cartes `rounded-xl`, gros blocs `rounded-2xl`, boutons `.btn-violet` `rounded-full`.
+4. Texte : tokens `--m-ink` / `--m-muted` / `--m-faint` (ou `paper` / `muted` / `faint` en sombre fixe).
+5. **Aucun `href="#"` mort.** Chaque bouton mène quelque part (route, ancre, action).
+6. Vérifier en clair ET sombre.

@@ -74,7 +74,7 @@ export default function ResultView({
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
-            className="overflow-hidden rounded-[22px] border border-white/10 bg-ink-800 shadow-[0_20px_50px_rgba(109,74,255,0.15)]"
+            className="overflow-hidden rounded-2xl border border-white/10 bg-ink-800 shadow-[0_20px_50px_rgba(109,74,255,0.15)]"
           >
             <div className="flex h-10 flex-none items-center gap-1.5 border-b border-white/5 bg-ink-900/60 px-4">
               <div className="flex items-center gap-1.5">

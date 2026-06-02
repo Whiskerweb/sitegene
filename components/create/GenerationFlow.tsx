@@ -143,30 +143,31 @@ export default function GenerationFlow() {
   // 1. Écran d'erreur initiale (aucun résultat encore) → échec + possibilité de modifier le brief.
   if (error && !result) {
     return (
-      <section className="grid min-h-[100dvh] place-items-center bg-white px-6">
-        <div className="max-w-[460px] rounded-[22px] border border-danger/30 bg-surface-2 p-8 text-center shadow-cloud">
-          <p className="text-[16px] font-semibold text-night">
+      <section className="relative grid min-h-[100dvh] place-items-center overflow-hidden bg-ink-900 px-6">
+        <div aria-hidden className="glow-violet pointer-events-none absolute left-1/2 top-0 h-[360px] w-full max-w-[1100px] -translate-x-1/2" />
+        <div className="relative z-10 w-full max-w-[460px] rounded-2xl border border-[var(--line-strong)] bg-ink-800 p-8 text-center shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+          <p className="text-[16px] font-semibold text-paper">
             La génération a échoué.
           </p>
-          <p className="mt-2 text-[14.5px] text-slate">{error}</p>
+          <p className="mt-2 text-[14.5px] text-muted">{error}</p>
           <button
             type="button"
             onClick={() => payloadRef.current && run(payloadRef.current)}
-            className="btn-violet mt-6 inline-block w-full rounded-full px-6 py-3 text-[14px] font-bold text-white"
+            className="btn-violet mt-6 inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-[14px] font-bold text-white transition-transform hover:scale-[1.02] active:scale-[0.98]"
           >
             Réessayer la génération
           </button>
           <button
             type="button"
             onClick={() => setError(null)}
-            className="mt-3 block w-full text-[13px] text-brand transition hover:text-brand-700"
+            className="mt-3 block w-full rounded-full border border-[var(--line-strong)] bg-white/[0.03] px-6 py-3 text-[13px] font-semibold text-paper transition hover:bg-white/[0.06]"
           >
             Modifier mon brief ou mes options
           </button>
           <button
             type="button"
             onClick={() => router.replace("/")}
-            className="mt-4 block w-full text-[12px] text-mist transition hover:text-slate"
+            className="mt-4 block w-full text-[12px] text-faint transition hover:text-muted"
           >
             Revenir à l&apos;accueil
           </button>

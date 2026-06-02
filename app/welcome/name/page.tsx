@@ -51,13 +51,13 @@ export default function NameSitePage() {
 
   if (liveSlug) {
     return (
-      <main className="relative flex min-h-screen items-center justify-center px-6 text-center">
-        <div className="glow-violet pointer-events-none absolute inset-x-0 top-0 h-[400px]" />
+      <main className="relative flex min-h-screen items-center justify-center bg-ink-900 px-6 text-center text-paper">
+        <div className="glow-violet pointer-events-none absolute inset-x-0 top-0 h-[440px] opacity-70" />
         <div className="relative max-w-[520px]">
           <div className="mx-auto mb-5 grid h-16 w-16 place-items-center rounded-full bg-mint-400/15 text-3xl text-mint-400">
             ✓
           </div>
-          <h1 className="font-display text-[32px] font-semibold tracking-[-0.02em]">
+          <h1 className="font-display text-[32px] font-semibold tracking-[-0.02em] text-paper">
             Votre site est en ligne 🎉
           </h1>
           <p className="mt-3 text-muted">
@@ -66,14 +66,14 @@ export default function NameSitePage() {
           </p>
           <a
             href={`/s/${liveSlug}`}
-            className="mt-5 inline-block rounded-xl border border-line bg-ink-700 px-5 py-3 font-medium text-violet-400 hover:text-violet-500"
+            className="mt-5 inline-block rounded-full border border-line bg-ink-700 px-5 py-3 font-medium text-violet-400 transition-colors hover:border-violet-500 hover:text-violet-500"
           >
             /s/{liveSlug}
           </a>
           <div className="mt-8">
             <a
               href="/dashboard"
-              className="btn-violet rounded-full px-6 py-3.5 text-[15px] font-semibold text-white"
+              className="btn-violet inline-block rounded-full px-6 py-3.5 text-[15px] font-bold text-white"
             >
               Accéder à mon tableau de bord
             </a>
@@ -84,10 +84,10 @@ export default function NameSitePage() {
   }
 
   return (
-    <main className="relative flex min-h-screen items-center justify-center px-6">
-      <div className="glow-violet pointer-events-none absolute inset-x-0 top-0 h-[400px]" />
+    <main className="relative flex min-h-screen items-center justify-center bg-ink-900 px-6 text-paper">
+      <div className="glow-violet pointer-events-none absolute inset-x-0 top-0 h-[440px] opacity-70" />
       <div className="relative w-full max-w-[460px]">
-        <h1 className="text-center font-display text-[28px] font-semibold tracking-[-0.02em]">
+        <h1 className="text-center font-display text-[28px] font-semibold tracking-[-0.02em] text-paper">
           Nommez votre site
         </h1>
         <p className="mt-2 text-center text-sm text-muted">
@@ -95,7 +95,7 @@ export default function NameSitePage() {
           domaine plus tard.
         </p>
 
-        <form onSubmit={submit} className="mt-7 rounded-[24px] border border-line bg-ink-700 p-8">
+        <form onSubmit={submit} className="mt-7 rounded-2xl border border-line bg-ink-700 p-8">
           <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-faint">
             Nom du site
           </label>
@@ -106,7 +106,7 @@ export default function NameSitePage() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="ex : studio-lumen"
-            className="w-full rounded-xl border border-line bg-ink-900 px-4 py-3 text-paper outline-none focus:border-violet-500"
+            className="w-full rounded-xl border border-line bg-ink-800 px-4 py-3 text-paper placeholder:text-faint outline-none transition-colors focus:border-violet-500"
           />
           <p className="mt-3 text-sm text-faint">
             Votre adresse :{" "}
@@ -116,7 +116,7 @@ export default function NameSitePage() {
           <button
             type="submit"
             disabled={busy || slug.length < 2}
-            className="btn-violet mt-6 w-full rounded-full px-6 py-4 text-[15px] font-semibold text-white disabled:opacity-50"
+            className="btn-violet mt-6 w-full rounded-full px-6 py-4 text-[15px] font-bold text-white transition-opacity disabled:opacity-50"
           >
             {busy ? "Mise en ligne…" : "Mettre en ligne 🚀"}
           </button>
