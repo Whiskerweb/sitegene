@@ -1,12 +1,33 @@
 @import "tailwindcss";
 
 @theme {
-  /* ---- Papier chaud (fonds) ---- */
-  --color-paper: #fbf8f2;
+  /* ---- Base sombre ---- */
+  --color-ink-900: #08080c;
+  --color-ink-800: #0e0e14;
+  --color-ink-700: #16161f;
+  --color-ink-600: #1f1f2b;
+
+  /* ---- Accent primaire (violet électrique) ---- */
+  --color-violet-400: #8b6bff;
+  --color-violet-500: #6d4aff;
+  --color-violet-600: #5226e0;
+
+  /* ---- Accent secondaire (or éditorial) ---- */
+  --color-gold-300: #f2d2a0;
+  --color-gold-400: #e8b468;
+
+  /* ---- Statut ---- */
+  --color-mint-400: #3de0a0;
+
+  /* ---- Texte ---- */
+  --color-paper: #f5f6fa;
+  --color-muted: #a6a8b8;
+  --color-faint: #6c6e80;
+
+  /* ---- Papier chaud hérité ---- */
+  --color-paper-warm: #fbf8f2;
   --color-paper-2: #f3ede3;
   --color-card: #ffffff;
-
-  /* ---- Encre (texte, chaud) ---- */
   --color-ink: #1c1a17;
   --color-ink-soft: #6b6357;
   --color-ink-faint: #a39a8c;
@@ -20,20 +41,6 @@
 
   /* ---- Signal vivant ---- */
   --color-sage: #2fa66a;
-
-  /* ---- Hérité : dashboards / pages app (thème sombre, à ré-aligner plus tard) ---- */
-  --color-ink-900: #08080c;
-  --color-ink-800: #0e0e14;
-  --color-ink-700: #16161f;
-  --color-ink-600: #1f1f2b;
-  --color-violet-400: #8b6bff;
-  --color-violet-500: #6d4aff;
-  --color-violet-600: #5226e0;
-  --color-muted: #a6a8b8;
-  --color-faint: #6c6e80;
-  --color-mint-400: #3de0a0;
-  --color-gold-400: #e8b468;
-  --color-gold-300: #f2d2a0;
 
   /* ---- DA Cloud (dashboards + app) ---- */
   --color-sky-50: #f8fbff;
@@ -57,9 +64,9 @@
   --color-danger: #dc2626;
 
   /* ---- Polices ---- */
-  --font-display: var(--font-fraunces), Georgia, serif;
-  --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-hand: var(--font-caveat), cursive;
+  --font-display: "Outfit", "Geist", sans-serif;
+  --font-sans: "Geist", "Inter", sans-serif;
+  --font-hand: "Caveat", cursive;
   --font-archivo: var(--ff-archivo), system-ui, sans-serif;
 
   /* ---- Rayons ---- */
@@ -123,10 +130,10 @@
 }
 
 :root {
-  --background: var(--color-paper);
-  --foreground: var(--color-ink);
-  --line: rgba(28, 26, 23, 0.1);
-  --line-strong: rgba(28, 26, 23, 0.18);
+  --background: var(--color-ink-900);
+  --foreground: var(--color-paper);
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
 }
 
 html {
@@ -141,12 +148,17 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Mot accentué dans un titre (terracotta, ou italique serif via .em) */
+.dotted-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Mot accentué dans un titre */
 .accent {
-  color: var(--color-terracotta);
+  color: var(--color-violet-400);
 }
 .accent-gold {
-  color: var(--color-terracotta);
+  color: var(--color-gold-400);
 }
 .em {
   font-style: italic;
@@ -163,8 +175,12 @@ body {
 
 /* Hérité : utilitaires des pages app (dashboard/admin/login/welcome). */
 .btn-violet {
-  background: linear-gradient(180deg, #8b6bff 0%, #6d4aff 55%, #5226e0 100%);
-  box-shadow: 0 18px 50px -12px rgba(82, 38, 224, 0.45);
+  position: relative;
+  background: linear-gradient(180deg, #6d4aff 0%, #5226e0 100%) padding-box,
+              conic-gradient(from var(--border-beam-angle), transparent 30%, #8b6bff 50%, #fff 70%, #8b6bff 90%, transparent 100%) border-box;
+  border: 1.5px solid transparent;
+  box-shadow: 0 12px 36px -8px rgba(109, 74, 255, 0.35);
+  animation: border-beam 4s linear infinite;
 }
 .glow-violet {
   background: radial-gradient(50% 50% at 50% 0%, rgba(109, 74, 255, 0.22), transparent 70%);
@@ -184,15 +200,15 @@ body {
   border-color: var(--line);
 }
 
-/* Grain papier (très léger, sur fond clair → texture de tirage) */
+/* Grain papier (effet bruit texturé) */
 .grain::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.045;
-  mix-blend-mode: multiply;
+  opacity: 0.12;
+  mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -228,12 +244,13 @@ body {
   background: linear-gradient(180deg, #f8fbff, #f0f5ff, #e8f1fa, #f0f5ff, #f8fbff);
 }
 
-/* Liquid glass clair — RÉSERVÉ aux éléments flottants (topbar, badges, carte hero, modals). */
+/* Glass sombre premium — pour navbar flottante, badges, footer, etc. */
 .glass {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(12px) saturate(1.4);
-  -webkit-backdrop-filter: blur(12px) saturate(1.4);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6), 0 4px 16px rgba(100, 150, 200, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
   position: relative;
   overflow: hidden;
 }
@@ -245,11 +262,11 @@ body {
   padding: 1.2px;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.7) 0%,
-    rgba(255, 255, 255, 0.2) 25%,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 25%,
     rgba(255, 255, 255, 0) 50%,
-    rgba(255, 255, 255, 0.2) 75%,
-    rgba(255, 255, 255, 0.6) 100%
+    rgba(255, 255, 255, 0.04) 75%,
+    rgba(255, 255, 255, 0.1) 100%
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -881,3 +898,68 @@ body {
 .sg-toast--error .sg-toast__icon{background:rgba(217,101,96,.16);color:#cc3b32}
 .sg-toast--error .sg-toast__bar{background:linear-gradient(90deg,#d96570,#f2a6a0)}
 .sg-toast--info .sg-toast__icon{background:linear-gradient(120deg,#4285F4,#9b72cb 55%,#d96570);color:#fff}
+
+/* ============================================================
+   Aura.build Precise Keyframe Reveals & Scroll Animations
+   ============================================================ */
+
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+}
+
+.animate-on-scroll:not([style*=animation]) {
+  opacity: 0;
+  transform: translateY(30px);
+  filter: blur(5px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-on-scroll:not([style*=animation]).animate {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+@keyframes columnReveal {
+  0% {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+  }
+  to {
+    clip-path: inset(0 0 0% 0);
+    opacity: 1;
+  }
+}
+
+.col-anim {
+  animation: columnReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  will-change: clip-path;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+.delay-6 { animation-delay: 0.6s; }
+.delay-7 { animation-delay: 0.7s; }
+
+.animate-on-scroll {
+  animation-play-state: paused !important;
+}
+
+.animate-on-scroll.animate {
+  animation-play-state: running !important;
+}
+

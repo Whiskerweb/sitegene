@@ -21,18 +21,11 @@ export function AkyraMark({
       className={className}
       aria-hidden
     >
-      <defs>
-        <radialGradient id="akyra-core" cx="50%" cy="42%" r="62%">
-          <stop offset="0%" stopColor="#fff7da" />
-          <stop offset="46%" stopColor="#f8cf55" />
-          <stop offset="100%" stopColor="#f0b429" />
-        </radialGradient>
-      </defs>
-      {/* halo concentrique */}
-      <circle cx="16" cy="16" r="15" fill="#f8cf55" opacity="0.16" />
-      <circle cx="16" cy="16" r="11" fill="#f8cf55" opacity="0.26" />
-      {/* disque solaire */}
-      <circle cx="16" cy="16" r="7.4" fill="url(#akyra-core)" />
+      {/* Shutter aperture and photography grid in currentColor */}
+      <circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.2" />
+      <circle cx="16" cy="16" r="7" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M16 2v6M16 24v6M2 16h6M24 16h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M7.5 7.5l4.5 4.5M20 20l4.5 4.5M24.5 7.5L20 12M12 20l-4.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.4" />
     </svg>
   );
 }
@@ -47,7 +40,7 @@ export function AkyraLogo({
 }) {
   return (
     <span className="flex items-center gap-2">
-      <AkyraMark size={size} />
+      <AkyraMark size={size} className="text-violet-400" />
       <span
         className={`font-display font-semibold tracking-tight ${textClassName}`}
       >

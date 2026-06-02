@@ -29,16 +29,16 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section id="how" className="bg-surface-2 px-6 py-24">
+    <section id="how" className="bg-ink-900 border-b border-[var(--line)] px-6 py-24">
       <div className="mx-auto max-w-[1240px]">
-        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-brand">
+        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-violet-400">
           Comment ça marche
         </p>
         <RevealWords
           text="Trois étapes. La dernière, c'est juste regarder."
           accent={[4]}
-          accentClass="text-brand"
-          className="max-w-[20ch] text-balance font-display text-[30px] font-medium leading-[1.08] tracking-[-0.01em] text-night md:text-[48px]"
+          accentClass="text-violet-400"
+          className="max-w-[20ch] text-balance font-display text-[30px] font-bold leading-[1.08] tracking-[-0.01em] text-paper md:text-[48px]"
         />
 
         <div className="relative mt-14">
@@ -51,7 +51,7 @@ export default function HowItWorks() {
           >
             <motion.line
               x1="16" y1="2" x2="84" y2="2"
-              stroke="var(--color-brand)"
+              stroke="var(--color-violet-500)"
               strokeWidth="0.4"
               strokeDasharray="1.4 1.6"
               strokeLinecap="round"
@@ -62,40 +62,31 @@ export default function HowItWorks() {
             />
           </svg>
 
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={viewportOnce}
-            className="relative grid gap-6 md:grid-cols-3"
-          >
-            {steps.map((s) => (
-              <motion.div
+          <div className="relative grid gap-6 md:grid-cols-3">
+            {steps.map((s, idx) => (
+              <div
                 key={s.n}
-                variants={fadeUp}
-                whileHover={{ y: -6 }}
-                transition={{ duration: 0.3 }}
-                className="rounded-[28px] border border-sky-200 bg-white p-8 shadow-cloud-sm"
+                className={`animate-on-scroll delay-${idx + 1} rounded-[28px] border border-[var(--line)] bg-ink-800 p-8 shadow-2xl transition hover:border-violet-500/20 hover:-translate-y-1.5 duration-300`}
               >
-                <div className="flex items-center gap-3">
-                  <span className="grid h-12 w-12 place-items-center rounded-2xl bg-blue text-brand">
+                <div className="flex items-center justify-between">
+                  <span className="grid h-12 w-12 place-items-center rounded-2xl bg-ink-700 text-violet-400 border border-[var(--line)]">
                     {s.icon}
                   </span>
-                  <span className="font-display text-[18px] font-semibold text-mist">0{s.n}</span>
+                  <span className="font-display text-[22px] font-bold text-gold-400">0{s.n}</span>
                 </div>
-                <h3 className="mt-6 flex items-center gap-2 font-display text-[24px] font-medium tracking-[-0.01em] text-night">
+                <h3 className="mt-6 flex items-center gap-2 font-display text-[24px] font-bold tracking-[-0.01em] text-paper">
                   {s.title}
-                  {s.live && <span className="dot-live h-2.5 w-2.5 rounded-full bg-success" />}
+                  {s.live && <span className="dot-live h-2.5 w-2.5 rounded-full bg-mint-400" />}
                 </h3>
-                <p className="mt-3 max-w-[32ch] text-[15px] leading-[1.6] text-slate">{s.body}</p>
+                <p className="mt-3 max-w-[32ch] text-[15px] leading-[1.6] text-muted">{s.body}</p>
                 {s.live && (
-                  <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-sky-200 bg-surface-2 px-3 py-1.5 text-[13px] text-slate">
-                    <span className="dot-live h-1.5 w-1.5 rounded-full bg-success" /> vous.akyra.com
+                  <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-ink-700 px-3 py-1.5 text-[13px] text-muted">
+                    <span className="dot-live h-1.5 w-1.5 rounded-full bg-mint-400" /> vous.akyra.com
                   </div>
                 )}
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
 
         <motion.div
@@ -103,13 +94,13 @@ export default function HowItWorks() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={viewportOnce}
           transition={{ duration: 0.5, ease: EASE }}
-          className="mt-12 flex justify-center"
+          className="mt-16 flex justify-center"
         >
           <a
             href="#demo"
-            className="btn-gold inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-[15px] font-bold transition-transform hover:scale-[1.03] active:scale-[0.97]"
+            className="btn-violet inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-[15px] font-bold text-white transition-transform hover:scale-[1.03] active:scale-[0.97]"
           >
-            Commencer ma description <span aria-hidden>→</span>
+            Mettre mon site en ligne <span aria-hidden>→</span>
           </a>
         </motion.div>
       </div>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, Inter, Caveat, Archivo } from "next/font/google";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -28,9 +29,9 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: "Akyra · Votre site pro, prêt en 10 secondes",
+  title: "Akyra · Votre site pro, prêt en 30 secondes",
   description:
-    "Des sites pros déjà construits pour photographes, musiciens et artisans. Vous décrivez, on publie. En ligne en 30 secondes, 50 €/an tout compris.",
+    "Des sites pros déjà construits pour photographes. Vous choisissez, on publie. En ligne en 30 secondes, 50 €/an tout compris.",
   robots: { index: false, follow: false },
 };
 
@@ -43,8 +44,13 @@ export default function RootLayout({
     <html
       lang="fr"
       className={`${fraunces.variable} ${inter.variable} ${caveat.variable} ${archivo.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="grain min-h-full bg-paper text-ink">{children}</body>
+      <body className="grain dotted-grid min-h-full bg-background text-foreground" suppressHydrationWarning>
+        <ScrollReveal />
+        {children}
+      </body>
     </html>
   );
 }
+

@@ -1,6 +1,6 @@
-# Sitegene — Design System
+# Akyra — Design System
 
-> Source unique de vérité pour la landing Sitegene. Tout choix visuel/copie part d'ici.
+> Source unique de vérité pour la landing Akyra. Tout choix visuel/copie part d'ici.
 > Stack confirmée : **Next.js 16 · React 19 · Tailwind v4 (`@import "tailwindcss"` + `@theme`) · framer-motion 12 · lucide-react**.
 >
 > Promesse produit : **« Votre site professionnel, déjà construit. En ligne en 30 secondes. »**
@@ -12,14 +12,14 @@
 
 **Une galerie de nuit.** Un fond presque noir, profond, qui fait ressortir les sites des photographes comme des tirages sous spot. Un seul accent électrique (indigo→violet) pour l'énergie « tech », une touche d'or chaud pour le côté éditorial/artisanal. De grands titres serrés en display, du corps net et sobre, et un rythme rapide : on révèle, on prouve, on rassure. Le mouvement est calme et décidé — pas d'effervescence, pas de néon partout.
 
-C'est le **parent naturel** des 3 templates photographes : `alice-r` (sombre, chaud, brun→noir), `potozon` (clair, pop, accents rouge/jaune/violet), `target` (clair éditorial Geist, accent orange). Sitegene est le studio sombre qui les expose tous.
+C'est le **parent naturel** des 3 templates photographes : `alice-r` (sombre, chaud, brun→noir), `potozon` (clair, pop, accents rouge/jaune/violet), `target` (clair éditorial Geist, accent orange). Akyra est le studio sombre qui les expose tous.
 
 ---
 
 ## 1. Positionnement, voix & ton
 
 ### 1.1 Positionnement
-Sitegene n'est pas un « créateur de site IA ». C'est un **catalogue de sites déjà finis, premium, faits pour les photographes**, que l'on met en ligne instantanément. On ne vend pas un outil. On vend un **résultat livré**.
+Akyra n'est pas un « créateur de site IA ». C'est un **catalogue de sites déjà finis, premium, faits pour les photographes**, que l'on met en ligne instantanément. On ne vend pas un outil. On vend un **résultat livré**.
 
 - Repositionnement clé : *« Pas un éditeur. Un site déjà prêt. »*
 - Bénéfice émotionnel : la fierté d'avoir « enfin » un vrai site, sans la honte du template Wix bricolé.
@@ -97,7 +97,7 @@ Base **galerie de nuit** (presque noire, légèrement bleutée) + accent **indig
 ### 2.2 Règles d'usage
 - **90 % du temps : fond `ink-900`, texte `paper`/`muted`.** Le violet est rare et précieux : CTA, un mot de titre, un underline, un dot. Jamais un fond plein violet sur de grandes surfaces.
 - **L'or ne touche jamais le violet de près** (sauf badge prix). Or = humain/éditorial ; violet = tech/action. On les sépare par section.
-- Les sites templates exposés gardent **leurs propres couleurs** : on ne les teinte pas. Le fond sombre de Sitegene sert d'écrin neutre (comme une cimaise de galerie).
+- Les sites templates exposés gardent **leurs propres couleurs** : on ne les teinte pas. Le fond sombre de Akyra sert d'écrin neutre (comme une cimaise de galerie).
 - Bordures toujours `rgba(255,255,255,0.08)` — jamais de gris plein qui « sale » le noir.
 - Le vert mint **uniquement** pour le « live/en ligne » (dot pulsé). Pas de succès générique.
 
@@ -175,7 +175,7 @@ Pairing **éditorial-premium** aligné sur l'inspiration (traaaction = Geist ser
 
 - **Display / titres : `Clash Display`** (Fontshare, gratuit) — grotesque géométrique à fort caractère, lettres serrées, très « studio créatif ». C'est le signal « éditorial » qui démarque d'une SaaS générique.
   *Fallback / option 100 % Google Fonts si Clash indisponible : **`Outfit`** (déjà éprouvé dans marquee-hero) ou **`Space Grotesk`**.*
-- **Corps & UI : `Geist`** (déjà le défaut du scaffold sitegene, et la police de traaaction) — neutre, net, moderne. `Inter` en fallback.
+- **Corps & UI : `Geist`** (déjà le défaut du scaffold akyra, et la police de traaaction) — neutre, net, moderne. `Inter` en fallback.
 - **Accent manuscrit : `Caveat`** (Google) — uniquement pour micro-annotations « humaines » (ex. flèche + « 30 sec ⏱ » à la main près du CTA), repris du `kresna-footer`. À doser : 1 à 2 occurrences max sur toute la page.
 
 Chargement : `Geist` via `next/font/google` (déjà en place dans `layout.tsx`), `Clash Display` via `@fontsource-variable/clash-display` ou `<link>` Fontshare ; `Caveat` via `next/font/google`.
@@ -294,7 +294,7 @@ Usage scroll : `whileInView` + `viewport={{ once: true, margin: "-80px" }}`, `st
 Ordre de page recommandé : **Navbar → Hero → Social proof marquee → How it works (3 étapes) → Template showcase → Pricing teaser → FAQ → Footer premium.**
 
 ### 6.1 Navbar
-- **Pill flottante en haut**, centrée, `glass` (cf. marquee-hero navbar) : logo mark Sitegene à gauche, 2-3 liens au centre (`Templates`, `Tarif`, `FAQ`), CTA pill violet à droite (« Mettre en ligne »).
+- **Pill flottante en haut**, centrée, `glass` (cf. marquee-hero navbar) : logo mark Akyra à gauche, 2-3 liens au centre (`Templates`, `Tarif`, `FAQ`), CTA pill violet à droite (« Mettre en ligne »).
 - Sticky avec apparition au scroll (`fadeDown`, delay stagger). Sur fond sombre : texte `muted` → `paper` au hover.
 - Mobile : burger → drawer plein écran sombre avec glow violet en coin (pattern `mdrawer` d'arelec).
 
@@ -316,7 +316,7 @@ Ordre de page recommandé : **Navbar → Hero → Social proof marquee → How i
 - 3 cartes (ou 3 panneaux en bande) `ink-700`, bordure `line`, chiffre or géant `01/02/03`.
   1. **Clic** — « Choisissez un design. » Visuel : curseur qui sélectionne un template.
   2. **Reveal** — « On l'habille de vos infos. » Visuel : le template se « remplit » (placeholder → vraies photos), titre en clip-reveal.
-  3. **En ligne** — « C'est publié. » Visuel : dot mint pulsé + badge `pop` « Live » + mini-URL `vous.sitegene.com`.
+  3. **En ligne** — « C'est publié. » Visuel : dot mint pulsé + badge `pop` « Live » + mini-URL `vous.akyra.com`.
 - Compteur 30 s qui tourne le long de la bande. Stagger d'entrée 0.12 s, `fadeUp`.
 - Phrase de section : « Trois étapes. La dernière, c'est juste regarder. »
 
@@ -342,12 +342,12 @@ Ordre de page recommandé : **Navbar → Hero → Social proof marquee → How i
 
 ### 6.8 Footer premium
 - Reprendre la **composition kresna-footer** adaptée au sombre : grille deux cartes.
-  - Carte gauche `ink-700` (ou fond vidéo voilé) : logo Sitegene + tagline + « Restez en contact ! » (Caveat) + icônes sociales (carrés `ink-900`, hover lift).
+  - Carte gauche `ink-700` (ou fond vidéo voilé) : logo Akyra + tagline + « Restez en contact ! » (Caveat) + icônes sociales (carrés `ink-900`, hover lift).
   - Carte droite : colonnes Navigation / Légal + bloc d'abonnement (input + bouton sombre).
   - **Badge flottant doré** (« On vous met en ligne ? » au lieu de « Feeling lucky? »).
-- **Watermark géant `Sitegene`** en bas, `fill: rgba(255,255,255,0.04)`, Clash Display, ajusté au pixel via `getBBox()` (script kresna-footer) — flush aux bords.
+- **Watermark géant `Akyra`** en bas, `fill: rgba(255,255,255,0.04)`, Clash Display, ajusté au pixel via `getBBox()` (script kresna-footer) — flush aux bords.
 - Bordure dégradée `liquid-glass::before` possible sur la carte gauche pour la finition.
-- Ligne légale `faint` : « © 2026 Sitegene. Votre site, déjà construit. »
+- Ligne légale `faint` : « © 2026 Akyra. Votre site, déjà construit. »
 
 ---
 
@@ -360,7 +360,7 @@ Ordre de page recommandé : **Navbar → Hero → Social proof marquee → How i
 - [ ] **Aucune icône lucide générique en grille 3×** (la classique « features grid » SaaS avec 6 picto identiques). On montre des **vrais sites**, pas des picto.
 - [ ] **Headlines Inter/Geist semibold standard interdites en hero** : le hero passe en Clash Display serré (`-0.03em`). C'est non négociable pour l'effet éditorial.
 - [ ] **Pas de tableau de pricing 3 colonnes** « Starter / Pro / Enterprise ». Une offre, un prix, des crédits.
-- [ ] **Pas de mention « propulsé par l'IA » / « AI-powered »** en headline. Sitegene vend un résultat livré, pas une techno.
+- [ ] **Pas de mention « propulsé par l'IA » / « AI-powered »** en headline. Akyra vend un résultat livré, pas une techno.
 - [ ] **Pas de bordures gris plein** (`#333`) : toujours `rgba(255,255,255,0.08)`.
 - [ ] **Pas d'ombre noire dure** par défaut : ombres teintées violet ou douces seulement.
 - [ ] **Coins arrondis généreux** partout (≥ 24px sur les cartes, 32px sur les grands blocs) — le `rounded-lg` 8px par défaut fait « bootstrap ».

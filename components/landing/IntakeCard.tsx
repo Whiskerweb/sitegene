@@ -63,15 +63,15 @@ export default function IntakeCard({
                 aria-pressed={selected}
                 className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-[13px] font-bold transition ${
                   selected
-                    ? "bg-brand text-white shadow-cloud-sm"
+                    ? "bg-violet-500 text-white shadow-lg shadow-violet-500/20"
                     : c.active
-                      ? "bg-white/70 text-night ring-1 ring-sky-200 hover:ring-brand/40"
-                      : "cursor-not-allowed bg-white/40 text-mist ring-1 ring-sky-200"
+                      ? "bg-ink-600 text-paper hover:bg-ink-600/80 hover:text-white border border-[var(--line)]"
+                      : "cursor-not-allowed bg-ink-800 text-faint border border-[var(--line)] border-dashed"
                 }`}
               >
                 {c.label}
                 {!c.active && (
-                  <span className="rounded-full bg-sky-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-mist">
+                  <span className="rounded-full bg-ink-900 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-faint">
                     bientôt
                   </span>
                 )}
@@ -81,7 +81,7 @@ export default function IntakeCard({
         </div>
 
         {/* Champ brief */}
-        <div className="rounded-[20px] border border-sky-200 bg-white p-3 transition focus-within:border-brand/50 focus-within:shadow-cloud-sm">
+        <div className="rounded-[20px] border border-[var(--line)] bg-ink-800 p-3 transition focus-within:border-violet-500/50 focus-within:shadow-[0_0_24px_-4px_rgba(109,74,255,0.25)]">
           <textarea
             rows={3}
             value={brief}
@@ -95,7 +95,7 @@ export default function IntakeCard({
             onKeyDown={(e) => {
               if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) submit();
             }}
-            className="w-full resize-none bg-transparent text-[15px] leading-[1.55] text-night outline-none placeholder:text-mist"
+            className="w-full resize-none bg-transparent text-[15px] leading-[1.55] text-paper outline-none placeholder:text-faint"
           />
 
           {/* Honeypot (caché) */}
@@ -110,7 +110,7 @@ export default function IntakeCard({
             className="absolute left-[-9999px] h-0 w-0 opacity-0"
           />
 
-          <div className="mt-2 flex flex-wrap items-center justify-between gap-2 border-t border-sky-100 pt-2.5">
+          <div className="mt-2 flex flex-wrap items-center justify-between gap-2 border-t border-[var(--line)] pt-2.5">
             <div className="flex items-center gap-2">
               <input
                 ref={fileRef}
@@ -123,7 +123,7 @@ export default function IntakeCard({
               <button
                 type="button"
                 onClick={() => fileRef.current?.click()}
-                className="inline-flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1.5 text-[13px] font-semibold text-night transition hover:bg-sky-200"
+                className="inline-flex items-center gap-1.5 rounded-full bg-ink-600 px-3 py-1.5 text-[13px] font-bold text-paper border border-[var(--line)] transition hover:bg-ink-600/70 hover:text-white"
               >
                 <IconPhoto size={15} />
                 {photos.length > 0
@@ -134,7 +134,7 @@ export default function IntakeCard({
                 <button
                   type="button"
                   onClick={() => setPhotos([])}
-                  className="text-[12px] font-medium text-mist underline-offset-2 hover:text-slate hover:underline"
+                  className="text-[12px] font-medium text-faint underline-offset-2 hover:text-muted hover:underline"
                 >
                   retirer
                 </button>
@@ -145,7 +145,7 @@ export default function IntakeCard({
               type="button"
               onClick={submit}
               disabled={!canSubmit}
-              className="btn-gold inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-[15px] font-bold transition-transform enabled:hover:scale-[1.03] enabled:active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50"
+              className="btn-violet inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-[15px] font-bold text-white transition-transform enabled:hover:scale-[1.03] enabled:active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40"
             >
               <IconStar4 size={15} />
               {busy ? "Un instant…" : "Voir mon site"}
@@ -153,8 +153,8 @@ export default function IntakeCard({
           </div>
         </div>
 
-      <p className="mt-3 flex items-center gap-1.5 text-[12.5px] font-medium text-slate">
-        <IconCheck size={13} className="flex-none text-success" />
+      <p className="mt-3 flex items-center gap-1.5 text-[12.5px] font-medium text-muted">
+        <IconCheck size={13} className="flex-none text-mint-400" />
         {photos.length > 0
           ? "Vos photos seront placées au bon endroit."
           : "Pas de photos ? On met des démos, vous les remplacerez après."}
@@ -166,7 +166,7 @@ export default function IntakeCard({
     variant === "liquid" ? (
       <LiquidGlass className="p-5 text-left md:p-6">{inner}</LiquidGlass>
     ) : (
-      <div className="glass relative rounded-[28px] p-5 text-left shadow-cloud md:p-6">
+      <div className="glass relative rounded-[28px] p-5 text-left shadow-2xl md:p-6">
         {inner}
       </div>
     );
@@ -175,15 +175,15 @@ export default function IntakeCard({
     <div className="mx-auto max-w-[640px]">
       {!hideHeader && (
         <div className="mb-6 text-center">
-          <p className="mb-3 flex items-center justify-center gap-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-brand">
+          <p className="mb-3 flex items-center justify-center gap-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-violet-400">
             Pour les{" "}
             <CyclingWord
               words={["photographes", "musiciens", "artisans"]}
-              className="font-semibold text-brand"
+              className="font-semibold text-violet-400"
             />
           </p>
-          <h2 className="font-display text-[26px] font-medium leading-[1.1] tracking-[-0.01em] text-night md:text-[34px]">
-            Décrivez votre activité. <span className="em text-brand">On s&apos;occupe du reste.</span>
+          <h2 className="font-display text-[26px] font-medium leading-[1.1] tracking-[-0.01em] text-paper md:text-[34px]">
+            Décrivez votre activité. <span className="em text-violet-400">On s&apos;occupe du reste.</span>
           </h2>
         </div>
       )}

@@ -8,8 +8,9 @@ export const metadata = {
 /** Tunnel de génération : chargement scénarisé → révélation du site. */
 export default function CreatePage() {
   return (
-    <main className="cloud-bg min-h-[100dvh]">
+    <main className="bg-ink-900 text-paper min-h-[100dvh]">
       <GenerationFlow />
     </main>
   );
 }
+

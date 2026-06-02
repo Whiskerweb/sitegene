@@ -34,8 +34,8 @@ export default function Navbar() {
       className="fixed inset-x-0 top-4 z-50 flex justify-center px-4"
     >
       <nav className="glass flex w-full max-w-[1040px] items-center justify-between rounded-full py-2 pl-4 pr-2">
-        <a href="#top" className="flex items-center gap-2 text-night">
-          <AkyraMark size={28} />
+        <a href="#top" className="flex items-center gap-2 text-paper hover:text-white">
+          <AkyraMark size={28} className="text-violet-400" />
           <span className="font-display text-lg font-semibold tracking-tight">
             Akyra
           </span>
@@ -46,7 +46,7 @@ export default function Navbar() {
             <a
               key={l.href}
               href={l.href}
-              className="rounded-full px-4 py-2 text-sm font-medium text-slate transition-colors hover:bg-white/60 hover:text-night"
+              className="rounded-full px-4 py-2 text-sm font-medium text-muted transition-colors hover:bg-white/10 hover:text-paper"
             >
               {l.label}
             </a>
@@ -56,15 +56,15 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           <a
             href={ctaHref}
-            className="btn-gold hidden rounded-full px-5 py-2.5 text-sm font-bold transition-transform hover:scale-[1.03] active:scale-[0.97] sm:inline-block"
+            className="btn-violet hidden rounded-full px-5 py-2.5 text-sm font-bold text-white transition-transform hover:scale-[1.03] active:scale-[0.97] sm:inline-block"
           >
-            Voir mon site
+            Mettre mon site en ligne
           </a>
           <button
             onClick={() => setOpen((v) => !v)}
             aria-label="Menu"
             aria-expanded={open}
-            className="grid h-9 w-9 place-items-center rounded-full text-night md:hidden"
+            className="grid h-9 w-9 place-items-center rounded-full text-paper md:hidden"
           >
             <span className="text-xl leading-none">{open ? "✕" : "☰"}</span>
           </button>
@@ -76,7 +76,7 @@ export default function Navbar() {
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: EASE }}
-          className="absolute top-[64px] w-[calc(100%-2rem)] max-w-[1040px] rounded-3xl border border-white bg-white/95 p-4 shadow-cloud backdrop-blur md:hidden"
+          className="absolute top-[64px] w-[calc(100%-2rem)] max-w-[1040px] rounded-3xl border border-[var(--line)] bg-ink-800/95 p-4 shadow-[0_18px_50px_-12px_rgba(82,38,224,0.3)] backdrop-blur md:hidden"
         >
           <div className="flex flex-col gap-1">
             {links.map((l) => (
@@ -84,7 +84,7 @@ export default function Navbar() {
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="rounded-2xl px-4 py-3 text-night/90 hover:bg-sky-100"
+                className="rounded-2xl px-4 py-3 text-muted hover:bg-white/5 hover:text-paper"
               >
                 {l.label}
               </a>
@@ -92,9 +92,9 @@ export default function Navbar() {
             <a
               href={ctaHref}
               onClick={() => setOpen(false)}
-              className="btn-gold mt-2 rounded-2xl px-4 py-3 text-center font-bold"
+              className="btn-violet mt-2 rounded-2xl px-4 py-3 text-center font-bold text-white"
             >
-              Voir mon site
+              Mettre mon site en ligne
             </a>
           </div>
         </motion.div>
