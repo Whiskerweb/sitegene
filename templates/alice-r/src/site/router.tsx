@@ -46,14 +46,11 @@ function detect(content: SiteContentV2, rawPathname: string): Match {
       return { page: p, basePrefix: "" };
     }
     if (pathname.endsWith(slug)) {
+      // Le slug commence par "/", donc endsWith garantit déjà la frontière de
+      // segment (ex. "/folio" ne matche PAS "/portfolio"). basePrefix = tout ce
+      // qui précède le slug, ex. "/r/<token>" ou "/s/<slug>" ou "".
       const start = pathname.length - slug.length;
-      // frontière `/` : le char qui précède le slug (qui commence par `/`)
-      // doit lui-même être un `/` pour éviter de matcher `/folio` dans
-      // `/portfolio`.
-      if (start > 0 && pathname[start - 1] === "/") {
-        // basePrefix = tout ce qui précède le slug, ex. "/r/<token>"
-        return { page: p, basePrefix: pathname.slice(0, start) };
-      }
+      return { page: p, basePrefix: pathname.slice(0, start) };
     }
   }
 
