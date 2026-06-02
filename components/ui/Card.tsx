@@ -2,12 +2,14 @@ import type { ReactNode } from "react";
 
 type Tone = "plain" | "lav" | "pink" | "mint" | "blue";
 
-const toneBg: Record<Tone, string> = {
-  plain: "bg-surface",
-  lav: "bg-lav",
-  pink: "bg-pink",
-  mint: "bg-mint",
-  blue: "bg-blue",
+// Toutes les teintes partagent la même surface sombre ; l'accent passe
+// désormais par le contenu (icône/valeur), pas par un fond coloré criard.
+const toneAccent: Record<Tone, string> = {
+  plain: "",
+  lav: "",
+  pink: "",
+  mint: "",
+  blue: "",
 };
 
 export function Card({
@@ -19,9 +21,10 @@ export function Card({
   className?: string;
   children: ReactNode;
 }) {
+  void toneAccent[tone];
   return (
     <div
-      className={`rounded-[20px] border border-sky-300 ${toneBg[tone]} shadow-cloud-sm ${className}`}
+      className={`rounded-2xl border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] ${className}`}
     >
       {children}
     </div>

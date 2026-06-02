@@ -1010,40 +1010,32 @@ body {
 .akyra-hline { border-top: 1px solid rgb(var(--m-overlay) / 0.05); }
 
 /* ============================================================
-   Dashboard — variante SOMBRE (DA marketing) par surcharge de
-   tokens, scopée à .dash.dark. Le mode clair (.dash sans .dark)
-   reste IDENTIQUE à l'existant — aucun risque de régression.
-   Seules les couleurs changent (structure/logique intactes).
+   Dashboard — hérite des tokens --m-* d'.akyra (clair/sombre) et
+   remappe les tokens « DA Cloud » legacy dessus, afin que tout le
+   markup existant (text-night, bg-surface, border-sky-300, bg-white…)
+   suive le thème. Les composants refondus utilisent --m-* directement.
    ============================================================ */
-.dash.dark {
-  --color-white: #16161c;       /* surfaces bg-white/-/60/-/70 → sombres */
-  --color-surface: #16161c;
-  --color-surface-2: #1c1d24;
-  --color-sky-50: #131419;
-  --color-sky-100: #1c1e26;     /* hovers */
-  --color-sky-200: #232630;
-  --color-sky-300: #2c2f3a;     /* hairlines / bordures */
-  --color-night: #f4f6fb;       /* titres → clair */
-  --color-slate: #c4cad6;       /* corps → gris clair */
-  --color-mist: #848ea0;        /* légendes / placeholders */
-  --color-brand: #9dc1fb;       /* accent → bleu clair */
-  --color-brand-700: #bcd5fc;
-  --color-blue: #1b2740;        /* chips teintées → sombres */
-  --color-lav: #272140;
-  --color-pink: #3a2230;
-  --color-mint: #163029;
-  --color-success: #34d399;
-  --color-success-50: #12291f;
-  --color-warn: #f59e0b;
-  --color-danger: #f87171;
+.akyra.dash {
+  --color-surface: rgb(var(--m-surface));
+  --color-surface-2: rgb(var(--m-elevated));
+  --color-white: rgb(var(--m-surface));
+  --color-night: rgb(var(--m-ink));
+  --color-slate: rgb(var(--m-muted));
+  --color-mist: rgb(var(--m-faint));
+  --color-sky-50: rgb(var(--m-elevated));
+  --color-sky-100: rgb(var(--m-overlay) / 0.06);
+  --color-sky-200: rgb(var(--m-overlay) / 0.1);
+  --color-sky-300: rgb(var(--m-line));
+  --color-brand: #8b6bff;
+  --color-brand-700: #6d4aff;
+  --color-blue: rgb(var(--m-overlay) / 0.06);
+  --color-lav: rgb(var(--m-overlay) / 0.06);
+  --color-pink: rgb(var(--m-overlay) / 0.06);
+  --color-mint: rgb(var(--m-overlay) / 0.06);
 }
-
-/* Fond de page sombre (remplace le dégradé ciel) + halos atténués */
-.dash.dark .cloud-bg {
-  background: radial-gradient(120% 90% at 50% -10%, #14161d 0%, #0e0f14 55%, #0b0c10 100%);
+/* Verre premium adapté au thème courant */
+.akyra.dash .glass {
+  background: rgb(var(--m-overlay) / 0.04);
+  border-color: rgb(var(--m-line));
 }
-.dash.dark .blob { opacity: 0.18; }
-/* Le verre premium reste lisible : il est déjà conçu pour le sombre. */
-.dash.dark .shadow-cloud,
-.dash.dark .shadow-cloud-sm { box-shadow: 0 12px 40px -18px rgba(0, 0, 0, 0.6); }
 

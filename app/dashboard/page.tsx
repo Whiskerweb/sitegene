@@ -92,14 +92,14 @@ export default async function MonSite() {
       )}
 
       {/* Hero site */}
-      <GlassCard className="relative overflow-hidden border border-sky-300 p-6 md:p-7">
-        <BorderBeam size={320} duration={8} borderWidth={2.5} colorFrom="#2563eb" colorTo="#22d3ee" />
-        <BorderBeam size={320} duration={8} delay={4} borderWidth={2.5} colorFrom="#7c3aed" colorTo="#22d3ee" />
+      <GlassCard className="relative overflow-hidden p-6 md:p-7">
+        <BorderBeam size={320} duration={8} borderWidth={2} colorFrom="#8b6bff" colorTo="#e8b468" />
+        <BorderBeam size={320} duration={8} delay={4} borderWidth={2} colorFrom="#6d4aff" colorTo="#3de0a0" />
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <StatusPill status={site.status} kind="site" />
             {site.slug && (
-              <code className="rounded-lg bg-white/70 px-3 py-1.5 text-sm text-slate">
+              <code className="rounded-lg border border-[rgb(var(--m-line))] bg-[rgb(var(--m-overlay)/0.06)] px-3 py-1.5 text-sm text-[rgb(var(--m-muted))]">
                 /s/{site.slug}
               </code>
             )}

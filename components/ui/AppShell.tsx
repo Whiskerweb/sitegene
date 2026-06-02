@@ -1,64 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { Sidebar } from "./Sidebar";
 import { Topbar } from "./Topbar";
 import type { NavItem } from "./NavItem";
 import { IconClose } from "./icons";
-import { DashThemeToggle, type DashThemeMode } from "./DashThemeToggle";
+import { MarketingThemeProvider, useMarketingTheme } from "@/components/marketing/theme";
+import ThemeToggle from "@/components/marketing/ThemeToggle";
 
-const THEME_KEY = "akyra-dash-theme";
-
-function useDashTheme() {
-  // Défaut sombre (= DA marketing). Le mode clair reste l'ancien rendu.
-  const [mode, setModeState] = useState<DashThemeMode>("dark");
-  const [dark, setDark] = useState(true);
-
-  useEffect(() => {
-    const stored = (localStorage.getItem(THEME_KEY) as DashThemeMode | null) ?? "dark";
-    setModeState(stored);
-  }, []);
-
-  useEffect(() => {
-    const apply = () =>
-      setDark(
-        mode === "dark" ||
-          (mode === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches),
-      );
-    apply();
-    if (mode !== "system") return;
-    const mql = window.matchMedia("(prefers-color-scheme: dark)");
-    mql.addEventListener("change", apply);
-    return () => mql.removeEventListener("change", apply);
-  }, [mode]);
-
-  const setMode = (m: DashThemeMode) => {
-    setModeState(m);
-    localStorage.setItem(THEME_KEY, m);
-  };
-
-  return { mode, setMode, dark };
-}
-
-export function AppShell({
-  nav,
-  titleMap,
-  right,
-  roleLabel,
-  footer,
-  children,
-}: {
+type Props = {
   nav: NavItem[];
   titleMap: Record<string, string>;
   right?: ReactNode;
   roleLabel?: string;
   footer?: ReactNode;
   children: ReactNode;
-}) {
+};
+
+function Shell({ nav, titleMap, right, roleLabel, footer, children }: Props) {
   const [open, setOpen] = useState(false);
-  const { mode, setMode, dark } = useDashTheme();
+  const { dark } = useMarketingTheme();
   const pathname = usePathname();
   const title =
     titleMap[pathname] ??
@@ -69,16 +32,16 @@ export function AppShell({
 
   return (
     <div
-      className={`dash ${dark ? "dark" : ""} font-archivo relative min-h-screen overflow-x-hidden cloud-bg text-slate`}
+      className={`akyra dash ${dark ? "dark" : ""} font-archivo relative min-h-screen overflow-x-hidden bg-[rgb(var(--m-page))] text-[rgb(var(--m-muted))]`}
     >
-      {/* Blobs d'ambiance (aérien) */}
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-        <div className="blob blob-blue absolute -left-32 -top-24 h-[420px] w-[420px]" />
-        <div className="blob blob-mint absolute -right-28 top-1/3 h-[360px] w-[360px]" />
-      </div>
+      {/* Halo d'ambiance violet, discret */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[380px] bg-[radial-gradient(60%_100%_at_50%_0%,rgba(109,74,255,0.10),transparent_72%)]"
+      />
 
       {/* Sidebar desktop */}
-      <aside className="fixed inset-y-0 left-0 z-40 hidden w-[260px] border-r border-sky-300 bg-white/60 backdrop-blur-md lg:block">
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-[260px] border-r border-[rgb(var(--m-line))] bg-[rgb(var(--m-page))] lg:block">
         <Sidebar items={nav} roleLabel={roleLabel} footer={footer} />
       </aside>
 
@@ -86,13 +49,13 @@ export function AppShell({
       {open && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div
-            className="absolute inset-0 bg-night/30 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setOpen(false)}
           />
-          <aside className="absolute inset-y-0 left-0 w-[280px] border-r border-sky-300 bg-sky-50">
+          <aside className="absolute inset-y-0 left-0 w-[280px] border-r border-[rgb(var(--m-line))] bg-[rgb(var(--m-page))]">
             <button
               onClick={() => setOpen(false)}
-              className="absolute right-3 top-4 grid h-8 w-8 place-items-center rounded-lg text-slate hover:bg-sky-100"
+              className="absolute right-3 top-4 grid h-8 w-8 place-items-center rounded-lg text-[rgb(var(--m-muted))] hover:bg-[rgb(var(--m-overlay)/0.06)]"
               aria-label="Fermer"
             >
               <IconClose size={18} />
@@ -113,16 +76,22 @@ export function AppShell({
           title={title}
           right={
             <>
-              <DashThemeToggle mode={mode} setMode={setMode} />
+              <ThemeToggle />
               {right}
             </>
           }
           onMenu={() => setOpen(true)}
         />
-        <main className="mx-auto max-w-[1040px] px-5 py-8 md:px-8 md:py-10">
-          {children}
-        </main>
+        <main className="mx-auto max-w-[1080px] px-5 py-8 md:px-8 md:py-10">{children}</main>
       </div>
     </div>
+  );
+}
+
+export function AppShell(props: Props) {
+  return (
+    <MarketingThemeProvider>
+      <Shell {...props} />
+    </MarketingThemeProvider>
   );
 }

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import type { NavItem } from "./NavItem";
+import { AkyraMark } from "./Logo";
 
 export function Sidebar({
   items,
@@ -28,16 +29,12 @@ export function Sidebar({
       <Link
         href={items[0]?.href ?? "/"}
         onClick={onNavigate}
-        className="mb-7 flex items-center gap-2 px-2 pt-2"
+        className="mb-8 flex items-center gap-2.5 px-2 pt-2 text-[rgb(var(--m-ink))]"
       >
-        <span className="grid h-8 w-8 place-items-center rounded-xl bg-brand text-sm font-bold text-white">
-          S
-        </span>
-        <span className="font-archivo text-lg font-bold tracking-tight text-night">
-          {brand}
-        </span>
+        <AkyraMark size={26} className="text-violet-400" />
+        <span className="text-[18px] font-semibold tracking-tight">{brand}</span>
         {roleLabel && (
-          <span className="ml-1 rounded-full bg-sky-200 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate">
+          <span className="ml-1 rounded-full bg-[rgb(var(--m-overlay)/0.08)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[rgb(var(--m-faint))]">
             {roleLabel}
           </span>
         )}
@@ -51,18 +48,25 @@ export function Sidebar({
               key={item.href}
               href={item.href}
               onClick={onNavigate}
-              className={`flex items-center gap-3 rounded-[14px] px-3 py-2.5 text-[15px] font-medium transition-colors ${
+              className={`group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-[14px] font-medium transition-colors ${
                 active
-                  ? "bg-blue text-brand"
-                  : "text-slate hover:bg-sky-100 hover:text-night"
+                  ? "bg-violet-500/12 text-[rgb(var(--m-ink))]"
+                  : "text-[rgb(var(--m-muted))] hover:bg-[rgb(var(--m-overlay)/0.05)] hover:text-[rgb(var(--m-ink))]"
               }`}
             >
-              <span className={active ? "text-brand" : "text-mist"}>{item.icon}</span>
+              {active && (
+                <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full bg-violet-400" />
+              )}
+              <span className={active ? "text-violet-400" : "text-[rgb(var(--m-faint))] group-hover:text-[rgb(var(--m-muted))]"}>
+                {item.icon}
+              </span>
               <span className="flex-1">{item.label}</span>
               {item.badge != null && item.badge !== 0 && item.badge !== "" && (
                 <span
-                  className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
-                    active ? "bg-brand text-white" : "bg-surface text-slate"
+                  className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                    active
+                      ? "bg-violet-400 text-[#0a0a14]"
+                      : "bg-[rgb(var(--m-overlay)/0.08)] text-[rgb(var(--m-faint))]"
                   }`}
                 >
                   {item.badge}

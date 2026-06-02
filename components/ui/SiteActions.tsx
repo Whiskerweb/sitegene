@@ -28,8 +28,8 @@ export function SiteActions({
 
   return (
     <AnimatedDock
-      className="mx-0 h-14 gap-3 border-sky-300 bg-white/60 shadow-cloud-sm backdrop-blur-md"
-      itemClassName="bg-brand text-white"
+      className="mx-0 h-14 gap-3 border-[rgb(var(--m-line))] bg-[rgb(var(--m-overlay)/0.06)] backdrop-blur-md"
+      itemClassName="bg-violet-500 text-white"
       items={[
         {
           link: editHref,
