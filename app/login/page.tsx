@@ -1,8 +1,8 @@
 "use client";
 
-import { type CSSProperties, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { AuthComponent } from "@/components/ui/sign-up";
+import { AuthSplit } from "@/components/ui/auth-split";
 import { AkyraMark } from "@/components/ui/Logo";
 import { CosmicParallaxBg } from "@/components/ui/parallax-cosmic-background";
 
@@ -31,32 +31,21 @@ export default function LoginPage() {
   }
 
   return (
-    <AuthComponent
+    <AuthSplit
       brandName="Akyra"
       logo={<AkyraMark size={28} />}
       homeHref="/"
-      onSubmitEmail={sendMagicLink}
-      initialError={initialError}
       title="Connexion"
       subtitle="Entrez votre email, on vous envoie un lien sécurisé."
+      quote="Votre site pro vous attend."
+      quoteAuthor="Akyra"
+      onSubmitEmail={sendMagicLink}
+      initialError={initialError}
       background={
         <>
           <CosmicParallaxBg bgOnly />
           <div className="absolute inset-0 bg-gradient-to-b from-[#1f3a5f]/20 via-transparent to-[#0e2138]/40" />
         </>
-      }
-      rootStyle={
-        {
-          // Texte blanc, lisible sur le ciel étoilé sombre.
-          // Tailwind v4 : les classes text-foreground/bg-card lisent --color-*.
-          "--color-background": "#0e2138",
-          "--color-foreground": "#ffffff",
-          "--color-muted-foreground": "#ffffff",
-          "--color-card": "transparent",
-          // L'effet verre de l'input lit ces variables sans préfixe.
-          "--foreground": "#ffffff",
-          "--background": "#0e2138",
-        } as CSSProperties
       }
     />
   );

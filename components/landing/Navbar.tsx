@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { EASE } from "@/lib/motion";
 import { AkyraMark } from "@/components/ui/Logo";
+import { createClient } from "@/lib/supabase/client";
 
 const links = [
   { label: "Commencer", href: "#demo" },
@@ -14,6 +15,16 @@ const links = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  // CTA : vers le dashboard si connecté, sinon login. /login renvoie déjà vers
+  // le dashboard après connexion, donc /login est un repli sûr avant hydratation.
+  const [ctaHref, setCtaHref] = useState("/login");
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data }) => {
+      if (data.user) setCtaHref("/dashboard");
+    });
+  }, []);
 
   return (
     <motion.header
@@ -44,7 +55,7 @@ export default function Navbar() {
 
         <div className="flex items-center gap-2">
           <a
-            href="#demo"
+            href={ctaHref}
             className="btn-gold hidden rounded-full px-5 py-2.5 text-sm font-bold transition-transform hover:scale-[1.03] active:scale-[0.97] sm:inline-block"
           >
             Voir mon site
@@ -79,7 +90,7 @@ export default function Navbar() {
               </a>
             ))}
             <a
-              href="#demo"
+              href={ctaHref}
               onClick={() => setOpen(false)}
               className="btn-gold mt-2 rounded-2xl px-4 py-3 text-center font-bold"
             >
