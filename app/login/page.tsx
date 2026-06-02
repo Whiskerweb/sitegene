@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { AuthSplit } from "@/components/ui/auth-split";
 import { AkyraMark } from "@/components/ui/Logo";
-import { CosmicParallaxBg } from "@/components/ui/parallax-cosmic-background";
 
 export default function LoginPage() {
   const [next, setNext] = useState("/dashboard");
@@ -39,13 +38,18 @@ export default function LoginPage() {
       subtitle="Entrez votre email, on vous envoie un lien sécurisé."
       quote="Votre site pro vous attend."
       quoteAuthor="Akyra"
+      imageSrc="/landing/tpl-alice-r.png"
       onSubmitEmail={sendMagicLink}
       initialError={initialError}
       background={
-        <>
-          <CosmicParallaxBg bgOnly />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#1f3a5f]/20 via-transparent to-[#0e2138]/40" />
-        </>
+        <div className="absolute inset-0 bg-ink-900">
+          <div className="glow-violet absolute inset-x-0 top-0 h-[440px] opacity-70" />
+          <div className="absolute -bottom-20 right-[-10%] h-[420px] w-[420px] rounded-full bg-gold-400/10 blur-[130px]" />
+          {/* Quadrillage façon landing */}
+          <div className="absolute inset-0 flex justify-center">
+            <div className="h-full w-full max-w-5xl border-l border-r border-white/[0.04]" />
+          </div>
+        </div>
       }
     />
   );

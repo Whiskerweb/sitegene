@@ -7,5 +7,5 @@ export function GlassCard({
   className?: string;
   children: ReactNode;
 }) {
-  return <div className={`glass rounded-[24px] ${className}`}>{children}</div>;
+  return <div className={`glass rounded-2xl ${className}`}>{children}</div>;
 }

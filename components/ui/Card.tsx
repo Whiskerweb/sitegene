@@ -24,7 +24,7 @@ export function Card({
   void toneAccent[tone];
   return (
     <div
-      className={`rounded-2xl border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] ${className}`}
+      className={`rounded-xl border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] ${className}`}
     >
       {children}
     </div>

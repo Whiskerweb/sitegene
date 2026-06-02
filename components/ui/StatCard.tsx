@@ -32,7 +32,7 @@ export function StatCard({
   icon?: ReactNode;
 }) {
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] p-5">
+    <div className="relative overflow-hidden rounded-xl border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] p-5">
       <span className={`absolute left-0 top-0 h-full w-[3px] ${accent[tone]}`} />
       <div className="flex items-start justify-between">
         <div className="text-[28px] font-bold leading-none text-[rgb(var(--m-ink))]">{value}</div>

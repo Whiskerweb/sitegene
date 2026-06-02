@@ -96,16 +96,16 @@ export function AuthSplit({
   }
 
   return (
-    <div className="relative grid min-h-screen w-full md:grid-cols-2">
+    <div className="relative grid min-h-screen w-full bg-ink-900 text-paper md:grid-cols-2">
       <div className="absolute inset-0 z-0">{background}</div>
 
       <Link
         href={homeHref}
         aria-label="Retour à l'accueil"
-        className="absolute left-5 top-5 z-20 flex items-center gap-2 transition-opacity hover:opacity-80"
+        className="absolute left-5 top-5 z-20 flex items-center gap-2 text-paper transition-opacity hover:opacity-80"
       >
         {logo}
-        <span className="font-display text-base font-semibold text-white">
+        <span className="font-display text-base font-semibold text-paper">
           {brandName}
         </span>
       </Link>
@@ -115,21 +115,21 @@ export function AuthSplit({
         <div className="w-full max-w-[360px]">
           {status === "sent" ? (
             <div className="text-center">
-              <div className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-full bg-[#f8cf55]/20 text-2xl text-[#f8cf55]">
+              <div className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-full bg-mint-400/15 text-2xl text-mint-400">
                 ✓
               </div>
-              <h1 className="font-display text-3xl font-medium text-white">
+              <h1 className="font-display text-3xl font-medium text-paper">
                 Vérifiez vos emails
               </h1>
-              <p className="mt-3 text-sm leading-relaxed text-sky-100/80">
+              <p className="mt-3 text-sm leading-relaxed text-muted">
                 On a envoyé un lien de connexion à{" "}
-                <span className="font-semibold text-white">{email}</span>.
+                <span className="font-semibold text-paper">{email}</span>.
                 Cliquez dessus pour entrer.
               </p>
               <button
                 type="button"
                 onClick={() => setStatus("idle")}
-                className="mt-6 text-sm text-sky-100/70 underline-offset-4 hover:text-white hover:underline"
+                className="mt-6 text-sm text-muted underline-offset-4 hover:text-paper hover:underline"
               >
                 Renvoyer / changer d&apos;email
               </button>
@@ -137,10 +137,10 @@ export function AuthSplit({
           ) : (
             <form onSubmit={submit} className="flex flex-col gap-7">
               <div className="flex flex-col items-center gap-2 text-center">
-                <h1 className="font-display text-3xl font-medium tracking-tight text-white">
+                <h1 className="font-display text-3xl font-medium tracking-tight text-paper">
                   {title}
                 </h1>
-                <p className="text-balance text-sm text-sky-100/75">
+                <p className="text-balance text-sm text-muted">
                   {subtitle}
                 </p>
               </div>
@@ -148,7 +148,7 @@ export function AuthSplit({
               <div className="grid gap-2 text-left">
                 <label
                   htmlFor={emailId}
-                  className="text-sm font-medium text-sky-100/90"
+                  className="text-sm font-medium text-muted"
                 >
                   Email
                 </label>
@@ -160,7 +160,7 @@ export function AuthSplit({
                   placeholder="vous@exemple.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="h-11 w-full rounded-xl border border-white/20 bg-white/10 px-4 text-sm text-white shadow-sm backdrop-blur-md outline-none transition placeholder:text-sky-100/40 focus:border-white/45 focus:bg-white/15"
+                  className="h-11 w-full rounded-xl border border-[var(--line)] bg-ink-800 px-4 text-sm text-paper outline-none transition placeholder:text-faint focus:border-violet-500 focus:bg-ink-700"
                 />
               </div>
 
@@ -171,14 +171,14 @@ export function AuthSplit({
               <button
                 type="submit"
                 disabled={!emailOk || status === "loading"}
-                className="btn-gold inline-flex h-11 items-center justify-center rounded-full text-[15px] font-bold transition-transform enabled:hover:scale-[1.02] enabled:active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+                className="btn-violet inline-flex h-11 items-center justify-center rounded-full text-[15px] font-bold text-white transition-transform enabled:hover:scale-[1.02] enabled:active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {status === "loading"
                   ? "Envoi du lien…"
                   : "Recevoir mon lien de connexion"}
               </button>
 
-              <p className="text-center text-xs text-sky-100/50">
+              <p className="text-center text-xs text-faint">
                 Pas de mot de passe. Un lien sécurisé suffit.
               </p>
             </form>
@@ -188,23 +188,24 @@ export function AuthSplit({
 
       {/* Colonne droite — image flottante + citation (caché mobile) */}
       <div className="relative z-10 hidden md:flex">
-        <div className="relative m-3 flex flex-1 flex-col items-center justify-between overflow-hidden rounded-[28px] border border-white/15 bg-white/[0.04] p-8 backdrop-blur-[2px]">
+        <div className="relative m-3 flex flex-1 flex-col items-center justify-between overflow-hidden rounded-[28px] border border-[var(--line)] bg-ink-800 p-8">
+          <div className="glow-violet pointer-events-none absolute inset-x-0 top-0 h-[300px] opacity-60" />
           <div className="flex flex-1 items-center justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={imageSrc}
               alt=""
-              className="drift-y max-h-[62vh] w-auto max-w-[80%] rounded-2xl object-contain shadow-[0_40px_90px_-30px_rgba(0,0,0,0.6)] ring-1 ring-white/15"
+              className="drift-y max-h-[62vh] w-auto max-w-[82%] rounded-2xl object-contain shadow-[0_40px_90px_-30px_rgba(0,0,0,0.7)] ring-1 ring-white/10"
             />
           </div>
 
           <blockquote className="relative z-10 space-y-2 pb-2 text-center">
-            <p className="font-display text-2xl font-medium leading-snug text-white drop-shadow-[0_2px_24px_rgba(10,25,45,0.7)]">
+            <p className="font-display text-2xl font-medium leading-snug text-paper">
               «{" "}
-              <Typewriter text={quote} speed={55} className="text-[#f8cf55]" />{" "}
+              <Typewriter text={quote} speed={55} className="text-gold-400" />{" "}
               »
             </p>
-            <cite className="block text-sm font-light not-italic text-sky-100/80">
+            <cite className="block text-sm font-light not-italic text-muted">
               — {quoteAuthor}
             </cite>
           </blockquote>
