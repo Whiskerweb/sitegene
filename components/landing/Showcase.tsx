@@ -1,7 +1,54 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { BorderBeam } from "@/components/ui/border-beam";
+
+/**
+ * Vidéo de démo qui démarre DEPUIS LE DÉBUT au moment où la carte entre dans le
+ * champ de vision (pas au chargement de la page), et se met en pause quand elle
+ * en sort. On force `muted` sur la propriété DOM (l'attribut JSX `muted` n'est
+ * pas toujours appliqué par React, ce qui fait bloquer l'autoplay).
+ */
+function DemoVideo() {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    v.muted = true;
+    v.defaultMuted = true;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            v.currentTime = 0;
+            v.play().catch(() => {});
+          } else {
+            v.pause();
+          }
+        }
+      },
+      { threshold: 0.4 },
+    );
+    io.observe(v);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      src="/landing/eloctix-demo.mp4"
+      poster="/landing/eloctix-demo-poster.jpg"
+      muted
+      loop
+      playsInline
+      preload="auto"
+      aria-label="Démonstration : créer et modifier un site avec Akyra"
+      className="h-full w-full object-cover"
+    />
+  );
+}
 
 /**
  * Showcase « agence » : une carte qui se redresse en 3D au scroll (ContainerScroll)
@@ -40,12 +87,7 @@ export default function Showcase() {
             colorFrom="#2563eb"
             colorTo="#f0b429"
           />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/landing/thumb1.jpg"
-            alt="Aperçu d'un site créé avec Akyra"
-            className="h-full w-full object-cover"
-          />
+          <DemoVideo />
         </div>
       </ContainerScroll>
     </section>
