@@ -47,7 +47,7 @@ export function CircledText({
         preserveAspectRatio="none"
         initial="hidden"
         animate="visible"
-        className="pointer-events-none absolute left-1/2 top-1/2 z-20 h-[150%] w-[124%] -translate-x-1/2 -translate-y-1/2 overflow-visible"
+        className="pointer-events-none absolute left-1/2 top-1/2 z-20 h-[132%] w-[120%] -translate-x-1/2 -translate-y-1/2 overflow-visible"
       >
         <motion.path
           d="M 980 70

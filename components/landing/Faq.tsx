@@ -33,14 +33,14 @@ const faqs = [
 
 export default function Faq() {
   return (
-    <section id="faq" className="bg-ink-900 px-6 py-24">
+    <section id="faq" className="bg-white px-6 py-24">
       <div className="mx-auto max-w-[820px]">
-        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-violet-400">FAQ</p>
+        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-brand">FAQ</p>
         <RevealWords
           text="Vos questions, nos réponses."
           accent={[2]}
-          accentClass="text-violet-400"
-          className="max-w-[20ch] text-balance font-display text-[30px] font-bold leading-[1.08] tracking-[-0.01em] text-paper md:text-[48px]"
+          accentClass="text-brand"
+          className="max-w-[20ch] text-balance font-display text-[30px] font-semibold leading-[1.08] tracking-[-0.01em] text-night md:text-[48px]"
         />
 
         <motion.div
@@ -54,15 +54,15 @@ export default function Faq() {
             <motion.details
               key={f.q}
               variants={fadeUp}
-              className="group rounded-[18px] border border-[var(--line)] bg-ink-800 px-6 [&_summary::-webkit-details-marker]:hidden transition-all duration-300 hover:border-violet-500/20"
+              className="group rounded-[18px] border border-black/[0.08] bg-surface-2 px-6 [&_summary::-webkit-details-marker]:hidden transition-all duration-300 hover:border-brand/20"
             >
-              <summary className="flex cursor-pointer items-center justify-between gap-4 py-5 text-[17px] font-medium text-paper">
+              <summary className="flex cursor-pointer items-center justify-between gap-4 py-5 text-[17px] font-medium text-night">
                 {f.q}
-                <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-[var(--line-strong)] text-lg text-muted transition-all duration-300 group-open:rotate-45 group-open:border-violet-500 group-open:text-violet-400">
+                <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-black/15 text-lg text-slate transition-all duration-300 group-open:rotate-45 group-open:border-brand group-open:text-brand">
                   +
                 </span>
               </summary>
-              <p className="pb-6 pr-10 text-[15px] leading-[1.65] text-muted">{f.a}</p>
+              <p className="pb-6 pr-10 text-[15px] leading-[1.65] text-slate">{f.a}</p>
             </motion.details>
           ))}
         </motion.div>

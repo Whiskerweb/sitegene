@@ -7,9 +7,8 @@ import { AkyraMark } from "@/components/ui/Logo";
 import { createClient } from "@/lib/supabase/client";
 
 const links = [
-  { label: "Commencer", href: "#demo" },
-  { label: "Comment ça marche", href: "#how" },
-  { label: "Tarif", href: "#tarif" },
+  { label: "Créer", href: "#demo" },
+  { label: "Modèles", href: "#templates" },
   { label: "FAQ", href: "#faq" },
 ];
 
@@ -33,9 +32,9 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
       className="fixed inset-x-0 top-4 z-50 flex justify-center px-4"
     >
-      <nav className="glass flex w-full max-w-[1040px] items-center justify-between rounded-full py-2 pl-4 pr-2">
-        <a href="#top" className="flex items-center gap-2 text-paper hover:text-white">
-          <AkyraMark size={28} className="text-violet-400" />
+      <nav className="flex w-full max-w-[1040px] items-center justify-between rounded-full border border-black/[0.07] bg-white/80 py-2 pl-4 pr-2 shadow-[0_8px_30px_-12px_rgba(20,30,80,0.18)] backdrop-blur-xl">
+        <a href="#top" className="flex items-center gap-2 text-night">
+          <AkyraMark size={28} className="text-brand" />
           <span className="font-display text-lg font-semibold tracking-tight">
             Akyra
           </span>
@@ -46,7 +45,7 @@ export default function Navbar() {
             <a
               key={l.href}
               href={l.href}
-              className="rounded-full px-4 py-2 text-sm font-medium text-muted transition-colors hover:bg-white/10 hover:text-paper"
+              className="rounded-full px-4 py-2 text-sm font-medium text-slate transition-colors hover:bg-black/[0.04] hover:text-night"
             >
               {l.label}
             </a>
@@ -64,7 +63,7 @@ export default function Navbar() {
             onClick={() => setOpen((v) => !v)}
             aria-label="Menu"
             aria-expanded={open}
-            className="grid h-9 w-9 place-items-center rounded-full text-paper md:hidden"
+            className="grid h-9 w-9 place-items-center rounded-full text-night md:hidden"
           >
             <span className="text-xl leading-none">{open ? "✕" : "☰"}</span>
           </button>
@@ -76,7 +75,7 @@ export default function Navbar() {
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: EASE }}
-          className="absolute top-[64px] w-[calc(100%-2rem)] max-w-[1040px] rounded-3xl border border-[var(--line)] bg-ink-800/95 p-4 shadow-[0_18px_50px_-12px_rgba(82,38,224,0.3)] backdrop-blur md:hidden"
+          className="absolute top-[64px] w-[calc(100%-2rem)] max-w-[1040px] rounded-3xl border border-black/[0.08] bg-white/95 p-4 shadow-[0_18px_50px_-12px_rgba(20,30,80,0.18)] backdrop-blur md:hidden"
         >
           <div className="flex flex-col gap-1">
             {links.map((l) => (
@@ -84,7 +83,7 @@ export default function Navbar() {
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="rounded-2xl px-4 py-3 text-muted hover:bg-white/5 hover:text-paper"
+                className="rounded-2xl px-4 py-3 text-slate hover:bg-black/[0.04] hover:text-night"
               >
                 {l.label}
               </a>

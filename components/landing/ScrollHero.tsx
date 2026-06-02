@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { setIntake } from "@/lib/intake-store";
-import { HeroWave } from "@/components/ui/ai-input-hero";
+import { AuraHero } from "@/components/ui/aura-hero";
 
 export default function ScrollHero() {
   const router = useRouter();
@@ -17,7 +17,5 @@ export default function ScrollHero() {
     router.push("/create");
   }
 
-  return (
-    <HeroWave onPromptSubmit={handlePromptSubmit} />
-  );
+  return <AuraHero onPromptSubmit={handlePromptSubmit} />;
 }

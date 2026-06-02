@@ -130,10 +130,12 @@
 }
 
 :root {
-  --background: var(--color-ink-900);
-  --foreground: var(--color-paper);
-  --line: rgba(255, 255, 255, 0.08);
-  --line-strong: rgba(255, 255, 255, 0.16);
+  /* Thème clair (façon Aura). Les pages app/éditeur qui veulent du sombre
+     posent leur propre fond local (bg-ink-900) au niveau de leur conteneur. */
+  --background: #ffffff;
+  --foreground: var(--color-night);
+  --line: rgba(20, 30, 80, 0.08);
+  --line-strong: rgba(20, 30, 80, 0.14);
 }
 
 html {
@@ -149,7 +151,7 @@ body {
 }
 
 .dotted-grid {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(20, 30, 80, 0.04) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
