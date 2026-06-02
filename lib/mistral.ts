@@ -116,33 +116,45 @@ export async function briefToOverrides(input: {
       | Record<string, unknown>
       | undefined)?.editable as EditableField[] | undefined ?? [];
 
-  // Étend un chemin manifest en chemins CONCRETS contre le contenu réel :
-  // - "services[].name" → "services[0].name", "services[1].name", … (autant
-  //   qu'il y a d'éléments dans le tableau `services`).
-  // - chemin sans liste → tel quel.
-  // Ainsi les sections en tableau (services, works, témoignages, FAQ…) sont
-  // bien traduites, au lieu de rester dans la langue démo (anglais).
-  function expandPath(path: string): string[] {
+  // Le contenu peut être au format multi-pages ({ pages: [{ content }] }) ou
+  // à la racine (ancien format). Les chemins du manifest sont relatifs au
+  // contenu d'une page (ex. "hero.title[0]") : on les préfixe par chaque base
+  // réelle. Sinon getPath renvoie undefined et AUCUN champ n'est traduit
+  // (→ site démo anglais).
+  const pages = (defaultContent as { pages?: unknown[] }).pages;
+  const bases =
+    Array.isArray(pages) && pages.length > 0
+      ? pages.map((_, i) => `pages[${i}].content`)
+      : [""];
+
+  const join = (base: string, p: string) => (base ? `${base}.${p}` : p);
+
+  // Étend un chemin manifest ("services[].name") en chemins concrets selon le
+  // nombre réel d'éléments du tableau, sous une base donnée.
+  function expandPath(base: string, path: string): string[] {
     const m = path.match(/^(.*?)\[\]\.(.+)$/);
-    if (!m) return [path];
+    if (!m) return [join(base, path)];
     const [, arrPath, rest] = m;
-    const arr = getPath(defaultContent, arrPath);
+    const arr = getPath(defaultContent, join(base, arrPath));
     if (!Array.isArray(arr)) return [];
-    return arr.map((_, i) => `${arrPath}[${i}].${rest}`);
+    return arr.map((_, i) => join(base, `${arrPath}[${i}].${rest}`));
   }
 
-  const fields = editable
-    .filter(
-      (f) =>
-        f &&
-        typeof f.path === "string" &&
-        (f.type === "text" || f.type === "textarea"),
-    )
-    .flatMap((f) =>
-      expandPath(f.path as string).map((p) => ({
-        path: p,
-        maxLen: f.maxLen ?? 120,
-      })),
+  const textFields = editable.filter(
+    (f) =>
+      f &&
+      typeof f.path === "string" &&
+      (f.type === "text" || f.type === "textarea"),
+  );
+
+  const fields = bases
+    .flatMap((base) =>
+      textFields.flatMap((f) =>
+        expandPath(base, f.path as string).map((p) => ({
+          path: p,
+          maxLen: f.maxLen ?? 120,
+        })),
+      ),
     )
     .map(({ path, maxLen }) => {
       const current = getPath(defaultContent, path);
