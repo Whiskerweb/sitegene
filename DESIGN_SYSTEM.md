@@ -372,4 +372,30 @@ Ordre de page recommandé : **Navbar → Hero → Social proof marquee → How i
 
 ---
 
-*Fin du design system. Tout ce qui suit (build de la landing) doit pouvoir se justifier par un point ci-dessus.*
+*Fin du design system historique. Tout ce qui suit (build de la landing) doit pouvoir se justifier par un point ci-dessus.*
+
+---
+
+## 13. Deux ambiances, un seul système (marketing sombre / app claire)
+
+Le design system couvre désormais **deux surfaces** qui partagent les mêmes tokens `@theme` (`app/globals.css`), polices, rayons et easings — seule la palette de surface change :
+
+| Surface | Ambiance | Fond | Texte | Accent | Où |
+|---|---|---|---|---|---|
+| **Marketing** | Sombre (« galerie de nuit ») | `ink-900` / `ink-800` / cartes `ink-700` | `paper` / `muted` / `faint` | `violet-400/500`, `gold-400` | accueil `/`, `/modeles`, `/tarifs`, `/faq`, pages légales |
+| **App** | Claire (« DA Cloud ») | `surface` / `sky-*` | `night` / `slate` / `mist` | `brand` (#2563eb) | `/dashboard`, `/editor`, `/login`, `/welcome` |
+
+**Règle :** marketing = sombre, app = clair. Les deux puisent dans la même source de tokens — on ne crée jamais de couleur ad hoc.
+
+### Surface marketing — route group `app/(marketing)/`
+Layout partagé `app/(marketing)/layout.tsx` : conteneur `bg-ink-900 text-paper` + `MarketingNav` (fixe) + `MarketingFooter`.
+
+Composants (`components/marketing/`) :
+- `MarketingNav` — nav sombre fixe, liens (Créer/Modèles/Tarifs/FAQ), Connexion, CTA `btn-violet` auth-aware (`/dashboard` si connecté, sinon `/login`).
+- `Hero` — titre display + badge `RotatingText` + champ de prompt branché à `setIntake → /create`.
+- `TemplateCard` + `Gallery` + `ModelesGrid` — cartes de réalisations (badges PRO / Nouveau / « À la une »), grille filtrable par catégorie (`lib/showcase.ts`).
+- `PricingPanel` (50 €/an + packs `lib/pricing.ts`), `FaqAccordion` (`lib/faq.ts`), `DemoSection`, `SectionHeading`, `LegalPage`.
+
+Données réutilisables : `lib/showcase.ts` (réalisations + filtres catégorie), `lib/faq.ts`, `lib/pricing.ts`, `lib/categories.ts`.
+
+> Note : `lucide-react` (1.17.0) de ce repo **n'expose pas** les icônes de marque (Instagram, Linkedin, Twitter…). Utiliser des icônes génériques ou des pastilles à initiale.

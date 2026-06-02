@@ -49,5 +49,5 @@ export async function POST(request: Request) {
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
 
   const { data: pub } = admin.storage.from("site-photos").getPublicUrl(objectPath);
-  return NextResponse.json({ url: pub.publicUrl });
+  return NextResponse.json({ url: pub.publicUrl, path: objectPath });
 }

@@ -98,6 +98,11 @@ export default function EditorClient({
   const [aiDraft, setAiDraft] = useState<{ target: PinSelector; message: string } | null>(null);
   const [aiLoading, setAiLoading] = useState(false);
   const [aiProposal, setAiProposal] = useState<{ css: string; explanation: string } | null>(null);
+  // Picker photo : clic sur un emplacement → choix « téléverser » ou « bibliothèque ».
+  const [photoPicker, setPhotoPicker] = useState<{ path: string } | null>(null);
+  const [libPhotos, setLibPhotos] = useState<
+    { path: string; url: string; name: string }[] | null
+  >(null);
   const reduce = useReducedMotion();
 
   // Notifications : message typé (info / succès / erreur). Succès & erreurs disparaissent
@@ -297,8 +302,9 @@ export default function EditorClient({
           });
         }
       } else if (d.type === "sg:editPhoto") {
-        pendingPhoto.current = d.path;
-        fileRef.current?.click();
+        // Ouvre le choix : nouvelle photo OU une photo de la bibliothèque.
+        setLibPhotos(null);
+        setPhotoPicker({ path: d.path });
       } else if (d.type === "sg:note") {
         // Mode « Sélectionner » : un clic ouvre directement la demande à l'IA.
         const t = d.target;
@@ -352,6 +358,40 @@ export default function EditorClient({
     } catch {
       notify("Échec de l'upload.", "error");
     }
+  }
+
+  // Charge la bibliothèque (lazy) à l'ouverture du picker.
+  useEffect(() => {
+    if (!photoPicker) return;
+    let alive = true;
+    fetch(`/api/site/photos?siteId=${encodeURIComponent(siteId)}`)
+      .then((r) => r.json())
+      .then((j) => {
+        if (alive) setLibPhotos(Array.isArray(j.photos) ? j.photos : []);
+      })
+      .catch(() => {
+        if (alive) setLibPhotos([]);
+      });
+    return () => {
+      alive = false;
+    };
+  }, [photoPicker, siteId]);
+
+  // Applique une photo de la bibliothèque à l'emplacement ciblé.
+  function pickFromLibrary(url: string) {
+    if (!photoPicker) return;
+    post({ type: "sg:setPhoto", path: photoPicker.path, url });
+    recordChange(photoPicker.path, url);
+    notify("Photo mise à jour", "success");
+    setPhotoPicker(null);
+  }
+
+  // Bascule vers le téléversement classique (flux onFile existant).
+  function pickUpload() {
+    if (!photoPicker) return;
+    pendingPhoto.current = photoPicker.path;
+    setPhotoPicker(null);
+    fileRef.current?.click();
   }
 
   function closeAi() {
@@ -671,6 +711,62 @@ export default function EditorClient({
               </Button>
               <Button size="sm" onClick={savePanel}>
                 Appliquer
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Choix d'une photo : téléverser ou piocher dans la bibliothèque */}
+      {photoPicker && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-night/30 p-4"
+          onClick={() => setPhotoPicker(null)}
+        >
+          <div
+            className="flex max-h-[80vh] w-full max-w-2xl flex-col rounded-[20px] bg-white p-6 shadow-cloud-lg"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mb-4 flex items-center justify-between gap-3">
+              <h3 className="font-archivo text-lg font-semibold text-night">Changer la photo</h3>
+              <Button size="sm" onClick={pickUpload}>
+                Téléverser une photo
+              </Button>
+            </div>
+            <p className="mb-3 text-sm text-slate">Ou choisissez dans votre bibliothèque :</p>
+            <div className="min-h-0 flex-1 overflow-y-auto">
+              {libPhotos === null ? (
+                <div className="grid place-items-center py-10 text-mist">
+                  <Spinner size={22} />
+                </div>
+              ) : libPhotos.length === 0 ? (
+                <p className="py-10 text-center text-sm text-mist">
+                  Votre bibliothèque est vide. Téléversez une première photo.
+                </p>
+              ) : (
+                <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+                  {libPhotos.map((ph) => (
+                    <button
+                      key={ph.path}
+                      type="button"
+                      onClick={() => pickFromLibrary(ph.url)}
+                      className="overflow-hidden rounded-xl border border-sky-300 transition hover:ring-2 hover:ring-brand"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={ph.url}
+                        alt={ph.name}
+                        loading="lazy"
+                        className="aspect-square w-full object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div className="mt-4 flex justify-end">
+              <Button variant="ghost" size="sm" onClick={() => setPhotoPicker(null)}>
+                Annuler
               </Button>
             </div>
           </div>

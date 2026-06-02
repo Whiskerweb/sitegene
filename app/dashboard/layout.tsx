@@ -9,12 +9,14 @@ import {
   IconCredit,
   IconSettings,
   IconLogout,
+  IconPhoto,
 } from "@/components/ui/icons";
 
 export const dynamic = "force-dynamic";
 
 const titleMap = {
   "/dashboard": "Mon site",
+  "/dashboard/bibliotheque": "Bibliothèque",
   "/dashboard/modifications": "Modifications",
   "/dashboard/marketplace": "Formules",
   "/dashboard/credits": "Crédits & facturation",
@@ -32,6 +34,7 @@ export default async function DashboardLayout({
 
   const nav: NavItem[] = [
     { href: "/dashboard", label: "Mon site", icon: <IconCloud size={18} /> },
+    { href: "/dashboard/bibliotheque", label: "Bibliothèque", icon: <IconPhoto size={18} /> },
     {
       href: "/dashboard/marketplace",
       label: "Formules",

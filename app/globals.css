@@ -965,3 +965,85 @@ body {
   animation-play-state: running !important;
 }
 
+/* ============================================================
+   Surface marketing Akyra — thème clair/sombre scopé (.akyra)
+   Tokens RGB (triplets) → usage `rgb(var(--m-x))` + alpha `/0.04`.
+   N'affecte QUE la surface marketing ; le dashboard garde son thème.
+   ============================================================ */
+.akyra {
+  --m-page: 255 255 255;
+  --m-surface: 255 255 255;
+  --m-elevated: 250 250 250;
+  --m-line: 235 235 235;
+  --m-ink: 23 23 23;
+  --m-muted: 102 102 102;
+  --m-faint: 153 153 153;
+  --m-overlay: 17 17 17;       /* base des hovers/bordures à faible alpha */
+  --m-accent: 37 99 235;       /* #2563eb */
+  --m-on-accent: 255 255 255;  /* texte sur fond accent */
+  background-color: rgb(var(--m-page));
+  color: rgb(var(--m-ink));
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.akyra.dark {
+  --m-page: 10 10 10;
+  --m-surface: 20 20 20;
+  --m-elevated: 26 26 26;
+  --m-line: 38 38 38;
+  --m-ink: 245 245 245;
+  --m-muted: 163 163 163;
+  --m-faint: 110 110 110;
+  --m-overlay: 255 255 255;
+  --m-accent: 157 193 251;     /* #9dc1fb */
+  --m-on-accent: 10 18 48;     /* #0a1230 */
+}
+
+/* Scrollbar discrète du textarea de prompt */
+.akyra-scroll::-webkit-scrollbar { width: 8px; }
+.akyra-scroll::-webkit-scrollbar-track { background: transparent; }
+.akyra-scroll::-webkit-scrollbar-thumb {
+  background: rgb(var(--m-overlay) / 0.2);
+  border-radius: 4px;
+}
+
+/* Quadrillage structurel — hairline horizontale pleine largeur */
+.akyra-hline { border-top: 1px solid rgb(var(--m-overlay) / 0.05); }
+
+/* ============================================================
+   Dashboard — variante SOMBRE (DA marketing) par surcharge de
+   tokens, scopée à .dash.dark. Le mode clair (.dash sans .dark)
+   reste IDENTIQUE à l'existant — aucun risque de régression.
+   Seules les couleurs changent (structure/logique intactes).
+   ============================================================ */
+.dash.dark {
+  --color-white: #16161c;       /* surfaces bg-white/-/60/-/70 → sombres */
+  --color-surface: #16161c;
+  --color-surface-2: #1c1d24;
+  --color-sky-50: #131419;
+  --color-sky-100: #1c1e26;     /* hovers */
+  --color-sky-200: #232630;
+  --color-sky-300: #2c2f3a;     /* hairlines / bordures */
+  --color-night: #f4f6fb;       /* titres → clair */
+  --color-slate: #c4cad6;       /* corps → gris clair */
+  --color-mist: #848ea0;        /* légendes / placeholders */
+  --color-brand: #9dc1fb;       /* accent → bleu clair */
+  --color-brand-700: #bcd5fc;
+  --color-blue: #1b2740;        /* chips teintées → sombres */
+  --color-lav: #272140;
+  --color-pink: #3a2230;
+  --color-mint: #163029;
+  --color-success: #34d399;
+  --color-success-50: #12291f;
+  --color-warn: #f59e0b;
+  --color-danger: #f87171;
+}
+
+/* Fond de page sombre (remplace le dégradé ciel) + halos atténués */
+.dash.dark .cloud-bg {
+  background: radial-gradient(120% 90% at 50% -10%, #14161d 0%, #0e0f14 55%, #0b0c10 100%);
+}
+.dash.dark .blob { opacity: 0.18; }
+/* Le verre premium reste lisible : il est déjà conçu pour le sombre. */
+.dash.dark .shadow-cloud,
+.dash.dark .shadow-cloud-sm { box-shadow: 0 12px 40px -18px rgba(0, 0, 0, 0.6); }
+
