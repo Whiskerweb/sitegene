@@ -13,6 +13,9 @@ import { collectImageSlots } from "@/lib/content-overlay";
 import { briefToOverrides } from "@/lib/mistral";
 import { getCategory, DEFAULT_CATEGORY } from "@/lib/categories";
 
+/** Laisse le temps à Mistral de réécrire tout le contenu (sinon coupé ~10 s). */
+export const maxDuration = 60;
+
 /** Marqueur "système prospect" (prospects.created_by est uuid nullable, sans FK). */
 const PROSPECT_SYSTEM_ID = "00000000-0000-0000-0000-000000000000";
 const MAX_PHOTOS = 12;

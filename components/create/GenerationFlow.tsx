@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { consumeIntake, type IntakePayload } from "@/lib/intake-store";
 import { getCategory, DEFAULT_CATEGORY } from "@/lib/categories";
+import { compressImages } from "@/lib/compress-image";
 import LoadingSteps from "./LoadingSteps";
 import ResultView from "./ResultView";
 import CreateDashboard from "./CreateDashboard";
@@ -54,20 +55,44 @@ export default function GenerationFlow() {
     fd.set("brief", payload.brief);
     fd.set("category", payload.categoryId);
     if (payload.company) fd.set("company", payload.company);
-    
+
     const activeTemplate = selectedTemplateId || templateId;
     fd.set("templateId", activeTemplate);
-    
-    payload.photos.forEach((f) => fd.append("photo", f));
+
+    // Compression client + plafond de taille total (~4 Mo) : la limite serverless
+    // Vercel est ~4,5 Mo ; au-delà la requête revient en 413 (pas du JSON).
+    try {
+      const compressed = await compressImages(payload.photos);
+      const MAX_TOTAL = 4_000_000;
+      let total = 0;
+      for (const f of compressed) {
+        if (total + f.size > MAX_TOTAL) break; // on s'arrête avant de dépasser
+        total += f.size;
+        fd.append("photo", f);
+      }
+    } catch {
+      // si la compression plante, on tente sans photos plutôt que d'échouer
+    }
 
     try {
       const res = await fetch("/api/prospect/generate", {
         method: "POST",
         body: fd,
       });
-      const data = (await res.json()) as Result & { error?: string };
-      if (!res.ok) throw new Error(data.error || "Génération impossible.");
-      
+      // Parsing défensif : un 413/500 renvoie du texte, pas du JSON.
+      const raw = await res.text();
+      let data: (Result & { error?: string }) | null = null;
+      try {
+        data = JSON.parse(raw);
+      } catch {
+        throw new Error(
+          res.status === 413
+            ? "Vos photos sont trop volumineuses. Réessayez avec moins de photos."
+            : `Le serveur a renvoyé une erreur (${res.status}).`,
+        );
+      }
+      if (!res.ok || !data) throw new Error(data?.error || "Génération impossible.");
+
       setResult({
         token: data.token,
         templateId: data.templateId,
@@ -118,30 +143,30 @@ export default function GenerationFlow() {
   // 1. Écran d'erreur initiale (aucun résultat encore) → échec + possibilité de modifier le brief.
   if (error && !result) {
     return (
-      <section className="grid min-h-[100dvh] place-items-center bg-ink-900 px-6">
-        <div className="max-w-[460px] rounded-[22px] border border-red-500/30 bg-ink-800 p-8 text-center shadow-2xl">
-          <p className="text-[16px] font-semibold text-paper">
+      <section className="grid min-h-[100dvh] place-items-center bg-white px-6">
+        <div className="max-w-[460px] rounded-[22px] border border-danger/30 bg-surface-2 p-8 text-center shadow-cloud">
+          <p className="text-[16px] font-semibold text-night">
             La génération a échoué.
           </p>
-          <p className="mt-2 text-[14.5px] text-muted">{error}</p>
+          <p className="mt-2 text-[14.5px] text-slate">{error}</p>
           <button
             type="button"
             onClick={() => payloadRef.current && run(payloadRef.current)}
-            className="btn-violet mt-6 inline-block rounded-full px-6 py-3 text-[14px] font-bold text-white w-full"
+            className="btn-violet mt-6 inline-block w-full rounded-full px-6 py-3 text-[14px] font-bold text-white"
           >
             Réessayer la génération
           </button>
           <button
             type="button"
             onClick={() => setError(null)}
-            className="mt-3 block w-full text-[13px] text-violet-400 hover:text-white transition"
+            className="mt-3 block w-full text-[13px] text-brand transition hover:text-brand-700"
           >
             Modifier mon brief ou mes options
           </button>
           <button
             type="button"
             onClick={() => router.replace("/")}
-            className="mt-4 block w-full text-[12px] text-faint hover:text-muted transition"
+            className="mt-4 block w-full text-[12px] text-mist transition hover:text-slate"
           >
             Revenir à l&apos;accueil
           </button>

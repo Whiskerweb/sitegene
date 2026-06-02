@@ -116,24 +116,50 @@ export async function briefToOverrides(input: {
       | Record<string, unknown>
       | undefined)?.editable as EditableField[] | undefined ?? [];
 
+  // Étend un chemin manifest en chemins CONCRETS contre le contenu réel :
+  // - "services[].name" → "services[0].name", "services[1].name", … (autant
+  //   qu'il y a d'éléments dans le tableau `services`).
+  // - chemin sans liste → tel quel.
+  // Ainsi les sections en tableau (services, works, témoignages, FAQ…) sont
+  // bien traduites, au lieu de rester dans la langue démo (anglais).
+  function expandPath(path: string): string[] {
+    const m = path.match(/^(.*?)\[\]\.(.+)$/);
+    if (!m) return [path];
+    const [, arrPath, rest] = m;
+    const arr = getPath(defaultContent, arrPath);
+    if (!Array.isArray(arr)) return [];
+    return arr.map((_, i) => `${arrPath}[${i}].${rest}`);
+  }
+
   const fields = editable
     .filter(
       (f) =>
         f &&
         typeof f.path === "string" &&
-        !f.path.includes("[]") &&
         (f.type === "text" || f.type === "textarea"),
     )
-    .map((f) => {
-      const current = getPath(defaultContent, f.path as string);
+    .flatMap((f) =>
+      expandPath(f.path as string).map((p) => ({
+        path: p,
+        maxLen: f.maxLen ?? 120,
+      })),
+    )
+    .map(({ path, maxLen }) => {
+      const current = getPath(defaultContent, path);
       if (typeof current !== "string" || !current) return null;
-      return { path: f.path as string, maxLen: f.maxLen ?? 120, current };
+      return { path, maxLen, current };
     })
     .filter(Boolean) as { path: string; maxLen: number; current: string }[];
 
   if (fields.length === 0) return {};
 
-  const system = `Tu personnalises un site vitrine PRO déjà conçu, à partir d'un brief client (métier : ${categoryLabel}). Tu RÉÉCRIS uniquement les champs texte fournis pour qu'ils collent au client, dans la MÊME LANGUE que le brief, ton professionnel, élégant et concret — jamais "IA générique" ni grandiloquent. Respecte STRICTEMENT maxLen (en caractères). Garde le rôle de chaque champ (un titre reste court, un sous-titre reste une phrase). N'invente pas d'email ni de chiffres faux. Renvoie un JSON STRICT { "<path>": "<texte>", ... } en n'utilisant QUE les chemins fournis ; omets ceux que tu ne peux pas personnaliser fidèlement.`;
+  const system = `Tu personnalises un site vitrine PRO déjà conçu, à partir d'un brief client (métier : ${categoryLabel}). Le contenu actuel est en anglais générique : tu dois le RÉÉCRIRE entièrement dans la langue du brief (si le brief est en français, TOUT en français), adapté au client, ton professionnel, élégant et concret — jamais "IA générique" ni grandiloquent.
+
+RÈGLES:
+- Réécris TOUS les champs fournis (ne laisse RIEN dans la langue d'origine). Si un champ est générique (ex. nom de service, FAQ), adapte-le au métier et au brief plutôt que de le traduire mot à mot.
+- Respecte STRICTEMENT maxLen (caractères). Garde le rôle de chaque champ : un titre reste court et percutant, un sous-titre une phrase, une description 1-2 phrases.
+- N'invente pas d'email réel ni de chiffres faux (garde des ordres de grandeur plausibles pour les stats).
+- Réponds en JSON STRICT { "<path>": "<texte>", ... } avec EXACTEMENT les chemins fournis. Inclus tous les chemins.`;
 
   const user = `Brief client :
 """${brief.slice(0, 1200)}"""
@@ -151,10 +177,10 @@ Renvoie le JSON.`;
           { role: "system", content: system },
           { role: "user", content: user },
         ],
-        { json: true, maxTokens: 1400 },
+        { json: true, maxTokens: 4000 },
       ),
       new Promise<string>((_, reject) =>
-        setTimeout(() => reject(new Error("timeout")), input.timeoutMs ?? 12000),
+        setTimeout(() => reject(new Error("timeout")), input.timeoutMs ?? 30000),
       ),
     ]);
   } catch {
