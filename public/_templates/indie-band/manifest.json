@@ -1,0 +1,216 @@
+{
+  "id": "indie-band",
+  "name": "HALCYON — Groupe indé",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "brand",
+      "ticker",
+      "heroCtas",
+      "hero",
+      "band",
+      "releasesLabel",
+      "releasesCta",
+      "releases",
+      "tour",
+      "videosLabel",
+      "videos",
+      "footer"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.image",
+      "role": "hero",
+      "required": true,
+      "note": "hero · image"
+    },
+    {
+      "slot": "p2",
+      "path": "band.image1",
+      "role": "image",
+      "required": true,
+      "note": "band · image1"
+    },
+    {
+      "slot": "p3",
+      "path": "band.image2",
+      "role": "image",
+      "required": true,
+      "note": "band · image2"
+    },
+    {
+      "slot": "p4",
+      "path": "releases[].cover",
+      "role": "cover",
+      "required": true,
+      "note": "releases · cover"
+    },
+    {
+      "slot": "p5",
+      "path": "videos[].cover",
+      "role": "cover",
+      "required": true,
+      "note": "videos · cover"
+    },
+    {
+      "slot": "p6",
+      "path": "footer.image",
+      "role": "image",
+      "required": true,
+      "note": "footer · image"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "ticker[]",
+        "label": "ticker",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.tagline",
+        "label": "hero · tagline",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "heroCtas[]",
+        "label": "heroCtas",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "band.label",
+        "label": "band · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "band.body",
+        "label": "band · body",
+        "type": "text",
+        "maxLen": 394
+      },
+      {
+        "path": "band.sub",
+        "label": "band · sub",
+        "type": "text",
+        "maxLen": 43
+      },
+      {
+        "path": "releasesLabel",
+        "label": "releasesLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "releases[].title",
+        "label": "releases · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "releasesCta",
+        "label": "releasesCta",
+        "type": "text",
+        "maxLen": 42
+      },
+      {
+        "path": "tour.label",
+        "label": "tour · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tour.regions[].name",
+        "label": "tour · regions · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tour.regions[].dates[].city",
+        "label": "tour · regions · dates · city",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tour.regions[].dates[].venue",
+        "label": "tour · regions · dates · venue",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tour.regions[].dates[].date",
+        "label": "tour · regions · dates · date",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tour.regions[].dates[].time",
+        "label": "tour · regions · dates · time",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tour.regions[].dates[].status",
+        "label": "tour · regions · dates · status",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "videosLabel",
+        "label": "videosLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "videos[].title",
+        "label": "videos · title",
+        "type": "text",
+        "maxLen": 53
+      },
+      {
+        "path": "footer.label",
+        "label": "footer · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.text",
+        "label": "footer · text",
+        "type": "text",
+        "maxLen": 123
+      },
+      {
+        "path": "footer.socials[]",
+        "label": "footer · socials",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.copyright",
+        "label": "footer · copyright",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.credit",
+        "label": "footer · credit",
+        "type": "text",
+        "maxLen": 42
+      }
+    ]
+  }
+}

@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KAIRO — Hip-Hop Artist & Producer</title>
+  <meta name="description" content="KAIRO — hip-hop artist and producer. Dark beats, real stories, raw energy." />
+
+  <!-- Polices exactes extraites des tokens : Big Shoulders Display (display condensé extra-bold) + Inter (labels/corps) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;600;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    // Config Tailwind : palette + typo issues de la capture (tokens.json)
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#000000', paper: '#cccccc', white2: '#ffffff',
+            accent: '#0000ee', panel: '#0a0a0a', line: 'rgba(204,204,204,0.2)',
+          },
+          fontFamily: {
+            display: ['"Big Shoulders Display"', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+          },
+          letterSpacing: { label: '0.2em' },
+        },
+      },
+    };
+  </script>
+  <style>
+    body { background: #000; color: #ccc; }
+  </style>
+
+  <!-- Source unique de vérité (le serveur Akyra injecte le vrai contenu ; fallback de preview) -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ ||  window.__SITE_CONTENT__ || {
+      brand: "KAIRO",
+      nav: ["Releases", "Tour", "About", "Booking"],
+      cta: "Booking",
+      hero: {
+        badge: "New Drop",
+        titleLine1: "“Silent Ops”",
+        titleLine2: "is out now",
+        listen: [
+          { label: "Listen on Apple Music", href: "#" },
+          { label: "Listen on Spotify", href: "#" },
+          { label: "Listen on YouTube Music", href: "#" }
+        ],
+        image: "img/hero.jpg"
+      },
+      releasesLabel: "Releases",
+      releases: [
+        { title: "Silent Ops", type: "Single · 2026", cover: "img/rel1.jpg" },
+        { title: "Jet Black Skies", type: "Album · 2025", cover: "img/rel2.jpg" },
+        { title: "Burning Soul", type: "Single · 2025", cover: "img/rel3.jpg" },
+        { title: "Concrete Lullabies", type: "EP · 2024", cover: "img/rel4.jpg" }
+      ],
+      tourLabel: "#KAIROTour",
+      tour: [
+        { date: "12 SEP", city: "Berlin, DE", venue: "Astra Kulturhaus", link: "Get Tickets" },
+        { date: "21 SEP", city: "Paris, FR", venue: "La Cigale", link: "Get Tickets" },
+        { date: "04 OCT", city: "London, UK", venue: "Village Underground", link: "Get Tickets" },
+        { date: "18 OCT", city: "Amsterdam, NL", venue: "Melkweg – Max", link: "Get Tickets" },
+        { date: "02 NOV", city: "Brussels, BE", venue: "Ancienne Belgique", link: "Get Tickets" },
+        { date: "15 NOV", city: "Lyon, FR", venue: "Le Transbordeur", link: "Get Tickets" },
+        { date: "29 NOV", city: "Madrid, ES", venue: "Sala La Riviera", link: "Get Tickets" }
+      ],
+      bio: {
+        quote: "“I’m KAIRO – hip-hop artist and producer. Dark beats, real stories, and raw energy. No gimmicks — just truth in every bar.”",
+        readMore: "Read the full story",
+        image: "img/portrait.jpg"
+      },
+      listenLabel: "Listen to Me On",
+      socials: [
+        { label: "Spotify", href: "#" },
+        { label: "Apple Music", href: "#" },
+        { label: "YouTube", href: "#" },
+        { label: "SoundCloud", href: "#" },
+        { label: "Instagram", href: "#" }
+      ],
+      footer: {
+        copyright: "© KAIRO",
+        credit: "Hip-hop artist · producer"
+      }
+    };
+  </script>
+</head>
+
+<body class="font-sans antialiased bg-ink text-paper selection:bg-accent selection:text-white2">
+
+  <!-- ============ NAV ============ -->
+  <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-sm bg-ink/50">
+    <nav class="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
+      <ul class="hidden md:flex items-center gap-7 font-sans text-[11px] font-medium tracking-label uppercase text-paper/70">
+        <li><a href="#releases" class="hover:text-white2 transition-colors" data-sg-path="nav[0]">Releases</a></li>
+        <li><a href="#tour" class="hover:text-white2 transition-colors" data-sg-path="nav[1]">Tour</a></li>
+      </ul>
+      <a href="#top" class="font-display font-extrabold text-2xl tracking-wider uppercase text-white2 absolute left-1/2 -translate-x-1/2" data-sg-path="brand">KAIRO</a>
+      <ul class="hidden md:flex items-center gap-7 font-sans text-[11px] font-medium tracking-label uppercase text-paper/70">
+        <li><a href="#about" class="hover:text-white2 transition-colors" data-sg-path="nav[2]">About</a></li>
+        <li><a href="#booking" class="hover:text-white2 transition-colors" data-sg-path="nav[3]">Booking</a></li>
+      </ul>
+      <a href="#booking" class="md:hidden font-sans text-[11px] font-medium tracking-label uppercase text-white2" data-sg-path="cta">Booking</a>
+    </nav>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section id="top" class="relative min-h-screen flex flex-col justify-center overflow-hidden">
+    <img src="img/hero.jpg" alt="KAIRO" data-sg-img="hero.image"
+         class="absolute inset-0 w-full h-full object-cover" data-sg-parallax />
+    <div class="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/20 to-ink"></div>
+
+    <div class="relative z-10 mx-auto max-w-7xl w-full px-6 text-center">
+      <span class="inline-block font-sans text-[10px] font-semibold tracking-label uppercase border border-paper/40 rounded-full px-4 py-1 text-paper mb-8" data-sg-path="hero.badge">New Drop</span>
+      <h1 class="font-display font-black uppercase leading-[0.92] text-white2 text-6xl sm:text-7xl md:text-8xl lg:text-[112px]">
+        <span class="block" data-sg-path="hero.titleLine1">"Silent Ops"</span>
+        <span class="block" data-sg-path="hero.titleLine2">is out now</span>
+      </h1>
+    </div>
+
+    <!-- Listen buttons row -->
+    <div class="relative z-10 mx-auto max-w-7xl w-full px-6 mt-16 grid grid-cols-1 md:grid-cols-3 gap-px bg-line border-y border-line">
+      <a href="#" class="flex items-center justify-center gap-2 bg-ink/40 py-4 font-sans text-[11px] font-semibold tracking-label uppercase text-paper hover:text-white2 hover:bg-accent transition-colors" data-sg-path="hero.listen[0].label">Listen on Apple Music</a>
+      <a href="#" class="flex items-center justify-center gap-2 bg-ink/40 py-4 font-sans text-[11px] font-semibold tracking-label uppercase text-paper hover:text-white2 hover:bg-accent transition-colors" data-sg-path="hero.listen[1].label">Listen on Spotify</a>
+      <a href="#" class="flex items-center justify-center gap-2 bg-ink/40 py-4 font-sans text-[11px] font-semibold tracking-label uppercase text-paper hover:text-white2 hover:bg-accent transition-colors" data-sg-path="hero.listen[2].label">Listen on YouTube Music</a>
+    </div>
+  </section>
+
+  <!-- ============ RELEASES ============ -->
+  <section id="releases" class="mx-auto max-w-7xl px-6 py-28" data-sg-reveal>
+    <h2 class="text-center font-display font-extrabold uppercase tracking-wide text-white2 text-4xl md:text-5xl mb-16" data-sg-path="releasesLabel">Releases</h2>
+    <ul class="grid grid-cols-2 md:grid-cols-4 gap-5">
+      <li class="group">
+        <div class="relative aspect-square overflow-hidden">
+          <img src="img/rel1.jpg" alt="" data-sg-img="releases[0].cover" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        </div>
+        <h3 class="mt-4 font-display font-extrabold uppercase text-xl text-white2" data-sg-path="releases[0].title">Silent Ops</h3>
+        <p class="font-sans text-[11px] tracking-label uppercase text-paper/60" data-sg-path="releases[0].type">Single · 2026</p>
+      </li>
+      <li class="group">
+        <div class="relative aspect-square overflow-hidden">
+          <img src="img/rel2.jpg" alt="" data-sg-img="releases[1].cover" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        </div>
+        <h3 class="mt-4 font-display font-extrabold uppercase text-xl text-white2" data-sg-path="releases[1].title">Jet Black Skies</h3>
+        <p class="font-sans text-[11px] tracking-label uppercase text-paper/60" data-sg-path="releases[1].type">Album · 2025</p>
+      </li>
+      <li class="group">
+        <div class="relative aspect-square overflow-hidden">
+          <img src="img/rel3.jpg" alt="" data-sg-img="releases[2].cover" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        </div>
+        <h3 class="mt-4 font-display font-extrabold uppercase text-xl text-white2" data-sg-path="releases[2].title">Burning Soul</h3>
+        <p class="font-sans text-[11px] tracking-label uppercase text-paper/60" data-sg-path="releases[2].type">Single · 2025</p>
+      </li>
+      <li class="group">
+        <div class="relative aspect-square overflow-hidden">
+          <img src="img/rel4.jpg" alt="" data-sg-img="releases[3].cover" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        </div>
+        <h3 class="mt-4 font-display font-extrabold uppercase text-xl text-white2" data-sg-path="releases[3].title">Concrete Lullabies</h3>
+        <p class="font-sans text-[11px] tracking-label uppercase text-paper/60" data-sg-path="releases[3].type">EP · 2024</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============ TOUR ============ -->
+  <section id="tour" class="mx-auto max-w-7xl px-6 py-28 border-t border-line" data-sg-reveal>
+    <h2 class="text-center font-display font-extrabold uppercase tracking-wide text-accent text-4xl md:text-5xl mb-16" data-sg-path="tourLabel">#KAIROTour</h2>
+    <ul class="divide-y divide-line border-y border-line">
+      <li class="grid grid-cols-[80px_1fr_auto] md:grid-cols-[120px_1fr_1fr_auto] gap-4 items-center py-5 group hover:bg-panel transition-colors">
+        <span class="font-display font-extrabold text-2xl text-white2" data-sg-path="tour[0].date">12 SEP</span>
+        <span class="font-sans text-sm font-medium text-paper" data-sg-path="tour[0].city">Berlin, DE</span>
+        <span class="hidden md:block font-sans text-[12px] tracking-wide uppercase text-paper/60" data-sg-path="tour[0].venue">Astra Kulturhaus</span>
+        <a href="#" class="justify-self-end font-sans text-[11px] font-semibold tracking-label uppercase text-accent group-hover:text-white2 transition-colors" data-sg-path="tour[0].link">Get Tickets</a>
+      </li>
+      <li class="grid grid-cols-[80px_1fr_auto] md:grid-cols-[120px_1fr_1fr_auto] gap-4 items-center py-5 group hover:bg-panel transition-colors">
+        <span class="font-display font-extrabold text-2xl text-white2" data-sg-path="tour[1].date">21 SEP</span>
+        <span class="font-sans text-sm font-medium text-paper" data-sg-path="tour[1].city">Paris, FR</span>
+        <span class="hidden md:block font-sans text-[12px] tracking-wide uppercase text-paper/60" data-sg-path="tour[1].venue">La Cigale</span>
+        <a href="#" class="justify-self-end font-sans text-[11px] font-semibold tracking-label uppercase text-accent group-hover:text-white2 transition-colors" data-sg-path="tour[1].link">Get Tickets</a>
+      </li>
+      <li class="grid grid-cols-[80px_1fr_auto] md:grid-cols-[120px_1fr_1fr_auto] gap-4 items-center py-5 group hover:bg-panel transition-colors">
+        <span class="font-display font-extrabold text-2xl text-white2" data-sg-path="tour[2].date">04 OCT</span>
+        <span class="font-sans text-sm font-medium text-paper" data-sg-path="tour[2].city">London, UK</span>
+        <span class="hidden md:block font-sans text-[12px] tracking-wide uppercase text-paper/60" data-sg-path="tour[2].venue">Village Underground</span>
+        <a href="#" class="justify-self-end font-sans text-[11px] font-semibold tracking-label uppercase text-accent group-hover:text-white2 transition-colors" data-sg-path="tour[2].link">Get Tickets</a>
+      </li>
+      <li class="grid grid-cols-[80px_1fr_auto] md:grid-cols-[120px_1fr_1fr_auto] gap-4 items-center py-5 group hover:bg-panel transition-colors">
+        <span class="font-display font-extrabold text-2xl text-white2" data-sg-path="tour[3].date">18 OCT</span>
+        <span class="font-sans text-sm font-medium text-paper" data-sg-path="tour[3].city">Amsterdam, NL</span>
+        <span class="hidden md:block font-sans text-[12px] tracking-wide uppercase text-paper/60" data-sg-path="tour[3].venue">Melkweg – Max</span>
+        <a href="#" class="justify-self-end font-sans text-[11px] font-semibold tracking-label uppercase text-accent group-hover:text-white2 transition-colors" data-sg-path="tour[3].link">Get Tickets</a>
+      </li>
+      <li class="grid grid-cols-[80px_1fr_auto] md:grid-cols-[120px_1fr_1fr_auto] gap-4 items-center py-5 group hover:bg-panel transition-colors">
+        <span class="font-display font-extrabold text-2xl text-white2" data-sg-path="tour[4].date">02 NOV</span>
+        <span class="font-sans text-sm font-medium text-paper" data-sg-path="tour[4].city">Brussels, BE</span>
+        <span class="hidden md:block font-sans text-[12px] tracking-wide uppercase text-paper/60" data-sg-path="tour[4].venue">Ancienne Belgique</span>
+        <a href="#" class="justify-self-end font-sans text-[11px] font-semibold tracking-label uppercase text-accent group-hover:text-white2 transition-colors" data-sg-path="tour[4].link">Get Tickets</a>
+      </li>
+      <li class="grid grid-cols-[80px_1fr_auto] md:grid-cols-[120px_1fr_1fr_auto] gap-4 items-center py-5 group hover:bg-panel transition-colors">
+        <span class="font-display font-extrabold text-2xl text-white2" data-sg-path="tour[5].date">15 NOV</span>
+        <span class="font-sans text-sm font-medium text-paper" data-sg-path="tour[5].city">Lyon, FR</span>
+        <span class="hidden md:block font-sans text-[12px] tracking-wide uppercase text-paper/60" data-sg-path="tour[5].venue">Le Transbordeur</span>
+        <a href="#" class="justify-self-end font-sans text-[11px] font-semibold tracking-label uppercase text-accent group-hover:text-white2 transition-colors" data-sg-path="tour[5].link">Get Tickets</a>
+      </li>
+      <li class="grid grid-cols-[80px_1fr_auto] md:grid-cols-[120px_1fr_1fr_auto] gap-4 items-center py-5 group hover:bg-panel transition-colors">
+        <span class="font-display font-extrabold text-2xl text-white2" data-sg-path="tour[6].date">29 NOV</span>
+        <span class="font-sans text-sm font-medium text-paper" data-sg-path="tour[6].city">Madrid, ES</span>
+        <span class="hidden md:block font-sans text-[12px] tracking-wide uppercase text-paper/60" data-sg-path="tour[6].venue">Sala La Riviera</span>
+        <a href="#" class="justify-self-end font-sans text-[11px] font-semibold tracking-label uppercase text-accent group-hover:text-white2 transition-colors" data-sg-path="tour[6].link">Get Tickets</a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============ ABOUT / BIO (blue full-bleed) ============ -->
+  <section id="about" class="relative bg-accent overflow-hidden" data-sg-reveal>
+    <div class="mx-auto max-w-7xl px-6 py-24 grid md:grid-cols-2 gap-12 items-center">
+      <div class="relative">
+        <img src="img/portrait.jpg" alt="" data-sg-img="bio.image" class="w-full max-h-[560px] object-cover" />
+      </div>
+      <div>
+        <blockquote class="font-display font-extrabold uppercase leading-tight text-white2 text-3xl md:text-4xl lg:text-5xl" data-sg-path="bio.quote">
+          "I'm KAIRO – hip-hop artist and producer. Dark beats, real stories, and raw energy. No gimmicks — just truth in every bar."
+        </blockquote>
+        <a href="#booking" class="inline-block mt-10 font-sans text-[11px] font-semibold tracking-label uppercase border border-white2/50 rounded-full px-6 py-2.5 text-white2 hover:bg-white2 hover:text-accent transition-colors" data-sg-path="bio.readMore">Read the full story</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LISTEN / BOOKING FOOTER ============ -->
+  <footer id="booking" class="mx-auto max-w-7xl px-6 py-28 text-center" data-sg-reveal>
+    <h2 class="font-display font-extrabold uppercase tracking-wide text-white2 text-4xl md:text-5xl mb-12" data-sg-path="listenLabel">Listen to Me On</h2>
+    <div class="flex flex-wrap justify-center gap-3">
+      <a href="#" class="font-sans text-[11px] font-semibold tracking-label uppercase border border-line rounded-full px-6 py-3 text-paper hover:border-accent hover:text-white2 transition-colors" data-sg-path="socials[0].label">Spotify</a>
+      <a href="#" class="font-sans text-[11px] font-semibold tracking-label uppercase border border-line rounded-full px-6 py-3 text-paper hover:border-accent hover:text-white2 transition-colors" data-sg-path="socials[1].label">Apple Music</a>
+      <a href="#" class="font-sans text-[11px] font-semibold tracking-label uppercase border border-line rounded-full px-6 py-3 text-paper hover:border-accent hover:text-white2 transition-colors" data-sg-path="socials[2].label">YouTube</a>
+      <a href="#" class="font-sans text-[11px] font-semibold tracking-label uppercase border border-line rounded-full px-6 py-3 text-paper hover:border-accent hover:text-white2 transition-colors" data-sg-path="socials[3].label">SoundCloud</a>
+      <a href="#" class="font-sans text-[11px] font-semibold tracking-label uppercase border border-line rounded-full px-6 py-3 text-paper hover:border-accent hover:text-white2 transition-colors" data-sg-path="socials[4].label">Instagram</a>
+    </div>
+
+    <div class="mt-20 pt-8 border-t border-line flex flex-col sm:flex-row justify-between items-center gap-3 font-sans text-[11px] tracking-label uppercase text-paper/50">
+      <span data-sg-path="footer.copyright">© KAIRO</span>
+      <span data-sg-path="footer.credit">Hip-hop artist · producer</span>
+    </div>
+  </footer>
+
+  <!-- ============ HYDRATATION + ANIMATIONS (standard clone-site) ============ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, { opacity: 0, y: 40, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, { yPercent: -15, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } });
+        });
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

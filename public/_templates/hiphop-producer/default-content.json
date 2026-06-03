@@ -1,0 +1,130 @@
+{
+  "brand": "KAIRO",
+  "nav": [
+    "Releases",
+    "Tour",
+    "About",
+    "Booking"
+  ],
+  "cta": "Booking",
+  "hero": {
+    "badge": "New Drop",
+    "titleLine1": "“Silent Ops”",
+    "titleLine2": "is out now",
+    "listen": [
+      {
+        "label": "Listen on Apple Music",
+        "href": "#"
+      },
+      {
+        "label": "Listen on Spotify",
+        "href": "#"
+      },
+      {
+        "label": "Listen on YouTube Music",
+        "href": "#"
+      }
+    ],
+    "image": "/_templates/hiphop-producer/img/hero.jpg"
+  },
+  "releasesLabel": "Releases",
+  "releases": [
+    {
+      "title": "Silent Ops",
+      "type": "Single · 2026",
+      "cover": "/_templates/hiphop-producer/img/rel1.jpg"
+    },
+    {
+      "title": "Jet Black Skies",
+      "type": "Album · 2025",
+      "cover": "/_templates/hiphop-producer/img/rel2.jpg"
+    },
+    {
+      "title": "Burning Soul",
+      "type": "Single · 2025",
+      "cover": "/_templates/hiphop-producer/img/rel3.jpg"
+    },
+    {
+      "title": "Concrete Lullabies",
+      "type": "EP · 2024",
+      "cover": "/_templates/hiphop-producer/img/rel4.jpg"
+    }
+  ],
+  "tourLabel": "#KAIROTour",
+  "tour": [
+    {
+      "date": "12 SEP",
+      "city": "Berlin, DE",
+      "venue": "Astra Kulturhaus",
+      "link": "Get Tickets"
+    },
+    {
+      "date": "21 SEP",
+      "city": "Paris, FR",
+      "venue": "La Cigale",
+      "link": "Get Tickets"
+    },
+    {
+      "date": "04 OCT",
+      "city": "London, UK",
+      "venue": "Village Underground",
+      "link": "Get Tickets"
+    },
+    {
+      "date": "18 OCT",
+      "city": "Amsterdam, NL",
+      "venue": "Melkweg – Max",
+      "link": "Get Tickets"
+    },
+    {
+      "date": "02 NOV",
+      "city": "Brussels, BE",
+      "venue": "Ancienne Belgique",
+      "link": "Get Tickets"
+    },
+    {
+      "date": "15 NOV",
+      "city": "Lyon, FR",
+      "venue": "Le Transbordeur",
+      "link": "Get Tickets"
+    },
+    {
+      "date": "29 NOV",
+      "city": "Madrid, ES",
+      "venue": "Sala La Riviera",
+      "link": "Get Tickets"
+    }
+  ],
+  "bio": {
+    "quote": "“I’m KAIRO – hip-hop artist and producer. Dark beats, real stories, and raw energy. No gimmicks — just truth in every bar.”",
+    "readMore": "Read the full story",
+    "image": "/_templates/hiphop-producer/img/portrait.jpg"
+  },
+  "listenLabel": "Listen to Me On",
+  "socials": [
+    {
+      "label": "Spotify",
+      "href": "#"
+    },
+    {
+      "label": "Apple Music",
+      "href": "#"
+    },
+    {
+      "label": "YouTube",
+      "href": "#"
+    },
+    {
+      "label": "SoundCloud",
+      "href": "#"
+    },
+    {
+      "label": "Instagram",
+      "href": "#"
+    }
+  ],
+  "footer": {
+    "copyright": "© KAIRO",
+    "credit": "Hip-hop artist · producer"
+  }
+}

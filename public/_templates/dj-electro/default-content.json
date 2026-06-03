@@ -1,0 +1,116 @@
+{
+  "brand": "ALEX STRIDE",
+  "cta": "Book the date",
+  "nav": [
+    "About",
+    "Services",
+    "Testimonials",
+    "Contact"
+  ],
+  "hero": {
+    "eyebrow": "Alex Stride, Club DJ",
+    "title": "DJ that keeps your club full all night long",
+    "tagline": "Let's keep your club packed with beats that move the crowd. 10+ years behind the decks, turning every venue into an unforgettable night.",
+    "ctaPrimary": "Contact me",
+    "ctaSecondary": "Watch video",
+    "image": "/_templates/dj-electro/img/hero.jpg"
+  },
+  "stats": [
+    {
+      "value": "10+",
+      "label": "Years of experience"
+    },
+    {
+      "value": "120+",
+      "label": "Clubs visited"
+    },
+    {
+      "value": "1K+",
+      "label": "Performances done"
+    },
+    {
+      "value": "100K+",
+      "label": "Monthly listeners"
+    }
+  ],
+  "about": {
+    "title": "Have been a DJ my whole life",
+    "p1": "With years of experience behind the decks, I bring a high-energy mix that keeps crowds on their feet. From deep house grooves to peak-time techno, every set is crafted to turn any venue into an electrifying experience.",
+    "p2": "My passion is creating unforgettable nights that leave people talking long after the lights come up.",
+    "cta": "Contact me",
+    "image": "/_templates/dj-electro/img/about.jpg"
+  },
+  "services": {
+    "label": "This is what I play",
+    "items": [
+      {
+        "title": "House",
+        "text": "Crafting smooth, groovy house vibes to set the perfect mood and keep the dance floor packed."
+      },
+      {
+        "title": "EDM",
+        "text": "Explosive EDM sets filled with crowd-favorite anthems to fuel the party and elevate the energy."
+      },
+      {
+        "title": "Techno",
+        "text": "Delivering deep, pulsating techno tracks that create an intense, immersive dance experience."
+      },
+      {
+        "title": "Electro",
+        "text": "Bringing high-energy electro beats that electrify the atmosphere and keep the crowd moving till dawn."
+      }
+    ]
+  },
+  "testimonialsLabel": "Testimonials",
+  "testimonial": {
+    "title": "Unforgettable Vibes and Packed Dance Floors",
+    "quote": "Booking this DJ was the best decision we made. His energy and track selection kept our club packed till closing time. The crowd couldn't get enough, and we've already had requests to bring him back!",
+    "author": "Pulse Nightclub",
+    "image": "/_templates/dj-electro/img/testimonial.jpg"
+  },
+  "eventsLabel": "Upcoming events",
+  "events": [
+    {
+      "date": "30 Nov 2026",
+      "title": "Techno Beats",
+      "text": "An after-dark warehouse session in Berlin, Germany. Expect relentless low-end and a packed floor till sunrise.",
+      "image": "/_templates/dj-electro/img/event1.jpg"
+    },
+    {
+      "date": "28 Dec 2026",
+      "title": "Electro Fest",
+      "text": "Headline electro showcase in Amsterdam, Netherlands. A high-voltage end-of-year set built for the main room.",
+      "image": "/_templates/dj-electro/img/event2.jpg"
+    },
+    {
+      "date": "14 Feb 2027",
+      "title": "Dance Night Paris",
+      "title2": "",
+      "text": "A Valentine's night residency in Paris, France. Deep house early, peak-time house by midnight.",
+      "image": "/_templates/dj-electro/img/event3.jpg"
+    }
+  ],
+  "eventsCta": "All events",
+  "marquee": "TRUSTED DJ FOR YOUR EVENT",
+  "contact": {
+    "title": "Let's get in touch",
+    "text": "Feel free to both ask questions and send business inquiries.",
+    "email": "hello@alexstride.com",
+    "phone": "+1 234 567 890",
+    "formName": "Name",
+    "formEmail": "Email",
+    "formLocation": "Location",
+    "formPhone": "Phone",
+    "formMessage": "Message",
+    "formSubmit": "Submit",
+    "namePlaceholder": "Jane Smith",
+    "emailPlaceholder": "example@example.com",
+    "locationPlaceholder": "Club X, New York",
+    "phonePlaceholder": "+123123123",
+    "messagePlaceholder": "We want you to perform in our club…"
+  },
+  "footer": {
+    "copyright": "© 2026 Alex Stride",
+    "credit": "Club DJ · House · EDM · Techno · Electro"
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "id": "hiphop-producer",
+  "name": "KAIRO — Producteur hip-hop",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "brand",
+      "nav",
+      "cta",
+      "hero",
+      "releasesLabel",
+      "releases",
+      "tourLabel",
+      "tour",
+      "bio",
+      "listenLabel",
+      "socials",
+      "footer"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.image",
+      "role": "hero",
+      "required": true,
+      "note": "hero · image"
+    },
+    {
+      "slot": "p2",
+      "path": "releases[].cover",
+      "role": "cover",
+      "required": true,
+      "note": "releases · cover"
+    },
+    {
+      "slot": "p3",
+      "path": "bio.image",
+      "role": "image",
+      "required": true,
+      "note": "bio · image"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "nav[]",
+        "label": "nav",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta",
+        "label": "cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.badge",
+        "label": "hero · badge",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.titleLine1",
+        "label": "hero · titleLine1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.titleLine2",
+        "label": "hero · titleLine2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.listen[].label",
+        "label": "hero · listen · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "releasesLabel",
+        "label": "releasesLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "releases[].title",
+        "label": "releases · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "releases[].type",
+        "label": "releases · type",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tourLabel",
+        "label": "tourLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tour[].date",
+        "label": "tour · date",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tour[].city",
+        "label": "tour · city",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tour[].venue",
+        "label": "tour · venue",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tour[].link",
+        "label": "tour · link",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "bio.quote",
+        "label": "bio · quote",
+        "type": "text",
+        "maxLen": 197
+      },
+      {
+        "path": "bio.readMore",
+        "label": "bio · readMore",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "listenLabel",
+        "label": "listenLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "socials[].label",
+        "label": "socials · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.copyright",
+        "label": "footer · copyright",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.credit",
+        "label": "footer · credit",
+        "type": "text",
+        "maxLen": 40
+      }
+    ]
+  }
+}

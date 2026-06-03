@@ -1,0 +1,199 @@
+{
+  "id": "podcast-audio",
+  "name": "NORTHWIRE — Podcast audio",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "brand",
+      "cta",
+      "nav",
+      "hero",
+      "about",
+      "episodesLabel",
+      "episodes",
+      "community",
+      "footer"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.image",
+      "role": "hero",
+      "required": true,
+      "note": "hero · image"
+    },
+    {
+      "slot": "p2",
+      "path": "about.image",
+      "role": "image",
+      "required": true,
+      "note": "about · image"
+    },
+    {
+      "slot": "p3",
+      "path": "episodes[].cover",
+      "role": "cover",
+      "required": true,
+      "note": "episodes · cover"
+    },
+    {
+      "slot": "p4",
+      "path": "community.image",
+      "role": "image",
+      "required": true,
+      "note": "community · image"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav[]",
+        "label": "nav",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta",
+        "label": "cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.eyebrow",
+        "label": "hero · eyebrow",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.title",
+        "label": "hero · title",
+        "type": "text",
+        "maxLen": 64
+      },
+      {
+        "path": "hero.tagline",
+        "label": "hero · tagline",
+        "type": "text",
+        "maxLen": 208
+      },
+      {
+        "path": "hero.button",
+        "label": "hero · button",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.label",
+        "label": "about · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.wordmark",
+        "label": "about · wordmark",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.p1",
+        "label": "about · p1",
+        "type": "text",
+        "maxLen": 330
+      },
+      {
+        "path": "about.p2",
+        "label": "about · p2",
+        "type": "text",
+        "maxLen": 227
+      },
+      {
+        "path": "about.hostName",
+        "label": "about · hostName",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.hostRole",
+        "label": "about · hostRole",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "episodesLabel",
+        "label": "episodesLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "episodes[].date",
+        "label": "episodes · date",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "episodes[].title",
+        "label": "episodes · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "episodes[].desc",
+        "label": "episodes · desc",
+        "type": "text",
+        "maxLen": 62
+      },
+      {
+        "path": "episodes[].more",
+        "label": "episodes · more",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "episodes[].caption",
+        "label": "episodes · caption",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "community.eyebrow",
+        "label": "community · eyebrow",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "community.title",
+        "label": "community · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "community.text",
+        "label": "community · text",
+        "type": "text",
+        "maxLen": 170
+      },
+      {
+        "path": "community.button",
+        "label": "community · button",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.links[]",
+        "label": "footer · links",
+        "type": "text",
+        "maxLen": 40
+      }
+    ]
+  }
+}

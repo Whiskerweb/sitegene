@@ -1,0 +1,67 @@
+{
+  "brand": "NORTHWIRE",
+  "cta": "Listen Now",
+  "nav": [
+    "Home",
+    "About",
+    "Episodes",
+    "Listen Now"
+  ],
+  "hero": {
+    "eyebrow": "A Cinematic Audio Podcast",
+    "title": "Authentic Sound. Beautiful Storytelling.",
+    "tagline": "Unheard and unscripted. Unpredictable. A home for the sonic adventures and the stories that linger long after the last note fades.",
+    "button": "Latest Episode",
+    "image": "/_templates/podcast-audio/img/hero.jpg"
+  },
+  "about": {
+    "label": "About",
+    "wordmark": "Northwire",
+    "p1": "Northwire is a sound-first podcast built for the deep listeners. Each episode is composed like a short film for the ears, layered field recordings, scored silence and voices that feel close enough to touch.",
+    "p2": "No filler, no formula. Just honest conversation and immersive sound design, recorded in a dim studio and released whenever the story is ready.",
+    "image": "/_templates/podcast-audio/img/host.jpg",
+    "hostName": "Cassian Vey",
+    "hostRole": "Host & Sound Designer"
+  },
+  "episodesLabel": "Episodes",
+  "episodes": [
+    {
+      "date": "April 6, 2026",
+      "title": "The Sound of Silence",
+      "desc": "Why we're addicted to background noise.",
+      "more": "View More",
+      "cover": "/_templates/podcast-audio/img/ep1.jpg",
+      "caption": "The Sound of Silence"
+    },
+    {
+      "date": "March 23, 2026",
+      "title": "Voices of Change",
+      "desc": "Highlighting stories that inspire and provoke thought.",
+      "more": "View More",
+      "cover": "/_templates/podcast-audio/img/ep2.jpg",
+      "caption": "Voices of Change"
+    },
+    {
+      "date": "March 9, 2026",
+      "title": "Echoes of Time",
+      "desc": "A deep dive into the stories that shape our history.",
+      "more": "View More",
+      "cover": "/_templates/podcast-audio/img/ep3.jpg",
+      "caption": "Echoes of Time"
+    }
+  ],
+  "community": {
+    "eyebrow": "Join the Community",
+    "title": "Tune in. Stay close.",
+    "text": "New episodes, behind-the-scenes sound notes and listener-only sessions, straight to your favourite player.",
+    "button": "Listen Now",
+    "image": "/_templates/podcast-audio/img/cta.jpg"
+  },
+  "footer": {
+    "links": [
+      "NorthwireFM",
+      "West Podcast",
+      "On The Air"
+    ]
+  }
+}

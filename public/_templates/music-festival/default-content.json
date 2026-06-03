@@ -1,0 +1,185 @@
+{
+  "brand": "SOLSTICE",
+  "wordmark": "SOL’26",
+  "cta": "Event Info",
+  "nav": [
+    "Lineup",
+    "Schedule",
+    "Experience",
+    "Tickets",
+    "Voices"
+  ],
+  "hero": {
+    "title": "Solstice Sound 2026",
+    "tagline": "Three days of non-stop music, world-class artists, vibrant vibes, and unforgettable memories. Don’t just hear the music — live it.",
+    "cardTitle": "Ready to be part of it?",
+    "cardText": "Bringing together top international headliners, rising stars, and immersive experiences — it’s more than a festival, it’s a movement.",
+    "cardCta": "Event Info",
+    "image": "/_templates/music-festival/img/hero.jpg"
+  },
+  "intro": "From chart-topping superstars to underground legends, experience a diverse lineup across multiple stages and genres.",
+  "scale": {
+    "title": "The scale of the experience"
+  },
+  "stats": [
+    {
+      "value": "40+",
+      "label": "Artists across 3 stages"
+    },
+    {
+      "value": "3",
+      "label": "Days of non-stop music"
+    },
+    {
+      "value": "12hrs",
+      "label": "Of sound every single day"
+    },
+    {
+      "value": "25k",
+      "label": "Festival-goers expected"
+    }
+  ],
+  "lineup": {
+    "label": "Lineup",
+    "title": "Headliners & rising stars",
+    "text": "A diverse cast of artists across electronic, indie and soul — handpicked to keep every stage alive from afternoon to afterparty.",
+    "artists": [
+      {
+        "name": "Arctic Echoes",
+        "genre": "Indie · Main Stage",
+        "day": "Day 1",
+        "image": "/_templates/music-festival/img/artist1.jpg"
+      },
+      {
+        "name": "Nova Skyline",
+        "genre": "Electronic · The Grid",
+        "day": "Day 2",
+        "image": "/_templates/music-festival/img/artist2.jpg"
+      },
+      {
+        "name": "Rafael & the Waves",
+        "genre": "Soul · Garden Stage",
+        "day": "Day 2",
+        "image": "/_templates/music-festival/img/artist3.jpg"
+      },
+      {
+        "name": "Luna Rae",
+        "genre": "Pop · Main Stage",
+        "day": "Day 3",
+        "image": "/_templates/music-festival/img/artist4.jpg"
+      }
+    ]
+  },
+  "schedule": {
+    "label": "Non-Stop Music & Culture",
+    "text": "Every day is packed with energy, art, food, and unforgettable performances.",
+    "slots": [
+      {
+        "time": "6:00 PM",
+        "day": "Day 1",
+        "index": "01",
+        "title": "Gates Open",
+        "text": "Step inside the festival grounds and explore the stages, art, and food village.",
+        "image": "/_templates/music-festival/img/crowd1.jpg"
+      },
+      {
+        "time": "7:00 PM",
+        "day": "Day 1",
+        "index": "02",
+        "title": "Opening Acts",
+        "text": "Rising stars and local talents warm up the crowd with fresh sounds.",
+        "image": "/_templates/music-festival/img/guitarist.jpg"
+      },
+      {
+        "time": "8:00 PM",
+        "day": "Day 1",
+        "index": "03",
+        "title": "Main Stage Headliner",
+        "text": "Kick off the night with electrifying performances from our first headliners.",
+        "image": "/_templates/music-festival/img/singer.jpg"
+      },
+      {
+        "time": "9:00 PM",
+        "day": "Day 1",
+        "index": "04",
+        "title": "Late Night Sets",
+        "text": "Genre-bending performances roll on as the grounds light up after dark.",
+        "image": "/_templates/music-festival/img/crowd2.jpg"
+      },
+      {
+        "time": "11:00 PM",
+        "day": "Day 1",
+        "index": "05",
+        "title": "Afterparty DJs",
+        "text": "Dance together until late.",
+        "image": "/_templates/music-festival/img/dj.jpg"
+      }
+    ]
+  },
+  "experience": {
+    "title": "More than just music",
+    "text": "Every moment at Solstice is designed to give you an unforgettable experience.",
+    "features": [
+      {
+        "title": "Art Installations",
+        "text": "Immersive light and sound art scattered across the grounds, day and night.",
+        "image": "/_templates/music-festival/img/art.jpg"
+      },
+      {
+        "title": "Food & Drink Village",
+        "text": "Street food, craft drinks and chefs from around the world in one open-air village.",
+        "image": "/_templates/music-festival/img/food.jpg"
+      },
+      {
+        "title": "Day & Night Parties",
+        "text": "From sunrise sets to midnight afterparties — the rhythm never stops.",
+        "image": "/_templates/music-festival/img/party.jpg"
+      }
+    ]
+  },
+  "tickets": {
+    "title": "One ticket. All access",
+    "text": "Your pass to 3 days of music, art, food, and unforgettable memories. One ticket gives you full access to everything the festival has to offer.",
+    "passLabel": "3-Day Festival Pass",
+    "price": "$199",
+    "perks": [
+      "All stages & performances",
+      "Art installations & cultural experiences",
+      "Food & drink village",
+      "Day & night parties",
+      "Festival wristband & welcome kit"
+    ],
+    "cta": "Get Updates"
+  },
+  "voices": {
+    "label": "Voices",
+    "title": "What people are saying",
+    "testimonials": [
+      {
+        "quote": "“Three days that completely reset my summer. Every stage felt like its own little world.”",
+        "author": "— Mara Devlin",
+        "role": "Festival-goer, 2025"
+      },
+      {
+        "quote": "“The production was flawless and the lineup was fearless. Easily the best curated festival I’ve covered all year.”",
+        "author": "— Theo Marsh",
+        "role": "Music journalist, Pulsewave"
+      },
+      {
+        "quote": "“From the food village to the afterparties, Solstice turns a concert into a full-on experience.”",
+        "author": "— Iris Caron",
+        "role": "Returning attendee"
+      }
+    ]
+  },
+  "footer": {
+    "tagline": "See you under the lights.",
+    "copyright": "© 2026 Solstice Festival",
+    "credit": "A demo festival template",
+    "socials": [
+      "Instagram",
+      "TikTok",
+      "Spotify"
+    ]
+  }
+}

@@ -72,7 +72,7 @@ export const CATEGORIES: Category[] = [
     briefPlaceholder:
       "Ex. Léo, producteur & DJ à Marseille.\nÉlectro chaleureuse, sets live, clips.\nDisponible pour clubs et festivals.",
     exampleDomain: "leo.akyra.io",
-    templateIds: ["jazz-vocalist"],
+    templateIds: ["jazz-vocalist", "dj-electro", "electronic-collective", "hiphop-producer", "indie-band", "music-festival", "podcast-audio"],
     defaultTemplateId: "jazz-vocalist",
     testimonial: {
       quote:

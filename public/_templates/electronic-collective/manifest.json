@@ -1,0 +1,254 @@
+{
+  "id": "electronic-collective",
+  "name": "NYXIS — Collectif électro",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "brand",
+      "mono",
+      "nav",
+      "socials",
+      "hero",
+      "bio",
+      "tour",
+      "release",
+      "previous",
+      "contact",
+      "footer"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.img1",
+      "role": "hero",
+      "required": true,
+      "note": "hero · img1"
+    },
+    {
+      "slot": "p2",
+      "path": "hero.img2",
+      "role": "hero",
+      "required": true,
+      "note": "hero · img2"
+    },
+    {
+      "slot": "p3",
+      "path": "hero.img3",
+      "role": "hero",
+      "required": true,
+      "note": "hero · img3"
+    },
+    {
+      "slot": "p4",
+      "path": "bio.img1",
+      "role": "image",
+      "required": true,
+      "note": "bio · img1"
+    },
+    {
+      "slot": "p5",
+      "path": "bio.img2",
+      "role": "image",
+      "required": true,
+      "note": "bio · img2"
+    },
+    {
+      "slot": "p6",
+      "path": "tour.img",
+      "role": "image",
+      "required": true,
+      "note": "tour · img"
+    },
+    {
+      "slot": "p7",
+      "path": "release.cover",
+      "role": "cover",
+      "required": true,
+      "note": "release · cover"
+    },
+    {
+      "slot": "p8",
+      "path": "previous.items[].cover",
+      "role": "cover",
+      "required": true,
+      "note": "previous · items · cover"
+    },
+    {
+      "slot": "p9",
+      "path": "contact.img",
+      "role": "image",
+      "required": true,
+      "note": "contact · img"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "mono",
+        "label": "mono",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.title",
+        "label": "hero · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav[]",
+        "label": "nav",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "socials[]",
+        "label": "socials",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "bio.heading",
+        "label": "bio · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "bio.text",
+        "label": "bio · text",
+        "type": "text",
+        "maxLen": 621
+      },
+      {
+        "path": "tour.label",
+        "label": "tour · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tour.label2",
+        "label": "tour · label2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tour.dates[].venue",
+        "label": "tour · dates · venue",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tour.dates[].city",
+        "label": "tour · dates · city",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tour.dates[].date",
+        "label": "tour · dates · date",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "release.label",
+        "label": "release · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "release.label2",
+        "label": "release · label2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "release.listenLabel",
+        "label": "release · listenLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "release.platforms[]",
+        "label": "release · platforms",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "release.title",
+        "label": "release · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "release.year",
+        "label": "release · year",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "previous.label",
+        "label": "previous · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "previous.label2",
+        "label": "previous · label2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "previous.items[].title",
+        "label": "previous · items · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "previous.items[].year",
+        "label": "previous · items · year",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.managementLabel",
+        "label": "contact · managementLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.managementEmail",
+        "label": "contact · managementEmail",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.bookingLabel",
+        "label": "contact · bookingLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.bookingEmail",
+        "label": "contact · bookingEmail",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.copyright",
+        "label": "footer · copyright",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.credit",
+        "label": "footer · credit",
+        "type": "text",
+        "maxLen": 54
+      }
+    ]
+  }
+}

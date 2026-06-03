@@ -1,0 +1,295 @@
+{
+  "id": "dj-electro",
+  "name": "ALEX STRIDE — DJ électro",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "brand",
+      "cta",
+      "nav",
+      "hero",
+      "stats",
+      "about",
+      "services",
+      "testimonialsLabel",
+      "testimonial",
+      "eventsLabel",
+      "events",
+      "eventsCta",
+      "marquee",
+      "contact",
+      "footer"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.image",
+      "role": "hero",
+      "required": true,
+      "note": "hero · image"
+    },
+    {
+      "slot": "p2",
+      "path": "about.image",
+      "role": "image",
+      "required": true,
+      "note": "about · image"
+    },
+    {
+      "slot": "p3",
+      "path": "testimonial.image",
+      "role": "image",
+      "required": true,
+      "note": "testimonial · image"
+    },
+    {
+      "slot": "p4",
+      "path": "events[].image",
+      "role": "image",
+      "required": true,
+      "note": "events · image"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav[]",
+        "label": "nav",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta",
+        "label": "cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.eyebrow",
+        "label": "hero · eyebrow",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.title",
+        "label": "hero · title",
+        "type": "text",
+        "maxLen": 69
+      },
+      {
+        "path": "hero.tagline",
+        "label": "hero · tagline",
+        "type": "text",
+        "maxLen": 218
+      },
+      {
+        "path": "hero.ctaPrimary",
+        "label": "hero · ctaPrimary",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.ctaSecondary",
+        "label": "hero · ctaSecondary",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "stats[].value",
+        "label": "stats · value",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "stats[].label",
+        "label": "stats · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.title",
+        "label": "about · title",
+        "type": "text",
+        "maxLen": 45
+      },
+      {
+        "path": "about.p1",
+        "label": "about · p1",
+        "type": "text",
+        "maxLen": 349
+      },
+      {
+        "path": "about.p2",
+        "label": "about · p2",
+        "type": "text",
+        "maxLen": 160
+      },
+      {
+        "path": "about.cta",
+        "label": "about · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.label",
+        "label": "services · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.items[].title",
+        "label": "services · items · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.items[].text",
+        "label": "services · items · text",
+        "type": "text",
+        "maxLen": 147
+      },
+      {
+        "path": "testimonialsLabel",
+        "label": "testimonialsLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonial.title",
+        "label": "testimonial · title",
+        "type": "text",
+        "maxLen": 69
+      },
+      {
+        "path": "testimonial.quote",
+        "label": "testimonial · quote",
+        "type": "text",
+        "maxLen": 317
+      },
+      {
+        "path": "testimonial.author",
+        "label": "testimonial · author",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "eventsLabel",
+        "label": "eventsLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "events[].date",
+        "label": "events · date",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "events[].title",
+        "label": "events · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "events[].text",
+        "label": "events · text",
+        "type": "text",
+        "maxLen": 176
+      },
+      {
+        "path": "eventsCta",
+        "label": "eventsCta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "marquee",
+        "label": "marquee",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.title",
+        "label": "contact · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.text",
+        "label": "contact · text",
+        "type": "text",
+        "maxLen": 96
+      },
+      {
+        "path": "contact.email",
+        "label": "contact · email",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.phone",
+        "label": "contact · phone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.formName",
+        "label": "contact · formName",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.formEmail",
+        "label": "contact · formEmail",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.formLocation",
+        "label": "contact · formLocation",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.formPhone",
+        "label": "contact · formPhone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.formMessage",
+        "label": "contact · formMessage",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.formSubmit",
+        "label": "contact · formSubmit",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.credit",
+        "label": "footer · credit",
+        "type": "text",
+        "maxLen": 64
+      },
+      {
+        "path": "footer.copyright",
+        "label": "footer · copyright",
+        "type": "text",
+        "maxLen": 40
+      }
+    ]
+  }
+}

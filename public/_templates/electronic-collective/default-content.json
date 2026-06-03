@@ -1,0 +1,108 @@
+{
+  "brand": "NYXIS",
+  "mono": "N",
+  "nav": [
+    "home",
+    "about",
+    "contact"
+  ],
+  "socials": [
+    "facebook",
+    "twitter",
+    "youtube"
+  ],
+  "hero": {
+    "title": "NYXIS",
+    "img1": "/_templates/electronic-collective/img/hero1.jpg",
+    "img2": "/_templates/electronic-collective/img/hero2.jpg",
+    "img3": "/_templates/electronic-collective/img/hero3.jpg"
+  },
+  "bio": {
+    "heading": "NYXIS",
+    "text": "NYXIS is the brainchild of electronic music collective, born in the neon underground. This cutting-edge group pushes the boundaries of electronic sound with festival-ready sets and avant-garde soundscapes. Blending diverse musical influences with a passion for technology, NYXIS' immersive performances transport audiences to a realm where music and machine converge in harmonious vision.",
+    "img1": "/_templates/electronic-collective/img/bio1.jpg",
+    "img2": "/_templates/electronic-collective/img/bio2.jpg"
+  },
+  "tour": {
+    "label": "Summer",
+    "label2": "Tour",
+    "dates": [
+      {
+        "venue": "The Redwood Room",
+        "city": "Berlin, DE",
+        "date": "12 Jul 2026"
+      },
+      {
+        "venue": "The Blue Moon Theatre",
+        "city": "Amsterdam, NL",
+        "date": "19 Jul 2026"
+      },
+      {
+        "venue": "The Electric Garden",
+        "city": "Barcelona, ES",
+        "date": "02 Aug 2026"
+      },
+      {
+        "venue": "The Silver Cathedral",
+        "city": "London, UK",
+        "date": "16 Aug 2026"
+      },
+      {
+        "venue": "The Emerald Palace",
+        "city": "Paris, FR",
+        "date": "30 Aug 2026"
+      }
+    ],
+    "img": "/_templates/electronic-collective/img/tour.jpg"
+  },
+  "release": {
+    "label": "New",
+    "label2": "Release",
+    "title": "Binary Beats",
+    "year": "2025",
+    "cover": "/_templates/electronic-collective/img/album-new.jpg",
+    "listenLabel": "Listen on",
+    "platforms": [
+      "Spotify",
+      "Youtube",
+      "Apple"
+    ]
+  },
+  "previous": {
+    "label": "Previous",
+    "label2": "Releases",
+    "items": [
+      {
+        "title": "Electric Odyssey",
+        "year": "2022",
+        "cover": "/_templates/electronic-collective/img/album1.jpg"
+      },
+      {
+        "title": "Circuit Groove",
+        "year": "2022",
+        "cover": "/_templates/electronic-collective/img/album2.jpg"
+      },
+      {
+        "title": "Synthwave Serenade",
+        "year": "2020",
+        "cover": "/_templates/electronic-collective/img/album3.jpg"
+      },
+      {
+        "title": "Neon Pulse",
+        "year": "2021",
+        "cover": "/_templates/electronic-collective/img/album4.jpg"
+      }
+    ]
+  },
+  "contact": {
+    "managementLabel": "Management:",
+    "managementEmail": "m@nyxis.live",
+    "bookingLabel": "Booking:",
+    "bookingEmail": "tv@nyxis.live",
+    "img": "/_templates/electronic-collective/img/contact.jpg"
+  },
+  "footer": {
+    "copyright": "© 2025 NYXIS",
+    "credit": "Electronic collective · since 2014"
+  }
+}

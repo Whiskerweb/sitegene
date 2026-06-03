@@ -1,0 +1,152 @@
+{
+  "brand": "HALCYON",
+  "ticker": [
+    "Booking",
+    "Menu"
+  ],
+  "heroCtas": [
+    "The Band",
+    "Tour",
+    "Listen"
+  ],
+  "hero": {
+    "tagline": "A bold and immersive indie band and audio project.",
+    "image": "/_templates/indie-band/img/hero.jpg"
+  },
+  "band": {
+    "label": "The Band",
+    "sub": "Listen to the latest tracks",
+    "body": "HALCYON is a three-piece formed between late-night studio sessions and empty warehouse stages. We build dense, cinematic soundscapes — analog tape, broken synths and a voice that refuses to sit still. Loud where it counts, quiet where it matters.",
+    "image1": "/_templates/indie-band/img/band1.jpg",
+    "image2": "/_templates/indie-band/img/band2.jpg"
+  },
+  "releasesLabel": "Latest Releases",
+  "releasesCta": "Listen the complete tracks",
+  "releases": [
+    {
+      "title": "Static Bloom",
+      "cover": "/_templates/indie-band/img/single1.jpg"
+    },
+    {
+      "title": "Paper Cathedral",
+      "cover": "/_templates/indie-band/img/single2.jpg"
+    },
+    {
+      "title": "Low Country Lights",
+      "cover": "/_templates/indie-band/img/single3.jpg"
+    }
+  ],
+  "tour": {
+    "label": "Tour",
+    "regions": [
+      {
+        "name": "Europa",
+        "dates": [
+          {
+            "city": "Barcelona, ES",
+            "venue": "Razzmatazz 3",
+            "date": "March 5, 2026",
+            "time": "8:00 PM",
+            "status": "Tickets"
+          },
+          {
+            "city": "Madrid, ES",
+            "venue": "Sala Clamores",
+            "date": "May 7, 2026",
+            "time": "8:00 PM",
+            "status": "Tickets"
+          },
+          {
+            "city": "Lyon, FR",
+            "venue": "Le Sonic",
+            "date": "March 9, 2026",
+            "time": "8:30 PM",
+            "status": "Tickets"
+          },
+          {
+            "city": "Milan, IT",
+            "venue": "Circolo Magnolia",
+            "date": "March 11, 2026",
+            "time": "9:00 PM",
+            "status": "Tickets"
+          },
+          {
+            "city": "Zurich, CH",
+            "venue": "Moods",
+            "date": "March 13, 2026",
+            "time": "8:00 PM",
+            "status": "Sold Out"
+          }
+        ]
+      },
+      {
+        "name": "South America",
+        "dates": [
+          {
+            "city": "Quito, EC",
+            "venue": "El Pobre Diablo",
+            "date": "April 12, 2026",
+            "time": "8:00 PM",
+            "status": "Tickets"
+          },
+          {
+            "city": "Bogotá, CO",
+            "venue": "Casa Babylon",
+            "date": "April 10, 2026",
+            "time": "9:00 PM",
+            "status": "Sold Out"
+          },
+          {
+            "city": "Lima, PE",
+            "venue": "La Noche de Barranco",
+            "date": "April 7, 2026",
+            "time": "8:00 PM",
+            "status": "Tickets"
+          },
+          {
+            "city": "Santiago, CL",
+            "venue": "Club Chocolate",
+            "date": "April 5, 2026",
+            "time": "8:30 PM",
+            "status": "Tickets"
+          },
+          {
+            "city": "Buenos Aires, AR",
+            "venue": "La Trastienda",
+            "date": "March 9, 2026",
+            "time": "9:00 PM",
+            "status": "Sold Out"
+          }
+        ]
+      }
+    ]
+  },
+  "videosLabel": "Videos",
+  "videos": [
+    {
+      "title": "Static Bloom — Live at Razzmatazz",
+      "cover": "/_templates/indie-band/img/video1.jpg"
+    },
+    {
+      "title": "Studio Sessions — Tape & Noise",
+      "cover": "/_templates/indie-band/img/video2.jpg"
+    },
+    {
+      "title": "Paper Cathedral — Official Video",
+      "cover": "/_templates/indie-band/img/video3.jpg"
+    }
+  ],
+  "footer": {
+    "label": "Updates on",
+    "text": "No drama, just music. Subscribe for tour announcements and unreleased tracks.",
+    "image": "/_templates/indie-band/img/footer.jpg",
+    "socials": [
+      "Instagram",
+      "Spotify",
+      "YouTube",
+      "Bandcamp"
+    ],
+    "copyright": "© HALCYON",
+    "credit": "Indie band · audio project"
+  }
+}

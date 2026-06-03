@@ -16,8 +16,16 @@ const SECTIONS: { title: string; cta: { label: string; href: string }; ids: stri
   },
   {
     title: "Musiciens",
-    cta: { label: "Tous les modèles", href: "/modeles" },
-    ids: ["jazz-vocalist"],
+    cta: { label: "Voir les musiciens", href: "/modeles" },
+    ids: [
+      "jazz-vocalist",
+      "dj-electro",
+      "music-festival",
+      "hiphop-producer",
+      "electronic-collective",
+      "indie-band",
+      "podcast-audio",
+    ],
   },
   {
     title: "Artisans & services",

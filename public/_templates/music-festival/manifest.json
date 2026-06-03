@@ -1,0 +1,324 @@
+{
+  "id": "music-festival",
+  "name": "SOLSTICE — Festival de musique",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "brand",
+      "wordmark",
+      "cta",
+      "nav",
+      "hero",
+      "intro",
+      "scale",
+      "stats",
+      "lineup",
+      "schedule",
+      "experience",
+      "tickets",
+      "voices",
+      "footer"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.image",
+      "role": "hero",
+      "required": true,
+      "note": "hero · image"
+    },
+    {
+      "slot": "p2",
+      "path": "schedule.slots[].image",
+      "role": "image",
+      "required": true,
+      "note": "schedule · slots · image"
+    },
+    {
+      "slot": "p3",
+      "path": "lineup.artists[].image",
+      "role": "image",
+      "required": true,
+      "note": "lineup · artists · image"
+    },
+    {
+      "slot": "p4",
+      "path": "experience.features[].image",
+      "role": "image",
+      "required": true,
+      "note": "experience · features · image"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "wordmark",
+        "label": "wordmark",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav[]",
+        "label": "nav",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta",
+        "label": "cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.title",
+        "label": "hero · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.tagline",
+        "label": "hero · tagline",
+        "type": "text",
+        "maxLen": 208
+      },
+      {
+        "path": "hero.cardTitle",
+        "label": "hero · cardTitle",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.cardText",
+        "label": "hero · cardText",
+        "type": "text",
+        "maxLen": 213
+      },
+      {
+        "path": "hero.cardCta",
+        "label": "hero · cardCta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "intro",
+        "label": "intro",
+        "type": "text",
+        "maxLen": 186
+      },
+      {
+        "path": "scale.title",
+        "label": "scale · title",
+        "type": "text",
+        "maxLen": 43
+      },
+      {
+        "path": "stats[].value",
+        "label": "stats · value",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "stats[].label",
+        "label": "stats · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "lineup.label",
+        "label": "lineup · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "lineup.title",
+        "label": "lineup · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "lineup.text",
+        "label": "lineup · text",
+        "type": "text",
+        "maxLen": 205
+      },
+      {
+        "path": "lineup.artists[].name",
+        "label": "lineup · artists · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "lineup.artists[].day",
+        "label": "lineup · artists · day",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "lineup.artists[].genre",
+        "label": "lineup · artists · genre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "schedule.label",
+        "label": "schedule · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "schedule.text",
+        "label": "schedule · text",
+        "type": "text",
+        "maxLen": 120
+      },
+      {
+        "path": "schedule.slots[].time",
+        "label": "schedule · slots · time",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "schedule.slots[].day",
+        "label": "schedule · slots · day",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "schedule.slots[].title",
+        "label": "schedule · slots · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "schedule.slots[].text",
+        "label": "schedule · slots · text",
+        "type": "text",
+        "maxLen": 126
+      },
+      {
+        "path": "schedule.slots[].index",
+        "label": "schedule · slots · index",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "experience.title",
+        "label": "experience · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "experience.text",
+        "label": "experience · text",
+        "type": "text",
+        "maxLen": 123
+      },
+      {
+        "path": "experience.features[].title",
+        "label": "experience · features · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "experience.features[].text",
+        "label": "experience · features · text",
+        "type": "text",
+        "maxLen": 118
+      },
+      {
+        "path": "tickets.title",
+        "label": "tickets · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tickets.text",
+        "label": "tickets · text",
+        "type": "text",
+        "maxLen": 227
+      },
+      {
+        "path": "tickets.passLabel",
+        "label": "tickets · passLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tickets.price",
+        "label": "tickets · price",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tickets.perks[]",
+        "label": "tickets · perks",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tickets.cta",
+        "label": "tickets · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "voices.label",
+        "label": "voices · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "voices.title",
+        "label": "voices · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "voices.testimonials[].quote",
+        "label": "voices · testimonials · quote",
+        "type": "text",
+        "maxLen": 142
+      },
+      {
+        "path": "voices.testimonials[].author",
+        "label": "voices · testimonials · author",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "voices.testimonials[].role",
+        "label": "voices · testimonials · role",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.tagline",
+        "label": "footer · tagline",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.socials[]",
+        "label": "footer · socials",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.copyright",
+        "label": "footer · copyright",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.credit",
+        "label": "footer · credit",
+        "type": "text",
+        "maxLen": 40
+      }
+    ]
+  }
+}

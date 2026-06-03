@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NYXIS — Electronic Collective</title>
+  <meta name="description" content="NYXIS — a futurist electronic music collective. Live shows, releases and streaming." />
+
+  <!-- Polices exactes extraites des tokens : MuseoModerno (display futuriste), Inter (corps) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=MuseoModerno:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    // Config Tailwind : palette + typo issues de la capture (tokens.json)
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#000000',     // texte / monogrammes
+            paper: '#f0f0f0',   // fond clair dominant
+            panel: '#212121',   // panneaux sombres
+            accent: '#0000ee',  // bleu électrique
+            white: '#ffffff',
+            muted: '#858585',   // gris secondaire
+          },
+          fontFamily: {
+            display: ['"MuseoModerno"', 'sans-serif'],
+            sans: ['"Inter"', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body { background: #f0f0f0; color: #000; }
+    .vtext { writing-mode: vertical-rl; text-orientation: mixed; }
+  </style>
+
+  <!-- Source unique de vérité (le serveur Akyra injecte le vrai contenu ; fallback de preview) -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ ||  window.__SITE_CONTENT__ || {
+      brand: "NYXIS",
+      mono: "N",
+      nav: ["home", "about", "contact"],
+      socials: ["facebook", "twitter", "youtube"],
+      hero: {
+        title: "NYXIS",
+        img1: "img/hero1.jpg",
+        img2: "img/hero2.jpg",
+        img3: "img/hero3.jpg"
+      },
+      bio: {
+        heading: "NYXIS",
+        text: "NYXIS is the brainchild of electronic music collective, born in the neon underground. This cutting-edge group pushes the boundaries of electronic sound with festival-ready sets and avant-garde soundscapes. Blending diverse musical influences with a passion for technology, NYXIS' immersive performances transport audiences to a realm where music and machine converge in harmonious vision.",
+        img1: "img/bio1.jpg",
+        img2: "img/bio2.jpg"
+      },
+      tour: {
+        label: "Summer",
+        label2: "Tour",
+        dates: [
+          { venue: "The Redwood Room", city: "Berlin, DE", date: "12 Jul 2026" },
+          { venue: "The Blue Moon Theatre", city: "Amsterdam, NL", date: "19 Jul 2026" },
+          { venue: "The Electric Garden", city: "Barcelona, ES", date: "02 Aug 2026" },
+          { venue: "The Silver Cathedral", city: "London, UK", date: "16 Aug 2026" },
+          { venue: "The Emerald Palace", city: "Paris, FR", date: "30 Aug 2026" }
+        ],
+        img: "img/tour.jpg"
+      },
+      release: {
+        label: "New",
+        label2: "Release",
+        title: "Binary Beats",
+        year: "2025",
+        cover: "img/album-new.jpg",
+        listenLabel: "Listen on",
+        platforms: ["Spotify", "Youtube", "Apple"]
+      },
+      previous: {
+        label: "Previous",
+        label2: "Releases",
+        items: [
+          { title: "Electric Odyssey", year: "2022", cover: "img/album1.jpg" },
+          { title: "Circuit Groove", year: "2022", cover: "img/album2.jpg" },
+          { title: "Synthwave Serenade", year: "2020", cover: "img/album3.jpg" },
+          { title: "Neon Pulse", year: "2021", cover: "img/album4.jpg" }
+        ]
+      },
+      contact: {
+        managementLabel: "Management:",
+        managementEmail: "m@nyxis.live",
+        bookingLabel: "Booking:",
+        bookingEmail: "tv@nyxis.live",
+        img: "img/contact.jpg"
+      },
+      footer: {
+        copyright: "© 2025 NYXIS",
+        credit: "Electronic collective · since 2014"
+      }
+    };
+  </script>
+</head>
+
+<body class="font-sans antialiased bg-paper text-ink selection:bg-accent selection:text-white">
+
+  <!-- ============ HERO (split 3 colonnes + monogramme) ============ -->
+  <section id="top" class="relative min-h-screen">
+    <!-- monogramme central en haut -->
+    <div class="absolute top-6 inset-x-0 z-30 flex justify-center">
+      <span class="font-display text-3xl text-ink" data-sg-path="mono">N</span>
+    </div>
+
+    <!-- 3 colonnes images -->
+    <div class="grid grid-cols-1 md:grid-cols-3 h-screen">
+      <div class="relative overflow-hidden bg-panel">
+        <img src="img/hero1.jpg" alt="" data-sg-img="hero.img1" class="absolute inset-0 w-full h-full object-cover" />
+      </div>
+      <div class="relative overflow-hidden bg-panel">
+        <img src="img/hero2.jpg" alt="" data-sg-img="hero.img2" class="absolute inset-0 w-full h-full object-cover" />
+        <!-- brand centré sur la colonne du milieu -->
+        <div class="absolute inset-0 z-20 flex items-center justify-center">
+          <h1 class="font-display text-white text-3xl md:text-2xl lg:text-4xl tracking-tight px-4 text-center drop-shadow-lg" data-sg-path="hero.title">NYXIS</h1>
+        </div>
+      </div>
+      <div class="relative overflow-hidden bg-panel">
+        <img src="img/hero3.jpg" alt="" data-sg-img="hero.img3" class="absolute inset-0 w-full h-full object-cover" />
+      </div>
+    </div>
+
+    <!-- nav bas gauche -->
+    <nav class="absolute bottom-6 left-6 z-30 flex gap-6 font-sans text-sm text-ink">
+      <a href="#top" class="hover:text-accent transition-colors" data-sg-path="nav[0]">home</a>
+      <a href="#about" class="hover:text-accent transition-colors" data-sg-path="nav[1]">about</a>
+      <a href="#contact" class="hover:text-accent transition-colors" data-sg-path="nav[2]">contact</a>
+    </nav>
+
+    <!-- socials bas droite -->
+    <div class="absolute bottom-6 right-6 z-30 flex gap-6 font-sans text-sm text-ink">
+      <a href="#" class="hover:text-accent transition-colors" data-sg-path="socials[0]">facebook</a>
+      <a href="#" class="hover:text-accent transition-colors" data-sg-path="socials[1]">twitter</a>
+      <a href="#" class="hover:text-accent transition-colors" data-sg-path="socials[2]">youtube</a>
+    </div>
+  </section>
+
+  <!-- ============ BIO ============ -->
+  <section id="about" class="mx-auto max-w-6xl px-6 pt-24 pb-16" data-sg-reveal>
+    <h2 class="font-display text-5xl md:text-7xl lg:text-8xl tracking-tight text-ink mb-10" data-sg-path="bio.heading">NYXIS</h2>
+    <p class="font-sans text-sm md:text-base leading-relaxed text-ink/90 max-w-3xl" data-sg-path="bio.text">
+      NYXIS is the brainchild of electronic music collective, born in the neon underground. This cutting-edge group pushes the boundaries of electronic sound with festival-ready sets and avant-garde soundscapes. Blending diverse musical influences with a passion for technology, NYXIS' immersive performances transport audiences to a realm where music and machine converge in harmonious vision.
+    </p>
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-1">
+      <img src="img/bio1.jpg" alt="" data-sg-img="bio.img1" class="w-full h-[320px] md:h-[420px] object-cover" />
+      <img src="img/bio2.jpg" alt="" data-sg-img="bio.img2" class="w-full h-[320px] md:h-[420px] object-cover" />
+    </div>
+  </section>
+
+  <!-- ============ SUMMER TOUR ============ -->
+  <section id="tour" class="mx-auto max-w-6xl px-6 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-10" data-sg-reveal>
+      <h2 class="font-display text-5xl md:text-6xl tracking-tight text-ink leading-[0.95]">
+        <span data-sg-path="tour.label">Summer</span><br /><span data-sg-path="tour.label2">Tour</span>
+      </h2>
+      <ul class="divide-y divide-ink/15 border-t border-ink/15">
+        <li class="grid grid-cols-[1fr_auto] gap-4 py-4 items-baseline">
+          <div>
+            <h3 class="font-sans font-medium text-lg text-ink" data-sg-path="tour.dates[0].venue">The Redwood Room</h3>
+            <p class="font-sans text-sm text-muted" data-sg-path="tour.dates[0].city">Berlin, DE</p>
+          </div>
+          <span class="font-sans text-sm text-ink" data-sg-path="tour.dates[0].date">12 Jul 2026</span>
+        </li>
+        <li class="grid grid-cols-[1fr_auto] gap-4 py-4 items-baseline">
+          <div>
+            <h3 class="font-sans font-medium text-lg text-ink" data-sg-path="tour.dates[1].venue">The Blue Moon Theatre</h3>
+            <p class="font-sans text-sm text-muted" data-sg-path="tour.dates[1].city">Amsterdam, NL</p>
+          </div>
+          <span class="font-sans text-sm text-ink" data-sg-path="tour.dates[1].date">19 Jul 2026</span>
+        </li>
+        <li class="grid grid-cols-[1fr_auto] gap-4 py-4 items-baseline">
+          <div>
+            <h3 class="font-sans font-medium text-lg text-ink" data-sg-path="tour.dates[2].venue">The Electric Garden</h3>
+            <p class="font-sans text-sm text-muted" data-sg-path="tour.dates[2].city">Barcelona, ES</p>
+          </div>
+          <span class="font-sans text-sm text-ink" data-sg-path="tour.dates[2].date">02 Aug 2026</span>
+        </li>
+        <li class="grid grid-cols-[1fr_auto] gap-4 py-4 items-baseline">
+          <div>
+            <h3 class="font-sans font-medium text-lg text-ink" data-sg-path="tour.dates[3].venue">The Silver Cathedral</h3>
+            <p class="font-sans text-sm text-muted" data-sg-path="tour.dates[3].city">London, UK</p>
+          </div>
+          <span class="font-sans text-sm text-ink" data-sg-path="tour.dates[3].date">16 Aug 2026</span>
+        </li>
+        <li class="grid grid-cols-[1fr_auto] gap-4 py-4 items-baseline">
+          <div>
+            <h3 class="font-sans font-medium text-lg text-ink" data-sg-path="tour.dates[4].venue">The Emerald Palace</h3>
+            <p class="font-sans text-sm text-muted" data-sg-path="tour.dates[4].city">Paris, FR</p>
+          </div>
+          <span class="font-sans text-sm text-ink" data-sg-path="tour.dates[4].date">30 Aug 2026</span>
+        </li>
+      </ul>
+    </div>
+    <!-- visuel pleine largeur (scène / lasers) -->
+    <div class="mt-12 relative h-[55vh] overflow-hidden bg-panel">
+      <img src="img/tour.jpg" alt="" data-sg-img="tour.img" class="absolute inset-0 w-full h-full object-cover" data-sg-parallax />
+    </div>
+  </section>
+
+  <!-- ============ NEW RELEASE ============ -->
+  <section class="mx-auto max-w-6xl px-6 py-16" data-sg-reveal>
+    <div class="grid grid-cols-1 md:grid-cols-[1fr_440px] gap-10 items-center">
+      <div>
+        <h2 class="font-display text-5xl md:text-6xl tracking-tight text-ink leading-[0.95] mb-10">
+          <span data-sg-path="release.label">New</span><br /><span data-sg-path="release.label2">Release</span>
+        </h2>
+        <div class="flex flex-wrap items-center gap-4">
+          <span class="font-sans text-sm text-muted mr-2" data-sg-path="release.listenLabel">Listen on</span>
+          <a href="#" class="border border-ink/30 rounded px-6 py-2 font-sans text-sm text-ink hover:bg-ink hover:text-paper transition-colors" data-sg-path="release.platforms[0]">Spotify</a>
+          <a href="#" class="border border-ink/30 rounded px-6 py-2 font-sans text-sm text-ink hover:bg-ink hover:text-paper transition-colors" data-sg-path="release.platforms[1]">Youtube</a>
+          <a href="#" class="border border-ink/30 rounded px-6 py-2 font-sans text-sm text-ink hover:bg-ink hover:text-paper transition-colors" data-sg-path="release.platforms[2]">Apple</a>
+        </div>
+      </div>
+      <!-- pochette avec titre vertical superposé -->
+      <div class="relative aspect-square overflow-hidden bg-panel">
+        <img src="img/album-new.jpg" alt="" data-sg-img="release.cover" class="absolute inset-0 w-full h-full object-cover" />
+        <span class="vtext absolute top-6 left-5 z-10 font-display text-white text-2xl tracking-widest" data-sg-path="release.title">Binary Beats</span>
+        <span class="absolute bottom-5 right-5 z-10 font-sans text-white/90 text-sm" data-sg-path="release.year">2025</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PREVIOUS RELEASES ============ -->
+  <section class="mx-auto max-w-6xl px-6 py-16" data-sg-reveal>
+    <h2 class="font-display text-5xl md:text-6xl tracking-tight text-ink leading-[0.95] mb-12">
+      <span data-sg-path="previous.label">Previous</span><br /><span data-sg-path="previous.label2">Releases</span>
+    </h2>
+    <div class="grid grid-cols-2 md:grid-cols-2 gap-x-8 gap-y-10 max-w-3xl">
+      <figure>
+        <div class="relative aspect-square overflow-hidden bg-panel">
+          <img src="img/album1.jpg" alt="" data-sg-img="previous.items[0].cover" class="absolute inset-0 w-full h-full object-cover" />
+        </div>
+        <figcaption class="mt-3 text-center font-sans text-sm text-ink"><span data-sg-path="previous.items[0].title">Electric Odyssey</span>, <span data-sg-path="previous.items[0].year">2022</span></figcaption>
+      </figure>
+      <figure>
+        <div class="relative aspect-square overflow-hidden bg-panel">
+          <img src="img/album2.jpg" alt="" data-sg-img="previous.items[1].cover" class="absolute inset-0 w-full h-full object-cover" />
+        </div>
+        <figcaption class="mt-3 text-center font-sans text-sm text-ink"><span data-sg-path="previous.items[1].title">Circuit Groove</span>, <span data-sg-path="previous.items[1].year">2022</span></figcaption>
+      </figure>
+      <figure>
+        <div class="relative aspect-square overflow-hidden bg-panel">
+          <img src="img/album3.jpg" alt="" data-sg-img="previous.items[2].cover" class="absolute inset-0 w-full h-full object-cover" />
+        </div>
+        <figcaption class="mt-3 text-center font-sans text-sm text-ink"><span data-sg-path="previous.items[2].title">Synthwave Serenade</span>, <span data-sg-path="previous.items[2].year">2020</span></figcaption>
+      </figure>
+      <figure>
+        <div class="relative aspect-square overflow-hidden bg-panel">
+          <img src="img/album4.jpg" alt="" data-sg-img="previous.items[3].cover" class="absolute inset-0 w-full h-full object-cover" />
+        </div>
+        <figcaption class="mt-3 text-center font-sans text-sm text-ink"><span data-sg-path="previous.items[3].title">Neon Pulse</span>, <span data-sg-path="previous.items[3].year">2021</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT / FOOTER ============ -->
+  <footer id="contact" class="mt-12">
+    <div class="mx-auto max-w-6xl px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-8" data-sg-reveal>
+      <div class="font-sans text-sm text-ink space-y-3">
+        <p><span class="text-muted" data-sg-path="contact.managementLabel">Management:</span> <a href="#" class="text-accent hover:text-ink transition-colors" data-sg-path="contact.managementEmail">m@nyxis.live</a></p>
+        <p><span class="text-muted" data-sg-path="contact.bookingLabel">Booking:</span> <a href="#" class="text-accent hover:text-ink transition-colors" data-sg-path="contact.bookingEmail">tv@nyxis.live</a></p>
+      </div>
+      <div class="flex gap-6 md:justify-end font-sans text-sm text-ink">
+        <a href="#" class="hover:text-accent transition-colors" data-sg-path="socials[0]">facebook</a>
+        <a href="#" class="hover:text-accent transition-colors" data-sg-path="socials[1]">twitter</a>
+        <a href="#" class="hover:text-accent transition-colors" data-sg-path="socials[2]">youtube</a>
+      </div>
+    </div>
+
+    <!-- bandeau image + monogramme -->
+    <div class="relative h-[60vh] overflow-hidden bg-panel">
+      <img src="img/contact.jpg" alt="" data-sg-img="contact.img" class="absolute inset-0 w-full h-full object-cover" data-sg-parallax />
+      <div class="absolute inset-0 bg-ink/30"></div>
+      <div class="absolute inset-0 z-10 flex items-center justify-center">
+        <span class="font-display text-white text-7xl md:text-8xl" data-sg-path="mono">N</span>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-6xl px-6 py-8 flex flex-col sm:flex-row justify-between items-center gap-2 font-sans text-xs text-muted">
+      <span data-sg-path="footer.copyright">© 2025 NYXIS</span>
+      <span data-sg-path="footer.credit">Electronic collective · since 2014</span>
+    </div>
+  </footer>
+
+  <!-- ============ HYDRATATION + ANIMATIONS (standard clone-site) ============ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, { opacity: 0, y: 40, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, { yPercent: -15, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } });
+        });
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

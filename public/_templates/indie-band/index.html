@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HALCYON — Indie Band & Audio Project</title>
+  <meta name="description" content="HALCYON — a bold and immersive indie band and audio project. Releases, tour dates, videos." />
+
+  <!-- Polices exactes extraites des tokens : Bungee Hairline (display), Karla (corps), Inter (labels) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bungee+Hairline&family=Inter:wght@400;500&family=Karla:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    // Config Tailwind : palette + typo issues de la capture (tokens.json)
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#000000',      // rgb(0,0,0) — fond dominant
+            paper: '#fafafa',    // rgb(250,250,250) — texte clair
+            soft: '#f1f1f1',     // rgb(241,241,241)
+            accent: '#0000ee',   // rgb(0,0,238) — bleu électrique
+            panel: '#0f0f0f',    // rgb(15,15,15) — surfaces
+            line: '#1a1a1a',     // séparateurs sombres
+            muted: '#a1a1a1',    // rgb(161,161,161) — texte secondaire
+            dim: '#6f6e6e',      // rgb(111,110,110)
+          },
+          fontFamily: {
+            display: ['"Bungee Hairline"', 'sans-serif'],
+            body: ['Karla', 'sans-serif'],
+            mono: ['Inter', 'sans-serif'],
+          },
+          letterSpacing: { label: '0.22em', wide: '0.12em' },
+        },
+      },
+    };
+  </script>
+  <style>
+    body { background:#000; color:#fafafa; }
+    .display-title { letter-spacing: 0.14em; }
+    /* marquee bandeau nav */
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .marquee-track { display:inline-flex; white-space:nowrap; animation: marquee 22s linear infinite; }
+  </style>
+
+  <!-- Source unique de vérité (le serveur Akyra injecte le vrai contenu ; fallback de preview) -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ ||  window.__SITE_CONTENT__ || {
+      brand: "HALCYON",
+      ticker: ["Booking", "Menu"],
+      heroCtas: ["The Band", "Tour", "Listen"],
+      hero: {
+        tagline: "A bold and immersive indie band and audio project.",
+        image: "img/hero.jpg"
+      },
+      band: {
+        label: "The Band",
+        sub: "Listen to the latest tracks",
+        body: "HALCYON is a three-piece formed between late-night studio sessions and empty warehouse stages. We build dense, cinematic soundscapes — analog tape, broken synths and a voice that refuses to sit still. Loud where it counts, quiet where it matters.",
+        image1: "img/band1.jpg",
+        image2: "img/band2.jpg"
+      },
+      releasesLabel: "Latest Releases",
+      releasesCta: "Listen the complete tracks",
+      releases: [
+        { title: "Static Bloom", cover: "img/single1.jpg" },
+        { title: "Paper Cathedral", cover: "img/single2.jpg" },
+        { title: "Low Country Lights", cover: "img/single3.jpg" }
+      ],
+      tour: {
+        label: "Tour",
+        regions: [
+          {
+            name: "Europa",
+            dates: [
+              { city: "Barcelona, ES", venue: "Razzmatazz 3",     date: "March 5, 2026",  time: "8:00 PM", status: "Tickets" },
+              { city: "Madrid, ES",    venue: "Sala Clamores",    date: "May 7, 2026",    time: "8:00 PM", status: "Tickets" },
+              { city: "Lyon, FR",      venue: "Le Sonic",         date: "March 9, 2026",  time: "8:30 PM", status: "Tickets" },
+              { city: "Milan, IT",     venue: "Circolo Magnolia", date: "March 11, 2026", time: "9:00 PM", status: "Tickets" },
+              { city: "Zurich, CH",    venue: "Moods",            date: "March 13, 2026", time: "8:00 PM", status: "Sold Out" }
+            ]
+          },
+          {
+            name: "South America",
+            dates: [
+              { city: "Quito, EC",        venue: "El Pobre Diablo",      date: "April 12, 2026", time: "8:00 PM", status: "Tickets" },
+              { city: "Bogotá, CO",       venue: "Casa Babylon",         date: "April 10, 2026", time: "9:00 PM", status: "Sold Out" },
+              { city: "Lima, PE",         venue: "La Noche de Barranco", date: "April 7, 2026",  time: "8:00 PM", status: "Tickets" },
+              { city: "Santiago, CL",     venue: "Club Chocolate",       date: "April 5, 2026",  time: "8:30 PM", status: "Tickets" },
+              { city: "Buenos Aires, AR", venue: "La Trastienda",        date: "March 9, 2026",  time: "9:00 PM", status: "Sold Out" }
+            ]
+          }
+        ]
+      },
+      videosLabel: "Videos",
+      videos: [
+        { title: "Static Bloom — Live at Razzmatazz", cover: "img/video1.jpg" },
+        { title: "Studio Sessions — Tape & Noise",    cover: "img/video2.jpg" },
+        { title: "Paper Cathedral — Official Video",  cover: "img/video3.jpg" }
+      ],
+      footer: {
+        label: "Updates on",
+        text: "No drama, just music. Subscribe for tour announcements and unreleased tracks.",
+        image: "img/footer.jpg",
+        socials: ["Instagram", "Spotify", "YouTube", "Bandcamp"],
+        copyright: "© HALCYON",
+        credit: "Indie band · audio project"
+      }
+    };
+  </script>
+</head>
+
+<body class="font-body antialiased bg-ink text-paper selection:bg-accent selection:text-white">
+
+  <!-- ============ NAV (bandeau marquee BOOKING · MENU) ============ -->
+  <header class="fixed top-0 inset-x-0 z-50 border-b border-line bg-ink/70 backdrop-blur-sm overflow-hidden">
+    <div class="h-9 flex items-center">
+      <div class="marquee-track font-mono text-[11px] tracking-label uppercase text-muted">
+        <span class="flex items-center">
+          <span class="px-4" data-sg-path="ticker[0]">Booking</span><span class="text-accent">·</span>
+          <span class="px-4" data-sg-path="ticker[1]">Menu</span><span class="text-accent">·</span>
+          <span class="px-4">Booking</span><span class="text-accent">·</span>
+          <span class="px-4">Menu</span><span class="text-accent">·</span>
+          <span class="px-4">Booking</span><span class="text-accent">·</span>
+          <span class="px-4">Menu</span><span class="text-accent">·</span>
+        </span>
+        <span class="flex items-center" aria-hidden="true">
+          <span class="px-4">Booking</span><span class="text-accent">·</span>
+          <span class="px-4">Menu</span><span class="text-accent">·</span>
+          <span class="px-4">Booking</span><span class="text-accent">·</span>
+          <span class="px-4">Menu</span><span class="text-accent">·</span>
+          <span class="px-4">Booking</span><span class="text-accent">·</span>
+          <span class="px-4">Menu</span><span class="text-accent">·</span>
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section id="top" class="relative min-h-screen flex flex-col justify-between overflow-hidden">
+    <img src="img/hero.jpg" alt="HALCYON" data-sg-img="hero.image" data-sg-parallax
+         class="absolute inset-0 w-full h-full object-cover grayscale opacity-80" />
+    <div class="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/10 to-ink"></div>
+
+    <!-- brand top-left, oversized -->
+    <div class="relative z-10 pt-16 px-6 md:px-10">
+      <h1 class="font-display display-title uppercase text-paper text-5xl sm:text-7xl md:text-8xl lg:text-[120px] leading-none" data-sg-path="brand">HALCYON</h1>
+      <p class="mt-4 font-mono text-xs md:text-sm tracking-wide uppercase text-paper/80 max-w-md" data-sg-path="hero.tagline">A bold and immersive indie band and audio project.</p>
+    </div>
+
+    <!-- CTA pills bottom-right -->
+    <div class="relative z-10 pb-12 px-6 md:px-10 flex justify-end">
+      <div class="flex flex-wrap gap-3">
+        <a href="#band" class="bg-paper text-ink font-mono text-[11px] tracking-label uppercase px-6 py-3 hover:bg-accent hover:text-white transition-colors" data-sg-path="heroCtas[0]">The Band</a>
+        <a href="#tour" class="bg-paper text-ink font-mono text-[11px] tracking-label uppercase px-6 py-3 hover:bg-accent hover:text-white transition-colors" data-sg-path="heroCtas[1]">Tour</a>
+        <a href="#releases" class="bg-paper text-ink font-mono text-[11px] tracking-label uppercase px-6 py-3 hover:bg-accent hover:text-white transition-colors" data-sg-path="heroCtas[2]">Listen</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ THE BAND ============ -->
+  <section id="band" class="mx-auto max-w-7xl px-6 md:px-10 py-28 md:py-40" data-sg-reveal>
+    <div class="grid md:grid-cols-2 gap-12 items-start">
+      <div>
+        <h2 class="font-display display-title uppercase text-paper text-3xl md:text-5xl mb-8" data-sg-path="band.label">The Band</h2>
+        <p class="font-body text-paper/85 leading-relaxed max-w-md text-lg" data-sg-path="band.body">HALCYON is a three-piece formed between late-night studio sessions and empty warehouse stages. We build dense, cinematic soundscapes — analog tape, broken synths and a voice that refuses to sit still. Loud where it counts, quiet where it matters.</p>
+        <p class="mt-10 font-mono text-[11px] tracking-label uppercase text-muted" data-sg-path="band.sub">Listen to the latest tracks</p>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <img src="img/band1.jpg" alt="" data-sg-img="band.image1" class="w-full aspect-[3/4] object-cover grayscale" data-sg-parallax />
+        <img src="img/band2.jpg" alt="" data-sg-img="band.image2" class="w-full aspect-[3/4] object-cover grayscale mt-12" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LATEST RELEASES ============ -->
+  <section id="releases" class="border-t border-line py-28 md:py-40 text-center" data-sg-reveal>
+    <h2 class="font-display display-title uppercase text-paper text-3xl md:text-6xl mb-16" data-sg-path="releasesLabel">Latest Releases</h2>
+    <div class="mx-auto max-w-5xl px-6 grid sm:grid-cols-3 gap-8">
+      <figure class="group">
+        <div class="relative overflow-hidden">
+          <img src="img/single1.jpg" alt="" data-sg-img="releases[0].cover" class="w-full aspect-square object-cover grayscale group-hover:grayscale-0 transition" />
+          <span class="absolute bottom-3 left-3 w-9 h-9 rounded-full bg-ink/60 backdrop-blur flex items-center justify-center text-paper">▶</span>
+        </div>
+        <figcaption class="mt-4 font-mono text-[11px] tracking-label uppercase text-muted" data-sg-path="releases[0].title">Static Bloom</figcaption>
+      </figure>
+      <figure class="group">
+        <div class="relative overflow-hidden">
+          <img src="img/single2.jpg" alt="" data-sg-img="releases[1].cover" class="w-full aspect-square object-cover grayscale group-hover:grayscale-0 transition" />
+          <span class="absolute bottom-3 left-3 w-9 h-9 rounded-full bg-ink/60 backdrop-blur flex items-center justify-center text-paper">▶</span>
+        </div>
+        <figcaption class="mt-4 font-mono text-[11px] tracking-label uppercase text-muted" data-sg-path="releases[1].title">Paper Cathedral</figcaption>
+      </figure>
+      <figure class="group">
+        <div class="relative overflow-hidden">
+          <img src="img/single3.jpg" alt="" data-sg-img="releases[2].cover" class="w-full aspect-square object-cover grayscale group-hover:grayscale-0 transition" />
+          <span class="absolute bottom-3 left-3 w-9 h-9 rounded-full bg-ink/60 backdrop-blur flex items-center justify-center text-paper">▶</span>
+        </div>
+        <figcaption class="mt-4 font-mono text-[11px] tracking-label uppercase text-muted" data-sg-path="releases[2].title">Low Country Lights</figcaption>
+      </figure>
+    </div>
+    <a href="#" class="inline-block mt-14 font-mono text-[11px] tracking-label uppercase text-accent hover:text-paper transition-colors" data-sg-path="releasesCta">Listen the complete tracks</a>
+  </section>
+
+  <!-- ============ TOUR ============ -->
+  <section id="tour" class="mx-auto max-w-5xl px-6 md:px-10 py-28 md:py-40" data-sg-reveal>
+    <h2 class="font-display display-title uppercase text-paper text-3xl md:text-6xl text-center mb-20" data-sg-path="tour.label">Tour</h2>
+
+    <!-- Region : Europa -->
+    <h3 class="font-display display-title uppercase text-muted text-xl md:text-3xl text-center mb-10" data-sg-path="tour.regions[0].name">Europa</h3>
+    <ul class="divide-y divide-line border-t border-line">
+      <li class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr_0.7fr_auto] gap-2 md:gap-6 items-center py-5">
+        <div><p class="font-mono text-[12px] tracking-wide uppercase text-paper" data-sg-path="tour.regions[0].dates[0].city">Barcelona, ES</p><p class="font-body text-sm text-muted" data-sg-path="tour.regions[0].dates[0].venue">Razzmatazz 3</p></div>
+        <span class="font-mono text-[11px] tracking-wide uppercase text-muted" data-sg-path="tour.regions[0].dates[0].date">March 5, 2026</span>
+        <span class="font-mono text-[11px] text-muted" data-sg-path="tour.regions[0].dates[0].time">8:00 PM</span>
+        <span class="justify-self-start md:justify-self-end font-mono text-[11px] tracking-label uppercase border border-line px-5 py-2 text-paper hover:bg-paper hover:text-ink transition-colors" data-sg-path="tour.regions[0].dates[0].status">Tickets</span>
+      </li>
+      <li class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr_0.7fr_auto] gap-2 md:gap-6 items-center py-5">
+        <div><p class="font-mono text-[12px] tracking-wide uppercase text-paper" data-sg-path="tour.regions[0].dates[1].city">Madrid, ES</p><p class="font-body text-sm text-muted" data-sg-path="tour.regions[0].dates[1].venue">Sala Clamores</p></div>
+        <span class="font-mono text-[11px] tracking-wide uppercase text-muted" data-sg-path="tour.regions[0].dates[1].date">May 7, 2026</span>
+        <span class="font-mono text-[11px] text-muted" data-sg-path="tour.regions[0].dates[1].time">8:00 PM</span>
+        <span class="justify-self-start md:justify-self-end font-mono text-[11px] tracking-label uppercase border border-line px-5 py-2 text-paper hover:bg-paper hover:text-ink transition-colors" data-sg-path="tour.regions[0].dates[1].status">Tickets</span>
+      </li>
+      <li class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr_0.7fr_auto] gap-2 md:gap-6 items-center py-5">
+        <div><p class="font-mono text-[12px] tracking-wide uppercase text-paper" data-sg-path="tour.regions[0].dates[2].city">Lyon, FR</p><p class="font-body text-sm text-muted" data-sg-path="tour.regions[0].dates[2].venue">Le Sonic</p></div>
+        <span class="font-mono text-[11px] tracking-wide uppercase text-muted" data-sg-path="tour.regions[0].dates[2].date">March 9, 2026</span>
+        <span class="font-mono text-[11px] text-muted" data-sg-path="tour.regions[0].dates[2].time">8:30 PM</span>
+        <span class="justify-self-start md:justify-self-end font-mono text-[11px] tracking-label uppercase border border-line px-5 py-2 text-paper hover:bg-paper hover:text-ink transition-colors" data-sg-path="tour.regions[0].dates[2].status">Tickets</span>
+      </li>
+      <li class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr_0.7fr_auto] gap-2 md:gap-6 items-center py-5">
+        <div><p class="font-mono text-[12px] tracking-wide uppercase text-paper" data-sg-path="tour.regions[0].dates[3].city">Milan, IT</p><p class="font-body text-sm text-muted" data-sg-path="tour.regions[0].dates[3].venue">Circolo Magnolia</p></div>
+        <span class="font-mono text-[11px] tracking-wide uppercase text-muted" data-sg-path="tour.regions[0].dates[3].date">March 11, 2026</span>
+        <span class="font-mono text-[11px] text-muted" data-sg-path="tour.regions[0].dates[3].time">9:00 PM</span>
+        <span class="justify-self-start md:justify-self-end font-mono text-[11px] tracking-label uppercase border border-line px-5 py-2 text-paper hover:bg-paper hover:text-ink transition-colors" data-sg-path="tour.regions[0].dates[3].status">Tickets</span>
+      </li>
+      <li class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr_0.7fr_auto] gap-2 md:gap-6 items-center py-5">
+        <div><p class="font-mono text-[12px] tracking-wide uppercase text-paper" data-sg-path="tour.regions[0].dates[4].city">Zurich, CH</p><p class="font-body text-sm text-muted" data-sg-path="tour.regions[0].dates[4].venue">Moods</p></div>
+        <span class="font-mono text-[11px] tracking-wide uppercase text-muted" data-sg-path="tour.regions[0].dates[4].date">March 13, 2026</span>
+        <span class="font-mono text-[11px] text-muted" data-sg-path="tour.regions[0].dates[4].time">8:00 PM</span>
+        <span class="justify-self-start md:justify-self-end font-mono text-[11px] tracking-label uppercase text-dim px-5 py-2" data-sg-path="tour.regions[0].dates[4].status">Sold Out</span>
+      </li>
+    </ul>
+
+    <!-- Region : South America -->
+    <h3 class="font-display display-title uppercase text-muted text-xl md:text-3xl text-center mt-20 mb-10" data-sg-path="tour.regions[1].name">South America</h3>
+    <ul class="divide-y divide-line border-t border-line">
+      <li class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr_0.7fr_auto] gap-2 md:gap-6 items-center py-5">
+        <div><p class="font-mono text-[12px] tracking-wide uppercase text-paper" data-sg-path="tour.regions[1].dates[0].city">Quito, EC</p><p class="font-body text-sm text-muted" data-sg-path="tour.regions[1].dates[0].venue">El Pobre Diablo</p></div>
+        <span class="font-mono text-[11px] tracking-wide uppercase text-muted" data-sg-path="tour.regions[1].dates[0].date">April 12, 2026</span>
+        <span class="font-mono text-[11px] text-muted" data-sg-path="tour.regions[1].dates[0].time">8:00 PM</span>
+        <span class="justify-self-start md:justify-self-end font-mono text-[11px] tracking-label uppercase border border-line px-5 py-2 text-paper hover:bg-paper hover:text-ink transition-colors" data-sg-path="tour.regions[1].dates[0].status">Tickets</span>
+      </li>
+      <li class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr_0.7fr_auto] gap-2 md:gap-6 items-center py-5">
+        <div><p class="font-mono text-[12px] tracking-wide uppercase text-paper" data-sg-path="tour.regions[1].dates[1].city">Bogotá, CO</p><p class="font-body text-sm text-muted" data-sg-path="tour.regions[1].dates[1].venue">Casa Babylon</p></div>
+        <span class="font-mono text-[11px] tracking-wide uppercase text-muted" data-sg-path="tour.regions[1].dates[1].date">April 10, 2026</span>
+        <span class="font-mono text-[11px] text-muted" data-sg-path="tour.regions[1].dates[1].time">9:00 PM</span>
+        <span class="justify-self-start md:justify-self-end font-mono text-[11px] tracking-label uppercase text-dim px-5 py-2" data-sg-path="tour.regions[1].dates[1].status">Sold Out</span>
+      </li>
+      <li class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr_0.7fr_auto] gap-2 md:gap-6 items-center py-5">
+        <div><p class="font-mono text-[12px] tracking-wide uppercase text-paper" data-sg-path="tour.regions[1].dates[2].city">Lima, PE</p><p class="font-body text-sm text-muted" data-sg-path="tour.regions[1].dates[2].venue">La Noche de Barranco</p></div>
+        <span class="font-mono text-[11px] tracking-wide uppercase text-muted" data-sg-path="tour.regions[1].dates[2].date">April 7, 2026</span>
+        <span class="font-mono text-[11px] text-muted" data-sg-path="tour.regions[1].dates[2].time">8:00 PM</span>
+        <span class="justify-self-start md:justify-self-end font-mono text-[11px] tracking-label uppercase border border-line px-5 py-2 text-paper hover:bg-paper hover:text-ink transition-colors" data-sg-path="tour.regions[1].dates[2].status">Tickets</span>
+      </li>
+      <li class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr_0.7fr_auto] gap-2 md:gap-6 items-center py-5">
+        <div><p class="font-mono text-[12px] tracking-wide uppercase text-paper" data-sg-path="tour.regions[1].dates[3].city">Santiago, CL</p><p class="font-body text-sm text-muted" data-sg-path="tour.regions[1].dates[3].venue">Club Chocolate</p></div>
+        <span class="font-mono text-[11px] tracking-wide uppercase text-muted" data-sg-path="tour.regions[1].dates[3].date">April 5, 2026</span>
+        <span class="font-mono text-[11px] text-muted" data-sg-path="tour.regions[1].dates[3].time">8:30 PM</span>
+        <span class="justify-self-start md:justify-self-end font-mono text-[11px] tracking-label uppercase border border-line px-5 py-2 text-paper hover:bg-paper hover:text-ink transition-colors" data-sg-path="tour.regions[1].dates[3].status">Tickets</span>
+      </li>
+      <li class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr_0.7fr_auto] gap-2 md:gap-6 items-center py-5">
+        <div><p class="font-mono text-[12px] tracking-wide uppercase text-paper" data-sg-path="tour.regions[1].dates[4].city">Buenos Aires, AR</p><p class="font-body text-sm text-muted" data-sg-path="tour.regions[1].dates[4].venue">La Trastienda</p></div>
+        <span class="font-mono text-[11px] tracking-wide uppercase text-muted" data-sg-path="tour.regions[1].dates[4].date">March 9, 2026</span>
+        <span class="font-mono text-[11px] text-muted" data-sg-path="tour.regions[1].dates[4].time">9:00 PM</span>
+        <span class="justify-self-start md:justify-self-end font-mono text-[11px] tracking-label uppercase text-dim px-5 py-2" data-sg-path="tour.regions[1].dates[4].status">Sold Out</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============ VIDEOS ============ -->
+  <section id="videos" class="border-t border-line py-28 md:py-40 text-center" data-sg-reveal>
+    <h2 class="font-display display-title uppercase text-paper text-3xl md:text-6xl mb-16" data-sg-path="videosLabel">Videos</h2>
+    <div class="mx-auto max-w-6xl px-6 grid md:grid-cols-3 gap-6">
+      <figure class="group relative overflow-hidden">
+        <img src="img/video1.jpg" alt="" data-sg-img="videos[0].cover" class="w-full aspect-video object-cover grayscale group-hover:grayscale-0 transition" />
+        <div class="absolute inset-0 flex items-center justify-center"><span class="w-12 h-12 rounded-full bg-ink/50 backdrop-blur flex items-center justify-center text-paper text-lg">▶</span></div>
+        <figcaption class="mt-4 font-mono text-[11px] tracking-wide uppercase text-muted text-left" data-sg-path="videos[0].title">Static Bloom — Live at Razzmatazz</figcaption>
+      </figure>
+      <figure class="group relative overflow-hidden">
+        <img src="img/video2.jpg" alt="" data-sg-img="videos[1].cover" class="w-full aspect-video object-cover grayscale group-hover:grayscale-0 transition" />
+        <div class="absolute inset-0 flex items-center justify-center"><span class="w-12 h-12 rounded-full bg-ink/50 backdrop-blur flex items-center justify-center text-paper text-lg">▶</span></div>
+        <figcaption class="mt-4 font-mono text-[11px] tracking-wide uppercase text-muted text-left" data-sg-path="videos[1].title">Studio Sessions — Tape & Noise</figcaption>
+      </figure>
+      <figure class="group relative overflow-hidden">
+        <img src="img/video3.jpg" alt="" data-sg-img="videos[2].cover" class="w-full aspect-video object-cover grayscale group-hover:grayscale-0 transition" />
+        <div class="absolute inset-0 flex items-center justify-center"><span class="w-12 h-12 rounded-full bg-ink/50 backdrop-blur flex items-center justify-center text-paper text-lg">▶</span></div>
+        <figcaption class="mt-4 font-mono text-[11px] tracking-wide uppercase text-muted text-left" data-sg-path="videos[2].title">Paper Cathedral — Official Video</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ UPDATES ON / FOOTER ============ -->
+  <footer id="contact" class="relative overflow-hidden border-t border-line">
+    <img src="img/footer.jpg" alt="" data-sg-img="footer.image" class="absolute inset-0 w-full h-full object-cover grayscale opacity-25" />
+    <div class="absolute inset-0 bg-ink/80"></div>
+
+    <div class="relative z-10 mx-auto max-w-5xl px-6 py-28 md:py-36 text-center" data-sg-reveal>
+      <h2 class="font-display display-title uppercase text-paper text-3xl md:text-6xl" data-sg-path="footer.label">Updates on</h2>
+      <p class="mt-6 font-body text-muted max-w-md mx-auto text-lg" data-sg-path="footer.text">No drama, just music. Subscribe for tour announcements and unreleased tracks.</p>
+
+      <div class="mt-12 flex flex-wrap justify-center gap-x-8 gap-y-3 font-mono text-[11px] tracking-label uppercase">
+        <a href="#" class="text-paper hover:text-accent transition-colors" data-sg-path="footer.socials[0]">Instagram</a>
+        <a href="#" class="text-paper hover:text-accent transition-colors" data-sg-path="footer.socials[1]">Spotify</a>
+        <a href="#" class="text-paper hover:text-accent transition-colors" data-sg-path="footer.socials[2]">YouTube</a>
+        <a href="#" class="text-paper hover:text-accent transition-colors" data-sg-path="footer.socials[3]">Bandcamp</a>
+      </div>
+
+      <div class="mt-20 pt-8 border-t border-line/60 flex flex-col sm:flex-row justify-between items-center gap-3 font-mono text-[11px] tracking-wide uppercase text-dim">
+        <span data-sg-path="footer.copyright">© HALCYON</span>
+        <span data-sg-path="footer.credit">Indie band · audio project</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ HYDRATATION + ANIMATIONS (standard clone-site) ============ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, { opacity: 0, y: 40, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, { yPercent: -15, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } });
+        });
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

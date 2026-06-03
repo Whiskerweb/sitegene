@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SOLSTICE — Music Festival</title>
+  <meta name="description" content="SOLSTICE — three days of non-stop music, art and culture across multiple stages and genres." />
+
+  <!-- Polices exactes extraites des tokens : Geist (display/corps), Geist Mono (labels/timecodes) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    // Config Tailwind : palette + typo issues de la capture (tokens.json)
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#000000',       // noir profond
+            paper: '#f6f6ea',      // crème (rgb 246,246,234)
+            panel: '#343434',      // gris foncé des cartes (rgb 52,52,52)
+            panel2: '#3d3d3d',
+            line: 'rgba(255,255,255,0.14)',
+            muted: 'rgba(255,255,255,0.62)',
+            inkmuted: 'rgba(0,0,0,0.6)',
+            orange: '#fe470d',     // accent orange (rgb 254,71,13)
+            blue: '#0000ee',       // accent bleu lien
+          },
+          fontFamily: {
+            sans: ['Geist', 'system-ui', 'sans-serif'],
+            mono: ['"Geist Mono"', 'ui-monospace', 'monospace'],
+          },
+          letterSpacing: { label: '0.16em' },
+        },
+      },
+    };
+  </script>
+  <style>
+    body { background: #f6f6ea; color: #000; }
+    .ticket-notch { -webkit-mask: radial-gradient(12px at 12px 0, transparent 98%, #000) -12px 0/100% 100%; }
+  </style>
+
+  <!-- Source unique de vérité (le serveur Akyra injecte le vrai contenu ; fallback de preview) -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ ||  window.__SITE_CONTENT__ || {
+      brand: "SOLSTICE",
+      wordmark: "SOL’26",
+      cta: "Event Info",
+      nav: ["Lineup", "Schedule", "Experience", "Tickets", "Voices"],
+      hero: {
+        title: "Solstice Sound 2026",
+        tagline: "Three days of non-stop music, world-class artists, vibrant vibes, and unforgettable memories. Don’t just hear the music — live it.",
+        cardTitle: "Ready to be part of it?",
+        cardText: "Bringing together top international headliners, rising stars, and immersive experiences — it’s more than a festival, it’s a movement.",
+        cardCta: "Event Info",
+        image: "img/hero.jpg"
+      },
+      intro: "From chart-topping superstars to underground legends, experience a diverse lineup across multiple stages and genres.",
+      scale: { title: "The scale of the experience" },
+      stats: [
+        { value: "40+", label: "Artists across 3 stages" },
+        { value: "3", label: "Days of non-stop music" },
+        { value: "12hrs", label: "Of sound every single day" },
+        { value: "25k", label: "Festival-goers expected" }
+      ],
+      lineup: {
+        label: "Lineup",
+        title: "Headliners & rising stars",
+        text: "A diverse cast of artists across electronic, indie and soul — handpicked to keep every stage alive from afternoon to afterparty.",
+        artists: [
+          { name: "Arctic Echoes", genre: "Indie · Main Stage", day: "Day 1", image: "img/artist1.jpg" },
+          { name: "Nova Skyline", genre: "Electronic · The Grid", day: "Day 2", image: "img/artist2.jpg" },
+          { name: "Rafael & the Waves", genre: "Soul · Garden Stage", day: "Day 2", image: "img/artist3.jpg" },
+          { name: "Luna Rae", genre: "Pop · Main Stage", day: "Day 3", image: "img/artist4.jpg" }
+        ]
+      },
+      schedule: {
+        label: "Non-Stop Music & Culture",
+        text: "Every day is packed with energy, art, food, and unforgettable performances.",
+        slots: [
+          { time: "6:00 PM", day: "Day 1", index: "01", title: "Gates Open", text: "Step inside the festival grounds and explore the stages, art, and food village.", image: "img/crowd1.jpg" },
+          { time: "7:00 PM", day: "Day 1", index: "02", title: "Opening Acts", text: "Rising stars and local talents warm up the crowd with fresh sounds.", image: "img/guitarist.jpg" },
+          { time: "8:00 PM", day: "Day 1", index: "03", title: "Main Stage Headliner", text: "Kick off the night with electrifying performances from our first headliners.", image: "img/singer.jpg" },
+          { time: "9:00 PM", day: "Day 1", index: "04", title: "Late Night Sets", text: "Genre-bending performances roll on as the grounds light up after dark.", image: "img/crowd2.jpg" },
+          { time: "11:00 PM", day: "Day 1", index: "05", title: "Afterparty DJs", text: "Dance together until late.", image: "img/dj.jpg" }
+        ]
+      },
+      experience: {
+        title: "More than just music",
+        text: "Every moment at Solstice is designed to give you an unforgettable experience.",
+        features: [
+          { title: "Art Installations", text: "Immersive light and sound art scattered across the grounds, day and night.", image: "img/art.jpg" },
+          { title: "Food & Drink Village", text: "Street food, craft drinks and chefs from around the world in one open-air village.", image: "img/food.jpg" },
+          { title: "Day & Night Parties", text: "From sunrise sets to midnight afterparties — the rhythm never stops.", image: "img/party.jpg" }
+        ]
+      },
+      tickets: {
+        title: "One ticket. All access",
+        text: "Your pass to 3 days of music, art, food, and unforgettable memories. One ticket gives you full access to everything the festival has to offer.",
+        passLabel: "3-Day Festival Pass",
+        price: "$199",
+        perks: [
+          "All stages & performances",
+          "Art installations & cultural experiences",
+          "Food & drink village",
+          "Day & night parties",
+          "Festival wristband & welcome kit"
+        ],
+        cta: "Get Updates"
+      },
+      voices: {
+        label: "Voices",
+        title: "What people are saying",
+        testimonials: [
+          { quote: "“Three days that completely reset my summer. Every stage felt like its own little world.”", author: "— Mara Devlin", role: "Festival-goer, 2025" },
+          { quote: "“The production was flawless and the lineup was fearless. Easily the best curated festival I’ve covered all year.”", author: "— Theo Marsh", role: "Music journalist, Pulsewave" },
+          { quote: "“From the food village to the afterparties, Solstice turns a concert into a full-on experience.”", author: "— Iris Caron", role: "Returning attendee" }
+        ]
+      },
+      footer: {
+        tagline: "See you under the lights.",
+        copyright: "© 2026 Solstice Festival",
+        credit: "A demo festival template",
+        socials: ["Instagram", "TikTok", "Spotify"]
+      }
+    };
+  </script>
+</head>
+
+<body class="font-sans antialiased bg-paper text-ink selection:bg-orange selection:text-white">
+
+  <!-- ============ NAV ============ -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-ink/85 backdrop-blur-sm text-paper">
+    <nav class="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
+      <a href="#top" class="font-mono text-sm tracking-label uppercase text-paper" data-sg-path="wordmark">SOL’26</a>
+      <ul class="hidden md:flex items-center gap-8 font-mono text-[12px] tracking-label uppercase text-muted">
+        <li><a href="#lineup" class="hover:text-paper transition-colors" data-sg-path="nav[0]">Lineup</a></li>
+        <li><a href="#schedule" class="hover:text-paper transition-colors" data-sg-path="nav[1]">Schedule</a></li>
+        <li><a href="#experience" class="hover:text-paper transition-colors" data-sg-path="nav[2]">Experience</a></li>
+        <li><a href="#tickets" class="hover:text-paper transition-colors" data-sg-path="nav[3]">Tickets</a></li>
+        <li><a href="#voices" class="hover:text-paper transition-colors" data-sg-path="nav[4]">Voices</a></li>
+      </ul>
+      <a href="#tickets" class="font-mono text-[12px] tracking-label uppercase bg-orange text-white rounded-sm px-4 py-2 hover:opacity-90 transition-opacity" data-sg-path="cta">Event Info</a>
+    </nav>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section id="top" class="relative bg-ink text-paper overflow-hidden">
+    <!-- bandeau image pixel/film en haut -->
+    <div class="relative h-[34vh] min-h-[220px] overflow-hidden">
+      <img src="img/hero.jpg" alt="Festival crowd under stage lights" data-sg-img="hero.image"
+           class="absolute inset-0 w-full h-full object-cover" data-sg-parallax />
+      <div class="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/20 to-ink"></div>
+      <h2 class="absolute -bottom-2 left-4 md:left-6 font-sans font-semibold leading-none text-paper/95 text-[20vw] md:text-[18vw] tracking-tight pointer-events-none" data-sg-path="wordmark">SOL’26</h2>
+    </div>
+
+    <div class="mx-auto max-w-7xl px-6 pb-24 pt-10 grid md:grid-cols-[1fr_360px] gap-10 items-start">
+      <div data-sg-reveal>
+        <h1 class="font-sans font-medium leading-[1.02] text-5xl md:text-7xl lg:text-[80px]" data-sg-path="hero.title">Solstice Sound 2026</h1>
+        <p class="mt-6 max-w-md font-sans text-sm text-muted leading-relaxed" data-sg-path="hero.tagline">
+          Three days of non-stop music, world-class artists, vibrant vibes, and unforgettable memories. Don’t just hear the music — live it.
+        </p>
+      </div>
+
+      <!-- carte "Ready to be part of it?" -->
+      <div class="bg-panel rounded-lg overflow-hidden" data-sg-reveal>
+        <div class="h-32 overflow-hidden">
+          <img src="img/singer.jpg" alt="" data-sg-img="schedule.slots[2].image" class="w-full h-full object-cover" />
+        </div>
+        <div class="p-6">
+          <h3 class="font-sans text-lg text-paper" data-sg-path="hero.cardTitle">Ready to be part of it?</h3>
+          <p class="mt-3 font-sans text-[13px] text-muted leading-relaxed" data-sg-path="hero.cardText">
+            Bringing together top international headliners, rising stars, and immersive experiences — it’s more than a festival, it’s a movement.
+          </p>
+        </div>
+        <a href="#tickets" class="block bg-orange text-white text-center font-mono text-[12px] tracking-label uppercase py-4 hover:opacity-90 transition-opacity" data-sg-path="hero.cardCta">Event Info</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INTRO STATEMENT ============ -->
+  <section class="bg-paper">
+    <div class="mx-auto max-w-7xl px-6 py-28 md:py-40 flex md:justify-center" data-sg-reveal>
+      <p class="font-sans font-medium text-2xl md:text-4xl leading-snug max-w-2xl text-ink" data-sg-path="intro">
+        From chart-topping superstars to underground legends, experience a diverse lineup across multiple stages and genres.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ SCALE / STATS ============ -->
+  <section class="bg-paper">
+    <div class="mx-auto max-w-7xl px-6 pb-28">
+      <h2 class="font-sans text-3xl md:text-5xl leading-tight text-ink max-w-md" data-sg-path="scale.title" data-sg-reveal>The scale of the experience</h2>
+      <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-y-12 gap-x-6 border-t border-black/10 pt-12" data-sg-reveal>
+        <div>
+          <p class="font-sans text-5xl md:text-7xl text-orange leading-none" data-sg-path="stats[0].value">40+</p>
+          <p class="mt-3 font-mono text-[12px] tracking-wide uppercase text-inkmuted" data-sg-path="stats[0].label">Artists across 3 stages</p>
+        </div>
+        <div>
+          <p class="font-sans text-5xl md:text-7xl text-orange leading-none" data-sg-path="stats[1].value">3</p>
+          <p class="mt-3 font-mono text-[12px] tracking-wide uppercase text-inkmuted" data-sg-path="stats[1].label">Days of non-stop music</p>
+        </div>
+        <div>
+          <p class="font-sans text-5xl md:text-7xl text-orange leading-none" data-sg-path="stats[2].value">12hrs</p>
+          <p class="mt-3 font-mono text-[12px] tracking-wide uppercase text-inkmuted" data-sg-path="stats[2].label">Of sound every single day</p>
+        </div>
+        <div>
+          <p class="font-sans text-5xl md:text-7xl text-orange leading-none" data-sg-path="stats[3].value">25k</p>
+          <p class="mt-3 font-mono text-[12px] tracking-wide uppercase text-inkmuted" data-sg-path="stats[3].label">Festival-goers expected</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LINEUP ============ -->
+  <section id="lineup" class="bg-paper">
+    <div class="mx-auto max-w-7xl px-6 pb-28">
+      <div class="grid md:grid-cols-[1fr_1fr] gap-6 items-end mb-12" data-sg-reveal>
+        <div>
+          <p class="font-mono text-[12px] tracking-label uppercase text-orange mb-4" data-sg-path="lineup.label">Lineup</p>
+          <h2 class="font-sans text-3xl md:text-5xl leading-tight text-ink" data-sg-path="lineup.title">Headliners &amp; rising stars</h2>
+        </div>
+        <p class="font-sans text-sm text-inkmuted max-w-sm md:justify-self-end" data-sg-path="lineup.text">A diverse cast of artists across electronic, indie and soul — handpicked to keep every stage alive from afternoon to afterparty.</p>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <article class="group" data-sg-reveal>
+          <div class="aspect-[3/4] overflow-hidden rounded-lg bg-panel">
+            <img src="img/artist1.jpg" alt="" data-sg-img="lineup.artists[0].image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+          </div>
+          <div class="mt-4 flex items-baseline justify-between gap-2">
+            <h3 class="font-sans text-lg text-ink" data-sg-path="lineup.artists[0].name">Arctic Echoes</h3>
+            <span class="font-mono text-[11px] tracking-wide uppercase text-orange" data-sg-path="lineup.artists[0].day">Day 1</span>
+          </div>
+          <p class="mt-1 font-mono text-[11px] tracking-wide uppercase text-inkmuted" data-sg-path="lineup.artists[0].genre">Indie · Main Stage</p>
+        </article>
+        <article class="group" data-sg-reveal>
+          <div class="aspect-[3/4] overflow-hidden rounded-lg bg-panel">
+            <img src="img/artist2.jpg" alt="" data-sg-img="lineup.artists[1].image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+          </div>
+          <div class="mt-4 flex items-baseline justify-between gap-2">
+            <h3 class="font-sans text-lg text-ink" data-sg-path="lineup.artists[1].name">Nova Skyline</h3>
+            <span class="font-mono text-[11px] tracking-wide uppercase text-orange" data-sg-path="lineup.artists[1].day">Day 2</span>
+          </div>
+          <p class="mt-1 font-mono text-[11px] tracking-wide uppercase text-inkmuted" data-sg-path="lineup.artists[1].genre">Electronic · The Grid</p>
+        </article>
+        <article class="group" data-sg-reveal>
+          <div class="aspect-[3/4] overflow-hidden rounded-lg bg-panel">
+            <img src="img/artist3.jpg" alt="" data-sg-img="lineup.artists[2].image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+          </div>
+          <div class="mt-4 flex items-baseline justify-between gap-2">
+            <h3 class="font-sans text-lg text-ink" data-sg-path="lineup.artists[2].name">Rafael &amp; the Waves</h3>
+            <span class="font-mono text-[11px] tracking-wide uppercase text-orange" data-sg-path="lineup.artists[2].day">Day 2</span>
+          </div>
+          <p class="mt-1 font-mono text-[11px] tracking-wide uppercase text-inkmuted" data-sg-path="lineup.artists[2].genre">Soul · Garden Stage</p>
+        </article>
+        <article class="group" data-sg-reveal>
+          <div class="aspect-[3/4] overflow-hidden rounded-lg bg-panel">
+            <img src="img/artist4.jpg" alt="" data-sg-img="lineup.artists[3].image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+          </div>
+          <div class="mt-4 flex items-baseline justify-between gap-2">
+            <h3 class="font-sans text-lg text-ink" data-sg-path="lineup.artists[3].name">Luna Rae</h3>
+            <span class="font-mono text-[11px] tracking-wide uppercase text-orange" data-sg-path="lineup.artists[3].day">Day 3</span>
+          </div>
+          <p class="mt-1 font-mono text-[11px] tracking-wide uppercase text-inkmuted" data-sg-path="lineup.artists[3].genre">Pop · Main Stage</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCHEDULE (timeline 3 jours) ============ -->
+  <section id="schedule" class="bg-panel text-paper">
+    <div class="mx-auto max-w-7xl px-6 py-28">
+      <div class="grid md:grid-cols-[1fr_1fr] gap-6 items-start mb-14" data-sg-reveal>
+        <h2 class="font-sans text-3xl md:text-5xl leading-tight text-paper max-w-sm" data-sg-path="schedule.label">Non-Stop Music &amp; Culture</h2>
+        <p class="font-sans text-sm text-muted max-w-xs md:justify-self-end" data-sg-path="schedule.text">Every day is packed with energy, art, food, and unforgettable performances.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <!-- slot 0 : carte texte -->
+        <div class="bg-paper/[0.06] rounded-lg p-7 flex flex-col justify-between min-h-[220px]" data-sg-reveal>
+          <div class="flex items-start justify-between">
+            <span class="font-mono text-2xl tracking-tight text-paper" data-sg-path="schedule.slots[0].time">6:00 PM</span>
+            <span class="font-mono text-[12px] tracking-wide uppercase text-muted" data-sg-path="schedule.slots[0].day">Day 1</span>
+          </div>
+          <div>
+            <h3 class="font-mono text-[13px] tracking-label uppercase text-paper" data-sg-path="schedule.slots[0].title">Gates Open</h3>
+            <p class="mt-2 font-sans text-[13px] text-muted leading-relaxed" data-sg-path="schedule.slots[0].text">Step inside the festival grounds and explore the stages, art, and food village.</p>
+          </div>
+        </div>
+        <!-- slot 1 : carte image + texte -->
+        <div class="bg-paper/[0.06] rounded-lg overflow-hidden grid grid-cols-1" data-sg-reveal>
+          <div class="grid grid-cols-[1fr_1.1fr]">
+            <div class="p-7 flex flex-col justify-between">
+              <span class="font-mono text-[12px] tracking-wide uppercase text-muted self-end" data-sg-path="schedule.slots[1].index">02</span>
+              <div>
+                <h3 class="font-mono text-[13px] tracking-label uppercase text-paper" data-sg-path="schedule.slots[1].title">Opening Acts</h3>
+                <p class="mt-2 font-sans text-[12px] text-muted leading-relaxed" data-sg-path="schedule.slots[1].text">Rising stars and local talents warm up the crowd with fresh sounds.</p>
+              </div>
+            </div>
+            <img src="img/guitarist.jpg" alt="" data-sg-img="schedule.slots[1].image" class="w-full h-full object-cover" />
+          </div>
+        </div>
+        <!-- slot 2 : carte texte -->
+        <div class="bg-paper/[0.06] rounded-lg p-7 flex flex-col justify-between min-h-[220px]" data-sg-reveal>
+          <div class="flex items-start justify-between">
+            <span class="font-mono text-2xl tracking-tight text-paper" data-sg-path="schedule.slots[2].time">8:00 PM</span>
+            <span class="font-mono text-[12px] tracking-wide uppercase text-muted" data-sg-path="schedule.slots[2].index">03</span>
+          </div>
+          <div>
+            <h3 class="font-mono text-[13px] tracking-label uppercase text-paper" data-sg-path="schedule.slots[2].title">Main Stage Headliner</h3>
+            <p class="mt-2 font-sans text-[13px] text-muted leading-relaxed" data-sg-path="schedule.slots[2].text">Kick off the night with electrifying performances from our first headliners.</p>
+          </div>
+        </div>
+        <!-- slot 3 : carte image + texte -->
+        <div class="bg-paper/[0.06] rounded-lg overflow-hidden" data-sg-reveal>
+          <div class="grid grid-cols-[1.1fr_1fr]">
+            <img src="img/singer.jpg" alt="" data-sg-img="schedule.slots[3].image" class="w-full h-full object-cover" />
+            <div class="p-7 flex flex-col justify-between">
+              <span class="font-mono text-[12px] tracking-wide uppercase text-muted self-end" data-sg-path="schedule.slots[3].index">04</span>
+              <div>
+                <h3 class="font-mono text-[13px] tracking-label uppercase text-paper" data-sg-path="schedule.slots[3].title">Late Night Sets</h3>
+                <p class="mt-2 font-sans text-[12px] text-muted leading-relaxed" data-sg-path="schedule.slots[3].text">Genre-bending performances roll on as the grounds light up after dark.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- slot 4 : afterparty pleine largeur -->
+        <div class="md:col-span-2 bg-paper/[0.06] rounded-lg overflow-hidden grid md:grid-cols-[1fr_1.4fr]" data-sg-reveal>
+          <img src="img/dj.jpg" alt="" data-sg-img="schedule.slots[4].image" class="w-full h-48 md:h-full object-cover" />
+          <div class="p-8 flex flex-col justify-center">
+            <span class="font-mono text-2xl tracking-tight text-paper" data-sg-path="schedule.slots[4].time">11:00 PM</span>
+            <h3 class="mt-4 font-mono text-[13px] tracking-label uppercase text-paper" data-sg-path="schedule.slots[4].title">Afterparty DJs</h3>
+            <p class="mt-2 font-sans text-[13px] text-muted" data-sg-path="schedule.slots[4].text">Dance together until late.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE / FEATURES ============ -->
+  <section id="experience" class="bg-paper">
+    <div class="mx-auto max-w-7xl px-6 py-28 md:py-36">
+      <div class="grid md:grid-cols-[1fr_1fr] gap-6 items-end mb-16" data-sg-reveal>
+        <h2 class="font-sans text-4xl md:text-6xl leading-[1.05] text-ink max-w-md" data-sg-path="experience.title">More than just music</h2>
+        <p class="font-sans text-sm text-inkmuted max-w-xs md:justify-self-end" data-sg-path="experience.text">Every moment at Solstice is designed to give you an unforgettable experience.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-5">
+        <article class="group" data-sg-reveal>
+          <div class="aspect-[4/3] overflow-hidden rounded-lg bg-panel">
+            <img src="img/art.jpg" alt="" data-sg-img="experience.features[0].image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+          </div>
+          <h3 class="mt-5 font-mono text-[13px] tracking-label uppercase text-ink" data-sg-path="experience.features[0].title">Art Installations</h3>
+          <p class="mt-2 font-sans text-sm text-inkmuted leading-relaxed" data-sg-path="experience.features[0].text">Immersive light and sound art scattered across the grounds, day and night.</p>
+        </article>
+        <article class="group" data-sg-reveal>
+          <div class="aspect-[4/3] overflow-hidden rounded-lg bg-panel">
+            <img src="img/food.jpg" alt="" data-sg-img="experience.features[1].image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+          </div>
+          <h3 class="mt-5 font-mono text-[13px] tracking-label uppercase text-ink" data-sg-path="experience.features[1].title">Food &amp; Drink Village</h3>
+          <p class="mt-2 font-sans text-sm text-inkmuted leading-relaxed" data-sg-path="experience.features[1].text">Street food, craft drinks and chefs from around the world in one open-air village.</p>
+        </article>
+        <article class="group" data-sg-reveal>
+          <div class="aspect-[4/3] overflow-hidden rounded-lg bg-panel">
+            <img src="img/party.jpg" alt="" data-sg-img="experience.features[2].image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+          </div>
+          <h3 class="mt-5 font-mono text-[13px] tracking-label uppercase text-ink" data-sg-path="experience.features[2].title">Day &amp; Night Parties</h3>
+          <p class="mt-2 font-sans text-sm text-inkmuted leading-relaxed" data-sg-path="experience.features[2].text">From sunrise sets to midnight afterparties — the rhythm never stops.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TICKETS ============ -->
+  <section id="tickets" class="bg-panel text-paper">
+    <div class="mx-auto max-w-7xl px-6 py-28 md:py-36 grid md:grid-cols-2 gap-12 items-center">
+      <div data-sg-reveal>
+        <h2 class="font-sans text-4xl md:text-6xl leading-[1.05] text-paper" data-sg-path="tickets.title">One ticket. All access</h2>
+        <p class="mt-6 max-w-md font-sans text-sm text-muted leading-relaxed" data-sg-path="tickets.text">
+          Your pass to 3 days of music, art, food, and unforgettable memories. One ticket gives you full access to everything the festival has to offer.
+        </p>
+      </div>
+
+      <!-- ticket card -->
+      <div class="md:justify-self-end w-full max-w-sm" data-sg-reveal>
+        <div class="bg-panel2 rounded-t-lg p-8">
+          <p class="font-mono text-[12px] tracking-label uppercase text-muted" data-sg-path="tickets.passLabel">3-Day Festival Pass</p>
+          <p class="mt-3 font-sans text-6xl text-paper" data-sg-path="tickets.price">$199</p>
+          <ul class="mt-8 space-y-4">
+            <li class="flex items-center gap-3 font-sans text-sm text-paper/90">
+              <span class="grid place-items-center w-5 h-5 rounded-[3px] bg-white/15 text-orange text-xs">✓</span>
+              <span data-sg-path="tickets.perks[0]">All stages &amp; performances</span>
+            </li>
+            <li class="flex items-center gap-3 font-sans text-sm text-paper/90">
+              <span class="grid place-items-center w-5 h-5 rounded-[3px] bg-white/15 text-orange text-xs">✓</span>
+              <span data-sg-path="tickets.perks[1]">Art installations &amp; cultural experiences</span>
+            </li>
+            <li class="flex items-center gap-3 font-sans text-sm text-paper/90">
+              <span class="grid place-items-center w-5 h-5 rounded-[3px] bg-white/15 text-orange text-xs">✓</span>
+              <span data-sg-path="tickets.perks[2]">Food &amp; drink village</span>
+            </li>
+            <li class="flex items-center gap-3 font-sans text-sm text-paper/90">
+              <span class="grid place-items-center w-5 h-5 rounded-[3px] bg-white/15 text-orange text-xs">✓</span>
+              <span data-sg-path="tickets.perks[3]">Day &amp; night parties</span>
+            </li>
+            <li class="flex items-center gap-3 font-sans text-sm text-paper/90">
+              <span class="grid place-items-center w-5 h-5 rounded-[3px] bg-white/15 text-orange text-xs">✓</span>
+              <span data-sg-path="tickets.perks[4]">Festival wristband &amp; welcome kit</span>
+            </li>
+          </ul>
+        </div>
+        <a href="#" class="block bg-orange text-white text-center font-mono text-[13px] tracking-label uppercase py-5 rounded-b-lg hover:opacity-90 transition-opacity" data-sg-path="tickets.cta">Get Updates</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VOICES / TESTIMONIALS ============ -->
+  <section id="voices" class="bg-paper">
+    <div class="mx-auto max-w-7xl px-6 py-28">
+      <div class="mb-14" data-sg-reveal>
+        <p class="font-mono text-[12px] tracking-label uppercase text-orange mb-4" data-sg-path="voices.label">Voices</p>
+        <h2 class="font-sans text-3xl md:text-5xl leading-tight text-ink max-w-md" data-sg-path="voices.title">What people are saying</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8 border-t border-black/10 pt-12">
+        <blockquote class="space-y-5" data-sg-reveal>
+          <p class="font-sans text-xl leading-snug text-ink" data-sg-path="voices.testimonials[0].quote">“Three days that completely reset my summer. Every stage felt like its own little world.”</p>
+          <footer class="font-mono text-[12px] tracking-wide uppercase text-inkmuted"><span data-sg-path="voices.testimonials[0].author">— Mara Devlin</span><br /><span class="text-orange" data-sg-path="voices.testimonials[0].role">Festival-goer, 2025</span></footer>
+        </blockquote>
+        <blockquote class="space-y-5" data-sg-reveal>
+          <p class="font-sans text-xl leading-snug text-ink" data-sg-path="voices.testimonials[1].quote">“The production was flawless and the lineup was fearless. Easily the best curated festival I’ve covered all year.”</p>
+          <footer class="font-mono text-[12px] tracking-wide uppercase text-inkmuted"><span data-sg-path="voices.testimonials[1].author">— Theo Marsh</span><br /><span class="text-orange" data-sg-path="voices.testimonials[1].role">Music journalist, Pulsewave</span></footer>
+        </blockquote>
+        <blockquote class="space-y-5" data-sg-reveal>
+          <p class="font-sans text-xl leading-snug text-ink" data-sg-path="voices.testimonials[2].quote">“From the food village to the afterparties, Solstice turns a concert into a full-on experience.”</p>
+          <footer class="font-mono text-[12px] tracking-wide uppercase text-inkmuted"><span data-sg-path="voices.testimonials[2].author">— Iris Caron</span><br /><span class="text-orange" data-sg-path="voices.testimonials[2].role">Returning attendee</span></footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="bg-ink text-paper overflow-hidden">
+    <div class="mx-auto max-w-7xl px-6 pt-20 pb-8">
+      <div class="flex flex-col md:flex-row justify-between gap-8" data-sg-reveal>
+        <p class="font-sans text-2xl md:text-3xl text-paper max-w-sm" data-sg-path="footer.tagline">See you under the lights.</p>
+        <div class="flex gap-6 font-mono text-[12px] tracking-label uppercase text-muted">
+          <a href="#" class="hover:text-orange transition-colors" data-sg-path="footer.socials[0]">Instagram</a>
+          <a href="#" class="hover:text-orange transition-colors" data-sg-path="footer.socials[1]">TikTok</a>
+          <a href="#" class="hover:text-orange transition-colors" data-sg-path="footer.socials[2]">Spotify</a>
+        </div>
+      </div>
+      <div class="mt-16 flex flex-col sm:flex-row justify-between items-center gap-3 font-mono text-[11px] tracking-wide uppercase text-muted/70 border-t border-line pt-6">
+        <span data-sg-path="footer.copyright">© 2026 Solstice Festival</span>
+        <span data-sg-path="footer.credit">A demo festival template</span>
+      </div>
+    </div>
+    <!-- grand wordmark bas de page -->
+    <h2 class="font-sans font-semibold leading-none text-paper/95 text-[26vw] tracking-tight text-center -mb-[3vw] select-none pointer-events-none" data-sg-path="wordmark">SOL’26</h2>
+  </footer>
+
+  <!-- ============ HYDRATATION + ANIMATIONS (standard clone-site) ============ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, { opacity: 0, y: 40, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, { yPercent: -15, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } });
+        });
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>
