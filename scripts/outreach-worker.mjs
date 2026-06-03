@@ -22,9 +22,9 @@ try {
 }
 
 // --- Réglages délivrabilité -------------------------------------------------
-const BATCH_PER_TICK = 12; // lignes traitées par tick (aligné sur DAILY_CAP)
-const SEND_SPACING_MS = 8000; // pause entre deux envois réels
-const DAILY_CAP = 12; // plafond d'envois/jour — warmup (domaine partagé akyra.io)
+const BATCH_PER_TICK = 20; // lignes traitées par tick (aligné sur DAILY_CAP)
+const SEND_SPACING_MS = 8000; // pause entre deux envois réels (étale, pas de burst)
+const DAILY_CAP = 20; // plafond d'envois/jour (liste de 34 → finie en ~2 jours)
 const POLL_MS = 30000; // intervalle de poll en mode boucle
 
 const admin = createClient(
