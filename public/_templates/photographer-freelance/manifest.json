@@ -1,0 +1,330 @@
+{
+  "id": "photographer-freelance",
+  "name": "Léon Marchal — Photographe freelance",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "meta",
+      "brand",
+      "nav",
+      "footerNav",
+      "hero",
+      "about",
+      "brands",
+      "albums",
+      "expertise",
+      "reviews",
+      "blog",
+      "faq",
+      "contact"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.image",
+      "role": "hero",
+      "required": true,
+      "note": "hero · image"
+    },
+    {
+      "slot": "p2",
+      "path": "albums.items[].image",
+      "role": "cover",
+      "required": true,
+      "note": "albums · items · image"
+    },
+    {
+      "slot": "p3",
+      "path": "expertise.items[].image",
+      "role": "image",
+      "required": true,
+      "note": "expertise · items · image"
+    },
+    {
+      "slot": "p4",
+      "path": "reviews.items[].avatar",
+      "role": "avatar",
+      "required": true,
+      "note": "reviews · items · avatar"
+    },
+    {
+      "slot": "p5",
+      "path": "blog.posts[].image",
+      "role": "image",
+      "required": true,
+      "note": "blog · posts · image"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "meta.title",
+        "label": "meta · title",
+        "type": "text",
+        "maxLen": 59
+      },
+      {
+        "path": "meta.description",
+        "label": "meta · description",
+        "type": "text",
+        "maxLen": 230
+      },
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav[]",
+        "label": "nav",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.ctaSecondary",
+        "label": "hero · ctaSecondary",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.intro",
+        "label": "hero · intro",
+        "type": "text",
+        "maxLen": 198
+      },
+      {
+        "path": "hero.ctaPrimary",
+        "label": "hero · ctaPrimary",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.titleLine1",
+        "label": "hero · titleLine1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.titleLine2",
+        "label": "hero · titleLine2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.tag",
+        "label": "hero · tag",
+        "type": "text",
+        "maxLen": 59
+      },
+      {
+        "path": "hero.scroll",
+        "label": "hero · scroll",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.heading",
+        "label": "about · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.paragraph",
+        "label": "about · paragraph",
+        "type": "text",
+        "maxLen": 394
+      },
+      {
+        "path": "about.cta",
+        "label": "about · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "brands.heading",
+        "label": "brands · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "brands.items[]",
+        "label": "brands · items",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "albums.heading",
+        "label": "albums · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "albums.items[].tags[]",
+        "label": "albums · items · tags",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "albums.items[].title",
+        "label": "albums · items · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "expertise.heading",
+        "label": "expertise · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "expertise.items[].name",
+        "label": "expertise · items · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "expertise.items[].text",
+        "label": "expertise · items · text",
+        "type": "text",
+        "maxLen": 394
+      },
+      {
+        "path": "expertise.moreLine1",
+        "label": "expertise · moreLine1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "expertise.moreLine2",
+        "label": "expertise · moreLine2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "reviews.kicker",
+        "label": "reviews · kicker",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "reviews.heading",
+        "label": "reviews · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "reviews.items[].quote",
+        "label": "reviews · items · quote",
+        "type": "text",
+        "maxLen": 267
+      },
+      {
+        "path": "reviews.items[].name",
+        "label": "reviews · items · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "reviews.items[].role",
+        "label": "reviews · items · role",
+        "type": "text",
+        "maxLen": 54
+      },
+      {
+        "path": "reviews.cta",
+        "label": "reviews · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "blog.kicker",
+        "label": "blog · kicker",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "blog.heading",
+        "label": "blog · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "blog.posts[].title",
+        "label": "blog · posts · title",
+        "type": "text",
+        "maxLen": 94
+      },
+      {
+        "path": "blog.posts[].tag",
+        "label": "blog · posts · tag",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "blog.posts[].date",
+        "label": "blog · posts · date",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "blog.cta",
+        "label": "blog · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.headingLine1",
+        "label": "faq · headingLine1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.headingLine2",
+        "label": "faq · headingLine2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.items[].q",
+        "label": "faq · items · q",
+        "type": "text",
+        "maxLen": 72
+      },
+      {
+        "path": "faq.items[].a",
+        "label": "faq · items · a",
+        "type": "text",
+        "maxLen": 325
+      },
+      {
+        "path": "contact.badge",
+        "label": "contact · badge",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.email",
+        "label": "contact · email",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.social[]",
+        "label": "contact · social",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footerNav[]",
+        "label": "footerNav",
+        "type": "text",
+        "maxLen": 40
+      }
+    ]
+  }
+}

@@ -1,0 +1,215 @@
+{
+  "meta": {
+    "title": "Adrien Roy | Fine-Art Portrait & Wedding Photography",
+    "description": "Fine-art portrait and wedding photographer based in London — natural light, quiet emotion, timeless elegance."
+  },
+  "brand": "ADRIEN ROY",
+  "nav": {
+    "about": "About me",
+    "gallery": "Gallery",
+    "galleryCount": "[09]",
+    "archive": "Archive",
+    "archiveCount": "[30]",
+    "contact": "Contact"
+  },
+  "hero": {
+    "location": "[LONDON, UNITED KINGDOM]",
+    "title": "Signature photography that blends art, emotion, and timeless natural elegance.",
+    "image": "/_templates/portrait-fineart/img/hero.jpg"
+  },
+  "intro": {
+    "text": "I craft each frame with care, blending natural light and emotion to capture honest, timeless portraits that tell your story.",
+    "thumbs": [
+      {
+        "image": "/_templates/portrait-fineart/img/thumb-1.jpg",
+        "alt": "Portrait in soft light"
+      },
+      {
+        "image": "/_templates/portrait-fineart/img/thumb-2.jpg",
+        "alt": "Quiet studio portrait"
+      },
+      {
+        "image": "/_templates/portrait-fineart/img/thumb-3.jpg",
+        "alt": "Candid moment outdoors"
+      },
+      {
+        "image": "/_templates/portrait-fineart/img/thumb-4.jpg",
+        "alt": "Detail in golden hour"
+      },
+      {
+        "image": "/_templates/portrait-fineart/img/thumb-5.jpg",
+        "alt": "Profile against light"
+      }
+    ]
+  },
+  "categories": {
+    "items": [
+      {
+        "name": "Portraits",
+        "number": "/01",
+        "desc": "Quiet, intimate portraiture built around natural light and the unguarded in-between moments.",
+        "image": "/_templates/portrait-fineart/img/cat-1.jpg"
+      },
+      {
+        "name": "Weddings",
+        "number": "/02",
+        "desc": "Documentary-led wedding stories — emotion first, posing last, kept timeless in tone.",
+        "image": "/_templates/portrait-fineart/img/cat-2.jpg"
+      },
+      {
+        "name": "Editorial",
+        "number": "/03",
+        "desc": "Considered editorial and brand imagery with a calm, refined and contemporary eye.",
+        "image": "/_templates/portrait-fineart/img/cat-3.jpg"
+      },
+      {
+        "name": "Still Life",
+        "number": "/04",
+        "desc": "Texture, light and stillness — objects and details photographed with patience.",
+        "image": "/_templates/portrait-fineart/img/cat-4.jpg"
+      }
+    ]
+  },
+  "work": {
+    "label": "[ SELECTED WORK ]",
+    "heading1": "Selected",
+    "heading2": "Work",
+    "projects": [
+      {
+        "title": "Lior, in Clair-Obscur",
+        "meta": "Portrait — 2024",
+        "image": "/_templates/portrait-fineart/img/work-1.jpg"
+      },
+      {
+        "title": "Fleur de Silence",
+        "meta": "Editorial — 2024",
+        "image": "/_templates/portrait-fineart/img/work-2.jpg"
+      },
+      {
+        "title": "The Rinaldi Gaze",
+        "meta": "Portrait — 2023",
+        "image": "/_templates/portrait-fineart/img/work-3.jpg"
+      },
+      {
+        "title": "The Whitmore Stillness",
+        "meta": "Wedding — 2024",
+        "image": "/_templates/portrait-fineart/img/work-4.jpg"
+      },
+      {
+        "title": "Valeria in the Wild Light",
+        "meta": "Portrait — 2023",
+        "image": "/_templates/portrait-fineart/img/work-5.jpg"
+      },
+      {
+        "title": "Before the Sea",
+        "meta": "Editorial — 2024",
+        "image": "/_templates/portrait-fineart/img/work-6.jpg"
+      },
+      {
+        "title": "Salt in the Smoke",
+        "meta": "Still Life — 2023",
+        "image": "/_templates/portrait-fineart/img/work-7.jpg"
+      },
+      {
+        "title": "Lova, in Bloom",
+        "meta": "Portrait — 2024",
+        "image": "/_templates/portrait-fineart/img/work-8.jpg"
+      },
+      {
+        "title": "Beneath the Blue",
+        "meta": "Editorial — 2023",
+        "image": "/_templates/portrait-fineart/img/work-9.jpg"
+      }
+    ]
+  },
+  "statement": {
+    "text": "I craft each frame with care, blending natural light and emotion to capture honest, timeless portraits that tell your story."
+  },
+  "archive": {
+    "label": "[ THE ARCHIVE ]",
+    "heading1": "The Gaze",
+    "heading2": "That Lingers",
+    "intro": "A wider, unfiltered look — thirty frames that didn't fit a single story, collected here for the patient eye.",
+    "images": [
+      {
+        "image": "/_templates/portrait-fineart/img/arc-1.jpg"
+      },
+      {
+        "image": "/_templates/portrait-fineart/img/arc-2.jpg"
+      },
+      {
+        "image": "/_templates/portrait-fineart/img/arc-3.jpg"
+      },
+      {
+        "image": "/_templates/portrait-fineart/img/arc-4.jpg"
+      },
+      {
+        "image": "/_templates/portrait-fineart/img/arc-5.jpg"
+      },
+      {
+        "image": "/_templates/portrait-fineart/img/arc-6.jpg"
+      },
+      {
+        "image": "/_templates/portrait-fineart/img/arc-7.jpg"
+      },
+      {
+        "image": "/_templates/portrait-fineart/img/arc-8.jpg"
+      },
+      {
+        "image": "/_templates/portrait-fineart/img/arc-9.jpg"
+      },
+      {
+        "image": "/_templates/portrait-fineart/img/arc-10.jpg"
+      },
+      {
+        "image": "/_templates/portrait-fineart/img/arc-11.jpg"
+      },
+      {
+        "image": "/_templates/portrait-fineart/img/arc-12.jpg"
+      }
+    ]
+  },
+  "contact": {
+    "label": "[ GET IN TOUCH ]",
+    "heading1": "I'd love to hear",
+    "heading2": "from you",
+    "fields": {
+      "name": "Let's start with your name",
+      "reach": "Where can I reach you?",
+      "shoot": "What kind of shoot are you booking?",
+      "message": "Message",
+      "messageHint": "Tell me a bit about what you're looking for"
+    },
+    "shootOptions": [
+      "Select a type",
+      "Portrait session",
+      "Wedding",
+      "Editorial / brand",
+      "Other"
+    ],
+    "button": "Send your message",
+    "image": "/_templates/portrait-fineart/img/contact.jpg"
+  },
+  "footer": {
+    "locationLabel": "[MY LOCATION]",
+    "location1": "Based in London,",
+    "location2": "United Kingdom",
+    "menuLabel": "[MENU]",
+    "menu": [
+      "About me",
+      "Gallery",
+      "Archive",
+      "Contact"
+    ],
+    "exploreLabel": "[EXPLORE MORE]",
+    "explore": [
+      "Instagram",
+      "Pexels",
+      "Unsplash",
+      "Lummi"
+    ],
+    "reachLabel": "[FEEL FREE TO REACH OUT]",
+    "email": "hello@adrienroy.com",
+    "phone": "+44 7911 123456"
+  }
+}

@@ -53,7 +53,7 @@ export const CATEGORIES: Category[] = [
     briefPlaceholder:
       "Ex. Camille, photographe mariage à Lyon.\nLumière naturelle, émotions vraies, zéro pose forcée.\nDisponible partout en France.",
     exampleDomain: "camille.akyra.io",
-    templateIds: ["alice-r", "potozon", "target", "luxury-wedding", "wedding-fine-art"],
+    templateIds: ["alice-r", "potozon", "target", "luxury-wedding", "wedding-fine-art", "wedding-warm", "portrait-fineart", "portrait-lifestyle", "photographer-freelance", "photo-vintage", "landscape-prints"],
     defaultTemplateId: "alice-r",
     testimonial: {
       quote:

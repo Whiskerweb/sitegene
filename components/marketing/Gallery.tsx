@@ -12,7 +12,19 @@ const SECTIONS: { title: string; cta: { label: string; href: string }; ids: stri
   {
     title: "Photographes",
     cta: { label: "Voir les photographes", href: "/modeles" },
-    ids: ["alice-r", "potozon", "target", "luxury-wedding", "wedding-fine-art"],
+    ids: [
+      "alice-r",
+      "potozon",
+      "target",
+      "landscape-prints",
+      "wedding-warm",
+      "photographer-freelance",
+      "portrait-fineart",
+      "luxury-wedding",
+      "portrait-lifestyle",
+      "wedding-fine-art",
+      "photo-vintage",
+    ],
   },
   {
     title: "Musiciens",

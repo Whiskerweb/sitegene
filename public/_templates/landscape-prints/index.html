@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-sg-path="meta.title">Orin Vale | Landscape Photography & Fine Art Prints</title>
+  <meta name="description" data-sg-path="meta.description" content="Orin Vale — contemplative landscape photography, fine art prints, courses, presets and field notes from the wild edges of the world.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Fraunces:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+
+  <!-- CDN: Tailwind + GSAP + ScrollTrigger -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Iconify for icons -->
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:     '#050505',   /* near-black immersive bg */
+            inkSoft: '#0d0d0e',   /* slightly raised panel */
+            card:    '#161616',   /* card surface */
+            orange:  '#FA642E',   /* international orange accent */
+            ember:   '#FF8B61',   /* warm highlight */
+            sun:     '#FDBD68',   /* golden hour */
+            mist:    '#A8DBFF',   /* cool sky */
+            line:    'rgba(255,255,255,0.08)',
+          },
+          fontFamily: {
+            sans:   ['"DM Sans"', 'system-ui', 'sans-serif'],
+            serif:  ['"Fraunces"', 'Georgia', 'serif'],
+          },
+          letterSpacing: {
+            wide2:  '0.2em',
+            wide15: '0.15em',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'DM Sans', system-ui, sans-serif; background:#050505; }
+    .font-serif-it { font-family: 'Fraunces', Georgia, serif; font-style: italic; }
+
+    /* Immersive hero grid hover */
+    .grid-cell img { transition: transform 1.6s cubic-bezier(.16,1,.3,1), filter 1s ease; }
+    .grid-cell:hover img { transform: scale(1.06); filter: saturate(1.15) brightness(1.05); }
+
+    /* Card hover lift */
+    .lift { transition: transform .5s cubic-bezier(.16,1,.3,1), box-shadow .5s ease; }
+    .lift:hover { transform: translateY(-6px); box-shadow: 0 24px 60px -20px rgba(250,100,46,0.35); }
+
+    /* Print frame */
+    .frame { box-shadow: 0 30px 60px -25px rgba(0,0,0,0.9); }
+    .frame img { transition: transform 1.4s cubic-bezier(.16,1,.3,1); }
+    .frame:hover img { transform: scale(1.05); }
+
+    /* Horizontal scroll rails */
+    .rail { scrollbar-width: none; -ms-overflow-style: none; }
+    .rail::-webkit-scrollbar { display: none; }
+
+    /* Glow background helpers */
+    .glow-orange { background-image: radial-gradient(60% 80% at 50% 0%, rgba(250,100,46,0.22), transparent 70%); }
+    .glow-green  { background-image: radial-gradient(70% 90% at 50% 50%, rgba(20,80,70,0.45), transparent 75%); }
+
+    details summary::-webkit-details-marker { display:none; }
+    select { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 1rem center; background-size:1.25rem; }
+
+    @keyframes spin-slow { to { transform: rotate(360deg); } }
+    .spin-slow { animation: spin-slow 26s linear infinite; transform-origin: 50px 50px; }
+  </style>
+
+  <!-- ============================================================
+       SINGLE SOURCE OF TRUTH — edit here or via Akyra editor
+       ============================================================ -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ ||  window.__SITE_CONTENT__ || {
+      meta: {
+        title: "Orin Vale | Landscape Photography & Fine Art Prints",
+        description: "Orin Vale — contemplative landscape photography, fine art prints, courses, presets and field notes from the wild edges of the world."
+      },
+      brand: "Orin Vale",
+      spinningBadge: "PRINTS • COURSES • PRESETS • LANDSCAPE • ORIN VALE • ",
+      nav: ["Gallery", "Prints", "Galleries", "Courses", "Presets", "Gear", "Journal", "About"],
+
+      hero: {
+        title1: "Orin Vale",
+        title2: "Photography",
+        tagline: "Contemplative landscape photography from the wild edges of the world.",
+        gallery: [
+          { image: "img/g1.jpg",  alt: "Misty alpine valley at dawn" },
+          { image: "img/g2.jpg",  alt: "Mountain ridge under cloud" },
+          { image: "img/g3.jpg",  alt: "Star field over the desert" },
+          { image: "img/g4.jpg",  alt: "Golden hour over the coast" },
+          { image: "img/g5.jpg",  alt: "Red rock canyon glow" },
+          { image: "img/g6.jpg",  alt: "Forest road in autumn" },
+          { image: "img/g7.jpg",  alt: "Lone tree at sunrise" },
+          { image: "img/g8.jpg",  alt: "Desert dunes at dusk" },
+          { image: "img/g9.jpg",  alt: "Lake reflection at twilight" },
+          { image: "img/g10.jpg", alt: "Snow peaks and mirror lake" },
+          { image: "img/g11.jpg", alt: "Pine forest in fog" },
+          { image: "img/g12.jpg", alt: "Northern lights over the tundra" }
+        ]
+      },
+
+      prints: {
+        label: "The Print Shop",
+        heading: "Prints",
+        subheading: "Available Now",
+        intro: "Museum-grade archival prints, hand-finished and shipped worldwide. Each edition is limited and signed. Demo pricing shown.",
+        items: [
+          { title: "Aurora Over Kvaløya", location: "Norway",            price: "€180", image: "img/print1.jpg" },
+          { title: "The Burning Field",   location: "Patagonia",          price: "€220", image: "img/print2.jpg" },
+          { title: "Stillwater Fjord",    location: "Iceland",            price: "€160", image: "img/print3.jpg" },
+          { title: "Canyon Light",        location: "Arizona, USA",       price: "€200", image: "img/print4.jpg" },
+          { title: "Dune Solitude",       location: "Namib Desert",       price: "€190", image: "img/print5.jpg" },
+          { title: "Glacier Blue Hour",   location: "Patagonia",          price: "€240", image: "img/print6.jpg" }
+        ]
+      },
+
+      galleries: {
+        label: "Collections",
+        heading: "Themed Galleries",
+        intro: "Bodies of work grouped by mood, palette and place. Each gallery is a long-form story from a single expedition.",
+        items: [
+          { title: "International Orange", location: "Golden Gate, USA",     image: "img/lib2.jpg" },
+          { title: "Colors of the Canyon", location: "Antelope, Arizona",   image: "img/lib4.jpg" },
+          { title: "Lakeland",             location: "Cumbria, England",    image: "img/lib3.jpg" },
+          { title: "Nightfall",            location: "Atacama, Chile",      image: "img/lib1.jpg" },
+          { title: "Patagonia Sunset",     location: "El Chaltén, Argentina", image: "img/lib5.jpg" }
+        ]
+      },
+
+      courses: {
+        label: "Learn",
+        heading: "Courses",
+        intro: "Step-by-step video courses to take you from the field to the final, gallery-ready frame.",
+        items: [
+          {
+            title: "Masterclass: Landscape Photography Shoots",
+            duration: "18 lessons",
+            desc: "The course begins with the basics of finding great locations for shooting landscapes and progresses to cover everything you need to know about capturing great landscape photographs — including framing, composition, camera settings, where to stand, and visualising shots and more."
+          },
+          {
+            title: "Ultimate Guide to Night Sky Photography",
+            duration: "12 lessons",
+            desc: "Everything there is to know about shooting astrophotography — from the best settings to use, tripods and equipment, where to shoot, and how to create beautiful composite images in post. Take your night-sky photography to the next level."
+          },
+          {
+            title: "The Art of Editing for Landscapes",
+            duration: "15 lessons",
+            desc: "A complete, repeatable editing workflow: building luminosity masks, color grading for mood, dodging and burning, and finishing a print-ready file that holds up at gallery scale."
+          }
+        ]
+      },
+
+      presets: {
+        label: "Lightroom",
+        heading: "Presets",
+        intro: "One-click looks built from years of field work. Drop them on your RAW files and dial them in. Demo pricing shown.",
+        items: [
+          { title: "Presets Pack 2020", price: "€30", image: "img/preset1.jpg" },
+          { title: "Presets Pack 2019", price: "€30", image: "img/preset2.jpg" },
+          { title: "Presets Pack 2023", price: "€40", image: "img/preset3.jpg" },
+          { title: "Presets Pack 2022", price: "€35", image: "img/preset4.jpg" },
+          { title: "Presets Pack 2021", price: "€30", image: "img/preset5.jpg" }
+        ]
+      },
+
+      gear: {
+        label: "In the Bag",
+        heading: "Gear",
+        intro: "The kit I actually carry into the field. Built for weather, distance and long, cold nights under the stars.",
+        items: [
+          { name: "Vela 25mm",        category: "Lens",        image: "img/gear1.jpg" },
+          { name: "Aperture A7",      category: "Camera Body", image: "img/gear2.jpg" },
+          { name: "Tarion Backpack",  category: "Bag",         image: "img/gear3.jpg" },
+          { name: "Lumen G7",         category: "Camera Body", image: "img/gear4.jpg" },
+          { name: "Vela 14–42mm",     category: "Software",    image: "img/gear5.jpg" },
+          { name: "Steadex Tripod",   category: "Tripod",      image: "img/gear6.jpg" }
+        ]
+      },
+
+      journal: {
+        label: "Field Notes",
+        heading: "Journal",
+        intro: "Short, practical reads on the craft — light, settings and the long walks in between.",
+        posts: [
+          { title: "Understanding Shutter Speed", date: "May 22, 2025", read: "10 minute read", image: "img/blog1.jpg" },
+          { title: "Understanding Aperture",      date: "April 17, 2025", read: "8 minute read",  image: "img/blog2.jpg" },
+          { title: "Understanding ISO",           date: "March 7, 2025",  read: "8 minute read",  image: "img/blog3.jpg" },
+          { title: "Reading the Light at Dawn",   date: "Feb 2, 2025",    read: "6 minute read",  image: "img/blog4.jpg" }
+        ]
+      },
+
+      about: {
+        label: "About",
+        heading: "Chasing light at the edges of the map",
+        paragraphs: [
+          "Orin Vale is a landscape photographer drawn to remote, weather-beaten places — fjords, deserts, glaciers and the long blue hours in between. The work is quiet and contemplative, built on patience rather than spectacle.",
+          "Over a decade of expeditions across Patagonia, Norway, Iceland and the American Southwest, Orin has learned that the best frames come to those who wait. This is a place to collect that work, share the craft, and send a piece of the wild to your wall."
+        ],
+        portrait: "img/about-portrait.jpg",
+        story: "img/about-story.jpg",
+        stats: [
+          { value: "12+", label: "Years in the field" },
+          { value: "30+", label: "Countries" },
+          { value: "200+", label: "Editions sold" }
+        ]
+      },
+
+      newsletter: {
+        heading: "Photography Insights Newsletter",
+        intro: "Field notes, new prints and the occasional preset drop. No spam — just light.",
+        cta: "Subscribe"
+      },
+
+      contact: {
+        email: "hello@orinvale.com",
+        location: "Based in Bergen / Working worldwide",
+        socials: ["Instagram", "YouTube", "Behance"]
+      }
+    };
+  </script>
+</head>
+
+<body class="antialiased text-white bg-ink" style="-webkit-font-smoothing:antialiased;">
+
+  <!-- ============================================================
+       NAVIGATION
+       ============================================================ -->
+  <header class="fixed top-0 inset-x-0 z-50">
+    <div class="flex h-20 max-w-[110rem] mx-auto px-5 lg:px-10 items-center justify-between">
+      <!-- Logo mark -->
+      <a href="#top" class="flex items-center gap-3 group">
+        <span class="w-9 h-9 rounded-full border border-white/30 flex items-center justify-center group-hover:border-orange transition-colors">
+          <span class="w-3.5 h-3.5 rounded-full bg-orange"></span>
+        </span>
+        <span class="text-sm uppercase tracking-wide2 font-medium hidden sm:block" data-sg-path="brand">Orin Vale</span>
+      </a>
+      <!-- Desktop nav -->
+      <nav class="hidden lg:flex items-center gap-7 text-xs uppercase tracking-wide15 text-white/70">
+        <a href="#gallery"   class="hover:text-white transition-colors" data-sg-path="nav[0]">Gallery</a>
+        <a href="#prints"    class="hover:text-white transition-colors" data-sg-path="nav[1]">Prints</a>
+        <a href="#galleries" class="hover:text-white transition-colors" data-sg-path="nav[2]">Galleries</a>
+        <a href="#courses"   class="hover:text-white transition-colors" data-sg-path="nav[3]">Courses</a>
+        <a href="#presets"   class="hover:text-white transition-colors" data-sg-path="nav[4]">Presets</a>
+        <a href="#gear"      class="hover:text-white transition-colors" data-sg-path="nav[5]">Gear</a>
+        <a href="#journal"   class="hover:text-white transition-colors" data-sg-path="nav[6]">Journal</a>
+        <a href="#about"     class="hover:text-white transition-colors" data-sg-path="nav[7]">About</a>
+      </nav>
+      <a href="#prints" class="hidden lg:inline-flex items-center gap-2 bg-orange hover:bg-ember transition-colors text-ink text-xs uppercase tracking-wide15 font-semibold px-5 py-2.5 rounded-full">
+        Shop Prints
+      </a>
+      <!-- Mobile menu button -->
+      <button id="menuBtn" class="lg:hidden w-10 h-10 rounded-full border border-white/20 flex items-center justify-center" aria-label="Menu">
+        <iconify-icon icon="solar:hamburger-menu-linear" class="text-xl"></iconify-icon>
+      </button>
+    </div>
+    <!-- Mobile menu panel -->
+    <div id="menuPanel" class="lg:hidden hidden bg-ink/95 backdrop-blur-md border-t border-line">
+      <nav class="flex flex-col px-6 py-6 gap-4 text-sm uppercase tracking-wide15 text-white/80">
+        <a href="#gallery">Gallery</a><a href="#prints">Prints</a><a href="#galleries">Galleries</a>
+        <a href="#courses">Courses</a><a href="#presets">Presets</a><a href="#gear">Gear</a>
+        <a href="#journal">Journal</a><a href="#about">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Spinning badge -->
+  <div class="pointer-events-none fixed bottom-6 right-6 w-28 h-28 opacity-80 mix-blend-difference z-40 hidden md:block">
+    <svg viewBox="0 0 100 100" class="overflow-visible w-full h-full">
+      <g class="spin-slow">
+        <path id="circlePath" d="M 50,50 m -35,0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none"/>
+        <text class="uppercase fill-white tracking-widest" style="font-size:8px;font-weight:500;">
+          <textPath href="#circlePath" startOffset="0%" data-sg-path="spinningBadge">PRINTS • COURSES • PRESETS • LANDSCAPE • ORIN VALE • </textPath>
+        </text>
+      </g>
+    </svg>
+  </div>
+
+
+  <!-- ============================================================
+       HERO — immersive landscape grid
+       ============================================================ -->
+  <section id="top" class="relative min-h-screen bg-ink overflow-hidden pt-20">
+    <div id="gallery" class="absolute inset-0 grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-2 p-2 opacity-90">
+      <div class="grid-cell relative overflow-hidden bg-card aspect-[3/4]"><img data-sg-img="hero.gallery[0].image" src="img/g1.jpg" alt="" class="w-full h-full object-cover"></div>
+      <div class="grid-cell relative overflow-hidden bg-card aspect-[3/4]"><img data-sg-img="hero.gallery[1].image" src="img/g2.jpg" alt="" class="w-full h-full object-cover"></div>
+      <div class="grid-cell relative overflow-hidden bg-card aspect-[3/4]"><img data-sg-img="hero.gallery[2].image" src="img/g3.jpg" alt="" class="w-full h-full object-cover"></div>
+      <div class="grid-cell relative overflow-hidden bg-card aspect-[3/4]"><img data-sg-img="hero.gallery[3].image" src="img/g4.jpg" alt="" class="w-full h-full object-cover"></div>
+      <div class="grid-cell relative overflow-hidden bg-card aspect-[3/4] hidden md:block"><img data-sg-img="hero.gallery[4].image" src="img/g5.jpg" alt="" class="w-full h-full object-cover"></div>
+      <div class="grid-cell relative overflow-hidden bg-card aspect-[3/4] hidden lg:block"><img data-sg-img="hero.gallery[5].image" src="img/g6.jpg" alt="" class="w-full h-full object-cover"></div>
+      <div class="grid-cell relative overflow-hidden bg-card aspect-[3/4]"><img data-sg-img="hero.gallery[6].image" src="img/g7.jpg" alt="" class="w-full h-full object-cover"></div>
+      <div class="grid-cell relative overflow-hidden bg-card aspect-[3/4]"><img data-sg-img="hero.gallery[7].image" src="img/g8.jpg" alt="" class="w-full h-full object-cover"></div>
+      <div class="grid-cell relative overflow-hidden bg-card aspect-[3/4]"><img data-sg-img="hero.gallery[8].image" src="img/g9.jpg" alt="" class="w-full h-full object-cover"></div>
+      <div class="grid-cell relative overflow-hidden bg-card aspect-[3/4]"><img data-sg-img="hero.gallery[9].image" src="img/g10.jpg" alt="" class="w-full h-full object-cover"></div>
+      <div class="grid-cell relative overflow-hidden bg-card aspect-[3/4] hidden md:block"><img data-sg-img="hero.gallery[10].image" src="img/g11.jpg" alt="" class="w-full h-full object-cover"></div>
+      <div class="grid-cell relative overflow-hidden bg-card aspect-[3/4] hidden lg:block"><img data-sg-img="hero.gallery[11].image" src="img/g12.jpg" alt="" class="w-full h-full object-cover"></div>
+    </div>
+    <!-- vignette -->
+    <div class="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/10 to-ink"></div>
+    <div class="absolute inset-0" style="background:radial-gradient(60% 60% at 50% 45%, rgba(5,5,5,0.65), transparent 70%)"></div>
+    <!-- Title overlay -->
+    <div class="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6 pointer-events-none">
+      <h1 class="leading-[0.95] tracking-tight drop-shadow-2xl">
+        <span class="block text-6xl sm:text-7xl lg:text-8xl font-bold" data-sg-path="hero.title1">Orin Vale</span>
+        <span class="block font-serif-it text-4xl sm:text-5xl lg:text-6xl text-white/90 mt-1" data-sg-path="hero.title2">Photography</span>
+      </h1>
+      <p class="mt-7 max-w-xl text-base md:text-lg text-white/70 font-light" data-sg-path="hero.tagline">
+        Contemplative landscape photography from the wild edges of the world.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       PRINTS (tab → section)
+       ============================================================ -->
+  <section id="prints" class="relative py-24 md:py-32 bg-ink overflow-hidden">
+    <div class="glow-orange absolute inset-x-0 top-0 h-[400px] pointer-events-none"></div>
+    <div class="relative max-w-[100rem] mx-auto px-5 lg:px-10">
+      <div class="text-center mb-14 md:mb-20" data-sg-reveal>
+        <span class="uppercase text-xs tracking-wide2 text-orange font-semibold" data-sg-path="prints.label">The Print Shop</span>
+        <h2 class="text-5xl md:text-7xl font-bold tracking-tight mt-4" data-sg-path="prints.heading">Prints</h2>
+        <p class="font-serif-it text-2xl md:text-3xl text-white/70 mt-2" data-sg-path="prints.subheading">Available Now</p>
+        <p class="max-w-xl mx-auto mt-6 text-white/55 font-light" data-sg-path="prints.intro">Museum-grade archival prints, hand-finished and shipped worldwide. Each edition is limited and signed. Demo pricing shown.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <!-- Print 1 -->
+        <article class="lift group" data-sg-reveal>
+          <div class="frame relative aspect-[4/5] overflow-hidden rounded-md bg-card ring-1 ring-white/10">
+            <img data-sg-img="prints.items[0].image" src="img/print1.jpg" alt="" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+            <span class="absolute top-4 right-4 bg-ink/80 backdrop-blur text-xs font-semibold px-3 py-1.5 rounded-full text-ember" data-sg-path="prints.items[0].price">€180</span>
+          </div>
+          <div class="flex items-end justify-between mt-4">
+            <div>
+              <h3 class="text-lg font-semibold" data-sg-path="prints.items[0].title">Aurora Over Kvaløya</h3>
+              <p class="text-sm text-white/45" data-sg-path="prints.items[0].location">Norway</p>
+            </div>
+            <iconify-icon icon="solar:arrow-right-up-linear" class="text-xl text-white/40 group-hover:text-orange transition-colors"></iconify-icon>
+          </div>
+        </article>
+        <!-- Print 2 -->
+        <article class="lift group" data-sg-reveal>
+          <div class="frame relative aspect-[4/5] overflow-hidden rounded-md bg-card ring-1 ring-white/10">
+            <img data-sg-img="prints.items[1].image" src="img/print2.jpg" alt="" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+            <span class="absolute top-4 right-4 bg-ink/80 backdrop-blur text-xs font-semibold px-3 py-1.5 rounded-full text-ember" data-sg-path="prints.items[1].price">€220</span>
+          </div>
+          <div class="flex items-end justify-between mt-4">
+            <div>
+              <h3 class="text-lg font-semibold" data-sg-path="prints.items[1].title">The Burning Field</h3>
+              <p class="text-sm text-white/45" data-sg-path="prints.items[1].location">Patagonia</p>
+            </div>
+            <iconify-icon icon="solar:arrow-right-up-linear" class="text-xl text-white/40 group-hover:text-orange transition-colors"></iconify-icon>
+          </div>
+        </article>
+        <!-- Print 3 -->
+        <article class="lift group" data-sg-reveal>
+          <div class="frame relative aspect-[4/5] overflow-hidden rounded-md bg-card ring-1 ring-white/10">
+            <img data-sg-img="prints.items[2].image" src="img/print3.jpg" alt="" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+            <span class="absolute top-4 right-4 bg-ink/80 backdrop-blur text-xs font-semibold px-3 py-1.5 rounded-full text-ember" data-sg-path="prints.items[2].price">€160</span>
+          </div>
+          <div class="flex items-end justify-between mt-4">
+            <div>
+              <h3 class="text-lg font-semibold" data-sg-path="prints.items[2].title">Stillwater Fjord</h3>
+              <p class="text-sm text-white/45" data-sg-path="prints.items[2].location">Iceland</p>
+            </div>
+            <iconify-icon icon="solar:arrow-right-up-linear" class="text-xl text-white/40 group-hover:text-orange transition-colors"></iconify-icon>
+          </div>
+        </article>
+        <!-- Print 4 -->
+        <article class="lift group" data-sg-reveal>
+          <div class="frame relative aspect-[4/5] overflow-hidden rounded-md bg-card ring-1 ring-white/10">
+            <img data-sg-img="prints.items[3].image" src="img/print4.jpg" alt="" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+            <span class="absolute top-4 right-4 bg-ink/80 backdrop-blur text-xs font-semibold px-3 py-1.5 rounded-full text-ember" data-sg-path="prints.items[3].price">€200</span>
+          </div>
+          <div class="flex items-end justify-between mt-4">
+            <div>
+              <h3 class="text-lg font-semibold" data-sg-path="prints.items[3].title">Canyon Light</h3>
+              <p class="text-sm text-white/45" data-sg-path="prints.items[3].location">Arizona, USA</p>
+            </div>
+            <iconify-icon icon="solar:arrow-right-up-linear" class="text-xl text-white/40 group-hover:text-orange transition-colors"></iconify-icon>
+          </div>
+        </article>
+        <!-- Print 5 -->
+        <article class="lift group" data-sg-reveal>
+          <div class="frame relative aspect-[4/5] overflow-hidden rounded-md bg-card ring-1 ring-white/10">
+            <img data-sg-img="prints.items[4].image" src="img/print5.jpg" alt="" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+            <span class="absolute top-4 right-4 bg-ink/80 backdrop-blur text-xs font-semibold px-3 py-1.5 rounded-full text-ember" data-sg-path="prints.items[4].price">€190</span>
+          </div>
+          <div class="flex items-end justify-between mt-4">
+            <div>
+              <h3 class="text-lg font-semibold" data-sg-path="prints.items[4].title">Dune Solitude</h3>
+              <p class="text-sm text-white/45" data-sg-path="prints.items[4].location">Namib Desert</p>
+            </div>
+            <iconify-icon icon="solar:arrow-right-up-linear" class="text-xl text-white/40 group-hover:text-orange transition-colors"></iconify-icon>
+          </div>
+        </article>
+        <!-- Print 6 -->
+        <article class="lift group" data-sg-reveal>
+          <div class="frame relative aspect-[4/5] overflow-hidden rounded-md bg-card ring-1 ring-white/10">
+            <img data-sg-img="prints.items[5].image" src="img/print6.jpg" alt="" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+            <span class="absolute top-4 right-4 bg-ink/80 backdrop-blur text-xs font-semibold px-3 py-1.5 rounded-full text-ember" data-sg-path="prints.items[5].price">€240</span>
+          </div>
+          <div class="flex items-end justify-between mt-4">
+            <div>
+              <h3 class="text-lg font-semibold" data-sg-path="prints.items[5].title">Glacier Blue Hour</h3>
+              <p class="text-sm text-white/45" data-sg-path="prints.items[5].location">Patagonia</p>
+            </div>
+            <iconify-icon icon="solar:arrow-right-up-linear" class="text-xl text-white/40 group-hover:text-orange transition-colors"></iconify-icon>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       THEMED GALLERIES (library/* → section, horizontal rail)
+       ============================================================ -->
+  <section id="galleries" class="py-24 md:py-32 bg-inkSoft border-y border-line overflow-hidden">
+    <div class="max-w-[100rem] mx-auto px-5 lg:px-10">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12" data-sg-reveal>
+        <div>
+          <span class="uppercase text-xs tracking-wide2 text-orange font-semibold" data-sg-path="galleries.label">Collections</span>
+          <h2 class="text-4xl md:text-6xl font-bold tracking-tight mt-3" data-sg-path="galleries.heading">Themed Galleries</h2>
+        </div>
+        <p class="max-w-md text-white/55 font-light" data-sg-path="galleries.intro">Bodies of work grouped by mood, palette and place. Each gallery is a long-form story from a single expedition.</p>
+      </div>
+    </div>
+    <!-- Horizontal rail -->
+    <div class="rail flex gap-5 overflow-x-auto px-5 lg:px-10 pb-4 snap-x">
+      <a href="#galleries" class="snap-start shrink-0 w-[78vw] sm:w-[440px] group" data-sg-reveal>
+        <div class="frame relative aspect-[4/3] overflow-hidden rounded-lg bg-card ring-1 ring-white/10">
+          <img data-sg-img="galleries.items[0].image" src="img/lib2.jpg" alt="" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
+          <div class="absolute bottom-5 left-5">
+            <h3 class="text-2xl font-bold" data-sg-path="galleries.items[0].title">International Orange</h3>
+            <p class="text-sm text-white/60 font-serif-it" data-sg-path="galleries.items[0].location">Golden Gate, USA</p>
+          </div>
+        </div>
+      </a>
+      <a href="#galleries" class="snap-start shrink-0 w-[78vw] sm:w-[440px] group" data-sg-reveal>
+        <div class="frame relative aspect-[4/3] overflow-hidden rounded-lg bg-card ring-1 ring-white/10">
+          <img data-sg-img="galleries.items[1].image" src="img/lib4.jpg" alt="" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
+          <div class="absolute bottom-5 left-5">
+            <h3 class="text-2xl font-bold" data-sg-path="galleries.items[1].title">Colors of the Canyon</h3>
+            <p class="text-sm text-white/60 font-serif-it" data-sg-path="galleries.items[1].location">Antelope, Arizona</p>
+          </div>
+        </div>
+      </a>
+      <a href="#galleries" class="snap-start shrink-0 w-[78vw] sm:w-[440px] group" data-sg-reveal>
+        <div class="frame relative aspect-[4/3] overflow-hidden rounded-lg bg-card ring-1 ring-white/10">
+          <img data-sg-img="galleries.items[2].image" src="img/lib3.jpg" alt="" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
+          <div class="absolute bottom-5 left-5">
+            <h3 class="text-2xl font-bold" data-sg-path="galleries.items[2].title">Lakeland</h3>
+            <p class="text-sm text-white/60 font-serif-it" data-sg-path="galleries.items[2].location">Cumbria, England</p>
+          </div>
+        </div>
+      </a>
+      <a href="#galleries" class="snap-start shrink-0 w-[78vw] sm:w-[440px] group" data-sg-reveal>
+        <div class="frame relative aspect-[4/3] overflow-hidden rounded-lg bg-card ring-1 ring-white/10">
+          <img data-sg-img="galleries.items[3].image" src="img/lib1.jpg" alt="" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
+          <div class="absolute bottom-5 left-5">
+            <h3 class="text-2xl font-bold" data-sg-path="galleries.items[3].title">Nightfall</h3>
+            <p class="text-sm text-white/60 font-serif-it" data-sg-path="galleries.items[3].location">Atacama, Chile</p>
+          </div>
+        </div>
+      </a>
+      <a href="#galleries" class="snap-start shrink-0 w-[78vw] sm:w-[440px] group" data-sg-reveal>
+        <div class="frame relative aspect-[4/3] overflow-hidden rounded-lg bg-card ring-1 ring-white/10">
+          <img data-sg-img="galleries.items[4].image" src="img/lib5.jpg" alt="" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
+          <div class="absolute bottom-5 left-5">
+            <h3 class="text-2xl font-bold" data-sg-path="galleries.items[4].title">Patagonia Sunset</h3>
+            <p class="text-sm text-white/60 font-serif-it" data-sg-path="galleries.items[4].location">El Chaltén, Argentina</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       COURSES (tab → section)
+       ============================================================ -->
+  <section id="courses" class="py-24 md:py-32 bg-ink">
+    <div class="max-w-5xl mx-auto px-5 lg:px-10">
+      <div class="text-center mb-14" data-sg-reveal>
+        <span class="uppercase text-xs tracking-wide2 text-orange font-semibold" data-sg-path="courses.label">Learn</span>
+        <h2 class="text-5xl md:text-7xl font-bold tracking-tight mt-4" data-sg-path="courses.heading">Courses</h2>
+        <p class="max-w-xl mx-auto mt-6 text-white/55 font-light" data-sg-path="courses.intro">Step-by-step video courses to take you from the field to the final, gallery-ready frame.</p>
+      </div>
+
+      <div class="space-y-5">
+        <!-- Course 1 -->
+        <article class="lift flex flex-col sm:flex-row gap-6 bg-card rounded-2xl p-5 ring-1 ring-white/5" data-sg-reveal>
+          <div class="sm:w-56 shrink-0 aspect-[16/10] sm:aspect-square rounded-xl overflow-hidden bg-ink">
+            <img data-sg-img="courses.items[0].image" src="img/course1.jpg" alt="" class="w-full h-full object-cover">
+          </div>
+          <div class="flex-1">
+            <span class="uppercase text-[11px] tracking-wide15 text-white/40" data-sg-path="courses.items[0].duration">18 lessons</span>
+            <h3 class="text-2xl font-bold mt-2 mb-3" data-sg-path="courses.items[0].title">Masterclass: Landscape Photography Shoots</h3>
+            <p class="text-white/55 font-light leading-relaxed" data-sg-path="courses.items[0].desc">The course begins with the basics of finding great locations for shooting landscapes and progresses to cover everything you need to know about capturing great landscape photographs — including framing, composition, camera settings, where to stand, and visualising shots and more.</p>
+          </div>
+        </article>
+        <!-- Course 2 -->
+        <article class="lift flex flex-col sm:flex-row gap-6 bg-card rounded-2xl p-5 ring-1 ring-white/5" data-sg-reveal>
+          <div class="sm:w-56 shrink-0 aspect-[16/10] sm:aspect-square rounded-xl overflow-hidden bg-ink">
+            <img data-sg-img="courses.items[1].image" src="img/course2.jpg" alt="" class="w-full h-full object-cover">
+          </div>
+          <div class="flex-1">
+            <span class="uppercase text-[11px] tracking-wide15 text-white/40" data-sg-path="courses.items[1].duration">12 lessons</span>
+            <h3 class="text-2xl font-bold mt-2 mb-3" data-sg-path="courses.items[1].title">Ultimate Guide to Night Sky Photography</h3>
+            <p class="text-white/55 font-light leading-relaxed" data-sg-path="courses.items[1].desc">Everything there is to know about shooting astrophotography — from the best settings to use, tripods and equipment, where to shoot, and how to create beautiful composite images in post. Take your night-sky photography to the next level.</p>
+          </div>
+        </article>
+        <!-- Course 3 -->
+        <article class="lift flex flex-col sm:flex-row gap-6 bg-card rounded-2xl p-5 ring-1 ring-white/5" data-sg-reveal>
+          <div class="sm:w-56 shrink-0 aspect-[16/10] sm:aspect-square rounded-xl overflow-hidden bg-ink">
+            <img data-sg-img="courses.items[2].image" src="img/course3.jpg" alt="" class="w-full h-full object-cover">
+          </div>
+          <div class="flex-1">
+            <span class="uppercase text-[11px] tracking-wide15 text-white/40" data-sg-path="courses.items[2].duration">15 lessons</span>
+            <h3 class="text-2xl font-bold mt-2 mb-3" data-sg-path="courses.items[2].title">The Art of Editing for Landscapes</h3>
+            <p class="text-white/55 font-light leading-relaxed" data-sg-path="courses.items[2].desc">A complete, repeatable editing workflow: building luminosity masks, color grading for mood, dodging and burning, and finishing a print-ready file that holds up at gallery scale.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       PRESETS (tab → section, carousel rail)
+       ============================================================ -->
+  <section id="presets" class="relative py-24 md:py-32 bg-inkSoft border-y border-line overflow-hidden">
+    <div class="absolute inset-x-0 bottom-0 h-[300px] pointer-events-none" style="background:linear-gradient(120deg, rgba(255,139,97,0.15), rgba(168,219,255,0.12), rgba(185,138,255,0.15));filter:blur(40px);"></div>
+    <div class="relative max-w-[100rem] mx-auto px-5 lg:px-10">
+      <div class="text-center mb-14" data-sg-reveal>
+        <span class="uppercase text-xs tracking-wide2 text-orange font-semibold" data-sg-path="presets.label">Lightroom</span>
+        <h2 class="text-5xl md:text-7xl font-bold tracking-tight mt-4" data-sg-path="presets.heading">Presets</h2>
+        <p class="max-w-xl mx-auto mt-6 text-white/55 font-light" data-sg-path="presets.intro">One-click looks built from years of field work. Drop them on your RAW files and dial them in. Demo pricing shown.</p>
+      </div>
+    </div>
+    <div class="rail flex gap-5 overflow-x-auto px-5 lg:px-10 pb-4 snap-x">
+      <div class="snap-start shrink-0 w-[60vw] sm:w-72 lift" data-sg-reveal>
+        <div class="relative aspect-[3/4] rounded-2xl overflow-hidden bg-card ring-1 ring-white/10">
+          <img data-sg-img="presets.items[0].image" src="img/preset1.jpg" alt="" class="w-full h-full object-cover">
+          <span class="absolute top-3 left-3 bg-mist/90 text-ink text-[11px] font-bold px-2.5 py-1 rounded">Lr</span>
+          <div class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+            <h3 class="font-semibold" data-sg-path="presets.items[0].title">Presets Pack 2020</h3>
+            <p class="text-ember text-sm font-medium" data-sg-path="presets.items[0].price">€30</p>
+          </div>
+        </div>
+      </div>
+      <div class="snap-start shrink-0 w-[60vw] sm:w-72 lift" data-sg-reveal>
+        <div class="relative aspect-[3/4] rounded-2xl overflow-hidden bg-card ring-1 ring-white/10">
+          <img data-sg-img="presets.items[1].image" src="img/preset2.jpg" alt="" class="w-full h-full object-cover">
+          <span class="absolute top-3 left-3 bg-mist/90 text-ink text-[11px] font-bold px-2.5 py-1 rounded">Lr</span>
+          <div class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+            <h3 class="font-semibold" data-sg-path="presets.items[1].title">Presets Pack 2019</h3>
+            <p class="text-ember text-sm font-medium" data-sg-path="presets.items[1].price">€30</p>
+          </div>
+        </div>
+      </div>
+      <div class="snap-start shrink-0 w-[60vw] sm:w-72 lift" data-sg-reveal>
+        <div class="relative aspect-[3/4] rounded-2xl overflow-hidden bg-card ring-2 ring-orange">
+          <img data-sg-img="presets.items[2].image" src="img/preset3.jpg" alt="" class="w-full h-full object-cover">
+          <span class="absolute top-3 left-3 bg-mist/90 text-ink text-[11px] font-bold px-2.5 py-1 rounded">Lr</span>
+          <div class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+            <h3 class="font-semibold" data-sg-path="presets.items[2].title">Presets Pack 2023</h3>
+            <p class="text-ember text-sm font-medium" data-sg-path="presets.items[2].price">€40</p>
+          </div>
+        </div>
+      </div>
+      <div class="snap-start shrink-0 w-[60vw] sm:w-72 lift" data-sg-reveal>
+        <div class="relative aspect-[3/4] rounded-2xl overflow-hidden bg-card ring-1 ring-white/10">
+          <img data-sg-img="presets.items[3].image" src="img/preset4.jpg" alt="" class="w-full h-full object-cover">
+          <span class="absolute top-3 left-3 bg-mist/90 text-ink text-[11px] font-bold px-2.5 py-1 rounded">Lr</span>
+          <div class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+            <h3 class="font-semibold" data-sg-path="presets.items[3].title">Presets Pack 2022</h3>
+            <p class="text-ember text-sm font-medium" data-sg-path="presets.items[3].price">€35</p>
+          </div>
+        </div>
+      </div>
+      <div class="snap-start shrink-0 w-[60vw] sm:w-72 lift" data-sg-reveal>
+        <div class="relative aspect-[3/4] rounded-2xl overflow-hidden bg-card ring-1 ring-white/10">
+          <img data-sg-img="presets.items[4].image" src="img/preset5.jpg" alt="" class="w-full h-full object-cover">
+          <span class="absolute top-3 left-3 bg-mist/90 text-ink text-[11px] font-bold px-2.5 py-1 rounded">Lr</span>
+          <div class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+            <h3 class="font-semibold" data-sg-path="presets.items[4].title">Presets Pack 2021</h3>
+            <p class="text-ember text-sm font-medium" data-sg-path="presets.items[4].price">€30</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       GEAR (tab → section)
+       ============================================================ -->
+  <section id="gear" class="relative py-24 md:py-32 overflow-hidden">
+    <div class="absolute inset-0 glow-orange"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-[#1a0d06] via-[#120a06] to-ink"></div>
+    <div class="relative max-w-[100rem] mx-auto px-5 lg:px-10">
+      <div class="text-center mb-14" data-sg-reveal>
+        <span class="uppercase text-xs tracking-wide2 text-sun font-semibold" data-sg-path="gear.label">In the Bag</span>
+        <h2 class="text-5xl md:text-7xl font-bold tracking-tight mt-4" data-sg-path="gear.heading">Gear</h2>
+        <p class="max-w-xl mx-auto mt-6 text-white/60 font-light" data-sg-path="gear.intro">The kit I actually carry into the field. Built for weather, distance and long, cold nights under the stars.</p>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+        <article class="lift bg-card/70 backdrop-blur rounded-2xl p-5 ring-1 ring-white/10" data-sg-reveal>
+          <div class="aspect-square rounded-xl overflow-hidden bg-ink mb-4"><img data-sg-img="gear.items[0].image" src="img/gear1.jpg" alt="" class="w-full h-full object-cover"></div>
+          <h3 class="font-semibold" data-sg-path="gear.items[0].name">Vela 25mm</h3>
+          <p class="text-sm text-white/45" data-sg-path="gear.items[0].category">Lens</p>
+        </article>
+        <article class="lift bg-card/70 backdrop-blur rounded-2xl p-5 ring-1 ring-white/10" data-sg-reveal>
+          <div class="aspect-square rounded-xl overflow-hidden bg-ink mb-4"><img data-sg-img="gear.items[1].image" src="img/gear2.jpg" alt="" class="w-full h-full object-cover"></div>
+          <h3 class="font-semibold" data-sg-path="gear.items[1].name">Aperture A7</h3>
+          <p class="text-sm text-white/45" data-sg-path="gear.items[1].category">Camera Body</p>
+        </article>
+        <article class="lift bg-card/70 backdrop-blur rounded-2xl p-5 ring-1 ring-white/10" data-sg-reveal>
+          <div class="aspect-square rounded-xl overflow-hidden bg-ink mb-4"><img data-sg-img="gear.items[2].image" src="img/gear3.jpg" alt="" class="w-full h-full object-cover"></div>
+          <h3 class="font-semibold" data-sg-path="gear.items[2].name">Tarion Backpack</h3>
+          <p class="text-sm text-white/45" data-sg-path="gear.items[2].category">Bag</p>
+        </article>
+        <article class="lift bg-card/70 backdrop-blur rounded-2xl p-5 ring-1 ring-white/10" data-sg-reveal>
+          <div class="aspect-square rounded-xl overflow-hidden bg-ink mb-4"><img data-sg-img="gear.items[3].image" src="img/gear4.jpg" alt="" class="w-full h-full object-cover"></div>
+          <h3 class="font-semibold" data-sg-path="gear.items[3].name">Lumen G7</h3>
+          <p class="text-sm text-white/45" data-sg-path="gear.items[3].category">Camera Body</p>
+        </article>
+        <article class="lift bg-card/70 backdrop-blur rounded-2xl p-5 ring-1 ring-white/10" data-sg-reveal>
+          <div class="aspect-square rounded-xl overflow-hidden bg-ink mb-4"><img data-sg-img="gear.items[4].image" src="img/gear5.jpg" alt="" class="w-full h-full object-cover"></div>
+          <h3 class="font-semibold" data-sg-path="gear.items[4].name">Vela 14–42mm</h3>
+          <p class="text-sm text-white/45" data-sg-path="gear.items[4].category">Software</p>
+        </article>
+        <article class="lift bg-card/70 backdrop-blur rounded-2xl p-5 ring-1 ring-white/10" data-sg-reveal>
+          <div class="aspect-square rounded-xl overflow-hidden bg-ink mb-4"><img data-sg-img="gear.items[5].image" src="img/gear6.jpg" alt="" class="w-full h-full object-cover"></div>
+          <h3 class="font-semibold" data-sg-path="gear.items[5].name">Steadex Tripod</h3>
+          <p class="text-sm text-white/45" data-sg-path="gear.items[5].category">Tripod</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       JOURNAL / BLOG (tab → section)
+       ============================================================ -->
+  <section id="journal" class="relative py-24 md:py-32 overflow-hidden">
+    <div class="absolute inset-0 glow-green"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-[#08120f] via-[#0a0f0d] to-ink"></div>
+    <div class="relative max-w-5xl mx-auto px-5 lg:px-10">
+      <div class="text-center mb-14" data-sg-reveal>
+        <span class="uppercase text-xs tracking-wide2 text-mist font-semibold" data-sg-path="journal.label">Field Notes</span>
+        <h2 class="text-5xl md:text-7xl font-bold tracking-tight mt-4" data-sg-path="journal.heading">Journal</h2>
+        <p class="max-w-xl mx-auto mt-6 text-white/60 font-light" data-sg-path="journal.intro">Short, practical reads on the craft — light, settings and the long walks in between.</p>
+      </div>
+
+      <div class="space-y-4">
+        <article class="lift flex items-center gap-5 bg-card/70 backdrop-blur rounded-2xl p-4 ring-1 ring-white/10" data-sg-reveal>
+          <div class="w-28 h-20 sm:w-40 sm:h-24 shrink-0 rounded-xl overflow-hidden bg-ink"><img data-sg-img="journal.posts[0].image" src="img/blog1.jpg" alt="" class="w-full h-full object-cover"></div>
+          <div class="flex-1 min-w-0">
+            <h3 class="text-lg sm:text-2xl font-bold truncate" data-sg-path="journal.posts[0].title">Understanding Shutter Speed</h3>
+            <p class="text-sm text-white/45" data-sg-path="journal.posts[0].date">May 22, 2025</p>
+          </div>
+          <span class="hidden sm:block text-xs text-white/40 shrink-0" data-sg-path="journal.posts[0].read">10 minute read</span>
+        </article>
+        <article class="lift flex items-center gap-5 bg-card/70 backdrop-blur rounded-2xl p-4 ring-1 ring-white/10" data-sg-reveal>
+          <div class="w-28 h-20 sm:w-40 sm:h-24 shrink-0 rounded-xl overflow-hidden bg-ink"><img data-sg-img="journal.posts[1].image" src="img/blog2.jpg" alt="" class="w-full h-full object-cover"></div>
+          <div class="flex-1 min-w-0">
+            <h3 class="text-lg sm:text-2xl font-bold truncate" data-sg-path="journal.posts[1].title">Understanding Aperture</h3>
+            <p class="text-sm text-white/45" data-sg-path="journal.posts[1].date">April 17, 2025</p>
+          </div>
+          <span class="hidden sm:block text-xs text-white/40 shrink-0" data-sg-path="journal.posts[1].read">8 minute read</span>
+        </article>
+        <article class="lift flex items-center gap-5 bg-card/70 backdrop-blur rounded-2xl p-4 ring-1 ring-white/10" data-sg-reveal>
+          <div class="w-28 h-20 sm:w-40 sm:h-24 shrink-0 rounded-xl overflow-hidden bg-ink"><img data-sg-img="journal.posts[2].image" src="img/blog3.jpg" alt="" class="w-full h-full object-cover"></div>
+          <div class="flex-1 min-w-0">
+            <h3 class="text-lg sm:text-2xl font-bold truncate" data-sg-path="journal.posts[2].title">Understanding ISO</h3>
+            <p class="text-sm text-white/45" data-sg-path="journal.posts[2].date">March 7, 2025</p>
+          </div>
+          <span class="hidden sm:block text-xs text-white/40 shrink-0" data-sg-path="journal.posts[2].read">8 minute read</span>
+        </article>
+        <article class="lift flex items-center gap-5 bg-card/70 backdrop-blur rounded-2xl p-4 ring-1 ring-white/10" data-sg-reveal>
+          <div class="w-28 h-20 sm:w-40 sm:h-24 shrink-0 rounded-xl overflow-hidden bg-ink"><img data-sg-img="journal.posts[3].image" src="img/blog4.jpg" alt="" class="w-full h-full object-cover"></div>
+          <div class="flex-1 min-w-0">
+            <h3 class="text-lg sm:text-2xl font-bold truncate" data-sg-path="journal.posts[3].title">Reading the Light at Dawn</h3>
+            <p class="text-sm text-white/45" data-sg-path="journal.posts[3].date">Feb 2, 2025</p>
+          </div>
+          <span class="hidden sm:block text-xs text-white/40 shrink-0" data-sg-path="journal.posts[3].read">6 minute read</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       ABOUT (tab → section)
+       ============================================================ -->
+  <section id="about" class="py-24 md:py-32 bg-ink">
+    <div class="max-w-6xl mx-auto px-5 lg:px-10">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div class="relative" data-sg-reveal>
+          <div class="aspect-[4/5] rounded-2xl overflow-hidden bg-card ring-1 ring-white/10">
+            <img data-sg-img="about.portrait" src="img/about-portrait.jpg" alt="" class="w-full h-full object-cover" data-sg-parallax>
+          </div>
+          <div class="absolute -bottom-8 -right-4 w-40 md:w-52 aspect-square rounded-xl overflow-hidden ring-4 ring-ink shadow-2xl hidden sm:block">
+            <img data-sg-img="about.story" src="img/about-story.jpg" alt="" class="w-full h-full object-cover">
+          </div>
+        </div>
+        <div data-sg-reveal>
+          <span class="uppercase text-xs tracking-wide2 text-orange font-semibold" data-sg-path="about.label">About</span>
+          <h2 class="text-4xl md:text-5xl font-bold tracking-tight mt-4 leading-[1.05]" data-sg-path="about.heading">Chasing light at the edges of the map</h2>
+          <p class="mt-6 text-white/60 font-light leading-relaxed" data-sg-path="about.paragraphs[0]">Orin Vale is a landscape photographer drawn to remote, weather-beaten places — fjords, deserts, glaciers and the long blue hours in between. The work is quiet and contemplative, built on patience rather than spectacle.</p>
+          <p class="mt-4 text-white/60 font-light leading-relaxed" data-sg-path="about.paragraphs[1]">Over a decade of expeditions across Patagonia, Norway, Iceland and the American Southwest, Orin has learned that the best frames come to those who wait. This is a place to collect that work, share the craft, and send a piece of the wild to your wall.</p>
+          <div class="grid grid-cols-3 gap-6 mt-10 border-t border-line pt-8">
+            <div>
+              <p class="text-3xl md:text-4xl font-bold text-orange" data-sg-path="about.stats[0].value">12+</p>
+              <p class="text-xs uppercase tracking-wide15 text-white/45 mt-1" data-sg-path="about.stats[0].label">Years in the field</p>
+            </div>
+            <div>
+              <p class="text-3xl md:text-4xl font-bold text-orange" data-sg-path="about.stats[1].value">30+</p>
+              <p class="text-xs uppercase tracking-wide15 text-white/45 mt-1" data-sg-path="about.stats[1].label">Countries</p>
+            </div>
+            <div>
+              <p class="text-3xl md:text-4xl font-bold text-orange" data-sg-path="about.stats[2].value">200+</p>
+              <p class="text-xs uppercase tracking-wide15 text-white/45 mt-1" data-sg-path="about.stats[2].label">Editions sold</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       NEWSLETTER + FOOTER
+       ============================================================ -->
+  <footer class="relative py-24 md:py-28 bg-inkSoft border-t border-line overflow-hidden">
+    <div class="glow-orange absolute inset-x-0 bottom-0 h-[300px] pointer-events-none"></div>
+    <div class="relative max-w-3xl mx-auto px-5 lg:px-10 text-center" data-sg-reveal>
+      <h2 class="text-3xl md:text-5xl font-bold tracking-tight" data-sg-path="newsletter.heading">Photography Insights Newsletter</h2>
+      <p class="mt-4 text-white/55 font-light" data-sg-path="newsletter.intro">Field notes, new prints and the occasional preset drop. No spam — just light.</p>
+      <form class="mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onsubmit="return false;">
+        <input type="email" placeholder="you@email.com" class="flex-1 bg-card border border-line rounded-full px-5 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-orange transition-colors">
+        <button class="bg-orange hover:bg-ember transition-colors text-ink text-sm uppercase tracking-wide15 font-semibold px-7 py-3 rounded-full" data-sg-path="newsletter.cta">Subscribe</button>
+      </form>
+    </div>
+
+    <div class="relative max-w-[100rem] mx-auto px-5 lg:px-10 mt-20 pt-10 border-t border-line flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <span class="w-8 h-8 rounded-full border border-white/30 flex items-center justify-center">
+          <span class="w-3 h-3 rounded-full bg-orange"></span>
+        </span>
+        <span class="text-sm uppercase tracking-wide2 font-medium" data-sg-path="brand">Orin Vale</span>
+      </div>
+      <div class="flex items-center gap-6 text-xs uppercase tracking-wide15 text-white/50">
+        <span data-sg-path="contact.socials[0]">Instagram</span>
+        <span data-sg-path="contact.socials[1]">YouTube</span>
+        <span data-sg-path="contact.socials[2]">Behance</span>
+      </div>
+      <div class="text-xs text-white/40 text-center md:text-right">
+        <p data-sg-path="contact.email">hello@orinvale.com</p>
+        <p data-sg-path="contact.location">Based in Bergen / Working worldwide</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       HYDRATION + GSAP ANIMATIONS (standard Akyra block)
+       ============================================================ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      // Hydrate texts
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      // Hydrate images (img.src or background-image)
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      // Mobile menu toggle
+      var btn = document.getElementById('menuBtn'), panel = document.getElementById('menuPanel');
+      if (btn && panel) {
+        btn.addEventListener('click', function () { panel.classList.toggle('hidden'); });
+        panel.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { panel.classList.add('hidden'); }); });
+      }
+      // Animations: reveal + parallax (GSAP recreation, not 1:1 capture)
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, {
+            opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+          });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, {
+            yPercent: -12, ease: 'none',
+            scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+          });
+        });
+        // ROBUSTESSE : recalcule les positions après chargement des images
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        // Filet ultime anti-page-blanche
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+{
+  "meta": {
+    "title": "Léon Marchal | Freelance Photographer",
+    "description": "Léon Marchal — freelance photographer capturing life's best moments across portrait, travel, commercial, event, aerial and wildlife photography."
+  },
+  "brand": "Léon Marchal",
+  "nav": [
+    "Home",
+    "About",
+    "Works",
+    "Reviews",
+    "Blogs",
+    "Contact"
+  ],
+  "footerNav": [
+    "Home",
+    "About",
+    "Works",
+    "Reviews",
+    "Blogs",
+    "Contact",
+    "More Templates"
+  ],
+  "hero": {
+    "titleLine1": "Capturing Life's Best",
+    "titleLine2": "Moments",
+    "intro": "Hi, Léon Marchal here. I'm a freelance photographer and the shutterbug capturing life's magical moments one click at a time.",
+    "tag": "Léon Marchal — Freelance Photographer",
+    "scroll": "↓ Scroll to explore",
+    "ctaPrimary": "Get in Touch",
+    "ctaSecondary": "Work With Me",
+    "image": "/_templates/photographer-freelance/img/hero.jpg"
+  },
+  "about": {
+    "heading": "I am …",
+    "paragraph": "a passionate photographer dedicated to capturing life's most precious moments. With a keen eye for detail and a love for storytelling, I strive to create images that are not just beautiful, but that also evoke emotion and tell a compelling story.",
+    "cta": "More About Me →"
+  },
+  "brands": {
+    "heading": "Brands I have worked with",
+    "items": [
+      "aperture",
+      "northlight",
+      "Veridian",
+      "stillframe",
+      "OPALINE",
+      "露光",
+      "Lumen",
+      "標識",
+      "Halcyon",
+      "Solace"
+    ]
+  },
+  "albums": {
+    "heading": "Albums",
+    "items": [
+      {
+        "title": "Colorful India",
+        "tags": [
+          "Travel",
+          "Collaboration"
+        ],
+        "image": "/_templates/photographer-freelance/img/album-travel.jpg"
+      },
+      {
+        "title": "Echoes of Dreams",
+        "tags": [
+          "Conceptual",
+          "Commercial"
+        ],
+        "image": "/_templates/photographer-freelance/img/album-concept.jpg"
+      },
+      {
+        "title": "Wings of Freedom",
+        "tags": [
+          "Aerial & Drone",
+          "Passion Project"
+        ],
+        "image": "/_templates/photographer-freelance/img/album-aerial.jpg"
+      },
+      {
+        "title": "Crafted Perfection",
+        "tags": [
+          "Product",
+          "Commercial"
+        ],
+        "image": "/_templates/photographer-freelance/img/album-product.jpg"
+      },
+      {
+        "title": "Wild Wonders",
+        "tags": [
+          "Wildlife & Nature",
+          "Passion Project"
+        ],
+        "image": "/_templates/photographer-freelance/img/album-wildlife.jpg"
+      }
+    ]
+  },
+  "expertise": {
+    "heading": "My Expertise",
+    "moreLine1": "Wait…",
+    "moreLine2": "There's more!",
+    "items": [
+      {
+        "name": "Documentary Photography",
+        "text": "Documentary photography serves to inform, educate, and inspire by providing a truthful and insightful representation of the world. It is used to raise awareness about important issues, document significant events, and preserve historical moments.",
+        "image": "/_templates/photographer-freelance/img/exp-documentary.jpg"
+      },
+      {
+        "name": "Event Photography",
+        "text": "Tell powerful stories through your event photography, capturing real-life events and moments. From intimate gatherings to grand celebrations, every frame preserves the energy and emotion of the day.",
+        "image": "/_templates/photographer-freelance/img/exp-event.jpg"
+      },
+      {
+        "name": "Aerial Photography",
+        "text": "Get a bird's-eye view with stunning aerial photography captured via drone, perfect for real estate, events, and sweeping landscapes that reveal a fresh perspective.",
+        "image": "/_templates/photographer-freelance/img/exp-aerial.jpg"
+      },
+      {
+        "name": "Corporate Photography",
+        "text": "Enhance your brand image with professional corporate photography for headshots, team photos, and company events that communicate trust and personality.",
+        "image": "/_templates/photographer-freelance/img/exp-corporate.jpg"
+      },
+      {
+        "name": "Editorial Photography",
+        "text": "Bring your stories to life with compelling editorial photography for magazines, blogs, and publications.",
+        "image": "/_templates/photographer-freelance/img/exp-editorial.jpg"
+      }
+    ]
+  },
+  "reviews": {
+    "kicker": "Smiles and Stories from",
+    "heading": "My Clients",
+    "cta": "View All Reviews →",
+    "items": [
+      {
+        "quote": "\"We are thrilled with the product photography provided by Léon. They captured our products beautifully, highlighting their unique features and enhancing their appeal.\"",
+        "name": "Michael T.",
+        "role": "Marketing Manager, Stellar Designs",
+        "avatar": "/_templates/photographer-freelance/img/avatar1.jpg"
+      },
+      {
+        "quote": "\"Thank you, our product images have never looked better! They have a keen eye for detail and a talent for capturing our products in the best possible light. We couldn't be happier with the results!\"",
+        "name": "Aurora Jensen",
+        "role": "Marketing Director",
+        "avatar": "/_templates/photographer-freelance/img/avatar2.jpg"
+      },
+      {
+        "quote": "\"He provided exceptional product photography services for our latest collection. Their attention to detail and creative approach resulted in images that perfectly showcased our products. Highly recommended!\"",
+        "name": "G. Monroe",
+        "role": "Marketing Manager, Stellar Designs",
+        "avatar": "/_templates/photographer-freelance/img/avatar3.jpg"
+      },
+      {
+        "quote": "\"It was a fantastic experience! They brought a level of professionalism and creativity to our product photography that truly set our brand apart. We look forward to working with them again in the future!\"",
+        "name": "Camille Roux",
+        "role": "MD, Stellar Designs",
+        "avatar": "/_templates/photographer-freelance/img/avatar4.jpg"
+      }
+    ]
+  },
+  "blog": {
+    "kicker": "Stay inspired with my",
+    "heading": "Insightful Articles",
+    "cta": "All Blogs →",
+    "posts": [
+      {
+        "title": "Elevate your photos with my signature color grading presets",
+        "tag": "Resources",
+        "date": "March 8, 2024",
+        "image": "/_templates/photographer-freelance/img/blog-grading.jpg"
+      },
+      {
+        "title": "The art of candid photography: capturing moments naturally",
+        "tag": "Tips",
+        "date": "April 14, 2024",
+        "image": "/_templates/photographer-freelance/img/blog-candid.jpg"
+      },
+      {
+        "title": "Capturing the magic of golden hour: a photographer's guide",
+        "tag": "Tips",
+        "date": "May 2, 2024",
+        "image": "/_templates/photographer-freelance/img/blog-golden.jpg"
+      }
+    ]
+  },
+  "faq": {
+    "headingLine1": "FAQ Frenzy:",
+    "headingLine2": "All your answers here",
+    "items": [
+      {
+        "q": "How do I book a photography session with you?",
+        "a": "You can book a session by filling out the contact form on my website or by emailing me directly at your email address. I'll get back to you within 24 hours to discuss the details and schedule your shoot."
+      },
+      {
+        "q": "What are your rates for photography sessions?",
+        "a": "Rates vary depending on the type of session, location, and deliverables. Get in touch for a custom quote tailored to your project — I'm happy to work within a range of budgets."
+      },
+      {
+        "q": "What does your pricing include?",
+        "a": "Pricing includes the shoot itself, professional editing of selected images, and delivery via a private online gallery. Print and licensing options are available on request."
+      },
+      {
+        "q": "What types of photography do you specialize in?",
+        "a": "I specialize in portrait, travel, commercial, event, aerial, and wildlife photography — bringing a documentary eye and a love for storytelling to each genre."
+      },
+      {
+        "q": "What is included in your photography packages?",
+        "a": "Each package includes pre-shoot planning, the session, a curated set of edited high-resolution images, and an online gallery. Add-ons like extra hours or prints can be arranged."
+      },
+      {
+        "q": "How long does a typical photo session last?",
+        "a": "Most sessions run between one and three hours depending on the scope. Larger events or commercial shoots can be scheduled for a full or half day."
+      },
+      {
+        "q": "Do you travel for shoots?",
+        "a": "Absolutely — I love travel assignments. I'm available for shoots worldwide; travel and accommodation are simply added to the quote."
+      },
+      {
+        "q": "What should I wear to my photo session?",
+        "a": "Wear something you feel confident in. Solid colors and simple textures photograph well; I'll send a short style guide once we've booked your session."
+      },
+      {
+        "q": "How long will it take to receive my photos?",
+        "a": "Edited galleries are typically delivered within two to three weeks. For events or larger projects, a small set of previews is shared within a few days."
+      }
+    ]
+  },
+  "contact": {
+    "badge": "Let's Talk",
+    "email": "leon@email.com",
+    "social": [
+      "Instagram",
+      "Facebook",
+      "Twitter",
+      "LinkedIn"
+    ]
+  }
+}

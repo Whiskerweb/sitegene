@@ -1,0 +1,425 @@
+{
+  "id": "wedding-warm",
+  "name": "Lumière Studio — Mariage éditorial",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "meta",
+      "brand",
+      "brandFull",
+      "brandTag",
+      "nav",
+      "hero",
+      "about",
+      "services",
+      "portfolio",
+      "testimonials",
+      "faq",
+      "journal",
+      "cta",
+      "footer"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.image",
+      "role": "hero",
+      "required": true,
+      "note": "hero · image"
+    },
+    {
+      "slot": "p2",
+      "path": "about.portrait",
+      "role": "avatar",
+      "required": true,
+      "note": "about · portrait"
+    },
+    {
+      "slot": "p3",
+      "path": "about.detail",
+      "role": "image",
+      "required": true,
+      "note": "about · detail"
+    },
+    {
+      "slot": "p4",
+      "path": "services.items[].strip[]",
+      "role": "image",
+      "required": true,
+      "note": "services · items · strip"
+    },
+    {
+      "slot": "p5",
+      "path": "portfolio.works[].image",
+      "role": "gallery",
+      "required": true,
+      "note": "portfolio · works · image"
+    },
+    {
+      "slot": "p6",
+      "path": "testimonials.image",
+      "role": "image",
+      "required": true,
+      "note": "testimonials · image"
+    },
+    {
+      "slot": "p7",
+      "path": "journal.posts[].image",
+      "role": "image",
+      "required": true,
+      "note": "journal · posts · image"
+    },
+    {
+      "slot": "p8",
+      "path": "cta.image",
+      "role": "image",
+      "required": true,
+      "note": "cta · image"
+    },
+    {
+      "slot": "p9",
+      "path": "footer.image",
+      "role": "image",
+      "required": true,
+      "note": "footer · image"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "meta.title",
+        "label": "meta · title",
+        "type": "text",
+        "maxLen": 91
+      },
+      {
+        "path": "meta.description",
+        "label": "meta · description",
+        "type": "text",
+        "maxLen": 166
+      },
+      {
+        "path": "nav.0",
+        "label": "nav · 0",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.1",
+        "label": "nav · 1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.2",
+        "label": "nav · 2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.3",
+        "label": "nav · 3",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.4",
+        "label": "nav · 4",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.5",
+        "label": "nav · 5",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.title1",
+        "label": "hero · title1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.title2",
+        "label": "hero · title2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.tagline",
+        "label": "hero · tagline",
+        "type": "text",
+        "maxLen": 117
+      },
+      {
+        "path": "hero.cta",
+        "label": "hero · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.label",
+        "label": "about · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.heading",
+        "label": "about · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.paragraphs[]",
+        "label": "about · paragraphs",
+        "type": "text",
+        "maxLen": 400
+      },
+      {
+        "path": "about.cta",
+        "label": "about · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.label",
+        "label": "services · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.intro",
+        "label": "services · intro",
+        "type": "text",
+        "maxLen": 170
+      },
+      {
+        "path": "services.cta",
+        "label": "services · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.items[].title",
+        "label": "services · items · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.items[].desc",
+        "label": "services · items · desc",
+        "type": "text",
+        "maxLen": 312
+      },
+      {
+        "path": "services.items[].cta",
+        "label": "services · items · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolio.heading",
+        "label": "portfolio · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolio.intro",
+        "label": "portfolio · intro",
+        "type": "text",
+        "maxLen": 154
+      },
+      {
+        "path": "portfolio.cta",
+        "label": "portfolio · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolio.works[].index",
+        "label": "portfolio · works · index",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolio.works[].title",
+        "label": "portfolio · works · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolio.works[].category",
+        "label": "portfolio · works · category",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.heading",
+        "label": "testimonials · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.intro",
+        "label": "testimonials · intro",
+        "type": "text",
+        "maxLen": 194
+      },
+      {
+        "path": "testimonials.items[].quote",
+        "label": "testimonials · items · quote",
+        "type": "text",
+        "maxLen": 296
+      },
+      {
+        "path": "testimonials.items[].name",
+        "label": "testimonials · items · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.heading",
+        "label": "faq · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.intro",
+        "label": "faq · intro",
+        "type": "text",
+        "maxLen": 165
+      },
+      {
+        "path": "faq.cta",
+        "label": "faq · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.items[].q",
+        "label": "faq · items · q",
+        "type": "text",
+        "maxLen": 74
+      },
+      {
+        "path": "faq.items[].a",
+        "label": "faq · items · a",
+        "type": "text",
+        "maxLen": 307
+      },
+      {
+        "path": "journal.heading",
+        "label": "journal · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "journal.intro",
+        "label": "journal · intro",
+        "type": "text",
+        "maxLen": 163
+      },
+      {
+        "path": "journal.cta",
+        "label": "journal · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "journal.posts[].title",
+        "label": "journal · posts · title",
+        "type": "text",
+        "maxLen": 75
+      },
+      {
+        "path": "journal.posts[].date",
+        "label": "journal · posts · date",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "journal.posts[].tag",
+        "label": "journal · posts · tag",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta.heading",
+        "label": "cta · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta.intro",
+        "label": "cta · intro",
+        "type": "text",
+        "maxLen": 290
+      },
+      {
+        "path": "cta.button",
+        "label": "cta · button",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "brandFull",
+        "label": "brandFull",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "brandTag",
+        "label": "brandTag",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.nav[]",
+        "label": "footer · nav",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.socials[]",
+        "label": "footer · socials",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.email",
+        "label": "footer · email",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.phone",
+        "label": "footer · phone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.legal[]",
+        "label": "footer · legal",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.copyright",
+        "label": "footer · copyright",
+        "type": "text",
+        "maxLen": 40
+      }
+    ]
+  }
+}

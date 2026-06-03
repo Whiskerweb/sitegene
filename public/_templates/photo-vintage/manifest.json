@@ -1,0 +1,270 @@
+{
+  "id": "photo-vintage",
+  "name": "Halcyon Films — Photo vintage",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "meta",
+      "brand",
+      "nav",
+      "hero",
+      "mission",
+      "strip",
+      "featured",
+      "marquee",
+      "testimonial",
+      "contact",
+      "footer"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.photo1",
+      "role": "hero",
+      "required": true,
+      "note": "hero · photo1"
+    },
+    {
+      "slot": "p2",
+      "path": "hero.photo2",
+      "role": "hero",
+      "required": true,
+      "note": "hero · photo2"
+    },
+    {
+      "slot": "p3",
+      "path": "hero.photo3",
+      "role": "hero",
+      "required": true,
+      "note": "hero · photo3"
+    },
+    {
+      "slot": "p4",
+      "path": "strip[].image",
+      "role": "image",
+      "required": true,
+      "note": "strip · image"
+    },
+    {
+      "slot": "p5",
+      "path": "featured.projects[].image",
+      "role": "image",
+      "required": true,
+      "note": "featured · projects · image"
+    },
+    {
+      "slot": "p6",
+      "path": "marquee.image",
+      "role": "image",
+      "required": true,
+      "note": "marquee · image"
+    },
+    {
+      "slot": "p7",
+      "path": "testimonial.avatar",
+      "role": "avatar",
+      "required": true,
+      "note": "testimonial · avatar"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "meta.title",
+        "label": "meta · title",
+        "type": "text",
+        "maxLen": 67
+      },
+      {
+        "path": "meta.description",
+        "label": "meta · description",
+        "type": "text",
+        "maxLen": 202
+      },
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav[]",
+        "label": "nav",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.badge",
+        "label": "hero · badge",
+        "type": "text",
+        "maxLen": 86
+      },
+      {
+        "path": "hero.line1pre",
+        "label": "hero · line1pre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.line1em",
+        "label": "hero · line1em",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.line2",
+        "label": "hero · line2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "mission.text",
+        "label": "mission · text",
+        "type": "text",
+        "maxLen": 178
+      },
+      {
+        "path": "featured.label1",
+        "label": "featured · label1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "featured.labelEm",
+        "label": "featured · labelEm",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "featured.label2",
+        "label": "featured · label2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "featured.intro",
+        "label": "featured · intro",
+        "type": "text",
+        "maxLen": 136
+      },
+      {
+        "path": "featured.tags[]",
+        "label": "featured · tags",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "featured.projects[].title",
+        "label": "featured · projects · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "featured.projects[].location",
+        "label": "featured · projects · location",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "featured.seeMore",
+        "label": "featured · seeMore",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "marquee.words",
+        "label": "marquee · words",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "marquee.words2",
+        "label": "marquee · words2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonial.quote",
+        "label": "testimonial · quote",
+        "type": "text",
+        "maxLen": 211
+      },
+      {
+        "path": "testimonial.name",
+        "label": "testimonial · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonial.role",
+        "label": "testimonial · role",
+        "type": "text",
+        "maxLen": 46
+      },
+      {
+        "path": "contact.getIn",
+        "label": "contact · getIn",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.touch",
+        "label": "contact · touch",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.website",
+        "label": "contact · website",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.phone",
+        "label": "contact · phone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.line1em",
+        "label": "footer · line1em",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.line2pre",
+        "label": "footer · line2pre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.line3",
+        "label": "footer · line3",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.links[]",
+        "label": "footer · links",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.copyright",
+        "label": "footer · copyright",
+        "type": "text",
+        "maxLen": 58
+      },
+      {
+        "path": "footer.social[]",
+        "label": "footer · social",
+        "type": "text",
+        "maxLen": 40
+      }
+    ]
+  }
+}

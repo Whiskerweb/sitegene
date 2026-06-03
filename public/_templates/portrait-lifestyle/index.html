@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-sg-path="meta.title">Clara Whitfield | Portrait & Lifestyle Photography</title>
+  <meta name="description" data-sg-path="meta.description" content="Portrait & lifestyle photographer in London — telling stories through the lens with timeless elegance and authenticity.">
+
+  <!-- Fonts: Cormorant Garamond (display serif italic) + Inter (sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- CDN: Tailwind + GSAP + ScrollTrigger -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:    '#2C2827',
+            bg:     '#F7F3F0',
+            dark:   '#1A1715',
+            faint:  '#8A8480',
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans:  ['Inter', 'Helvetica', 'Arial', 'sans-serif'],
+          },
+          letterSpacing: {
+            wide2: '0.18em',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Inter', Helvetica, Arial, sans-serif; background:#F7F3F0; color:#2C2827; }
+    .font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
+    .dot::before { content:'●'; font-size:0.55em; vertical-align:middle; margin-right:0.45em; position:relative; top:-0.12em; }
+    img { display:block; }
+  </style>
+
+  <!-- ============================================================
+       SOURCE UNIQUE DE VÉRITÉ — contenu démo, remplaçable par client
+       ============================================================ -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ ||  window.__SITE_CONTENT__ || {
+      brand: "CLARA WHITFIELD",
+      meta: {
+        title: "Clara Whitfield | Portrait & Lifestyle Photography",
+        description: "Portrait & lifestyle photographer in London — telling stories through the lens with timeless elegance and authenticity."
+      },
+      nav: ["Work", "About", "Contact"],
+      hero: {
+        title: "Telling Stories Through the Lens",
+        tagline: "Capturing the moments that matter most—portraits and lifestyles.",
+        portrait: "img/hero-portrait.jpg",
+        lifestyle: ["img/life1.jpg", "img/life2.jpg", "img/life3.jpg"]
+      },
+      services: {
+        label: "What I offer",
+        intro: "I specialise in creating timeless photography for Portrait and Lifestyle photography. My work is tailored to your story, blending artistry with authenticity.",
+        items: [
+          { num: "01", name: "Portrait", text: "Timeless portraits that celebrate individuality and elegance, capturing the essence of who you are in every frame." },
+          { num: "02", name: "Lifestyle", text: "Authentic storytelling through natural, everyday moments, showcasing the beauty of life's simple pleasures." }
+        ]
+      },
+      work: {
+        label: "A Glimpse Into Our Work",
+        intro: "Explore a curated selection of my finest work, showcasing the artistry and emotion behind every portrait and lifestyle moment.",
+        cta: "View my work",
+        items: [
+          { title: "Timeless Elegance", category: "Portrait", image: "img/work1.jpg" },
+          { title: "Morning Rituals",   category: "Lifestyle", image: "img/work2.jpg" },
+          { title: "Golden Hour Glow",  category: "Portrait", image: "img/work3.jpg" },
+          { title: "Artisan at Work",   category: "Lifestyle", image: "img/work4.jpg" },
+          { title: "Home Sweet Home",   category: "Lifestyle", image: "img/work5.jpg" },
+          { title: "Urban Muse",        category: "Portrait", image: "img/work6.jpg" }
+        ]
+      },
+      testimonial: {
+        quote: "Clara has an incredible talent for capturing the emotion and essence of every moment. Her photos speak for themselves.",
+        author: "Rachel Karina, portrait client",
+        image: "img/testimonial.jpg"
+      },
+      cta: {
+        title: "Let's work together",
+        text: "Ready to capture your story? Reach out to book your session or inquire about services.",
+        button: "Contact me",
+        instagram: "Instagram: @clara.whitfield",
+        email: "Email: hello@clarawhitfield.com",
+        background: "img/studio.jpg"
+      }
+    };
+  </script>
+</head>
+
+<body class="bg-bg text-ink antialiased">
+
+  <!-- ============================================================ NAVBAR ============================================================ -->
+  <nav class="fixed top-0 inset-x-0 z-50 px-6 md:px-12 py-6 flex items-center justify-between mix-blend-difference text-white">
+    <a href="#top" class="font-display italic text-xl md:text-2xl tracking-tight" data-sg-path="brand">CLARA WHITFIELD</a>
+    <ul class="flex items-center gap-7 text-[11px] uppercase tracking-wide2">
+      <li><a href="#work" class="hover:opacity-60 transition-opacity" data-sg-path="nav[0]">Work</a></li>
+      <li><a href="#about" class="hover:opacity-60 transition-opacity" data-sg-path="nav[1]">About</a></li>
+      <li><a href="#contact" class="hover:opacity-60 transition-opacity" data-sg-path="nav[2]">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============================================================ HERO ============================================================ -->
+  <header id="top" class="px-6 md:px-12 pt-32 md:pt-40 pb-16 md:pb-24">
+    <div class="max-w-[1400px] mx-auto">
+      <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-12 md:mb-20">
+        <h1 class="font-display italic font-light leading-[0.95] text-[44px] sm:text-6xl md:text-7xl lg:text-[108px] max-w-3xl" data-sg-reveal>
+          <span class="dot"></span><span data-sg-path="hero.title">Telling Stories Through the Lens</span>
+        </h1>
+        <div class="flex items-start gap-10 md:pt-4" data-sg-reveal>
+          <p class="text-sm text-faint max-w-[220px] leading-relaxed" data-sg-path="hero.tagline">Capturing the moments that matter most—portraits and lifestyles.</p>
+          <span class="text-2xl text-ink select-none hidden md:inline">↓</span>
+        </div>
+      </div>
+
+      <!-- Hero image row: B&W portrait left, lifestyle trio right -->
+      <div class="grid grid-cols-2 md:grid-cols-12 gap-3 md:gap-4">
+        <div class="col-span-2 md:col-span-4 overflow-hidden" data-sg-reveal>
+          <img data-sg-img="hero.portrait" src="img/hero-portrait.jpg" alt="Portrait" class="w-full h-[320px] md:h-[460px] object-cover grayscale" data-sg-parallax>
+        </div>
+        <div class="hidden md:block md:col-span-2"></div>
+        <div class="overflow-hidden md:col-span-2" data-sg-reveal>
+          <img data-sg-img="hero.lifestyle[0]" src="img/life1.jpg" alt="Lifestyle" class="w-full h-[260px] md:h-[460px] object-cover">
+        </div>
+        <div class="overflow-hidden md:col-span-2" data-sg-reveal>
+          <img data-sg-img="hero.lifestyle[1]" src="img/life2.jpg" alt="Lifestyle" class="w-full h-[260px] md:h-[460px] object-cover">
+        </div>
+        <div class="col-span-2 overflow-hidden md:col-span-2" data-sg-reveal>
+          <img data-sg-img="hero.lifestyle[2]" src="img/life3.jpg" alt="Lifestyle" class="w-full h-[260px] md:h-[460px] object-cover">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================ SERVICES ============================================================ -->
+  <section id="about" class="px-6 md:px-12 py-20 md:py-28">
+    <div class="max-w-[1400px] mx-auto">
+      <h2 class="dot text-sm uppercase tracking-wide2 mb-8" data-sg-path="services.label" data-sg-reveal>What I offer</h2>
+      <p class="text-sm text-faint max-w-md leading-relaxed mb-16 md:mb-24" data-sg-path="services.intro" data-sg-reveal>
+        I specialise in creating timeless photography for Portrait and Lifestyle photography. My work is tailored to your story, blending artistry with authenticity.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-12 md:gap-20 border-t border-ink/15 pt-12 md:pt-16">
+        <!-- 01 Portrait -->
+        <div data-sg-reveal>
+          <div class="flex items-baseline gap-4 mb-5">
+            <span class="font-display italic text-3xl md:text-5xl text-ink/40" data-sg-path="services.items[0].num">01</span>
+            <h3 class="font-display italic font-light text-4xl md:text-6xl" data-sg-path="services.items[0].name">Portrait</h3>
+          </div>
+          <p class="text-sm text-faint max-w-sm leading-relaxed" data-sg-path="services.items[0].text">Timeless portraits that celebrate individuality and elegance, capturing the essence of who you are in every frame.</p>
+        </div>
+        <!-- 02 Lifestyle -->
+        <div data-sg-reveal>
+          <div class="flex items-baseline gap-4 mb-5">
+            <span class="font-display italic text-3xl md:text-5xl text-ink/40" data-sg-path="services.items[1].num">02</span>
+            <h3 class="font-display italic font-light text-4xl md:text-6xl" data-sg-path="services.items[1].name">Lifestyle</h3>
+          </div>
+          <p class="text-sm text-faint max-w-sm leading-relaxed" data-sg-path="services.items[1].text">Authentic storytelling through natural, everyday moments, showcasing the beauty of life's simple pleasures.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ WORK (dark) ============================================================ -->
+  <section id="work" class="bg-dark text-white px-6 md:px-12 py-20 md:py-32">
+    <div class="max-w-[1400px] mx-auto">
+      <div class="grid md:grid-cols-12 gap-10 md:gap-16">
+        <!-- Sticky intro column -->
+        <div class="md:col-span-4 md:sticky md:top-28 self-start" data-sg-reveal>
+          <h2 class="dot font-display italic font-light text-3xl md:text-4xl mb-6" data-sg-path="work.label">A Glimpse Into Our Work</h2>
+          <p class="text-sm text-white/50 leading-relaxed max-w-xs mb-8" data-sg-path="work.intro">Explore a curated selection of my finest work, showcasing the artistry and emotion behind every portrait and lifestyle moment.</p>
+          <a href="#contact" class="inline-flex items-center gap-2 text-[11px] uppercase tracking-wide2 text-white/80 hover:text-white transition-colors">
+            <span data-sg-path="work.cta">View my work</span>
+            <span>→</span>
+          </a>
+        </div>
+
+        <!-- Gallery column -->
+        <div class="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+          <figure class="group overflow-hidden" data-sg-reveal>
+            <img data-sg-img="work.items[0].image" src="img/work1.jpg" alt="" class="w-full h-[360px] md:h-[480px] object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-[1.03]">
+            <figcaption class="flex items-center justify-between pt-3 text-[11px] uppercase tracking-wide2 text-white/60">
+              <span data-sg-path="work.items[0].title">Timeless Elegance</span><span data-sg-path="work.items[0].category">Portrait</span>
+            </figcaption>
+          </figure>
+          <figure class="group overflow-hidden sm:mt-16" data-sg-reveal>
+            <img data-sg-img="work.items[1].image" src="img/work2.jpg" alt="" class="w-full h-[360px] md:h-[480px] object-cover transition-all duration-700 group-hover:scale-[1.03]">
+            <figcaption class="flex items-center justify-between pt-3 text-[11px] uppercase tracking-wide2 text-white/60">
+              <span data-sg-path="work.items[1].title">Morning Rituals</span><span data-sg-path="work.items[1].category">Lifestyle</span>
+            </figcaption>
+          </figure>
+          <figure class="group overflow-hidden" data-sg-reveal>
+            <img data-sg-img="work.items[2].image" src="img/work3.jpg" alt="" class="w-full h-[360px] md:h-[480px] object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-[1.03]">
+            <figcaption class="flex items-center justify-between pt-3 text-[11px] uppercase tracking-wide2 text-white/60">
+              <span data-sg-path="work.items[2].title">Golden Hour Glow</span><span data-sg-path="work.items[2].category">Portrait</span>
+            </figcaption>
+          </figure>
+          <figure class="group overflow-hidden sm:mt-16" data-sg-reveal>
+            <img data-sg-img="work.items[3].image" src="img/work4.jpg" alt="" class="w-full h-[360px] md:h-[480px] object-cover transition-all duration-700 group-hover:scale-[1.03]">
+            <figcaption class="flex items-center justify-between pt-3 text-[11px] uppercase tracking-wide2 text-white/60">
+              <span data-sg-path="work.items[3].title">Artisan at Work</span><span data-sg-path="work.items[3].category">Lifestyle</span>
+            </figcaption>
+          </figure>
+          <figure class="group overflow-hidden" data-sg-reveal>
+            <img data-sg-img="work.items[4].image" src="img/work5.jpg" alt="" class="w-full h-[360px] md:h-[480px] object-cover transition-all duration-700 group-hover:scale-[1.03]">
+            <figcaption class="flex items-center justify-between pt-3 text-[11px] uppercase tracking-wide2 text-white/60">
+              <span data-sg-path="work.items[4].title">Home Sweet Home</span><span data-sg-path="work.items[4].category">Lifestyle</span>
+            </figcaption>
+          </figure>
+          <figure class="group overflow-hidden sm:mt-16" data-sg-reveal>
+            <img data-sg-img="work.items[5].image" src="img/work6.jpg" alt="" class="w-full h-[360px] md:h-[480px] object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-[1.03]">
+            <figcaption class="flex items-center justify-between pt-3 text-[11px] uppercase tracking-wide2 text-white/60">
+              <span data-sg-path="work.items[5].title">Urban Muse</span><span data-sg-path="work.items[5].category">Portrait</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ TESTIMONIAL ============================================================ -->
+  <section class="px-6 md:px-12 py-24 md:py-36 text-center">
+    <div class="max-w-2xl mx-auto">
+      <img data-sg-img="testimonial.image" src="img/testimonial.jpg" alt="" class="w-28 h-28 md:w-36 md:h-36 object-cover grayscale mx-auto mb-12" data-sg-reveal>
+      <blockquote class="text-2xl md:text-4xl leading-snug font-light text-ink/85" data-sg-reveal>
+        "<span data-sg-path="testimonial.quote">Clara has an incredible talent for capturing the emotion and essence of every moment. Her photos speak for themselves.</span>"
+      </blockquote>
+      <p class="font-display italic text-lg text-faint mt-8" data-sg-reveal>—<span data-sg-path="testimonial.author">Rachel Karina, portrait client</span></p>
+    </div>
+  </section>
+
+  <!-- ============================================================ CTA / FOOTER ============================================================ -->
+  <footer id="contact" class="relative px-6 md:px-12 py-20 md:py-32">
+    <div class="absolute inset-0 -z-0">
+      <img data-sg-img="cta.background" src="img/studio.jpg" alt="" class="w-full h-full object-cover" data-sg-parallax>
+    </div>
+    <div class="relative z-10 max-w-xl mx-auto bg-dark/95 text-white text-center px-8 md:px-14 py-16 md:py-20" data-sg-reveal>
+      <h2 class="font-display italic font-light text-4xl md:text-5xl mb-5" data-sg-path="cta.title">Let's work together</h2>
+      <p class="text-sm text-white/55 max-w-sm mx-auto leading-relaxed mb-10" data-sg-path="cta.text">Ready to capture your story? Reach out to book your session or inquire about services.</p>
+      <a href="mailto:hello@clarawhitfield.com" class="inline-flex items-center gap-2 border border-white/30 rounded-full px-7 py-3 text-[11px] uppercase tracking-wide2 hover:bg-white hover:text-dark transition-colors mb-12">
+        <span data-sg-path="cta.button">Contact me</span><span>→</span>
+      </a>
+      <div class="space-y-2 text-sm text-white/60">
+        <p data-sg-path="cta.instagram">Instagram: @clara.whitfield</p>
+        <p data-sg-path="cta.email">Email: hello@clarawhitfield.com</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       HYDRATION + GSAP ANIMATIONS (standard Akyra block)
+       ============================================================ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      // Hydrate texts
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      // Hydrate images (img.src or background-image)
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      // Animations: reveal + parallax (GSAP recreation, not 1:1 capture)
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, {
+            opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+          });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, {
+            yPercent: -12, ease: 'none',
+            scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+          });
+        });
+        // ROBUSTESSE : recalcule les positions après chargement des images
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        // Filet ultime anti-page-blanche
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

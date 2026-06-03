@@ -1,0 +1,413 @@
+{
+  "id": "landscape-prints",
+  "name": "Orin Vale — Paysage & tirages",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "meta",
+      "brand",
+      "spinningBadge",
+      "nav",
+      "hero",
+      "prints",
+      "galleries",
+      "courses",
+      "presets",
+      "gear",
+      "journal",
+      "about",
+      "newsletter",
+      "contact"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.gallery[].image",
+      "role": "hero",
+      "required": true,
+      "note": "hero · gallery · image"
+    },
+    {
+      "slot": "p2",
+      "path": "prints.items[].image",
+      "role": "image",
+      "required": true,
+      "note": "prints · items · image"
+    },
+    {
+      "slot": "p3",
+      "path": "galleries.items[].image",
+      "role": "image",
+      "required": true,
+      "note": "galleries · items · image"
+    },
+    {
+      "slot": "p4",
+      "path": "courses.items[].image",
+      "role": "image",
+      "required": true,
+      "note": "courses · items · image"
+    },
+    {
+      "slot": "p5",
+      "path": "presets.items[].image",
+      "role": "image",
+      "required": true,
+      "note": "presets · items · image"
+    },
+    {
+      "slot": "p6",
+      "path": "gear.items[].image",
+      "role": "image",
+      "required": true,
+      "note": "gear · items · image"
+    },
+    {
+      "slot": "p7",
+      "path": "journal.posts[].image",
+      "role": "image",
+      "required": true,
+      "note": "journal · posts · image"
+    },
+    {
+      "slot": "p8",
+      "path": "about.portrait",
+      "role": "avatar",
+      "required": true,
+      "note": "about · portrait"
+    },
+    {
+      "slot": "p9",
+      "path": "about.story",
+      "role": "image",
+      "required": true,
+      "note": "about · story"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "meta.title",
+        "label": "meta · title",
+        "type": "text",
+        "maxLen": 82
+      },
+      {
+        "path": "meta.description",
+        "label": "meta · description",
+        "type": "text",
+        "maxLen": 211
+      },
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav[]",
+        "label": "nav",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "spinningBadge",
+        "label": "spinningBadge",
+        "type": "text",
+        "maxLen": 85
+      },
+      {
+        "path": "hero.title1",
+        "label": "hero · title1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.title2",
+        "label": "hero · title2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.tagline",
+        "label": "hero · tagline",
+        "type": "text",
+        "maxLen": 110
+      },
+      {
+        "path": "prints.label",
+        "label": "prints · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "prints.heading",
+        "label": "prints · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "prints.subheading",
+        "label": "prints · subheading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "prints.intro",
+        "label": "prints · intro",
+        "type": "text",
+        "maxLen": 195
+      },
+      {
+        "path": "prints.items[].price",
+        "label": "prints · items · price",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "prints.items[].title",
+        "label": "prints · items · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "prints.items[].location",
+        "label": "prints · items · location",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "galleries.label",
+        "label": "galleries · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "galleries.heading",
+        "label": "galleries · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "galleries.intro",
+        "label": "galleries · intro",
+        "type": "text",
+        "maxLen": 176
+      },
+      {
+        "path": "galleries.items[].title",
+        "label": "galleries · items · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "galleries.items[].location",
+        "label": "galleries · items · location",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "courses.label",
+        "label": "courses · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "courses.heading",
+        "label": "courses · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "courses.intro",
+        "label": "courses · intro",
+        "type": "text",
+        "maxLen": 141
+      },
+      {
+        "path": "courses.items[].duration",
+        "label": "courses · items · duration",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "courses.items[].title",
+        "label": "courses · items · title",
+        "type": "text",
+        "maxLen": 66
+      },
+      {
+        "path": "courses.items[].desc",
+        "label": "courses · items · desc",
+        "type": "text",
+        "maxLen": 446
+      },
+      {
+        "path": "presets.label",
+        "label": "presets · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "presets.heading",
+        "label": "presets · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "presets.intro",
+        "label": "presets · intro",
+        "type": "text",
+        "maxLen": 181
+      },
+      {
+        "path": "presets.items[].title",
+        "label": "presets · items · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "presets.items[].price",
+        "label": "presets · items · price",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "gear.label",
+        "label": "gear · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "gear.heading",
+        "label": "gear · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "gear.intro",
+        "label": "gear · intro",
+        "type": "text",
+        "maxLen": 171
+      },
+      {
+        "path": "gear.items[].name",
+        "label": "gear · items · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "gear.items[].category",
+        "label": "gear · items · category",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "journal.label",
+        "label": "journal · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "journal.heading",
+        "label": "journal · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "journal.intro",
+        "label": "journal · intro",
+        "type": "text",
+        "maxLen": 134
+      },
+      {
+        "path": "journal.posts[].title",
+        "label": "journal · posts · title",
+        "type": "text",
+        "maxLen": 43
+      },
+      {
+        "path": "journal.posts[].date",
+        "label": "journal · posts · date",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "journal.posts[].read",
+        "label": "journal · posts · read",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.label",
+        "label": "about · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.heading",
+        "label": "about · heading",
+        "type": "text",
+        "maxLen": 59
+      },
+      {
+        "path": "about.paragraphs[]",
+        "label": "about · paragraphs",
+        "type": "text",
+        "maxLen": 349
+      },
+      {
+        "path": "about.stats[].value",
+        "label": "about · stats · value",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.stats[].label",
+        "label": "about · stats · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "newsletter.heading",
+        "label": "newsletter · heading",
+        "type": "text",
+        "maxLen": 50
+      },
+      {
+        "path": "newsletter.intro",
+        "label": "newsletter · intro",
+        "type": "text",
+        "maxLen": 123
+      },
+      {
+        "path": "newsletter.cta",
+        "label": "newsletter · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.socials[]",
+        "label": "contact · socials",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.email",
+        "label": "contact · email",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.location",
+        "label": "contact · location",
+        "type": "text",
+        "maxLen": 56
+      }
+    ]
+  }
+}

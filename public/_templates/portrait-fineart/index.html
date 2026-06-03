@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-sg-path="meta.title">Adrien Roy | Fine-Art Portrait & Wedding Photography</title>
+  <meta name="description" data-sg-path="meta.description" content="Fine-art portrait and wedding photographer based in London — natural light, quiet emotion, timeless elegance.">
+
+  <!-- Fonts: Manrope (display + body) — matches captured type scale -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CDN: Tailwind + GSAP + ScrollTrigger -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:    '#0A0A0A',
+            night:  '#12141D',
+            bg:     '#FFFFFF',
+            bgSoft: '#FBFBFB',
+            line:   '#E7E7E7',
+            muted:  '#999999',
+            accent: '#0000EE',
+          },
+          fontFamily: {
+            sans: ['Manrope', 'system-ui', 'sans-serif'],
+          },
+          letterSpacing: {
+            tightest: '-0.04em',
+            tight2:   '-0.025em',
+            mono:     '0.14em',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Manrope', system-ui, sans-serif; }
+    .display { letter-spacing: -0.04em; }
+    /* Image hover scale (gallery cells) */
+    .img-zoom img { transition: transform 1.4s cubic-bezier(0.22,1,0.36,1); }
+    .img-zoom:hover img { transform: scale(1.045); }
+    /* Mono label */
+    .mono { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; }
+    /* Form fields */
+    .field { transition: border-color .3s ease; }
+    .field:focus { border-color: #0A0A0A; outline: none; }
+    select.field { appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23999999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right .25rem center; background-size: 1.25rem; }
+  </style>
+
+  <!-- ============================================================
+       SINGLE SOURCE OF TRUTH — edit here or via Akyra editor
+       (all copy & images are DEMO placeholders, freely replaceable)
+       ============================================================ -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ ||  window.__SITE_CONTENT__ || {
+      meta: {
+        title: "Adrien Roy | Fine-Art Portrait & Wedding Photography",
+        description: "Fine-art portrait and wedding photographer based in London — natural light, quiet emotion, timeless elegance."
+      },
+      brand: "ADRIEN ROY",
+      nav: { about: "About me", gallery: "Gallery", galleryCount: "[09]", archive: "Archive", archiveCount: "[30]", contact: "Contact" },
+
+      hero: {
+        location: "[LONDON, UNITED KINGDOM]",
+        title: "Signature photography that blends art, emotion, and timeless natural elegance.",
+        image: "img/hero.jpg"
+      },
+
+      intro: {
+        text: "I craft each frame with care, blending natural light and emotion to capture honest, timeless portraits that tell your story.",
+        thumbs: [
+          { image: "img/thumb-1.jpg", alt: "Portrait in soft light" },
+          { image: "img/thumb-2.jpg", alt: "Quiet studio portrait" },
+          { image: "img/thumb-3.jpg", alt: "Candid moment outdoors" },
+          { image: "img/thumb-4.jpg", alt: "Detail in golden hour" },
+          { image: "img/thumb-5.jpg", alt: "Profile against light" }
+        ]
+      },
+
+      categories: {
+        items: [
+          { name: "Portraits",        number: "/01", desc: "Quiet, intimate portraiture built around natural light and the unguarded in-between moments.", image: "img/cat-1.jpg" },
+          { name: "Weddings",         number: "/02", desc: "Documentary-led wedding stories — emotion first, posing last, kept timeless in tone.", image: "img/cat-2.jpg" },
+          { name: "Editorial",        number: "/03", desc: "Considered editorial and brand imagery with a calm, refined and contemporary eye.", image: "img/cat-3.jpg" },
+          { name: "Still Life",       number: "/04", desc: "Texture, light and stillness — objects and details photographed with patience.", image: "img/cat-4.jpg" }
+        ]
+      },
+
+      work: {
+        label: "[ SELECTED WORK ]",
+        heading1: "Selected",
+        heading2: "Work",
+        projects: [
+          { title: "Lior, in Clair-Obscur",   meta: "Portrait — 2024", image: "img/work-1.jpg" },
+          { title: "Fleur de Silence",        meta: "Editorial — 2024", image: "img/work-2.jpg" },
+          { title: "The Rinaldi Gaze",        meta: "Portrait — 2023", image: "img/work-3.jpg" },
+          { title: "The Whitmore Stillness",  meta: "Wedding — 2024", image: "img/work-4.jpg" },
+          { title: "Valeria in the Wild Light", meta: "Portrait — 2023", image: "img/work-5.jpg" },
+          { title: "Before the Sea",          meta: "Editorial — 2024", image: "img/work-6.jpg" },
+          { title: "Salt in the Smoke",       meta: "Still Life — 2023", image: "img/work-7.jpg" },
+          { title: "Lova, in Bloom",          meta: "Portrait — 2024", image: "img/work-8.jpg" },
+          { title: "Beneath the Blue",        meta: "Editorial — 2023", image: "img/work-9.jpg" }
+        ]
+      },
+
+      statement: {
+        text: "I craft each frame with care, blending natural light and emotion to capture honest, timeless portraits that tell your story."
+      },
+
+      archive: {
+        label: "[ THE ARCHIVE ]",
+        heading1: "The Gaze",
+        heading2: "That Lingers",
+        intro: "A wider, unfiltered look — thirty frames that didn't fit a single story, collected here for the patient eye.",
+        images: [
+          { image: "img/arc-1.jpg" }, { image: "img/arc-2.jpg" }, { image: "img/arc-3.jpg" },
+          { image: "img/arc-4.jpg" }, { image: "img/arc-5.jpg" }, { image: "img/arc-6.jpg" },
+          { image: "img/arc-7.jpg" }, { image: "img/arc-8.jpg" }, { image: "img/arc-9.jpg" },
+          { image: "img/arc-10.jpg" }, { image: "img/arc-11.jpg" }, { image: "img/arc-12.jpg" }
+        ]
+      },
+
+      contact: {
+        label: "[ GET IN TOUCH ]",
+        heading1: "I'd love to hear",
+        heading2: "from you",
+        fields: {
+          name:  "Let's start with your name",
+          reach: "Where can I reach you?",
+          shoot: "What kind of shoot are you booking?",
+          message: "Message",
+          messageHint: "Tell me a bit about what you're looking for"
+        },
+        shootOptions: ["Select a type", "Portrait session", "Wedding", "Editorial / brand", "Other"],
+        button: "Send your message",
+        image: "img/contact.jpg"
+      },
+
+      footer: {
+        locationLabel: "[MY LOCATION]",
+        location1: "Based in London,",
+        location2: "United Kingdom",
+        menuLabel: "[MENU]",
+        menu: ["About me", "Gallery", "Archive", "Contact"],
+        exploreLabel: "[EXPLORE MORE]",
+        explore: ["Instagram", "Pexels", "Unsplash", "Lummi"],
+        reachLabel: "[FEEL FREE TO REACH OUT]",
+        email: "hello@adrienroy.com",
+        phone: "+44 7911 123456"
+      }
+    };
+  </script>
+</head>
+
+<body class="antialiased text-ink bg-bg" style="-webkit-font-smoothing:antialiased;">
+
+  <!-- ============================================================
+       HERO (full-bleed portrait, nav overlaid, headline bottom-left)
+       ============================================================ -->
+  <section class="relative w-full h-screen min-h-[640px] bg-night overflow-hidden">
+    <!-- Background image -->
+    <div class="absolute inset-0 overflow-hidden">
+      <img data-sg-img="hero.image" src="img/hero.jpg" alt="Photographer portrait in natural light"
+           class="w-full h-full object-cover object-center" data-sg-parallax>
+      <div class="absolute inset-0" style="background:linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 28%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%);"></div>
+    </div>
+
+    <!-- Nav -->
+    <header class="absolute top-0 inset-x-0 z-30">
+      <div class="max-w-[100rem] mx-auto px-6 lg:px-10 h-20 flex items-center justify-between text-white">
+        <a href="#" class="flex items-center gap-2.5">
+          <span class="w-5 h-5 rounded-full bg-white/90 flex items-center justify-center">
+            <span class="w-2 h-2 rounded-full bg-ink"></span>
+          </span>
+          <span class="mono font-semibold" data-sg-path="brand">ADRIEN ROY</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-7 lg:gap-9">
+          <a href="#categories" class="mono hover:opacity-60 transition-opacity" data-sg-path="nav.about">About me</a>
+          <a href="#work" class="mono hover:opacity-60 transition-opacity flex items-center gap-1.5">
+            <span data-sg-path="nav.gallery">Gallery</span>
+            <span class="opacity-60" data-sg-path="nav.galleryCount">[09]</span>
+          </a>
+          <a href="#archive" class="mono hover:opacity-60 transition-opacity flex items-center gap-1.5">
+            <span data-sg-path="nav.archive">Archive</span>
+            <span class="opacity-60" data-sg-path="nav.archiveCount">[30]</span>
+          </a>
+          <a href="#contact" class="mono hover:opacity-60 transition-opacity" data-sg-path="nav.contact">Contact</a>
+        </nav>
+        <button class="md:hidden text-2xl" aria-label="Menu">&#9776;</button>
+      </div>
+    </header>
+
+    <!-- Headline -->
+    <div class="absolute bottom-0 inset-x-0 z-20">
+      <div class="max-w-[100rem] mx-auto px-6 lg:px-10 pb-16 lg:pb-20">
+        <p class="mono text-white/80 mb-5" data-sg-path="hero.location">[LONDON, UNITED KINGDOM]</p>
+        <h1 class="display text-white font-medium leading-[1.04] text-[2.6rem] sm:text-5xl lg:text-6xl max-w-4xl"
+            data-sg-path="hero.title">Signature photography that blends art, emotion, and timeless natural elegance.</h1>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       INTRO STATEMENT + THUMBNAIL STRIP
+       ============================================================ -->
+  <section class="bg-bg py-20 lg:py-28">
+    <div class="max-w-[100rem] mx-auto px-6 lg:px-10">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start mb-14 lg:mb-20" data-sg-reveal>
+        <div class="lg:col-span-3 hidden lg:block">
+          <span class="mono text-muted">[ 01 — INTRO ]</span>
+        </div>
+        <div class="lg:col-span-9">
+          <p class="display text-ink font-medium leading-[1.18] text-2xl sm:text-3xl lg:text-[2.1rem] max-w-4xl"
+             data-sg-path="intro.text">I craft each frame with care, blending natural light and emotion to capture honest, timeless portraits that tell your story.</p>
+        </div>
+      </div>
+
+      <!-- Thumbnail strip -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-4" data-sg-reveal>
+        <div class="img-zoom aspect-[4/5] overflow-hidden bg-bgSoft rounded-sm">
+          <img data-sg-img="intro.thumbs[0].image" src="img/thumb-1.jpg" alt="Portrait in soft light" class="w-full h-full object-cover">
+        </div>
+        <div class="img-zoom aspect-[4/5] overflow-hidden bg-bgSoft rounded-sm">
+          <img data-sg-img="intro.thumbs[1].image" src="img/thumb-2.jpg" alt="Quiet studio portrait" class="w-full h-full object-cover">
+        </div>
+        <div class="img-zoom aspect-[4/5] overflow-hidden bg-bgSoft rounded-sm">
+          <img data-sg-img="intro.thumbs[2].image" src="img/thumb-3.jpg" alt="Candid moment outdoors" class="w-full h-full object-cover">
+        </div>
+        <div class="img-zoom aspect-[4/5] overflow-hidden bg-bgSoft rounded-sm">
+          <img data-sg-img="intro.thumbs[3].image" src="img/thumb-4.jpg" alt="Detail in golden hour" class="w-full h-full object-cover">
+        </div>
+        <div class="img-zoom aspect-[4/5] overflow-hidden bg-bgSoft rounded-sm col-span-2 sm:col-span-1">
+          <img data-sg-img="intro.thumbs[4].image" src="img/thumb-5.jpg" alt="Profile against light" class="w-full h-full object-cover">
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       CATEGORIES (numbered list, hover-styled rows)
+       ============================================================ -->
+  <section id="categories" class="bg-bgSoft py-20 lg:py-28 border-t border-line">
+    <div class="max-w-[100rem] mx-auto px-6 lg:px-10">
+      <div class="grid md:grid-cols-2 gap-x-12 gap-y-12">
+
+        <!-- Cat 1 -->
+        <div class="flex flex-col" data-sg-reveal>
+          <div class="img-zoom aspect-[16/10] overflow-hidden rounded-sm bg-bg mb-6">
+            <img data-sg-img="categories.items[0].image" src="img/cat-1.jpg" alt="Portraits" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-baseline justify-between mb-3">
+            <h3 class="display text-3xl lg:text-4xl font-medium text-ink" data-sg-path="categories.items[0].name">Portraits</h3>
+            <span class="mono text-muted" data-sg-path="categories.items[0].number">/01</span>
+          </div>
+          <p class="text-ink/70 text-base lg:text-lg font-light leading-relaxed max-w-md" data-sg-path="categories.items[0].desc">Quiet, intimate portraiture built around natural light and the unguarded in-between moments.</p>
+        </div>
+
+        <!-- Cat 2 -->
+        <div class="flex flex-col md:mt-16" data-sg-reveal>
+          <div class="img-zoom aspect-[16/10] overflow-hidden rounded-sm bg-bg mb-6">
+            <img data-sg-img="categories.items[1].image" src="img/cat-2.jpg" alt="Weddings" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-baseline justify-between mb-3">
+            <h3 class="display text-3xl lg:text-4xl font-medium text-ink" data-sg-path="categories.items[1].name">Weddings</h3>
+            <span class="mono text-muted" data-sg-path="categories.items[1].number">/02</span>
+          </div>
+          <p class="text-ink/70 text-base lg:text-lg font-light leading-relaxed max-w-md" data-sg-path="categories.items[1].desc">Documentary-led wedding stories — emotion first, posing last, kept timeless in tone.</p>
+        </div>
+
+        <!-- Cat 3 -->
+        <div class="flex flex-col" data-sg-reveal>
+          <div class="img-zoom aspect-[16/10] overflow-hidden rounded-sm bg-bg mb-6">
+            <img data-sg-img="categories.items[2].image" src="img/cat-3.jpg" alt="Editorial" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-baseline justify-between mb-3">
+            <h3 class="display text-3xl lg:text-4xl font-medium text-ink" data-sg-path="categories.items[2].name">Editorial</h3>
+            <span class="mono text-muted" data-sg-path="categories.items[2].number">/03</span>
+          </div>
+          <p class="text-ink/70 text-base lg:text-lg font-light leading-relaxed max-w-md" data-sg-path="categories.items[2].desc">Considered editorial and brand imagery with a calm, refined and contemporary eye.</p>
+        </div>
+
+        <!-- Cat 4 -->
+        <div class="flex flex-col md:mt-16" data-sg-reveal>
+          <div class="img-zoom aspect-[16/10] overflow-hidden rounded-sm bg-bg mb-6">
+            <img data-sg-img="categories.items[3].image" src="img/cat-4.jpg" alt="Still Life" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-baseline justify-between mb-3">
+            <h3 class="display text-3xl lg:text-4xl font-medium text-ink" data-sg-path="categories.items[3].name">Still Life</h3>
+            <span class="mono text-muted" data-sg-path="categories.items[3].number">/04</span>
+          </div>
+          <p class="text-ink/70 text-base lg:text-lg font-light leading-relaxed max-w-md" data-sg-path="categories.items[3].desc">Texture, light and stillness — objects and details photographed with patience.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       SELECTED WORK (3-col captioned grid)
+       ============================================================ -->
+  <section id="work" class="bg-bg py-20 lg:py-28 border-t border-line">
+    <div class="max-w-[100rem] mx-auto px-6 lg:px-10">
+
+      <div class="flex items-end justify-between mb-12 lg:mb-16" data-sg-reveal>
+        <h2 class="display text-center mx-auto text-5xl lg:text-6xl font-medium text-ink leading-[0.98]">
+          <span data-sg-path="work.heading1">Selected</span><br>
+          <span data-sg-path="work.heading2">Work</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
+
+        <!-- 9 projects -->
+        <a href="#contact" class="block group" data-sg-reveal>
+          <div class="img-zoom aspect-[4/5] overflow-hidden rounded-sm bg-bgSoft mb-4">
+            <img data-sg-img="work.projects[0].image" src="img/work-1.jpg" alt="Lior, in Clair-Obscur" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-baseline justify-between">
+            <h3 class="display text-lg font-medium text-ink" data-sg-path="work.projects[0].title">Lior, in Clair-Obscur</h3>
+            <span class="mono text-muted" data-sg-path="work.projects[0].meta">Portrait — 2024</span>
+          </div>
+        </a>
+
+        <a href="#contact" class="block group" data-sg-reveal>
+          <div class="img-zoom aspect-[4/5] overflow-hidden rounded-sm bg-bgSoft mb-4">
+            <img data-sg-img="work.projects[1].image" src="img/work-2.jpg" alt="Fleur de Silence" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-baseline justify-between">
+            <h3 class="display text-lg font-medium text-ink" data-sg-path="work.projects[1].title">Fleur de Silence</h3>
+            <span class="mono text-muted" data-sg-path="work.projects[1].meta">Editorial — 2024</span>
+          </div>
+        </a>
+
+        <a href="#contact" class="block group" data-sg-reveal>
+          <div class="img-zoom aspect-[4/5] overflow-hidden rounded-sm bg-bgSoft mb-4">
+            <img data-sg-img="work.projects[2].image" src="img/work-3.jpg" alt="The Rinaldi Gaze" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-baseline justify-between">
+            <h3 class="display text-lg font-medium text-ink" data-sg-path="work.projects[2].title">The Rinaldi Gaze</h3>
+            <span class="mono text-muted" data-sg-path="work.projects[2].meta">Portrait — 2023</span>
+          </div>
+        </a>
+
+        <a href="#contact" class="block group" data-sg-reveal>
+          <div class="img-zoom aspect-[4/5] overflow-hidden rounded-sm bg-bgSoft mb-4">
+            <img data-sg-img="work.projects[3].image" src="img/work-4.jpg" alt="The Whitmore Stillness" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-baseline justify-between">
+            <h3 class="display text-lg font-medium text-ink" data-sg-path="work.projects[3].title">The Whitmore Stillness</h3>
+            <span class="mono text-muted" data-sg-path="work.projects[3].meta">Wedding — 2024</span>
+          </div>
+        </a>
+
+        <a href="#contact" class="block group" data-sg-reveal>
+          <div class="img-zoom aspect-[4/5] overflow-hidden rounded-sm bg-bgSoft mb-4">
+            <img data-sg-img="work.projects[4].image" src="img/work-5.jpg" alt="Valeria in the Wild Light" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-baseline justify-between">
+            <h3 class="display text-lg font-medium text-ink" data-sg-path="work.projects[4].title">Valeria in the Wild Light</h3>
+            <span class="mono text-muted" data-sg-path="work.projects[4].meta">Portrait — 2023</span>
+          </div>
+        </a>
+
+        <a href="#contact" class="block group" data-sg-reveal>
+          <div class="img-zoom aspect-[4/5] overflow-hidden rounded-sm bg-bgSoft mb-4">
+            <img data-sg-img="work.projects[5].image" src="img/work-6.jpg" alt="Before the Sea" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-baseline justify-between">
+            <h3 class="display text-lg font-medium text-ink" data-sg-path="work.projects[5].title">Before the Sea</h3>
+            <span class="mono text-muted" data-sg-path="work.projects[5].meta">Editorial — 2024</span>
+          </div>
+        </a>
+
+        <a href="#contact" class="block group" data-sg-reveal>
+          <div class="img-zoom aspect-[4/5] overflow-hidden rounded-sm bg-bgSoft mb-4">
+            <img data-sg-img="work.projects[6].image" src="img/work-7.jpg" alt="Salt in the Smoke" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-baseline justify-between">
+            <h3 class="display text-lg font-medium text-ink" data-sg-path="work.projects[6].title">Salt in the Smoke</h3>
+            <span class="mono text-muted" data-sg-path="work.projects[6].meta">Still Life — 2023</span>
+          </div>
+        </a>
+
+        <a href="#contact" class="block group" data-sg-reveal>
+          <div class="img-zoom aspect-[4/5] overflow-hidden rounded-sm bg-bgSoft mb-4">
+            <img data-sg-img="work.projects[7].image" src="img/work-8.jpg" alt="Lova, in Bloom" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-baseline justify-between">
+            <h3 class="display text-lg font-medium text-ink" data-sg-path="work.projects[7].title">Lova, in Bloom</h3>
+            <span class="mono text-muted" data-sg-path="work.projects[7].meta">Portrait — 2024</span>
+          </div>
+        </a>
+
+        <a href="#contact" class="block group" data-sg-reveal>
+          <div class="img-zoom aspect-[4/5] overflow-hidden rounded-sm bg-bgSoft mb-4">
+            <img data-sg-img="work.projects[8].image" src="img/work-9.jpg" alt="Beneath the Blue" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-baseline justify-between">
+            <h3 class="display text-lg font-medium text-ink" data-sg-path="work.projects[8].title">Beneath the Blue</h3>
+            <span class="mono text-muted" data-sg-path="work.projects[8].meta">Editorial — 2023</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       STATEMENT BAND (centered)
+       ============================================================ -->
+  <section class="bg-bgSoft py-24 lg:py-36 border-t border-line">
+    <div class="max-w-4xl mx-auto px-6 text-center" data-sg-reveal>
+      <p class="display text-ink font-medium leading-[1.2] text-2xl sm:text-3xl lg:text-[2.4rem]"
+         data-sg-path="statement.text">I craft each frame with care, blending natural light and emotion to capture honest, timeless portraits that tell your story.</p>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       ARCHIVE TEASER (dense grid)
+       ============================================================ -->
+  <section id="archive" class="bg-bg py-20 lg:py-28 border-t border-line">
+    <div class="max-w-[100rem] mx-auto px-6 lg:px-10">
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-12 lg:mb-16" data-sg-reveal>
+        <h2 class="display text-5xl lg:text-6xl font-medium text-ink leading-[0.98]">
+          <span data-sg-path="archive.heading1">The Gaze</span><br>
+          <span data-sg-path="archive.heading2">That Lingers</span>
+        </h2>
+        <p class="text-ink/60 text-base lg:text-lg font-light leading-relaxed max-w-md"
+           data-sg-path="archive.intro">A wider, unfiltered look — thirty frames that didn't fit a single story, collected here for the patient eye.</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4" data-sg-reveal>
+        <div class="img-zoom aspect-square overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="archive.images[0].image" src="img/arc-1.jpg" alt="" class="w-full h-full object-cover"></div>
+        <div class="img-zoom aspect-square overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="archive.images[1].image" src="img/arc-2.jpg" alt="" class="w-full h-full object-cover"></div>
+        <div class="img-zoom aspect-square overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="archive.images[2].image" src="img/arc-3.jpg" alt="" class="w-full h-full object-cover"></div>
+        <div class="img-zoom aspect-square overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="archive.images[3].image" src="img/arc-4.jpg" alt="" class="w-full h-full object-cover"></div>
+        <div class="img-zoom aspect-square overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="archive.images[4].image" src="img/arc-5.jpg" alt="" class="w-full h-full object-cover"></div>
+        <div class="img-zoom aspect-square overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="archive.images[5].image" src="img/arc-6.jpg" alt="" class="w-full h-full object-cover"></div>
+        <div class="img-zoom aspect-square overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="archive.images[6].image" src="img/arc-7.jpg" alt="" class="w-full h-full object-cover"></div>
+        <div class="img-zoom aspect-square overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="archive.images[7].image" src="img/arc-8.jpg" alt="" class="w-full h-full object-cover"></div>
+        <div class="img-zoom aspect-square overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="archive.images[8].image" src="img/arc-9.jpg" alt="" class="w-full h-full object-cover"></div>
+        <div class="img-zoom aspect-square overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="archive.images[9].image" src="img/arc-10.jpg" alt="" class="w-full h-full object-cover"></div>
+        <div class="img-zoom aspect-square overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="archive.images[10].image" src="img/arc-11.jpg" alt="" class="w-full h-full object-cover"></div>
+        <div class="img-zoom aspect-square overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="archive.images[11].image" src="img/arc-12.jpg" alt="" class="w-full h-full object-cover"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       CONTACT (split: heading + form, image below)
+       ============================================================ -->
+  <section id="contact" class="bg-bg pt-20 lg:pt-28 border-t border-line">
+    <div class="max-w-[100rem] mx-auto px-6 lg:px-10">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start" data-sg-reveal>
+        <!-- Heading -->
+        <div>
+          <span class="mono text-muted block mb-6" data-sg-path="contact.label">[ GET IN TOUCH ]</span>
+          <h2 class="display text-5xl lg:text-6xl font-medium text-ink leading-[1.0]">
+            <span data-sg-path="contact.heading1">I'd love to hear</span><br>
+            <span data-sg-path="contact.heading2">from you</span>
+          </h2>
+        </div>
+
+        <!-- Form -->
+        <form class="space-y-8" onsubmit="return false;">
+          <div>
+            <label class="mono text-muted block mb-2.5" data-sg-path="contact.fields.name">Let's start with your name</label>
+            <input type="text" placeholder="Enter your name" class="field w-full bg-transparent border-b border-line py-2.5 text-lg text-ink font-light placeholder:text-muted/60" required>
+          </div>
+          <div>
+            <label class="mono text-muted block mb-2.5" data-sg-path="contact.fields.reach">Where can I reach you?</label>
+            <input type="email" placeholder="Enter your email" class="field w-full bg-transparent border-b border-line py-2.5 text-lg text-ink font-light placeholder:text-muted/60" required>
+          </div>
+          <div>
+            <label class="mono text-muted block mb-2.5" data-sg-path="contact.fields.shoot">What kind of shoot are you booking?</label>
+            <select class="field w-full bg-transparent border-b border-line py-2.5 text-lg text-ink font-light cursor-pointer">
+              <option data-sg-path="contact.shootOptions[0]">Select a type</option>
+              <option data-sg-path="contact.shootOptions[1]">Portrait session</option>
+              <option data-sg-path="contact.shootOptions[2]">Wedding</option>
+              <option data-sg-path="contact.shootOptions[3]">Editorial / brand</option>
+              <option data-sg-path="contact.shootOptions[4]">Other</option>
+            </select>
+          </div>
+          <div>
+            <label class="mono text-muted block mb-2.5" data-sg-path="contact.fields.message">Message</label>
+            <textarea rows="3" placeholder="Tell me a bit about what you're looking for" class="field w-full bg-transparent border-b border-line py-2.5 text-lg text-ink font-light placeholder:text-muted/60 resize-none"></textarea>
+          </div>
+          <button type="submit" class="mono border-b border-ink pb-1.5 text-ink hover:opacity-60 transition-opacity" data-sg-path="contact.button">Send your message</button>
+        </form>
+      </div>
+
+      <!-- Wide image -->
+      <div class="img-zoom mt-16 lg:mt-24 aspect-[21/9] overflow-hidden rounded-sm bg-bgSoft" data-sg-reveal>
+        <img data-sg-img="contact.image" src="img/contact.jpg" alt="Portrait of the photographer" class="w-full h-full object-cover">
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="bg-bg pt-16 pb-12 border-t border-line mt-16 lg:mt-24">
+    <div class="max-w-[100rem] mx-auto px-6 lg:px-10 grid grid-cols-2 lg:grid-cols-4 gap-10">
+      <div>
+        <span class="mono text-muted block mb-4" data-sg-path="footer.locationLabel">[MY LOCATION]</span>
+        <p class="text-ink font-light text-lg leading-snug">
+          <span data-sg-path="footer.location1">Based in London,</span><br>
+          <span data-sg-path="footer.location2">United Kingdom</span>
+        </p>
+      </div>
+      <div>
+        <span class="mono text-muted block mb-4" data-sg-path="footer.menuLabel">[MENU]</span>
+        <ul class="space-y-2 text-ink font-light text-lg">
+          <li><a href="#categories" class="hover:opacity-60 transition-opacity" data-sg-path="footer.menu[0]">About me</a></li>
+          <li><a href="#work" class="hover:opacity-60 transition-opacity" data-sg-path="footer.menu[1]">Gallery</a></li>
+          <li><a href="#archive" class="hover:opacity-60 transition-opacity" data-sg-path="footer.menu[2]">Archive</a></li>
+          <li><a href="#contact" class="hover:opacity-60 transition-opacity" data-sg-path="footer.menu[3]">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="mono text-muted block mb-4" data-sg-path="footer.exploreLabel">[EXPLORE MORE]</span>
+        <ul class="space-y-2 text-ink font-light text-lg">
+          <li><a href="#" class="hover:opacity-60 transition-opacity" data-sg-path="footer.explore[0]">Instagram</a></li>
+          <li><a href="#" class="hover:opacity-60 transition-opacity" data-sg-path="footer.explore[1]">Pexels</a></li>
+          <li><a href="#" class="hover:opacity-60 transition-opacity" data-sg-path="footer.explore[2]">Unsplash</a></li>
+          <li><a href="#" class="hover:opacity-60 transition-opacity" data-sg-path="footer.explore[3]">Lummi</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="mono text-muted block mb-4" data-sg-path="footer.reachLabel">[FEEL FREE TO REACH OUT]</span>
+        <p class="text-ink font-light text-lg leading-snug">
+          <a href="#" class="hover:opacity-60 transition-opacity" data-sg-path="footer.email">hello@adrienroy.com</a><br>
+          <span class="text-ink/70" data-sg-path="footer.phone">+44 7911 123456</span>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       HYDRATION + GSAP ANIMATIONS (standard Akyra block)
+       ============================================================ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      // Hydrate texts
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      // Hydrate images (img.src or background-image)
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      // Animations: reveal + parallax (GSAP recreation, not 1:1 capture)
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, {
+            opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+          });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, {
+            yPercent: -12, ease: 'none',
+            scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+          });
+        });
+        // ROBUSTESSE : recalcule les positions après chargement des images
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        // Filet ultime anti-page-blanche
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

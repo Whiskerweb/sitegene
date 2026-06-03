@@ -1,0 +1,323 @@
+{
+  "id": "portrait-fineart",
+  "name": "Adrien Roy — Portrait fine-art",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "meta",
+      "brand",
+      "nav",
+      "hero",
+      "intro",
+      "categories",
+      "work",
+      "statement",
+      "archive",
+      "contact",
+      "footer"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.image",
+      "role": "hero",
+      "required": true,
+      "note": "hero · image"
+    },
+    {
+      "slot": "p2",
+      "path": "intro.thumbs[].image",
+      "role": "image",
+      "required": true,
+      "note": "intro · thumbs · image"
+    },
+    {
+      "slot": "p3",
+      "path": "categories.items[].image",
+      "role": "image",
+      "required": true,
+      "note": "categories · items · image"
+    },
+    {
+      "slot": "p4",
+      "path": "work.projects[].image",
+      "role": "gallery",
+      "required": true,
+      "note": "work · projects · image"
+    },
+    {
+      "slot": "p5",
+      "path": "archive.images[].image",
+      "role": "image",
+      "required": true,
+      "note": "archive · images · image"
+    },
+    {
+      "slot": "p6",
+      "path": "contact.image",
+      "role": "image",
+      "required": true,
+      "note": "contact · image"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "meta.title",
+        "label": "meta · title",
+        "type": "text",
+        "maxLen": 83
+      },
+      {
+        "path": "meta.description",
+        "label": "meta · description",
+        "type": "text",
+        "maxLen": 174
+      },
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.about",
+        "label": "nav · about",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.gallery",
+        "label": "nav · gallery",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.galleryCount",
+        "label": "nav · galleryCount",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.archive",
+        "label": "nav · archive",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.archiveCount",
+        "label": "nav · archiveCount",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.contact",
+        "label": "nav · contact",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.location",
+        "label": "hero · location",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.title",
+        "label": "hero · title",
+        "type": "text",
+        "maxLen": 125
+      },
+      {
+        "path": "intro.text",
+        "label": "intro · text",
+        "type": "text",
+        "maxLen": 198
+      },
+      {
+        "path": "categories.items[].name",
+        "label": "categories · items · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "categories.items[].number",
+        "label": "categories · items · number",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "categories.items[].desc",
+        "label": "categories · items · desc",
+        "type": "text",
+        "maxLen": 147
+      },
+      {
+        "path": "work.heading1",
+        "label": "work · heading1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "work.heading2",
+        "label": "work · heading2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "work.projects[].title",
+        "label": "work · projects · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "work.projects[].meta",
+        "label": "work · projects · meta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "statement.text",
+        "label": "statement · text",
+        "type": "text",
+        "maxLen": 198
+      },
+      {
+        "path": "archive.heading1",
+        "label": "archive · heading1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "archive.heading2",
+        "label": "archive · heading2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "archive.intro",
+        "label": "archive · intro",
+        "type": "text",
+        "maxLen": 173
+      },
+      {
+        "path": "contact.label",
+        "label": "contact · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.heading1",
+        "label": "contact · heading1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.heading2",
+        "label": "contact · heading2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.fields.name",
+        "label": "contact · fields · name",
+        "type": "text",
+        "maxLen": 42
+      },
+      {
+        "path": "contact.fields.reach",
+        "label": "contact · fields · reach",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.fields.shoot",
+        "label": "contact · fields · shoot",
+        "type": "text",
+        "maxLen": 56
+      },
+      {
+        "path": "contact.shootOptions[]",
+        "label": "contact · shootOptions",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.fields.message",
+        "label": "contact · fields · message",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.button",
+        "label": "contact · button",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.locationLabel",
+        "label": "footer · locationLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.location1",
+        "label": "footer · location1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.location2",
+        "label": "footer · location2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.menuLabel",
+        "label": "footer · menuLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.menu[]",
+        "label": "footer · menu",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.exploreLabel",
+        "label": "footer · exploreLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.explore[]",
+        "label": "footer · explore",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.reachLabel",
+        "label": "footer · reachLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.email",
+        "label": "footer · email",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.phone",
+        "label": "footer · phone",
+        "type": "text",
+        "maxLen": 40
+      }
+    ]
+  }
+}

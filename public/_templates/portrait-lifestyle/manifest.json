@@ -1,0 +1,199 @@
+{
+  "id": "portrait-lifestyle",
+  "name": "Clara Whitfield — Portrait & lifestyle",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "brand",
+      "meta",
+      "nav",
+      "hero",
+      "services",
+      "work",
+      "testimonial",
+      "cta"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.portrait",
+      "role": "hero",
+      "required": true,
+      "note": "hero · portrait"
+    },
+    {
+      "slot": "p2",
+      "path": "hero.lifestyle[]",
+      "role": "hero",
+      "required": true,
+      "note": "hero · lifestyle"
+    },
+    {
+      "slot": "p3",
+      "path": "work.items[].image",
+      "role": "gallery",
+      "required": true,
+      "note": "work · items · image"
+    },
+    {
+      "slot": "p4",
+      "path": "testimonial.image",
+      "role": "image",
+      "required": true,
+      "note": "testimonial · image"
+    },
+    {
+      "slot": "p5",
+      "path": "cta.background",
+      "role": "image",
+      "required": true,
+      "note": "cta · background"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "meta.title",
+        "label": "meta · title",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "meta.description",
+        "label": "meta · description",
+        "type": "text",
+        "maxLen": 190
+      },
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav[]",
+        "label": "nav",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.title",
+        "label": "hero · title",
+        "type": "text",
+        "maxLen": 51
+      },
+      {
+        "path": "hero.tagline",
+        "label": "hero · tagline",
+        "type": "text",
+        "maxLen": 102
+      },
+      {
+        "path": "services.label",
+        "label": "services · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.intro",
+        "label": "services · intro",
+        "type": "text",
+        "maxLen": 251
+      },
+      {
+        "path": "services.items[].num",
+        "label": "services · items · num",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.items[].name",
+        "label": "services · items · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.items[].text",
+        "label": "services · items · text",
+        "type": "text",
+        "maxLen": 182
+      },
+      {
+        "path": "work.label",
+        "label": "work · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "work.intro",
+        "label": "work · intro",
+        "type": "text",
+        "maxLen": 202
+      },
+      {
+        "path": "work.cta",
+        "label": "work · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "work.items[].title",
+        "label": "work · items · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "work.items[].category",
+        "label": "work · items · category",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonial.quote",
+        "label": "testimonial · quote",
+        "type": "text",
+        "maxLen": 189
+      },
+      {
+        "path": "testimonial.author",
+        "label": "testimonial · author",
+        "type": "text",
+        "maxLen": 48
+      },
+      {
+        "path": "cta.title",
+        "label": "cta · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta.text",
+        "label": "cta · text",
+        "type": "text",
+        "maxLen": 138
+      },
+      {
+        "path": "cta.button",
+        "label": "cta · button",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta.instagram",
+        "label": "cta · instagram",
+        "type": "text",
+        "maxLen": 43
+      },
+      {
+        "path": "cta.email",
+        "label": "cta · email",
+        "type": "text",
+        "maxLen": 50
+      }
+    ]
+  }
+}
