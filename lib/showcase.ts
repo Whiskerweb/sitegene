@@ -9,7 +9,7 @@ export type Realisation = {
   /** Libellé d'affichage de la catégorie. */
   category: string;
   /** Id de catégorie pour le filtre. */
-  categoryId: "photographe" | "artisan" | "musicien";
+  categoryId: "photographe" | "artisan" | "musicien" | "portfolio" | "saas";
   views: number;
   thumb: string;
   link: string;
@@ -75,6 +75,68 @@ export const REALISATIONS: Realisation[] = [
     featured: true,
     badge: "Nouveau",
   },
+  {
+    id: "cleaning-services",
+    title: "Ménage & services à domicile",
+    category: "Artisan",
+    categoryId: "artisan",
+    views: 96,
+    thumb: "/landing/tpl-cleaning-services.png",
+    link: "/s/cleaning-services",
+    badge: "Nouveau",
+  },
+  {
+    id: "eco-garden-care",
+    title: "Paysagiste & entretien de jardin",
+    category: "Artisan",
+    categoryId: "artisan",
+    views: 88,
+    thumb: "/landing/tpl-eco-garden-care.png",
+    link: "/s/eco-garden-care",
+    badge: "Nouveau",
+  },
+  {
+    id: "creative-portfolio",
+    title: "Portfolio créatif — Designer",
+    category: "Portfolio",
+    categoryId: "portfolio",
+    views: 74,
+    thumb: "/landing/tpl-creative-portfolio.png",
+    link: "/s/creative-portfolio",
+    featured: true,
+    badge: "Nouveau",
+  },
+  {
+    id: "health-saas",
+    title: "App / SaaS — Santé connectée",
+    category: "SaaS",
+    categoryId: "saas",
+    views: 81,
+    thumb: "/landing/tpl-health-saas.png",
+    link: "/s/health-saas",
+    featured: true,
+    badge: "Nouveau",
+  },
+  {
+    id: "luxury-wedding",
+    title: "Mariage premium — Studio",
+    category: "Photographe",
+    categoryId: "photographe",
+    views: 112,
+    thumb: "/landing/tpl-luxury-wedding.png",
+    link: "/s/luxury-wedding",
+    badge: "Nouveau",
+  },
+  {
+    id: "wedding-fine-art",
+    title: "Mariage fine-art — Narratif",
+    category: "Photographe",
+    categoryId: "photographe",
+    views: 104,
+    thumb: "/landing/tpl-wedding-fine-art.png",
+    link: "/s/wedding-fine-art",
+    badge: "Nouveau",
+  },
 ];
 
 /** Filtres de catégorie pour /modeles (dérivés des réalisations + « bientôt »). */
@@ -82,6 +144,8 @@ export const SHOWCASE_FILTERS: { id: string; label: string; soon?: boolean }[] =
   { id: "tous", label: "Tous" },
   { id: "photographe", label: "Photographe" },
   { id: "artisan", label: "Artisan" },
+  { id: "portfolio", label: "Portfolio" },
+  { id: "saas", label: "SaaS" },
   { id: "musicien", label: "Musicien", soon: true },
 ];
 

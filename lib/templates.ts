@@ -1,9 +1,21 @@
 /** Identifiants des templates disponibles (photographes pour l'instant). */
-export const TEMPLATE_IDS = ["alice-r", "potozon", "target"] as const;
+export const TEMPLATE_IDS = ["alice-r", "potozon", "target", "cleaning-services", "eco-garden-care", "creative-portfolio", "health-saas", "luxury-wedding", "wedding-fine-art"] as const;
 export type TemplateId = (typeof TEMPLATE_IDS)[number];
 
 export function isTemplateId(x: string): x is TemplateId {
   return (TEMPLATE_IDS as readonly string[]).includes(x);
+}
+
+/** Méta d'affichage des templates pour le reveal multi-DA (nom + descripteur de style). */
+export const TEMPLATE_META: Partial<Record<TemplateId, { name: string; style: string }>> = {
+  "alice-r": { name: "Éditorial", style: "Sombre & chaleureux, magazine" },
+  potozon: { name: "Galerie", style: "Épuré, place aux images" },
+  target: { name: "Audacieux", style: "Contrasté, signature forte" },
+};
+
+/** Méta d'affichage avec repli sûr (templates sans entrée dédiée). */
+export function templateMeta(id: string): { name: string; style: string } {
+  return TEMPLATE_META[id as TemplateId] ?? { name: "Signature", style: "Direction artistique" };
 }
 
 /** Slugs réservés (ne peuvent pas être pris par un client). */

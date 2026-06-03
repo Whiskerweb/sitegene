@@ -8,7 +8,12 @@
  */
 import type { TemplateId } from "@/lib/templates";
 
-export type CategoryId = "photographe" | "musicien" | "artisan";
+export type CategoryId =
+  | "photographe"
+  | "musicien"
+  | "artisan"
+  | "portfolio"
+  | "saas";
 
 export type CategoryTestimonial = {
   quote: string;
@@ -47,8 +52,8 @@ export const CATEGORIES: Category[] = [
     tagline: "Vos images méritent un vrai écrin.",
     briefPlaceholder:
       "Ex. Camille, photographe mariage à Lyon.\nLumière naturelle, émotions vraies, zéro pose forcée.\nDisponible partout en France.",
-    exampleDomain: "camille.akyra.com",
-    templateIds: ["alice-r", "potozon", "target"],
+    exampleDomain: "camille.akyra.io",
+    templateIds: ["alice-r", "potozon", "target", "luxury-wedding", "wedding-fine-art"],
     defaultTemplateId: "alice-r",
     testimonial: {
       quote:
@@ -66,7 +71,7 @@ export const CATEGORIES: Category[] = [
     tagline: "Votre univers sonore, enfin en ligne.",
     briefPlaceholder:
       "Ex. Léo, producteur & DJ à Marseille.\nÉlectro chaleureuse, sets live, clips.\nDisponible pour clubs et festivals.",
-    exampleDomain: "leo.akyra.com",
+    exampleDomain: "leo.akyra.io",
     templateIds: [],
     defaultTemplateId: "alice-r",
     testimonial: {
@@ -81,19 +86,57 @@ export const CATEGORIES: Category[] = [
     id: "artisan",
     label: "Artisan",
     cyclingWord: "artisan",
-    active: false,
+    active: true,
     tagline: "Votre savoir-faire, mis en valeur.",
     briefPlaceholder:
       "Ex. Atelier Beaumont, ébéniste à Nantes.\nMobilier sur mesure, bois massif, pièces uniques.\nDevis sous 48 h.",
-    exampleDomain: "beaumont.akyra.com",
-    templateIds: [],
-    defaultTemplateId: "alice-r",
+    exampleDomain: "beaumont.akyra.io",
+    templateIds: ["cleaning-services", "eco-garden-care"],
+    defaultTemplateId: "cleaning-services",
     testimonial: {
       quote:
         "Un site qui respire le sérieux de mon atelier. Je reçois des demandes chaque semaine.",
       name: "Hugo B.",
       role: "Ébéniste",
       tone: "#e2f3e6",
+    },
+  },
+  {
+    id: "portfolio",
+    label: "Portfolio / Créatif",
+    cyclingWord: "créatif",
+    active: true,
+    tagline: "Votre travail, mis en scène.",
+    briefPlaceholder:
+      "Ex. Alex, designer & directeur artistique à Paris.\nIdentités de marque, sites, direction créative.\nDisponible en freelance.",
+    exampleDomain: "alex.akyra.io",
+    templateIds: ["creative-portfolio"],
+    defaultTemplateId: "creative-portfolio",
+    testimonial: {
+      quote:
+        "Un portfolio qui parle enfin pour moi. Les clients arrivent déjà convaincus.",
+      name: "Alex M.",
+      role: "Designer",
+      tone: "#ececec",
+    },
+  },
+  {
+    id: "saas",
+    label: "SaaS / App",
+    cyclingWord: "startup",
+    active: true,
+    tagline: "Votre produit, expliqué et vendu.",
+    briefPlaceholder:
+      "Ex. Healix, app de suivi santé.\nTracking, alertes, abonnement.\nEssai gratuit.",
+    exampleDomain: "healix.akyra.io",
+    templateIds: ["health-saas"],
+    defaultTemplateId: "health-saas",
+    testimonial: {
+      quote:
+        "Notre landing convertit enfin. Le pricing et les preuves sociales font le job.",
+      name: "Sam R.",
+      role: "Fondateur SaaS",
+      tone: "#eaf2f0",
     },
   },
 ];
