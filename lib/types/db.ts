@@ -10,6 +10,25 @@
 // Enums (string unions mirroring CHECK constraints)
 // ---------------------------------------------------------------------------
 export type ProspectCodeStatus = 'sent' | 'opened' | 'paid' | 'expired'
+export type OutreachStatus =
+  | 'queued'
+  | 'active'
+  | 'completed'
+  | 'converted'
+  | 'engaged'
+  | 'unsubscribed'
+  | 'bounced'
+  | 'paused'
+  | 'failed'
+export type EmailEventName =
+  | 'sent'
+  | 'delivered'
+  | 'opened'
+  | 'clicked'
+  | 'bounced'
+  | 'complained'
+  | 'unsubscribed'
+  | 'failed'
 export type SiteStatus = 'draft' | 'revealed' | 'live' | 'suspended'
 export type ContentAuthor = 'operator' | 'client' | 'ai'
 export type NoteStatus = 'open' | 'in_progress' | 'done' | 'rejected'
@@ -69,6 +88,34 @@ export interface ProspectCode {
   status: ProspectCodeStatus
   reveal_seen_at: Timestamptz | null
   expires_at: Timestamptz | null
+  created_at: Timestamptz
+}
+
+export interface Outreach {
+  id: UUID
+  prospect_id: UUID
+  status: OutreachStatus
+  step: number
+  max_steps: number
+  next_run_at: Timestamptz
+  last_sent_at: Timestamptz | null
+  reveal_token: string | null
+  unsub_token: string
+  error: string | null
+  created_at: Timestamptz
+  updated_at: Timestamptz
+}
+
+export interface EmailEvent {
+  id: UUID
+  outreach_id: UUID | null
+  prospect_id: UUID | null
+  to_email: string | null
+  kind: string
+  step: number | null
+  provider_id: string | null
+  event: EmailEventName
+  meta: Json
   created_at: Timestamptz
 }
 
@@ -186,6 +233,20 @@ export type ProspectInsert = Omit<Prospect, 'id' | 'created_at'> &
 export type ProspectCodeInsert = Omit<ProspectCode, 'id' | 'status' | 'created_at'> &
   Partial<Pick<ProspectCode, 'id' | 'status' | 'created_at'>>
 
+export type OutreachInsert = Omit<
+  Outreach,
+  'id' | 'status' | 'step' | 'max_steps' | 'next_run_at' | 'unsub_token' | 'created_at' | 'updated_at'
+> &
+  Partial<
+    Pick<
+      Outreach,
+      'id' | 'status' | 'step' | 'max_steps' | 'next_run_at' | 'unsub_token' | 'created_at' | 'updated_at'
+    >
+  >
+
+export type EmailEventInsert = Omit<EmailEvent, 'id' | 'meta' | 'created_at'> &
+  Partial<Pick<EmailEvent, 'id' | 'meta' | 'created_at'>>
+
 export type TemplateInsert = Omit<Template, 'version' | 'photo_manifest' | 'field_schema'> &
   Partial<Pick<Template, 'version' | 'photo_manifest' | 'field_schema'>>
 
@@ -228,6 +289,8 @@ export interface Tables {
   profiles: Profile
   prospects: Prospect
   prospect_codes: ProspectCode
+  outreach: Outreach
+  email_events: EmailEvent
   templates: Template
   sites: Site
   site_content: SiteContent
