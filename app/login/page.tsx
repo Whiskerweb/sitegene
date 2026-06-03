@@ -32,7 +32,7 @@ export default function LoginPage() {
   return (
     <AuthSplit
       brandName="Akyra"
-      logo={<AkyraMark size={28} />}
+      logo={<AkyraMark size={28} tone="dark" />}
       homeHref="/"
       title="Connexion"
       subtitle="Entrez votre email, on vous envoie un lien sécurisé."

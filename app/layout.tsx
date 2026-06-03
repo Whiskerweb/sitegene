@@ -29,10 +29,18 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://akyra.io"),
   title: "Akyra · Votre site pro, prêt en 30 secondes",
   description:
     "Des sites pros déjà construits pour photographes. Vous choisissez, on publie. En ligne en 30 secondes, 50 €/an tout compris.",
   robots: { index: false, follow: false },
+  openGraph: {
+    type: "website",
+    siteName: "Akyra",
+    title: "Akyra · Votre site pro, prêt en 30 secondes",
+    description:
+      "Des sites pros déjà construits pour photographes. Vous choisissez, on publie. En ligne en 30 secondes, 50 €/an tout compris.",
+  },
 };
 
 export default function RootLayout({

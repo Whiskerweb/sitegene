@@ -119,7 +119,7 @@ export default function CreateDashboard({
         {/* En-tête du Dashboard */}
         <header className="flex items-center justify-between border-b border-[var(--line)] pb-6 mb-10">
           <div className="flex items-center gap-2">
-            <AkyraMark size={32} className="text-violet-400" />
+            <AkyraMark size={32} tone="dark" />
             <span className="font-display text-xl font-bold tracking-tight">Akyra <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-violet-500/10 text-violet-400 border border-violet-500/20">Studio</span></span>
           </div>
 
