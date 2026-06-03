@@ -35,14 +35,22 @@ describe("outreachEmail", () => {
     expect(new Set(subjects).size).toBe(3);
   });
 
-  it("chaque étape injecte le reveal + le lien de désinscription", () => {
+  it("chaque étape injecte le reveal + l'option de désinscription", () => {
     for (const step of [0, 1, 2]) {
       const m = outreachEmail(step, opts);
       expect(m.html).toContain("https://akyra.io/r/abc123");
       expect(m.html).toContain(opts.unsubUrl);
-      expect(m.html.toLowerCase()).toContain("désinscrire");
+      expect(m.html.toLowerCase()).toContain("contacté");
       expect(m.text).toContain(opts.revealUrl);
+      expect(m.text.toLowerCase()).toContain("contacté");
     }
+  });
+
+  it("reste en texte brut : pas de logo, pas de bouton/table", () => {
+    const m = outreachEmail(0, opts);
+    expect(m.html).not.toContain("<table");
+    expect(m.html).not.toContain("akyra-light.png");
+    expect(m.html).not.toContain("brand");
   });
 
   it("step hors borne → borné sur la dernière variante", () => {

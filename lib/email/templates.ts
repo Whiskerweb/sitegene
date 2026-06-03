@@ -48,65 +48,68 @@ export function outreachEmail(
   step: number,
   opts: { firstName?: string | null; revealUrl: string; unsubUrl: string },
 ): EmailParts {
-  const name = opts.firstName ? esc(opts.firstName) : "";
+  const name = (opts.firstName ?? "").trim();
   const hi = name ? `Bonjour ${name},` : "Bonjour,";
 
-  const variants: Array<{ subject: string; preheader: string; lead: string[]; cta: string }> = [
+  // Volontairement « écrit à la main » : texte brut, pas de logo ni de bouton,
+  // le lien en clair. Un mail 1:1 s'ouvre mieux et passe mieux les filtres.
+  const variants: Array<{ subject: string; lines: string[] }> = [
     {
-      subject: name ? `${name}, j'ai préparé un aperçu de votre site` : "Un aperçu de votre site photo",
-      preheader: "Un site déjà construit avec vos photos — à voir en 30 secondes.",
-      lead: [
-        "Je crée des sites pour les photographes, et j'en ai préparé un pour vous — avec vos photos, déjà en ligne.",
-        "Pas une maquette : un vrai site que vous pouvez voir tout de suite.",
+      subject: name ? `${name}, un aperçu de votre site` : "Un aperçu de votre site",
+      lines: [
+        hi,
+        "",
+        "Je suis tombé sur votre travail et je me suis permis de vous préparer un aperçu de site avec vos photos. Il est déjà en ligne, vous pouvez le regarder ici :",
+        opts.revealUrl,
+        "",
+        "Si le rendu vous plaît, dites-le moi, on en discute. Sinon ce n'est pas grave, je ne vous embête pas plus.",
+        "",
+        "Bonne journée,",
+        "Lucas",
       ],
-      cta: "Voir mon site",
     },
     {
-      subject: name ? `${name}, vous avez vu votre aperçu ?` : "Vous avez vu votre aperçu ?",
-      preheader: "Je remonte mon précédent message — votre site vous attend.",
-      lead: [
-        "Je me permets de remonter mon précédent message au cas où il serait passé inaperçu.",
-        "Votre aperçu est toujours en ligne, prêt à être personnalisé :",
+      subject: name ? `${name}, vous avez pu y jeter un œil ?` : "Vous avez pu y jeter un œil ?",
+      lines: [
+        hi,
+        "",
+        "Je me permets de revenir rapidement vers vous — vous avez eu le temps de regarder l'aperçu que je vous avais préparé ?",
+        opts.revealUrl,
+        "",
+        "Un simple retour me suffit, même si c'est non.",
+        "",
+        "Lucas",
       ],
-      cta: "Revoir mon site",
     },
     {
       subject: name ? `${name}, je clôture votre aperçu` : "Je clôture votre aperçu",
-      preheader: "Dernier message — je libère l'aperçu si pas de retour.",
-      lead: [
-        "Dernier message de ma part : sans retour, je libérerai l'aperçu que j'avais préparé pour vous.",
-        "Si le site vous plaît, il est encore là :",
+      lines: [
+        hi,
+        "",
+        "Sans retour de votre part, je vais clôturer l'aperçu de votre site. S'il vous intéresse encore, c'est le bon moment :",
+        opts.revealUrl,
+        "",
+        "Sinon je n'insiste pas — bonne continuation à vous.",
+        "",
+        "Lucas",
       ],
-      cta: "Voir une dernière fois",
     },
   ];
 
   const v = variants[Math.max(0, Math.min(step, variants.length - 1))];
-  const bodyHtml = [
-    p(`<strong>${hi}</strong>`),
-    ...v.lead.map((l) => p(l)),
-    button(v.cta, opts.revealUrl),
-    p(`<span style="font-size:13px;color:#6b6878;">— Lucas, Akyra</span>`),
-  ].join("\n");
+  const optOut = "Si vous ne souhaitez plus être contacté : ";
 
-  const text = [
-    hi,
-    "",
-    ...v.lead,
-    "",
-    v.cta + " : " + opts.revealUrl,
-    "",
-    "— Lucas, Akyra",
-    "",
-    "Se désinscrire : " + opts.unsubUrl,
-  ].join("\n");
+  // Texte brut = version de référence.
+  const text = `${v.lines.join("\n")}\n\n—\n${optOut}${opts.unsubUrl}`;
 
-  return wrap({
-    subject: v.subject,
-    preheader: v.preheader,
-    bodyHtml,
-    text,
-    footerKind: "outreach",
-    unsubUrl: opts.unsubUrl,
-  });
+  // HTML minimal : rendu identique au texte, lien cliquable, zéro mise en page.
+  const link = (url: string) => `<a href="${esc(url)}" style="color:#1a56db;">${esc(url)}</a>`;
+  const body = v.lines.map((l) => (l === opts.revealUrl ? link(l) : esc(l))).join("<br>");
+  const html =
+    `<div style="font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-size:15px;line-height:1.5;color:#222;">` +
+    `${body}<br><br>—<br>` +
+    `<span style="font-size:13px;color:#888;">${optOut}${link(opts.unsubUrl)}</span>` +
+    `</div>`;
+
+  return { subject: v.subject, html, text };
 }
