@@ -17,7 +17,7 @@ const DEVICES: { id: DeviceId; label: string; width: string; Icon: typeof Monito
  * CTA flottant « Tester cette template » vers la connexion. On ne style QUE le
  * chrome, jamais le template rendu.
  */
-export default function TemplatePreview({ id, title }: { id: string; title: string }) {
+export default function TemplatePreview({ src, title }: { src: string; title: string }) {
   const [device, setDevice] = useState<DeviceId>("desktop");
   const width = DEVICES.find((d) => d.id === device)!.width;
 
@@ -65,7 +65,7 @@ export default function TemplatePreview({ id, title }: { id: string; title: stri
       <div className="flex flex-1 justify-center overflow-auto p-4 md:p-6">
         <iframe
           key={device}
-          src={`/_templates/${id}/index.html`}
+          src={src}
           title={title}
           className="h-full rounded-lg border-0 bg-white shadow-2xl"
           style={{ width, maxWidth: "100%" }}

@@ -39,7 +39,9 @@ export async function GET(
       .limit(1)
       .maybeSingle();
     rawContent = sc?.content_json ?? (await fetchDefaultContent(origin, site.template_id));
-  } else if (process.env.NODE_ENV !== "production" && isTemplateId(slug)) {
+  } else if (isTemplateId(slug)) {
+    // Aperçu démo d'un template (sans site client) — disponible aussi en prod.
+    // Réponse noindex ; ne sert que des templateId connus, contenu par défaut.
     templateId = slug;
     rawContent = await fetchDefaultContent(origin, slug);
   }
