@@ -1,5 +1,30 @@
 import { describe, it, expect } from "vitest";
-import { receiptEmail, outreachEmail } from "./templates";
+import { receiptEmail, outreachEmail, customOutreachEmail } from "./templates";
+
+describe("customOutreachEmail", () => {
+  const msg =
+    "Bonjour Gael,\n\nVotre site est prêt :\nhttps://akyra.io/r/abc123\n\nLucas";
+  const m = customOutreachEmail({
+    subject: "Gael, votre site est prêt",
+    message: msg,
+    unsubUrl: "https://akyra.io/api/email/unsubscribe?token=tok",
+  });
+
+  it("garde le message intact dans le texte", () => {
+    expect(m.text).toContain("Bonjour Gael,");
+    expect(m.text).toContain("https://akyra.io/r/abc123");
+  });
+  it("transforme le lien du message en lien cliquable HTML", () => {
+    expect(m.html).toContain('href="https://akyra.io/r/abc123"');
+  });
+  it("ajoute l'option de désinscription", () => {
+    expect(m.html).toContain("https://akyra.io/api/email/unsubscribe?token=tok");
+    expect(m.text.toLowerCase()).toContain("contacté");
+  });
+  it("aucun lien localhost possible (le lien vient du message)", () => {
+    expect(m.html).not.toContain("localhost");
+  });
+});
 
 describe("receiptEmail", () => {
   const mail = receiptEmail({ firstName: "Camille", dashboardUrl: "https://akyra.io/dashboard" });

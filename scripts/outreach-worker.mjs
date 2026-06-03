@@ -4,12 +4,22 @@
 //   npm run outreach:worker        → boucle (poll toutes les 30 s)
 //   npm run outreach:worker:once   → traite la file due puis s'arrête
 //   DRY_RUN=1 npm run outreach:worker:once   → log au lieu d'envoyer
+import { readFileSync } from "node:fs";
 import { createClient } from "@supabase/supabase-js";
 import { sendOutreachStep } from "../lib/email/send.ts";
 import { isSuppressed } from "../lib/email/suppress.ts";
 import { advanceAfterSend, shouldStop } from "../lib/email/sequence.ts";
 
 const ONCE = process.argv.includes("--once");
+
+// Messages rédigés à la main par token (écrits par outreach-enroll-excel).
+// { "<token>": { message, subject } }. Utilisés pour l'étape 0.
+let MESSAGES = {};
+try {
+  MESSAGES = JSON.parse(readFileSync(new URL("./.outreach-messages.json", import.meta.url)));
+} catch {
+  MESSAGES = {};
+}
 
 // --- Réglages délivrabilité -------------------------------------------------
 const BATCH_PER_TICK = 12; // lignes traitées par tick (aligné sur DAILY_CAP)
@@ -125,6 +135,7 @@ async function processBatch() {
 
     // Envoi de l'étape courante (row.step = index de l'email à envoyer).
     try {
+      const custom = MESSAGES[row.reveal_token] || {};
       await sendOutreachStep(admin, {
         outreachId: row.id,
         prospectId: row.prospect_id,
@@ -133,6 +144,8 @@ async function processBatch() {
         step: row.step,
         revealToken: row.reveal_token,
         unsubToken: row.unsub_token,
+        customMessage: custom.message ?? null,
+        customSubject: custom.subject ?? null,
       });
       const next = advanceAfterSend({
         step: row.step,

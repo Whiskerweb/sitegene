@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { sendRaw } from "./client";
-import { receiptEmail, outreachEmail } from "./templates";
+import { receiptEmail, outreachEmail, customOutreachEmail } from "./templates";
 
 /**
  * URL publique pour les liens des emails. Priorité à EMAIL_PUBLIC_BASE_URL.
@@ -84,6 +84,10 @@ export type OutreachStepInput = {
   step: number; // étape à envoyer (0 = initial)
   revealToken: string;
   unsubToken: string;
+  // Étape 0 : message rédigé à la main (lien déjà dedans). Si fourni, on l'envoie
+  // tel quel au lieu du template généré. Les relances utilisent toujours le template.
+  customMessage?: string | null;
+  customSubject?: string | null;
 };
 
 /** Envoie l'étape courante d'une séquence de prospection. */
@@ -92,13 +96,19 @@ export async function sendOutreachStep(
   input: OutreachStepInput,
 ): Promise<string | null> {
   const base = appUrl();
-  const revealUrl = `${base}/r/${input.revealToken}`;
   const unsubUrl = `${base}/api/email/unsubscribe?token=${encodeURIComponent(input.unsubToken)}`;
-  const mail = outreachEmail(input.step, {
-    firstName: input.firstName,
-    revealUrl,
-    unsubUrl,
-  });
+  const mail =
+    input.step === 0 && input.customMessage
+      ? customOutreachEmail({
+          subject: input.customSubject || "Votre site est prêt",
+          message: input.customMessage,
+          unsubUrl,
+        })
+      : outreachEmail(input.step, {
+          firstName: input.firstName,
+          revealUrl: `${base}/r/${input.revealToken}`,
+          unsubUrl,
+        });
   const res = await sendRaw({
     from: fromOutreach(),
     to: input.to,

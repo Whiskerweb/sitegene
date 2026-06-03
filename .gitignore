@@ -53,3 +53,4 @@ templates/**/.DS_Store
 
 # Log du cron de prospection (local)
 outreach-cron.log
+scripts/.outreach-messages.json

@@ -6,6 +6,33 @@ import { wrap, button, esc, type EmailParts } from "./layout";
 
 const p = (s: string) => `<p style="margin:0 0 14px;">${s}</p>`;
 
+const OPT_OUT = "Si vous ne souhaitez plus être contacté : ";
+
+/**
+ * Email de prospection à partir d'un message rédigé À LA MAIN (déjà personnalisé,
+ * lien reveal déjà écrit dedans). On n'ajoute qu'une ligne de désinscription.
+ * Aucune reconstruction d'URL → impossible d'envoyer un lien cassé.
+ */
+export function customOutreachEmail(opts: {
+  subject: string;
+  message: string;
+  unsubUrl: string;
+}): EmailParts {
+  const text = `${opts.message}\n\n—\n${OPT_OUT}${opts.unsubUrl}`;
+  // Échappe, transforme les URLs http(s) en liens, puis les sauts de ligne en <br>.
+  const linkified = esc(opts.message).replace(
+    /(https?:\/\/[^\s<]+)/g,
+    (u) => `<a href="${u}" style="color:#1a56db;">${u}</a>`,
+  );
+  const body = linkified.replace(/\n/g, "<br>");
+  const html =
+    `<div style="font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-size:15px;line-height:1.5;color:#222;">` +
+    `${body}<br><br>—<br>` +
+    `<span style="font-size:13px;color:#888;">${OPT_OUT}<a href="${esc(opts.unsubUrl)}" style="color:#1a56db;">${esc(opts.unsubUrl)}</a></span>` +
+    `</div>`;
+  return { subject: opts.subject, html, text };
+}
+
 /** Reçu / bienvenue après le paiement initial (50 €). */
 export function receiptEmail(opts: {
   firstName?: string | null;
