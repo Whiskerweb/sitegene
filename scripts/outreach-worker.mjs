@@ -7,7 +7,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { sendOutreachStep } from "../lib/email/send.ts";
 import { isSuppressed } from "../lib/email/suppress.ts";
-import { advanceAfterSend, stopStatusForCode } from "../lib/email/sequence.ts";
+import { advanceAfterSend, shouldStop } from "../lib/email/sequence.ts";
 
 const ONCE = process.argv.includes("--once");
 
@@ -60,7 +60,7 @@ async function processBatch() {
   const nowIso = new Date().toISOString();
   const { data: rows, error } = await admin
     .from("outreach")
-    .select("id, prospect_id, status, step, max_steps, reveal_token, unsub_token, prospects(email, first_name)")
+    .select("id, prospect_id, status, step, max_steps, reveal_token, unsub_token, created_at, last_sent_at, prospects(email, first_name)")
     .in("status", ["queued", "active"])
     .lte("next_run_at", nowIso)
     .order("next_run_at", { ascending: true })
@@ -90,17 +90,29 @@ async function processBatch() {
       continue;
     }
 
-    // Stop engagement : a vu son reveal ou a payé.
+    // Stop : a payé/périmé, OU vrai engagement reveal APRÈS notre dernier envoi.
+    // L'engagement est lu dans `events` (open/clic), jamais le statut 'opened'
+    // du code (qui peut venir d'une prévisualisation opérateur pré-campagne).
     if (row.reveal_token) {
       const { data: code } = await admin
         .from("prospect_codes")
         .select("status")
         .eq("token", row.reveal_token)
         .maybeSingle();
-      const stop = stopStatusForCode(code?.status);
+      const baseline = row.last_sent_at || row.created_at;
+      const { count: engaged } = await admin
+        .from("events")
+        .select("id", { count: "exact", head: true })
+        .eq("token", row.reveal_token)
+        .in("type", ["reveal_opened", "button_click", "go_live_clicked", "purchased"])
+        .gt("created_at", baseline);
+      const stop = shouldStop({
+        codeStatus: code?.status,
+        engagedAfterSend: (engaged ?? 0) > 0,
+      });
       if (stop) {
         await setOutreach(row.id, { status: stop });
-        log(`stop ${email} — code ${code?.status} → ${stop}`);
+        log(`stop ${email} — ${stop} (code ${code?.status}, engagé ${engaged ?? 0})`);
         continue;
       }
     }

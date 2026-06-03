@@ -35,25 +35,22 @@ export function advanceAfterSend(opts: {
   return { step: newStep, status: "active", next_run_at: new Date(next).toISOString() };
 }
 
-export type ProspectCodeStop = "opened" | "paid" | "expired";
-
 /**
- * Statut `outreach` à appliquer si le prospect_code a évolué (stop séquence).
+ * Décision d'arrêt de la séquence (logique pure).
+ * - `codeStatus` vient de prospect_codes : `paid` = client, `expired` = périmé.
+ * - `engagedAfterSend` = un vrai événement d'ouverture/clic du reveal s'est
+ *   produit APRÈS notre dernier envoi (lu dans la table `events`).
+ *
+ * On n'utilise volontairement PAS le statut `opened` du code : il peut provenir
+ * d'une prévisualisation opérateur antérieure à la campagne (faux positif).
  * null = pas de stop, on continue la séquence.
  */
-export function stopStatusForCode(codeStatus: string | null | undefined):
-  | "engaged"
-  | "converted"
-  | "completed"
-  | null {
-  switch (codeStatus) {
-    case "opened":
-      return "engaged"; // a vu son reveal → on arrête les relances à froid
-    case "paid":
-      return "converted";
-    case "expired":
-      return "completed";
-    default:
-      return null;
-  }
+export function shouldStop(opts: {
+  codeStatus?: string | null;
+  engagedAfterSend: boolean;
+}): "converted" | "completed" | "engaged" | null {
+  if (opts.codeStatus === "paid") return "converted";
+  if (opts.codeStatus === "expired") return "completed";
+  if (opts.engagedAfterSend) return "engaged";
+  return null;
 }

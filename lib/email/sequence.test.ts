@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { advanceAfterSend, stopStatusForCode } from "./sequence";
+import { advanceAfterSend, shouldStop } from "./sequence";
 
 const DAY = 24 * 60 * 60 * 1000;
 const NOW = 1_700_000_000_000;
@@ -31,10 +31,15 @@ describe("advanceAfterSend", () => {
   });
 });
 
-describe("stopStatusForCode", () => {
-  it("reveal vu → engaged", () => expect(stopStatusForCode("opened")).toBe("engaged"));
-  it("payé → converted", () => expect(stopStatusForCode("paid")).toBe("converted"));
-  it("expiré → completed", () => expect(stopStatusForCode("expired")).toBe("completed"));
-  it("encore 'sent' → pas de stop", () => expect(stopStatusForCode("sent")).toBeNull());
-  it("inconnu/null → pas de stop", () => expect(stopStatusForCode(null)).toBeNull());
+describe("shouldStop", () => {
+  it("payé → converted", () =>
+    expect(shouldStop({ codeStatus: "paid", engagedAfterSend: false })).toBe("converted"));
+  it("expiré → completed", () =>
+    expect(shouldStop({ codeStatus: "expired", engagedAfterSend: false })).toBe("completed"));
+  it("engagement réel après envoi → engaged", () =>
+    expect(shouldStop({ codeStatus: "sent", engagedAfterSend: true })).toBe("engaged"));
+  it("'opened' pré-campagne (aucun engagement après envoi) → PAS de stop", () =>
+    expect(shouldStop({ codeStatus: "opened", engagedAfterSend: false })).toBeNull());
+  it("rien → pas de stop", () =>
+    expect(shouldStop({ codeStatus: "sent", engagedAfterSend: false })).toBeNull());
 });
