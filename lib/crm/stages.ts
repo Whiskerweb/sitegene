@@ -55,8 +55,8 @@ export const PIPELINE_STATUSES: StatusDef[] = [
   { id: "GAGNE",        label: "Gagné ✓",      cls: "text-mint-400 border-mint-400/30",      terminal: false },
   { id: "PERDU",        label: "Perdu",        cls: "text-faint border-line",                terminal: true },
   { id: "NON_QUALIFIE", label: "Non qualifié", cls: "text-faint border-line",                terminal: true },
-  { id: "DESABONNE",    label: "Désinscrit",   cls: "text-[#ef6d6d] border-[#ef6d6d]/30",    terminal: true },
-  { id: "BOUNCE",       label: "Bounce",       cls: "text-[#ef6d6d] border-[#ef6d6d]/30",    terminal: true },
+  { id: "DESABONNE",    label: "Désinscrit · pas intéressé", cls: "text-[#ef6d6d] border-[#ef6d6d]/30", terminal: true },
+  { id: "BOUNCE",       label: "Bounce (email invalide)",    cls: "text-[#ef6d6d] border-[#ef6d6d]/30", terminal: true },
 ];
 
 export const STATUS_BY_ID: Record<PipelineStatus, StatusDef> = Object.fromEntries(

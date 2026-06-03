@@ -1,36 +1,46 @@
 /**
- * lib/crm/categories.ts — Catégories métier DU CRM (filtre/tri/reporting).
+ * lib/crm/categories.ts — Catégories métier du CRM (filtre/groupement/reporting).
  *
- * Volontairement SÉPARÉ de lib/categories.ts (qui pilote la landing publique) :
- * on peut ajouter un vertical au CRM sans modifier la landing ni la base
- * (la colonne prospects.category est un text libre, validé ici).
+ * DÉRIVÉES de lib/categories.ts, la source de vérité UNIQUE du mapping
+ * template → catégorie (5 verticaux). Ce module n'ajoute que la couche CRM :
+ * couleurs de chips + helpers de classement.
  *
- * `templateIds` sert au backfill (migration 0011) et au pré-remplissage de la
- * catégorie à la création d'un prospect depuis un template.
+ * Le miroir SQL est piloté par `templates.category` (migration 0015) : à
+ * l'enregistrement d'un NOUVEAU template, renseigner sa catégorie en base.
  */
-export type CrmCategoryId =
-  | "photographe"
-  | "artisan"
-  | "musicien"
-  | "electricien"
-  | "elearning";
+import { CATEGORIES, type CategoryId } from "@/lib/categories";
+
+export type CrmCategoryId = CategoryId;
 
 export type CrmCategory = {
   id: CrmCategoryId;
   label: string;
-  /** Templates rattachés à ce métier (mapping de backfill). */
+  /** Templates rattachés à ce métier (classement auto des prospects). */
   templateIds: string[];
   /** Accent de chip (classes Tailwind). */
   cls: string;
 };
 
-export const CRM_CATEGORIES: CrmCategory[] = [
-  { id: "photographe", label: "Photographe", templateIds: ["alice-r", "potozon", "target"], cls: "text-[#f0a9cf] border-[#f0a9cf]/30" },
-  { id: "artisan",     label: "Artisan",     templateIds: ["arelec", "eloctix"],            cls: "text-[#9fd6a8] border-[#9fd6a8]/30" },
-  { id: "musicien",    label: "Musicien",    templateIds: [],                                cls: "text-[#a9c5f0] border-[#a9c5f0]/30" },
-  { id: "electricien", label: "Électricien", templateIds: [],                                cls: "text-gold-400 border-gold-400/30" },
-  { id: "elearning",   label: "E-learning",  templateIds: [],                                cls: "text-violet-400 border-violet-400/30" },
-];
+const CHIP_CLS: Record<string, string> = {
+  photographe: "text-[#f0a9cf] border-[#f0a9cf]/30",
+  musicien: "text-[#a9c5f0] border-[#a9c5f0]/30",
+  artisan: "text-[#9fd6a8] border-[#9fd6a8]/30",
+  portfolio: "text-gold-400 border-gold-400/30",
+  saas: "text-violet-400 border-violet-400/30",
+};
+
+export const CRM_CATEGORIES: CrmCategory[] = CATEGORIES.map((c) => ({
+  id: c.id,
+  label: c.label,
+  templateIds: [...c.templateIds],
+  cls: CHIP_CLS[c.id] ?? "text-muted border-line",
+}));
+
+/** Templates historiques retirés du catalogue mais encore présents en base. */
+const LEGACY_TEMPLATE_CATEGORY: Record<string, CrmCategoryId> = {
+  arelec: "artisan",
+  eloctix: "artisan",
+};
 
 const BY_ID = new Map(CRM_CATEGORIES.map((c) => [c.id, c]));
 
@@ -43,9 +53,9 @@ export function categoryDef(id: string | null | undefined): CrmCategory | undefi
   return id ? BY_ID.get(id as CrmCategoryId) : undefined;
 }
 
-/** Catégorie déduite d'un template (mapping inverse du backfill). */
+/** Catégorie déduite d'un template (site photographe → photographe, etc.). */
 export function categoryFromTemplate(templateId: string | null | undefined): CrmCategoryId | null {
   if (!templateId) return null;
   const hit = CRM_CATEGORIES.find((c) => c.templateIds.includes(templateId));
-  return hit ? hit.id : null;
+  return hit ? hit.id : (LEGACY_TEMPLATE_CATEGORY[templateId] ?? null);
 }

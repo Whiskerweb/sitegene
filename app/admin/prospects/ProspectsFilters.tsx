@@ -8,11 +8,10 @@ import { PIPELINE_STAGES, PIPELINE_STATUSES } from "@/lib/crm/stages";
 type Props = {
   view: "table" | "kanban";
   sort: string;
-  showAll: boolean;
   sp: Record<string, string | undefined>;
 };
 
-export function ProspectsFilters({ view, sort, showAll, sp }: Props) {
+export function ProspectsFilters({ view, sort, sp }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
@@ -96,7 +95,7 @@ export function ProspectsFilters({ view, sort, showAll, sp }: Props) {
       )}
 
       <select value={sp.status ?? ""} onChange={(e) => setParam("status", e.target.value)} className={selCls}>
-        <option value="">Statut : actifs</option>
+        <option value="">Tous les statuts</option>
         {PIPELINE_STATUSES.map((s) => (
           <option key={s.id} value={s.id}>
             {s.label}
@@ -109,16 +108,6 @@ export function ProspectsFilters({ view, sort, showAll, sp }: Props) {
         <option value="signal">Tri : dernier signal</option>
         <option value="recent">Tri : récents</option>
       </select>
-
-      <label className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-ink-800 px-3 py-2 text-sm text-muted">
-        <input
-          type="checkbox"
-          checked={showAll}
-          onChange={(e) => setParam("all", e.target.checked ? "1" : "")}
-          className="accent-violet-500"
-        />
-        Inclure perdus
-      </label>
 
       {isPending ? <span className="text-xs text-faint">…</span> : null}
     </div>

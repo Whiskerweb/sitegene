@@ -3,12 +3,18 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { PIPELINE_STAGES, LOST_REASONS, leadTemperature } from "@/lib/crm/stages";
+import {
+  PIPELINE_STAGES,
+  LOST_REASONS,
+  leadTemperature,
+  isTerminalStatus,
+  statusLabel,
+} from "@/lib/crm/stages";
 import { categoryLabel } from "@/lib/crm/categories";
 import { relativeTime } from "@/app/admin/_components";
 import { setProspectStatus } from "@/app/admin/_actions";
 import type { ProspectRow } from "./_shared";
-import type { PipelineStage } from "@/lib/types/db";
+import type { PipelineStage, PipelineStatus } from "@/lib/types/db";
 
 export function ProspectsKanban({ prospects }: { prospects: ProspectRow[] }) {
   const router = useRouter();
@@ -18,10 +24,16 @@ export function ProspectsKanban({ prospects }: { prospects: ProspectRow[] }) {
   const [dragId, setDragId] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
+  // Le board = flux ACTIF. Les sortis (désinscrits, perdus…) sont récapitulés dessous.
+  const active = prospects.filter((p) => !isTerminalStatus(p.pipeline_status));
   const byStage = new Map<PipelineStage, ProspectRow[]>();
   for (const s of PIPELINE_STAGES) byStage.set(s.id, []);
-  for (const p of prospects) byStage.get(p.pipeline_stage)?.push(p);
+  for (const p of active) byStage.get(p.pipeline_stage)?.push(p);
   for (const list of byStage.values()) list.sort((a, b) => b.lead_score - a.lead_score);
+
+  const terminalCounts = (["DESABONNE", "BOUNCE", "PERDU", "NON_QUALIFIE"] as PipelineStatus[])
+    .map((id) => ({ id, count: prospects.filter((p) => p.pipeline_status === id).length }))
+    .filter((t) => t.count > 0);
 
   function act(id: string, status: "PERDU" | "NON_QUALIFIE" | "EN_COURS", reason?: string | null) {
     setMenuFor(null);
@@ -173,6 +185,28 @@ export function ProspectsKanban({ prospects }: { prospects: ProspectRow[] }) {
           </div>
         ))}
       </div>
+
+      {/* Sortis du pipeline — les désinscrits sont notés « pas intéressés » */}
+      {terminalCounts.length > 0 ? (
+        <div className="mt-4 flex flex-wrap items-center gap-2 rounded-xl border border-line bg-ink-800 px-4 py-3">
+          <span className="text-[12px] font-semibold uppercase tracking-wider text-faint">
+            Sortis du pipeline :
+          </span>
+          {terminalCounts.map((t) => (
+            <Link
+              key={t.id}
+              href={`/admin/prospects?view=table&status=${t.id}`}
+              className={`rounded-full border px-3 py-1 text-[12px] hover:bg-ink-700 ${
+                t.id === "DESABONNE" || t.id === "BOUNCE"
+                  ? "border-[#ef6d6d]/30 text-[#ef6d6d]"
+                  : "border-line text-faint"
+              }`}
+            >
+              {t.count} {statusLabel(t.id)} →
+            </Link>
+          ))}
+        </div>
+      ) : null}
 
       <p className="mt-3 text-[11px] text-faint">
         Les étapes avancent automatiquement selon les signaux (email, visite du reveal, paiement). Tu
