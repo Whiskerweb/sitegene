@@ -1,0 +1,12 @@
+# Exclus du déploiement Vercel : non nécessaires au build de l'app Next.
+# IMPORTANT : chemins ancrés à la racine (/) pour NE PAS exclure lib/supabase,
+# public/_templates, etc. Les templates buildés (public/_templates) sont déployés.
+/video
+/templates
+/docs
+/supabase
+/.intake-tmp
+/.superpowers
+/.worktrees
+/.agents
+/.aidesigner

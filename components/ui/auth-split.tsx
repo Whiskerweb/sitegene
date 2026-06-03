@@ -54,6 +54,7 @@ export function AuthSplit({
   imageSrc = "/landing/showcase.jpg",
   background,
   onSubmitEmail,
+  onVerifyCode,
   initialError,
 }: {
   logo?: React.ReactNode;
@@ -66,16 +67,27 @@ export function AuthSplit({
   imageSrc?: string;
   background?: React.ReactNode;
   onSubmitEmail: (email: string) => Promise<SubmitResult>;
+  /** Si fourni : flux OTP (code à 6 chiffres) au lieu du lien magique. */
+  onVerifyCode?: (email: string, code: string) => Promise<SubmitResult>;
   initialError?: string;
 }) {
   const emailId = useId();
+  const codeId = useId();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">(
     "idle",
   );
   const [error, setError] = useState(initialError ?? "");
 
+  // Étape 2 (OTP) : saisie du code à 6 chiffres.
+  const [code, setCode] = useState("");
+  const [verifyStatus, setVerifyStatus] = useState<"idle" | "loading" | "error">(
+    "idle",
+  );
+  const [verifyError, setVerifyError] = useState("");
+
   const emailOk = /\S+@\S+\.\S+/.test(email);
+  const codeOk = /^\d{6}$/.test(code);
 
   useEffect(() => {
     if (initialError) setStatus("error");
@@ -91,8 +103,24 @@ export function AuthSplit({
       setError(res.error);
       setStatus("error");
     } else {
+      setCode("");
+      setVerifyStatus("idle");
+      setVerifyError("");
       setStatus("sent");
     }
+  }
+
+  async function submitCode(e: React.FormEvent) {
+    e.preventDefault();
+    if (!codeOk || verifyStatus === "loading" || !onVerifyCode) return;
+    setVerifyStatus("loading");
+    setVerifyError("");
+    const res = await onVerifyCode(email, code);
+    if (res && res.error) {
+      setVerifyError(res.error);
+      setVerifyStatus("error");
+    }
+    // Succès : la page parente s'occupe de la redirection.
   }
 
   return (
@@ -113,7 +141,62 @@ export function AuthSplit({
       {/* Colonne gauche — formulaire magic link */}
       <div className="relative z-10 flex items-center justify-center px-6 py-16 md:py-12">
         <div className="w-full max-w-[360px]">
-          {status === "sent" ? (
+          {status === "sent" && onVerifyCode ? (
+            <form onSubmit={submitCode} className="flex flex-col gap-7">
+              <div className="flex flex-col items-center gap-2 text-center">
+                <div className="mb-1 grid h-14 w-14 place-items-center rounded-full bg-violet-500/15 text-2xl text-violet-300">
+                  ✦
+                </div>
+                <h1 className="font-display text-3xl font-medium tracking-tight text-paper">
+                  Entrez le code
+                </h1>
+                <p className="text-balance text-sm text-muted">
+                  On a envoyé un code à 6 chiffres à{" "}
+                  <span className="font-semibold text-paper">{email}</span>.
+                </p>
+              </div>
+
+              <div className="grid gap-2 text-left">
+                <label htmlFor={codeId} className="text-sm font-medium text-muted">
+                  Code à 6 chiffres
+                </label>
+                <input
+                  id={codeId}
+                  type="text"
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  autoFocus
+                  required
+                  placeholder="000000"
+                  value={code}
+                  onChange={(e) =>
+                    setCode(e.target.value.replace(/\D/g, "").slice(0, 6))
+                  }
+                  className="h-14 w-full rounded-xl border border-[var(--line)] bg-ink-800 px-4 text-center font-display text-2xl tracking-[0.5em] text-paper outline-none transition placeholder:text-faint focus:border-violet-500 focus:bg-ink-700"
+                />
+              </div>
+
+              {verifyStatus === "error" && verifyError && (
+                <p className="-mt-3 text-sm text-[#ffb4a8]">{verifyError}</p>
+              )}
+
+              <button
+                type="submit"
+                disabled={!codeOk || verifyStatus === "loading"}
+                className="btn-violet inline-flex h-11 items-center justify-center rounded-full text-[15px] font-bold text-white transition-transform enabled:hover:scale-[1.02] enabled:active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {verifyStatus === "loading" ? "Vérification…" : "Me connecter"}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setStatus("idle")}
+                className="text-center text-sm text-muted underline-offset-4 hover:text-paper hover:underline"
+              >
+                Renvoyer / changer d&apos;email
+              </button>
+            </form>
+          ) : status === "sent" ? (
             <div className="text-center">
               <div className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-full bg-mint-400/15 text-2xl text-mint-400">
                 ✓
@@ -174,12 +257,17 @@ export function AuthSplit({
                 className="btn-violet inline-flex h-11 items-center justify-center rounded-full text-[15px] font-bold text-white transition-transform enabled:hover:scale-[1.02] enabled:active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {status === "loading"
-                  ? "Envoi du lien…"
-                  : "Recevoir mon lien de connexion"}
+                  ? "Envoi du code…"
+                  : onVerifyCode
+                    ? "Recevoir mon code"
+                    : "Recevoir mon lien de connexion"}
               </button>
 
               <p className="text-center text-xs text-faint">
-                Pas de mot de passe. Un lien sécurisé suffit.
+                Pas de mot de passe.{" "}
+                {onVerifyCode
+                  ? "Un code à 6 chiffres suffit."
+                  : "Un lien sécurisé suffit."}
               </p>
             </form>
           )}

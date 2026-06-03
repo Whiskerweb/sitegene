@@ -1,10 +1,17 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { sendRaw } from "./client";
-import { receiptEmail, outreachEmail } from "./templates";
+import { receiptEmail, outreachEmail, customOutreachEmail } from "./templates";
 
-/** URL publique de l'app (liens dans les emails). */
+/**
+ * URL publique pour les liens des emails. Priorité à EMAIL_PUBLIC_BASE_URL.
+ * GARDE-FOU : jamais de lien localhost/127.0.0.1 dans un email envoyé — le worker
+ * tourne en local avec NEXT_PUBLIC_APP_URL=localhost, on retombe alors sur la prod.
+ */
 function appUrl(): string {
-  return (process.env.NEXT_PUBLIC_APP_URL || "https://akyra.io").replace(/\/$/, "");
+  const raw =
+    process.env.EMAIL_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || "https://akyra.io";
+  if (raw.includes("localhost") || raw.includes("127.0.0.1")) return "https://akyra.io";
+  return raw.replace(/\/$/, "");
 }
 
 function fromTransactional(): string {
@@ -77,6 +84,10 @@ export type OutreachStepInput = {
   step: number; // étape à envoyer (0 = initial)
   revealToken: string;
   unsubToken: string;
+  // Étape 0 : message rédigé à la main (lien déjà dedans). Si fourni, on l'envoie
+  // tel quel au lieu du template généré. Les relances utilisent toujours le template.
+  customMessage?: string | null;
+  customSubject?: string | null;
 };
 
 /** Envoie l'étape courante d'une séquence de prospection. */
@@ -85,13 +96,19 @@ export async function sendOutreachStep(
   input: OutreachStepInput,
 ): Promise<string | null> {
   const base = appUrl();
-  const revealUrl = `${base}/r/${input.revealToken}`;
   const unsubUrl = `${base}/api/email/unsubscribe?token=${encodeURIComponent(input.unsubToken)}`;
-  const mail = outreachEmail(input.step, {
-    firstName: input.firstName,
-    revealUrl,
-    unsubUrl,
-  });
+  const mail =
+    input.step === 0 && input.customMessage
+      ? customOutreachEmail({
+          subject: input.customSubject || "Votre site est prêt",
+          message: input.customMessage,
+          unsubUrl,
+        })
+      : outreachEmail(input.step, {
+          firstName: input.firstName,
+          revealUrl: `${base}/r/${input.revealToken}`,
+          unsubUrl,
+        });
   const res = await sendRaw({
     from: fromOutreach(),
     to: input.to,
