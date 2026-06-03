@@ -1,0 +1,315 @@
+{
+  "id": "luxury-wedding",
+  "name": "Mariage premium",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "meta",
+      "brand",
+      "spinningBadge",
+      "nav",
+      "hero",
+      "logos",
+      "philosophy",
+      "team",
+      "services",
+      "portfolio",
+      "testimonial",
+      "faq",
+      "contact"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.image",
+      "role": "hero",
+      "required": true,
+      "note": "hero · image"
+    },
+    {
+      "slot": "p2",
+      "path": "philosophy.imageRight",
+      "role": "image",
+      "required": true,
+      "note": "philosophy · imageRight"
+    },
+    {
+      "slot": "p3",
+      "path": "philosophy.imageLeft",
+      "role": "image",
+      "required": true,
+      "note": "philosophy · imageLeft"
+    },
+    {
+      "slot": "p4",
+      "path": "team.members[].image",
+      "role": "avatar",
+      "required": true,
+      "note": "team · members · image"
+    },
+    {
+      "slot": "p5",
+      "path": "services.items[].image",
+      "role": "image",
+      "required": true,
+      "note": "services · items · image"
+    },
+    {
+      "slot": "p6",
+      "path": "portfolio.gallery[].image",
+      "role": "gallery",
+      "required": true,
+      "note": "portfolio · gallery · image"
+    },
+    {
+      "slot": "p7",
+      "path": "portfolio.gallery[].imageBlur",
+      "role": "gallery",
+      "required": true,
+      "note": "portfolio · gallery · imageBlur"
+    },
+    {
+      "slot": "p8",
+      "path": "portfolio.gallery[].imageSharp",
+      "role": "gallery",
+      "required": true,
+      "note": "portfolio · gallery · imageSharp"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "meta.title",
+        "label": "meta · title",
+        "type": "text",
+        "maxLen": 74
+      },
+      {
+        "path": "meta.description",
+        "label": "meta · description",
+        "type": "text",
+        "maxLen": 134
+      },
+      {
+        "path": "nav[]",
+        "label": "nav",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "spinningBadge",
+        "label": "spinningBadge",
+        "type": "text",
+        "maxLen": 85
+      },
+      {
+        "path": "hero.title1",
+        "label": "hero · title1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.title2",
+        "label": "hero · title2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.tagline",
+        "label": "hero · tagline",
+        "type": "text",
+        "maxLen": 427
+      },
+      {
+        "path": "logos.label",
+        "label": "logos · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "logos.items[]",
+        "label": "logos · items",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "team.label",
+        "label": "team · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "team.heading1",
+        "label": "team · heading1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "team.heading2",
+        "label": "team · heading2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "team.intro",
+        "label": "team · intro",
+        "type": "text",
+        "maxLen": 328
+      },
+      {
+        "path": "team.members[].name",
+        "label": "team · members · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "team.members[].role",
+        "label": "team · members · role",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "team.members[].bio",
+        "label": "team · members · bio",
+        "type": "text",
+        "maxLen": 282
+      },
+      {
+        "path": "services.label",
+        "label": "services · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.intro",
+        "label": "services · intro",
+        "type": "text",
+        "maxLen": 242
+      },
+      {
+        "path": "services.items[].title",
+        "label": "services · items · title",
+        "type": "text",
+        "maxLen": 43
+      },
+      {
+        "path": "services.items[].desc",
+        "label": "services · items · desc",
+        "type": "text",
+        "maxLen": 349
+      },
+      {
+        "path": "services.items[].category",
+        "label": "services · items · category",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolio.heading1",
+        "label": "portfolio · heading1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolio.intro",
+        "label": "portfolio · intro",
+        "type": "text",
+        "maxLen": 338
+      },
+      {
+        "path": "portfolio.caption1.title",
+        "label": "portfolio · caption1 · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolio.caption1.body",
+        "label": "portfolio · caption1 · body",
+        "type": "text",
+        "maxLen": 155
+      },
+      {
+        "path": "portfolio.caption2.title",
+        "label": "portfolio · caption2 · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolio.caption2.body",
+        "label": "portfolio · caption2 · body",
+        "type": "text",
+        "maxLen": 152
+      },
+      {
+        "path": "testimonial.quote",
+        "label": "testimonial · quote",
+        "type": "text",
+        "maxLen": 277
+      },
+      {
+        "path": "testimonial.name",
+        "label": "testimonial · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonial.venue",
+        "label": "testimonial · venue",
+        "type": "text",
+        "maxLen": 43
+      },
+      {
+        "path": "faq.label",
+        "label": "faq · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.heading",
+        "label": "faq · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.items[].q",
+        "label": "faq · items · q",
+        "type": "text",
+        "maxLen": 46
+      },
+      {
+        "path": "faq.items[].a",
+        "label": "faq · items · a",
+        "type": "text",
+        "maxLen": 106
+      },
+      {
+        "path": "contact.heading",
+        "label": "contact · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.intro",
+        "label": "contact · intro",
+        "type": "text",
+        "maxLen": 272
+      },
+      {
+        "path": "contact.email",
+        "label": "contact · email",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.location",
+        "label": "contact · location",
+        "type": "text",
+        "maxLen": 40
+      }
+    ]
+  }
+}

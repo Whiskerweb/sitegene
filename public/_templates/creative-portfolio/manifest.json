@@ -1,0 +1,210 @@
+{
+  "id": "creative-portfolio",
+  "name": "Portfolio créatif",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "meta",
+      "brand",
+      "brand_last",
+      "nav",
+      "hero",
+      "projects",
+      "about",
+      "testimonials",
+      "contact",
+      "footer"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "projects.items[].image",
+      "role": "image",
+      "required": true,
+      "note": "projects · items · image"
+    },
+    {
+      "slot": "p2",
+      "path": "about.image",
+      "role": "image",
+      "required": true,
+      "note": "about · image"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "meta.title",
+        "label": "meta · title",
+        "type": "text",
+        "maxLen": 66
+      },
+      {
+        "path": "meta.description",
+        "label": "meta · description",
+        "type": "text",
+        "maxLen": 258
+      },
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "brand_last",
+        "label": "brand_last",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav[]",
+        "label": "nav",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.tagline",
+        "label": "hero · tagline",
+        "type": "text",
+        "maxLen": 258
+      },
+      {
+        "path": "projects.section_title",
+        "label": "projects · section_title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "projects.items[].title",
+        "label": "projects · items · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "projects.items[].year",
+        "label": "projects · items · year",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "projects.cta",
+        "label": "projects · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.section_title",
+        "label": "about · section_title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.paragraphs[]",
+        "label": "about · paragraphs",
+        "type": "text",
+        "maxLen": 205
+      },
+      {
+        "path": "about.services_label",
+        "label": "about · services_label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.services[]",
+        "label": "about · services",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.cta",
+        "label": "about · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.section_title",
+        "label": "testimonials · section_title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.items[].quote",
+        "label": "testimonials · items · quote",
+        "type": "text",
+        "maxLen": 190
+      },
+      {
+        "path": "testimonials.items[].author",
+        "label": "testimonials · items · author",
+        "type": "text",
+        "maxLen": 66
+      },
+      {
+        "path": "contact.label",
+        "label": "contact · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.headline1",
+        "label": "contact · headline1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.headline2",
+        "label": "contact · headline2",
+        "type": "text",
+        "maxLen": 43
+      },
+      {
+        "path": "contact.cta",
+        "label": "contact · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.email",
+        "label": "contact · email",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.nav_label",
+        "label": "footer · nav_label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.nav[]",
+        "label": "footer · nav",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.social_label",
+        "label": "footer · social_label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.social[]",
+        "label": "footer · social",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.back_to_top",
+        "label": "footer · back_to_top",
+        "type": "text",
+        "maxLen": 40
+      }
+    ]
+  }
+}

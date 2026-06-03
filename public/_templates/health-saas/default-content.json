@@ -1,0 +1,324 @@
+{
+  "meta": {
+    "title": "Healix – Where care meets innovation",
+    "description": "From daily wellness to advanced health insights, our platform is designed to support you."
+  },
+  "brand": "Healix",
+  "nav": [
+    "All Pages",
+    "Features",
+    "Pricing",
+    "Reviews"
+  ],
+  "cta": "Get Started For Free",
+  "hero": {
+    "tagline": "Reliable Solutions for Everyday Care",
+    "title": "Where care meets innovation",
+    "subtitle": "From daily wellness to advanced health insights, our platform is designed to support you.",
+    "stat_num": "190",
+    "stat_unit": "K+",
+    "stat_label": "Cured several systems across the globe",
+    "image": "/_templates/health-saas/img/hero-doctor.jpg",
+    "tags": [
+      "Rehabilitation",
+      "Healthcare",
+      "Monitoring",
+      "Technology",
+      "Personalized"
+    ],
+    "insight_label": "Insights",
+    "insight_text": "Personalized care and demand",
+    "insight_stat": "68%",
+    "doctors_num": "132+",
+    "doctors_label": "Doctors"
+  },
+  "why": {
+    "title": "Why choose Healix for health tracking & monitoring?",
+    "features": [
+      {
+        "title": "Enhanced health awareness",
+        "body": "Healix encourages users to stay active through custom goals and personalized reminders.",
+        "stat_num": "36k+",
+        "stat_label": "Boost in physical activity levels",
+        "tags": [
+          "Step count",
+          "Physical activity",
+          "Custom goals",
+          "Cardiovascular",
+          "Fitness"
+        ],
+        "explore_label": "Explore"
+      },
+      {
+        "title": "Personalized care on demand",
+        "body": "From daily wellness to advanced health insights we support every step of your journey.",
+        "stat_num": "11%",
+        "stat_label": "Improvement in wellness score",
+        "tags": [
+          "Rehabilitation",
+          "Healthcare",
+          "Monitoring"
+        ],
+        "explore_label": "Explore"
+      },
+      {
+        "title": "Faster response to health changes",
+        "body": "Healix is designed to help you track and understand lifestyle changes in real time.",
+        "stat_num": "11.36%",
+        "stat_label": "Faster health response rate",
+        "tags": [
+          "Monitoring",
+          "Technology",
+          "Alerts"
+        ],
+        "explore_label": "Explore"
+      }
+    ]
+  },
+  "features": {
+    "title": "Features designed for your health journey",
+    "subtitle": "Healix is designed to help you track and understand your health to make informed decisions for a healthier lifestyle.",
+    "items": [
+      {
+        "title": "Get answers to your health questions",
+        "body": "Healix encourages users to stay active and informed with AI-driven health insights."
+      },
+      {
+        "title": "Monitor your vitals in real time",
+        "body": "Track heart rate, blood oxygen, and sleep quality seamlessly through connected devices."
+      },
+      {
+        "title": "Receive personalised health alerts",
+        "body": "Receive tailored health tips and alerts based on your individual data trends."
+      },
+      {
+        "title": "Sync all your health devices",
+        "body": "Connect wearables and smart devices to get a unified view of your health data."
+      }
+    ]
+  },
+  "steps": {
+    "title": "Simple steps to start your health journey",
+    "items": [
+      {
+        "number": "01",
+        "label": "Explore",
+        "title": "Download the app and connect your devices",
+        "body": "For access sync Healix with your health wearables for real-time updates."
+      },
+      {
+        "number": "02",
+        "label": "Explore",
+        "title": "Set your health goals and start monitoring",
+        "body": "Define your wellness targets for a fully personalized experience."
+      },
+      {
+        "number": "03",
+        "label": "Explore",
+        "title": "Track & achieve your desired goal and stay healthy",
+        "body": "Start monitoring, receive insights, and adjust your habits based on data."
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "See how Healix has transformed lives through personalized health tracking",
+    "cta_text": "Have a success story with Healix? We'd love to hear from you!",
+    "cta_label": "Share your video",
+    "items": [
+      {
+        "name": "Guy Hawkins",
+        "role": "Marathon runner",
+        "body": "Healix has been a game-changer for me. I can now monitor my health continuously and feel much more confident about my daily performance.",
+        "tags": [
+          "Boost in physical",
+          "activity levels"
+        ]
+      },
+      {
+        "name": "Jane Austen",
+        "role": "Yoga instructor",
+        "body": "I love the doctor chat feature. It gives me peace of mind knowing I can reach out to a health expert whenever I need guidance.",
+        "tags": [
+          "Physical boost",
+          "Energy surge"
+        ]
+      },
+      {
+        "name": "Toni Morrison",
+        "role": "Wellness coach",
+        "body": "Using Healix completely transformed my health. The personalised insights helped me build better habits in just a few weeks.",
+        "tags": [
+          "Stamina rise",
+          "Strength gain"
+        ]
+      }
+    ]
+  },
+  "pricing": {
+    "title": "Choose the right plan for your health journey",
+    "subtitle": "Flexible options to suit your health monitoring needs.",
+    "toggle_monthly": "Billed monthly",
+    "toggle_yearly": "Billed yearly",
+    "plans": [
+      {
+        "name": "Wellness Starter Plan",
+        "desc": "Designed to enhance sleep quality with tailored insights.",
+        "price": "$59",
+        "period": "/month",
+        "popular": false,
+        "features": [
+          "Articles and tips",
+          "Activity reminders",
+          "Basic health tracking",
+          "Weekly wellness check-in"
+        ],
+        "cta": "Get Started For Free"
+      },
+      {
+        "name": "Sleep Wellness Plan",
+        "desc": "Ideal for general wellness tracking and building healthy habits.",
+        "price": "$79",
+        "period": "/month",
+        "popular": true,
+        "features": [
+          "Articles and tips",
+          "Activity reminders",
+          "Basic health tracking",
+          "Weekly wellness check-in",
+          "Priority doctor chat"
+        ],
+        "cta": "Get Started For Free"
+      },
+      {
+        "name": "Weight Management Plan",
+        "desc": "Focus on achieving and maintaining a healthy weight.",
+        "price": "$99",
+        "period": "/month",
+        "popular": false,
+        "features": [
+          "Articles and tips",
+          "Activity reminders",
+          "Advanced health tracking",
+          "Weekly wellness check-in",
+          "Custom reports"
+        ],
+        "cta": "Get Started For Free"
+      }
+    ],
+    "compare": {
+      "columns": [
+        "Wellness Starter Plan",
+        "Sleep Wellness Plan",
+        "Weight Management Plan"
+      ],
+      "rows": [
+        {
+          "feature": "Personalised Health Reports",
+          "values": [
+            "Basic summaries",
+            "Detailed reports",
+            "Comprehensive insights"
+          ]
+        },
+        {
+          "feature": "Goal Setting & Tracking",
+          "values": [
+            "Basic access",
+            "Priority access",
+            "Priority access"
+          ]
+        },
+        {
+          "feature": "Device Sync",
+          "values": [
+            "Limited devices",
+            "Multiple devices",
+            "All compatible devices"
+          ]
+        },
+        {
+          "feature": "Custom Reminders",
+          "values": [
+            "No",
+            "No",
+            "Yes"
+          ]
+        },
+        {
+          "feature": "Health Reports Download",
+          "values": [
+            "No",
+            "PDF format",
+            "PDF & CSV formats"
+          ]
+        },
+        {
+          "feature": "24/7 Customer Support",
+          "values": [
+            "Email support",
+            "Email & Priority Chat",
+            "24/7 Priority Support"
+          ]
+        }
+      ]
+    }
+  },
+  "social_proof": {
+    "title": "Studies show that proactive health tracking can reduce chronic health risks by up to 78%",
+    "stat": "78%",
+    "subtitle": "Health Monitoring Matters",
+    "body": "Studies show that proactive health tracking can reduce chronic health risks by up to",
+    "tags": [
+      "Rehabilitation",
+      "Healthcare",
+      "Monitoring",
+      "Technology",
+      "Personalized"
+    ]
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "subtitle": "For any unanswered questions, reach out to our support team via email. We'll respond as soon as possible to assist you.",
+    "items": [
+      {
+        "q": "How secure is my data with Healix?",
+        "a": "Your privacy is our priority. Healix uses advanced encryption to protect your data and you have full control over it."
+      },
+      {
+        "q": "Can I use Healix without any wearable devices?",
+        "a": "Yes, Healix can be used without wearables. You can manually log your health data or use your smartphone's sensors."
+      },
+      {
+        "q": "What's included in the doctor chat support?",
+        "a": "Doctor chat support allows you to consult with licensed health professionals directly through the app."
+      },
+      {
+        "q": "Can I upgrade or downgrade my plan later?",
+        "a": "Absolutely. You can change your plan at any time from your account settings with no extra fees."
+      },
+      {
+        "q": "Does Healix offer a free trial?",
+        "a": "Yes, we offer a 14-day free trial on all plans. No credit card required to get started."
+      }
+    ]
+  },
+  "cta_section": {
+    "title": "Speak with one of our health tech experts to discover how Healix can support your wellness journey.",
+    "eyebrow": "Start your health journey with Healix today. Your health, your data, your power.",
+    "cta": "Get Started For Free"
+  },
+  "footer": {
+    "brand": "Healix",
+    "links_left": [
+      "About Us",
+      "Blogs"
+    ],
+    "links_right": [
+      "Help Center",
+      "Contact Us",
+      "Privacy Policy",
+      "Terms of Service"
+    ],
+    "copyright": "Copyright © 2024 Healix. All Rights Reserved."
+  }
+}

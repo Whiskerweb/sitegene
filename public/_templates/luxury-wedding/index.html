@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-sg-path="meta.title">Ocean West Studio | Luxury Wedding Photography</title>
+  <meta name="description" data-sg-path="meta.description" content="Luxury wedding photography & cinematography — capturing authentic stories worldwide.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CDN: Tailwind + GSAP + ScrollTrigger -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Iconify for FAQ icons -->
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:     '#0A0A0A',
+            inkDeep: '#020617',
+            bg:      '#FAF8F5',
+            bgLight: '#f9f9f9',
+            accent:  '#455CE9',
+            sage:    '#738065',
+            muted:   '#333333',
+          },
+          fontFamily: {
+            sans: ['"Google Sans Flex"', 'Arial', 'sans-serif'],
+            narrow: ['"Arial Narrow"', 'Arial', 'sans-serif'],
+          },
+          letterSpacing: {
+            wide2: '0.2em',
+            wide15: '0.15em',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Google Sans Flex', Arial, sans-serif; }
+    .font-narrow { font-family: 'Arial Narrow', Arial, sans-serif; }
+
+    /* Hero gradient overlay */
+    .hero-gradient {
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0) 100%);
+    }
+
+    /* Services hover image reveal */
+    .service-hover-img {
+      opacity: 0;
+      transform: scale(0.75);
+      transition: opacity 0.7s cubic-bezier(0.76,0,0.24,1), transform 0.7s cubic-bezier(0.76,0,0.24,1);
+      pointer-events: none;
+    }
+    .service-row:hover .service-hover-img {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .service-row:hover .service-content {
+      opacity: 0.4;
+    }
+    .service-content {
+      transition: opacity 0.3s ease;
+    }
+    .service-title-inner {
+      transition: transform 0.5s ease;
+    }
+    .service-row:hover .service-title-inner { transform: translateX(1rem); }
+    .service-desc-inner {
+      transition: transform 0.5s ease;
+    }
+    .service-row:hover .service-desc-inner { transform: translateX(0.5rem); }
+    .service-cat-inner {
+      transition: transform 0.5s ease;
+    }
+    .service-row:hover .service-cat-inner { transform: translateX(-1rem); }
+
+    /* Gallery hover scale */
+    .gallery-cell img { transition: transform 1.5s ease-out; }
+    .gallery-cell:hover img { transform: scale(1.05); }
+    .gallery-cell-featured img.featured-sharp { transition: transform 2s ease-out; }
+    .gallery-cell-featured:hover img.featured-sharp { transform: scale(1.1); }
+
+    /* Team card hover */
+    .team-card img {
+      transition: transform 1s ease-out, filter 1s ease-out, opacity 1s ease-out;
+      filter: grayscale(100%);
+      opacity: 0.8;
+    }
+    .team-card:hover img { transform: scale(1.05); filter: grayscale(0); }
+
+    /* FAQ details marker */
+    details summary::-webkit-details-marker { display: none; }
+
+    /* Custom select arrow */
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1.5rem;
+    }
+
+    /* Spinning text badge */
+    @keyframes spin-slow { to { transform: rotate(360deg); } }
+    .spin-slow { animation: spin-slow 20s linear infinite; transform-origin: 50px 50px; }
+  </style>
+
+  <!-- ============================================================
+       SINGLE SOURCE OF TRUTH — edit here or via Akyra editor
+       ============================================================ -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+      meta: {
+        title: "Ocean West Studio | Luxury Wedding Photography",
+        description: "Luxury wedding photography & cinematography — capturing authentic stories worldwide."
+      },
+      brand: "Ocean West Studio",
+      spinningBadge: "WEDDINGS • FILMS • PHOTOGRAPHY • OCEAN WEST STUDIO • ",
+      nav: ["Home", "Mini Sessions", "Services", "Portfolio", "About", "Inquire"],
+
+      hero: {
+        title1: "Wedding",
+        title2: "Photography",
+        tagline: "If you are looking for an authentic wedding photographer, capable of capturing the essence of your story and your emotions, you are in the right place. As a high-end wedding photographer, I go far beyond traditional photos, creating unique and unforgettable memories.",
+        image: "img/hero.jpg"
+      },
+
+      logos: {
+        label: "Featured Elegance",
+        items: ["VOGUE", "Brides", "Style Me Pretty", "The Knot"]
+      },
+
+      philosophy: {
+        text: "Don't be afraid! I understand your concerns and want to make it easier for you. My team and I will help you to feel <em>comfortable, natural</em> and have <em>fun</em>. Reflecting who you really are in the most <em>authentic</em> way possible, capture all excitement, tears, joy and create photos and videos which would last <em>forever</em>.",
+        imageRight: "img/philosophy-portrait.jpg",
+        imageLeft:  "img/philosophy-portrait-left.jpg"
+      },
+
+      team: {
+        label: "The Founders",
+        heading1: "Vision & Craft",
+        heading2: "Behind the Lens",
+        intro: "With over a decade of documenting love stories across the globe, our foundation is built on blending editorial precision with raw, documentary intuition. We don't just take photographs; we craft heirlooms.",
+        members: [
+          {
+            name:  "Heena Malhotra",
+            role:  "Lead Photographer",
+            bio:   "Elena brings an editorial eye and an unobtrusive approach, ensuring every frame is intentionally composed to immortalize the fleeting atmosphere and unseen glances of your day.",
+            image: "img/team-photographer.jpg"
+          },
+          {
+            name:  "Eddie Licea",
+            role:  "Lead Cinematographer",
+            bio:   "Julian's cinematic approach translates raw emotion into moving heirlooms. He focuses on narrative storytelling, preserving the grand architecture and dynamic energy of your celebration.",
+            image: "img/team-cinematographer.jpg"
+          }
+        ]
+      },
+
+      services: {
+        label: "Service",
+        intro: "Our solutions are tailored to meet the unique vision of your celebration, providing artistry, reliability, and elegance at every stage of your journey.",
+        items: [
+          {
+            title:    "Editorial & Timeless Stills",
+            desc:     "Curated, timeless imagery that captures both the grand moments and the quiet, unseen details. We focus on natural light, sophisticated composition, and raw emotion to build a visual legacy that feels authentically you.",
+            category: "Photography",
+            image:    "img/service-photography.jpg"
+          },
+          {
+            title:    "Cinematic & Emotional Films",
+            desc:     "Moving portraiture that tells the narrative of your day. We create elegant, emotion-driven films scored to perfectly tailored music, preserving the atmosphere, the spoken vows, and the dynamic energy of your celebration.",
+            category: "Videography",
+            image:    "img/service-videography.jpg"
+          },
+          {
+            title:    "Wedding Live Broadcasting",
+            desc:     "Share your most cherished moments in real-time with loved ones across the globe. We provide high-fidelity audio and multi-camera streaming to ensure no one misses your celebration.",
+            category: "Broadcasting",
+            image:    "img/service-broadcasting.jpg"
+          }
+        ]
+      },
+
+      portfolio: {
+        heading1: "Selected work",
+        subheading: "Moments that are returned to",
+        intro: "These photographs are chosen again and again, finding in them a familiar feeling of beauty and the exact mood. Look, get inspired and feel — perhaps they will respond to you today and become part of your legacy.",
+        caption1: { title: "Quiet beauty",   body: "Moments in which natural elegance unfolds quietly, confidently, and without unnecessary emphasis." },
+        caption2: { title: "Natural harmony", body: "Connections whose shape, energy, and rhythm create a profound sense of harmony at first glance." },
+        gallery: [
+          { image: "img/gallery-rings.jpg",       alt: "Wedding Rings Detail" },
+          { image: "img/gallery-bouquet.jpg",      alt: "Bridal Bouquet Detail" },
+          { imageBlur: "img/gallery-bride-blur.jpg", imageSharp: "img/gallery-bride-sharp.jpg", alt: "Bride Portrait" },
+          { image: "img/gallery-table.jpg",        alt: "Wedding Table Setting" },
+          { imageBlur: "img/gallery-couple-blur.jpg", imageSharp: "img/gallery-couple-sharp.jpg", alt: "Couple Walking" },
+          { image: "img/gallery-dancing.jpg",      alt: "Celebration Dancing" },
+          { image: "img/gallery-champagne.jpg",    alt: "Champagne Toast" },
+          { image: "img/gallery-dress.jpg",        alt: "Wedding Dress Detail" }
+        ]
+      },
+
+      testimonial: {
+        quote: "Working with Ocean West was the best investment we made. Their presence was calming, and the resulting work belongs in a magazine. They captured our love exactly as it felt.",
+        name:  "Eleanor & James",
+        venue: "Château de Villette, France"
+      },
+
+      faq: {
+        label:   "Information",
+        heading: "Investment & FAQ",
+        items: [
+          {
+            q: "Do you offer custom packages?",
+            a: "Yes! We customize packages based on how many hours you would need."
+          },
+          {
+            q: "Is there a deposit?",
+            a: "Yes, we require a signed contract and a 30% non-refundable retainer to secure your date and our exclusive availability."
+          },
+          {
+            q: "How long do we have to wait for our photos and video?",
+            a: "For a full day celebration, you can expect your complete, meticulously curated gallery and cinematic film delivered within 8 to 10 weeks."
+          },
+          {
+            q: "Do you give out raw images?",
+            a: "We do not provide raw files. Our dedicated color grading and editorial editing process is a fundamental part of the final artistic vision you invest in."
+          },
+          {
+            q: "Can we request specific shots?",
+            a: "Absolutely. Prior to your celebration, we will share a comprehensive questionnaire where you can detail specific family groupings and meaningful details."
+          }
+        ]
+      },
+
+      contact: {
+        heading: "Begin Your Journey",
+        intro:   "We accept a limited number of commissions each year to ensure every couple receives our utmost attention and artistry. Please share the details of your celebration below.",
+        email:   "hello@oceanweststudio.com",
+        location: "Seattle / Worldwide"
+      }
+    };
+  </script>
+</head>
+
+<body class="antialiased text-white bg-ink" style="-webkit-font-smoothing:antialiased;">
+
+  <!-- ============================================================
+       NAVIGATION
+       ============================================================ -->
+  <nav class="z-50 text-white w-full absolute top-0" data-sg-reveal>
+    <div class="flex h-28 max-w-[100rem] ml-auto mr-auto pl-6 pr-6 lg:px-12 items-center justify-between">
+
+      <!-- Left links -->
+      <div class="hidden lg:flex items-center justify-end space-x-6 xl:space-x-10 w-2/5">
+        <a href="#" class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap" data-sg-path="nav[0]">Home</a>
+        <a href="#" class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap" data-sg-path="nav[1]">Mini Sessions •</a>
+        <a href="#services" class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap" data-sg-path="nav[2]">Services</a>
+      </div>
+
+      <!-- Center logo (SVG — two overlapping circles) -->
+      <div class="flex w-1/5 justify-center">
+        <a href="#" class="inline-block hover:opacity-80 transition-opacity">
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="21" cy="24" r="14" stroke="white" stroke-width="1.5"/>
+            <circle cx="27" cy="24" r="14" stroke="white" stroke-width="1.5"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Right links -->
+      <div class="hidden lg:flex w-2/5 space-x-6 xl:space-x-10 items-center justify-start">
+        <a href="#portfolio" class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap" data-sg-path="nav[3]">Portfolio •</a>
+        <a href="#about"     class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap" data-sg-path="nav[4]">About</a>
+        <a href="#inquire"   class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap" data-sg-path="nav[5]">Inquire</a>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <div class="lg:hidden flex w-2/5 items-center justify-end">
+        <button class="text-white text-3xl" aria-label="Menu">&#9776;</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Spinning badge -->
+  <div class="pointer-events-none lg:right-12 w-36 h-36 lg:w-40 lg:h-40 opacity-90 mix-blend-difference absolute top-[85vh] right-4 z-40">
+    <svg viewBox="0 0 100 100" class="overflow-visible w-full h-full">
+      <g class="spin-slow">
+        <path id="circlePath" d="M 50,50 m -35,0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none"/>
+        <text class="uppercase font-thin fill-white tracking-widest" style="font-size:8.5px;">
+          <textPath href="#circlePath" startOffset="0%" textLength="219" lengthAdjust="spacing" data-sg-path="spinningBadge">WEDDINGS • FILMS • PHOTOGRAPHY • OCEAN WEST STUDIO • </textPath>
+        </text>
+      </g>
+    </svg>
+  </div>
+
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section class="flex flex-col bg-ink w-full h-screen pb-16 md:pb-24 relative justify-end">
+    <!-- Background image -->
+    <div class="overflow-hidden bg-ink absolute inset-0">
+      <img data-sg-img="hero.image" src="img/hero.jpg" alt="Wedding Celebration"
+           class="w-full h-full object-cover object-center opacity-80 grayscale" data-sg-parallax>
+      <div class="hero-gradient absolute inset-0"></div>
+    </div>
+
+    <div class="z-10 w-full max-w-[100rem] ml-auto mr-auto pl-6 pr-6 lg:px-12 relative">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-24 items-end">
+        <div class="flex flex-col items-start space-y-8">
+          <h1 class="leading-[0.9] text-6xl sm:text-7xl lg:text-8xl text-white tracking-tighter font-thin drop-shadow-lg">
+            <span data-sg-path="hero.title1">Wedding</span><br>
+            <span data-sg-path="hero.title2">Photography</span>
+          </h1>
+        </div>
+        <div class="pb-2 md:pb-4">
+          <p class="text-2xl md:text-3xl leading-relaxed text-gray-200 font-thin max-w-xl drop-shadow-md"
+             data-sg-path="hero.tagline">
+            If you are looking for an authentic wedding photographer, capable of capturing the essence of your story and your emotions, you are in the right place. As a high-end wedding photographer, I go far beyond traditional photos, creating unique and unforgettable memories.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       SOCIAL PROOF / LOGOS
+       ============================================================ -->
+  <section class="py-12 bg-ink border-b border-white/5" data-sg-reveal>
+    <div class="max-w-[90rem] mx-auto px-6 text-center">
+      <p class="uppercase text-sm text-gray-500 tracking-[0.2em] font-extralight mb-8"
+         data-sg-path="logos.label">Featured Elegance</p>
+      <div class="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-40 grayscale hover:grayscale-0 transition-all duration-700">
+        <span class="font-narrow text-3xl tracking-tighter text-white uppercase" data-sg-path="logos.items[0]">VOGUE</span>
+        <span class="font-narrow text-3xl tracking-tighter text-white italic"    data-sg-path="logos.items[1]">Brides</span>
+        <span class="font-narrow text-3xl tracking-tighter text-white uppercase" data-sg-path="logos.items[2]">Style Me Pretty</span>
+        <span class="font-narrow text-3xl tracking-tighter text-white uppercase" data-sg-path="logos.items[3]">The Knot</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       PHILOSOPHY (About)
+       ============================================================ -->
+  <section class="md:py-32 overflow-hidden bg-bg pt-24 pb-24 relative" id="about">
+    <div class="max-w-[85rem] mx-auto px-6 relative">
+
+      <!-- Desktop top-right portrait -->
+      <div class="hidden md:block absolute right-6 lg:right-24 top-0 w-[160px] lg:w-[200px] aspect-[3/4] z-10 shadow-sm">
+        <img data-sg-img="philosophy.imageRight" src="img/philosophy-portrait.jpg"
+             alt="Portrait" class="w-full h-full object-cover">
+      </div>
+
+      <!-- Desktop bottom-left portrait -->
+      <div class="hidden md:block absolute bottom-12 left-0 lg:left-12 w-[280px] lg:w-[340px] aspect-[4/5] z-0 shadow-sm">
+        <img data-sg-img="philosophy.imageLeft" src="img/philosophy-portrait-left.jpg"
+             alt="Bride Portrait" class="w-full h-full object-cover">
+      </div>
+
+      <!-- Content -->
+      <div class="flex flex-col z-20 relative items-center" data-sg-reveal>
+        <!-- Mobile top image -->
+        <div class="md:hidden w-40 aspect-[3/4] mb-12 self-end shadow-sm">
+          <img data-sg-img="philosophy.imageRight" src="img/philosophy-portrait.jpg"
+               alt="Portrait" class="w-full h-full object-cover">
+        </div>
+
+        <div class="text-center max-w-[56rem] mx-auto w-full z-20">
+          <h2 class="leading-[1.25] text-4xl font-light text-muted tracking-tight md:text-5xl md:leading-[1.2]">
+            Don't be afraid! I understand your concerns and want to make it easier for you. My team and I will help you to feel <span class="italic text-sage font-extralight">comfortable, natural</span> and have <span class="italic text-sage font-extralight">fun</span>. Reflecting who you really are in the most <span class="italic text-sage font-extralight">authentic</span> way possible, capture all excitement, tears, joy and create photos and videos which would last <span class="italic text-sage font-extralight">forever</span>.
+          </h2>
+        </div>
+
+        <!-- Mobile bottom image -->
+        <div class="md:hidden aspect-[4/5] self-start w-full max-w-[280px] mt-12 shadow-sm">
+          <img data-sg-img="philosophy.imageLeft" src="img/philosophy-portrait-left.jpg"
+               alt="Bride Portrait" class="w-full h-full object-cover">
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       TEAM / FOUNDERS
+       ============================================================ -->
+  <section class="md:py-32 overflow-hidden bg-inkDeep pt-24 pb-24 relative">
+    <!-- Radial glow -->
+    <div class="absolute inset-0 pointer-events-none z-0"
+         style="background-image:radial-gradient(circle 500px at 50% 100px, rgba(249,115,22,0.4), transparent)"></div>
+
+    <div class="max-w-[90rem] mx-auto pl-6 pr-6 lg:px-12 relative z-10">
+      <!-- Header -->
+      <div class="flex flex-col md:flex-row md:items-end gap-8 mb-16 md:mb-24 items-start justify-between" data-sg-reveal>
+        <div>
+          <span class="uppercase block text-sm font-thin text-gray-500 tracking-[0.2em] mb-6"
+                data-sg-path="team.label">The Founders</span>
+          <h2 class="text-5xl lg:text-6xl font-thin text-white tracking-tighter leading-tight">
+            <span data-sg-path="team.heading1">Vision &amp; Craft</span><br>
+            <span data-sg-path="team.heading2">Behind the Lens</span>
+          </h2>
+        </div>
+        <div class="max-w-lg">
+          <p class="text-xl lg:text-2xl leading-relaxed text-gray-400 font-thin"
+             data-sg-path="team.intro">
+            With over a decade of documenting love stories across the globe, our foundation is built on blending editorial precision with raw, documentary intuition. We don't just take photographs; we craft heirlooms.
+          </p>
+        </div>
+      </div>
+
+      <!-- Members grid -->
+      <div class="grid md:grid-cols-2 gap-12 lg:gap-24">
+        <!-- Member 1 -->
+        <div class="flex flex-col team-card" data-sg-reveal>
+          <div class="h-[60vh] md:h-[70vh] overflow-hidden rounded-sm mb-8 relative">
+            <img data-sg-img="team.members[0].image" src="img/team-photographer.jpg"
+                 alt="Lead Photographer" class="w-full h-full object-cover">
+          </div>
+          <div class="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-6 gap-2">
+            <h3 class="text-4xl lg:text-5xl font-thin text-white tracking-tighter"
+                data-sg-path="team.members[0].name">Heena Malhotra</h3>
+            <span class="uppercase text-xs font-thin text-gray-500 tracking-[0.2em] mb-1"
+                  data-sg-path="team.members[0].role">Lead Photographer</span>
+          </div>
+          <p class="text-xl leading-relaxed text-gray-400 font-thin"
+             data-sg-path="team.members[0].bio">
+            Elena brings an editorial eye and an unobtrusive approach, ensuring every frame is intentionally composed to immortalize the fleeting atmosphere and unseen glances of your day.
+          </p>
+        </div>
+
+        <!-- Member 2 (offset on desktop) -->
+        <div class="flex flex-col team-card md:mt-32" data-sg-reveal>
+          <div class="h-[60vh] md:h-[70vh] overflow-hidden rounded-sm mb-8 relative">
+            <img data-sg-img="team.members[1].image" src="img/team-cinematographer.jpg"
+                 alt="Lead Cinematographer" class="w-full h-full object-cover">
+          </div>
+          <div class="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-6 gap-2">
+            <h3 class="text-4xl lg:text-5xl font-thin text-white tracking-tighter"
+                data-sg-path="team.members[1].name">Eddie Licea</h3>
+            <span class="uppercase text-xs font-thin text-gray-500 tracking-[0.2em] mb-1"
+                  data-sg-path="team.members[1].role">Lead Cinematographer</span>
+          </div>
+          <p class="text-xl leading-relaxed text-gray-400 font-thin"
+             data-sg-path="team.members[1].bio">
+            Julian's cinematic approach translates raw emotion into moving heirlooms. He focuses on narrative storytelling, preserving the grand architecture and dynamic energy of your celebration.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       SERVICES
+       ============================================================ -->
+  <section class="md:py-32 overflow-hidden text-ink bg-bgLight pt-24 pb-24 relative" id="services">
+    <div class="max-w-[100rem] mx-auto pl-6 pr-6 lg:px-12">
+
+      <!-- Header -->
+      <div class="flex flex-col md:flex-row md:items-end gap-8 mb-16 md:mb-24 items-start justify-between" data-sg-reveal>
+        <h2 class="text-5xl md:text-6xl font-thin text-ink tracking-tighter leading-snug"
+            data-sg-path="services.label">Service</h2>
+        <p class="max-w-md font-extralight text-ink/60 text-lg lg:text-xl leading-relaxed md:pb-2"
+           data-sg-path="services.intro">
+          Our solutions are tailored to meet the unique vision of your celebration, providing artistry, reliability, and elegance at every stage of your journey.
+        </p>
+      </div>
+
+      <!-- Service rows -->
+      <div class="flex flex-col w-full">
+
+        <!-- Service item template (×3) -->
+        <!-- Item 1 -->
+        <div class="service-row group flex flex-col lg:flex-row lg:items-center cursor-pointer transition-all duration-300 w-full border-ink/20 border-t last:border-b pt-8 pb-8 relative items-start justify-between" data-sg-reveal>
+          <!-- Hover modal (desktop) -->
+          <div class="service-hover-img hidden lg:block absolute top-1/2 left-[55%] lg:left-[60%] -translate-x-1/2 -translate-y-1/2 z-20">
+            <div class="overflow-hidden bg-zinc-900 w-[450px] h-[320px] rounded-xl relative shadow-2xl">
+              <img data-sg-img="services.items[0].image" src="img/service-photography.jpg" alt="Photography Service"
+                   class="w-full h-full object-cover">
+              <div class="absolute inset-0 flex items-center justify-center bg-black/5">
+                <div class="w-20 h-20 rounded-full bg-accent text-white shadow-lg flex items-center justify-center">
+                  <span class="text-sm font-extralight uppercase tracking-widest">View</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Content -->
+          <div class="service-content flex flex-col lg:flex-row lg:items-center z-10 w-full relative items-start justify-between">
+            <div class="service-title-inner lg:w-1/3 w-full mb-0">
+              <h3 class="text-4xl md:text-5xl lg:text-3xl font-thin text-ink tracking-tighter"
+                  data-sg-path="services.items[0].title">Editorial &amp; Timeless Stills</h3>
+            </div>
+            <div class="service-desc-inner lg:w-1/3 w-full mb-0">
+              <p class="text-lg font-extralight text-ink/70 leading-relaxed lg:pr-8"
+                 data-sg-path="services.items[0].desc">
+                Curated, timeless imagery that captures both the grand moments and the quiet, unseen details. We focus on natural light, sophisticated composition, and raw emotion to build a visual legacy that feels authentically you.
+              </p>
+            </div>
+            <div class="service-cat-inner lg:w-auto flex flex-row lg:justify-end gap-8 w-full items-center justify-between">
+              <span class="uppercase text-sm text-ink/60 tracking-widest"
+                    data-sg-path="services.items[0].category">Photography</span>
+            </div>
+          </div>
+          <!-- Mobile image -->
+          <div class="w-full mt-6 lg:hidden rounded-xl overflow-hidden shadow-md relative">
+            <img data-sg-img="services.items[0].image" src="img/service-photography.jpg" alt="Photography"
+                 class="w-full h-64 object-cover">
+            <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm text-ink px-6 py-2 rounded-full border border-black/10">
+              <span class="text-xs font-extralight uppercase tracking-widest">View</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="service-row group flex flex-col lg:flex-row lg:items-center cursor-pointer transition-all duration-300 w-full border-ink/20 border-t last:border-b pt-8 pb-8 relative items-start justify-between" data-sg-reveal>
+          <div class="service-hover-img hidden lg:block absolute top-1/2 left-[55%] lg:left-[60%] -translate-x-1/2 -translate-y-1/2 z-20">
+            <div class="overflow-hidden bg-zinc-900 w-[450px] h-[320px] rounded-xl relative shadow-2xl">
+              <img data-sg-img="services.items[1].image" src="img/service-videography.jpg" alt="Videography Service"
+                   class="w-full h-full object-cover">
+              <div class="absolute inset-0 flex items-center justify-center bg-black/5">
+                <div class="w-20 h-20 rounded-full bg-accent text-white shadow-lg flex items-center justify-center">
+                  <span class="text-sm font-extralight uppercase tracking-widest">View</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="service-content flex flex-col lg:flex-row lg:items-center z-10 w-full relative items-start justify-between">
+            <div class="service-title-inner lg:w-1/3 w-full mb-0">
+              <h3 class="text-4xl md:text-5xl lg:text-3xl font-thin text-ink tracking-tighter"
+                  data-sg-path="services.items[1].title">Cinematic &amp; Emotional Films</h3>
+            </div>
+            <div class="service-desc-inner lg:w-1/3 w-full mb-0">
+              <p class="text-lg font-extralight text-ink/70 leading-relaxed lg:pr-8"
+                 data-sg-path="services.items[1].desc">
+                Moving portraiture that tells the narrative of your day. We create elegant, emotion-driven films scored to perfectly tailored music, preserving the atmosphere, the spoken vows, and the dynamic energy of your celebration.
+              </p>
+            </div>
+            <div class="service-cat-inner lg:w-auto flex flex-row lg:justify-end gap-8 w-full items-center justify-between">
+              <span class="uppercase text-sm text-ink/60 tracking-widest"
+                    data-sg-path="services.items[1].category">Videography</span>
+            </div>
+          </div>
+          <div class="w-full mt-6 lg:hidden rounded-xl overflow-hidden shadow-md relative">
+            <img data-sg-img="services.items[1].image" src="img/service-videography.jpg" alt="Videography"
+                 class="w-full h-64 object-cover">
+            <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm text-ink px-6 py-2 rounded-full border border-black/10">
+              <span class="text-xs font-extralight uppercase tracking-widest">View</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="service-row group flex flex-col lg:flex-row lg:items-center cursor-pointer transition-all duration-300 w-full border-ink/20 border-t last:border-b pt-8 pb-8 relative items-start justify-between" data-sg-reveal>
+          <div class="service-hover-img hidden lg:block absolute top-1/2 left-[55%] lg:left-[60%] -translate-x-1/2 -translate-y-1/2 z-20">
+            <div class="overflow-hidden bg-zinc-900 w-[450px] h-[320px] rounded-xl relative shadow-2xl">
+              <img data-sg-img="services.items[2].image" src="img/service-broadcasting.jpg" alt="Broadcasting Service"
+                   class="w-full h-full object-cover">
+              <div class="absolute inset-0 flex items-center justify-center bg-black/5">
+                <div class="w-20 h-20 rounded-full bg-accent text-white shadow-lg flex items-center justify-center">
+                  <span class="text-sm font-extralight uppercase tracking-widest">View</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="service-content flex flex-col lg:flex-row lg:items-center z-10 w-full relative items-start justify-between">
+            <div class="service-title-inner lg:w-1/3 w-full mb-0">
+              <h3 class="text-4xl md:text-5xl lg:text-3xl font-thin text-ink tracking-tighter"
+                  data-sg-path="services.items[2].title">Wedding Live Broadcasting</h3>
+            </div>
+            <div class="service-desc-inner lg:w-1/3 w-full mb-0">
+              <p class="text-lg font-extralight text-ink/70 leading-relaxed lg:pr-8"
+                 data-sg-path="services.items[2].desc">
+                Share your most cherished moments in real-time with loved ones across the globe. We provide high-fidelity audio and multi-camera streaming to ensure no one misses your celebration.
+              </p>
+            </div>
+            <div class="service-cat-inner lg:w-auto flex flex-row lg:justify-end gap-8 w-full items-center justify-between">
+              <span class="uppercase text-sm text-ink/60 tracking-widest"
+                    data-sg-path="services.items[2].category">Broadcasting</span>
+            </div>
+          </div>
+          <div class="w-full mt-6 lg:hidden rounded-xl overflow-hidden shadow-md relative">
+            <img data-sg-img="services.items[2].image" src="img/service-broadcasting.jpg" alt="Broadcasting"
+                 class="w-full h-64 object-cover">
+            <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm text-ink px-6 py-2 rounded-full border border-black/10">
+              <span class="text-xs font-extralight uppercase tracking-widest">View</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       PORTFOLIO / SELECTED WORKS
+       ============================================================ -->
+  <section class="md:py-32 overflow-hidden text-white bg-ink pt-24 pb-24" id="portfolio">
+    <div class="max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Header -->
+      <div class="flex flex-col lg:flex-row w-full mb-16 lg:mb-20 gap-x-12 gap-y-12 items-start justify-between" data-sg-reveal>
+        <div class="w-full">
+          <div class="flex flex-col md:flex-row md:items-end w-full border-white/10 border-b mb-10 pb-0">
+            <h2 class="mb-6 md:mb-0 md:mr-auto text-5xl lg:text-6xl font-thin text-white tracking-tighter leading-tight"
+                data-sg-path="portfolio.heading1">Selected work</h2>
+            <div class="flex items-end space-x-6 lg:space-x-10">
+              <button class="text-sm lg:text-base uppercase tracking-[0.15em] text-white font-thin border-b border-white pb-3 -mb-[1px]">Photography</button>
+              <button class="text-sm lg:text-base uppercase tracking-[0.15em] text-gray-500 font-extralight hover:text-gray-300 transition-colors pb-3">Videography</button>
+            </div>
+          </div>
+          <div class="max-w-3xl">
+            <h2 class="text-6xl md:text-7xl lg:text-[6.5rem] font-thin text-white tracking-tighter leading-[0.95] mb-8">
+              <em class="font-thin">Moments</em> that<br>
+              are returned to
+            </h2>
+            <p class="text-xl lg:text-2xl leading-relaxed text-gray-400 font-thin max-w-xl"
+               data-sg-path="portfolio.intro">
+              These photographs are chosen again and again, finding in them a familiar feeling of beauty and the exact mood. Look, get inspired and feel — perhaps they will respond to you today and become part of your legacy.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-1 sm:gap-2 lg:gap-3 bg-black" data-sg-reveal>
+
+        <!-- Cell 1 -->
+        <div class="gallery-cell aspect-square bg-zinc-900 overflow-hidden relative">
+          <img data-sg-img="portfolio.gallery[0].image" src="img/gallery-rings.jpg"
+               alt="Wedding Rings" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Cell 2 -->
+        <div class="gallery-cell aspect-square bg-zinc-900 overflow-hidden relative">
+          <img data-sg-img="portfolio.gallery[1].image" src="img/gallery-bouquet.jpg"
+               alt="Bridal Bouquet" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Cell 3 — large featured (col+row span 2) -->
+        <div class="gallery-cell-featured col-span-2 lg:col-span-2 row-span-2 lg:row-span-2 relative overflow-hidden bg-zinc-900 flex items-center justify-center">
+          <img data-sg-img="portfolio.gallery[2].imageBlur" src="img/gallery-bride-blur.jpg"
+               alt="Bride Portrait Background"
+               class="blur-[4px] opacity-40 w-full h-full object-cover absolute inset-0 transition-transform duration-[2s] ease-out">
+          <div class="w-3/5 aspect-square relative z-10 shadow-2xl overflow-hidden border border-white/5">
+            <img data-sg-img="portfolio.gallery[2].imageSharp" src="img/gallery-bride-sharp.jpg"
+                 alt="Bride Portrait" class="featured-sharp w-full h-full object-cover">
+          </div>
+        </div>
+
+        <!-- Cell 4 -->
+        <div class="gallery-cell aspect-square bg-zinc-900 overflow-hidden relative">
+          <img data-sg-img="portfolio.gallery[3].image" src="img/gallery-table.jpg"
+               alt="Wedding Table" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Cell 5 — caption -->
+        <div class="aspect-square lg:p-8 flex flex-col bg-black border border-white/5 pt-6 pr-6 pb-6 pl-6 justify-between">
+          <h3 class="font-narrow text-4xl lg:text-5xl tracking-tighter text-white font-thin leading-none">
+            <em class="font-extralight">Quiet</em> <span data-sg-path="portfolio.caption1.title">beauty</span>
+          </h3>
+          <p class="text-base text-gray-400 font-extralight leading-relaxed mt-auto max-w-[200px]"
+             data-sg-path="portfolio.caption1.body">
+            Moments in which natural elegance unfolds quietly, confidently, and without unnecessary emphasis.
+          </p>
+        </div>
+
+        <!-- Cell 6 — large featured 2 -->
+        <div class="gallery-cell-featured col-span-2 lg:col-span-2 row-span-2 lg:row-span-2 relative overflow-hidden bg-zinc-900 flex items-center justify-center">
+          <img data-sg-img="portfolio.gallery[4].imageBlur" src="img/gallery-couple-blur.jpg"
+               alt="Couple Walking Background"
+               class="blur-[4px] opacity-40 w-full h-full object-cover absolute inset-0 transition-transform duration-[2s] ease-out">
+          <div class="w-3/5 aspect-square relative z-10 shadow-2xl overflow-hidden border border-white/5">
+            <img data-sg-img="portfolio.gallery[4].imageSharp" src="img/gallery-couple-sharp.jpg"
+                 alt="Couple Walking" class="featured-sharp w-full h-full object-cover">
+          </div>
+        </div>
+
+        <!-- Cell 7 -->
+        <div class="gallery-cell aspect-square bg-zinc-900 overflow-hidden relative">
+          <img data-sg-img="portfolio.gallery[5].image" src="img/gallery-dancing.jpg"
+               alt="Celebration Dancing" class="w-full h-full object-cover grayscale">
+        </div>
+
+        <!-- Cell 8 -->
+        <div class="gallery-cell aspect-square bg-zinc-900 overflow-hidden relative">
+          <img data-sg-img="portfolio.gallery[6].image" src="img/gallery-champagne.jpg"
+               alt="Champagne Toast" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Cell 9 — caption -->
+        <div class="aspect-square bg-black p-6 lg:p-8 flex flex-col justify-between border border-white/5">
+          <h3 class="font-narrow text-4xl lg:text-5xl tracking-tighter text-white font-thin leading-none">
+            <em class="font-extralight">Natural</em> <span data-sg-path="portfolio.caption2.title">harmony</span>
+          </h3>
+          <p class="text-base text-gray-400 font-extralight leading-relaxed mt-auto max-w-[200px]"
+             data-sg-path="portfolio.caption2.body">
+            Connections whose shape, energy, and rhythm create a profound sense of harmony at first glance.
+          </p>
+        </div>
+
+        <!-- Cell 10 -->
+        <div class="gallery-cell aspect-square bg-zinc-900 overflow-hidden relative">
+          <img data-sg-img="portfolio.gallery[7].image" src="img/gallery-dress.jpg"
+               alt="Wedding Dress Detail" class="w-full h-full object-cover">
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       TESTIMONIAL
+       ============================================================ -->
+  <section class="py-32 bg-ink text-white" data-sg-reveal>
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <span class="font-narrow text-7xl text-[#1A1A1A] block mb-6 leading-none tracking-tighter">"</span>
+      <h3 class="font-narrow text-4xl md:text-5xl lg:text-6xl tracking-tighter text-white leading-tight mb-12 font-thin"
+          data-sg-path="testimonial.quote">
+        Working with Ocean West was the best investment we made. Their presence was calming, and the resulting work belongs in a magazine. They captured our love exactly as it felt.
+      </h3>
+      <div class="flex flex-col items-center justify-center">
+        <span class="text-base uppercase tracking-widest text-white font-thin mb-2"
+              data-sg-path="testimonial.name">Eleanor &amp; James</span>
+        <span class="text-sm text-gray-500 font-extralight tracking-[0.2em] uppercase"
+              data-sg-path="testimonial.venue">Château de Villette, France</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FAQ / INVESTMENT
+       ============================================================ -->
+  <section class="py-24 md:py-32 bg-white border-t border-ink/10" data-sg-reveal>
+    <div class="max-w-4xl mx-auto px-6 lg:px-12">
+      <div class="mb-16 md:mb-20 text-center">
+        <span class="uppercase tracking-[0.2em] text-sm font-thin text-gray-500 mb-4 block"
+              data-sg-path="faq.label">Information</span>
+        <h2 class="font-narrow text-5xl md:text-6xl tracking-tighter text-ink font-thin"
+            data-sg-path="faq.heading">Investment &amp; FAQ</h2>
+      </div>
+
+      <div class="space-y-6">
+
+        <details class="group border-b border-ink/10 pb-6">
+          <summary class="flex items-center justify-between cursor-pointer list-none">
+            <h3 class="text-sm md:text-base uppercase tracking-[0.2em] text-ink font-extralight pr-4"
+                data-sg-path="faq.items[0].q">Do you offer custom packages?</h3>
+            <span class="relative flex-shrink-0 ml-1.5 w-6 h-6 flex items-center justify-center">
+              <iconify-icon icon="solar:add-linear" class="absolute text-xl text-ink opacity-70 group-open:opacity-0 transition-opacity duration-300"></iconify-icon>
+              <iconify-icon icon="solar:minus-linear" class="absolute text-xl text-ink opacity-0 group-open:opacity-70 transition-opacity duration-300"></iconify-icon>
+            </span>
+          </summary>
+          <div class="mt-6 text-gray-600 font-extralight text-lg leading-relaxed">
+            <p data-sg-path="faq.items[0].a">Yes! We customize packages based on how many hours you would need.</p>
+          </div>
+        </details>
+
+        <details class="group border-b border-ink/10 pb-6">
+          <summary class="flex items-center justify-between cursor-pointer list-none">
+            <h3 class="text-sm md:text-base uppercase tracking-[0.2em] text-ink font-extralight pr-4"
+                data-sg-path="faq.items[1].q">Is there a deposit?</h3>
+            <span class="relative flex-shrink-0 ml-1.5 w-6 h-6 flex items-center justify-center">
+              <iconify-icon icon="solar:add-linear" class="absolute text-xl text-ink opacity-70 group-open:opacity-0 transition-opacity duration-300"></iconify-icon>
+              <iconify-icon icon="solar:minus-linear" class="absolute text-xl text-ink opacity-0 group-open:opacity-70 transition-opacity duration-300"></iconify-icon>
+            </span>
+          </summary>
+          <div class="mt-6 text-gray-600 font-extralight text-lg leading-relaxed">
+            <p data-sg-path="faq.items[1].a">Yes, we require a signed contract and a 30% non-refundable retainer to secure your date and our exclusive availability.</p>
+          </div>
+        </details>
+
+        <details class="group border-b border-ink/10 pb-6">
+          <summary class="flex items-center justify-between cursor-pointer list-none">
+            <h3 class="text-sm md:text-base uppercase tracking-[0.2em] text-ink font-extralight pr-4"
+                data-sg-path="faq.items[2].q">How long do we have to wait for our photos and video?</h3>
+            <span class="relative flex-shrink-0 ml-1.5 w-6 h-6 flex items-center justify-center">
+              <iconify-icon icon="solar:add-linear" class="absolute text-xl text-ink opacity-70 group-open:opacity-0 transition-opacity duration-300"></iconify-icon>
+              <iconify-icon icon="solar:minus-linear" class="absolute text-xl text-ink opacity-0 group-open:opacity-70 transition-opacity duration-300"></iconify-icon>
+            </span>
+          </summary>
+          <div class="mt-6 text-gray-600 font-extralight text-lg leading-relaxed">
+            <p data-sg-path="faq.items[2].a">For a full day celebration, you can expect your complete, meticulously curated gallery and cinematic film delivered within 8 to 10 weeks.</p>
+          </div>
+        </details>
+
+        <details class="group border-b border-ink/10 pb-6">
+          <summary class="flex items-center justify-between cursor-pointer list-none">
+            <h3 class="text-sm md:text-base uppercase tracking-[0.2em] text-ink font-extralight pr-4"
+                data-sg-path="faq.items[3].q">Do you give out raw images?</h3>
+            <span class="relative flex-shrink-0 ml-1.5 w-6 h-6 flex items-center justify-center">
+              <iconify-icon icon="solar:add-linear" class="absolute text-xl text-ink opacity-70 group-open:opacity-0 transition-opacity duration-300"></iconify-icon>
+              <iconify-icon icon="solar:minus-linear" class="absolute text-xl text-ink opacity-0 group-open:opacity-70 transition-opacity duration-300"></iconify-icon>
+            </span>
+          </summary>
+          <div class="mt-6 text-gray-600 font-extralight text-lg leading-relaxed">
+            <p data-sg-path="faq.items[3].a">We do not provide raw files. Our dedicated color grading and editorial editing process is a fundamental part of the final artistic vision you invest in.</p>
+          </div>
+        </details>
+
+        <details class="group border-b border-ink/10 pb-6">
+          <summary class="flex items-center justify-between cursor-pointer list-none">
+            <h3 class="text-sm md:text-base uppercase tracking-[0.2em] text-ink font-extralight pr-4"
+                data-sg-path="faq.items[4].q">Can we request specific shots?</h3>
+            <span class="relative flex-shrink-0 ml-1.5 w-6 h-6 flex items-center justify-center">
+              <iconify-icon icon="solar:add-linear" class="absolute text-xl text-ink opacity-70 group-open:opacity-0 transition-opacity duration-300"></iconify-icon>
+              <iconify-icon icon="solar:minus-linear" class="absolute text-xl text-ink opacity-0 group-open:opacity-70 transition-opacity duration-300"></iconify-icon>
+            </span>
+          </summary>
+          <div class="mt-6 text-gray-600 font-extralight text-lg leading-relaxed">
+            <p data-sg-path="faq.items[4].a">Absolutely. Prior to your celebration, we will share a comprehensive questionnaire where you can detail specific family groupings and meaningful details.</p>
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       INQUIRY FORM
+       ============================================================ -->
+  <section id="inquire" class="py-32 bg-ink text-white" data-sg-reveal>
+    <div class="max-w-[90rem] mx-auto px-6 lg:px-12 grid lg:grid-cols-5 gap-16 lg:gap-24 items-start">
+
+      <!-- Left info -->
+      <div class="lg:col-span-2">
+        <h2 class="font-narrow text-5xl md:text-6xl tracking-tighter text-white font-thin mb-6 leading-tight"
+            data-sg-path="contact.heading">Begin Your Journey</h2>
+        <p class="text-2xl lg:text-3xl text-gray-400 font-extralight mb-12 leading-relaxed"
+           data-sg-path="contact.intro">
+          We accept a limited number of commissions each year to ensure every couple receives our utmost attention and artistry. Please share the details of your celebration below.
+        </p>
+        <div class="space-y-6">
+          <div class="flex items-center text-sm uppercase tracking-[0.2em] text-gray-300 font-thin">
+            <iconify-icon icon="solar:letter-linear" class="text-xl mr-4 opacity-70"></iconify-icon>
+            <span data-sg-path="contact.email">hello@oceanweststudio.com</span>
+          </div>
+          <div class="flex items-center text-sm uppercase tracking-[0.2em] text-gray-300 font-thin">
+            <iconify-icon icon="solar:map-point-linear" class="text-xl mr-4 opacity-70"></iconify-icon>
+            <span data-sg-path="contact.location">Seattle / Worldwide</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right form -->
+      <div class="lg:col-span-3">
+        <form class="space-y-12" onsubmit="return false;">
+
+          <div class="grid md:grid-cols-2 gap-10">
+            <div>
+              <label class="block text-sm uppercase tracking-[0.2em] text-gray-500 mb-3 font-extralight">First &amp; Last Name</label>
+              <input type="text" class="w-full bg-transparent border-b border-gray-700 py-3 text-2xl text-white font-thin focus:border-white focus:outline-none transition-colors" required>
+            </div>
+            <div>
+              <label class="block text-sm uppercase tracking-[0.2em] text-gray-500 mb-3 font-extralight">Fiancé's Name</label>
+              <input type="text" class="w-full bg-transparent border-b border-gray-700 py-3 text-2xl text-white font-thin focus:border-white focus:outline-none transition-colors">
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-10">
+            <div>
+              <label class="block text-sm uppercase tracking-[0.2em] text-gray-500 mb-3 font-extralight">Email Address</label>
+              <input type="email" class="w-full bg-transparent border-b border-gray-700 py-3 text-2xl text-white font-thin focus:border-white focus:outline-none transition-colors" required>
+            </div>
+            <div>
+              <label class="block text-sm uppercase tracking-[0.2em] text-gray-500 mb-3 font-extralight">Wedding Date</label>
+              <input type="text" class="w-full bg-transparent border-b border-gray-700 py-3 text-2xl text-white font-thin focus:border-white focus:outline-none transition-colors" placeholder="MM/DD/YYYY">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm uppercase tracking-[0.2em] text-gray-500 mb-3 font-extralight">Venue &amp; Location</label>
+            <input type="text" class="w-full bg-transparent border-b border-gray-700 py-3 text-2xl text-white font-thin focus:border-white focus:outline-none transition-colors">
+          </div>
+
+          <div>
+            <label class="block text-sm uppercase tracking-[0.2em] text-gray-500 mb-3 font-extralight">Services Interested In</label>
+            <select class="w-full bg-transparent border-b border-gray-700 py-3 text-2xl text-white font-thin focus:border-white focus:outline-none transition-colors cursor-pointer">
+              <option value="full"   class="bg-ink text-white">Full Experience (Photo, Video, Stream)</option>
+              <option value="photo"  class="bg-ink text-white">Photography</option>
+              <option value="video"  class="bg-ink text-white">Videography</option>
+              <option value="stream" class="bg-ink text-white">Livestreaming</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm uppercase tracking-[0.2em] text-gray-500 mb-3 font-extralight">Tell us about your vision</label>
+            <textarea rows="4" class="w-full bg-transparent border-b border-gray-700 py-3 text-2xl text-white font-thin focus:border-white focus:outline-none transition-colors resize-none"></textarea>
+          </div>
+
+          <button type="submit"
+                  class="w-full md:w-auto bg-white text-ink px-12 py-4 text-sm uppercase tracking-[0.2em] font-thin hover:bg-gray-200 transition-colors duration-300 flex items-center gap-3">
+            Submit Inquiry
+            <iconify-icon icon="solar:arrow-right-linear" class="text-base"></iconify-icon>
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       HYDRATION + GSAP ANIMATIONS (standard Akyra block)
+       ============================================================ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      // Hydrate texts (innerHTML for richtext fields like philosophy)
+      var RICH_PATHS = new Set(['philosophy.text']);
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var path = el.getAttribute('data-sg-path');
+        var v = get(path);
+        if (v == null || typeof v === 'object') return;
+        if (RICH_PATHS.has(path)) el.innerHTML = v;
+        else el.textContent = v;
+      });
+      // Hydrate images (img.src or background-image)
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      // Animations: reveal + parallax (GSAP recreation, not 1:1 capture)
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, {
+            opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+          });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, {
+            yPercent: -15, ease: 'none',
+            scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+          });
+        });
+        // ROBUSTESSE : recalcule les positions après chargement des images
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        // Filet ultime anti-page-blanche
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

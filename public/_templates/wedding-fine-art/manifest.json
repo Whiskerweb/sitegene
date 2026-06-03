@@ -1,0 +1,294 @@
+{
+  "id": "wedding-fine-art",
+  "name": "Mariage fine-art",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "brand",
+      "brandInitials",
+      "location",
+      "locationLabel",
+      "tagline",
+      "instagram",
+      "copyright",
+      "hero",
+      "intro",
+      "services",
+      "about",
+      "testimonials",
+      "cta",
+      "gallery",
+      "nav"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.image",
+      "role": "hero",
+      "required": true,
+      "note": "hero · image"
+    },
+    {
+      "slot": "p2",
+      "path": "intro.imageLeft",
+      "role": "image",
+      "required": true,
+      "note": "intro · imageLeft"
+    },
+    {
+      "slot": "p3",
+      "path": "intro.imageRight",
+      "role": "image",
+      "required": true,
+      "note": "intro · imageRight"
+    },
+    {
+      "slot": "p4",
+      "path": "services.imageMain",
+      "role": "image",
+      "required": true,
+      "note": "services · imageMain"
+    },
+    {
+      "slot": "p5",
+      "path": "services.imageDetail",
+      "role": "image",
+      "required": true,
+      "note": "services · imageDetail"
+    },
+    {
+      "slot": "p6",
+      "path": "about.imageMain",
+      "role": "image",
+      "required": true,
+      "note": "about · imageMain"
+    },
+    {
+      "slot": "p7",
+      "path": "about.imageDetail",
+      "role": "image",
+      "required": true,
+      "note": "about · imageDetail"
+    },
+    {
+      "slot": "p8",
+      "path": "cta.image",
+      "role": "image",
+      "required": true,
+      "note": "cta · image"
+    },
+    {
+      "slot": "p9",
+      "path": "gallery[].image",
+      "role": "gallery",
+      "required": true,
+      "note": "gallery · image"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "brandInitials",
+        "label": "brandInitials",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.region",
+        "label": "hero · region",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.title1",
+        "label": "hero · title1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.title2",
+        "label": "hero · title2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.subtitle",
+        "label": "hero · subtitle",
+        "type": "text",
+        "maxLen": 45
+      },
+      {
+        "path": "location",
+        "label": "location",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "locationLabel",
+        "label": "locationLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "intro.eyebrow",
+        "label": "intro · eyebrow",
+        "type": "text",
+        "maxLen": 69
+      },
+      {
+        "path": "intro.heading1",
+        "label": "intro · heading1",
+        "type": "text",
+        "maxLen": 46
+      },
+      {
+        "path": "intro.heading2",
+        "label": "intro · heading2",
+        "type": "text",
+        "maxLen": 42
+      },
+      {
+        "path": "intro.body",
+        "label": "intro · body",
+        "type": "text",
+        "maxLen": 555
+      },
+      {
+        "path": "intro.cta",
+        "label": "intro · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.tabs[]",
+        "label": "services · tabs",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.heading",
+        "label": "services · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.body1",
+        "label": "services · body1",
+        "type": "text",
+        "maxLen": 536
+      },
+      {
+        "path": "services.body2",
+        "label": "services · body2",
+        "type": "text",
+        "maxLen": 216
+      },
+      {
+        "path": "services.cta",
+        "label": "services · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.heading1",
+        "label": "about · heading1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.heading2",
+        "label": "about · heading2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.paragraph1",
+        "label": "about · paragraph1",
+        "type": "text",
+        "maxLen": 382
+      },
+      {
+        "path": "about.paragraph2",
+        "label": "about · paragraph2",
+        "type": "text",
+        "maxLen": 435
+      },
+      {
+        "path": "about.links[].label",
+        "label": "about · links · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.links[].num",
+        "label": "about · links · num",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials[].quote",
+        "label": "testimonials · quote",
+        "type": "text",
+        "maxLen": 400
+      },
+      {
+        "path": "testimonials[].couple",
+        "label": "testimonials · couple",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta.heading1",
+        "label": "cta · heading1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta.heading2",
+        "label": "cta · heading2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta.button",
+        "label": "cta · button",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "tagline",
+        "label": "tagline",
+        "type": "text",
+        "maxLen": 165
+      },
+      {
+        "path": "instagram",
+        "label": "instagram",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav[]",
+        "label": "nav",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "copyright",
+        "label": "copyright",
+        "type": "text",
+        "maxLen": 40
+      }
+    ]
+  }
+}

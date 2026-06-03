@@ -1,0 +1,217 @@
+{
+  "meta": {
+    "title": "Neatly – Local Cleaning Services You Can Count On",
+    "description": "Professional home cleaning services you can truly trust and rely on. Book online in minutes."
+  },
+  "brand": "Neatly",
+  "topbar": {
+    "phone": "+403-394-9940",
+    "email": "hello@neatly.com"
+  },
+  "nav": {
+    "links": [
+      "About",
+      "Services",
+      "Blogs",
+      "Contact"
+    ],
+    "cta": "Book Now"
+  },
+  "hero": {
+    "rating": "4.7",
+    "ratingText": "Trusted reviews from Google & Yelp!",
+    "title": "Local Cleaning Services You Can Count On",
+    "tagline": "Experience the ultimate in professional home cleaning services that you can truly trust and rely on.",
+    "cta": "Call us: +403-394-9940",
+    "image": "/_templates/cleaning-services/img/hero.jpg"
+  },
+  "badge": "We're a top-notch 5-star contractor!",
+  "services": {
+    "label": "Eco-Friendly Cleaning",
+    "items": [
+      {
+        "title": "Eco-Friendly Cleaning",
+        "desc": "We proudly offer eco-friendly cleaning options using safer products that don't compromise on results.",
+        "image": "/_templates/cleaning-services/img/service-spray.jpg"
+      },
+      {
+        "title": "Regular Home Cleaning",
+        "desc": "Our regular cleaning service keeps your home consistently clean and comfortable.",
+        "image": "/_templates/cleaning-services/img/service-vacuuming.jpg"
+      },
+      {
+        "title": "Floor Cleaning & Care",
+        "desc": "We clean all kinds of floors using safe and eco-friendly methods that really work.",
+        "image": "/_templates/cleaning-services/img/service-floor.jpg"
+      },
+      {
+        "title": "Kitchen Cleaning",
+        "desc": "Our regular cleaning service keeps your home consistently clean and comfortable.",
+        "image": "/_templates/cleaning-services/img/service-detail.jpg"
+      }
+    ]
+  },
+  "trust": {
+    "paragraph": "Every cleaner is meticulously background-checked and thoroughly trained before entering your home. We don't compromise on who we send, so you can feel completely confident about safety, professionalism, and respect for your personal space."
+  },
+  "howItWorks": {
+    "title": "How Neatly Works",
+    "subtitle": "Please select the service you want, choose a date, and let us know how long you need it for in minutes.",
+    "steps": [
+      {
+        "number": "1.",
+        "title": "Book Your Cleaning",
+        "desc": "Choose your service, select a date, and specify how long you need in total minutes."
+      },
+      {
+        "number": "2.",
+        "title": "We Handle the Cleaning",
+        "desc": "A trusted, trained, background-checked professional cleans your home with care."
+      },
+      {
+        "number": "3.",
+        "title": "Enjoy a Fresh Home",
+        "desc": "Kick back and enjoy a chill, comfy spot where you can relax and feel right at home."
+      }
+    ]
+  },
+  "stats": [
+    {
+      "value": "4.7",
+      "label": "Average Rating"
+    },
+    {
+      "value": "1.2k+",
+      "label": "Homes Cleaned"
+    },
+    {
+      "value": "300+",
+      "label": "Regular Clients"
+    },
+    {
+      "value": "100%",
+      "label": "Background-Checked Staff"
+    }
+  ],
+  "whyUs": {
+    "title": "Save Your Time",
+    "subtitle": "We clean so you don't have to. Get your valuable time back for work, family, or much-needed rest.",
+    "image": "/_templates/cleaning-services/img/why-us.jpg",
+    "features": [
+      {
+        "title": "Save Time Every Week",
+        "desc": "Hiring a professional to clean your space effectively frees up your valuable time for work, family, or relaxation."
+      },
+      {
+        "title": "Feel Safe Letting Us In",
+        "desc": "Every cleaner is background-checked and vetted so you always feel secure."
+      },
+      {
+        "title": "Simple, Stress-Free Booking",
+        "desc": "Book in minutes online. No calls, no hassle. Just pick your slot and we handle the rest."
+      },
+      {
+        "title": "Trusted by Happy Customers",
+        "desc": "Hundreds of 5-star reviews from homeowners and professionals across the city."
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "Trusted by Happy Customers",
+    "subtitle": "After the cleaning, the house didn't just look clean—it felt clean. The air felt fresher, and everything was more comfortable.",
+    "items": [
+      {
+        "quote": "I work long hours and struggle to keep things tidy. This service made it easy, and the cleaner did a fantastic job without rushing.",
+        "author": "Daniel Carter",
+        "role": "Software Engineer"
+      },
+      {
+        "quote": "I've tried several cleaning services, but this one is the most reliable. Booking was easy, they were on time, and the house felt clean.",
+        "author": "Sarah Mitchell",
+        "role": "Marketing Manager"
+      },
+      {
+        "quote": "I used their cleaning service, and it looked absolutely fantastic. The property was ready for viewing the very same day.",
+        "author": "Michael Thompson",
+        "role": "Real Estate Agent"
+      },
+      {
+        "quote": "I'm particular about cleanliness, and they met my expectations. Attention to detail was noticeable, especially in the kitchen space.",
+        "author": "Emily Rogers",
+        "role": "Interior Designer"
+      },
+      {
+        "quote": "The team was super friendly and really professional. They went the extra mile to make everything shine. Totally recommend them!",
+        "author": "James Wilson",
+        "role": "Project Manager"
+      }
+    ]
+  },
+  "features": {
+    "title": "Reliable & On Time",
+    "subtitle": "Our cleaners always show up right on time, so your day stays on track and everything keeps running smoothly.",
+    "items": [
+      "Consistent Results You Can Rely On",
+      "Flexible to Fit Your Lifestyle",
+      "Results That Feel Different",
+      "A Healthier Home Environment"
+    ]
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Booking your cleaning is super easy! Just hop on our website, pick your service, choose a date and time, and you're all set.",
+    "items": [
+      {
+        "question": "How do I book a cleaning?",
+        "answer": "Booking online is a breeze and takes only a few minutes. Simply choose your desired service, select a convenient date and time, and confirm your booking instantly with just a few clicks."
+      },
+      {
+        "question": "Are your cleaners trained and background-checked?",
+        "answer": "Yes — every cleaner goes through a thorough background check and training program before being assigned to any client's home."
+      },
+      {
+        "question": "What cleaning supplies do you use?",
+        "answer": "We use eco-friendly, non-toxic cleaning products that are safe for children, pets, and the environment, without compromising on results."
+      },
+      {
+        "question": "What if I'm not satisfied with the cleaning?",
+        "answer": "Your satisfaction is our priority. If you're not happy with the results, contact us within 24 hours and we'll send a team back to re-clean at no extra charge."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Let's Clean Your Place",
+    "subtitle": "Stop stressing over cleaning and start enjoying life more! Let our dedicated crew take care of all the chores for you.",
+    "phone": "+403-394-9940",
+    "caption": "We provide professional cleaning with attention to detail, making your space shine every day."
+  },
+  "footer": {
+    "tagline": "We provide professional cleaning with attention to detail, making your space shine every day.",
+    "columns": [
+      {
+        "heading": "Company",
+        "links": [
+          "Home",
+          "About Us",
+          "Blogs"
+        ]
+      },
+      {
+        "heading": "More",
+        "links": [
+          "Services",
+          "Contact",
+          "Book"
+        ]
+      },
+      {
+        "heading": "Legal & Policy",
+        "links": [
+          "Privacy Policy",
+          "Terms and Conditions"
+        ]
+      }
+    ],
+    "copyright": "Copyright © 2026 Neatly"
+  }
+}

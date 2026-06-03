@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-sg-path="meta.title">Neatly – Local Cleaning Services You Can Count On</title>
+  <meta name="description" data-sg-path="meta.description" content="Professional home cleaning services you can truly trust and rely on. Book online in minutes." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary:  '#FEBF03',   /* yellow accent */
+            ink:      '#171206',   /* near-black dark bg */
+            bg:       '#F2F7F9',   /* light section bg */
+            muted:    '#5B5955',   /* body text muted */
+            border:   '#E5EAEC',   /* card borders */
+            white:    '#FFFFFF',
+            blue:     '#2B80F7',   /* rating stars / links */
+            danger:   '#F02A2B',   /* "red" badge */
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            inter: ['"Inter"', 'sans-serif'],
+          },
+          borderRadius: {
+            'xl2': '16px',
+            'xl3': '24px',
+          },
+        }
+      }
+    };
+  </script>
+
+  <!-- __SITE_CONTENT__ — single source of truth for all copy + image paths -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+      meta: {
+        title: "Neatly – Local Cleaning Services You Can Count On",
+        description: "Professional home cleaning services you can truly trust and rely on. Book online in minutes."
+      },
+      brand: "Neatly",
+      topbar: {
+        phone: "+403-394-9940",
+        email: "hello@neatly.com"
+      },
+      nav: {
+        links: ["About", "Services", "Blogs", "Contact"],
+        cta: "Book Now"
+      },
+      hero: {
+        rating:     "4.7",
+        ratingText: "Trusted reviews from Google & Yelp!",
+        title:      "Local Cleaning Services You Can Count On",
+        tagline:    "Experience the ultimate in professional home cleaning services that you can truly trust and rely on.",
+        cta:        "Call us: +403-394-9940",
+        image:      "img/hero.jpg"
+      },
+      badge: "We're a top-notch 5-star contractor!",
+      services: {
+        label: "Eco-Friendly Cleaning",
+        items: [
+          { title: "Eco-Friendly Cleaning",      desc: "We proudly offer eco-friendly cleaning options using safer products that don't compromise on results.",  image: "img/service-spray.jpg" },
+          { title: "Regular Home Cleaning",       desc: "Our regular cleaning service keeps your home consistently clean and comfortable.",                        image: "img/service-vacuuming.jpg" },
+          { title: "Floor Cleaning & Care",       desc: "We clean all kinds of floors using safe and eco-friendly methods that really work.",                     image: "img/service-floor.jpg" },
+          { title: "Kitchen Cleaning",            desc: "Our regular cleaning service keeps your home consistently clean and comfortable.",                        image: "img/service-detail.jpg" }
+        ]
+      },
+      trust: {
+        paragraph: "Every cleaner is meticulously background-checked and thoroughly trained before entering your home. We don't compromise on who we send, so you can feel completely confident about safety, professionalism, and respect for your personal space."
+      },
+      howItWorks: {
+        title:    "How Neatly Works",
+        subtitle: "Please select the service you want, choose a date, and let us know how long you need it for in minutes.",
+        steps: [
+          { number: "1.", title: "Book Your Cleaning",    desc: "Choose your service, select a date, and specify how long you need in total minutes." },
+          { number: "2.", title: "We Handle the Cleaning", desc: "A trusted, trained, background-checked professional cleans your home with care." },
+          { number: "3.", title: "Enjoy a Fresh Home",     desc: "Kick back and enjoy a chill, comfy spot where you can relax and feel right at home." }
+        ]
+      },
+      stats: [
+        { value: "4.7",   label: "Average Rating" },
+        { value: "1.2k+", label: "Homes Cleaned" },
+        { value: "300+",  label: "Regular Clients" },
+        { value: "100%",  label: "Background-Checked Staff" }
+      ],
+      whyUs: {
+        title:    "Save Your Time",
+        subtitle: "We clean so you don't have to. Get your valuable time back for work, family, or much-needed rest.",
+        image:    "img/why-us.jpg",
+        features: [
+          { title: "Save Time Every Week",         desc: "Hiring a professional to clean your space effectively frees up your valuable time for work, family, or relaxation." },
+          { title: "Feel Safe Letting Us In",       desc: "Every cleaner is background-checked and vetted so you always feel secure." },
+          { title: "Simple, Stress-Free Booking",   desc: "Book in minutes online. No calls, no hassle. Just pick your slot and we handle the rest." },
+          { title: "Trusted by Happy Customers",    desc: "Hundreds of 5-star reviews from homeowners and professionals across the city." }
+        ]
+      },
+      testimonials: {
+        title:    "Trusted by Happy Customers",
+        subtitle: "After the cleaning, the house didn't just look clean—it felt clean. The air felt fresher, and everything was more comfortable.",
+        items: [
+          { quote: "I work long hours and struggle to keep things tidy. This service made it easy, and the cleaner did a fantastic job without rushing.",              author: "Daniel Carter",    role: "Software Engineer" },
+          { quote: "I've tried several cleaning services, but this one is the most reliable. Booking was easy, they were on time, and the house felt clean.",         author: "Sarah Mitchell",   role: "Marketing Manager" },
+          { quote: "I used their cleaning service, and it looked absolutely fantastic. The property was ready for viewing the very same day.",                        author: "Michael Thompson", role: "Real Estate Agent" },
+          { quote: "I'm particular about cleanliness, and they met my expectations. Attention to detail was noticeable, especially in the kitchen space.",           author: "Emily Rogers",     role: "Interior Designer" },
+          { quote: "The team was super friendly and really professional. They went the extra mile to make everything shine. Totally recommend them!",                author: "James Wilson",     role: "Project Manager" }
+        ]
+      },
+      features: {
+        title:    "Reliable & On Time",
+        subtitle: "Our cleaners always show up right on time, so your day stays on track and everything keeps running smoothly.",
+        items: [
+          "Consistent Results You Can Rely On",
+          "Flexible to Fit Your Lifestyle",
+          "Results That Feel Different",
+          "A Healthier Home Environment"
+        ]
+      },
+      faq: {
+        title:    "Frequently Asked Questions",
+        subtitle: "Booking your cleaning is super easy! Just hop on our website, pick your service, choose a date and time, and you're all set.",
+        items: [
+          { question: "How do I book a cleaning?",                       answer: "Booking online is a breeze and takes only a few minutes. Simply choose your desired service, select a convenient date and time, and confirm your booking instantly with just a few clicks." },
+          { question: "Are your cleaners trained and background-checked?", answer: "Yes — every cleaner goes through a thorough background check and training program before being assigned to any client's home." },
+          { question: "What cleaning supplies do you use?",              answer: "We use eco-friendly, non-toxic cleaning products that are safe for children, pets, and the environment, without compromising on results." },
+          { question: "What if I'm not satisfied with the cleaning?",    answer: "Your satisfaction is our priority. If you're not happy with the results, contact us within 24 hours and we'll send a team back to re-clean at no extra charge." }
+        ]
+      },
+      cta: {
+        title:    "Let's Clean Your Place",
+        subtitle: "Stop stressing over cleaning and start enjoying life more! Let our dedicated crew take care of all the chores for you.",
+        phone:    "+403-394-9940",
+        caption:  "We provide professional cleaning with attention to detail, making your space shine every day."
+      },
+      footer: {
+        tagline: "We provide professional cleaning with attention to detail, making your space shine every day.",
+        columns: [
+          { heading: "Company",  links: ["Home", "About Us", "Blogs"] },
+          { heading: "More",     links: ["Services", "Contact", "Book"] },
+          { heading: "Legal & Policy", links: ["Privacy Policy", "Terms and Conditions"] }
+        ],
+        copyright: "Copyright © 2026 Neatly"
+      }
+    };
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fff; color: #171206; margin: 0; }
+
+    /* Topbar ticker */
+    .ticker-wrap { overflow: hidden; }
+    .ticker { display: flex; white-space: nowrap; animation: ticker 18s linear infinite; }
+    .ticker-item { padding: 0 2.5rem; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* FAQ accordion */
+    .faq-item .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .faq-item.open .faq-answer { max-height: 300px; }
+    .faq-icon { transition: transform 0.3s ease; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* Testimonials scroll */
+    .testimonials-track { display: flex; gap: 1.5rem; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .testimonials-track::-webkit-scrollbar { display: none; }
+    .testimonial-card { scroll-snap-align: start; flex: 0 0 340px; }
+
+    /* Smooth underline nav */
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; left: 0; bottom: -2px; width: 0; height: 2px; background: #FEBF03; transition: width .25s; }
+    .nav-link:hover::after { width: 100%; }
+  </style>
+</head>
+<body class="antialiased">
+
+<!-- ───────── TOPBAR ───────── -->
+<div class="bg-[#171206] text-white py-2 overflow-hidden text-sm font-medium" style="font-family:'Plus Jakarta Sans',sans-serif">
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <!-- repeated twice for seamless loop -->
+      <span class="ticker-item flex items-center gap-2">
+        <svg class="w-4 h-4 text-primary inline" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11 19.79 19.79 0 01.07 2.18 2 2 0 012.03 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+        <span data-sg-path="topbar.phone">+403-394-9940</span>
+      </span>
+      <span class="ticker-item flex items-center gap-2">
+        <svg class="w-4 h-4 text-primary inline" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+        <span data-sg-path="topbar.email">hello@neatly.com</span>
+      </span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item flex items-center gap-2">
+        <svg class="w-4 h-4 text-primary inline" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11 19.79 19.79 0 01.07 2.18 2 2 0 012.03 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+        <span data-sg-path="topbar.phone">+403-394-9940</span>
+      </span>
+      <span class="ticker-item flex items-center gap-2">
+        <svg class="w-4 h-4 text-primary inline" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+        <span data-sg-path="topbar.email">hello@neatly.com</span>
+      </span>
+      <span class="ticker-item">·</span>
+    </div>
+  </div>
+</div>
+
+<!-- ───────── NAV ───────── -->
+<nav class="bg-[#171206] sticky top-0 z-50 border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+        <svg class="w-5 h-5 text-ink" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>
+      </div>
+      <span class="text-white font-bold text-lg tracking-tight" data-sg-path="brand">Neatly</span>
+    </a>
+    <!-- Links -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#" class="nav-link text-white/80 hover:text-white text-sm font-medium transition-colors" data-sg-path="nav.links[0]">About</a>
+      <a href="#" class="nav-link text-white/80 hover:text-white text-sm font-medium transition-colors" data-sg-path="nav.links[1]">Services</a>
+      <a href="#" class="nav-link text-white/80 hover:text-white text-sm font-medium transition-colors" data-sg-path="nav.links[2]">Blogs</a>
+      <a href="#" class="nav-link text-white/80 hover:text-white text-sm font-medium transition-colors" data-sg-path="nav.links[3]">Contact</a>
+    </div>
+    <!-- CTA -->
+    <a href="#" class="bg-primary text-ink font-semibold text-sm px-5 py-2.5 rounded-full hover:brightness-110 transition-all" data-sg-path="nav.cta">Book Now</a>
+  </div>
+</nav>
+
+<!-- ───────── HERO ───────── -->
+<section class="relative bg-[#171206] overflow-hidden" style="min-height:600px;">
+  <!-- Background image -->
+  <div class="absolute inset-0" data-sg-parallax>
+    <img data-sg-img="hero.image" src="img/hero.jpg" alt="Professional cleaning" class="w-full h-full object-cover opacity-50" />
+    <div class="absolute inset-0 bg-gradient-to-r from-[#171206] via-[#171206]/80 to-transparent"></div>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center">
+    <!-- Left: copy -->
+    <div data-sg-reveal>
+      <!-- Rating badge -->
+      <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 mb-6">
+        <div class="flex text-primary text-sm">★★★★★</div>
+        <span class="text-white font-bold text-sm" data-sg-path="hero.rating">4.7</span>
+        <span class="text-white/60 text-xs" data-sg-path="hero.ratingText">Trusted reviews from Google &amp; Yelp!</span>
+      </div>
+
+      <h1 class="text-white font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6" data-sg-path="hero.title">
+        Local Cleaning Services You Can Count On
+      </h1>
+      <p class="text-white/70 text-lg mb-8 max-w-md" data-sg-path="hero.tagline">
+        Experience the ultimate in professional home cleaning services that you can truly trust and rely on.
+      </p>
+      <a href="#" class="inline-flex items-center gap-3 bg-primary text-ink font-semibold px-6 py-3.5 rounded-full hover:brightness-110 transition-all text-sm">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+        <span data-sg-path="hero.cta">Call us: +403-394-9940</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── BADGE MARQUEE ───────── -->
+<div class="bg-[#171206] py-6 border-t border-white/5 overflow-hidden">
+  <div class="flex items-center gap-6 justify-center flex-wrap px-6">
+    <!-- Star icons -->
+    <div class="flex items-center gap-1">
+      <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+      <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+      <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+      <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+      <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+    </div>
+    <span class="text-white font-semibold text-sm" data-sg-path="badge">We're a top-notch 5-star contractor!</span>
+  </div>
+</div>
+
+<!-- ───────── SERVICES ───────── -->
+<section class="bg-[#F2F7F9] py-20 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12" data-sg-reveal>
+      <span class="inline-block bg-primary/10 text-ink font-semibold text-xs uppercase tracking-wider px-3 py-1.5 rounded-full mb-4" data-sg-path="services.label">Eco-Friendly Cleaning</span>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <!-- Service card 0 -->
+      <div class="bg-white rounded-xl2 overflow-hidden shadow-sm hover:shadow-lg transition-shadow" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="services.items[0].image" src="img/service-spray.jpg" alt="" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+        </div>
+        <div class="p-5">
+          <h3 class="font-bold text-lg text-ink mb-2" data-sg-path="services.items[0].title">Eco-Friendly Cleaning</h3>
+          <p class="text-muted text-sm leading-relaxed" data-sg-path="services.items[0].desc">We proudly offer eco-friendly cleaning options using safer products that don't compromise on results.</p>
+        </div>
+      </div>
+
+      <!-- Service card 1 -->
+      <div class="bg-white rounded-xl2 overflow-hidden shadow-sm hover:shadow-lg transition-shadow" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="services.items[1].image" src="img/service-vacuuming.jpg" alt="" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+        </div>
+        <div class="p-5">
+          <h3 class="font-bold text-lg text-ink mb-2" data-sg-path="services.items[1].title">Regular Home Cleaning</h3>
+          <p class="text-muted text-sm leading-relaxed" data-sg-path="services.items[1].desc">Our regular cleaning service keeps your home consistently clean and comfortable.</p>
+        </div>
+      </div>
+
+      <!-- Service card 2 -->
+      <div class="bg-white rounded-xl2 overflow-hidden shadow-sm hover:shadow-lg transition-shadow" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="services.items[2].image" src="img/service-floor.jpg" alt="" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+        </div>
+        <div class="p-5">
+          <h3 class="font-bold text-lg text-ink mb-2" data-sg-path="services.items[2].title">Floor Cleaning &amp; Care</h3>
+          <p class="text-muted text-sm leading-relaxed" data-sg-path="services.items[2].desc">We clean all kinds of floors using safe and eco-friendly methods that really work.</p>
+        </div>
+      </div>
+
+      <!-- Service card 3 -->
+      <div class="bg-white rounded-xl2 overflow-hidden shadow-sm hover:shadow-lg transition-shadow" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="services.items[3].image" src="img/service-detail.jpg" alt="" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+        </div>
+        <div class="p-5">
+          <h3 class="font-bold text-lg text-ink mb-2" data-sg-path="services.items[3].title">Kitchen Cleaning</h3>
+          <p class="text-muted text-sm leading-relaxed" data-sg-path="services.items[3].desc">Our regular cleaning service keeps your home consistently clean and comfortable.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ───────── TRUST PARAGRAPH ───────── -->
+<section class="bg-[#171206] py-16 px-6">
+  <div class="max-w-3xl mx-auto text-center" data-sg-reveal>
+    <p class="text-white/80 text-xl leading-relaxed font-medium" data-sg-path="trust.paragraph">
+      Every cleaner is meticulously background-checked and thoroughly trained before entering your home. We don't compromise on who we send, so you can feel completely confident about safety, professionalism, and respect for your personal space.
+    </p>
+  </div>
+</section>
+
+<!-- ───────── HOW IT WORKS ───────── -->
+<section class="bg-[#F2F7F9] py-20 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14" data-sg-reveal>
+      <h2 class="text-ink font-bold text-4xl mb-4" data-sg-path="howItWorks.title">How Neatly Works</h2>
+      <p class="text-muted text-lg max-w-xl mx-auto" data-sg-path="howItWorks.subtitle">Please select the service you want, choose a date, and let us know how long you need it for in minutes.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- Step 0 -->
+      <div class="bg-white rounded-xl2 p-8 shadow-sm" data-sg-reveal>
+        <div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-6">
+          <span class="text-ink font-bold text-lg" data-sg-path="howItWorks.steps[0].number">1.</span>
+        </div>
+        <h3 class="font-bold text-xl text-ink mb-3" data-sg-path="howItWorks.steps[0].title">Book Your Cleaning</h3>
+        <p class="text-muted text-sm leading-relaxed" data-sg-path="howItWorks.steps[0].desc">Choose your service, select a date, and specify how long you need in total minutes.</p>
+      </div>
+
+      <!-- Step 1 -->
+      <div class="bg-white rounded-xl2 p-8 shadow-sm" data-sg-reveal>
+        <div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-6">
+          <span class="text-ink font-bold text-lg" data-sg-path="howItWorks.steps[1].number">2.</span>
+        </div>
+        <h3 class="font-bold text-xl text-ink mb-3" data-sg-path="howItWorks.steps[1].title">We Handle the Cleaning</h3>
+        <p class="text-muted text-sm leading-relaxed" data-sg-path="howItWorks.steps[1].desc">A trusted, trained, background-checked professional cleans your home with care.</p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="bg-white rounded-xl2 p-8 shadow-sm" data-sg-reveal>
+        <div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-6">
+          <span class="text-ink font-bold text-lg" data-sg-path="howItWorks.steps[2].number">3.</span>
+        </div>
+        <h3 class="font-bold text-xl text-ink mb-3" data-sg-path="howItWorks.steps[2].title">Enjoy a Fresh Home</h3>
+        <p class="text-muted text-sm leading-relaxed" data-sg-path="howItWorks.steps[2].desc">Kick back and enjoy a chill, comfy spot where you can relax and feel right at home.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ───────── STATS ───────── -->
+<section class="bg-[#171206] py-16 px-6">
+  <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center" data-sg-reveal>
+
+    <div>
+      <div class="text-primary font-bold text-4xl md:text-5xl mb-2" data-sg-path="stats[0].value">4.7</div>
+      <div class="text-white/60 text-sm" data-sg-path="stats[0].label">Average Rating</div>
+    </div>
+    <div>
+      <div class="text-primary font-bold text-4xl md:text-5xl mb-2" data-sg-path="stats[1].value">1.2k+</div>
+      <div class="text-white/60 text-sm" data-sg-path="stats[1].label">Homes Cleaned</div>
+    </div>
+    <div>
+      <div class="text-primary font-bold text-4xl md:text-5xl mb-2" data-sg-path="stats[2].value">300+</div>
+      <div class="text-white/60 text-sm" data-sg-path="stats[2].label">Regular Clients</div>
+    </div>
+    <div>
+      <div class="text-primary font-bold text-4xl md:text-5xl mb-2" data-sg-path="stats[3].value">100%</div>
+      <div class="text-white/60 text-sm" data-sg-path="stats[3].label">Background-Checked Staff</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ───────── WHY US ───────── -->
+<section class="bg-white py-20 px-6">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+
+    <!-- Left: image -->
+    <div class="relative rounded-xl3 overflow-hidden shadow-xl" data-sg-parallax>
+      <img data-sg-img="whyUs.image" src="img/why-us.jpg" alt="Reliable cleaning" class="w-full h-[500px] object-cover" />
+      <!-- Yellow badge overlaid -->
+      <div class="absolute bottom-6 left-6 bg-primary text-ink font-bold text-sm px-5 py-3 rounded-full shadow-lg">
+        5-Star Rated Service
+      </div>
+    </div>
+
+    <!-- Right: text + features -->
+    <div data-sg-reveal>
+      <h2 class="text-ink font-bold text-4xl mb-4" data-sg-path="whyUs.title">Save Your Time</h2>
+      <p class="text-muted text-lg mb-10 leading-relaxed" data-sg-path="whyUs.subtitle">We clean so you don't have to. Get your valuable time back for work, family, or much-needed rest.</p>
+
+      <ul class="space-y-6">
+        <li class="flex gap-4 items-start">
+          <span class="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-3.5 h-3.5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </span>
+          <div>
+            <div class="font-semibold text-ink mb-1" data-sg-path="whyUs.features[0].title">Save Time Every Week</div>
+            <div class="text-muted text-sm leading-relaxed" data-sg-path="whyUs.features[0].desc">Hiring a professional to clean your space effectively frees up your valuable time for work, family, or relaxation.</div>
+          </div>
+        </li>
+        <li class="flex gap-4 items-start">
+          <span class="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-3.5 h-3.5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </span>
+          <div>
+            <div class="font-semibold text-ink mb-1" data-sg-path="whyUs.features[1].title">Feel Safe Letting Us In</div>
+            <div class="text-muted text-sm leading-relaxed" data-sg-path="whyUs.features[1].desc">Every cleaner is background-checked and vetted so you always feel secure.</div>
+          </div>
+        </li>
+        <li class="flex gap-4 items-start">
+          <span class="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-3.5 h-3.5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </span>
+          <div>
+            <div class="font-semibold text-ink mb-1" data-sg-path="whyUs.features[2].title">Simple, Stress-Free Booking</div>
+            <div class="text-muted text-sm leading-relaxed" data-sg-path="whyUs.features[2].desc">Book in minutes online. No calls, no hassle. Just pick your slot and we handle the rest.</div>
+          </div>
+        </li>
+        <li class="flex gap-4 items-start">
+          <span class="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-3.5 h-3.5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </span>
+          <div>
+            <div class="font-semibold text-ink mb-1" data-sg-path="whyUs.features[3].title">Trusted by Happy Customers</div>
+            <div class="text-muted text-sm leading-relaxed" data-sg-path="whyUs.features[3].desc">Hundreds of 5-star reviews from homeowners and professionals across the city.</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ───────── TESTIMONIALS ───────── -->
+<section class="bg-[#F2F7F9] py-20 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-12" data-sg-reveal>
+      <h2 class="text-ink font-bold text-4xl mb-3" data-sg-path="testimonials.title">Trusted by Happy Customers</h2>
+      <p class="text-muted text-lg max-w-2xl" data-sg-path="testimonials.subtitle">After the cleaning, the house didn't just look clean—it felt clean. The air felt fresher, and everything was more comfortable.</p>
+    </div>
+
+    <div class="testimonials-track pb-4">
+
+      <!-- Card 0 -->
+      <div class="testimonial-card bg-white rounded-xl2 p-7 shadow-sm flex flex-col gap-4" data-sg-reveal>
+        <div class="flex text-primary text-sm">★★★★★</div>
+        <p class="text-ink text-sm leading-relaxed flex-1" data-sg-path="testimonials.items[0].quote">"I work long hours and struggle to keep things tidy. This service made it easy, and the cleaner did a fantastic job without rushing."</p>
+        <div>
+          <div class="font-semibold text-ink text-sm" data-sg-path="testimonials.items[0].author">Daniel Carter</div>
+          <div class="text-muted text-xs" data-sg-path="testimonials.items[0].role">Software Engineer</div>
+        </div>
+      </div>
+
+      <!-- Card 1 -->
+      <div class="testimonial-card bg-white rounded-xl2 p-7 shadow-sm flex flex-col gap-4" data-sg-reveal>
+        <div class="flex text-primary text-sm">★★★★★</div>
+        <p class="text-ink text-sm leading-relaxed flex-1" data-sg-path="testimonials.items[1].quote">"I've tried several cleaning services, but this one is the most reliable. Booking was easy, they were on time, and the house felt clean."</p>
+        <div>
+          <div class="font-semibold text-ink text-sm" data-sg-path="testimonials.items[1].author">Sarah Mitchell</div>
+          <div class="text-muted text-xs" data-sg-path="testimonials.items[1].role">Marketing Manager</div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="testimonial-card bg-[#171206] rounded-xl2 p-7 shadow-sm flex flex-col gap-4" data-sg-reveal>
+        <div class="flex text-primary text-sm">★★★★★</div>
+        <p class="text-white/80 text-sm leading-relaxed flex-1" data-sg-path="testimonials.items[2].quote">"I used their cleaning service, and it looked absolutely fantastic. The property was ready for viewing the very same day."</p>
+        <div>
+          <div class="font-semibold text-white text-sm" data-sg-path="testimonials.items[2].author">Michael Thompson</div>
+          <div class="text-white/50 text-xs" data-sg-path="testimonials.items[2].role">Real Estate Agent</div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="testimonial-card bg-white rounded-xl2 p-7 shadow-sm flex flex-col gap-4" data-sg-reveal>
+        <div class="flex text-primary text-sm">★★★★★</div>
+        <p class="text-ink text-sm leading-relaxed flex-1" data-sg-path="testimonials.items[3].quote">"I'm particular about cleanliness, and they met my expectations. Attention to detail was noticeable, especially in the kitchen space."</p>
+        <div>
+          <div class="font-semibold text-ink text-sm" data-sg-path="testimonials.items[3].author">Emily Rogers</div>
+          <div class="text-muted text-xs" data-sg-path="testimonials.items[3].role">Interior Designer</div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="testimonial-card bg-white rounded-xl2 p-7 shadow-sm flex flex-col gap-4" data-sg-reveal>
+        <div class="flex text-primary text-sm">★★★★★</div>
+        <p class="text-ink text-sm leading-relaxed flex-1" data-sg-path="testimonials.items[4].quote">"The team was super friendly and really professional. They went the extra mile to make everything shine. Totally recommend them!"</p>
+        <div>
+          <div class="font-semibold text-ink text-sm" data-sg-path="testimonials.items[4].author">James Wilson</div>
+          <div class="text-muted text-xs" data-sg-path="testimonials.items[4].role">Project Manager</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ───────── FEATURES LIST ───────── -->
+<section class="bg-white py-20 px-6">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+
+    <div data-sg-reveal>
+      <h2 class="text-ink font-bold text-4xl mb-4" data-sg-path="features.title">Reliable &amp; On Time</h2>
+      <p class="text-muted text-lg mb-10 leading-relaxed" data-sg-path="features.subtitle">Our cleaners always show up right on time, so your day stays on track and everything keeps running smoothly.</p>
+
+      <ul class="space-y-4">
+        <li class="flex items-center gap-3 border border-[#E5EAEC] rounded-xl px-5 py-4">
+          <span class="w-5 h-5 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+            <svg class="w-3 h-3 text-ink" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </span>
+          <span class="text-ink font-medium text-sm" data-sg-path="features.items[0]">Consistent Results You Can Rely On</span>
+        </li>
+        <li class="flex items-center gap-3 border border-[#E5EAEC] rounded-xl px-5 py-4">
+          <span class="w-5 h-5 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+            <svg class="w-3 h-3 text-ink" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </span>
+          <span class="text-ink font-medium text-sm" data-sg-path="features.items[1]">Flexible to Fit Your Lifestyle</span>
+        </li>
+        <li class="flex items-center gap-3 border border-[#E5EAEC] rounded-xl px-5 py-4">
+          <span class="w-5 h-5 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+            <svg class="w-3 h-3 text-ink" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </span>
+          <span class="text-ink font-medium text-sm" data-sg-path="features.items[2]">Results That Feel Different</span>
+        </li>
+        <li class="flex items-center gap-3 border border-[#E5EAEC] rounded-xl px-5 py-4">
+          <span class="w-5 h-5 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+            <svg class="w-3 h-3 text-ink" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </span>
+          <span class="text-ink font-medium text-sm" data-sg-path="features.items[3]">A Healthier Home Environment</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Right: decorative image block -->
+    <div class="rounded-xl3 overflow-hidden shadow-xl" data-sg-reveal>
+      <img src="img/service-vacuuming.jpg" alt="Reliable cleaning" class="w-full h-[400px] object-cover" />
+    </div>
+
+  </div>
+</section>
+
+<!-- ───────── FAQ ───────── -->
+<section class="bg-[#F2F7F9] py-20 px-6">
+  <div class="max-w-3xl mx-auto">
+    <div class="mb-12 text-center" data-sg-reveal>
+      <h2 class="text-ink font-bold text-4xl mb-4" data-sg-path="faq.title">Frequently Asked Questions</h2>
+      <p class="text-muted text-lg" data-sg-path="faq.subtitle">Booking your cleaning is super easy! Just hop on our website, pick your service, choose a date and time.</p>
+    </div>
+
+    <ul class="space-y-3" id="faq-list">
+
+      <!-- FAQ 0 -->
+      <li class="faq-item open bg-white rounded-xl2 shadow-sm overflow-hidden" data-sg-reveal>
+        <button class="w-full text-left px-6 py-5 flex items-center justify-between gap-4 focus:outline-none" onclick="toggleFaq(this)">
+          <span class="font-semibold text-ink text-sm" data-sg-path="faq.items[0].question">How do I book a cleaning?</span>
+          <span class="faq-icon text-2xl text-primary flex-shrink-0 font-light leading-none">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-5">
+          <p class="text-muted text-sm leading-relaxed" data-sg-path="faq.items[0].answer">Booking online is a breeze and takes only a few minutes. Simply choose your desired service, select a convenient date and time, and confirm your booking instantly with just a few clicks.</p>
+        </div>
+      </li>
+
+      <!-- FAQ 1 -->
+      <li class="faq-item bg-white rounded-xl2 shadow-sm overflow-hidden" data-sg-reveal>
+        <button class="w-full text-left px-6 py-5 flex items-center justify-between gap-4 focus:outline-none" onclick="toggleFaq(this)">
+          <span class="font-semibold text-ink text-sm" data-sg-path="faq.items[1].question">Are your cleaners trained and background-checked?</span>
+          <span class="faq-icon text-2xl text-primary flex-shrink-0 font-light leading-none">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-5">
+          <p class="text-muted text-sm leading-relaxed" data-sg-path="faq.items[1].answer">Yes — every cleaner goes through a thorough background check and training program before being assigned to any client's home.</p>
+        </div>
+      </li>
+
+      <!-- FAQ 2 -->
+      <li class="faq-item bg-white rounded-xl2 shadow-sm overflow-hidden" data-sg-reveal>
+        <button class="w-full text-left px-6 py-5 flex items-center justify-between gap-4 focus:outline-none" onclick="toggleFaq(this)">
+          <span class="font-semibold text-ink text-sm" data-sg-path="faq.items[2].question">What cleaning supplies do you use?</span>
+          <span class="faq-icon text-2xl text-primary flex-shrink-0 font-light leading-none">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-5">
+          <p class="text-muted text-sm leading-relaxed" data-sg-path="faq.items[2].answer">We use eco-friendly, non-toxic cleaning products that are safe for children, pets, and the environment, without compromising on results.</p>
+        </div>
+      </li>
+
+      <!-- FAQ 3 -->
+      <li class="faq-item bg-white rounded-xl2 shadow-sm overflow-hidden" data-sg-reveal>
+        <button class="w-full text-left px-6 py-5 flex items-center justify-between gap-4 focus:outline-none" onclick="toggleFaq(this)">
+          <span class="font-semibold text-ink text-sm" data-sg-path="faq.items[3].question">What if I'm not satisfied with the cleaning?</span>
+          <span class="faq-icon text-2xl text-primary flex-shrink-0 font-light leading-none">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-5">
+          <p class="text-muted text-sm leading-relaxed" data-sg-path="faq.items[3].answer">Your satisfaction is our priority. If you're not happy with the results, contact us within 24 hours and we'll send a team back to re-clean at no extra charge.</p>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</section>
+
+<!-- ───────── CTA ───────── -->
+<section class="bg-primary py-20 px-6 relative overflow-hidden">
+  <!-- Decorative circle -->
+  <div class="absolute -right-24 -top-24 w-64 h-64 bg-white/10 rounded-full pointer-events-none"></div>
+  <div class="absolute -left-16 -bottom-16 w-48 h-48 bg-black/5 rounded-full pointer-events-none"></div>
+
+  <div class="max-w-4xl mx-auto text-center relative z-10" data-sg-reveal>
+    <h2 class="text-ink font-bold text-4xl md:text-5xl mb-4" data-sg-path="cta.title">Let's Clean Your Place</h2>
+    <p class="text-ink/70 text-lg mb-8 max-w-xl mx-auto" data-sg-path="cta.subtitle">Stop stressing over cleaning and start enjoying life more! Let our dedicated crew take care of all the chores for you.</p>
+    <a href="#" class="inline-flex items-center gap-3 bg-ink text-white font-semibold px-8 py-4 rounded-full hover:bg-ink/80 transition-all text-sm">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+      <span data-sg-path="cta.phone">+403-394-9940</span>
+    </a>
+    <p class="mt-6 text-ink/50 text-xs" data-sg-path="cta.caption">We provide professional cleaning with attention to detail, making your space shine every day.</p>
+  </div>
+</section>
+
+<!-- ───────── FOOTER ───────── -->
+<footer class="bg-[#171206] text-white pt-16 pb-8 px-6">
+  <div class="max-w-7xl mx-auto">
+    <!-- Top row: logo + description + columns -->
+    <div class="grid md:grid-cols-4 gap-12 mb-12">
+      <!-- Brand -->
+      <div class="md:col-span-1">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-ink" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>
+          </div>
+          <span class="font-bold text-lg" data-sg-path="brand">Neatly</span>
+        </div>
+        <p class="text-white/50 text-sm leading-relaxed" data-sg-path="footer.tagline">We provide professional cleaning with attention to detail, making your space shine every day.</p>
+      </div>
+
+      <!-- Column 0: Company -->
+      <div>
+        <h4 class="font-semibold text-sm mb-4 text-white/80" data-sg-path="footer.columns[0].heading">Company</h4>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[0]">Home</a></li>
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[1]">About Us</a></li>
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[2]">Blogs</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 1: More -->
+      <div>
+        <h4 class="font-semibold text-sm mb-4 text-white/80" data-sg-path="footer.columns[1].heading">More</h4>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[1].links[0]">Services</a></li>
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[1].links[1]">Contact</a></li>
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[1].links[2]">Book</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 2: Legal -->
+      <div>
+        <h4 class="font-semibold text-sm mb-4 text-white/80" data-sg-path="footer.columns[2].heading">Legal &amp; Policy</h4>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[2].links[0]">Privacy Policy</a></li>
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[2].links[1]">Terms and Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="border-t border-white/10 pt-8 text-center">
+      <p class="text-white/30 text-xs" data-sg-path="footer.copyright">Copyright © 2026 Neatly</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ───────── STANDARD HYDRATION + GSAP BLOCK ───────── -->
+<script>
+  (function () {
+    var C = window.__SITE_CONTENT__ || {};
+    function get(p) {
+      return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+        .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+    }
+    // Hydrate texts
+    document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-path'));
+      if (v != null && typeof v !== 'object') el.textContent = v;
+    });
+    // Hydrate images (img.src or background-image)
+    document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-img'));
+      if (v == null) return;
+      if (el.tagName === 'IMG') el.src = v;
+      else el.style.backgroundImage = "url('" + v + "')";
+    });
+    // Animations: reveal/parallax au scroll (re-création GSAP, pas une capture)
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+        gsap.from(el, {
+          opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 85%' }
+        });
+      });
+      gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+        gsap.to(el, {
+          yPercent: -15, ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+      });
+    }
+  })();
+</script>
+
+<!-- FAQ toggle -->
+<script>
+  function toggleFaq(btn) {
+    var item = btn.closest('.faq-item');
+    var isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(el) { el.classList.remove('open'); });
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+
+
+<script>
+  /* Filet de securite reveals (durable) : recalcule ScrollTrigger apres chargement des
+     images (positions fiables) et garantit qu'aucun [data-sg-reveal] ne reste invisible. */
+  (function () {
+    function refresh() { if (window.ScrollTrigger) ScrollTrigger.refresh(); }
+    window.addEventListener('load', refresh);
+    setTimeout(refresh, 700);
+    setTimeout(function () {
+      document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+        if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+      });
+    }, 2200);
+  })();
+</script>
+</body>
+</html>

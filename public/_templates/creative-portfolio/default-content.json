@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "title": "Creative Portfolio — Brand & Web Designer",
+    "description": "I help purpose-driven brands grow through strategic design — creating beautiful identities and solid websites that tell a story, build trust, and make an impact."
+  },
+  "brand": "ALEX",
+  "brand_last": "MORGAN",
+  "nav": [
+    "Projects",
+    "About",
+    "Contact"
+  ],
+  "hero": {
+    "tagline": "I help purpose-driven brands grow through strategic design — creating beautiful identities and solid websites that tell a story, build trust, and make an impact."
+  },
+  "projects": {
+    "section_title": "Featured Projects",
+    "items": [
+      {
+        "title": "Circle",
+        "year": "2024",
+        "category": "Brand Identity",
+        "image": "/_templates/creative-portfolio/img/project1.jpg"
+      },
+      {
+        "title": "Aerofly",
+        "year": "2024",
+        "category": "Web Design",
+        "image": "/_templates/creative-portfolio/img/project2.jpg"
+      },
+      {
+        "title": "Node",
+        "year": "2024",
+        "category": "Art Direction",
+        "image": "/_templates/creative-portfolio/img/project3.jpg"
+      },
+      {
+        "title": "Build",
+        "year": "2024",
+        "category": "Product Design",
+        "image": "/_templates/creative-portfolio/img/project4.jpg"
+      }
+    ],
+    "cta": "View all projects"
+  },
+  "about": {
+    "section_title": "About Alex",
+    "image": "/_templates/creative-portfolio/img/about.jpg",
+    "paragraphs": [
+      "Hi, I'm Alex — a brand and web designer helping businesses build clarity, consistency, and confidence through thoughtful design.",
+      "I work with founders, creatives, and small teams to create brand identities and websites that are not only visually strong, but strategically built.",
+      "Whether you're launching something new or evolving an existing brand, my process is collaborative, grounded in research, and tailored to you.",
+      "I believe good design isn't just about how it looks. It's about how it works, how it feels, and how it moves people to take action."
+    ],
+    "services_label": "Services",
+    "services": [
+      "Art Direction",
+      "Brand Identity",
+      "Web Design",
+      "Web Development",
+      "Brand Strategy",
+      "Product Design"
+    ],
+    "cta": "Read more"
+  },
+  "testimonials": {
+    "section_title": "Proven Results",
+    "items": [
+      {
+        "quote": "Alex nailed our brand and website redesign with great attention to detail and clear communication. A true professional.",
+        "author": "— Sarah M., Founder of Luna Lifestyle Co."
+      },
+      {
+        "quote": "The UX improvements Alex made boosted our site's usability and customer engagement. Highly recommend working with them.",
+        "author": "— Jason T., Product Manager at BrightWave Tech"
+      }
+    ]
+  },
+  "contact": {
+    "label": "Get in touch",
+    "headline1": "Your next great design",
+    "headline2": "starts with a conversation.",
+    "cta": "Say Hello",
+    "email": "hello@alexmorgan.design"
+  },
+  "footer": {
+    "nav_label": "Navigate",
+    "nav": [
+      "Home",
+      "Projects",
+      "About",
+      "Contact"
+    ],
+    "social_label": "Social",
+    "social": [
+      "Behance",
+      "LinkedIn",
+      "X (Twitter)",
+      "Instagram"
+    ],
+    "back_to_top": "Back to Top"
+  }
+}

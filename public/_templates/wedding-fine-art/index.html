@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elise Maes | Authentic Belgian Photography</title>
+
+  <!-- CDNs -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+  <!-- Tailwind config: palette + fonts -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:   '#fbf7ef',  /* bg-light / primary background */
+            sand:    '#eee9df',  /* bg-mid / footer background */
+            ink:     '#141414',  /* bg-dark / text-dark */
+            bark:    '#2a2825',  /* services section background */
+          },
+          fontFamily: {
+            sans:  ['"Instrument Sans"', 'sans-serif'],
+            serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Instrument Sans', sans-serif; background-color: #fbf7ef; color: #141414; }
+    .font-serif { font-family: 'Instrument Serif', serif; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SINGLE SOURCE OF TRUTH — edit here to rebrand the template
+       ═══════════════════════════════════════════════════════════ -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+      brand:     "Elise Maes",
+      brandInitials: "EM",
+      location:  "50.8503° N, 4.3517° E",
+      locationLabel: "Brussels, BE",
+      tagline:   "Adventure elopements and intimate weddings. Based in Brussels, Belgium. Travelling to wherever you are.",
+      instagram: "@ELISEMAESPHOTO",
+      copyright: "© ELISE MAES 2026 | LEGAL",
+
+      hero: {
+        region:   "Belgium",
+        title1:   "SOULFUL",
+        title2:   "PHOTOGRAPHY",
+        subtitle: "for the wild at heart lovers",
+        image:    "img/hero.jpg"
+      },
+
+      intro: {
+        eyebrow: "Couples | Weddings | Elopements | Editorial",
+        heading1: "CANDID CINEMATIC STORYTELLING",
+        heading2: "THAT ALWAYS FEELS LIKE YOU",
+        body:    "Based in Brussels and always ready to travel wherever your story leads, I specialize in capturing the quiet, unfiltered moments that make your love yours. Whether it's a windswept mountain elopement, a historic chateau ceremony, or a cozy engagement session in a cobblestone city, I approach each shoot with intention, curiosity, and deep respect.",
+        cta:     "Learn More",
+        imageLeft:  "img/intro-left.jpg",
+        imageRight: "img/intro-right.jpg"
+      },
+
+      services: {
+        tabs: ["01 Couples", "02 Elopements", "03 Intimate Weddings", "04 Editorial"],
+        heading: "SERVICES",
+        body1:   "I offer a range of photography services designed for couples who do things their own way. Whether you're planning a barefoot ceremony in the Scottish highlands, a snowy mountaintop vow exchange in the Alps, or cozy engagement photos in a historic European city, I'm here to document every wild, wonderful moment with honesty and heart.",
+        body2:   "My approach is journalistic, emotive, and always rooted in the real. Because the best moments are usually the ones you didn't plan for.",
+        cta:     "View Packages",
+        imageMain:   "img/services-main.jpg",
+        imageDetail: "img/services-detail.jpg"
+      },
+
+      about: {
+        heading1: "MEET YOUR",
+        heading2: "PHOTOGRAPHER",
+        paragraph1: "Hey, I'm Elise — architecture admirer, light chaser, and big fan of spontaneous detours down unknown streets. I've always believed there's something sacred about human connection, and I bring that energy into every love story I photograph.",
+        paragraph2: "I'm here for the couples who light up in ancient cities — who choose quiet historical ruins over crowded halls, and would rather wander a cobblestone alleyway than walk down an aisle. My style is part documentary, part editorial, with an emphasis on the real, raw moments.",
+        links: [
+          { label: "Get to know me",          num: "01" },
+          { label: "View experience + packages", num: "02" },
+          { label: "Browse portfolio",         num: "03" }
+        ],
+        imageMain:   "img/about-main.jpg",
+        imageDetail: "img/about-detail.jpg"
+      },
+
+      testimonials: [
+        {
+          quote:  "Elise captured the essence of our day so perfectly. Looking at the photos feels like reliving the exact emotions we felt. The light, the mood, the quiet moments — everything was documented beautifully. We couldn't have asked for a better storyteller.",
+          couple: "Sophie + Marc"
+        }
+      ],
+
+      cta: {
+        heading1: "LET'S GET LOST IN",
+        heading2: "LOVE TOGETHER",
+        button:   "Get In Touch",
+        image:    "img/cta.jpg"
+      },
+
+      gallery: [
+        { image: "img/ig1.jpg" },
+        { image: "img/ig2.jpg" },
+        { image: "img/ig3.jpg" },
+        { image: "img/ig4.jpg" },
+        { image: "img/ig5.jpg" }
+      ],
+
+      nav: ["Instagram", "Pinterest", "Tiktok", "Journal"]
+    };
+  </script>
+</head>
+
+<body class="antialiased" style="selection-background: #141414; selection-color: #fbf7ef;">
+
+  <!-- ══════════════════ NAVIGATION ══════════════════ -->
+  <header class="flex text-slate-50 mix-blend-difference w-full z-50 px-6 py-8 absolute top-0 items-center justify-between">
+    <div class="flex gap-4">
+      <!-- Camera icon SVG -->
+      <a href="#" aria-label="Portfolio" class="hover:opacity-70 transition-opacity">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 3L7.17 5H4C2.9 5 2 5.9 2 7v13c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2h-3.17L15 3H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.65 0-3 1.35-3 3s1.35 3 3 3 3-1.35 3-3-1.35-3-3-3z"/>
+        </svg>
+      </a>
+      <!-- Gallery icon SVG -->
+      <a href="#" aria-label="Gallery" class="hover:opacity-70 transition-opacity">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"/>
+        </svg>
+      </a>
+    </div>
+
+    <a href="#" class="md:text-2xl uppercase flex items-center gap-3 text-xl text-slate-50 tracking-widest">
+      <span class="text-2xl italic text-slate-50 tracking-tighter font-serif opacity-100" data-sg-path="brandInitials">EM</span>
+      <span class="md:text-base text-sm font-light text-slate-50 tracking-widest pt-1" data-sg-path="brand">Elise Maes</span>
+    </a>
+
+    <button class="flex flex-col focus:outline-none p-2 gap-y-1.5" aria-label="Menu">
+      <span class="w-6 bg-current block" style="height:1px"></span>
+      <span class="w-6 bg-current block" style="height:1px"></span>
+    </button>
+  </header>
+
+  <!-- ══════════════════ HERO ══════════════════ -->
+  <section class="relative h-screen w-full overflow-hidden flex flex-col justify-center items-center text-center bg-ink">
+    <img data-sg-img="hero.image"
+         src="img/hero.jpg"
+         alt="Wedding couple in landscape"
+         data-sg-parallax
+         class="object-center opacity-60 w-full h-full object-cover absolute inset-0">
+
+    <div class="relative z-10 flex flex-col items-center px-4 max-w-5xl mx-auto mt-16" data-sg-reveal>
+      <span class="text-xs md:text-sm uppercase tracking-[0.2em] text-white/80 mb-6 md:mb-8 font-light" data-sg-path="hero.region">Belgium</span>
+      <h1 class="text-6xl md:text-8xl lg:text-[7rem] leading-[0.9] font-serif tracking-tight text-white mb-6">
+        <span data-sg-path="hero.title1">SOULFUL</span><br>
+        <span data-sg-path="hero.title2">PHOTOGRAPHY</span>
+      </h1>
+      <p class="font-serif italic text-xl md:text-3xl text-white/90 mt-4 tracking-tight" data-sg-path="hero.subtitle">
+        for the wild at heart lovers
+      </p>
+    </div>
+
+    <div class="absolute bottom-8 left-6 right-6 justify-between text-xs md:text-sm uppercase tracking-widest text-white/70 font-light hidden md:flex">
+      <span data-sg-path="location">50.8503° N, 4.3517° E</span>
+      <span data-sg-path="locationLabel">Brussels, BE</span>
+    </div>
+  </section>
+
+  <!-- ══════════════════ INTRO ══════════════════ -->
+  <section class="py-24 md:py-32 px-6 bg-cream relative overflow-hidden" data-sg-reveal>
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      <span class="text-xs md:text-sm uppercase tracking-[0.15em] text-black/60 font-light mb-8 block" data-sg-path="intro.eyebrow">Couples | Weddings | Elopements | Editorial</span>
+
+      <h2 class="text-4xl md:text-6xl font-serif tracking-tight leading-none mb-8">
+        <span data-sg-path="intro.heading1">CANDID CINEMATIC STORYTELLING</span><br>
+        <span data-sg-path="intro.heading2">THAT ALWAYS FEELS LIKE YOU</span>
+      </h2>
+
+      <p class="text-lg md:text-xl text-black/80 font-light max-w-2xl mx-auto leading-relaxed mb-12" data-sg-path="intro.body">
+        Based in Brussels and always ready to travel wherever your story leads, I specialize in capturing the quiet, unfiltered moments that make your love yours. Whether it's a windswept mountain elopement, a historic chateau ceremony, or a cozy engagement session in a cobblestone city, I approach each shoot with intention, curiosity, and deep respect.
+      </p>
+
+      <a href="#" class="inline-flex items-center gap-2 text-sm uppercase tracking-widest border-b border-black pb-1 hover:text-black/60 hover:border-black/60 transition-all duration-300">
+        <span data-sg-path="intro.cta">Learn More</span>
+      </a>
+    </div>
+
+    <!-- Decorative rotated images (desktop only) -->
+    <div class="hidden lg:block absolute top-12 left-12 w-48 h-64 shadow-xl transform -rotate-2">
+      <img data-sg-img="intro.imageLeft" src="img/intro-left.jpg" class="w-full h-full object-cover sepia-[0.2] grayscale-[0.2]" alt="Wedding detail">
+    </div>
+    <div class="hidden lg:block absolute bottom-12 right-24 w-56 h-72 shadow-xl transform rotate-3">
+      <img data-sg-img="intro.imageRight" src="img/intro-right.jpg" class="w-full h-full object-cover sepia-[0.2] grayscale-[0.2]" alt="Wedding detail">
+    </div>
+  </section>
+
+  <!-- ══════════════════ SERVICES ══════════════════ -->
+  <section class="bg-bark text-[#eee9df] flex flex-col md:flex-row min-h-screen" data-sg-reveal>
+    <!-- Vertical tabs -->
+    <div class="w-full md:w-32 border-b md:border-b-0 md:border-r border-white/10 flex md:flex-col text-sm uppercase tracking-widest font-light overflow-x-auto no-scrollbar">
+      <div class="px-6 py-4 md:py-12 md:h-1/4 border-r md:border-r-0 md:border-b border-white/10 flex items-center justify-center min-w-[120px] md:min-w-0">
+        <span class="md:-rotate-90 whitespace-nowrap" data-sg-path="services.tabs[0]">01 Couples</span>
+      </div>
+      <div class="px-6 py-4 md:py-12 md:h-1/4 border-r md:border-r-0 md:border-b border-white/10 flex items-center justify-center text-white/40 min-w-[120px] md:min-w-0">
+        <span class="md:-rotate-90 whitespace-nowrap" data-sg-path="services.tabs[1]">02 Elopements</span>
+      </div>
+      <div class="px-6 py-4 md:py-12 md:h-1/4 border-r md:border-r-0 md:border-b border-white/10 flex items-center justify-center text-white/40 min-w-[120px] md:min-w-0">
+        <span class="md:-rotate-90 whitespace-nowrap" data-sg-path="services.tabs[2]">03 Intimate Weddings</span>
+      </div>
+      <div class="px-6 py-4 md:py-12 md:h-1/4 flex items-center justify-center text-white/40 min-w-[120px] md:min-w-0">
+        <span class="md:-rotate-90 whitespace-nowrap" data-sg-path="services.tabs[3]">04 Editorial</span>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="flex-1 p-8 md:p-24 flex flex-col justify-center">
+      <h2 class="text-5xl md:text-7xl font-serif tracking-tight mb-16" data-sg-path="services.heading">SERVICES</h2>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div class="order-2 lg:order-1 relative">
+          <img data-sg-img="services.imageMain"
+               src="img/services-main.jpg"
+               class="aspect-[3/4] grayscale-[0.3] w-full max-w-md object-cover mr-auto ml-auto"
+               alt="Couple elopement">
+          <img data-sg-img="services.imageDetail"
+               src="img/services-detail.jpg"
+               class="-top-12 -right-4 aspect-square hidden md:block grayscale-[0.3] w-1/2 object-cover border-bark border-4 absolute"
+               alt="Wedding detail">
+        </div>
+
+        <div class="order-1 lg:order-2">
+          <p class="text-lg md:text-xl font-light text-white/80 leading-relaxed mb-8" data-sg-path="services.body1">
+            I offer a range of photography services designed for couples who do things their own way. Whether you're planning a barefoot ceremony in the Scottish highlands, a snowy mountaintop vow exchange in the Alps, or cozy engagement photos in a historic European city, I'm here to document every wild, wonderful moment with honesty and heart.
+          </p>
+          <p class="text-lg md:text-xl font-light text-white/80 leading-relaxed mb-12" data-sg-path="services.body2">
+            My approach is journalistic, emotive, and always rooted in the real. Because the best moments are usually the ones you didn't plan for.
+          </p>
+          <a href="#" class="inline-flex items-center gap-2 text-sm uppercase tracking-widest border-b border-white/50 pb-1 hover:text-white hover:border-white transition-all duration-300">
+            <span data-sg-path="services.cta">View Packages</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ ABOUT ══════════════════ -->
+  <section class="md:py-32 bg-cream pt-24 pr-6 pb-24 pl-6" data-sg-reveal>
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+
+      <!-- Image collage -->
+      <div class="relative h-[600px] md:h-[800px] w-full max-w-lg mx-auto lg:mx-0">
+        <img data-sg-img="about.imageMain"
+             src="img/about-main.jpg"
+             class="grayscale-[0.2] w-4/5 h-4/5 object-cover absolute bottom-0 left-0"
+             alt="Photographer portrait">
+        <img data-sg-img="about.imageDetail"
+             src="img/about-detail.jpg"
+             class="aspect-[3/4] grayscale-[0.2] w-2/5 object-cover border-cream border-8 absolute top-0 right-0"
+             alt="Nature detail">
+      </div>
+
+      <!-- Content -->
+      <div class="flex flex-col justify-center">
+        <h2 class="text-5xl md:text-7xl font-serif tracking-tight leading-none mb-8">
+          <span data-sg-path="about.heading1">MEET YOUR</span><br>
+          <span data-sg-path="about.heading2">PHOTOGRAPHER</span>
+        </h2>
+
+        <div class="space-y-6 text-lg md:text-xl font-light text-black/80 leading-relaxed mb-16">
+          <p data-sg-path="about.paragraph1">
+            Hey, I'm Elise — architecture admirer, light chaser, and big fan of spontaneous detours down unknown streets. I've always believed there's something sacred about human connection, and I bring that energy into every love story I photograph.
+          </p>
+          <p data-sg-path="about.paragraph2">
+            I'm here for the couples who light up in ancient cities — who choose quiet historical ruins over crowded halls, and would rather wander a cobblestone alleyway than walk down an aisle. My style is part documentary, part editorial, with an emphasis on the real, raw moments.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-4 w-full text-sm md:text-base uppercase tracking-widest font-light">
+          <a href="#" class="flex justify-between items-center py-4 border-b border-black/10 hover:border-black/40 transition-colors group">
+            <span data-sg-path="about.links[0].label">Get to know me</span>
+            <span class="text-black/40 group-hover:text-black transition-colors" data-sg-path="about.links[0].num">01</span>
+          </a>
+          <a href="#" class="flex justify-between items-center py-4 border-b border-black/10 hover:border-black/40 transition-colors group">
+            <span data-sg-path="about.links[1].label">View experience + packages</span>
+            <span class="text-black/40 group-hover:text-black transition-colors" data-sg-path="about.links[1].num">02</span>
+          </a>
+          <a href="#" class="flex justify-between items-center py-4 border-b border-black/10 hover:border-black/40 transition-colors group">
+            <span data-sg-path="about.links[2].label">Browse portfolio</span>
+            <span class="text-black/40 group-hover:text-black transition-colors" data-sg-path="about.links[2].num">03</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ TESTIMONIALS ══════════════════ -->
+  <section class="py-24 md:py-32 px-6 bg-ink text-cream" data-sg-reveal>
+    <div class="max-w-6xl mx-auto flex flex-col">
+
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 gap-8">
+        <div>
+          <h2 class="leading-none md:text-7xl text-5xl tracking-tight font-serif mb-2">LOVE NOTES</h2>
+          <p class="font-serif italic text-xl md:text-2xl text-white/60 tracking-tight">from past couples</p>
+        </div>
+        <div class="text-xs uppercase tracking-widest text-white/50 font-light hidden md:block" data-sg-path="location">
+          50.8503° N, 4.3517° E
+        </div>
+      </div>
+
+      <div class="max-w-4xl mx-auto text-center relative">
+        <!-- Decorative quote mark -->
+        <svg class="absolute -top-8 -left-8 md:-top-16 md:-left-16 w-8 h-8 md:w-14 md:h-14 text-white/10" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
+        </svg>
+        <p class="text-2xl md:text-4xl lg:text-5xl font-serif italic leading-[1.3] tracking-tight mb-16" data-sg-path="testimonials[0].quote">
+          "Elise captured the essence of our day so perfectly. Looking at the photos feels like reliving the exact emotions we felt. The light, the mood, the quiet moments — everything was documented beautifully. We couldn't have asked for a better storyteller."
+        </p>
+      </div>
+
+      <div class="flex flex-col md:flex-row justify-between items-center gap-8 mt-12 pt-8 border-t border-white/10 text-sm uppercase tracking-widest font-light">
+        <span data-sg-path="testimonials[0].couple">Sophie + Marc</span>
+        <div class="flex gap-8">
+          <button class="hover:text-white/60 transition-colors flex items-center gap-2" aria-label="Previous">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            Prev
+          </button>
+          <button class="hover:text-white/60 transition-colors flex items-center gap-2" aria-label="Next">
+            Next
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 19l7-7-7-7"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════ CTA ══════════════════ -->
+  <section class="relative py-48 md:py-64 w-full flex items-center justify-center overflow-hidden bg-bark" data-sg-reveal>
+    <img data-sg-img="cta.image"
+         src="img/cta.jpg"
+         alt="Moody landscape"
+         data-sg-parallax
+         class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay grayscale">
+
+    <div class="relative z-10 text-center px-6">
+      <h2 class="text-5xl md:text-7xl lg:text-[6rem] font-serif tracking-tight text-white leading-[0.9] mb-12">
+        <span data-sg-path="cta.heading1">LET'S GET LOST IN</span><br>
+        <span data-sg-path="cta.heading2">LOVE TOGETHER</span>
+      </h2>
+      <a href="#" class="inline-block text-sm uppercase tracking-widest text-white border-b border-white pb-1 hover:text-white/70 hover:border-white/70 transition-all duration-300 font-light">
+        <span data-sg-path="cta.button">Get In Touch</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════════ FOOTER ══════════════════ -->
+  <footer class="bg-sand pt-16 md:pt-24 pb-8 px-6" data-sg-reveal>
+    <div class="max-w-7xl mx-auto">
+
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
+        <a href="#" class="text-2xl md:text-3xl uppercase tracking-widest flex items-center gap-3 text-ink">
+          <span class="font-serif tracking-tighter italic text-3xl" data-sg-path="brandInitials">EM</span>
+          <span class="tracking-widest font-light text-base md:text-lg pt-1" data-sg-path="brand">Elise Maes</span>
+        </a>
+        <span class="text-xs uppercase tracking-widest text-black/50 font-light" data-sg-path="location">
+          50.8503° N, 4.3517° E
+        </span>
+      </div>
+
+      <!-- Instagram / gallery grid -->
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-4 mb-16">
+        <a href="#" class="block aspect-square overflow-hidden group">
+          <img data-sg-img="gallery[0].image" src="img/ig1.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale-[0.3]" alt="Gallery 1">
+        </a>
+        <a href="#" class="block aspect-square overflow-hidden group">
+          <img data-sg-img="gallery[1].image" src="img/ig2.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale-[0.3]" alt="Gallery 2">
+        </a>
+        <a href="#" class="block aspect-square overflow-hidden group hidden md:block">
+          <img data-sg-img="gallery[2].image" src="img/ig3.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale-[0.3]" alt="Gallery 3">
+        </a>
+        <a href="#" class="block aspect-square overflow-hidden group hidden md:block">
+          <img data-sg-img="gallery[3].image" src="img/ig4.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale-[0.3]" alt="Gallery 4">
+        </a>
+        <a href="#" class="block aspect-square overflow-hidden group hidden md:block">
+          <img data-sg-img="gallery[4].image" src="img/ig5.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale-[0.3]" alt="Gallery 5">
+        </a>
+      </div>
+
+      <div class="flex flex-col md:flex-row justify-between items-start gap-12 mb-24">
+        <p class="max-w-sm text-sm md:text-base text-black/70 font-light leading-relaxed" data-sg-path="tagline">
+          Adventure elopements and intimate weddings. Based in Brussels, Belgium. Travelling to wherever you are.
+        </p>
+        <div class="text-left md:text-right">
+          <span class="block text-sm uppercase tracking-widest font-light mb-2">Follow Along</span>
+          <a href="#" class="text-sm uppercase tracking-widest font-medium hover:text-black/60 transition-colors" data-sg-path="instagram">@ELISEMAESPHOTO</a>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-black/10 text-xs md:text-sm uppercase tracking-widest font-light gap-6">
+        <div class="flex flex-wrap justify-center gap-6 md:gap-8">
+          <a href="#" class="hover:text-black/60 transition-colors" data-sg-path="nav[0]">Instagram</a>
+          <a href="#" class="hover:text-black/60 transition-colors" data-sg-path="nav[1]">Pinterest</a>
+          <a href="#" class="hover:text-black/60 transition-colors" data-sg-path="nav[2]">Tiktok</a>
+          <a href="#" class="hover:text-black/60 transition-colors" data-sg-path="nav[3]">Journal</a>
+        </div>
+        <div class="flex flex-col md:flex-row items-center gap-4 text-black/50">
+          <span data-sg-path="copyright">© ELISE MAES 2026 | LEGAL</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════════════
+       STANDARD HYDRATION + GSAP BLOCK (verbatim from guide)
+       ══════════════════════════════════════════════════════ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      // Hydrate texts
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      // Hydrate images (img.src or background-image)
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      // Animations: reveal/parallax on scroll (GSAP recreation, not a capture)
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, {
+            opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+          });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, {
+            yPercent: -15, ease: 'none',
+            scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+          });
+        });
+        // ROBUSTNESS: recalculate positions after images load
+        // (prevents reveals below the fold staying at opacity:0 on image-heavy pages)
+        // + ultimate anti-blank-page safety net.
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+{
+  "brand": "Elise Maes",
+  "brandInitials": "EM",
+  "location": "50.8503° N, 4.3517° E",
+  "locationLabel": "Brussels, BE",
+  "tagline": "Adventure elopements and intimate weddings. Based in Brussels, Belgium. Travelling to wherever you are.",
+  "instagram": "@ELISEMAESPHOTO",
+  "copyright": "© ELISE MAES 2026 | LEGAL",
+  "hero": {
+    "region": "Belgium",
+    "title1": "SOULFUL",
+    "title2": "PHOTOGRAPHY",
+    "subtitle": "for the wild at heart lovers",
+    "image": "/_templates/wedding-fine-art/img/hero.jpg"
+  },
+  "intro": {
+    "eyebrow": "Couples | Weddings | Elopements | Editorial",
+    "heading1": "CANDID CINEMATIC STORYTELLING",
+    "heading2": "THAT ALWAYS FEELS LIKE YOU",
+    "body": "Based in Brussels and always ready to travel wherever your story leads, I specialize in capturing the quiet, unfiltered moments that make your love yours. Whether it's a windswept mountain elopement, a historic chateau ceremony, or a cozy engagement session in a cobblestone city, I approach each shoot with intention, curiosity, and deep respect.",
+    "cta": "Learn More",
+    "imageLeft": "/_templates/wedding-fine-art/img/intro-left.jpg",
+    "imageRight": "/_templates/wedding-fine-art/img/intro-right.jpg"
+  },
+  "services": {
+    "tabs": [
+      "01 Couples",
+      "02 Elopements",
+      "03 Intimate Weddings",
+      "04 Editorial"
+    ],
+    "heading": "SERVICES",
+    "body1": "I offer a range of photography services designed for couples who do things their own way. Whether you're planning a barefoot ceremony in the Scottish highlands, a snowy mountaintop vow exchange in the Alps, or cozy engagement photos in a historic European city, I'm here to document every wild, wonderful moment with honesty and heart.",
+    "body2": "My approach is journalistic, emotive, and always rooted in the real. Because the best moments are usually the ones you didn't plan for.",
+    "cta": "View Packages",
+    "imageMain": "/_templates/wedding-fine-art/img/services-main.jpg",
+    "imageDetail": "/_templates/wedding-fine-art/img/services-detail.jpg"
+  },
+  "about": {
+    "heading1": "MEET YOUR",
+    "heading2": "PHOTOGRAPHER",
+    "paragraph1": "Hey, I'm Elise — architecture admirer, light chaser, and big fan of spontaneous detours down unknown streets. I've always believed there's something sacred about human connection, and I bring that energy into every love story I photograph.",
+    "paragraph2": "I'm here for the couples who light up in ancient cities — who choose quiet historical ruins over crowded halls, and would rather wander a cobblestone alleyway than walk down an aisle. My style is part documentary, part editorial, with an emphasis on the real, raw moments.",
+    "links": [
+      {
+        "label": "Get to know me",
+        "num": "01"
+      },
+      {
+        "label": "View experience + packages",
+        "num": "02"
+      },
+      {
+        "label": "Browse portfolio",
+        "num": "03"
+      }
+    ],
+    "imageMain": "/_templates/wedding-fine-art/img/about-main.jpg",
+    "imageDetail": "/_templates/wedding-fine-art/img/about-detail.jpg"
+  },
+  "testimonials": [
+    {
+      "quote": "Elise captured the essence of our day so perfectly. Looking at the photos feels like reliving the exact emotions we felt. The light, the mood, the quiet moments — everything was documented beautifully. We couldn't have asked for a better storyteller.",
+      "couple": "Sophie + Marc"
+    }
+  ],
+  "cta": {
+    "heading1": "LET'S GET LOST IN",
+    "heading2": "LOVE TOGETHER",
+    "button": "Get In Touch",
+    "image": "/_templates/wedding-fine-art/img/cta.jpg"
+  },
+  "gallery": [
+    {
+      "image": "/_templates/wedding-fine-art/img/ig1.jpg"
+    },
+    {
+      "image": "/_templates/wedding-fine-art/img/ig2.jpg"
+    },
+    {
+      "image": "/_templates/wedding-fine-art/img/ig3.jpg"
+    },
+    {
+      "image": "/_templates/wedding-fine-art/img/ig4.jpg"
+    },
+    {
+      "image": "/_templates/wedding-fine-art/img/ig5.jpg"
+    }
+  ],
+  "nav": [
+    "Instagram",
+    "Pinterest",
+    "Tiktok",
+    "Journal"
+  ]
+}

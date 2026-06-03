@@ -1,0 +1,166 @@
+{
+  "meta": {
+    "title": "Ocean West Studio | Luxury Wedding Photography",
+    "description": "Luxury wedding photography & cinematography — capturing authentic stories worldwide."
+  },
+  "brand": "Ocean West Studio",
+  "spinningBadge": "WEDDINGS • FILMS • PHOTOGRAPHY • OCEAN WEST STUDIO • ",
+  "nav": [
+    "Home",
+    "Mini Sessions",
+    "Services",
+    "Portfolio",
+    "About",
+    "Inquire"
+  ],
+  "hero": {
+    "title1": "Wedding",
+    "title2": "Photography",
+    "tagline": "If you are looking for an authentic wedding photographer, capable of capturing the essence of your story and your emotions, you are in the right place. As a high-end wedding photographer, I go far beyond traditional photos, creating unique and unforgettable memories.",
+    "image": "/_templates/luxury-wedding/img/hero.jpg"
+  },
+  "logos": {
+    "label": "Featured Elegance",
+    "items": [
+      "VOGUE",
+      "Brides",
+      "Style Me Pretty",
+      "The Knot"
+    ]
+  },
+  "philosophy": {
+    "text": "Don't be afraid! I understand your concerns and want to make it easier for you. My team and I will help you to feel <em>comfortable, natural</em> and have <em>fun</em>. Reflecting who you really are in the most <em>authentic</em> way possible, capture all excitement, tears, joy and create photos and videos which would last <em>forever</em>.",
+    "imageRight": "/_templates/luxury-wedding/img/philosophy-portrait.jpg",
+    "imageLeft": "/_templates/luxury-wedding/img/philosophy-portrait-left.jpg"
+  },
+  "team": {
+    "label": "The Founders",
+    "heading1": "Vision & Craft",
+    "heading2": "Behind the Lens",
+    "intro": "With over a decade of documenting love stories across the globe, our foundation is built on blending editorial precision with raw, documentary intuition. We don't just take photographs; we craft heirlooms.",
+    "members": [
+      {
+        "name": "Heena Malhotra",
+        "role": "Lead Photographer",
+        "bio": "Elena brings an editorial eye and an unobtrusive approach, ensuring every frame is intentionally composed to immortalize the fleeting atmosphere and unseen glances of your day.",
+        "image": "/_templates/luxury-wedding/img/team-photographer.jpg"
+      },
+      {
+        "name": "Eddie Licea",
+        "role": "Lead Cinematographer",
+        "bio": "Julian's cinematic approach translates raw emotion into moving heirlooms. He focuses on narrative storytelling, preserving the grand architecture and dynamic energy of your celebration.",
+        "image": "/_templates/luxury-wedding/img/team-cinematographer.jpg"
+      }
+    ]
+  },
+  "services": {
+    "label": "Service",
+    "intro": "Our solutions are tailored to meet the unique vision of your celebration, providing artistry, reliability, and elegance at every stage of your journey.",
+    "items": [
+      {
+        "title": "Editorial & Timeless Stills",
+        "desc": "Curated, timeless imagery that captures both the grand moments and the quiet, unseen details. We focus on natural light, sophisticated composition, and raw emotion to build a visual legacy that feels authentically you.",
+        "category": "Photography",
+        "image": "/_templates/luxury-wedding/img/service-photography.jpg"
+      },
+      {
+        "title": "Cinematic & Emotional Films",
+        "desc": "Moving portraiture that tells the narrative of your day. We create elegant, emotion-driven films scored to perfectly tailored music, preserving the atmosphere, the spoken vows, and the dynamic energy of your celebration.",
+        "category": "Videography",
+        "image": "/_templates/luxury-wedding/img/service-videography.jpg"
+      },
+      {
+        "title": "Wedding Live Broadcasting",
+        "desc": "Share your most cherished moments in real-time with loved ones across the globe. We provide high-fidelity audio and multi-camera streaming to ensure no one misses your celebration.",
+        "category": "Broadcasting",
+        "image": "/_templates/luxury-wedding/img/service-broadcasting.jpg"
+      }
+    ]
+  },
+  "portfolio": {
+    "heading1": "Selected work",
+    "subheading": "Moments that are returned to",
+    "intro": "These photographs are chosen again and again, finding in them a familiar feeling of beauty and the exact mood. Look, get inspired and feel — perhaps they will respond to you today and become part of your legacy.",
+    "caption1": {
+      "title": "Quiet beauty",
+      "body": "Moments in which natural elegance unfolds quietly, confidently, and without unnecessary emphasis."
+    },
+    "caption2": {
+      "title": "Natural harmony",
+      "body": "Connections whose shape, energy, and rhythm create a profound sense of harmony at first glance."
+    },
+    "gallery": [
+      {
+        "image": "/_templates/luxury-wedding/img/gallery-rings.jpg",
+        "alt": "Wedding Rings Detail"
+      },
+      {
+        "image": "/_templates/luxury-wedding/img/gallery-bouquet.jpg",
+        "alt": "Bridal Bouquet Detail"
+      },
+      {
+        "imageBlur": "/_templates/luxury-wedding/img/gallery-bride-blur.jpg",
+        "imageSharp": "/_templates/luxury-wedding/img/gallery-bride-sharp.jpg",
+        "alt": "Bride Portrait"
+      },
+      {
+        "image": "/_templates/luxury-wedding/img/gallery-table.jpg",
+        "alt": "Wedding Table Setting"
+      },
+      {
+        "imageBlur": "/_templates/luxury-wedding/img/gallery-couple-blur.jpg",
+        "imageSharp": "/_templates/luxury-wedding/img/gallery-couple-sharp.jpg",
+        "alt": "Couple Walking"
+      },
+      {
+        "image": "/_templates/luxury-wedding/img/gallery-dancing.jpg",
+        "alt": "Celebration Dancing"
+      },
+      {
+        "image": "/_templates/luxury-wedding/img/gallery-champagne.jpg",
+        "alt": "Champagne Toast"
+      },
+      {
+        "image": "/_templates/luxury-wedding/img/gallery-dress.jpg",
+        "alt": "Wedding Dress Detail"
+      }
+    ]
+  },
+  "testimonial": {
+    "quote": "Working with Ocean West was the best investment we made. Their presence was calming, and the resulting work belongs in a magazine. They captured our love exactly as it felt.",
+    "name": "Eleanor & James",
+    "venue": "Château de Villette, France"
+  },
+  "faq": {
+    "label": "Information",
+    "heading": "Investment & FAQ",
+    "items": [
+      {
+        "q": "Do you offer custom packages?",
+        "a": "Yes! We customize packages based on how many hours you would need."
+      },
+      {
+        "q": "Is there a deposit?",
+        "a": "Yes, we require a signed contract and a 30% non-refundable retainer to secure your date and our exclusive availability."
+      },
+      {
+        "q": "How long do we have to wait for our photos and video?",
+        "a": "For a full day celebration, you can expect your complete, meticulously curated gallery and cinematic film delivered within 8 to 10 weeks."
+      },
+      {
+        "q": "Do you give out raw images?",
+        "a": "We do not provide raw files. Our dedicated color grading and editorial editing process is a fundamental part of the final artistic vision you invest in."
+      },
+      {
+        "q": "Can we request specific shots?",
+        "a": "Absolutely. Prior to your celebration, we will share a comprehensive questionnaire where you can detail specific family groupings and meaningful details."
+      }
+    ]
+  },
+  "contact": {
+    "heading": "Begin Your Journey",
+    "intro": "We accept a limited number of commissions each year to ensure every couple receives our utmost attention and artistry. Please share the details of your celebration below.",
+    "email": "hello@oceanweststudio.com",
+    "location": "Seattle / Worldwide"
+  }
+}

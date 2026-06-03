@@ -1,0 +1,239 @@
+{
+  "meta": {
+    "title": "Eco Garden Care – Expert Gardening & Landscaping",
+    "description": "Professional gardening and lawn care services. Eco-friendly tools, expert gardeners, 24/7 support."
+  },
+  "brand": "Eco Garden Care",
+  "nav": [
+    "About",
+    "Services",
+    "Contact"
+  ],
+  "navCta": "Get A Free Quote",
+  "hero": {
+    "tagline": "Transform Your Outdoor Space Effortlessly Today",
+    "description": "Create a greener, more beautiful outdoor space with expert gardening and landscape design.",
+    "cta": "Book Your Service",
+    "image": "/_templates/eco-garden-care/img/hero.jpg"
+  },
+  "features": [
+    {
+      "icon": "🌿",
+      "title": "Skilled Gardeners",
+      "text": "Our expert gardeners use their skills to bring your dream garden to life, beautifully today."
+    },
+    {
+      "icon": "🌱",
+      "title": "Eco-Friendly Tools",
+      "text": "We use eco-friendly tools and sustainable methods to care for your garden."
+    },
+    {
+      "icon": "💬",
+      "title": "24/7 Customer Support",
+      "text": "Our customer support team is available 24/7 to answer any questions you have."
+    }
+  ],
+  "about": {
+    "label": "About Us",
+    "title": "Dedicated to Keeping Green Spaces Beautiful",
+    "description": "We are committed to creating and maintaining outdoor spaces that feel fresh, vibrant, and beautifully designed with passion.",
+    "values": [
+      {
+        "title": "Quality You Can Trust",
+        "text": "Reliable service, clear communication, consistent results."
+      },
+      {
+        "title": "Personalised Care",
+        "text": "Services tailored to your outdoor space and lifestyle."
+      }
+    ],
+    "cta": "Discover Our Story",
+    "image": "/_templates/eco-garden-care/img/about.jpg"
+  },
+  "services": {
+    "label": "Our Services",
+    "title": "Our Expert Services Today",
+    "items": [
+      {
+        "title": "Shrub Trimming",
+        "text": "Maintain a neat, vibrant garden with our expert shrub trimming services. Schedule today.",
+        "image": "/_templates/eco-garden-care/img/service-shrub.jpg"
+      },
+      {
+        "title": "Garden Maintenance",
+        "text": "With our full-service care you can keep your garden lush, lively and exquisitely arranged.",
+        "image": "/_templates/eco-garden-care/img/service-lawn.jpg"
+      },
+      {
+        "title": "Landscaping Design",
+        "text": "Elevate your property's appeal with our premier landscaping design solutions. Reach out.",
+        "image": "/_templates/eco-garden-care/img/service-maintenance.jpg"
+      }
+    ],
+    "cta": "Explore Our Services"
+  },
+  "stats": [
+    {
+      "number": "169",
+      "label": "Lawns Maintained"
+    },
+    {
+      "number": "51",
+      "label": "Landscaping Projects"
+    },
+    {
+      "number": "34",
+      "label": "Customer Satisfaction %"
+    },
+    {
+      "number": "169",
+      "label": "Happy Customers"
+    }
+  ],
+  "cta_mid": {
+    "title": "Make Your Outdoors Beautiful Naturally",
+    "text": "Our team uses sustainable methods, quality tools and plant-friendly techniques to create vibrant lawns.",
+    "badge1": "Free garden inspection consultation",
+    "badge2": "Eco-friendly tools &amp; safe treatments",
+    "cta": "Get A Free Quote",
+    "image": "/_templates/eco-garden-care/img/cta-bg.jpg"
+  },
+  "process": {
+    "label": "How It Works",
+    "title": "Trusted by 12k Happy Customers",
+    "image": "/_templates/eco-garden-care/img/process.jpg",
+    "steps": [
+      {
+        "number": "001",
+        "title": "Receive a Quote",
+        "text": "We provide a detailed estimate based on our inspection findings."
+      },
+      {
+        "number": "002",
+        "title": "Schedule the Service",
+        "text": "Choose a convenient date and time for the service to be performed."
+      },
+      {
+        "number": "003",
+        "title": "Service Completion",
+        "text": "Our team carries out the service with professionalism and care."
+      },
+      {
+        "number": "004",
+        "title": "Follow-Up Support",
+        "text": "We offer after-service support to ensure you're satisfied with the results."
+      }
+    ]
+  },
+  "testimonials": {
+    "label": "Testimonials",
+    "title": "Loved by Our Valued Clients",
+    "subtitle": "Our clients trust us to care for their gardens and lawns with dedication, skill and attention to detail.",
+    "items": [
+      {
+        "quote": "Absolutely outstanding service! My lawn has never looked this green and healthy. The team was professional, punctual, and paid attention to every detail. My garden is now a vibrant, colourful paradise.",
+        "name": "Daniel K.",
+        "role": "Commercial Property Manager",
+        "avatar": "/_templates/eco-garden-care/img/testimonial1.jpg"
+      },
+      {
+        "quote": "Incredible service from the team! Our lawn is the envy of the neighbourhood. They are punctual, courteous, and deliver outstanding results every time. I recommend their services to anyone seeking reliable lawn care.",
+        "name": "Angela R.",
+        "role": "Asset Management Specialist",
+        "avatar": "/_templates/eco-garden-care/img/testimonial2.jpg"
+      },
+      {
+        "quote": "They transformed our property into a stunning landscape. Their team is professional, efficient, and truly cares about the details. I highly recommend their services to anyone looking for top-notch lawn care!",
+        "name": "Jessica P.",
+        "role": "Property Investment Advisor",
+        "avatar": "/_templates/eco-garden-care/img/testimonial3.jpg"
+      }
+    ]
+  },
+  "gallery": {
+    "label": "Portfolio",
+    "title": "Our Landscaping Gallery",
+    "cta": "View Full Gallery",
+    "images": [
+      "/_templates/eco-garden-care/img/gallery1.jpg",
+      "/_templates/eco-garden-care/img/gallery2.jpg",
+      "/_templates/eco-garden-care/img/gallery3.jpg",
+      "/_templates/eco-garden-care/img/gallery4.jpg"
+    ]
+  },
+  "faq": {
+    "label": "FAQ",
+    "title": "Frequently Asked Questions",
+    "cta_title": "Transform Your Garden Today",
+    "cta_text": "Bring your garden to life with expert care and eco-friendly solutions. Our team of trained gardeners is ready to handle everything from routine maintenance.",
+    "cta": "Contact Us",
+    "items": [
+      {
+        "q": "How often should I schedule lawn maintenance?",
+        "a": "It depends on your lawn type and needs, but generally weekly or bi-weekly maintenance keeps your outdoor space healthy and looking its best."
+      },
+      {
+        "q": "What are the benefits of aerating my lawn?",
+        "a": "Aeration relieves soil compaction, improves water and nutrient absorption, encourages deeper root growth, and leads to a thicker, healthier lawn."
+      },
+      {
+        "q": "When is the best time to fertilize my lawn?",
+        "a": "For most grasses, spring and autumn are ideal. Spring fertilizing jumpstarts growth while autumn applications strengthen roots before winter."
+      },
+      {
+        "q": "How can I control weeds in my lawn?",
+        "a": "Regular mowing, proper watering, and dense healthy turf are the best natural defenses. We also offer selective weed-control treatments."
+      },
+      {
+        "q": "What type of grass is best for my climate?",
+        "a": "This depends on your region and sun exposure. Our experts will assess your garden and recommend the most suitable grass variety during the free consultation."
+      }
+    ]
+  },
+  "blog": {
+    "label": "Green Living",
+    "title": "Our Blog",
+    "posts": [
+      {
+        "date": "Jan 10, 2026",
+        "title": "Transform Your Outdoors with Expert Advice",
+        "image": "/_templates/eco-garden-care/img/blog1.jpg"
+      },
+      {
+        "date": "Jan 8, 2026",
+        "title": "Revamp Your Garden with Seasonal Tips",
+        "image": "/_templates/eco-garden-care/img/blog2.jpg"
+      },
+      {
+        "date": "Jan 19, 2026",
+        "title": "Maximize Your Space: Vertical Gardening Solutions",
+        "image": "/_templates/eco-garden-care/img/blog3.jpg"
+      }
+    ]
+  },
+  "footer_cta": {
+    "title": "Transform Your Garden with Experts",
+    "text": "Relax and enjoy a greener, more beautiful garden — expertly crafted to match your vision.",
+    "cta": "Get A Free Quote"
+  },
+  "footer": {
+    "tagline": "We provide professional gardening and lawn care services focused on your satisfaction.",
+    "quickLinks": [
+      "About Us",
+      "Our Services",
+      "Contact Us",
+      "Our Blog"
+    ],
+    "services": [
+      "Lawn Mowing",
+      "Garden Maintenance",
+      "Tree & Shrub Trimming",
+      "Seasonal Cleanups"
+    ],
+    "email": "info@gardencare.com",
+    "phone": "+1 (000) 123-4567",
+    "address": "123 Greenway Street, City Name",
+    "hours": "Mon – Sat: 8:00 AM – 6:00 PM",
+    "copyright": "© 2026 Eco Garden Care. All Rights Reserved."
+  }
+}

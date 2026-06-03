@@ -1,0 +1,475 @@
+{
+  "id": "eco-garden-care",
+  "name": "Paysagiste & jardin",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "meta",
+      "brand",
+      "nav",
+      "navCta",
+      "hero",
+      "features",
+      "about",
+      "services",
+      "stats",
+      "cta_mid",
+      "process",
+      "testimonials",
+      "gallery",
+      "faq",
+      "blog",
+      "footer_cta",
+      "footer"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.image",
+      "role": "hero",
+      "required": true,
+      "note": "hero · image"
+    },
+    {
+      "slot": "p2",
+      "path": "about.image",
+      "role": "image",
+      "required": true,
+      "note": "about · image"
+    },
+    {
+      "slot": "p3",
+      "path": "services.items[].image",
+      "role": "image",
+      "required": true,
+      "note": "services · items · image"
+    },
+    {
+      "slot": "p4",
+      "path": "cta_mid.image",
+      "role": "image",
+      "required": true,
+      "note": "cta_mid · image"
+    },
+    {
+      "slot": "p5",
+      "path": "process.image",
+      "role": "image",
+      "required": true,
+      "note": "process · image"
+    },
+    {
+      "slot": "p6",
+      "path": "testimonials.items[].avatar",
+      "role": "avatar",
+      "required": true,
+      "note": "testimonials · items · avatar"
+    },
+    {
+      "slot": "p7",
+      "path": "gallery.images[]",
+      "role": "gallery",
+      "required": true,
+      "note": "gallery · images"
+    },
+    {
+      "slot": "p8",
+      "path": "blog.posts[].image",
+      "role": "image",
+      "required": true,
+      "note": "blog · posts · image"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "meta.title",
+        "label": "meta · title",
+        "type": "text",
+        "maxLen": 77
+      },
+      {
+        "path": "meta.description",
+        "label": "meta · description",
+        "type": "text",
+        "maxLen": 157
+      },
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav[]",
+        "label": "nav",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "navCta",
+        "label": "navCta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "features[].title",
+        "label": "features · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.tagline",
+        "label": "hero · tagline",
+        "type": "text",
+        "maxLen": 75
+      },
+      {
+        "path": "hero.description",
+        "label": "hero · description",
+        "type": "text",
+        "maxLen": 144
+      },
+      {
+        "path": "hero.cta",
+        "label": "hero · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "features[].text",
+        "label": "features · text",
+        "type": "text",
+        "maxLen": 147
+      },
+      {
+        "path": "about.label",
+        "label": "about · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.title",
+        "label": "about · title",
+        "type": "text",
+        "maxLen": 69
+      },
+      {
+        "path": "about.description",
+        "label": "about · description",
+        "type": "text",
+        "maxLen": 198
+      },
+      {
+        "path": "about.values[].title",
+        "label": "about · values · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.values[].text",
+        "label": "about · values · text",
+        "type": "text",
+        "maxLen": 93
+      },
+      {
+        "path": "about.cta",
+        "label": "about · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.label",
+        "label": "services · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.title",
+        "label": "services · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.cta",
+        "label": "services · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.items[].title",
+        "label": "services · items · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.items[].text",
+        "label": "services · items · text",
+        "type": "text",
+        "maxLen": 141
+      },
+      {
+        "path": "stats[].number",
+        "label": "stats · number",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "stats[].label",
+        "label": "stats · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta_mid.title",
+        "label": "cta_mid · title",
+        "type": "text",
+        "maxLen": 61
+      },
+      {
+        "path": "cta_mid.text",
+        "label": "cta_mid · text",
+        "type": "text",
+        "maxLen": 165
+      },
+      {
+        "path": "cta_mid.badge1",
+        "label": "cta_mid · badge1",
+        "type": "text",
+        "maxLen": 56
+      },
+      {
+        "path": "cta_mid.badge2",
+        "label": "cta_mid · badge2",
+        "type": "text",
+        "maxLen": 64
+      },
+      {
+        "path": "cta_mid.cta",
+        "label": "cta_mid · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "process.label",
+        "label": "process · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "process.title",
+        "label": "process · title",
+        "type": "text",
+        "maxLen": 48
+      },
+      {
+        "path": "process.steps[].number",
+        "label": "process · steps · number",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "process.steps[].title",
+        "label": "process · steps · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "process.steps[].text",
+        "label": "process · steps · text",
+        "type": "text",
+        "maxLen": 102
+      },
+      {
+        "path": "testimonials.label",
+        "label": "testimonials · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.title",
+        "label": "testimonials · title",
+        "type": "text",
+        "maxLen": 43
+      },
+      {
+        "path": "testimonials.subtitle",
+        "label": "testimonials · subtitle",
+        "type": "text",
+        "maxLen": 166
+      },
+      {
+        "path": "testimonials.items[].quote",
+        "label": "testimonials · items · quote",
+        "type": "text",
+        "maxLen": 322
+      },
+      {
+        "path": "testimonials.items[].name",
+        "label": "testimonials · items · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.items[].role",
+        "label": "testimonials · items · role",
+        "type": "text",
+        "maxLen": 43
+      },
+      {
+        "path": "gallery.label",
+        "label": "gallery · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "gallery.title",
+        "label": "gallery · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "gallery.cta",
+        "label": "gallery · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.label",
+        "label": "faq · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.title",
+        "label": "faq · title",
+        "type": "text",
+        "maxLen": 42
+      },
+      {
+        "path": "faq.items[].q",
+        "label": "faq · items · q",
+        "type": "text",
+        "maxLen": 72
+      },
+      {
+        "path": "faq.items[].a",
+        "label": "faq · items · a",
+        "type": "text",
+        "maxLen": 224
+      },
+      {
+        "path": "faq.cta_title",
+        "label": "faq · cta_title",
+        "type": "text",
+        "maxLen": 43
+      },
+      {
+        "path": "faq.cta_text",
+        "label": "faq · cta_text",
+        "type": "text",
+        "maxLen": 250
+      },
+      {
+        "path": "faq.cta",
+        "label": "faq · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "blog.label",
+        "label": "blog · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "blog.title",
+        "label": "blog · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "blog.posts[].date",
+        "label": "blog · posts · date",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "blog.posts[].title",
+        "label": "blog · posts · title",
+        "type": "text",
+        "maxLen": 67
+      },
+      {
+        "path": "footer_cta.title",
+        "label": "footer_cta · title",
+        "type": "text",
+        "maxLen": 54
+      },
+      {
+        "path": "footer_cta.text",
+        "label": "footer_cta · text",
+        "type": "text",
+        "maxLen": 142
+      },
+      {
+        "path": "footer_cta.cta",
+        "label": "footer_cta · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.tagline",
+        "label": "footer · tagline",
+        "type": "text",
+        "maxLen": 138
+      },
+      {
+        "path": "footer.quickLinks[]",
+        "label": "footer · quickLinks",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.services[]",
+        "label": "footer · services",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.email",
+        "label": "footer · email",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.phone",
+        "label": "footer · phone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.hours",
+        "label": "footer · hours",
+        "type": "text",
+        "maxLen": 45
+      },
+      {
+        "path": "footer.address",
+        "label": "footer · address",
+        "type": "text",
+        "maxLen": 48
+      },
+      {
+        "path": "footer.copyright",
+        "label": "footer · copyright",
+        "type": "text",
+        "maxLen": 70
+      }
+    ]
+  }
+}

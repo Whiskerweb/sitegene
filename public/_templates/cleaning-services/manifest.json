@@ -1,0 +1,343 @@
+{
+  "id": "cleaning-services",
+  "name": "Ménage & services",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "meta",
+      "brand",
+      "topbar",
+      "nav",
+      "hero",
+      "badge",
+      "services",
+      "trust",
+      "howItWorks",
+      "stats",
+      "whyUs",
+      "testimonials",
+      "features",
+      "faq",
+      "cta",
+      "footer"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.image",
+      "role": "hero",
+      "required": true,
+      "note": "hero · image"
+    },
+    {
+      "slot": "p2",
+      "path": "services.items[].image",
+      "role": "image",
+      "required": true,
+      "note": "services · items · image"
+    },
+    {
+      "slot": "p3",
+      "path": "whyUs.image",
+      "role": "image",
+      "required": true,
+      "note": "whyUs · image"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "meta.title",
+        "label": "meta · title",
+        "type": "text",
+        "maxLen": 78
+      },
+      {
+        "path": "meta.description",
+        "label": "meta · description",
+        "type": "text",
+        "maxLen": 147
+      },
+      {
+        "path": "topbar.phone",
+        "label": "topbar · phone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "topbar.email",
+        "label": "topbar · email",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.links[]",
+        "label": "nav · links",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.cta",
+        "label": "nav · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.rating",
+        "label": "hero · rating",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.ratingText",
+        "label": "hero · ratingText",
+        "type": "text",
+        "maxLen": 56
+      },
+      {
+        "path": "hero.title",
+        "label": "hero · title",
+        "type": "text",
+        "maxLen": 64
+      },
+      {
+        "path": "hero.tagline",
+        "label": "hero · tagline",
+        "type": "text",
+        "maxLen": 160
+      },
+      {
+        "path": "hero.cta",
+        "label": "hero · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "badge",
+        "label": "badge",
+        "type": "text",
+        "maxLen": 58
+      },
+      {
+        "path": "services.label",
+        "label": "services · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.items[].title",
+        "label": "services · items · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.items[].desc",
+        "label": "services · items · desc",
+        "type": "text",
+        "maxLen": 162
+      },
+      {
+        "path": "trust.paragraph",
+        "label": "trust · paragraph",
+        "type": "text",
+        "maxLen": 382
+      },
+      {
+        "path": "howItWorks.title",
+        "label": "howItWorks · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "howItWorks.subtitle",
+        "label": "howItWorks · subtitle",
+        "type": "text",
+        "maxLen": 165
+      },
+      {
+        "path": "howItWorks.steps[].number",
+        "label": "howItWorks · steps · number",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "howItWorks.steps[].title",
+        "label": "howItWorks · steps · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "howItWorks.steps[].desc",
+        "label": "howItWorks · steps · desc",
+        "type": "text",
+        "maxLen": 133
+      },
+      {
+        "path": "stats[].value",
+        "label": "stats · value",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "stats[].label",
+        "label": "stats · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "whyUs.title",
+        "label": "whyUs · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "whyUs.subtitle",
+        "label": "whyUs · subtitle",
+        "type": "text",
+        "maxLen": 155
+      },
+      {
+        "path": "whyUs.features[].title",
+        "label": "whyUs · features · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "whyUs.features[].desc",
+        "label": "whyUs · features · desc",
+        "type": "text",
+        "maxLen": 182
+      },
+      {
+        "path": "testimonials.title",
+        "label": "testimonials · title",
+        "type": "text",
+        "maxLen": 42
+      },
+      {
+        "path": "testimonials.subtitle",
+        "label": "testimonials · subtitle",
+        "type": "text",
+        "maxLen": 202
+      },
+      {
+        "path": "testimonials.items[].quote",
+        "label": "testimonials · items · quote",
+        "type": "text",
+        "maxLen": 210
+      },
+      {
+        "path": "testimonials.items[].author",
+        "label": "testimonials · items · author",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.items[].role",
+        "label": "testimonials · items · role",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "features.title",
+        "label": "features · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "features.subtitle",
+        "label": "features · subtitle",
+        "type": "text",
+        "maxLen": 173
+      },
+      {
+        "path": "features.items[]",
+        "label": "features · items",
+        "type": "text",
+        "maxLen": 54
+      },
+      {
+        "path": "faq.title",
+        "label": "faq · title",
+        "type": "text",
+        "maxLen": 42
+      },
+      {
+        "path": "faq.subtitle",
+        "label": "faq · subtitle",
+        "type": "text",
+        "maxLen": 198
+      },
+      {
+        "path": "faq.items[].question",
+        "label": "faq · items · question",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.items[].answer",
+        "label": "faq · items · answer",
+        "type": "text",
+        "maxLen": 298
+      },
+      {
+        "path": "cta.title",
+        "label": "cta · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta.subtitle",
+        "label": "cta · subtitle",
+        "type": "text",
+        "maxLen": 189
+      },
+      {
+        "path": "cta.phone",
+        "label": "cta · phone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta.caption",
+        "label": "cta · caption",
+        "type": "text",
+        "maxLen": 149
+      },
+      {
+        "path": "footer.tagline",
+        "label": "footer · tagline",
+        "type": "text",
+        "maxLen": 149
+      },
+      {
+        "path": "footer.columns[].heading",
+        "label": "footer · columns · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.columns[].links[]",
+        "label": "footer · columns · links",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.copyright",
+        "label": "footer · copyright",
+        "type": "text",
+        "maxLen": 40
+      }
+    ]
+  }
+}

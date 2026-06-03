@@ -1,0 +1,429 @@
+{
+  "id": "health-saas",
+  "name": "App / SaaS",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "meta",
+      "brand",
+      "nav",
+      "cta",
+      "hero",
+      "why",
+      "features",
+      "steps",
+      "testimonials",
+      "pricing",
+      "social_proof",
+      "faq",
+      "cta_section",
+      "footer"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.image",
+      "role": "hero",
+      "required": true,
+      "note": "hero · image"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "meta.title",
+        "label": "meta · title",
+        "type": "text",
+        "maxLen": 58
+      },
+      {
+        "path": "meta.description",
+        "label": "meta · description",
+        "type": "text",
+        "maxLen": 142
+      },
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav[]",
+        "label": "nav",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta",
+        "label": "cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.tagline",
+        "label": "hero · tagline",
+        "type": "text",
+        "maxLen": 58
+      },
+      {
+        "path": "hero.title",
+        "label": "hero · title",
+        "type": "text",
+        "maxLen": 43
+      },
+      {
+        "path": "hero.subtitle",
+        "label": "hero · subtitle",
+        "type": "text",
+        "maxLen": 142
+      },
+      {
+        "path": "hero.stat_num",
+        "label": "hero · stat_num",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.stat_unit",
+        "label": "hero · stat_unit",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.stat_label",
+        "label": "hero · stat_label",
+        "type": "text",
+        "maxLen": 61
+      },
+      {
+        "path": "hero.insight_label",
+        "label": "hero · insight_label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.insight_text",
+        "label": "hero · insight_text",
+        "type": "text",
+        "maxLen": 45
+      },
+      {
+        "path": "hero.insight_stat",
+        "label": "hero · insight_stat",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.doctors_num",
+        "label": "hero · doctors_num",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.doctors_label",
+        "label": "hero · doctors_label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "why.title",
+        "label": "why · title",
+        "type": "text",
+        "maxLen": 82
+      },
+      {
+        "path": "why.features[].title",
+        "label": "why · features · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "why.features[].body",
+        "label": "why · features · body",
+        "type": "text",
+        "maxLen": 139
+      },
+      {
+        "path": "why.features[].tags[]",
+        "label": "why · features · tags",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "why.features[].stat_num",
+        "label": "why · features · stat_num",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "why.features[].stat_label",
+        "label": "why · features · stat_label",
+        "type": "text",
+        "maxLen": 53
+      },
+      {
+        "path": "features.title",
+        "label": "features · title",
+        "type": "text",
+        "maxLen": 66
+      },
+      {
+        "path": "features.subtitle",
+        "label": "features · subtitle",
+        "type": "text",
+        "maxLen": 187
+      },
+      {
+        "path": "features.items[].title",
+        "label": "features · items · title",
+        "type": "text",
+        "maxLen": 58
+      },
+      {
+        "path": "features.items[].body",
+        "label": "features · items · body",
+        "type": "text",
+        "maxLen": 133
+      },
+      {
+        "path": "steps.title",
+        "label": "steps · title",
+        "type": "text",
+        "maxLen": 66
+      },
+      {
+        "path": "steps.items[].number",
+        "label": "steps · items · number",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "steps.items[].label",
+        "label": "steps · items · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "steps.items[].title",
+        "label": "steps · items · title",
+        "type": "text",
+        "maxLen": 66
+      },
+      {
+        "path": "steps.items[].body",
+        "label": "steps · items · body",
+        "type": "text",
+        "maxLen": 115
+      },
+      {
+        "path": "testimonials.title",
+        "label": "testimonials · title",
+        "type": "text",
+        "maxLen": 117
+      },
+      {
+        "path": "testimonials.items[].body",
+        "label": "testimonials · items · body",
+        "type": "text",
+        "maxLen": 218
+      },
+      {
+        "path": "testimonials.items[].name",
+        "label": "testimonials · items · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.items[].role",
+        "label": "testimonials · items · role",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.items[].tags[]",
+        "label": "testimonials · items · tags",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.cta_text",
+        "label": "testimonials · cta_text",
+        "type": "text",
+        "maxLen": 98
+      },
+      {
+        "path": "testimonials.cta_label",
+        "label": "testimonials · cta_label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.title",
+        "label": "pricing · title",
+        "type": "text",
+        "maxLen": 72
+      },
+      {
+        "path": "pricing.subtitle",
+        "label": "pricing · subtitle",
+        "type": "text",
+        "maxLen": 86
+      },
+      {
+        "path": "pricing.toggle_monthly",
+        "label": "pricing · toggle_monthly",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.toggle_yearly",
+        "label": "pricing · toggle_yearly",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.plans[].name",
+        "label": "pricing · plans · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.plans[].desc",
+        "label": "pricing · plans · desc",
+        "type": "text",
+        "maxLen": 91
+      },
+      {
+        "path": "pricing.plans[].price",
+        "label": "pricing · plans · price",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.plans[].period",
+        "label": "pricing · plans · period",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.plans[].features[]",
+        "label": "pricing · plans · features",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.plans[].cta",
+        "label": "pricing · plans · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.compare.columns[]",
+        "label": "pricing · compare · columns",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.compare.rows[].feature",
+        "label": "pricing · compare · rows · feature",
+        "type": "text",
+        "maxLen": 43
+      },
+      {
+        "path": "pricing.compare.rows[].values[]",
+        "label": "pricing · compare · rows · values",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "social_proof.subtitle",
+        "label": "social_proof · subtitle",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "social_proof.title",
+        "label": "social_proof · title",
+        "type": "text",
+        "maxLen": 141
+      },
+      {
+        "path": "social_proof.stat",
+        "label": "social_proof · stat",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.title",
+        "label": "faq · title",
+        "type": "text",
+        "maxLen": 42
+      },
+      {
+        "path": "faq.subtitle",
+        "label": "faq · subtitle",
+        "type": "text",
+        "maxLen": 190
+      },
+      {
+        "path": "faq.items[].q",
+        "label": "faq · items · q",
+        "type": "text",
+        "maxLen": 54
+      },
+      {
+        "path": "faq.items[].a",
+        "label": "faq · items · a",
+        "type": "text",
+        "maxLen": 187
+      },
+      {
+        "path": "cta_section.title",
+        "label": "cta_section · title",
+        "type": "text",
+        "maxLen": 158
+      },
+      {
+        "path": "cta_section.eyebrow",
+        "label": "cta_section · eyebrow",
+        "type": "text",
+        "maxLen": 128
+      },
+      {
+        "path": "cta_section.cta",
+        "label": "cta_section · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.brand",
+        "label": "footer · brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.links_left[]",
+        "label": "footer · links_left",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.links_right[]",
+        "label": "footer · links_right",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.copyright",
+        "label": "footer · copyright",
+        "type": "text",
+        "maxLen": 72
+      }
+    ]
+  }
+}
