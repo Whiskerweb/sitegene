@@ -2,9 +2,16 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { sendRaw } from "./client";
 import { receiptEmail, outreachEmail } from "./templates";
 
-/** URL publique de l'app (liens dans les emails). */
+/**
+ * URL publique pour les liens des emails. Priorité à EMAIL_PUBLIC_BASE_URL.
+ * GARDE-FOU : jamais de lien localhost/127.0.0.1 dans un email envoyé — le worker
+ * tourne en local avec NEXT_PUBLIC_APP_URL=localhost, on retombe alors sur la prod.
+ */
 function appUrl(): string {
-  return (process.env.NEXT_PUBLIC_APP_URL || "https://akyra.io").replace(/\/$/, "");
+  const raw =
+    process.env.EMAIL_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || "https://akyra.io";
+  if (raw.includes("localhost") || raw.includes("127.0.0.1")) return "https://akyra.io";
+  return raw.replace(/\/$/, "");
 }
 
 function fromTransactional(): string {
