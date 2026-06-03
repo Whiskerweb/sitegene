@@ -50,3 +50,6 @@ templates/**/.DS_Store
 
 # Fichiers temporaires du worker (photos pour l'analyse vision Claude)
 .intake-tmp/
+
+# Log du cron de prospection (local)
+outreach-cron.log
