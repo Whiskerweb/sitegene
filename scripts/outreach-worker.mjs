@@ -14,7 +14,7 @@ const ONCE = process.argv.includes("--once");
 // --- Réglages délivrabilité -------------------------------------------------
 const BATCH_PER_TICK = 8; // lignes traitées par tick
 const SEND_SPACING_MS = 8000; // pause entre deux envois réels
-const DAILY_CAP = 60; // plafond d'envois de prospection / jour
+const DAILY_CAP = 12; // plafond d'envois/jour — warmup (domaine partagé akyra.io)
 const POLL_MS = 30000; // intervalle de poll en mode boucle
 
 const admin = createClient(
