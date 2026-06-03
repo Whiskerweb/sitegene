@@ -14,7 +14,8 @@ type OutreachRow = {
   prospects: { first_name: string | null; email: string | null } | null;
 };
 
-type Ev = { token: string | null; type: string };
+type Ev = { token: string | null; type: string; created_at: string };
+const ENGAGE_TYPES = ["reveal_opened", "button_click", "go_live_clicked"];
 
 const STATUS: Record<string, { label: string; cls: string }> = {
   queued: { label: "En file", cls: "text-faint border-line" },
@@ -62,20 +63,34 @@ export default async function CrmPage() {
         "id, status, step, max_steps, next_run_at, last_sent_at, reveal_token, created_at, prospects(first_name, email)",
       )
       .order("created_at", { ascending: true }),
-    supabase.from("events").select("token, type").limit(5000),
+    supabase.from("events").select("token, type, created_at").limit(5000),
   ]);
 
   const rows = (outreachData ?? []) as unknown as OutreachRow[];
   const events = (eventsData ?? []) as Ev[];
 
-  // Engagement par token (a-t-il ouvert son reveal ? cliqué « mettre en ligne » ?).
-  const eng = new Map<string, { opened: boolean; goLive: boolean }>();
+  // Événements d'engagement groupés par token (avec horodatage).
+  const evByToken = new Map<string, Ev[]>();
   for (const e of events) {
-    if (!e.token) continue;
-    const a = eng.get(e.token) ?? { opened: false, goLive: false };
-    if (e.type === "reveal_opened") a.opened = true;
-    if (e.type === "go_live_clicked") a.goLive = true;
-    eng.set(e.token, a);
+    if (!e.token || !ENGAGE_TYPES.includes(e.type)) continue;
+    const arr = evByToken.get(e.token) ?? [];
+    arr.push(e);
+    evByToken.set(e.token, arr);
+  }
+
+  // Engagement RÉEL : uniquement les ouvertures/clics survenus APRÈS notre envoi
+  // (sinon on compterait les prévisualisations opérateur d'avant la campagne).
+  function engagement(token: string | null, sentAt: string | null) {
+    if (!token || !sentAt) return { opened: false, goLive: false };
+    const sentMs = new Date(sentAt).getTime();
+    let opened = false;
+    let goLive = false;
+    for (const e of evByToken.get(token) ?? []) {
+      if (new Date(e.created_at).getTime() <= sentMs) continue;
+      opened = true;
+      if (e.type === "go_live_clicked") goLive = true;
+    }
+    return { opened, goLive };
   }
 
   const count = (s: string) => rows.filter((r) => r.status === s).length;
@@ -120,7 +135,7 @@ export default async function CrmPage() {
           </thead>
           <tbody>
             {rows.map((r) => {
-              const e = r.reveal_token ? eng.get(r.reveal_token) : undefined;
+              const e = engagement(r.reveal_token, r.last_sent_at);
               const scheduled = r.status === "active" || r.status === "queued";
               return (
                 <tr key={r.id} className="border-b border-line/60 last:border-0">
@@ -141,7 +156,7 @@ export default async function CrmPage() {
                     {scheduled && r.step < r.max_steps ? fmtDate(r.next_run_at) : "—"}
                   </td>
                   <td className="px-4 py-3">
-                    {e?.opened ? (
+                    {e.opened ? (
                       <span className="text-gold-400">● {e.goLive ? "+ intéressé" : "oui"}</span>
                     ) : (
                       <span className="text-faint">—</span>
