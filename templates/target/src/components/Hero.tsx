@@ -3,6 +3,21 @@ import { ArrowUpRight } from 'lucide-react'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
+// Titre « PHOTOGRAPHER » : certaines lettres prennent une teinte spectrale
+// (comme la réf. target.framer.media où le titre capte les couleurs du fond).
+const TINT = '#5ad7ff'
+function HeroTitle({ word, from = 4, to = 8 }: { word: string; from?: number; to?: number }) {
+  return (
+    <>
+      {word.split('').map((c, i) => (
+        <span key={i} style={i >= from && i < to ? { color: TINT } : undefined}>
+          {c}
+        </span>
+      ))}
+    </>
+  )
+}
+
 interface HeroData {
   tagline: string
   title: string
@@ -21,11 +36,15 @@ export default function Hero({ data }: { data: HeroData }) {
   const hero = data
   return (
     <section className="relative h-screen min-h-[640px] w-full overflow-hidden bg-tg-dark text-white md:min-h-[720px]">
-      {/* Portrait motion-blur + voiles */}
-      <img src="img/hero.jpg" alt="" className="absolute inset-0 h-full w-full object-cover" />
+      {/* Portrait motion-blur + voiles spectrales (réf : rainbow blur très saturé) */}
+      <img src="img/hero.jpg" alt="" className="absolute inset-0 h-full w-full object-cover" style={{ filter: 'saturate(1.15) contrast(1.05)' }} />
       <div
-        className="absolute inset-0 mix-blend-color opacity-90"
-        style={{ background: 'linear-gradient(105deg, rgba(255,90,0,.6) 0%, rgba(255,0,90,.3) 40%, rgba(0,190,255,.45) 72%, rgba(0,255,170,.4) 100%)' }}
+        className="absolute inset-0 mix-blend-color"
+        style={{ background: 'linear-gradient(100deg, rgba(255,80,0,.85) 0%, rgba(255,0,110,.55) 32%, rgba(150,0,255,.4) 52%, rgba(0,180,255,.7) 74%, rgba(0,255,170,.65) 100%)' }}
+      />
+      <div
+        className="absolute inset-0 mix-blend-screen opacity-50"
+        style={{ background: 'linear-gradient(100deg, rgba(255,120,0,.5) 0%, transparent 40%, rgba(0,200,255,.45) 80%, rgba(0,255,180,.4) 100%)' }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-tg-dark via-transparent to-tg-dark/40" />
 
@@ -70,7 +89,7 @@ export default function Hero({ data }: { data: HeroData }) {
             className="tg-head font-bold uppercase leading-[0.9] tracking-tighter text-white"
             style={{ fontSize: 'clamp(2rem, 10.5vw, 4rem)' }}
           >
-            <span data-sg-path="hero.title" data-sg-edit="panel">{hero.title}</span>
+            <span data-sg-path="hero.title" data-sg-edit="panel"><HeroTitle word={hero.title} /></span>
           </motion.h1>
 
           <motion.p
@@ -131,7 +150,7 @@ export default function Hero({ data }: { data: HeroData }) {
                 className="tg-head font-bold uppercase leading-[0.8] tracking-tighter text-white"
                 style={{ fontSize: 'clamp(2.4rem, 11.5vw, 16rem)' }}
               >
-                <span data-sg-path="hero.title" data-sg-edit="panel">{hero.title}</span>
+                <span data-sg-path="hero.title" data-sg-edit="panel"><HeroTitle word={hero.title} /></span>
               </motion.h1>
             </div>
 

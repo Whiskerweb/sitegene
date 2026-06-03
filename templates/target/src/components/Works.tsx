@@ -19,12 +19,14 @@ export default function Works({ items = [] }: { items?: Work[] }) {
                 data-sg-img={`works[${i}].img`}
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <span data-sg-path={`works[${i}].category`} className="absolute left-4 top-4 rounded-full bg-black/55 px-3 py-1 text-xs backdrop-blur">
-                {w.category}
+              <span data-sg-path={`works[${i}].date`} className="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-tg-ink shadow-sm">
+                {w.date}
               </span>
             </div>
-            <p data-sg-path={`works[${i}].date`} className="mt-4 text-xs uppercase tracking-widest text-tg-mut">{w.date}</p>
-            <h3 data-sg-path={`works[${i}].title`} className="tg-head mt-1 text-2xl font-medium">{w.title}</h3>
+            <span data-sg-path={`works[${i}].category`} className="mt-4 inline-flex rounded-full bg-tg-ink/5 px-3 py-1 text-xs font-medium text-tg-mut">
+              {w.category}
+            </span>
+            <h3 data-sg-path={`works[${i}].title`} className="tg-head mt-3 text-2xl font-medium">{w.title}</h3>
             <p data-sg-path={`works[${i}].desc`} className="mt-2 max-w-md text-sm leading-relaxed text-tg-mut">{w.desc}</p>
           </FadeIn>
         ))}

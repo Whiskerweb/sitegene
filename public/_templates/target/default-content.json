@@ -126,14 +126,18 @@
           }
         ],
         "collaborations": [
-          "VOGUE",
-          "NIKE",
-          "AIRBNB",
-          "SPOTIFY",
-          "CANON",
-          "GUCCI",
-          "APPLE",
-          "LEICA"
+          "Lumière",
+          "Aperture",
+          "Studio 9",
+          "Northlight",
+          "Frame Co",
+          "Optik",
+          "Verve",
+          "Atelier"
+        ],
+        "collabLabels": [
+          "5+ years experience",
+          "2025 Photographer of the year"
         ],
         "works": [
           {
@@ -166,42 +170,88 @@
           }
         ],
         "beyond": {
-          "title": "Capture Beyond the Frame",
-          "body": "Photography, for me, is more than an image — it is a feeling preserved. I chase light, emotion and the unrepeatable in-between moments that make a story worth telling.",
-          "cta": "Capture Your Story",
+          "heading": "Capture Beyond the Frame",
+          "cards": {
+            "adapt": {
+              "title": "Indoor or Outdoor? I adapt seamlessly to any setting to capture the perfect shot.",
+              "img": "/_templates/target/img/p5.jpg"
+            },
+            "trust": {
+              "title": "Proven Experience & Trusted by Many",
+              "desc": "With over 10,000+ photos captured and 80+ satisfied clients.",
+              "imgs": [
+                "/_templates/target/img/p7.jpg",
+                "/_templates/target/img/p8.jpg",
+                "/_templates/target/img/p9.jpg",
+                "/_templates/target/img/p10.jpg",
+                "/_templates/target/img/p11.jpg",
+                "/_templates/target/img/p12.jpg"
+              ]
+            },
+            "gear": {
+              "title": "I shoot with",
+              "accent": "professional",
+              "tail": "-grade gears.",
+              "desc": "Every piece of equipment I shoot with is top quality. This ensures every image is crisp, detailed and ready for any use — print or digital.",
+              "img": "/_templates/target/img/p2.jpg"
+            },
+            "recognition": {
+              "title": "Recognized Beyond Borders",
+              "desc": "I've earned international recognition reflecting excellence.",
+              "img": "/_templates/target/img/p6.jpg"
+            },
+            "editing": {
+              "title": "Editing That Elevates, Not Alters",
+              "desc": "Every touch enhances the emotion of your photos.",
+              "img": "/_templates/target/img/p1.jpg"
+            },
+            "portrait": {
+              "img": "/_templates/target/img/p3.jpg"
+            },
+            "rating": {
+              "value": "80+",
+              "label": "satisfied clients"
+            }
+          },
           "stats": [
             {
-              "v": "12+",
-              "l": "Years of experience"
+              "value": 38,
+              "suffix": "+",
+              "label": "Awards"
             },
             {
-              "v": "450",
-              "l": "Projects delivered"
+              "value": 100,
+              "suffix": "%",
+              "label": "Clients referred"
             },
             {
-              "v": "38",
-              "l": "Awards & features"
+              "value": 12,
+              "suffix": "K+",
+              "label": "Photos captured"
             }
           ]
         },
         "testimonials": [
           {
-            "text": "Timi captured our wedding with such artistry. Every frame feels alive and honest.",
+            "text": "Timi captured our wedding with such artistry. Every frame feels alive and honest — the attention to detail and ability to capture genuine emotions made every shot a story we will treasure.",
             "name": "Amara Okafor",
             "role": "Wedding Client",
-            "avatar": "/_templates/target/img/p7.jpg"
+            "avatar": "/_templates/target/img/p7.jpg",
+            "rating": "4.9/5"
           },
           {
-            "text": "The most effortless shoot I have ever done. The results spoke louder than any copy could.",
+            "text": "The most effortless shoot I have ever done. The results spoke louder than any copy could, and the whole process felt calm, intentional and genuinely creative from start to finish.",
             "name": "Lukas Meyer",
             "role": "Creative Director",
-            "avatar": "/_templates/target/img/p8.jpg"
+            "avatar": "/_templates/target/img/p8.jpg",
+            "rating": "5.0/5"
           },
           {
-            "text": "Genuine, patient and ridiculously talented. Our family session felt like play.",
+            "text": "Genuine, patient and ridiculously talented. Our family session felt like play, yet the photos came back looking like fine art. We could not recommend the experience more highly.",
             "name": "Sofia Bianchi",
             "role": "Family Session",
-            "avatar": "/_templates/target/img/p9.jpg"
+            "avatar": "/_templates/target/img/p9.jpg",
+            "rating": "4.8/5"
           }
         ],
         "faqs": [
@@ -332,42 +382,88 @@
           ]
         },
         "beyond": {
-          "title": "Capture Beyond the Frame",
-          "body": "Photography, for me, is more than an image — it is a feeling preserved. I chase light, emotion and the unrepeatable in-between moments that make a story worth telling.",
-          "cta": "Capture Your Story",
+          "heading": "Capture Beyond the Frame",
+          "cards": {
+            "adapt": {
+              "title": "Indoor or Outdoor? I adapt seamlessly to any setting to capture the perfect shot.",
+              "img": "/_templates/target/img/p5.jpg"
+            },
+            "trust": {
+              "title": "Proven Experience & Trusted by Many",
+              "desc": "With over 10,000+ photos captured and 80+ satisfied clients.",
+              "imgs": [
+                "/_templates/target/img/p7.jpg",
+                "/_templates/target/img/p8.jpg",
+                "/_templates/target/img/p9.jpg",
+                "/_templates/target/img/p10.jpg",
+                "/_templates/target/img/p11.jpg",
+                "/_templates/target/img/p12.jpg"
+              ]
+            },
+            "gear": {
+              "title": "I shoot with",
+              "accent": "professional",
+              "tail": "-grade gears.",
+              "desc": "Every piece of equipment I shoot with is top quality. This ensures every image is crisp, detailed and ready for any use — print or digital.",
+              "img": "/_templates/target/img/p2.jpg"
+            },
+            "recognition": {
+              "title": "Recognized Beyond Borders",
+              "desc": "I've earned international recognition reflecting excellence.",
+              "img": "/_templates/target/img/p6.jpg"
+            },
+            "editing": {
+              "title": "Editing That Elevates, Not Alters",
+              "desc": "Every touch enhances the emotion of your photos.",
+              "img": "/_templates/target/img/p1.jpg"
+            },
+            "portrait": {
+              "img": "/_templates/target/img/p3.jpg"
+            },
+            "rating": {
+              "value": "80+",
+              "label": "satisfied clients"
+            }
+          },
           "stats": [
             {
-              "v": "12+",
-              "l": "Years of experience"
+              "value": 38,
+              "suffix": "+",
+              "label": "Awards"
             },
             {
-              "v": "450",
-              "l": "Projects delivered"
+              "value": 100,
+              "suffix": "%",
+              "label": "Clients referred"
             },
             {
-              "v": "38",
-              "l": "Awards & features"
+              "value": 12,
+              "suffix": "K+",
+              "label": "Photos captured"
             }
           ]
         },
         "testimonials": [
           {
-            "text": "Timi captured our wedding with such artistry. Every frame feels alive and honest.",
+            "text": "Timi captured our wedding with such artistry. Every frame feels alive and honest — the attention to detail and ability to capture genuine emotions made every shot a story we will treasure.",
             "name": "Amara Okafor",
             "role": "Wedding Client",
-            "avatar": "/_templates/target/img/p7.jpg"
+            "avatar": "/_templates/target/img/p7.jpg",
+            "rating": "4.9/5"
           },
           {
-            "text": "The most effortless shoot I have ever done. The results spoke louder than any copy could.",
+            "text": "The most effortless shoot I have ever done. The results spoke louder than any copy could, and the whole process felt calm, intentional and genuinely creative from start to finish.",
             "name": "Lukas Meyer",
             "role": "Creative Director",
-            "avatar": "/_templates/target/img/p8.jpg"
+            "avatar": "/_templates/target/img/p8.jpg",
+            "rating": "5.0/5"
           },
           {
-            "text": "Genuine, patient and ridiculously talented. Our family session felt like play.",
+            "text": "Genuine, patient and ridiculously talented. Our family session felt like play, yet the photos came back looking like fine art. We could not recommend the experience more highly.",
             "name": "Sofia Bianchi",
             "role": "Family Session",
-            "avatar": "/_templates/target/img/p9.jpg"
+            "avatar": "/_templates/target/img/p9.jpg",
+            "rating": "4.8/5"
           }
         ]
       }

@@ -29,7 +29,7 @@ export interface Work {
   img: string
 }
 
-export interface Testimonial { text: string; name: string; role: string; avatar: string }
+export interface Testimonial { text: string; name: string; role: string; avatar: string; rating: string }
 
 export interface Faq { q: string; a: string }
 
@@ -105,8 +105,15 @@ const HOME_CONTENT = {
     },
   ] as Service[],
 
+  // Logos partenaires neutres (façon Logoipsum, PAS de vraies marques).
   collaborations: [
-    'VOGUE', 'NIKE', 'AIRBNB', 'SPOTIFY', 'CANON', 'GUCCI', 'APPLE', 'LEICA',
+    'Lumière', 'Aperture', 'Studio 9', 'Northlight',
+    'Frame Co', 'Optik', 'Verve', 'Atelier',
+  ] as string[],
+  // Étiquettes de réassurance affichées à côté de la grille de logos.
+  collabLabels: [
+    '5+ years experience',
+    '2025 Photographer of the year',
   ] as string[],
 
   works: [
@@ -116,22 +123,50 @@ const HOME_CONTENT = {
     { date: 'October 2025', category: 'Brand & Commercial', title: 'Gaia Essence Skincare', desc: 'A brand-focused editorial inspired by nature, warmth and organic beauty.', img: img(6) },
   ] as Work[],
 
-  // Stats + CTA « beyond the frame »
+  // Bento « beyond the frame » + compteurs animés
   beyond: {
-    title: 'Capture Beyond the Frame',
-    body: 'Photography, for me, is more than an image — it is a feeling preserved. I chase light, emotion and the unrepeatable in-between moments that make a story worth telling.',
-    cta: 'Capture Your Story',
+    heading: 'Capture Beyond the Frame',
+    cards: {
+      adapt: {
+        title: 'Indoor or Outdoor? I adapt seamlessly to any setting to capture the perfect shot.',
+        img: img(5),
+      },
+      trust: {
+        title: 'Proven Experience & Trusted by Many',
+        desc: 'With over 10,000+ photos captured and 80+ satisfied clients.',
+        imgs: [img(7), img(8), img(9), img(10), img(11), img(12)],
+      },
+      gear: {
+        title: 'I shoot with',
+        accent: 'professional',
+        tail: '-grade gears.',
+        desc: 'Every piece of equipment I shoot with is top quality. This ensures every image is crisp, detailed and ready for any use — print or digital.',
+        img: img(2),
+      },
+      recognition: {
+        title: 'Recognized Beyond Borders',
+        desc: "I've earned international recognition reflecting excellence.",
+        img: img(6),
+      },
+      editing: {
+        title: 'Editing That Elevates, Not Alters',
+        desc: 'Every touch enhances the emotion of your photos.',
+        img: img(1),
+      },
+      portrait: { img: img(3) },
+      rating: { value: '80+', label: 'satisfied clients' },
+    },
     stats: [
-      { v: '12+', l: 'Years of experience' },
-      { v: '450', l: 'Projects delivered' },
-      { v: '38', l: 'Awards & features' },
+      { value: 38, suffix: '+', label: 'Awards' },
+      { value: 100, suffix: '%', label: 'Clients referred' },
+      { value: 12, suffix: 'K+', label: 'Photos captured' },
     ],
   },
 
   testimonials: [
-    { text: 'Timi captured our wedding with such artistry. Every frame feels alive and honest.', name: 'Amara Okafor', role: 'Wedding Client', avatar: img(7) },
-    { text: 'The most effortless shoot I have ever done. The results spoke louder than any copy could.', name: 'Lukas Meyer', role: 'Creative Director', avatar: img(8) },
-    { text: 'Genuine, patient and ridiculously talented. Our family session felt like play.', name: 'Sofia Bianchi', role: 'Family Session', avatar: img(9) },
+    { text: 'Timi captured our wedding with such artistry. Every frame feels alive and honest — the attention to detail and ability to capture genuine emotions made every shot a story we will treasure.', name: 'Amara Okafor', role: 'Wedding Client', avatar: img(7), rating: '4.9/5' },
+    { text: 'The most effortless shoot I have ever done. The results spoke louder than any copy could, and the whole process felt calm, intentional and genuinely creative from start to finish.', name: 'Lukas Meyer', role: 'Creative Director', avatar: img(8), rating: '5.0/5' },
+    { text: 'Genuine, patient and ridiculously talented. Our family session felt like play, yet the photos came back looking like fine art. We could not recommend the experience more highly.', name: 'Sofia Bianchi', role: 'Family Session', avatar: img(9), rating: '4.8/5' },
   ] as Testimonial[],
 
   faqs: [

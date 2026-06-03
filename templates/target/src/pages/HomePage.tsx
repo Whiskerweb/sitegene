@@ -18,12 +18,12 @@ export default function HomePage() {
       <FeaturedQuote data={content.featuredQuote} />
       <IntroText text={content.intro} />
       <Services intro={content.servicesIntro} items={content.services} />
-      <Collaborations items={content.collaborations} />
+      <Collaborations items={content.collaborations} labels={content.collabLabels} />
       <Works items={content.works} />
       <BeyondFrame data={content.beyond} />
       <Testimonials items={content.testimonials} />
-      <FAQs items={content.faqs} />
       <Gallery items={content.gallery} />
+      <FAQs items={content.faqs} />
     </>
   )
 }
