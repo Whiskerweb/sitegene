@@ -7,12 +7,27 @@ const SECTIONS: { title: string; cta: { label: string; href: string }; ids: stri
   {
     title: "À la une",
     cta: { label: "Tous les modèles", href: "/modeles" },
-    ids: ["target", "potozon", "alice-r"],
+    ids: ["luxury-wedding", "jazz-vocalist", "health-saas"],
   },
   {
-    title: "Récemment ajoutés",
+    title: "Photographes",
+    cta: { label: "Voir les photographes", href: "/modeles" },
+    ids: ["alice-r", "potozon", "target", "luxury-wedding", "wedding-fine-art"],
+  },
+  {
+    title: "Musiciens",
+    cta: { label: "Tous les modèles", href: "/modeles" },
+    ids: ["jazz-vocalist"],
+  },
+  {
+    title: "Artisans & services",
     cta: { label: "Voir les artisans", href: "/modeles" },
-    ids: ["arelec", "eloctix"],
+    ids: ["cleaning-services", "eco-garden-care", "arelec", "eloctix"],
+  },
+  {
+    title: "Portfolio & SaaS",
+    cta: { label: "Tous les modèles", href: "/modeles" },
+    ids: ["creative-portfolio", "health-saas"],
   },
 ];
 
