@@ -70,7 +70,7 @@ export const REALISATIONS: Realisation[] = [
     category: "Artisan",
     categoryId: "artisan",
     views: 118,
-    thumb: "/landing/tpl-eloctix.png",
+    thumb: "/landing/tpl-eloctix-shot.png",
     link: "/#apercu",
     featured: true,
     badge: "Nouveau",
