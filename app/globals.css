@@ -998,10 +998,12 @@ body {
   --m-on-accent: 10 18 48;     /* #0a1230 */
 }
 
-/* Marque Akyra (tone="auto") — bascule clair/sombre selon le thème .akyra.dark */
-.akyra-mark__dark { display: none; }
-.akyra.dark .akyra-mark__light { display: none; }
-.akyra.dark .akyra-mark__dark { display: inline-block; }
+/* Marque Akyra (tone="auto") — variante claire en inline ; sous le thème
+   sombre .akyra.dark, on remplace par la variante lumineuse (!important pour
+   battre le background-image inline). */
+.akyra.dark .akyra-mark {
+  background-image: url("/brand/akyra-dark.png") !important;
+}
 
 /* Scrollbar discrète du textarea de prompt */
 .akyra-scroll::-webkit-scrollbar { width: 8px; }

@@ -23,31 +23,27 @@ export function AkyraMark({
   className?: string;
   tone?: Tone;
 }) {
-  const imgProps = {
+  const base = {
     width: size,
     height: size,
-    alt: "",
-    draggable: false,
-    style: { width: size, height: size, objectFit: "contain" as const },
-  };
+    display: "inline-block",
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    flexShrink: 0,
+  } as const;
 
-  if (tone === "light") {
-    return <img src={LIGHT_SRC} aria-hidden className={className} {...imgProps} />;
-  }
-  if (tone === "dark") {
-    return <img src={DARK_SRC} aria-hidden className={className} {...imgProps} />;
-  }
+  // Un seul élément, jamais deux : l'image claire est posée en inline (toujours
+  // visible) ; en mode auto, `.akyra.dark .akyra-mark` la remplace par la sombre.
+  const src = tone === "dark" ? DARK_SRC : LIGHT_SRC;
+  const markClass = tone === "auto" ? `akyra-mark ${className}` : className;
 
-  // auto : les deux variantes, swap géré par CSS (.akyra.dark) dans globals.css
   return (
     <span
       aria-hidden
-      className={`akyra-mark ${className}`}
-      style={{ display: "inline-flex", width: size, height: size }}
-    >
-      <img src={LIGHT_SRC} className="akyra-mark__light" {...imgProps} />
-      <img src={DARK_SRC} className="akyra-mark__dark" {...imgProps} />
-    </span>
+      className={markClass}
+      style={{ ...base, backgroundImage: `url(${src})` }}
+    />
   );
 }
 
