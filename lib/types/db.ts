@@ -43,6 +43,23 @@ export type CreditReason =
   | 'ai_edit'
 export type PaymentKind = 'initial_50' | 'topup'
 
+// CRM — état dérivé du pipeline (cf. migrations 0011/0012).
+export type PipelineStage =
+  | 'A_CONTACTER'
+  | 'CONTACTE'
+  | 'REVEAL_VU'
+  | 'ENGAGE'
+  | 'GO_LIVE_INTENT'
+  | 'CLIENT'
+export type PipelineStatus =
+  | 'EN_COURS'
+  | 'GAGNE'
+  | 'PERDU'
+  | 'NON_QUALIFIE'
+  | 'DESABONNE'
+  | 'BOUNCE'
+export type StageChangedBy = 'system' | 'operator'
+
 // ISO 8601 timestamp string (Postgres timestamptz serialized by PostgREST).
 export type Timestamptz = string
 // UUID string.
@@ -77,6 +94,54 @@ export interface Prospect {
   source_note: string | null
   created_by: UUID | null
   created_at: Timestamptz
+  // --- CRM : enrichissement (0011) ---
+  category: string | null
+  city: string | null
+  phone: string | null
+  company_name: string | null
+  website: string | null
+  instagram: string | null
+  source: string | null
+  custom_fields: Json
+  campaign_id: UUID | null
+  // --- CRM : état dérivé, rempli par triggers (0011/0012) ---
+  pipeline_stage: PipelineStage
+  pipeline_status: PipelineStatus
+  lead_score: number
+  last_signal_at: Timestamptz | null
+  last_contacted_at: Timestamptz | null
+  lost_reason: string | null
+}
+
+export interface LeadStageHistory {
+  id: UUID
+  prospect_id: UUID
+  from_stage: PipelineStage | null
+  to_stage: PipelineStage | null
+  from_status: PipelineStatus | null
+  to_status: PipelineStatus | null
+  trigger_event_id: UUID | null
+  changed_by: StageChangedBy
+  changed_at: Timestamptz
+}
+
+export interface Campaign {
+  id: UUID
+  name: string
+  category: string | null
+  started_at: Timestamptz
+  segment: Json
+  created_at: Timestamptz
+}
+
+// Vue v_prospect_timeline (0013) — une ligne par signal, source = UNION de l'existant.
+export interface ProspectTimelineEntry {
+  prospect_id: UUID
+  ts: Timestamptz
+  channel: 'email' | 'site' | 'payment' | 'note' | 'stage'
+  kind: string
+  label: string
+  meta: Json
 }
 
 export interface ProspectCode {
@@ -227,8 +292,17 @@ export type ProfileInsert = Omit<
 > &
   Partial<Pick<Profile, 'is_operator' | 'stripe_customer_id' | 'created_at' | 'last_login_at'>>
 
-export type ProspectInsert = Omit<Prospect, 'id' | 'created_at'> &
-  Partial<Pick<Prospect, 'id' | 'created_at'>>
+// Colonnes CRM avec défaut DB ou nullables → optionnelles à l'insert.
+type ProspectCrmDefaulted =
+  | 'category' | 'city' | 'phone' | 'company_name' | 'website' | 'instagram' | 'source'
+  | 'custom_fields' | 'campaign_id' | 'pipeline_stage' | 'pipeline_status' | 'lead_score'
+  | 'last_signal_at' | 'last_contacted_at' | 'lost_reason'
+
+export type ProspectInsert = Omit<Prospect, 'id' | 'created_at' | ProspectCrmDefaulted> &
+  Partial<Pick<Prospect, 'id' | 'created_at' | ProspectCrmDefaulted>>
+
+export type CampaignInsert = Omit<Campaign, 'id' | 'started_at' | 'segment' | 'created_at'> &
+  Partial<Pick<Campaign, 'id' | 'started_at' | 'segment' | 'created_at'>>
 
 export type ProspectCodeInsert = Omit<ProspectCode, 'id' | 'status' | 'created_at'> &
   Partial<Pick<ProspectCode, 'id' | 'status' | 'created_at'>>
@@ -291,6 +365,8 @@ export interface Tables {
   prospect_codes: ProspectCode
   outreach: Outreach
   email_events: EmailEvent
+  lead_stage_history: LeadStageHistory
+  campaigns: Campaign
   templates: Template
   sites: Site
   site_content: SiteContent

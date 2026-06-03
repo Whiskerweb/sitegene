@@ -26,16 +26,16 @@ export default async function AdminLayout({
             </Link>
             <nav className="hidden gap-4 text-sm text-muted md:flex">
               <Link href="/admin" className="hover:text-paper">
-                Sites
+                Tableau de bord
+              </Link>
+              <Link href="/admin/prospects" className="hover:text-paper">
+                Prospects
               </Link>
               <Link href="/admin/new" className="hover:text-paper">
                 Nouveau site
               </Link>
               <Link href="/admin/notes" className="hover:text-paper">
                 Demandes
-              </Link>
-              <Link href="/admin/crm" className="hover:text-paper">
-                Prospection
               </Link>
             </nav>
           </div>
