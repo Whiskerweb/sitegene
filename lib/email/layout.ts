@@ -6,9 +6,22 @@
  */
 
 const INK = "#0c0a14";
-const GOLD = "#c9a84a";
 const MUTED = "#6b6878";
 const BORDER = "#ececf1";
+
+/** Logo Akyra (variante claire, fond transparent) — URL absolue pour les emails. */
+export const LOGO_URL =
+  process.env.AKYRA_LOGO_URL || "https://akyra.io/brand/akyra-light.png";
+
+/** En-tête de marque : symbole + mot-marque (le texte reste si l'image est bloquée). */
+export function brandHeader(): string {
+  return `<tr><td style="padding:26px 32px 8px;">
+      <img src="${LOGO_URL}" width="30" height="30" alt="Akyra"
+           style="vertical-align:middle;display:inline-block;border:0;outline:none;text-decoration:none;">
+      <span style="font-family:Arial,Helvetica,sans-serif;font-size:20px;font-weight:700;
+            color:${INK};letter-spacing:-0.02em;vertical-align:middle;margin-left:9px;">Akyra</span>
+    </td></tr>`;
+}
 
 export type EmailParts = { subject: string; html: string; text: string };
 
@@ -73,10 +86,7 @@ export function wrap(opts: {
     <tr><td align="center">
       <table role="presentation" width="100%" cellspacing="0" cellpadding="0"
              style="max-width:560px;background:#ffffff;border:1px solid ${BORDER};border-radius:16px;overflow:hidden;">
-        <tr><td style="padding:28px 32px 8px;">
-          <span style="font-family:Arial,Helvetica,sans-serif;font-size:20px;font-weight:700;
-                color:${INK};letter-spacing:-0.02em;">Akyra<span style="color:${GOLD};">.</span></span>
-        </td></tr>
+        ${brandHeader()}
         <tr><td style="padding:8px 32px 4px;font-family:Arial,Helvetica,sans-serif;
               font-size:15px;line-height:1.6;color:#26242e;">
           ${opts.bodyHtml}
