@@ -117,6 +117,12 @@ async function processBatch() {
       }
     }
 
+    // DRY_RUN = simulation pure : on n'envoie pas et on NE consomme PAS la file.
+    if (DRY_RUN) {
+      log(`[dry] enverrait à ${email} l'étape ${row.step} (/r/${String(row.reveal_token).slice(0, 10)}…)`);
+      continue;
+    }
+
     // Envoi de l'étape courante (row.step = index de l'email à envoyer).
     try {
       await sendOutreachStep(admin, {
@@ -143,7 +149,7 @@ async function processBatch() {
       sent += 1;
       budget -= 1;
       log(`✓ ${email} — étape ${row.step} → ${next.status}`);
-      if (!DRY_RUN) await sleep(SEND_SPACING_MS);
+      await sleep(SEND_SPACING_MS);
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
       await setOutreach(row.id, { status: "failed", error: msg });
