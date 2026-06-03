@@ -195,10 +195,32 @@ otp_expiry = 3600
 # admin_email = "admin@email.com"
 # sender_name = "Admin"
 
-# Uncomment to customize email template
-# [auth.email.template.invite]
-# subject = "You have been invited"
-# content_path = "./supabase/templates/invite.html"
+# Templates email Akyra (brandés, logo akyra-light.png). Source de vérité
+# versionnée — à reporter dans Dashboard → Auth → Email Templates tant que le
+# projet distant n'est pas géré par `supabase config push`.
+[auth.email.template.magic_link]
+subject = "Votre lien de connexion Akyra"
+content_path = "./supabase/templates/magic_link.html"
+
+[auth.email.template.confirmation]
+subject = "Confirmez votre inscription Akyra"
+content_path = "./supabase/templates/confirmation.html"
+
+[auth.email.template.recovery]
+subject = "Réinitialisez votre mot de passe Akyra"
+content_path = "./supabase/templates/recovery.html"
+
+[auth.email.template.email_change]
+subject = "Confirmez votre nouvelle adresse email"
+content_path = "./supabase/templates/email_change.html"
+
+[auth.email.template.invite]
+subject = "Vous êtes invité sur Akyra"
+content_path = "./supabase/templates/invite.html"
+
+[auth.email.template.reauthentication]
+subject = "Votre code de vérification Akyra"
+content_path = "./supabase/templates/reauthentication.html"
 
 # Uncomment to customize notification email template
 # [auth.email.notification.password_changed]

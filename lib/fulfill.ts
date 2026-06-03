@@ -2,6 +2,7 @@ import type Stripe from "stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { grantCredits } from "@/lib/credits-server";
 import { SIGNUP_CREDITS } from "@/lib/stripe";
+import { sendReceipt } from "@/lib/email/send";
 
 export type FulfillResult = {
   email: string | null;
@@ -76,6 +77,29 @@ export async function fulfillPayment(
   await grantCredits(admin, userId, SIGNUP_CREDITS, "signup_grant", {
     payment_id: payment?.id,
   });
+
+  // Reçu / bienvenue — best-effort, ne doit JAMAIS bloquer le fulfillment.
+  try {
+    let firstName: string | null = null;
+    if (code?.prospect_id) {
+      const { data: prospect } = await admin
+        .from("prospects")
+        .select("first_name")
+        .eq("id", code.prospect_id)
+        .maybeSingle();
+      firstName = prospect?.first_name ?? null;
+    }
+    await sendReceipt(admin, { to: email, firstName });
+    // Si ce prospect était dans une séquence de prospection : converti → stop.
+    if (code?.prospect_id) {
+      await admin
+        .from("outreach")
+        .update({ status: "converted", updated_at: new Date().toISOString() })
+        .eq("prospect_id", code.prospect_id);
+    }
+  } catch (e) {
+    console.error("[fulfill] receipt email failed:", e instanceof Error ? e.message : e);
+  }
 
   if (code?.id) {
     await admin.from("prospect_codes").update({ status: "paid" }).eq("id", code.id);
