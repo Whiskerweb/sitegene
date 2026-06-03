@@ -1,0 +1,221 @@
+{
+  "meta": {
+    "title": "BlueDrop – Modern Plumbing Care You Can Trust 24/7",
+    "description": "Licensed plumbing experts for leak detection, drain cleaning, sewer lines and fixture repair. Available 24/7. Book a free consultation today."
+  },
+  "brand": "BlueDrop",
+  "topbar": {
+    "rating": "4.9 Rated",
+    "ratingNote": "by Satisfied Customers",
+    "phone": "+1 406 555 0190"
+  },
+  "nav": {
+    "links": [
+      "Pages",
+      "About",
+      "Services",
+      "Contact"
+    ],
+    "cta": "Call us: +1 406 555 0190"
+  },
+  "hero": {
+    "badge": "4.9 Rated by Satisfied Customers",
+    "titleA": "All type of",
+    "titleB": "Plumbing Care",
+    "titleC": "for your home",
+    "tagline": "We provide all types of plumbing care to keep your home safe, comfortable and worry free.",
+    "cta": "Book a Free Consultation",
+    "proof": "10,000+ individuals who trust BlueDrop",
+    "image": "/_templates/plumber-modern/img/hero.jpg"
+  },
+  "why": {
+    "label": "Why Choose Us",
+    "title": "Why Choose Our Plumbing Team",
+    "text": "We're not just plumbers — we're a dependable team of professionals committed to solving your problems quickly and efficiently.",
+    "image1": "/_templates/plumber-modern/img/why-1.jpg",
+    "image2": "/_templates/plumber-modern/img/why-2.jpg",
+    "points": [
+      {
+        "title": "Licensed Technicians",
+        "desc": "Expert care from fully licensed technicians."
+      },
+      {
+        "title": "24/7 Emergency Support",
+        "desc": "Always here to help whenever you need us."
+      }
+    ]
+  },
+  "services": {
+    "label": "Our Services",
+    "title": "Plumbing Services That Keep Life Flowing",
+    "items": [
+      {
+        "title": "Leak Detection & Repair",
+        "desc": "We locate hidden leaks fast and fix them at the source, before they damage your home.",
+        "image": "/_templates/plumber-modern/img/service-leak.jpg"
+      },
+      {
+        "title": "Drain Cleaning",
+        "desc": "Clogged or slow drains cleared with safe, high-pressure methods that keep water moving.",
+        "image": "/_templates/plumber-modern/img/service-drain.jpg"
+      },
+      {
+        "title": "Sewer Line Services",
+        "desc": "Camera inspections, repairs and replacements for sewer lines you can count on.",
+        "image": "/_templates/plumber-modern/img/service-sewer.jpg"
+      },
+      {
+        "title": "Faucet & Fixture Repair",
+        "desc": "Dripping taps and worn fixtures repaired or upgraded with precision and care.",
+        "image": "/_templates/plumber-modern/img/service-faucet.jpg"
+      }
+    ]
+  },
+  "about": {
+    "label": "About Us",
+    "title": "Your Trusted Plumbing Experts in Town",
+    "text": "From quick fixes to major repairs, our skilled professionals are committed to delivering reliable service with a personal touch.",
+    "cta": "More About Us",
+    "image": "/_templates/plumber-modern/img/about.jpg"
+  },
+  "stat": {
+    "value": "24/7",
+    "caption": "Support You Can Count On"
+  },
+  "team": {
+    "label": "Team Members",
+    "title": "Our Hard working Members",
+    "members": [
+      {
+        "name": "Marcus Reed",
+        "role": "Lead Plumber",
+        "image": "/_templates/plumber-modern/img/team-1.jpg"
+      },
+      {
+        "name": "Diego Alvarez",
+        "role": "Drainage Specialist",
+        "image": "/_templates/plumber-modern/img/team-2.jpg"
+      },
+      {
+        "name": "Sofia Lindgren",
+        "role": "Fixture Technician",
+        "image": "/_templates/plumber-modern/img/team-3.jpg"
+      }
+    ]
+  },
+  "testimonials": {
+    "label": "Testimonials",
+    "title": "Trusted by 10,000+ Customers",
+    "items": [
+      {
+        "quote": "They found a leak two other plumbers missed and fixed it the same morning. Honest, fast and tidy.",
+        "author": "Hannah Brooks",
+        "role": "Homeowner"
+      },
+      {
+        "quote": "Our main drain was completely blocked on a Sunday night. BlueDrop arrived within the hour. Lifesavers.",
+        "author": "Tom Whitfield",
+        "role": "Café Owner"
+      },
+      {
+        "quote": "Clear pricing, friendly technician, and zero mess left behind. Exactly what you want from a plumber.",
+        "author": "Priya Nair",
+        "role": "Property Manager"
+      }
+    ]
+  },
+  "process": {
+    "label": "How It Works",
+    "title": "Fixing Your Plumbing the Simple Way",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Schedule Your Service",
+        "desc": "Call us or book online in just a few clicks. Tell us what's wrong, we'll confirm your appointment."
+      },
+      {
+        "number": "02",
+        "title": "We Inspect & Fix",
+        "desc": "Our technician arrives on time, diagnoses the issue and explains the solution clearly."
+      },
+      {
+        "number": "03",
+        "title": "Enjoy Peace of Mind",
+        "desc": "Once the job's done, we double-check everything, clean up, and ensure you're 100% satisfied."
+      }
+    ]
+  },
+  "gallery": {
+    "label": "Project Gallery",
+    "title": "Gallery of Trusted Repairs & Installations",
+    "images": [
+      "/_templates/plumber-modern/img/gallery-1.jpg",
+      "/_templates/plumber-modern/img/gallery-2.jpg",
+      "/_templates/plumber-modern/img/gallery-3.jpg",
+      "/_templates/plumber-modern/img/gallery-4.jpg"
+    ]
+  },
+  "faq": {
+    "label": "FAQ",
+    "title": "Frequently Asked Questions",
+    "items": [
+      {
+        "question": "Do you offer 24/7 emergency plumbing?",
+        "answer": "Yes. Our emergency line is open around the clock, every day of the year. A licensed technician is always on call for urgent leaks, blockages and burst pipes."
+      },
+      {
+        "question": "Are your plumbers licensed and insured?",
+        "answer": "Every BlueDrop technician is fully licensed, background-checked and insured, so you can feel completely confident letting us into your home."
+      },
+      {
+        "question": "How much does a call-out cost?",
+        "answer": "We give clear, upfront pricing before any work begins. You'll always approve the quote first, with no surprise charges added afterward."
+      },
+      {
+        "question": "How quickly can you come out?",
+        "answer": "For emergencies we aim to be on-site within the hour. For scheduled work we'll book the earliest slot that suits you, often same-day."
+      }
+    ]
+  },
+  "cta": {
+    "label": "Let's discuss",
+    "title": "Book Your Service",
+    "text": "Tell us what's wrong and pick a time that works. We'll confirm your appointment and get your home flowing again.",
+    "fields": {
+      "name": "Your name",
+      "email": "Email address",
+      "message": "Describe your plumbing issue"
+    },
+    "button": "Book Now",
+    "image": "/_templates/plumber-modern/img/cta.jpg"
+  },
+  "footer": {
+    "tagline": "Modern plumbing care for your home — licensed, on time, and available 24/7.",
+    "columns": [
+      {
+        "heading": "Company",
+        "links": [
+          "Home",
+          "About Us",
+          "Services"
+        ]
+      },
+      {
+        "heading": "Services",
+        "links": [
+          "Leak Detection",
+          "Drain Cleaning",
+          "Sewer Lines"
+        ]
+      },
+      {
+        "heading": "Legal & Policy",
+        "links": [
+          "Privacy Policy",
+          "Terms and Conditions"
+        ]
+      }
+    ],
+    "copyright": "Copyright & design © 2026 BlueDrop, Inc. All rights reserved"
+  }
+}

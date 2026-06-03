@@ -1,0 +1,368 @@
+{
+  "brand": "Northpeak",
+  "meta": {
+    "title": "Northpeak — AI analytics for commercial growth",
+    "description": "Northpeak turns your commercial data into AI-driven insights. Amplify growth with smart analytics, integrations and dashboards built for modern teams."
+  },
+  "nav": {
+    "links": [
+      "How It Works",
+      "Integration",
+      "Performance",
+      "Pricing",
+      "FAQ"
+    ],
+    "cta": "Book a Demo"
+  },
+  "hero": {
+    "kicker": "AI ANALYTICS PLATFORM",
+    "title_a": "Amplify your growth",
+    "title_b": "with",
+    "title_c": "Smart AI",
+    "title_d": "insights",
+    "subtitle": "You are just one click away from transforming your business with powerful, real-time analytics support.",
+    "cta_primary": "Start Free Trial",
+    "cta_secondary": "How It Works",
+    "proof_label": "GROWING PARTNERSHIPS AROUND THE WORLD",
+    "logos": [
+      "avocadoo",
+      "nanowise",
+      "NEXUSGATE",
+      "Spitfire",
+      "GESSLER"
+    ]
+  },
+  "dashboard": {
+    "sidebar": [
+      "Dashboard",
+      "Campaigns",
+      "Analytics",
+      "Integration",
+      "Reports",
+      "Performance",
+      "Settings"
+    ],
+    "panel_title": "Performance Overview",
+    "kpi": [
+      {
+        "label": "Growth this Week",
+        "value": "$45,800",
+        "delta": "+8.4%"
+      },
+      {
+        "label": "Active Campaigns",
+        "value": "24",
+        "delta": "+5 New"
+      },
+      {
+        "label": "AI Insights Generated",
+        "value": "1,250",
+        "delta": "+12%"
+      }
+    ],
+    "chart_a_title": "Performance Analytics",
+    "chart_b_title": "Resource Distribution",
+    "legend": [
+      "Campaign Budget",
+      "Integration Usage",
+      "AI Processing",
+      "AI Resources"
+    ]
+  },
+  "bento": {
+    "a_title": "Ask AI anything",
+    "a_text": "Conversational analytics — query your numbers in plain language.",
+    "b_value": "3x",
+    "b_text": "Faster reporting cycles",
+    "c_title": "Custom Reports",
+    "c_text": "Branded, exportable revenue analysis in one click.",
+    "d_title": "Instant Integrations",
+    "d_text": "Connect your favourite platforms and sync in seconds.",
+    "e_title": "Simple Strategies",
+    "e_text": "Pre-built playbooks that adapt to your goals.",
+    "f_title": "Process Optimisation",
+    "f_text": "Automate the busywork, focus on the decisions."
+  },
+  "steps": {
+    "kicker": "HOW IT WORKS",
+    "title_a": "Explore Our Simple,",
+    "title_b": "Easy Process",
+    "subtitle": "Start with ease and watch your business thrive from the get-go, with personalised guidance every step of the way.",
+    "items": [
+      {
+        "tag": "Step 1",
+        "title": "Sign up & Profile",
+        "text": "Create your account with our guided setup process. Access your personalised dashboard instantly."
+      },
+      {
+        "tag": "Step 2",
+        "title": "Personalisation",
+        "text": "Tell us your goals and preferences. We'll customise your experience with AI-driven insights."
+      },
+      {
+        "tag": "Step 3",
+        "title": "Strategy",
+        "text": "Implement data-backed strategies aligned with your objectives. Optimise your performance in real-time."
+      },
+      {
+        "tag": "Step 4",
+        "title": "Analyze & Scale",
+        "text": "Monitor your success through clear analytics. Scale what works and optimise for growth."
+      }
+    ],
+    "cta_text": "Seamless integration with expert guidance",
+    "cta_btn": "Connect Now"
+  },
+  "integration": {
+    "kicker": "INTEGRATION",
+    "title_a": "Powerful Integrations",
+    "title_b": "Made Simple",
+    "subtitle": "Integrate your favourite platforms into one powerful ecosystem, enabling seamless collaboration and enhanced efficiency.",
+    "feature_label": "Advanced Architecture",
+    "feature_title": "Analytics Module",
+    "feature_text": "Optimise your integrations with live performance metrics.",
+    "orb_label": "AI³",
+    "orb_text": "Unified intelligence layer",
+    "layout_text": "Flexible workspace layouts",
+    "uptime_value": "99%",
+    "uptime_text": "Uptime guaranteed",
+    "footnote": "Your favourite platforms are ready to be connected.",
+    "cta_text": "Receive assistance from our integration specialists",
+    "cta_btn": "Instant Support"
+  },
+  "performance": {
+    "kicker": "PERFORMANCE",
+    "title_a": "Our Milestones,",
+    "title_b": "your Advantage",
+    "subtitle": "Driving measurable growth worldwide with every campaign launched, user supported, and AI-driven solution delivered.",
+    "stats": [
+      {
+        "label": "Campaigns Launched",
+        "value": "12K+"
+      },
+      {
+        "label": "Active Platform Users",
+        "value": "40K"
+      },
+      {
+        "label": "AI Insights Generated",
+        "value": "8M"
+      },
+      {
+        "label": "Global Engagement",
+        "value": "95K"
+      },
+      {
+        "label": "Customer Satisfaction",
+        "value": "98%"
+      },
+      {
+        "label": "Strategic Solutions",
+        "value": "320"
+      }
+    ],
+    "cta_text": "Experience our analytics engine and how we shape businesses worldwide.",
+    "cta_btn": "Analytics Demo"
+  },
+  "founders": {
+    "kicker": "ABOUT US",
+    "title": "Meet the Founders",
+    "subtitle": "The minds behind innovative solutions, making tomorrow's tech today with expertise that shapes the future of business.",
+    "people": [
+      {
+        "name": "Elena Marsh",
+        "role": "Co-founder & CEO",
+        "image": "/_templates/analytics-saas/img/founder1.jpg"
+      },
+      {
+        "name": "Daniel Okafor",
+        "role": "Co-founder & CTO",
+        "image": "/_templates/analytics-saas/img/founder2.jpg"
+      },
+      {
+        "name": "Priya Nair",
+        "role": "Co-founder & Head of AI",
+        "image": "/_templates/analytics-saas/img/founder3.jpg"
+      }
+    ],
+    "story_title": "The Story So Far —",
+    "story_p1": "Three friends with a shared passion for AI met at university. After countless coffee-fuelled coding sessions, we shipped our first prototype to a handful of teams who believed in the vision.",
+    "story_p2": "Today, backed by some of the best operators in tech, we're making advanced analytics accessible to businesses worldwide — without the enterprise complexity.",
+    "story_p3": "We're industry leaders in AI-driven business solutions, enabling companies to make smarter, data-backed decisions. Our team blends deep AI expertise with real business analytics to deliver impactful results.",
+    "badge": "Backed by leading operators",
+    "culture_title": "Life at Northpeak",
+    "culture_text": "Our culture through the lens",
+    "culture_btn": "Join Us",
+    "culture_image": "/_templates/analytics-saas/img/culture.jpg",
+    "cta_text": "Discover the full story",
+    "cta_btn": "Read More"
+  },
+  "testimonials": {
+    "kicker": "CLIENT INSIGHTS",
+    "title_a": "What Our",
+    "title_b": "Clients Say",
+    "subtitle": "How our clients transform growth with advanced, AI-driven analytics.",
+    "featured": {
+      "name": "David Pierce",
+      "role": "Marketing Consultant at Apex",
+      "image": "/_templates/analytics-saas/img/feature.jpg",
+      "quote": "Northpeak gave us a single source of truth. The AI insights surfaced opportunities our team would have missed entirely."
+    },
+    "items": [
+      {
+        "name": "Greg Weingartner",
+        "role": "CEO at Nexusgate",
+        "image": "/_templates/analytics-saas/img/t1.jpg",
+        "quote": "Since implementing this solution, we've seen a dramatic improvement in our analytics efficiency. The AI insights helped us identify opportunities we would have missed."
+      },
+      {
+        "name": "Jhon Lande",
+        "role": "Marketing Director at Spitfire",
+        "image": "/_templates/analytics-saas/img/t2.jpg",
+        "quote": "The platform's automation has streamlined our workflow and noticeably enhanced productivity across the team."
+      },
+      {
+        "name": "Mara Velez",
+        "role": "Growth Lead at Gessler",
+        "image": "/_templates/analytics-saas/img/t3.jpg",
+        "quote": "Northpeak delivers actionable data that has transformed our decision-making process from gut-feel to evidence."
+      },
+      {
+        "name": "Sofia Klein",
+        "role": "Ops Lead at Avocadoo",
+        "image": "/_templates/analytics-saas/img/t4.jpg",
+        "quote": "Onboarding took an afternoon. Within a week we were running reports that used to take our analysts days."
+      }
+    ]
+  },
+  "pricing": {
+    "kicker": "PRICING",
+    "title_a": "Explore",
+    "title_b": "Our Plans",
+    "subtitle": "Super flexible monthly plans and cost-effective annual subscriptions.",
+    "toggle_monthly": "Monthly",
+    "toggle_annual": "Annual",
+    "plans": [
+      {
+        "name": "Essential",
+        "price": "$29",
+        "period": "/month",
+        "features": [
+          "Core Analytics",
+          "Limited Campaigns",
+          "Community Access",
+          "Standard Support"
+        ],
+        "cta": "Purchase",
+        "featured": false
+      },
+      {
+        "name": "Advanced",
+        "price": "$79",
+        "period": "/month",
+        "features": [
+          "All Essential Features",
+          "Unlimited Campaigns",
+          "Advanced AI predictions",
+          "Priority support",
+          "Team collaboration tools"
+        ],
+        "cta": "Purchase",
+        "featured": true
+      },
+      {
+        "name": "Enterprise",
+        "price": "$199",
+        "period": "/month",
+        "features": [
+          "All Advanced Features",
+          "Custom AI models",
+          "API access",
+          "Advanced Integrations",
+          "24/7 priority support",
+          "Training Sessions"
+        ],
+        "cta": "Contact Sales",
+        "featured": false
+      }
+    ],
+    "proof_label": "TRUSTED BY MARKET LEADERS",
+    "logos": [
+      "Spitfire",
+      "avocadoo",
+      "nanowise",
+      "NEXUSGATE",
+      "GESSLER"
+    ],
+    "cta_text": "Unsure which plan to pick?",
+    "cta_btn": "Ask our Expert"
+  },
+  "faq": {
+    "kicker": "FAQ",
+    "title_a": "Burning Questions",
+    "title_b": "About Northpeak",
+    "subtitle": "Simple answers to make things clear.",
+    "items": [
+      {
+        "q": "Is the platform suitable for beginners?",
+        "a": "Absolutely. Northpeak ships with a guided setup, sensible defaults and plain-language insights, so you don't need a data team to get value on day one."
+      },
+      {
+        "q": "How accurate are the AI insights?",
+        "a": "Our models are continuously evaluated against your historical outcomes. You always see the confidence level behind each recommendation, so you stay in control."
+      },
+      {
+        "q": "Can I integrate with my existing tools?",
+        "a": "Yes. Northpeak connects to the platforms you already use in seconds, with no engineering work required for the most common integrations."
+      },
+      {
+        "q": "What security measures do you have?",
+        "a": "Data is encrypted in transit and at rest, with role-based access controls and audit logging. Your data is never used to train shared models."
+      },
+      {
+        "q": "How often are insights updated?",
+        "a": "Dashboards refresh in near real-time as new data arrives, and strategic insights are recalculated on a rolling schedule throughout the day."
+      },
+      {
+        "q": "What kind of support do you offer?",
+        "a": "Every plan includes support. Advanced and Enterprise plans add priority and 24/7 channels, plus a dedicated specialist for onboarding."
+      }
+    ],
+    "cta_text": "Still have questions?",
+    "cta_btn": "Get Assistance"
+  },
+  "finalcta": {
+    "title": "Ready? Let's Talk!",
+    "subtitle": "Get expert insights and answers tailored to your business requirements and transformation.",
+    "cta_primary": "Book a Call",
+    "cta_secondary": "2 spots available",
+    "marquee": [
+      "Predictive Analysis",
+      "Business Growth",
+      "Smart Automation",
+      "Strategic Planning"
+    ]
+  },
+  "footer": {
+    "newsletter_title": "Stay in the Loop",
+    "newsletter_text": "Be first to know what's next",
+    "email_placeholder": "Your Email",
+    "col1": [
+      "Home",
+      "Features",
+      "How It Works",
+      "Integration",
+      "Performance",
+      "Pricing",
+      "FAQ"
+    ],
+    "col2": [
+      "About us",
+      "Client Insights",
+      "Book a Call",
+      "Journal",
+      "Contact"
+    ],
+    "copyright": "Copyright © Northpeak 2026"
+  }
+}

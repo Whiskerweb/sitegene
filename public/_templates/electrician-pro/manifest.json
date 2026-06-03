@@ -1,0 +1,360 @@
+{
+  "id": "electrician-pro",
+  "name": "Ohmly — Électricien",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "meta",
+      "brand",
+      "nav",
+      "hero",
+      "services",
+      "why",
+      "testimonials",
+      "pricing",
+      "faq",
+      "cta",
+      "footer"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.image",
+      "role": "hero",
+      "required": true,
+      "note": "hero · image"
+    },
+    {
+      "slot": "p2",
+      "path": "services.items[].image",
+      "role": "image",
+      "required": true,
+      "note": "services · items · image"
+    },
+    {
+      "slot": "p3",
+      "path": "why.cards.experience.image",
+      "role": "image",
+      "required": true,
+      "note": "why · cards · experience · image"
+    },
+    {
+      "slot": "p4",
+      "path": "why.cards.care.image",
+      "role": "image",
+      "required": true,
+      "note": "why · cards · care · image"
+    },
+    {
+      "slot": "p5",
+      "path": "why.cards.quality.image",
+      "role": "image",
+      "required": true,
+      "note": "why · cards · quality · image"
+    },
+    {
+      "slot": "p6",
+      "path": "pricing.image",
+      "role": "image",
+      "required": true,
+      "note": "pricing · image"
+    },
+    {
+      "slot": "p7",
+      "path": "cta.image",
+      "role": "image",
+      "required": true,
+      "note": "cta · image"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "meta.title",
+        "label": "meta · title",
+        "type": "text",
+        "maxLen": 72
+      },
+      {
+        "path": "meta.description",
+        "label": "meta · description",
+        "type": "text",
+        "maxLen": 173
+      },
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.links[]",
+        "label": "nav · links",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.cta",
+        "label": "nav · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.rating",
+        "label": "nav · rating",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.title",
+        "label": "hero · title",
+        "type": "text",
+        "maxLen": 58
+      },
+      {
+        "path": "hero.tagline",
+        "label": "hero · tagline",
+        "type": "text",
+        "maxLen": 171
+      },
+      {
+        "path": "hero.cta",
+        "label": "hero · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.badge",
+        "label": "hero · badge",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.label",
+        "label": "services · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.title",
+        "label": "services · title",
+        "type": "text",
+        "maxLen": 75
+      },
+      {
+        "path": "services.items[].title",
+        "label": "services · items · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "why.label",
+        "label": "why · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "why.title",
+        "label": "why · title",
+        "type": "text",
+        "maxLen": 62
+      },
+      {
+        "path": "why.statValue",
+        "label": "why · statValue",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "why.statLabel",
+        "label": "why · statLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "why.cards.response.title",
+        "label": "why · cards · response · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "why.cards.experience.title",
+        "label": "why · cards · experience · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "why.cards.safety.title",
+        "label": "why · cards · safety · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "why.cards.care.title",
+        "label": "why · cards · care · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "why.cards.quality.title",
+        "label": "why · cards · quality · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.label",
+        "label": "testimonials · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.title",
+        "label": "testimonials · title",
+        "type": "text",
+        "maxLen": 74
+      },
+      {
+        "path": "testimonials.items[].quote",
+        "label": "testimonials · items · quote",
+        "type": "text",
+        "maxLen": 171
+      },
+      {
+        "path": "testimonials.items[].author",
+        "label": "testimonials · items · author",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.items[].role",
+        "label": "testimonials · items · role",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.label",
+        "label": "pricing · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.title",
+        "label": "pricing · title",
+        "type": "text",
+        "maxLen": 54
+      },
+      {
+        "path": "pricing.standard.name",
+        "label": "pricing · standard · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.standard.rate",
+        "label": "pricing · standard · rate",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.standard.unit",
+        "label": "pricing · standard · unit",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.standard.included[]",
+        "label": "pricing · standard · included",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.custom.tag",
+        "label": "pricing · custom · tag",
+        "type": "text",
+        "maxLen": 43
+      },
+      {
+        "path": "pricing.custom.name",
+        "label": "pricing · custom · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.custom.cta",
+        "label": "pricing · custom · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.custom.included[]",
+        "label": "pricing · custom · included",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.label",
+        "label": "faq · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.title",
+        "label": "faq · title",
+        "type": "text",
+        "maxLen": 43
+      },
+      {
+        "path": "faq.items[].question",
+        "label": "faq · items · question",
+        "type": "text",
+        "maxLen": 62
+      },
+      {
+        "path": "faq.items[].answer",
+        "label": "faq · items · answer",
+        "type": "text",
+        "maxLen": 270
+      },
+      {
+        "path": "cta.title",
+        "label": "cta · title",
+        "type": "text",
+        "maxLen": 45
+      },
+      {
+        "path": "cta.subtitle",
+        "label": "cta · subtitle",
+        "type": "text",
+        "maxLen": 178
+      },
+      {
+        "path": "cta.phone",
+        "label": "cta · phone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.tagline",
+        "label": "footer · tagline",
+        "type": "text",
+        "maxLen": 229
+      },
+      {
+        "path": "footer.links[]",
+        "label": "footer · links",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.copyright",
+        "label": "footer · copyright",
+        "type": "text",
+        "maxLen": 54
+      }
+    ]
+  }
+}

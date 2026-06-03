@@ -1,0 +1,193 @@
+{
+  "meta": {
+    "title": "RAPIDPLOMB – Plombier d'urgence 24/7, noté 5 étoiles",
+    "description": "Service de plomberie professionnel disponible 24h/24. Fuite, chauffe-eau, refoulement : nos plombiers experts interviennent en urgence partout en ville."
+  },
+  "brand": "RAPIDPLOMB",
+  "nav": {
+    "links": [
+      "Toutes les pages",
+      "Services",
+      "Blog",
+      "Contact"
+    ],
+    "cta": "Appeler : 01 86 95 99 43"
+  },
+  "hero": {
+    "title": "Tous vos travaux de plomberie, partout chez vous.",
+    "tagline": "Qu'il s'agisse d'un robinet qui fuit ou d'une urgence majeure, nos professionnels expérimentés ne sont qu'à un appel de chez vous.",
+    "cta": "Appeler : 01 86 95 99 43",
+    "availability": "Disponible 24/7, appelez à tout moment",
+    "image": "/_templates/plumber-emergency/img/hero.jpg",
+    "customerName": "Christin Williams",
+    "customerRole": "Cliente satisfaite à Lyon"
+  },
+  "reviews": {
+    "label": "Plombiers notés 5 étoiles, recommandés par la ville",
+    "sources": [
+      "Google",
+      "Angi",
+      "Top Rated",
+      "Yelp"
+    ]
+  },
+  "trust": {
+    "title": "Bâti sur la confiance, guidé par l'excellence",
+    "text": "Nous mettons un point d'honneur à fournir un service de plomberie haut de gamme, avec un engagement total envers chaque client.",
+    "image": "/_templates/plumber-emergency/img/trust.jpg",
+    "features": [
+      {
+        "title": "Techniciens expérimentés",
+        "desc": "Notre équipe cumule des décennies d'expérience dans la plomberie. Nous tenons nos promesses grâce à notre exigence de qualité."
+      },
+      {
+        "title": "Satisfaction garantie",
+        "desc": "Nous ne sommes satisfaits que lorsque vous l'êtes. Nous garantissons un service de qualité, à chaque intervention."
+      }
+    ]
+  },
+  "services": {
+    "title": "Les meilleures solutions de plomberie de la ville",
+    "subtitle": "Gardez votre logement en parfait état grâce à nos services de plomberie complets et fiables.",
+    "items": [
+      {
+        "title": "Prévention du refoulement",
+        "desc": "Protégez votre réseau d'eau grâce à nos interventions expertes de prévention : nous installons, entretenons et réparons les clapets anti-retour.",
+        "image": "/_templates/plumber-emergency/img/service-backflow.jpg",
+        "link": "En savoir plus"
+      },
+      {
+        "title": "Réparation de chauffe-eau",
+        "desc": "Que votre chauffe-eau nécessite une réparation, un entretien ou un remplacement complet, nous proposons des solutions efficaces.",
+        "image": "/_templates/plumber-emergency/img/service-waterheater.jpg",
+        "link": "En savoir plus"
+      },
+      {
+        "title": "Services de remplacement",
+        "desc": "Réduisez les coûts à long terme en modernisant votre système de plomberie. Nous intervenons sur la réparation comme sur le remplacement.",
+        "image": "/_templates/plumber-emergency/img/service-replacement.jpg",
+        "link": "En savoir plus"
+      },
+      {
+        "title": "Services d'installation",
+        "desc": "Confiez-nous tout type d'installation, de la réfection complète à la pose ponctuelle ou à la construction neuve.",
+        "image": "/_templates/plumber-emergency/img/service-installation.jpg",
+        "link": "En savoir plus"
+      }
+    ]
+  },
+  "whyUs": {
+    "title": "Pourquoi nos clients reviennent toujours",
+    "text": "Nous sommes bien plus que de simples plombiers : une équipe dévouée qui place ses clients en priorité. Notre engagement : un service exceptionnel et des prix honnêtes.",
+    "cta": "Appeler maintenant : 01 86 95 99 43",
+    "cards": [
+      {
+        "title": "Urgences 24/7",
+        "desc": "Les urgences de plomberie ne suivent aucun horaire, mais nous, si. Nous sommes disponibles à toute heure pour gérer vos problèmes."
+      },
+      {
+        "title": "Satisfaction garantie",
+        "desc": "Nous garantissons la qualité de notre travail. Si vous n'êtes pas pleinement satisfait, nous revenons jusqu'à ce que tout soit parfait."
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "Les avis de nos vrais clients",
+    "subtitle": "Gardez votre logement au meilleur de sa forme grâce à nos services de plomberie complets et soignés.",
+    "featured": {
+      "quote": "J'avais une fuite persistante sous l'évier de la cuisine que d'autres plombiers ne parvenaient pas à régler. Le technicien de RAPIDPLOMB a non seulement résolu le problème, mais m'a aussi expliqué la cause et comment l'éviter à l'avenir. Un professionnalisme et une expertise sans égal.",
+      "author": "Zachary John",
+      "role": "Client régulier",
+      "avatar": "/_templates/plumber-emergency/img/testi-main.jpg",
+      "image": "/_templates/plumber-emergency/img/instant.jpg"
+    },
+    "items": [
+      {
+        "quote": "Nous avons fait appel à RAPIDPLOMB pour rénover la plomberie de notre salle de bain et nous sommes ravis du résultat. L'équipe a été remarquable de créativité.",
+        "author": "James Michael Carter",
+        "role": "Saint-Étienne",
+        "avatar": "/_templates/plumber-emergency/img/av1.jpg"
+      },
+      {
+        "quote": "Je ne peux que dire du bien de cette entreprise. Des plombiers fiables, compétents, et qui font toujours le travail correctement, du premier coup.",
+        "author": "Anna Grace Williams",
+        "role": "Paris",
+        "avatar": "/_templates/plumber-emergency/img/av2.jpg"
+      },
+      {
+        "quote": "J'avais eu de mauvaises expériences par le passé avec d'autres plombiers, mais RAPIDPLOMB m'a redonné confiance.",
+        "author": "Kumer Anik Dey",
+        "role": "Bordeaux",
+        "avatar": "/_templates/plumber-emergency/img/av3.jpg"
+      }
+    ]
+  },
+  "instant": {
+    "title": "Des solutions immédiates, quand vous en avez besoin.",
+    "text": "Nous nous engageons à fournir un service de plomberie exceptionnel, du début à la fin. Notre équipe expérimentée propose des solutions rapides, fiables et abordables pour tous vos besoins.",
+    "image": "/_templates/plumber-emergency/img/instant.jpg",
+    "features": [
+      {
+        "title": "Entreprise locale de confiance",
+        "desc": "Entreprise familiale et locale, nous sommes fiers de servir notre communauté avec le plus grand soin."
+      },
+      {
+        "title": "Équipement de pointe",
+        "desc": "Nous utilisons les outils et technologies les plus récents pour un diagnostic précis et des réparations efficaces, vous faisant gagner du temps."
+      }
+    ],
+    "miniTestimonial": {
+      "quote": "Je ne peux que dire du bien de RAPIDPLOMB. Fiables, compétents, et toujours ponctuels.",
+      "author": "Zachary John",
+      "role": "Client régulier",
+      "avatar": "/_templates/plumber-emergency/img/av4.jpg"
+    }
+  },
+  "booking": {
+    "title": "Réserver une intervention",
+    "image": "/_templates/plumber-emergency/img/booking.jpg",
+    "fields": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "E-mail",
+      "phone": "Téléphone",
+      "message": "Message"
+    },
+    "submit": "Prendre rendez-vous"
+  },
+  "finalCta": {
+    "title": "Réservez votre intervention maintenant",
+    "text": "Qu'il s'agisse d'un robinet qui fuit ou d'une urgence de plomberie majeure, nos professionnels expérimentés ne sont qu'à un appel de chez vous.",
+    "cta": "Appeler maintenant : 01 86 95 99 43",
+    "availability": "Disponible 24/7, appelez à tout moment"
+  },
+  "footer": {
+    "tagline": "Plomberie professionnelle, soignée et disponible à toute heure pour redonner à votre logement tout son confort.",
+    "columns": [
+      {
+        "heading": "Entreprise",
+        "links": [
+          "Accueil",
+          "À propos",
+          "Blog"
+        ]
+      },
+      {
+        "heading": "Plus",
+        "links": [
+          "Services",
+          "Contact",
+          "Réserver"
+        ]
+      },
+      {
+        "heading": "Légal",
+        "links": [
+          "Confidentialité",
+          "Conditions générales"
+        ]
+      }
+    ],
+    "copyright": "Copyright © 2026 RAPIDPLOMB"
+  }
+}

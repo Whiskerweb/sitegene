@@ -1,0 +1,438 @@
+{
+  "id": "plumber-modern",
+  "name": "BlueDrop — Plombier moderne",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "meta",
+      "brand",
+      "topbar",
+      "nav",
+      "hero",
+      "why",
+      "services",
+      "about",
+      "stat",
+      "team",
+      "testimonials",
+      "process",
+      "gallery",
+      "faq",
+      "cta",
+      "footer"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.image",
+      "role": "hero",
+      "required": true,
+      "note": "hero · image"
+    },
+    {
+      "slot": "p2",
+      "path": "why.image1",
+      "role": "image",
+      "required": true,
+      "note": "why · image1"
+    },
+    {
+      "slot": "p3",
+      "path": "why.image2",
+      "role": "image",
+      "required": true,
+      "note": "why · image2"
+    },
+    {
+      "slot": "p4",
+      "path": "services.items[].image",
+      "role": "image",
+      "required": true,
+      "note": "services · items · image"
+    },
+    {
+      "slot": "p5",
+      "path": "about.image",
+      "role": "image",
+      "required": true,
+      "note": "about · image"
+    },
+    {
+      "slot": "p6",
+      "path": "team.members[].image",
+      "role": "avatar",
+      "required": true,
+      "note": "team · members · image"
+    },
+    {
+      "slot": "p7",
+      "path": "gallery.images[]",
+      "role": "gallery",
+      "required": true,
+      "note": "gallery · images"
+    },
+    {
+      "slot": "p8",
+      "path": "cta.image",
+      "role": "image",
+      "required": true,
+      "note": "cta · image"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "meta.title",
+        "label": "meta · title",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "meta.description",
+        "label": "meta · description",
+        "type": "text",
+        "maxLen": 226
+      },
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.links[]",
+        "label": "nav · links",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.cta",
+        "label": "nav · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.badge",
+        "label": "hero · badge",
+        "type": "text",
+        "maxLen": 51
+      },
+      {
+        "path": "hero.titleA",
+        "label": "hero · titleA",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.titleB",
+        "label": "hero · titleB",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.titleC",
+        "label": "hero · titleC",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.tagline",
+        "label": "hero · tagline",
+        "type": "text",
+        "maxLen": 142
+      },
+      {
+        "path": "hero.cta",
+        "label": "hero · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.proof",
+        "label": "hero · proof",
+        "type": "text",
+        "maxLen": 61
+      },
+      {
+        "path": "why.label",
+        "label": "why · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "why.title",
+        "label": "why · title",
+        "type": "text",
+        "maxLen": 45
+      },
+      {
+        "path": "why.text",
+        "label": "why · text",
+        "type": "text",
+        "maxLen": 202
+      },
+      {
+        "path": "why.points[].title",
+        "label": "why · points · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "why.points[].desc",
+        "label": "why · points · desc",
+        "type": "text",
+        "maxLen": 70
+      },
+      {
+        "path": "services.label",
+        "label": "services · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.title",
+        "label": "services · title",
+        "type": "text",
+        "maxLen": 64
+      },
+      {
+        "path": "services.items[].title",
+        "label": "services · items · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.items[].desc",
+        "label": "services · items · desc",
+        "type": "text",
+        "maxLen": 136
+      },
+      {
+        "path": "about.label",
+        "label": "about · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.title",
+        "label": "about · title",
+        "type": "text",
+        "maxLen": 59
+      },
+      {
+        "path": "about.text",
+        "label": "about · text",
+        "type": "text",
+        "maxLen": 205
+      },
+      {
+        "path": "about.cta",
+        "label": "about · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "stat.value",
+        "label": "stat · value",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "stat.caption",
+        "label": "stat · caption",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "team.label",
+        "label": "team · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "team.title",
+        "label": "team · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "team.members[].name",
+        "label": "team · members · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "team.members[].role",
+        "label": "team · members · role",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.label",
+        "label": "testimonials · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.title",
+        "label": "testimonials · title",
+        "type": "text",
+        "maxLen": 45
+      },
+      {
+        "path": "testimonials.items[].quote",
+        "label": "testimonials · items · quote",
+        "type": "text",
+        "maxLen": 155
+      },
+      {
+        "path": "testimonials.items[].author",
+        "label": "testimonials · items · author",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.items[].role",
+        "label": "testimonials · items · role",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "process.label",
+        "label": "process · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "process.title",
+        "label": "process · title",
+        "type": "text",
+        "maxLen": 56
+      },
+      {
+        "path": "process.steps[].number",
+        "label": "process · steps · number",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "process.steps[].title",
+        "label": "process · steps · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "process.steps[].desc",
+        "label": "process · steps · desc",
+        "type": "text",
+        "maxLen": 157
+      },
+      {
+        "path": "gallery.label",
+        "label": "gallery · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "gallery.title",
+        "label": "gallery · title",
+        "type": "text",
+        "maxLen": 67
+      },
+      {
+        "path": "faq.label",
+        "label": "faq · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.title",
+        "label": "faq · title",
+        "type": "text",
+        "maxLen": 42
+      },
+      {
+        "path": "faq.items[].question",
+        "label": "faq · items · question",
+        "type": "text",
+        "maxLen": 59
+      },
+      {
+        "path": "faq.items[].answer",
+        "label": "faq · items · answer",
+        "type": "text",
+        "maxLen": 251
+      },
+      {
+        "path": "cta.label",
+        "label": "cta · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta.title",
+        "label": "cta · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta.text",
+        "label": "cta · text",
+        "type": "text",
+        "maxLen": 179
+      },
+      {
+        "path": "cta.fields.name",
+        "label": "cta · fields · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta.fields.email",
+        "label": "cta · fields · email",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta.fields.message",
+        "label": "cta · fields · message",
+        "type": "text",
+        "maxLen": 45
+      },
+      {
+        "path": "cta.button",
+        "label": "cta · button",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.tagline",
+        "label": "footer · tagline",
+        "type": "text",
+        "maxLen": 120
+      },
+      {
+        "path": "footer.columns[].heading",
+        "label": "footer · columns · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.columns[].links[]",
+        "label": "footer · columns · links",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.copyright",
+        "label": "footer · copyright",
+        "type": "text",
+        "maxLen": 96
+      }
+    ]
+  }
+}

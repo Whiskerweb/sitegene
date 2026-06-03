@@ -1,0 +1,811 @@
+{
+  "id": "analytics-saas",
+  "name": "Northpeak — SaaS analytics",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "brand",
+      "meta",
+      "nav",
+      "hero",
+      "dashboard",
+      "bento",
+      "steps",
+      "integration",
+      "performance",
+      "founders",
+      "testimonials",
+      "pricing",
+      "faq",
+      "finalcta",
+      "footer"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "founders.people[].image",
+      "role": "image",
+      "required": true,
+      "note": "founders · people · image"
+    },
+    {
+      "slot": "p2",
+      "path": "founders.culture_image",
+      "role": "image",
+      "required": true,
+      "note": "founders · culture_image"
+    },
+    {
+      "slot": "p3",
+      "path": "testimonials.featured.image",
+      "role": "image",
+      "required": true,
+      "note": "testimonials · featured · image"
+    },
+    {
+      "slot": "p4",
+      "path": "testimonials.items[].image",
+      "role": "image",
+      "required": true,
+      "note": "testimonials · items · image"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "meta.title",
+        "label": "meta · title",
+        "type": "text",
+        "maxLen": 74
+      },
+      {
+        "path": "meta.description",
+        "label": "meta · description",
+        "type": "text",
+        "maxLen": 240
+      },
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.links[]",
+        "label": "nav · links",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.cta",
+        "label": "nav · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.kicker",
+        "label": "hero · kicker",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.title_a",
+        "label": "hero · title_a",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.title_b",
+        "label": "hero · title_b",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.title_c",
+        "label": "hero · title_c",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.title_d",
+        "label": "hero · title_d",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.subtitle",
+        "label": "hero · subtitle",
+        "type": "text",
+        "maxLen": 165
+      },
+      {
+        "path": "hero.cta_primary",
+        "label": "hero · cta_primary",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.cta_secondary",
+        "label": "hero · cta_secondary",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.proof_label",
+        "label": "hero · proof_label",
+        "type": "text",
+        "maxLen": 59
+      },
+      {
+        "path": "hero.logos[]",
+        "label": "hero · logos",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "dashboard.sidebar[]",
+        "label": "dashboard · sidebar",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "dashboard.panel_title",
+        "label": "dashboard · panel_title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "dashboard.kpi[].label",
+        "label": "dashboard · kpi · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "dashboard.kpi[].value",
+        "label": "dashboard · kpi · value",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "dashboard.kpi[].delta",
+        "label": "dashboard · kpi · delta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "dashboard.chart_a_title",
+        "label": "dashboard · chart_a_title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "dashboard.chart_b_title",
+        "label": "dashboard · chart_b_title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "dashboard.legend[]",
+        "label": "dashboard · legend",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "bento.a_title",
+        "label": "bento · a_title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "bento.a_text",
+        "label": "bento · a_text",
+        "type": "text",
+        "maxLen": 102
+      },
+      {
+        "path": "bento.b_value",
+        "label": "bento · b_value",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "bento.b_text",
+        "label": "bento · b_text",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "bento.c_title",
+        "label": "bento · c_title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "bento.c_text",
+        "label": "bento · c_text",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "bento.d_title",
+        "label": "bento · d_title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "bento.d_text",
+        "label": "bento · d_text",
+        "type": "text",
+        "maxLen": 85
+      },
+      {
+        "path": "bento.e_title",
+        "label": "bento · e_title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "bento.e_text",
+        "label": "bento · e_text",
+        "type": "text",
+        "maxLen": 72
+      },
+      {
+        "path": "bento.f_title",
+        "label": "bento · f_title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "bento.f_text",
+        "label": "bento · f_text",
+        "type": "text",
+        "maxLen": 74
+      },
+      {
+        "path": "steps.kicker",
+        "label": "steps · kicker",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "steps.title_a",
+        "label": "steps · title_a",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "steps.title_b",
+        "label": "steps · title_b",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "steps.subtitle",
+        "label": "steps · subtitle",
+        "type": "text",
+        "maxLen": 181
+      },
+      {
+        "path": "steps.items[].tag",
+        "label": "steps · items · tag",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "steps.items[].title",
+        "label": "steps · items · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "steps.items[].text",
+        "label": "steps · items · text",
+        "type": "text",
+        "maxLen": 154
+      },
+      {
+        "path": "steps.cta_text",
+        "label": "steps · cta_text",
+        "type": "text",
+        "maxLen": 66
+      },
+      {
+        "path": "steps.cta_btn",
+        "label": "steps · cta_btn",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "integration.kicker",
+        "label": "integration · kicker",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "integration.title_a",
+        "label": "integration · title_a",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "integration.title_b",
+        "label": "integration · title_b",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "integration.subtitle",
+        "label": "integration · subtitle",
+        "type": "text",
+        "maxLen": 192
+      },
+      {
+        "path": "integration.feature_label",
+        "label": "integration · feature_label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "integration.feature_title",
+        "label": "integration · feature_title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "integration.feature_text",
+        "label": "integration · feature_text",
+        "type": "text",
+        "maxLen": 91
+      },
+      {
+        "path": "integration.orb_label",
+        "label": "integration · orb_label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "integration.layout_text",
+        "label": "integration · layout_text",
+        "type": "text",
+        "maxLen": 42
+      },
+      {
+        "path": "integration.orb_text",
+        "label": "integration · orb_text",
+        "type": "text",
+        "maxLen": 42
+      },
+      {
+        "path": "integration.uptime_value",
+        "label": "integration · uptime_value",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "integration.uptime_text",
+        "label": "integration · uptime_text",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "integration.footnote",
+        "label": "integration · footnote",
+        "type": "text",
+        "maxLen": 82
+      },
+      {
+        "path": "integration.cta_text",
+        "label": "integration · cta_text",
+        "type": "text",
+        "maxLen": 82
+      },
+      {
+        "path": "integration.cta_btn",
+        "label": "integration · cta_btn",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "performance.kicker",
+        "label": "performance · kicker",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "performance.title_a",
+        "label": "performance · title_a",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "performance.title_b",
+        "label": "performance · title_b",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "performance.subtitle",
+        "label": "performance · subtitle",
+        "type": "text",
+        "maxLen": 184
+      },
+      {
+        "path": "performance.stats[].label",
+        "label": "performance · stats · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "performance.stats[].value",
+        "label": "performance · stats · value",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "performance.cta_text",
+        "label": "performance · cta_text",
+        "type": "text",
+        "maxLen": 112
+      },
+      {
+        "path": "performance.cta_btn",
+        "label": "performance · cta_btn",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "founders.kicker",
+        "label": "founders · kicker",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "founders.title",
+        "label": "founders · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "founders.subtitle",
+        "label": "founders · subtitle",
+        "type": "text",
+        "maxLen": 189
+      },
+      {
+        "path": "founders.people[].name",
+        "label": "founders · people · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "founders.people[].role",
+        "label": "founders · people · role",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "founders.story_title",
+        "label": "founders · story_title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "founders.story_p1",
+        "label": "founders · story_p1",
+        "type": "text",
+        "maxLen": 304
+      },
+      {
+        "path": "founders.story_p2",
+        "label": "founders · story_p2",
+        "type": "text",
+        "maxLen": 250
+      },
+      {
+        "path": "founders.story_p3",
+        "label": "founders · story_p3",
+        "type": "text",
+        "maxLen": 331
+      },
+      {
+        "path": "founders.badge",
+        "label": "founders · badge",
+        "type": "text",
+        "maxLen": 43
+      },
+      {
+        "path": "founders.culture_title",
+        "label": "founders · culture_title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "founders.culture_text",
+        "label": "founders · culture_text",
+        "type": "text",
+        "maxLen": 45
+      },
+      {
+        "path": "founders.culture_btn",
+        "label": "founders · culture_btn",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "founders.cta_text",
+        "label": "founders · cta_text",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "founders.cta_btn",
+        "label": "founders · cta_btn",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.kicker",
+        "label": "testimonials · kicker",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.title_a",
+        "label": "testimonials · title_a",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.title_b",
+        "label": "testimonials · title_b",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.subtitle",
+        "label": "testimonials · subtitle",
+        "type": "text",
+        "maxLen": 109
+      },
+      {
+        "path": "testimonials.featured.quote",
+        "label": "testimonials · featured · quote",
+        "type": "text",
+        "maxLen": 190
+      },
+      {
+        "path": "testimonials.featured.name",
+        "label": "testimonials · featured · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.featured.role",
+        "label": "testimonials · featured · role",
+        "type": "text",
+        "maxLen": 45
+      },
+      {
+        "path": "testimonials.items[].quote",
+        "label": "testimonials · items · quote",
+        "type": "text",
+        "maxLen": 267
+      },
+      {
+        "path": "testimonials.items[].name",
+        "label": "testimonials · items · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.items[].role",
+        "label": "testimonials · items · role",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.kicker",
+        "label": "pricing · kicker",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.title_a",
+        "label": "pricing · title_a",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.title_b",
+        "label": "pricing · title_b",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.subtitle",
+        "label": "pricing · subtitle",
+        "type": "text",
+        "maxLen": 110
+      },
+      {
+        "path": "pricing.toggle_monthly",
+        "label": "pricing · toggle_monthly",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.toggle_annual",
+        "label": "pricing · toggle_annual",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.plans[].name",
+        "label": "pricing · plans · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.plans[].features[]",
+        "label": "pricing · plans · features",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.plans[].price",
+        "label": "pricing · plans · price",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.plans[].period",
+        "label": "pricing · plans · period",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.plans[].cta",
+        "label": "pricing · plans · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.proof_label",
+        "label": "pricing · proof_label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.logos[]",
+        "label": "pricing · logos",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.cta_text",
+        "label": "pricing · cta_text",
+        "type": "text",
+        "maxLen": 42
+      },
+      {
+        "path": "pricing.cta_btn",
+        "label": "pricing · cta_btn",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.kicker",
+        "label": "faq · kicker",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.title_a",
+        "label": "faq · title_a",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.title_b",
+        "label": "faq · title_b",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.subtitle",
+        "label": "faq · subtitle",
+        "type": "text",
+        "maxLen": 58
+      },
+      {
+        "path": "faq.items[].q",
+        "label": "faq · items · q",
+        "type": "text",
+        "maxLen": 62
+      },
+      {
+        "path": "faq.items[].a",
+        "label": "faq · items · a",
+        "type": "text",
+        "maxLen": 240
+      },
+      {
+        "path": "faq.cta_text",
+        "label": "faq · cta_text",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.cta_btn",
+        "label": "faq · cta_btn",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "finalcta.title",
+        "label": "finalcta · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "finalcta.subtitle",
+        "label": "finalcta · subtitle",
+        "type": "text",
+        "maxLen": 144
+      },
+      {
+        "path": "finalcta.cta_primary",
+        "label": "finalcta · cta_primary",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "finalcta.cta_secondary",
+        "label": "finalcta · cta_secondary",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "finalcta.marquee[]",
+        "label": "finalcta · marquee",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.newsletter_title",
+        "label": "footer · newsletter_title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.newsletter_text",
+        "label": "footer · newsletter_text",
+        "type": "text",
+        "maxLen": 45
+      },
+      {
+        "path": "footer.col1[]",
+        "label": "footer · col1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.col2[]",
+        "label": "footer · col2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.copyright",
+        "label": "footer · copyright",
+        "type": "text",
+        "maxLen": 42
+      }
+    ]
+  }
+}

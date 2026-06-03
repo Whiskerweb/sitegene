@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-sg-path="meta.title">Northpeak — AI analytics for commercial growth</title>
+  <meta name="description" data-sg-path="meta.description" content="Northpeak turns your commercial data into AI-driven insights. Amplify growth with smart analytics, integrations and dashboards built for modern teams." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- CDNs -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:     '#1e2b3a',   /* dark slate text */
+            muted:   '#465478',   /* muted blue-grey */
+            bg:      '#f9fafb',   /* page bg */
+            surface: '#ffffff',   /* card bg */
+            cyan:    '#80e5ff',   /* accent cyan in gradient titles */
+            indigo:  '#5b63d8',   /* indigo */
+            iris:    '#7584d6',   /* lavender-indigo */
+            violet:  '#545c9e',   /* deep violet */
+            soft:    '#dfe1f5',   /* pale lilac */
+            ribbon:  '#7d86f0',   /* purple band / CTA */
+            line:    '#e5e8eb',
+          },
+          fontFamily: {
+            sans: ['Manrope', 'ui-sans-serif', 'system-ui'],
+            inter: ['Inter', 'ui-sans-serif'],
+          },
+          fontSize: {
+            'd1': ['5rem',    {lineHeight: '1.02'}],
+            'd2': ['3.5rem',  {lineHeight: '1.05'}],
+            'd3': ['2.5rem',  {lineHeight: '1.1'}],
+          },
+          spacing: { '30': '7.5rem', '38': '9.5rem', '45': '11.25rem' },
+        }
+      }
+    };
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Manrope', sans-serif; color: #1e2b3a; background: #f9fafb; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    /* gradient title cyan -> violet, like the source */
+    .grad-title { background: linear-gradient(95deg, #80e5ff 0%, #7584d6 40%, #545c9e 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .grad-soft  { background: linear-gradient(120deg, #eef0fb 0%, #f6f3ff 50%, #f9fafb 100%); }
+    /* soft aurora blobs background */
+    .aurora { position: absolute; border-radius: 9999px; filter: blur(60px); opacity: .55; pointer-events: none; }
+    .pill-btn { box-shadow: 0 10px 24px -8px rgba(125,134,240,.55); }
+    .card-dot { background-image: radial-gradient(rgba(117,132,214,.18) 1px, transparent 1px); background-size: 10px 10px; }
+    /* accordion */
+    details > summary { list-style: none; cursor: pointer; }
+    details > summary::-webkit-details-marker { display: none; }
+    details[open] .faq-plus { transform: rotate(45deg); }
+    /* marquee */
+    @keyframes marquee { from { transform: translateX(0);} to { transform: translateX(-50%);} }
+    .marquee-track { animation: marquee 22s linear infinite; }
+    /* count-up shimmer cards */
+    .stat-shine { background: linear-gradient(135deg,#ffffff 0%,#f3f4fb 100%); }
+  </style>
+</head>
+<body class="bg-bg text-ink font-sans">
+
+  <!-- ═══════════ SITE CONTENT (single source of truth) ═══════════ -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ ||  window.__SITE_CONTENT__ || {
+      brand: "Northpeak",
+      meta: {
+        title: "Northpeak — AI analytics for commercial growth",
+        description: "Northpeak turns your commercial data into AI-driven insights. Amplify growth with smart analytics, integrations and dashboards built for modern teams."
+      },
+      nav: {
+        links: ["How It Works", "Integration", "Performance", "Pricing", "FAQ"],
+        cta: "Book a Demo"
+      },
+      hero: {
+        kicker: "AI ANALYTICS PLATFORM",
+        title_a: "Amplify your growth",
+        title_b: "with",
+        title_c: "Smart AI",
+        title_d: "insights",
+        subtitle: "You are just one click away from transforming your business with powerful, real-time analytics support.",
+        cta_primary: "Start Free Trial",
+        cta_secondary: "How It Works",
+        proof_label: "GROWING PARTNERSHIPS AROUND THE WORLD",
+        logos: ["avocadoo", "nanowise", "NEXUSGATE", "Spitfire", "GESSLER"]
+      },
+      dashboard: {
+        sidebar: ["Dashboard", "Campaigns", "Analytics", "Integration", "Reports", "Performance", "Settings"],
+        panel_title: "Performance Overview",
+        kpi: [
+          { label: "Growth this Week", value: "$45,800", delta: "+8.4%" },
+          { label: "Active Campaigns", value: "24", delta: "+5 New" },
+          { label: "AI Insights Generated", value: "1,250", delta: "+12%" }
+        ],
+        chart_a_title: "Performance Analytics",
+        chart_b_title: "Resource Distribution",
+        legend: ["Campaign Budget", "Integration Usage", "AI Processing", "AI Resources"]
+      },
+      bento: {
+        a_title: "Ask AI anything",
+        a_text: "Conversational analytics — query your numbers in plain language.",
+        b_value: "3x",
+        b_text: "Faster reporting cycles",
+        c_title: "Custom Reports",
+        c_text: "Branded, exportable revenue analysis in one click.",
+        d_title: "Instant Integrations",
+        d_text: "Connect your favourite platforms and sync in seconds.",
+        e_title: "Simple Strategies",
+        e_text: "Pre-built playbooks that adapt to your goals.",
+        f_title: "Process Optimisation",
+        f_text: "Automate the busywork, focus on the decisions."
+      },
+      steps: {
+        kicker: "HOW IT WORKS",
+        title_a: "Explore Our Simple,",
+        title_b: "Easy Process",
+        subtitle: "Start with ease and watch your business thrive from the get-go, with personalised guidance every step of the way.",
+        items: [
+          { tag: "Step 1", title: "Sign up & Profile", text: "Create your account with our guided setup process. Access your personalised dashboard instantly." },
+          { tag: "Step 2", title: "Personalisation", text: "Tell us your goals and preferences. We'll customise your experience with AI-driven insights." },
+          { tag: "Step 3", title: "Strategy", text: "Implement data-backed strategies aligned with your objectives. Optimise your performance in real-time." },
+          { tag: "Step 4", title: "Analyze & Scale", text: "Monitor your success through clear analytics. Scale what works and optimise for growth." }
+        ],
+        cta_text: "Seamless integration with expert guidance",
+        cta_btn: "Connect Now"
+      },
+      integration: {
+        kicker: "INTEGRATION",
+        title_a: "Powerful Integrations",
+        title_b: "Made Simple",
+        subtitle: "Integrate your favourite platforms into one powerful ecosystem, enabling seamless collaboration and enhanced efficiency.",
+        feature_label: "Advanced Architecture",
+        feature_title: "Analytics Module",
+        feature_text: "Optimise your integrations with live performance metrics.",
+        orb_label: "AI³",
+        orb_text: "Unified intelligence layer",
+        layout_text: "Flexible workspace layouts",
+        uptime_value: "99%",
+        uptime_text: "Uptime guaranteed",
+        footnote: "Your favourite platforms are ready to be connected.",
+        cta_text: "Receive assistance from our integration specialists",
+        cta_btn: "Instant Support"
+      },
+      performance: {
+        kicker: "PERFORMANCE",
+        title_a: "Our Milestones,",
+        title_b: "your Advantage",
+        subtitle: "Driving measurable growth worldwide with every campaign launched, user supported, and AI-driven solution delivered.",
+        stats: [
+          { label: "Campaigns Launched", value: "12K+" },
+          { label: "Active Platform Users", value: "40K" },
+          { label: "AI Insights Generated", value: "8M" },
+          { label: "Global Engagement", value: "95K" },
+          { label: "Customer Satisfaction", value: "98%" },
+          { label: "Strategic Solutions", value: "320" }
+        ],
+        cta_text: "Experience our analytics engine and how we shape businesses worldwide.",
+        cta_btn: "Analytics Demo"
+      },
+      founders: {
+        kicker: "ABOUT US",
+        title: "Meet the Founders",
+        subtitle: "The minds behind innovative solutions, making tomorrow's tech today with expertise that shapes the future of business.",
+        people: [
+          { name: "Elena Marsh", role: "Co-founder & CEO", image: "img/founder1.jpg" },
+          { name: "Daniel Okafor", role: "Co-founder & CTO", image: "img/founder2.jpg" },
+          { name: "Priya Nair", role: "Co-founder & Head of AI", image: "img/founder3.jpg" }
+        ],
+        story_title: "The Story So Far —",
+        story_p1: "Three friends with a shared passion for AI met at university. After countless coffee-fuelled coding sessions, we shipped our first prototype to a handful of teams who believed in the vision.",
+        story_p2: "Today, backed by some of the best operators in tech, we're making advanced analytics accessible to businesses worldwide — without the enterprise complexity.",
+        story_p3: "We're industry leaders in AI-driven business solutions, enabling companies to make smarter, data-backed decisions. Our team blends deep AI expertise with real business analytics to deliver impactful results.",
+        badge: "Backed by leading operators",
+        culture_title: "Life at Northpeak",
+        culture_text: "Our culture through the lens",
+        culture_btn: "Join Us",
+        culture_image: "img/culture.jpg",
+        cta_text: "Discover the full story",
+        cta_btn: "Read More"
+      },
+      testimonials: {
+        kicker: "CLIENT INSIGHTS",
+        title_a: "What Our",
+        title_b: "Clients Say",
+        subtitle: "How our clients transform growth with advanced, AI-driven analytics.",
+        featured: { name: "David Pierce", role: "Marketing Consultant at Apex", image: "img/feature.jpg", quote: "Northpeak gave us a single source of truth. The AI insights surfaced opportunities our team would have missed entirely." },
+        items: [
+          { name: "Greg Weingartner", role: "CEO at Nexusgate", image: "img/t1.jpg", quote: "Since implementing this solution, we've seen a dramatic improvement in our analytics efficiency. The AI insights helped us identify opportunities we would have missed." },
+          { name: "Jhon Lande", role: "Marketing Director at Spitfire", image: "img/t2.jpg", quote: "The platform's automation has streamlined our workflow and noticeably enhanced productivity across the team." },
+          { name: "Mara Velez", role: "Growth Lead at Gessler", image: "img/t3.jpg", quote: "Northpeak delivers actionable data that has transformed our decision-making process from gut-feel to evidence." },
+          { name: "Sofia Klein", role: "Ops Lead at Avocadoo", image: "img/t4.jpg", quote: "Onboarding took an afternoon. Within a week we were running reports that used to take our analysts days." }
+        ]
+      },
+      pricing: {
+        kicker: "PRICING",
+        title_a: "Explore",
+        title_b: "Our Plans",
+        subtitle: "Super flexible monthly plans and cost-effective annual subscriptions.",
+        toggle_monthly: "Monthly",
+        toggle_annual: "Annual",
+        plans: [
+          { name: "Essential", price: "$29", period: "/month", features: ["Core Analytics", "Limited Campaigns", "Community Access", "Standard Support"], cta: "Purchase", featured: false },
+          { name: "Advanced", price: "$79", period: "/month", features: ["All Essential Features", "Unlimited Campaigns", "Advanced AI predictions", "Priority support", "Team collaboration tools"], cta: "Purchase", featured: true },
+          { name: "Enterprise", price: "$199", period: "/month", features: ["All Advanced Features", "Custom AI models", "API access", "Advanced Integrations", "24/7 priority support", "Training Sessions"], cta: "Contact Sales", featured: false }
+        ],
+        proof_label: "TRUSTED BY MARKET LEADERS",
+        logos: ["Spitfire", "avocadoo", "nanowise", "NEXUSGATE", "GESSLER"],
+        cta_text: "Unsure which plan to pick?",
+        cta_btn: "Ask our Expert"
+      },
+      faq: {
+        kicker: "FAQ",
+        title_a: "Burning Questions",
+        title_b: "About Northpeak",
+        subtitle: "Simple answers to make things clear.",
+        items: [
+          { q: "Is the platform suitable for beginners?", a: "Absolutely. Northpeak ships with a guided setup, sensible defaults and plain-language insights, so you don't need a data team to get value on day one." },
+          { q: "How accurate are the AI insights?", a: "Our models are continuously evaluated against your historical outcomes. You always see the confidence level behind each recommendation, so you stay in control." },
+          { q: "Can I integrate with my existing tools?", a: "Yes. Northpeak connects to the platforms you already use in seconds, with no engineering work required for the most common integrations." },
+          { q: "What security measures do you have?", a: "Data is encrypted in transit and at rest, with role-based access controls and audit logging. Your data is never used to train shared models." },
+          { q: "How often are insights updated?", a: "Dashboards refresh in near real-time as new data arrives, and strategic insights are recalculated on a rolling schedule throughout the day." },
+          { q: "What kind of support do you offer?", a: "Every plan includes support. Advanced and Enterprise plans add priority and 24/7 channels, plus a dedicated specialist for onboarding." }
+        ],
+        cta_text: "Still have questions?",
+        cta_btn: "Get Assistance"
+      },
+      finalcta: {
+        title: "Ready? Let's Talk!",
+        subtitle: "Get expert insights and answers tailored to your business requirements and transformation.",
+        cta_primary: "Book a Call",
+        cta_secondary: "2 spots available",
+        marquee: ["Predictive Analysis", "Business Growth", "Smart Automation", "Strategic Planning"]
+      },
+      footer: {
+        newsletter_title: "Stay in the Loop",
+        newsletter_text: "Be first to know what's next",
+        email_placeholder: "Your Email",
+        col1: ["Home", "Features", "How It Works", "Integration", "Performance", "Pricing", "FAQ"],
+        col2: ["About us", "Client Insights", "Book a Call", "Journal", "Contact"],
+        copyright: "Copyright © Northpeak 2026"
+      }
+    };
+  </script>
+
+  <!-- ═══════════ NAVBAR (floating pill) ═══════════ -->
+  <header class="fixed top-4 inset-x-0 z-50 flex justify-center px-4">
+    <nav class="w-full max-w-3xl bg-white/70 backdrop-blur-xl border border-white/60 rounded-full shadow-[0_10px_40px_-12px_rgba(84,92,158,.35)] px-3 py-2 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-2 pl-3">
+        <span class="grid place-items-center w-7 h-7 rounded-lg bg-gradient-to-br from-iris to-violet text-white text-xs font-bold">N</span>
+        <span class="font-bold text-lg tracking-tight text-ink" data-sg-path="brand">Northpeak</span>
+      </a>
+      <ul class="hidden md:flex items-center gap-6 text-sm text-muted font-medium">
+        <li><a href="#steps" class="hover:text-ink transition" data-sg-path="nav.links[0]">How It Works</a></li>
+        <li><a href="#integration" class="hover:text-ink transition" data-sg-path="nav.links[1]">Integration</a></li>
+        <li><a href="#performance" class="hover:text-ink transition" data-sg-path="nav.links[2]">Performance</a></li>
+        <li><a href="#pricing" class="hover:text-ink transition" data-sg-path="nav.links[3]">Pricing</a></li>
+        <li><a href="#faq" class="hover:text-ink transition" data-sg-path="nav.links[4]">FAQ</a></li>
+      </ul>
+      <a href="#finalcta" class="pill-btn inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-iris to-violet text-white text-sm font-semibold px-4 py-2">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
+        <span data-sg-path="nav.cta">Book a Demo</span>
+      </a>
+    </nav>
+  </header>
+
+  <main id="top">
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <section class="relative overflow-hidden pt-36 pb-20 grad-soft">
+    <div class="aurora w-[420px] h-[420px] -top-20 left-[8%]" style="background:#b7c0e8;"></div>
+    <div class="aurora w-[380px] h-[380px] top-10 right-[6%]" style="background:#a5a4fa;"></div>
+    <div class="aurora w-[300px] h-[300px] top-40 left-[40%]" style="background:#80e5ff;"></div>
+
+    <div class="relative max-w-5xl mx-auto px-6 text-center">
+      <span class="inline-flex items-center gap-2 rounded-full bg-white/70 border border-white/70 px-4 py-1.5 text-xs font-semibold tracking-wide text-muted mb-7" data-sg-reveal>
+        <span class="w-2 h-2 rounded-full bg-iris"></span>
+        <span data-sg-path="hero.kicker">AI ANALYTICS PLATFORM</span>
+      </span>
+
+      <h1 class="font-sans font-semibold text-d2 md:text-d1 tracking-tight" data-sg-reveal>
+        <span class="grad-title" data-sg-path="hero.title_a">Amplify your growth</span>
+      </h1>
+      <h1 class="font-sans font-semibold text-d2 md:text-d1 tracking-tight mt-1 flex flex-wrap items-center justify-center gap-x-4 gap-y-2" data-sg-reveal>
+        <span class="text-ink" data-sg-path="hero.title_b">with</span>
+        <span class="inline-flex items-center rounded-full border border-iris/40 bg-white/60 px-5 py-1 grad-title" data-sg-path="hero.title_c">Smart AI</span>
+        <span class="text-ink" data-sg-path="hero.title_d">insights</span>
+      </h1>
+
+      <p class="mx-auto max-w-xl text-muted text-lg mt-7" data-sg-path="hero.subtitle" data-sg-reveal>You are just one click away from transforming your business with powerful, real-time analytics support.</p>
+
+      <div class="flex flex-wrap items-center justify-center gap-3 mt-8" data-sg-reveal>
+        <a href="#pricing" class="pill-btn rounded-full bg-gradient-to-br from-iris to-violet text-white font-semibold px-7 py-3.5" data-sg-path="hero.cta_primary">Start Free Trial</a>
+        <a href="#steps" class="rounded-full bg-white/80 border border-line text-ink font-semibold px-7 py-3.5 hover:bg-white transition" data-sg-path="hero.cta_secondary">How It Works</a>
+      </div>
+
+      <!-- proof logos -->
+      <div class="mt-16" data-sg-reveal>
+        <p class="text-[11px] tracking-[0.25em] text-muted/70 font-semibold mb-6" data-sg-path="hero.proof_label">GROWING PARTNERSHIPS AROUND THE WORLD</p>
+        <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-muted/50 font-bold">
+          <span data-sg-path="hero.logos[0]">avocadoo</span>
+          <span data-sg-path="hero.logos[1]">nanowise</span>
+          <span class="tracking-wide" data-sg-path="hero.logos[2]">NEXUSGATE</span>
+          <span class="italic" data-sg-path="hero.logos[3]">Spitfire</span>
+          <span data-sg-path="hero.logos[4]">GESSLER</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD MOCKUP (pure HTML/CSS) -->
+    <div class="relative max-w-6xl mx-auto px-6 mt-16" data-sg-reveal>
+      <div class="rounded-2xl bg-white border border-line shadow-[0_30px_80px_-30px_rgba(84,92,158,.45)] overflow-hidden">
+        <div class="grid grid-cols-12">
+          <!-- sidebar -->
+          <aside class="hidden md:flex col-span-3 lg:col-span-2 flex-col gap-1 bg-bg/60 border-r border-line p-4">
+            <div class="flex items-center gap-2 px-2 pb-4">
+              <span class="grid place-items-center w-6 h-6 rounded-md bg-gradient-to-br from-iris to-violet text-white text-[10px] font-bold">N</span>
+              <span class="font-bold text-sm" data-sg-path="brand">Northpeak</span>
+            </div>
+            <a class="rounded-lg bg-iris/15 text-violet text-sm font-semibold px-3 py-2" data-sg-path="dashboard.sidebar[0]">Dashboard</a>
+            <a class="rounded-lg text-muted text-sm px-3 py-2 hover:bg-bg" data-sg-path="dashboard.sidebar[1]">Campaigns</a>
+            <a class="rounded-lg text-muted text-sm px-3 py-2 hover:bg-bg" data-sg-path="dashboard.sidebar[2]">Analytics</a>
+            <a class="rounded-lg text-muted text-sm px-3 py-2 hover:bg-bg" data-sg-path="dashboard.sidebar[3]">Integration</a>
+            <a class="rounded-lg text-muted text-sm px-3 py-2 hover:bg-bg" data-sg-path="dashboard.sidebar[4]">Reports</a>
+            <a class="rounded-lg text-muted text-sm px-3 py-2 hover:bg-bg" data-sg-path="dashboard.sidebar[5]">Performance</a>
+            <a class="rounded-lg text-muted text-sm px-3 py-2 hover:bg-bg mt-auto" data-sg-path="dashboard.sidebar[6]">Settings</a>
+          </aside>
+          <!-- main -->
+          <div class="col-span-12 md:col-span-9 lg:col-span-10 p-5 md:p-7">
+            <div class="flex items-center justify-between mb-5">
+              <h3 class="font-bold text-lg" data-sg-path="dashboard.panel_title">Performance Overview</h3>
+              <span class="rounded-full bg-iris/15 text-violet text-xs font-semibold px-3 py-1.5">＋ Create Campaign</span>
+            </div>
+            <!-- KPIs -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+              <div class="rounded-xl border border-line p-4 stat-shine">
+                <p class="text-xs text-muted" data-sg-path="dashboard.kpi[0].label">Growth this Week</p>
+                <p class="text-2xl font-bold mt-1" data-sg-path="dashboard.kpi[0].value">$45,800</p>
+                <p class="text-xs text-emerald-500 font-semibold mt-1" data-sg-path="dashboard.kpi[0].delta">+8.4%</p>
+              </div>
+              <div class="rounded-xl border border-line p-4 stat-shine">
+                <p class="text-xs text-muted" data-sg-path="dashboard.kpi[1].label">Active Campaigns</p>
+                <p class="text-2xl font-bold mt-1" data-sg-path="dashboard.kpi[1].value">24</p>
+                <p class="text-xs text-emerald-500 font-semibold mt-1" data-sg-path="dashboard.kpi[1].delta">+5 New</p>
+              </div>
+              <div class="rounded-xl border border-line p-4 stat-shine">
+                <p class="text-xs text-muted" data-sg-path="dashboard.kpi[2].label">AI Insights Generated</p>
+                <p class="text-2xl font-bold mt-1" data-sg-path="dashboard.kpi[2].value">1,250</p>
+                <p class="text-xs text-emerald-500 font-semibold mt-1" data-sg-path="dashboard.kpi[2].delta">+12%</p>
+              </div>
+            </div>
+            <!-- charts -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <div class="lg:col-span-2 rounded-xl border border-line p-4">
+                <p class="text-sm font-semibold mb-4" data-sg-path="dashboard.chart_a_title">Performance Analytics</p>
+                <div class="flex items-end gap-2 h-36">
+                  <span class="flex-1 rounded-t bg-iris/70" style="height:42%"></span>
+                  <span class="flex-1 rounded-t bg-violet/60" style="height:64%"></span>
+                  <span class="flex-1 rounded-t bg-iris/70" style="height:38%"></span>
+                  <span class="flex-1 rounded-t bg-violet/60" style="height:80%"></span>
+                  <span class="flex-1 rounded-t bg-iris/70" style="height:55%"></span>
+                  <span class="flex-1 rounded-t bg-violet/60" style="height:70%"></span>
+                  <span class="flex-1 rounded-t bg-iris/70" style="height:48%"></span>
+                  <span class="flex-1 rounded-t bg-violet/60" style="height:90%"></span>
+                  <span class="flex-1 rounded-t bg-iris/70" style="height:60%"></span>
+                  <span class="flex-1 rounded-t bg-violet/60" style="height:74%"></span>
+                  <span class="flex-1 rounded-t bg-iris/70" style="height:50%"></span>
+                  <span class="flex-1 rounded-t bg-violet/60" style="height:68%"></span>
+                </div>
+              </div>
+              <div class="rounded-xl border border-line p-4">
+                <p class="text-sm font-semibold mb-4" data-sg-path="dashboard.chart_b_title">Resource Distribution</p>
+                <div class="flex items-center justify-center my-2">
+                  <div class="w-24 h-24 rounded-full" style="background:conic-gradient(#7584d6 0 35%,#80e5ff 35% 60%,#545c9e 60% 82%,#dfe1f5 82% 100%);"></div>
+                </div>
+                <ul class="grid grid-cols-2 gap-1.5 text-[11px] text-muted mt-3">
+                  <li class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-iris"></span><span data-sg-path="dashboard.legend[0]">Campaign Budget</span></li>
+                  <li class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-cyan"></span><span data-sg-path="dashboard.legend[1]">Integration Usage</span></li>
+                  <li class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-violet"></span><span data-sg-path="dashboard.legend[2]">AI Processing</span></li>
+                  <li class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-soft"></span><span data-sg-path="dashboard.legend[3]">AI Resources</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FEATURE BENTO ═══════════ -->
+  <section class="py-20 md:py-24">
+    <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <!-- a: Ask AI -->
+      <div class="rounded-2xl bg-surface border border-line p-6 flex flex-col" data-sg-reveal>
+        <div class="inline-flex self-start items-center gap-2 rounded-full bg-iris/10 text-violet text-sm font-semibold px-4 py-2 mb-5">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.6 4.4L18 8l-4.4 1.6L12 14l-1.6-4.4L6 8l4.4-1.6z"/></svg>
+          <span data-sg-path="bento.a_title">Ask AI anything</span>
+        </div>
+        <div class="rounded-xl border border-line p-4 card-dot flex-1">
+          <div class="flex items-center justify-between text-xs text-muted mb-3"><span>Smart Strategies</span><span class="rounded-full bg-iris/15 text-violet px-2 py-0.5">Create</span></div>
+          <p class="text-sm font-semibold mb-2">Performance Overview</p>
+          <div class="flex gap-3 text-[11px] text-muted"><span>$45,800</span><span>24 Active</span><span>1,250 Insights</span></div>
+        </div>
+        <p class="text-sm text-muted mt-4" data-sg-path="bento.a_text">Conversational analytics — query your numbers in plain language.</p>
+      </div>
+
+      <!-- b: 3x metric -->
+      <div class="rounded-2xl bg-surface border border-line p-6 flex flex-col items-center justify-center text-center card-dot" data-sg-reveal>
+        <div class="relative w-32 h-32 mb-3">
+          <div class="absolute inset-0 rounded-full border-[10px] border-soft"></div>
+          <div class="absolute inset-0 rounded-full border-[10px] border-iris" style="clip-path: inset(0 0 50% 0)"></div>
+          <div class="absolute inset-0 grid place-items-center text-3xl font-extrabold text-violet" data-sg-path="bento.b_value">3x</div>
+        </div>
+        <p class="text-sm text-muted" data-sg-path="bento.b_text">Faster reporting cycles</p>
+      </div>
+
+      <!-- c: Custom Reports -->
+      <div class="rounded-2xl bg-surface border border-line p-6 flex flex-col" data-sg-reveal>
+        <div class="rounded-xl bg-gradient-to-br from-cyan/40 to-iris/30 p-5 flex-1 flex items-end">
+          <div class="w-full rounded-lg bg-white/90 shadow p-3">
+            <p class="text-[11px] font-semibold text-ink">Revenue Analysis</p>
+            <div class="mt-2 h-1.5 rounded bg-line"></div>
+            <div class="mt-1.5 h-1.5 w-2/3 rounded bg-line"></div>
+          </div>
+        </div>
+        <h3 class="text-lg font-bold mt-4" data-sg-path="bento.c_title">Custom Reports</h3>
+        <p class="text-sm text-muted mt-1" data-sg-path="bento.c_text">Branded, exportable revenue analysis in one click.</p>
+      </div>
+
+      <!-- d: Integrations orbit -->
+      <div class="rounded-2xl bg-surface border border-line p-6 flex flex-col" data-sg-reveal>
+        <div class="relative grid place-items-center flex-1 min-h-[160px] card-dot rounded-xl">
+          <div class="absolute w-40 h-40 rounded-full border border-dashed border-iris/30"></div>
+          <div class="grid place-items-center w-12 h-12 rounded-full bg-gradient-to-br from-iris to-violet text-white text-xs font-bold">N</div>
+          <span class="absolute top-3 left-6 w-7 h-7 rounded-full bg-white shadow grid place-items-center text-[10px] font-bold text-iris">Sl</span>
+          <span class="absolute top-6 right-6 w-7 h-7 rounded-full bg-white shadow grid place-items-center text-[10px] font-bold text-violet">No</span>
+          <span class="absolute bottom-5 left-10 w-7 h-7 rounded-full bg-white shadow grid place-items-center text-[10px] font-bold text-cyan">Pp</span>
+          <span class="absolute bottom-6 right-8 w-7 h-7 rounded-full bg-white shadow grid place-items-center text-[10px] font-bold text-iris">Zp</span>
+        </div>
+        <h3 class="text-lg font-bold mt-4" data-sg-path="bento.d_title">Instant Integrations</h3>
+        <p class="text-sm text-muted mt-1" data-sg-path="bento.d_text">Connect your favourite platforms and sync in seconds.</p>
+      </div>
+
+      <!-- e: Simple Strategies -->
+      <div class="rounded-2xl bg-surface border border-line p-6 flex flex-col" data-sg-reveal>
+        <div class="grid place-items-center flex-1 min-h-[160px] card-dot rounded-xl">
+          <div class="grid grid-cols-3 gap-1.5">
+            <span class="w-9 h-9 rounded-md border border-line"></span>
+            <span class="w-9 h-9 rounded-md border border-line grid place-items-center text-iris font-bold">＋</span>
+            <span class="w-9 h-9 rounded-md border border-line"></span>
+            <span class="w-9 h-9 rounded-md border border-line grid place-items-center text-violet font-bold">＋</span>
+            <span class="w-9 h-9 rounded-md border border-line"></span>
+            <span class="w-9 h-9 rounded-md border border-line grid place-items-center text-iris font-bold">＋</span>
+            <span class="w-9 h-9 rounded-md border border-line"></span>
+            <span class="w-9 h-9 rounded-md border border-line"></span>
+            <span class="w-9 h-9 rounded-md border border-line"></span>
+          </div>
+        </div>
+        <h3 class="text-lg font-bold mt-4" data-sg-path="bento.e_title">Simple Strategies</h3>
+        <p class="text-sm text-muted mt-1" data-sg-path="bento.e_text">Pre-built playbooks that adapt to your goals.</p>
+      </div>
+
+      <!-- f: Process Optimisation -->
+      <div class="rounded-2xl bg-surface border border-line p-6 flex flex-col" data-sg-reveal>
+        <div class="grid place-items-center flex-1 min-h-[160px] card-dot rounded-xl">
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-14 rounded-full bg-iris/20 grid items-start justify-center pt-1"><span class="w-5 h-5 rounded-full bg-iris"></span></span>
+            <span class="w-7 h-14 rounded-full bg-cyan/30 grid items-end justify-center pb-1"><span class="w-5 h-5 rounded-full bg-cyan"></span></span>
+            <span class="w-7 h-14 rounded-full bg-violet/20 grid items-start justify-center pt-1"><span class="w-5 h-5 rounded-full bg-violet"></span></span>
+            <span class="w-7 h-14 rounded-full bg-iris/20 grid items-end justify-center pb-1"><span class="w-5 h-5 rounded-full bg-iris"></span></span>
+          </div>
+        </div>
+        <h3 class="text-lg font-bold mt-4" data-sg-path="bento.f_title">Process Optimisation</h3>
+        <p class="text-sm text-muted mt-1" data-sg-path="bento.f_text">Automate the busywork, focus on the decisions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ STEPS / HOW IT WORKS ═══════════ -->
+  <section id="steps" class="py-20 md:py-24 grad-soft">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto" data-sg-reveal>
+        <p class="text-xs tracking-[0.25em] text-iris font-semibold mb-4" data-sg-path="steps.kicker">HOW IT WORKS</p>
+        <h2 class="font-semibold text-d3 md:text-d2 tracking-tight grad-title">
+          <span data-sg-path="steps.title_a">Explore Our Simple,</span><br/>
+          <span data-sg-path="steps.title_b">Easy Process</span>
+        </h2>
+        <p class="text-muted mt-5" data-sg-path="steps.subtitle">Start with ease and watch your business thrive from the get-go, with personalised guidance every step of the way.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-14">
+        <div class="rounded-2xl bg-surface border border-line p-6 card-dot" data-sg-reveal>
+          <span class="inline-block rounded-full bg-iris/10 text-violet text-xs font-semibold px-3 py-1.5 mb-6" data-sg-path="steps.items[0].tag">Step 1</span>
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan/40 to-iris/30 grid place-items-center mb-5 text-violet">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 21v-2a4 4 0 00-8 0v2M12 11a4 4 0 100-8 4 4 0 000 8z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold" data-sg-path="steps.items[0].title">Sign up & Profile</h3>
+          <p class="text-sm text-muted mt-2" data-sg-path="steps.items[0].text">Create your account with our guided setup process. Access your personalised dashboard instantly.</p>
+        </div>
+        <div class="rounded-2xl bg-surface border border-line p-6 card-dot" data-sg-reveal>
+          <span class="inline-block rounded-full bg-iris/10 text-violet text-xs font-semibold px-3 py-1.5 mb-6" data-sg-path="steps.items[1].tag">Step 2</span>
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan/40 to-iris/30 grid place-items-center mb-5 text-violet">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 6 6 .9-4.5 4.3 1 6.3L12 16.8 6.5 19.5l1-6.3L3 8.9 9 8z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold" data-sg-path="steps.items[1].title">Personalisation</h3>
+          <p class="text-sm text-muted mt-2" data-sg-path="steps.items[1].text">Tell us your goals and preferences. We'll customise your experience with AI-driven insights.</p>
+        </div>
+        <div class="rounded-2xl bg-surface border border-line p-6 card-dot" data-sg-reveal>
+          <span class="inline-block rounded-full bg-iris/10 text-violet text-xs font-semibold px-3 py-1.5 mb-6" data-sg-path="steps.items[2].tag">Step 3</span>
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan/40 to-iris/30 grid place-items-center mb-5 text-violet">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18M7 14l3-3 3 3 5-6"/></svg>
+          </div>
+          <h3 class="text-lg font-bold" data-sg-path="steps.items[2].title">Strategy</h3>
+          <p class="text-sm text-muted mt-2" data-sg-path="steps.items[2].text">Implement data-backed strategies aligned with your objectives. Optimise your performance in real-time.</p>
+        </div>
+        <div class="rounded-2xl bg-surface border border-line p-6 card-dot" data-sg-reveal>
+          <span class="inline-block rounded-full bg-iris/10 text-violet text-xs font-semibold px-3 py-1.5 mb-6" data-sg-path="steps.items[3].tag">Step 4</span>
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan/40 to-iris/30 grid place-items-center mb-5 text-violet">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+          </div>
+          <h3 class="text-lg font-bold" data-sg-path="steps.items[3].title">Analyze & Scale</h3>
+          <p class="text-sm text-muted mt-2" data-sg-path="steps.items[3].text">Monitor your success through clear analytics. Scale what works and optimise for growth.</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-14 pt-10 border-t border-line" data-sg-reveal>
+        <p class="text-muted" data-sg-path="steps.cta_text">Seamless integration with expert guidance</p>
+        <a href="#integration" class="pill-btn rounded-full bg-gradient-to-br from-iris to-violet text-white font-semibold px-6 py-3" data-sg-path="steps.cta_btn">Connect Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ INTEGRATION ═══════════ -->
+  <section id="integration" class="py-20 md:py-24">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="max-w-2xl" data-sg-reveal>
+        <p class="text-xs tracking-[0.25em] text-iris font-semibold mb-4" data-sg-path="integration.kicker">INTEGRATION</p>
+        <h2 class="font-semibold text-d3 md:text-d2 tracking-tight grad-title">
+          <span data-sg-path="integration.title_a">Powerful Integrations</span><br/>
+          <span data-sg-path="integration.title_b">Made Simple</span>
+        </h2>
+        <p class="text-muted mt-5" data-sg-path="integration.subtitle">Integrate your favourite platforms into one powerful ecosystem, enabling seamless collaboration and enhanced efficiency.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-12">
+        <!-- big feature card -->
+        <div class="rounded-2xl bg-surface border border-line p-7 flex flex-col card-dot" data-sg-reveal>
+          <div class="inline-flex self-start items-center gap-2 text-sm font-semibold text-violet mb-6">
+            <span class="w-2.5 h-2.5 rounded-full bg-iris"></span>
+            <span data-sg-path="integration.feature_label">Advanced Architecture</span>
+          </div>
+          <div class="grid place-items-center flex-1 min-h-[180px] my-2 text-iris">
+            <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2l8 4.6v9.2L12 22l-8-4.6V6.6z"/><path d="M12 2v20M4 6.6l8 4.6 8-4.6M4 15.8l8-4.6 8 4.6"/></svg>
+          </div>
+          <h3 class="text-2xl font-bold mt-2" data-sg-path="integration.feature_title">Analytics Module</h3>
+          <p class="text-sm text-muted mt-2" data-sg-path="integration.feature_text">Optimise your integrations with live performance metrics.</p>
+        </div>
+
+        <!-- right column: 4 small cards -->
+        <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="rounded-2xl bg-surface border border-line p-6 grid place-items-center min-h-[150px]" data-sg-reveal>
+            <div class="relative w-28 h-28 rounded-full bg-gradient-to-br from-cyan/50 via-iris/40 to-violet/40 grid place-items-center">
+              <span class="w-16 h-16 rounded-full bg-white/80 grid place-items-center font-bold text-violet" data-sg-path="integration.orb_label">AI³</span>
+            </div>
+          </div>
+          <div class="rounded-2xl bg-surface border border-line p-6 flex flex-col justify-center gap-3" data-sg-reveal>
+            <div class="flex gap-2">
+              <span class="w-9 h-12 rounded border border-line"></span>
+              <span class="w-9 h-12 rounded border-2 border-iris"></span>
+              <span class="w-9 h-12 rounded border border-line"></span>
+            </div>
+            <p class="text-sm text-muted" data-sg-path="integration.layout_text">Flexible workspace layouts</p>
+          </div>
+          <div class="rounded-2xl bg-surface border border-line p-6 flex flex-col justify-center" data-sg-reveal>
+            <p class="text-sm font-semibold text-violet" data-sg-path="integration.orb_text">Unified intelligence layer</p>
+            <div class="mt-3 h-2 rounded bg-line overflow-hidden"><span class="block h-full w-4/5 bg-gradient-to-r from-iris to-violet"></span></div>
+          </div>
+          <div class="rounded-2xl bg-surface border border-line p-6 flex flex-col justify-center" data-sg-reveal>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7584d6" stroke-width="1.6" class="mb-2"><path d="M12 3a7 7 0 017 7H5a7 7 0 017-7zM12 10v8M9 18a3 3 0 006 0"/></svg>
+            <p class="text-3xl font-extrabold text-violet" data-sg-path="integration.uptime_value">99%</p>
+            <p class="text-sm text-muted" data-sg-path="integration.uptime_text">Uptime guaranteed</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-muted mt-8" data-sg-path="integration.footnote" data-sg-reveal>Your favourite platforms are ready to be connected.</p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12 pt-10 border-t border-line" data-sg-reveal>
+        <p class="text-muted text-center" data-sg-path="integration.cta_text">Receive assistance from our integration specialists</p>
+        <a href="#finalcta" class="pill-btn rounded-full bg-gradient-to-br from-iris to-violet text-white font-semibold px-6 py-3 whitespace-nowrap" data-sg-path="integration.cta_btn">Instant Support</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ PERFORMANCE / MILESTONES ═══════════ -->
+  <section id="performance" class="py-20 md:py-24 grad-soft">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="max-w-2xl" data-sg-reveal>
+        <p class="text-xs tracking-[0.25em] text-iris font-semibold mb-4" data-sg-path="performance.kicker">PERFORMANCE</p>
+        <h2 class="font-semibold text-d3 md:text-d2 tracking-tight grad-title">
+          <span data-sg-path="performance.title_a">Our Milestones,</span><br/>
+          <span data-sg-path="performance.title_b">your Advantage</span>
+        </h2>
+        <p class="text-muted mt-5" data-sg-path="performance.subtitle">Driving measurable growth worldwide with every campaign launched, user supported, and AI-driven solution delivered.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
+        <div class="rounded-2xl bg-surface border border-line p-7 stat-shine" data-sg-reveal>
+          <p class="text-sm text-muted" data-sg-path="performance.stats[0].label">Campaigns Launched</p>
+          <p class="text-4xl font-extrabold text-ink mt-2" data-sg-path="performance.stats[0].value">12K+</p>
+        </div>
+        <div class="rounded-2xl bg-surface border border-line p-7 stat-shine" data-sg-reveal>
+          <p class="text-sm text-muted" data-sg-path="performance.stats[1].label">Active Platform Users</p>
+          <p class="text-4xl font-extrabold text-ink mt-2" data-sg-path="performance.stats[1].value">40K</p>
+        </div>
+        <div class="rounded-2xl bg-surface border border-line p-7 stat-shine" data-sg-reveal>
+          <p class="text-sm text-muted" data-sg-path="performance.stats[2].label">AI Insights Generated</p>
+          <p class="text-4xl font-extrabold text-ink mt-2" data-sg-path="performance.stats[2].value">8M</p>
+        </div>
+        <div class="rounded-2xl bg-surface border border-line p-7 stat-shine" data-sg-reveal>
+          <p class="text-sm text-muted" data-sg-path="performance.stats[3].label">Global Engagement</p>
+          <p class="text-4xl font-extrabold text-ink mt-2" data-sg-path="performance.stats[3].value">95K</p>
+        </div>
+        <div class="rounded-2xl bg-surface border border-line p-7 stat-shine" data-sg-reveal>
+          <p class="text-sm text-muted" data-sg-path="performance.stats[4].label">Customer Satisfaction</p>
+          <p class="text-4xl font-extrabold text-ink mt-2" data-sg-path="performance.stats[4].value">98%</p>
+        </div>
+        <div class="rounded-2xl bg-surface border border-line p-7 stat-shine" data-sg-reveal>
+          <p class="text-sm text-muted" data-sg-path="performance.stats[5].label">Strategic Solutions</p>
+          <p class="text-4xl font-extrabold text-ink mt-2" data-sg-path="performance.stats[5].value">320</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12 pt-10 border-t border-line" data-sg-reveal>
+        <p class="text-muted text-center" data-sg-path="performance.cta_text">Experience our analytics engine and how we shape businesses worldwide.</p>
+        <a href="#finalcta" class="pill-btn rounded-full bg-gradient-to-br from-iris to-violet text-white font-semibold px-6 py-3 whitespace-nowrap" data-sg-path="performance.cta_btn">Analytics Demo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FOUNDERS / ABOUT ═══════════ -->
+  <section id="about" class="py-20 md:py-24">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-3" data-sg-reveal>
+          <p class="text-xs tracking-[0.25em] text-iris font-semibold" data-sg-path="founders.kicker">ABOUT US</p>
+        </div>
+        <div class="lg:col-span-9" data-sg-reveal>
+          <h2 class="font-semibold text-d3 md:text-d2 tracking-tight grad-title" data-sg-path="founders.title">Meet the Founders</h2>
+          <p class="text-muted mt-4 max-w-2xl" data-sg-path="founders.subtitle">The minds behind innovative solutions, making tomorrow's tech today with expertise that shapes the future of business.</p>
+        </div>
+      </div>
+
+      <!-- founders portraits -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mt-12">
+        <figure class="rounded-2xl overflow-hidden bg-surface border border-line" data-sg-reveal>
+          <img data-sg-img="founders.people[0].image" src="img/founder1.jpg" alt="" class="w-full h-72 object-cover" loading="lazy" />
+          <figcaption class="p-5">
+            <p class="font-bold" data-sg-path="founders.people[0].name">Elena Marsh</p>
+            <p class="text-sm text-muted" data-sg-path="founders.people[0].role">Co-founder & CEO</p>
+          </figcaption>
+        </figure>
+        <figure class="rounded-2xl overflow-hidden bg-surface border border-line" data-sg-reveal>
+          <img data-sg-img="founders.people[1].image" src="img/founder2.jpg" alt="" class="w-full h-72 object-cover" loading="lazy" />
+          <figcaption class="p-5">
+            <p class="font-bold" data-sg-path="founders.people[1].name">Daniel Okafor</p>
+            <p class="text-sm text-muted" data-sg-path="founders.people[1].role">Co-founder & CTO</p>
+          </figcaption>
+        </figure>
+        <figure class="rounded-2xl overflow-hidden bg-surface border border-line" data-sg-reveal>
+          <img data-sg-img="founders.people[2].image" src="img/founder3.jpg" alt="" class="w-full h-72 object-cover" loading="lazy" />
+          <figcaption class="p-5">
+            <p class="font-bold" data-sg-path="founders.people[2].name">Priya Nair</p>
+            <p class="text-sm text-muted" data-sg-path="founders.people[2].role">Co-founder & Head of AI</p>
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- story -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mt-16 pt-12 border-t border-line">
+        <div data-sg-reveal>
+          <h3 class="font-semibold text-d3 tracking-tight grad-title mb-5" data-sg-path="founders.story_title">The Story So Far —</h3>
+          <p class="text-muted" data-sg-path="founders.story_p1">Three friends with a shared passion for AI met at university. After countless coffee-fuelled coding sessions, we shipped our first prototype to a handful of teams who believed in the vision.</p>
+          <p class="text-muted mt-4" data-sg-path="founders.story_p2">Today, backed by some of the best operators in tech, we're making advanced analytics accessible to businesses worldwide — without the enterprise complexity.</p>
+          <p class="text-sm text-muted/80 mt-4" data-sg-path="founders.story_p3">We're industry leaders in AI-driven business solutions, enabling companies to make smarter, data-backed decisions. Our team blends deep AI expertise with real business analytics to deliver impactful results.</p>
+          <div class="inline-flex items-center gap-2 mt-6 rounded-full bg-iris/10 px-4 py-2 text-sm font-semibold text-violet">
+            <span class="w-2 h-2 rounded-full" style="background:#fa6e43"></span>
+            <span data-sg-path="founders.badge">Backed by leading operators</span>
+          </div>
+        </div>
+        <div class="relative" data-sg-reveal>
+          <div class="rounded-2xl overflow-hidden border border-line shadow-xl rotate-2">
+            <img data-sg-img="founders.culture_image" src="img/culture.jpg" alt="" class="w-full h-80 object-cover" loading="lazy" />
+          </div>
+          <div class="mt-5">
+            <p class="text-xl font-bold text-violet" data-sg-path="founders.culture_title">Life at Northpeak</p>
+            <p class="text-sm text-muted" data-sg-path="founders.culture_text">Our culture through the lens</p>
+            <a href="#finalcta" class="inline-block mt-4 rounded-full border border-line bg-white px-5 py-2 text-sm font-semibold hover:bg-bg transition" data-sg-path="founders.culture_btn">Join Us</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-14 pt-10 border-t border-line" data-sg-reveal>
+        <p class="text-muted" data-sg-path="founders.cta_text">Discover the full story</p>
+        <a href="#about" class="pill-btn rounded-full bg-gradient-to-br from-iris to-violet text-white font-semibold px-6 py-3" data-sg-path="founders.cta_btn">Read More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ TESTIMONIALS ═══════════ -->
+  <section id="testimonials" class="py-20 md:py-24 grad-soft">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="max-w-2xl" data-sg-reveal>
+        <p class="text-xs tracking-[0.25em] text-iris font-semibold mb-4" data-sg-path="testimonials.kicker">CLIENT INSIGHTS</p>
+        <h2 class="font-semibold text-d3 md:text-d2 tracking-tight grad-title">
+          <span data-sg-path="testimonials.title_a">What Our</span>
+          <span data-sg-path="testimonials.title_b">Clients Say</span>
+        </h2>
+        <p class="text-muted mt-5" data-sg-path="testimonials.subtitle">How our clients transform growth with advanced, AI-driven analytics.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-12">
+        <!-- featured -->
+        <figure class="lg:col-span-1 relative rounded-2xl overflow-hidden min-h-[420px] flex flex-col justify-end" data-sg-reveal>
+          <img data-sg-img="testimonials.featured.image" src="img/feature.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-violet/90 via-violet/30 to-transparent"></div>
+          <figcaption class="relative p-6 text-white">
+            <p class="text-sm mb-3" data-sg-path="testimonials.featured.quote">Northpeak gave us a single source of truth. The AI insights surfaced opportunities our team would have missed entirely.</p>
+            <p class="font-bold" data-sg-path="testimonials.featured.name">David Pierce</p>
+            <p class="text-sm text-white/80" data-sg-path="testimonials.featured.role">Marketing Consultant at Apex</p>
+          </figcaption>
+        </figure>
+
+        <!-- cards -->
+        <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-5 content-start">
+          <figure class="rounded-2xl bg-surface border border-line p-6" data-sg-reveal>
+            <p class="text-sm text-muted" data-sg-path="testimonials.items[0].quote">Since implementing this solution, we've seen a dramatic improvement in our analytics efficiency. The AI insights helped us identify opportunities we would have missed.</p>
+            <figcaption class="flex items-center gap-3 mt-5">
+              <img data-sg-img="testimonials.items[0].image" src="img/t1.jpg" alt="" class="w-10 h-10 rounded-full object-cover" loading="lazy" />
+              <div><p class="font-semibold text-sm" data-sg-path="testimonials.items[0].name">Greg Weingartner</p><p class="text-xs text-muted" data-sg-path="testimonials.items[0].role">CEO at Nexusgate</p></div>
+            </figcaption>
+          </figure>
+          <figure class="rounded-2xl bg-surface border border-line p-6" data-sg-reveal>
+            <p class="text-sm text-muted" data-sg-path="testimonials.items[1].quote">The platform's automation has streamlined our workflow and noticeably enhanced productivity across the team.</p>
+            <figcaption class="flex items-center gap-3 mt-5">
+              <img data-sg-img="testimonials.items[1].image" src="img/t2.jpg" alt="" class="w-10 h-10 rounded-full object-cover" loading="lazy" />
+              <div><p class="font-semibold text-sm" data-sg-path="testimonials.items[1].name">Jhon Lande</p><p class="text-xs text-muted" data-sg-path="testimonials.items[1].role">Marketing Director at Spitfire</p></div>
+            </figcaption>
+          </figure>
+          <figure class="rounded-2xl bg-surface border border-line p-6" data-sg-reveal>
+            <p class="text-sm text-muted" data-sg-path="testimonials.items[2].quote">Northpeak delivers actionable data that has transformed our decision-making process from gut-feel to evidence.</p>
+            <figcaption class="flex items-center gap-3 mt-5">
+              <img data-sg-img="testimonials.items[2].image" src="img/t3.jpg" alt="" class="w-10 h-10 rounded-full object-cover" loading="lazy" />
+              <div><p class="font-semibold text-sm" data-sg-path="testimonials.items[2].name">Mara Velez</p><p class="text-xs text-muted" data-sg-path="testimonials.items[2].role">Growth Lead at Gessler</p></div>
+            </figcaption>
+          </figure>
+          <figure class="rounded-2xl bg-surface border border-line p-6" data-sg-reveal>
+            <p class="text-sm text-muted" data-sg-path="testimonials.items[3].quote">Onboarding took an afternoon. Within a week we were running reports that used to take our analysts days.</p>
+            <figcaption class="flex items-center gap-3 mt-5">
+              <img data-sg-img="testimonials.items[3].image" src="img/t4.jpg" alt="" class="w-10 h-10 rounded-full object-cover" loading="lazy" />
+              <div><p class="font-semibold text-sm" data-sg-path="testimonials.items[3].name">Sofia Klein</p><p class="text-xs text-muted" data-sg-path="testimonials.items[3].role">Ops Lead at Avocadoo</p></div>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ PRICING ═══════════ -->
+  <section id="pricing" class="py-20 md:py-24">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto" data-sg-reveal>
+        <p class="text-xs tracking-[0.25em] text-iris font-semibold mb-4" data-sg-path="pricing.kicker">PRICING</p>
+        <h2 class="font-semibold text-d3 md:text-d2 tracking-tight grad-title">
+          <span data-sg-path="pricing.title_a">Explore</span>
+          <span data-sg-path="pricing.title_b">Our Plans</span>
+        </h2>
+        <p class="text-muted mt-5" data-sg-path="pricing.subtitle">Super flexible monthly plans and cost-effective annual subscriptions.</p>
+        <div class="inline-flex items-center gap-1 mt-7 rounded-full bg-white border border-line p-1">
+          <span class="rounded-full bg-gradient-to-br from-iris to-violet text-white text-sm font-semibold px-4 py-1.5" data-sg-path="pricing.toggle_monthly">Monthly</span>
+          <span class="rounded-full text-sm font-semibold text-muted px-4 py-1.5" data-sg-path="pricing.toggle_annual">Annual</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-14 items-start">
+        <!-- Essential -->
+        <div class="rounded-2xl bg-surface border border-line p-7 card-dot" data-sg-reveal>
+          <h3 class="text-lg font-bold" data-sg-path="pricing.plans[0].name">Essential</h3>
+          <ul class="space-y-3 mt-6 text-sm text-muted">
+            <li class="flex items-center gap-2"><span class="text-iris">✓</span><span data-sg-path="pricing.plans[0].features[0]">Core Analytics</span></li>
+            <li class="flex items-center gap-2"><span class="text-iris">✓</span><span data-sg-path="pricing.plans[0].features[1]">Limited Campaigns</span></li>
+            <li class="flex items-center gap-2"><span class="text-iris">✓</span><span data-sg-path="pricing.plans[0].features[2]">Community Access</span></li>
+            <li class="flex items-center gap-2"><span class="text-iris">✓</span><span data-sg-path="pricing.plans[0].features[3]">Standard Support</span></li>
+          </ul>
+          <div class="border-t border-line mt-7 pt-6">
+            <p class="flex items-end gap-1"><span class="text-4xl font-extrabold text-ink" data-sg-path="pricing.plans[0].price">$29</span><span class="text-sm text-muted mb-1.5" data-sg-path="pricing.plans[0].period">/month</span></p>
+            <a href="#finalcta" class="pill-btn block text-center mt-5 rounded-full bg-gradient-to-br from-iris to-violet text-white font-semibold px-6 py-3" data-sg-path="pricing.plans[0].cta">Purchase</a>
+          </div>
+        </div>
+
+        <!-- Advanced (featured) -->
+        <div class="rounded-2xl bg-surface border-2 border-iris p-7 card-dot shadow-[0_30px_70px_-30px_rgba(117,132,214,.6)] md:-mt-4" data-sg-reveal>
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-bold" data-sg-path="pricing.plans[1].name">Advanced</h3>
+            <span class="rounded-full bg-iris/15 text-violet text-xs font-semibold px-3 py-1">Popular</span>
+          </div>
+          <ul class="space-y-3 mt-6 text-sm text-muted">
+            <li class="flex items-center gap-2"><span class="text-iris">✓</span><span data-sg-path="pricing.plans[1].features[0]">All Essential Features</span></li>
+            <li class="flex items-center gap-2"><span class="text-iris">✓</span><span data-sg-path="pricing.plans[1].features[1]">Unlimited Campaigns</span></li>
+            <li class="flex items-center gap-2"><span class="text-iris">✓</span><span data-sg-path="pricing.plans[1].features[2]">Advanced AI predictions</span></li>
+            <li class="flex items-center gap-2"><span class="text-iris">✓</span><span data-sg-path="pricing.plans[1].features[3]">Priority support</span></li>
+            <li class="flex items-center gap-2"><span class="text-iris">✓</span><span data-sg-path="pricing.plans[1].features[4]">Team collaboration tools</span></li>
+          </ul>
+          <div class="border-t border-line mt-7 pt-6">
+            <p class="flex items-end gap-1"><span class="text-4xl font-extrabold text-ink" data-sg-path="pricing.plans[1].price">$79</span><span class="text-sm text-muted mb-1.5" data-sg-path="pricing.plans[1].period">/month</span></p>
+            <a href="#finalcta" class="pill-btn block text-center mt-5 rounded-full bg-gradient-to-br from-iris to-violet text-white font-semibold px-6 py-3" data-sg-path="pricing.plans[1].cta">Purchase</a>
+          </div>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="rounded-2xl bg-surface border border-line p-7 card-dot" data-sg-reveal>
+          <h3 class="text-lg font-bold" data-sg-path="pricing.plans[2].name">Enterprise</h3>
+          <ul class="space-y-3 mt-6 text-sm text-muted">
+            <li class="flex items-center gap-2"><span class="text-iris">✓</span><span data-sg-path="pricing.plans[2].features[0]">All Advanced Features</span></li>
+            <li class="flex items-center gap-2"><span class="text-iris">✓</span><span data-sg-path="pricing.plans[2].features[1]">Custom AI models</span></li>
+            <li class="flex items-center gap-2"><span class="text-iris">✓</span><span data-sg-path="pricing.plans[2].features[2]">API access</span></li>
+            <li class="flex items-center gap-2"><span class="text-iris">✓</span><span data-sg-path="pricing.plans[2].features[3]">Advanced Integrations</span></li>
+            <li class="flex items-center gap-2"><span class="text-iris">✓</span><span data-sg-path="pricing.plans[2].features[4]">24/7 priority support</span></li>
+            <li class="flex items-center gap-2"><span class="text-iris">✓</span><span data-sg-path="pricing.plans[2].features[5]">Training Sessions</span></li>
+          </ul>
+          <div class="border-t border-line mt-7 pt-6">
+            <p class="flex items-end gap-1"><span class="text-4xl font-extrabold text-ink" data-sg-path="pricing.plans[2].price">$199</span><span class="text-sm text-muted mb-1.5" data-sg-path="pricing.plans[2].period">/month</span></p>
+            <a href="#finalcta" class="block text-center mt-5 rounded-full bg-white border border-line text-ink font-semibold px-6 py-3 hover:bg-bg transition" data-sg-path="pricing.plans[2].cta">Contact Sales</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- trusted by -->
+      <div class="mt-16 text-center" data-sg-reveal>
+        <p class="text-[11px] tracking-[0.25em] text-muted/70 font-semibold mb-6" data-sg-path="pricing.proof_label">TRUSTED BY MARKET LEADERS</p>
+        <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-4 text-muted/50 font-bold">
+          <span class="italic" data-sg-path="pricing.logos[0]">Spitfire</span>
+          <span data-sg-path="pricing.logos[1]">avocadoo</span>
+          <span data-sg-path="pricing.logos[2]">nanowise</span>
+          <span class="tracking-wide" data-sg-path="pricing.logos[3]">NEXUSGATE</span>
+          <span data-sg-path="pricing.logos[4]">GESSLER</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12 pt-10 border-t border-line" data-sg-reveal>
+        <p class="text-muted" data-sg-path="pricing.cta_text">Unsure which plan to pick?</p>
+        <a href="#finalcta" class="pill-btn rounded-full bg-gradient-to-br from-iris to-violet text-white font-semibold px-6 py-3" data-sg-path="pricing.cta_btn">Ask our Expert</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FAQ ═══════════ -->
+  <section id="faq" class="py-20 md:py-24 grad-soft">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="text-center" data-sg-reveal>
+        <p class="text-xs tracking-[0.25em] text-iris font-semibold mb-4" data-sg-path="faq.kicker">FAQ</p>
+        <h2 class="font-semibold text-d3 md:text-d2 tracking-tight grad-title">
+          <span data-sg-path="faq.title_a">Burning Questions</span><br/>
+          <span data-sg-path="faq.title_b">About Northpeak</span>
+        </h2>
+        <p class="text-muted mt-5" data-sg-path="faq.subtitle">Simple answers to make things clear.</p>
+      </div>
+
+      <div class="mt-12 space-y-3">
+        <details class="group rounded-xl bg-surface border border-line px-5 py-1" data-sg-reveal>
+          <summary class="flex items-center justify-between py-4 font-semibold"><span data-sg-path="faq.items[0].q">Is the platform suitable for beginners?</span><span class="faq-plus text-iris text-xl transition-transform">＋</span></summary>
+          <p class="text-sm text-muted pb-4" data-sg-path="faq.items[0].a">Absolutely. Northpeak ships with a guided setup, sensible defaults and plain-language insights, so you don't need a data team to get value on day one.</p>
+        </details>
+        <details class="group rounded-xl bg-surface border border-line px-5 py-1" data-sg-reveal>
+          <summary class="flex items-center justify-between py-4 font-semibold"><span data-sg-path="faq.items[1].q">How accurate are the AI insights?</span><span class="faq-plus text-iris text-xl transition-transform">＋</span></summary>
+          <p class="text-sm text-muted pb-4" data-sg-path="faq.items[1].a">Our models are continuously evaluated against your historical outcomes. You always see the confidence level behind each recommendation, so you stay in control.</p>
+        </details>
+        <details class="group rounded-xl bg-surface border border-line px-5 py-1" data-sg-reveal>
+          <summary class="flex items-center justify-between py-4 font-semibold"><span data-sg-path="faq.items[2].q">Can I integrate with my existing tools?</span><span class="faq-plus text-iris text-xl transition-transform">＋</span></summary>
+          <p class="text-sm text-muted pb-4" data-sg-path="faq.items[2].a">Yes. Northpeak connects to the platforms you already use in seconds, with no engineering work required for the most common integrations.</p>
+        </details>
+        <details class="group rounded-xl bg-surface border border-line px-5 py-1" data-sg-reveal>
+          <summary class="flex items-center justify-between py-4 font-semibold"><span data-sg-path="faq.items[3].q">What security measures do you have?</span><span class="faq-plus text-iris text-xl transition-transform">＋</span></summary>
+          <p class="text-sm text-muted pb-4" data-sg-path="faq.items[3].a">Data is encrypted in transit and at rest, with role-based access controls and audit logging. Your data is never used to train shared models.</p>
+        </details>
+        <details class="group rounded-xl bg-surface border border-line px-5 py-1" data-sg-reveal>
+          <summary class="flex items-center justify-between py-4 font-semibold"><span data-sg-path="faq.items[4].q">How often are insights updated?</span><span class="faq-plus text-iris text-xl transition-transform">＋</span></summary>
+          <p class="text-sm text-muted pb-4" data-sg-path="faq.items[4].a">Dashboards refresh in near real-time as new data arrives, and strategic insights are recalculated on a rolling schedule throughout the day.</p>
+        </details>
+        <details class="group rounded-xl bg-surface border border-line px-5 py-1" data-sg-reveal>
+          <summary class="flex items-center justify-between py-4 font-semibold"><span data-sg-path="faq.items[5].q">What kind of support do you offer?</span><span class="faq-plus text-iris text-xl transition-transform">＋</span></summary>
+          <p class="text-sm text-muted pb-4" data-sg-path="faq.items[5].a">Every plan includes support. Advanced and Enterprise plans add priority and 24/7 channels, plus a dedicated specialist for onboarding.</p>
+        </details>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12" data-sg-reveal>
+        <p class="text-muted" data-sg-path="faq.cta_text">Still have questions?</p>
+        <a href="#finalcta" class="pill-btn rounded-full bg-gradient-to-br from-iris to-violet text-white font-semibold px-6 py-3" data-sg-path="faq.cta_btn">Get Assistance</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FINAL CTA BANNER ═══════════ -->
+  <section id="finalcta" class="relative overflow-hidden bg-ribbon text-white py-24">
+    <div class="aurora w-[360px] h-[360px] -bottom-20 left-[5%]" style="background:#a5a4fa;opacity:.5"></div>
+    <div class="aurora w-[300px] h-[300px] top-0 right-[8%]" style="background:#80e5ff;opacity:.4"></div>
+    <div class="relative max-w-3xl mx-auto px-6 text-center" data-sg-reveal>
+      <!-- floating cards icon -->
+      <div class="flex items-center justify-center gap-2 mb-8">
+        <div class="w-16 h-12 rounded-lg bg-white/90 -rotate-6 shadow-lg"></div>
+        <div class="w-20 h-14 rounded-lg bg-white shadow-xl flex items-center px-2 gap-1"><span class="w-6 h-6 rounded-full bg-iris/40"></span><span class="flex-1 h-1.5 rounded bg-line"></span></div>
+        <div class="w-12 h-12 rounded-lg bg-white/90 rotate-6 shadow-lg grid place-items-center text-iris">▦</div>
+      </div>
+      <h2 class="text-d3 md:text-d2 font-semibold tracking-tight" data-sg-path="finalcta.title">Ready? Let's Talk!</h2>
+      <p class="text-white/85 mt-4 max-w-md mx-auto" data-sg-path="finalcta.subtitle">Get expert insights and answers tailored to your business requirements and transformation.</p>
+      <div class="flex flex-wrap items-center justify-center gap-3 mt-8">
+        <a href="#top" class="rounded-full bg-white text-ink font-semibold px-7 py-3.5 hover:bg-white/90 transition" data-sg-path="finalcta.cta_primary">Book a Call</a>
+        <span class="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/30 text-sm font-semibold px-5 py-3.5">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span data-sg-path="finalcta.cta_secondary">2 spots available</span>
+        </span>
+      </div>
+    </div>
+    <!-- marquee -->
+    <div class="relative mt-16 overflow-hidden">
+      <div class="marquee-track flex whitespace-nowrap text-3xl md:text-5xl font-bold text-white/25">
+        <span class="flex items-center">
+          <span class="px-6" data-sg-path="finalcta.marquee[0]">Predictive Analysis</span><span class="text-cyan/60">✦</span>
+          <span class="px-6" data-sg-path="finalcta.marquee[1]">Business Growth</span><span class="text-cyan/60">✦</span>
+          <span class="px-6" data-sg-path="finalcta.marquee[2]">Smart Automation</span><span class="text-cyan/60">✦</span>
+          <span class="px-6" data-sg-path="finalcta.marquee[3]">Strategic Planning</span><span class="text-cyan/60">✦</span>
+        </span>
+        <span class="flex items-center" aria-hidden="true">
+          <span class="px-6">Predictive Analysis</span><span class="text-cyan/60">✦</span>
+          <span class="px-6">Business Growth</span><span class="text-cyan/60">✦</span>
+          <span class="px-6">Smart Automation</span><span class="text-cyan/60">✦</span>
+          <span class="px-6">Strategic Planning</span><span class="text-cyan/60">✦</span>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="bg-ribbon text-white pt-20 pb-10 relative overflow-hidden">
+    <div class="aurora w-[300px] h-[300px] -bottom-20 left-0" style="background:#a5a4fa;opacity:.45"></div>
+    <div class="relative max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <!-- newsletter -->
+        <div>
+          <h3 class="text-2xl font-bold" data-sg-path="footer.newsletter_title">Stay in the Loop</h3>
+          <p class="text-white/80 mt-1" data-sg-path="footer.newsletter_text">Be first to know what's next</p>
+          <form class="flex items-center gap-2 border-b border-white/40 mt-6 max-w-xs pb-2" onsubmit="return false">
+            <input type="email" class="bg-transparent flex-1 placeholder-white/60 text-white outline-none text-sm" data-sg-attr-placeholder="footer.email_placeholder" placeholder="Your Email" />
+            <button class="text-white" aria-label="Subscribe">→</button>
+          </form>
+          <div class="flex items-center gap-4 mt-8 text-white/80">
+            <a href="#" aria-label="X" class="hover:text-white"><svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><path d="M14.5 1h2.5l-5.5 6.3L18 17h-5.1l-3.9-5.1L4.5 17H2l5.8-6.6L1.5 1H6.7l3.5 4.6L14.5 1z"/></svg></a>
+            <a href="#" aria-label="LinkedIn" class="hover:text-white"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5.01A2.5 2.5 0 014.98 3.5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4 0 4.7 2.4 4.7 5.5V21h-4v-5.3c0-1.3 0-2.9-1.8-2.9s-2.05 1.4-2.05 2.8V21H10z"/></svg></a>
+            <a href="#" aria-label="Instagram" class="hover:text-white"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="14" height="14" rx="4"/><circle cx="9" cy="9" r="3.5"/><circle cx="13.5" cy="4.5" r=".6" fill="currentColor"/></svg></a>
+            <a href="#" aria-label="YouTube" class="hover:text-white"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.4-.43-5a2.6 2.6 0 00-1.83-1.84C19.14 4.7 12 4.7 12 4.7s-7.14 0-8.74.46A2.6 2.6 0 001.43 7C1 8.6 1 12 1 12s0 3.4.43 5a2.6 2.6 0 001.83 1.84c1.6.46 8.74.46 8.74.46s7.14 0 8.74-.46A2.6 2.6 0 0022.57 17C23 15.4 23 12 23 12zM9.75 15.5v-7l6 3.5z"/></svg></a>
+            <a href="#" aria-label="Discord" class="hover:text-white"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.3 5.3A16 16 0 0015.3 4l-.2.4a12 12 0 014 2 13 13 0 00-12 0 12 12 0 014-2l-.2-.4A16 16 0 004.7 5.3 17 17 0 002 18.4 16 16 0 006.9 21l.6-1a11 11 0 01-1.8-.9l.4-.3a11 11 0 009.8 0l.4.3a11 11 0 01-1.8.9l.6 1a16 16 0 005-2.6 17 17 0 00-2.8-13.1zM9.5 14.5c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8zm5 0c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8z"/></svg></a>
+          </div>
+        </div>
+        <!-- links -->
+        <div class="grid grid-cols-2 gap-8 lg:col-span-2 lg:justify-items-end">
+          <ul class="space-y-3 text-white/85">
+            <li><a href="#top" class="hover:text-white" data-sg-path="footer.col1[0]">Home</a></li>
+            <li><a href="#integration" class="hover:text-white" data-sg-path="footer.col1[1]">Features</a></li>
+            <li><a href="#steps" class="hover:text-white" data-sg-path="footer.col1[2]">How It Works</a></li>
+            <li><a href="#integration" class="hover:text-white" data-sg-path="footer.col1[3]">Integration</a></li>
+            <li><a href="#performance" class="hover:text-white" data-sg-path="footer.col1[4]">Performance</a></li>
+            <li><a href="#pricing" class="hover:text-white" data-sg-path="footer.col1[5]">Pricing</a></li>
+            <li><a href="#faq" class="hover:text-white" data-sg-path="footer.col1[6]">FAQ</a></li>
+          </ul>
+          <ul class="space-y-3 text-white/85">
+            <li><a href="#about" class="hover:text-white" data-sg-path="footer.col2[0]">About us</a></li>
+            <li><a href="#testimonials" class="hover:text-white" data-sg-path="footer.col2[1]">Client Insights</a></li>
+            <li><a href="#finalcta" class="hover:text-white" data-sg-path="footer.col2[2]">Book a Call</a></li>
+            <li><a href="#" class="hover:text-white" data-sg-path="footer.col2[3]">Journal</a></li>
+            <li><a href="#finalcta" class="hover:text-white" data-sg-path="footer.col2[4]">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/20 mt-12 pt-6">
+        <p class="text-sm text-white/75" data-sg-path="footer.copyright">Copyright © Northpeak 2026</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════════
+       STANDARD HYDRATION + GSAP BLOCK
+       ═══════════════════════════════════════════════════════ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      // Hydrate texts
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      // Hydrate placeholders
+      document.querySelectorAll('[data-sg-attr-placeholder]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-attr-placeholder'));
+        if (v != null) el.setAttribute('placeholder', v);
+      });
+      // Hydrate images (img.src or background-image)
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      // Animations : reveal/parallax au scroll (re-creation GSAP, pas une capture)
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, {
+            opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+          });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, {
+            yPercent: -15, ease: 'none',
+            scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+          });
+        });
+        // ROBUSTESSE : recalcule apres chargement images + filet anti-page-blanche
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+</body>
+</html>

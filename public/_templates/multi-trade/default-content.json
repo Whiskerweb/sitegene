@@ -1,0 +1,236 @@
+{
+  "meta": {
+    "title": "Voltéo – Electrical, Plumbing & Heating Experts",
+    "description": "Smart solutions for power, water and heat. Certified electricians, plumbers and heating engineers for homes and businesses — available 24/7."
+  },
+  "brand": "Voltéo",
+  "topbar": {
+    "phone": "(555) 120-4480"
+  },
+  "nav": {
+    "links": [
+      "Services",
+      "How it works",
+      "About",
+      "FAQs"
+    ],
+    "cta": "Contact us"
+  },
+  "hero": {
+    "title": "Smart solutions for power, water & heat",
+    "tagline": "Fast, professional service for homes and businesses. Available 24/7 with certified experts you can trust.",
+    "cta": "Request a quote",
+    "image": "/_templates/multi-trade/img/hero.jpg",
+    "pills": [
+      "24/7 emergency service",
+      "Certified & insured technicians",
+      "Transparent pricing",
+      "Fixed response time"
+    ]
+  },
+  "marquee": [
+    "Electrical repairs",
+    "Plumbing solutions",
+    "Heating systems"
+  ],
+  "services": {
+    "label": "Our services",
+    "title": "Expert solutions for every home system",
+    "subtitle": "Voltéo provides professional electrical, heating and plumbing services designed to keep your home safe, efficient and comfortable all year round.",
+    "items": [
+      {
+        "title": "Electrical repairs",
+        "desc": "Reliable solutions for wiring faults, panel upgrades, lighting installations and electrical issues.",
+        "image": "/_templates/multi-trade/img/service-electrical.jpg"
+      },
+      {
+        "title": "Plumbing solutions",
+        "desc": "Leak detection, pipe repairs, fixture installs and full bathroom systems done right the first time.",
+        "image": "/_templates/multi-trade/img/service-plumbing.jpg"
+      },
+      {
+        "title": "Heating systems",
+        "desc": "Boiler servicing, radiator installs and heating diagnostics to keep your home warm and efficient.",
+        "image": "/_templates/multi-trade/img/service-heating.jpg"
+      }
+    ]
+  },
+  "trust": {
+    "label": "Why us",
+    "title": "Company you can trust",
+    "subtitle": "At Voltéo, we combine experience, professionalism and attention to detail to deliver dependable solutions for every project.",
+    "image": "/_templates/multi-trade/img/about.jpg",
+    "statValue": "10+",
+    "statLabel": "years of experience",
+    "features": [
+      {
+        "title": "Experienced technicians",
+        "desc": "Our team consists of trained and experienced professionals who handle every project with skill and precision. We rely on industry standards to deliver dependable results."
+      },
+      {
+        "title": "Reliable & on-time service",
+        "desc": ""
+      },
+      {
+        "title": "Transparent pricing",
+        "desc": ""
+      },
+      {
+        "title": "Customer-focused approach",
+        "desc": ""
+      },
+      {
+        "title": "Emergency support",
+        "desc": ""
+      }
+    ],
+    "urgentTitle": "Have an urgent problem?",
+    "urgentText": "We provide fast and reliable emergency services whenever you need help.",
+    "urgentCta": "Contact our experts"
+  },
+  "howItWorks": {
+    "label": "How it works",
+    "title": "Simple steps to fast, reliable service",
+    "subtitle": "Our streamlined process ensures fast response, clear communication and high-quality results from start to finish.",
+    "steps": [
+      {
+        "number": "01",
+        "tab": "Request a service",
+        "title": "Tell us what you need and we're ready to help.",
+        "desc": "Reach out through our online form or give us a call. Describe your issue, choose a convenient time and we'll confirm your booking within minutes.",
+        "cta": "Request a service",
+        "image": "/_templates/multi-trade/img/process.jpg"
+      },
+      {
+        "number": "02",
+        "tab": "Inspection & quote",
+        "title": "We inspect and give you a clear quote.",
+        "desc": "A certified technician assesses the work on site, explains the options and provides transparent, fixed pricing before anything starts.",
+        "cta": "Request a service",
+        "image": "/_templates/multi-trade/img/process.jpg"
+      },
+      {
+        "number": "03",
+        "tab": "Fast repair",
+        "title": "We fix it fast and clean up after.",
+        "desc": "Our experts complete the job efficiently, test everything thoroughly and leave your space tidy and fully working.",
+        "cta": "Request a service",
+        "image": "/_templates/multi-trade/img/process.jpg"
+      }
+    ]
+  },
+  "testimonials": {
+    "label": "Testimonials",
+    "title": "What our clients say",
+    "subtitle": "Trusted by homeowners and businesses",
+    "items": [
+      {
+        "quote": "Quick and professional service! Voltéo fixed our electrical issue within an hour. The technician was friendly, explained everything clearly, and made sure everything was safe before they leaving.",
+        "author": "Martin K.",
+        "role": "Homeowner",
+        "avatar": "/_templates/multi-trade/img/avatar1.jpg"
+      },
+      {
+        "quote": "Highly recommend for plumbing work. We had a major leak in our kitchen, and Voltéo responded immediately. The repair was fast, clean, and affordable. Great experience overall with them.",
+        "author": "Petra L.",
+        "role": "Apartment owner",
+        "avatar": "/_templates/multi-trade/img/avatar2.jpg"
+      },
+      {
+        "quote": "Reliable heating service. Our heating system broke down in the middle of winter, and Voltéo saved the day. They arrived quickly and got everything running perfectly again. Thanks so much.",
+        "author": "Jan S.",
+        "role": "Property manager",
+        "avatar": "/_templates/multi-trade/img/avatar3.jpg"
+      },
+      {
+        "quote": "Arrived faster than expected in the morning, and the technician was at my door within an hour. He quickly completed the lighting repair. Very professional and respectful of my home.",
+        "author": "David K.",
+        "role": "Homeowner",
+        "avatar": "/_templates/multi-trade/img/avatar4.jpg"
+      }
+    ]
+  },
+  "about": {
+    "label": "About us",
+    "title": "Trust and reliable service since 2012",
+    "paragraphs": [
+      "Voltéo was founded with a simple goal — to provide dependable electrical, heating and plumbing services that homeowners and businesses can trust.",
+      "Our team of experienced technicians is committed to delivering safe, efficient and long-lasting solutions for every project. We believe great service starts with professionalism, clear communication and attention to detail."
+    ],
+    "cta": "Contact our experts",
+    "image": "/_templates/multi-trade/img/trust.jpg"
+  },
+  "faq": {
+    "label": "FAQ",
+    "title": "Frequently asked questions",
+    "subtitle": "Explore our most common inquiries about electricity repair, plumbing, and heating services.",
+    "items": [
+      {
+        "question": "What services does Voltéo offer?",
+        "answer": "We cover electrical repairs and installations, plumbing and leak repair, and full heating system servicing — for both residential and commercial clients."
+      },
+      {
+        "question": "Are your technicians certified?",
+        "answer": "Yes. Every technician on our team is fully certified, insured and background-checked before working on any job."
+      },
+      {
+        "question": "Do you provide emergency services?",
+        "answer": "Absolutely. We offer 24/7 emergency support with a fixed response time so help is always one call away."
+      },
+      {
+        "question": "Can I schedule an appointment online?",
+        "answer": "Yes — use our online form to pick a service and a convenient time, and we'll confirm your booking within minutes."
+      },
+      {
+        "question": "How do I get a quote?",
+        "answer": "Request a quote online or by phone. A technician inspects the work on site and gives you transparent, fixed pricing before anything starts."
+      },
+      {
+        "question": "Do you offer service warranties?",
+        "answer": "All of our work is backed by a workmanship guarantee. If anything isn't right, we'll come back and put it right at no extra charge."
+      }
+    ],
+    "cta": "Ask a question"
+  },
+  "finalCta": {
+    "label": "Get in touch",
+    "title": "Let's fix the problem today",
+    "subtitle": "Our experienced technicians are ready to handle your electrical, heating, cooling, or plumbing needs.",
+    "cta": "Request quote",
+    "image": "/_templates/multi-trade/img/cta.jpg"
+  },
+  "footer": {
+    "tagline": "We proudly serve the local area and surrounding communities with fast and reliable home services.",
+    "phone": "(555) 120-4480",
+    "email": "contact@volteo.com",
+    "columns": [
+      {
+        "heading": "Company",
+        "links": [
+          "Home",
+          "Services",
+          "About us",
+          "FAQs",
+          "Contact us"
+        ]
+      },
+      {
+        "heading": "Services",
+        "links": [
+          "Electrical repairs",
+          "Plumbing solutions",
+          "Heating systems"
+        ]
+      },
+      {
+        "heading": "Legal",
+        "links": [
+          "Privacy policy",
+          "Terms of use",
+          "Quick links"
+        ]
+      }
+    ],
+    "copyright": "© 2026 Voltéo. Demo template."
+  }
+}

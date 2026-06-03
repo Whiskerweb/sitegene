@@ -1,0 +1,441 @@
+{
+  "id": "multi-trade",
+  "name": "Voltéo — Élec/Plomberie/Chauffage",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "meta",
+      "brand",
+      "topbar",
+      "nav",
+      "hero",
+      "marquee",
+      "services",
+      "trust",
+      "howItWorks",
+      "testimonials",
+      "about",
+      "faq",
+      "finalCta",
+      "footer"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.image",
+      "role": "hero",
+      "required": true,
+      "note": "hero · image"
+    },
+    {
+      "slot": "p2",
+      "path": "services.items[].image",
+      "role": "image",
+      "required": true,
+      "note": "services · items · image"
+    },
+    {
+      "slot": "p3",
+      "path": "trust.image",
+      "role": "image",
+      "required": true,
+      "note": "trust · image"
+    },
+    {
+      "slot": "p4",
+      "path": "howItWorks.steps[].image",
+      "role": "gallery",
+      "required": true,
+      "note": "howItWorks · steps · image"
+    },
+    {
+      "slot": "p5",
+      "path": "testimonials.items[].avatar",
+      "role": "avatar",
+      "required": true,
+      "note": "testimonials · items · avatar"
+    },
+    {
+      "slot": "p6",
+      "path": "about.image",
+      "role": "image",
+      "required": true,
+      "note": "about · image"
+    },
+    {
+      "slot": "p7",
+      "path": "finalCta.image",
+      "role": "image",
+      "required": true,
+      "note": "finalCta · image"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "meta.title",
+        "label": "meta · title",
+        "type": "text",
+        "maxLen": 75
+      },
+      {
+        "path": "meta.description",
+        "label": "meta · description",
+        "type": "text",
+        "maxLen": 224
+      },
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.links[]",
+        "label": "nav · links",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "topbar.phone",
+        "label": "topbar · phone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav.cta",
+        "label": "nav · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.title",
+        "label": "hero · title",
+        "type": "text",
+        "maxLen": 62
+      },
+      {
+        "path": "hero.tagline",
+        "label": "hero · tagline",
+        "type": "text",
+        "maxLen": 168
+      },
+      {
+        "path": "hero.cta",
+        "label": "hero · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.pills[]",
+        "label": "hero · pills",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "marquee[]",
+        "label": "marquee",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.label",
+        "label": "services · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.title",
+        "label": "services · title",
+        "type": "text",
+        "maxLen": 61
+      },
+      {
+        "path": "services.subtitle",
+        "label": "services · subtitle",
+        "type": "text",
+        "maxLen": 232
+      },
+      {
+        "path": "services.items[].title",
+        "label": "services · items · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "services.items[].desc",
+        "label": "services · items · desc",
+        "type": "text",
+        "maxLen": 158
+      },
+      {
+        "path": "trust.label",
+        "label": "trust · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "trust.title",
+        "label": "trust · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "trust.subtitle",
+        "label": "trust · subtitle",
+        "type": "text",
+        "maxLen": 198
+      },
+      {
+        "path": "trust.statValue",
+        "label": "trust · statValue",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "trust.statLabel",
+        "label": "trust · statLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "trust.features[].title",
+        "label": "trust · features · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "trust.features[].desc",
+        "label": "trust · features · desc",
+        "type": "text",
+        "maxLen": 272
+      },
+      {
+        "path": "trust.urgentTitle",
+        "label": "trust · urgentTitle",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "trust.urgentText",
+        "label": "trust · urgentText",
+        "type": "text",
+        "maxLen": 114
+      },
+      {
+        "path": "trust.urgentCta",
+        "label": "trust · urgentCta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "howItWorks.label",
+        "label": "howItWorks · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "howItWorks.title",
+        "label": "howItWorks · title",
+        "type": "text",
+        "maxLen": 61
+      },
+      {
+        "path": "howItWorks.subtitle",
+        "label": "howItWorks · subtitle",
+        "type": "text",
+        "maxLen": 181
+      },
+      {
+        "path": "howItWorks.steps[].number",
+        "label": "howItWorks · steps · number",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "howItWorks.steps[].tab",
+        "label": "howItWorks · steps · tab",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "howItWorks.steps[].title",
+        "label": "howItWorks · steps · title",
+        "type": "text",
+        "maxLen": 74
+      },
+      {
+        "path": "howItWorks.steps[].desc",
+        "label": "howItWorks · steps · desc",
+        "type": "text",
+        "maxLen": 232
+      },
+      {
+        "path": "howItWorks.steps[].cta",
+        "label": "howItWorks · steps · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.label",
+        "label": "testimonials · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.title",
+        "label": "testimonials · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.subtitle",
+        "label": "testimonials · subtitle",
+        "type": "text",
+        "maxLen": 58
+      },
+      {
+        "path": "testimonials.items[].quote",
+        "label": "testimonials · items · quote",
+        "type": "text",
+        "maxLen": 312
+      },
+      {
+        "path": "testimonials.items[].author",
+        "label": "testimonials · items · author",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.items[].role",
+        "label": "testimonials · items · role",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.label",
+        "label": "about · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.title",
+        "label": "about · title",
+        "type": "text",
+        "maxLen": 59
+      },
+      {
+        "path": "about.paragraphs[]",
+        "label": "about · paragraphs",
+        "type": "text",
+        "maxLen": 232
+      },
+      {
+        "path": "about.cta",
+        "label": "about · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.label",
+        "label": "faq · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "faq.title",
+        "label": "faq · title",
+        "type": "text",
+        "maxLen": 42
+      },
+      {
+        "path": "faq.subtitle",
+        "label": "faq · subtitle",
+        "type": "text",
+        "maxLen": 146
+      },
+      {
+        "path": "faq.items[].question",
+        "label": "faq · items · question",
+        "type": "text",
+        "maxLen": 51
+      },
+      {
+        "path": "faq.items[].answer",
+        "label": "faq · items · answer",
+        "type": "text",
+        "maxLen": 245
+      },
+      {
+        "path": "faq.cta",
+        "label": "faq · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "finalCta.label",
+        "label": "finalCta · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "finalCta.title",
+        "label": "finalCta · title",
+        "type": "text",
+        "maxLen": 43
+      },
+      {
+        "path": "finalCta.subtitle",
+        "label": "finalCta · subtitle",
+        "type": "text",
+        "maxLen": 162
+      },
+      {
+        "path": "finalCta.cta",
+        "label": "finalCta · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.tagline",
+        "label": "footer · tagline",
+        "type": "text",
+        "maxLen": 155
+      },
+      {
+        "path": "footer.phone",
+        "label": "footer · phone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.email",
+        "label": "footer · email",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.columns[].heading",
+        "label": "footer · columns · heading",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.columns[].links[]",
+        "label": "footer · columns · links",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.copyright",
+        "label": "footer · copyright",
+        "type": "text",
+        "maxLen": 46
+      }
+    ]
+  }
+}

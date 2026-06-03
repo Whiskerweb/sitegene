@@ -1,0 +1,520 @@
+{
+  "id": "studio-portfolio",
+  "name": "Mörk Studio — Portfolio créatif",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "meta",
+      "brand",
+      "wordmark",
+      "nav",
+      "hero",
+      "clients",
+      "projects",
+      "statement",
+      "capabilities",
+      "experience",
+      "testimonials",
+      "awards",
+      "partners",
+      "pricing",
+      "footer"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "projects.items[].image",
+      "role": "image",
+      "required": true,
+      "note": "projects · items · image"
+    },
+    {
+      "slot": "p2",
+      "path": "statement.portrait1",
+      "role": "avatar",
+      "required": true,
+      "note": "statement · portrait1"
+    },
+    {
+      "slot": "p3",
+      "path": "statement.portrait2",
+      "role": "avatar",
+      "required": true,
+      "note": "statement · portrait2"
+    },
+    {
+      "slot": "p4",
+      "path": "statement.profile",
+      "role": "image",
+      "required": true,
+      "note": "statement · profile"
+    },
+    {
+      "slot": "p5",
+      "path": "testimonials.items[].avatar",
+      "role": "avatar",
+      "required": true,
+      "note": "testimonials · items · avatar"
+    },
+    {
+      "slot": "p6",
+      "path": "awards.items[].thumb",
+      "role": "image",
+      "required": true,
+      "note": "awards · items · thumb"
+    },
+    {
+      "slot": "p7",
+      "path": "partners.cards[].image",
+      "role": "image",
+      "required": true,
+      "note": "partners · cards · image"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "meta.title",
+        "label": "meta · title",
+        "type": "text",
+        "maxLen": 70
+      },
+      {
+        "path": "meta.description",
+        "label": "meta · description",
+        "type": "text",
+        "maxLen": 250
+      },
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav[]",
+        "label": "nav",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.headline",
+        "label": "hero · headline",
+        "type": "text",
+        "maxLen": 115
+      },
+      {
+        "path": "hero.tags[]",
+        "label": "hero · tags",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "wordmark",
+        "label": "wordmark",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "clients.logos[]",
+        "label": "clients · logos",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "clients.label",
+        "label": "clients · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "clients.index",
+        "label": "clients · index",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "clients.meta",
+        "label": "clients · meta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "projects.intro",
+        "label": "projects · intro",
+        "type": "text",
+        "maxLen": 312
+      },
+      {
+        "path": "projects.cta",
+        "label": "projects · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "projects.items[].title",
+        "label": "projects · items · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "projects.items[].index",
+        "label": "projects · items · index",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "statement.label",
+        "label": "statement · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "statement.index",
+        "label": "statement · index",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "statement.meta",
+        "label": "statement · meta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "statement.text",
+        "label": "statement · text",
+        "type": "text",
+        "maxLen": 256
+      },
+      {
+        "path": "statement.body",
+        "label": "statement · body",
+        "type": "text",
+        "maxLen": 312
+      },
+      {
+        "path": "capabilities.label",
+        "label": "capabilities · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "capabilities.index",
+        "label": "capabilities · index",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "capabilities.meta",
+        "label": "capabilities · meta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "capabilities.cols[]",
+        "label": "capabilities · cols",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "capabilities.items[].no",
+        "label": "capabilities · items · no",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "capabilities.items[].name",
+        "label": "capabilities · items · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "capabilities.items[].desc",
+        "label": "capabilities · items · desc",
+        "type": "text",
+        "maxLen": 184
+      },
+      {
+        "path": "experience.label",
+        "label": "experience · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "experience.index",
+        "label": "experience · index",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "experience.meta",
+        "label": "experience · meta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "experience.cols[]",
+        "label": "experience · cols",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "experience.rows[].studio",
+        "label": "experience · rows · studio",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "experience.rows[].period",
+        "label": "experience · rows · period",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "experience.rows[].role",
+        "label": "experience · rows · role",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "experience.rows[].city",
+        "label": "experience · rows · city",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.label",
+        "label": "testimonials · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.index",
+        "label": "testimonials · index",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.meta",
+        "label": "testimonials · meta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.cta",
+        "label": "testimonials · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.items[].quote",
+        "label": "testimonials · items · quote",
+        "type": "text",
+        "maxLen": 400
+      },
+      {
+        "path": "testimonials.items[].name",
+        "label": "testimonials · items · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.items[].role",
+        "label": "testimonials · items · role",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials.items[].logo",
+        "label": "testimonials · items · logo",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "awards.label",
+        "label": "awards · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "awards.index",
+        "label": "awards · index",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "awards.meta",
+        "label": "awards · meta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "awards.cols[]",
+        "label": "awards · cols",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "awards.items[].count",
+        "label": "awards · items · count",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "awards.items[].name",
+        "label": "awards · items · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "awards.items[].desc",
+        "label": "awards · items · desc",
+        "type": "text",
+        "maxLen": 174
+      },
+      {
+        "path": "partners.label",
+        "label": "partners · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "partners.index",
+        "label": "partners · index",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "partners.meta",
+        "label": "partners · meta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "partners.wordmark",
+        "label": "partners · wordmark",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "partners.cards[].city",
+        "label": "partners · cards · city",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.label",
+        "label": "pricing · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.index",
+        "label": "pricing · index",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.meta",
+        "label": "pricing · meta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.cols[]",
+        "label": "pricing · cols",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.plans[].price",
+        "label": "pricing · plans · price",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.plans[].unit",
+        "label": "pricing · plans · unit",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.plans[].name",
+        "label": "pricing · plans · name",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "pricing.plans[].desc",
+        "label": "pricing · plans · desc",
+        "type": "text",
+        "maxLen": 126
+      },
+      {
+        "path": "pricing.plans[].features[]",
+        "label": "pricing · plans · features",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.brand",
+        "label": "footer · brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.tagline",
+        "label": "footer · tagline",
+        "type": "text",
+        "maxLen": 78
+      },
+      {
+        "path": "footer.email",
+        "label": "footer · email",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.nav_label",
+        "label": "footer · nav_label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.nav[]",
+        "label": "footer · nav",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.social_label",
+        "label": "footer · social_label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.social[]",
+        "label": "footer · social",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.back_to_top",
+        "label": "footer · back_to_top",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "footer.copyright",
+        "label": "footer · copyright",
+        "type": "text",
+        "maxLen": 66
+      }
+    ]
+  }
+}

@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-sg-path="meta.title">BlueDrop – Modern Plumbing Care You Can Trust 24/7</title>
+  <meta name="description" data-sg-path="meta.description" content="Licensed plumbing experts for leak detection, drain cleaning, sewer lines and fixture repair. Available 24/7. Book a free consultation today." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1681FF',   /* main blue */
+            ink:     '#09093D',    /* dark navy ink / headings */
+            accent:  '#FDBC0D',    /* yellow CTA accent */
+            bg:      '#F5F7FA',    /* light section bg */
+            muted:   '#3B3B3B',    /* body text */
+            mutedlt: 'rgba(59,59,59,0.8)',
+            line:    '#E5EAEC',    /* borders */
+            white:   '#FFFFFF',
+          },
+          fontFamily: {
+            display: ['"Outfit"', 'sans-serif'],
+            sans:    ['"Inter"', 'sans-serif'],
+          },
+          borderRadius: {
+            'xl2': '16px',
+            'xl3': '24px',
+            'xl4': '32px',
+          },
+        }
+      }
+    };
+  </script>
+
+  <!-- __SITE_CONTENT__ — single source of truth for all copy + image paths (DEMO content) -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ ||  window.__SITE_CONTENT__ || {
+      meta: {
+        title: "BlueDrop – Modern Plumbing Care You Can Trust 24/7",
+        description: "Licensed plumbing experts for leak detection, drain cleaning, sewer lines and fixture repair. Available 24/7. Book a free consultation today."
+      },
+      brand: "BlueDrop",
+      topbar: { rating: "4.9 Rated", ratingNote: "by Satisfied Customers", phone: "+1 406 555 0190" },
+      nav: {
+        links: ["Pages", "About", "Services", "Contact"],
+        cta: "Call us: +1 406 555 0190"
+      },
+      hero: {
+        badge: "4.9 Rated by Satisfied Customers",
+        titleA: "All type of",
+        titleB: "Plumbing Care",
+        titleC: "for your home",
+        tagline: "We provide all types of plumbing care to keep your home safe, comfortable and worry free.",
+        cta: "Book a Free Consultation",
+        proof: "10,000+ individuals who trust BlueDrop",
+        image: "img/hero.jpg"
+      },
+      why: {
+        label: "Why Choose Us",
+        title: "Why Choose Our Plumbing Team",
+        text: "We're not just plumbers — we're a dependable team of professionals committed to solving your problems quickly and efficiently.",
+        image1: "img/why-1.jpg",
+        image2: "img/why-2.jpg",
+        points: [
+          { title: "Licensed Technicians", desc: "Expert care from fully licensed technicians." },
+          { title: "24/7 Emergency Support", desc: "Always here to help whenever you need us." }
+        ]
+      },
+      services: {
+        label: "Our Services",
+        title: "Plumbing Services That Keep Life Flowing",
+        items: [
+          { title: "Leak Detection & Repair", desc: "We locate hidden leaks fast and fix them at the source, before they damage your home.", image: "img/service-leak.jpg" },
+          { title: "Drain Cleaning", desc: "Clogged or slow drains cleared with safe, high-pressure methods that keep water moving.", image: "img/service-drain.jpg" },
+          { title: "Sewer Line Services", desc: "Camera inspections, repairs and replacements for sewer lines you can count on.", image: "img/service-sewer.jpg" },
+          { title: "Faucet & Fixture Repair", desc: "Dripping taps and worn fixtures repaired or upgraded with precision and care.", image: "img/service-faucet.jpg" }
+        ]
+      },
+      about: {
+        label: "About Us",
+        title: "Your Trusted Plumbing Experts in Town",
+        text: "From quick fixes to major repairs, our skilled professionals are committed to delivering reliable service with a personal touch.",
+        cta: "More About Us",
+        image: "img/about.jpg"
+      },
+      stat: { value: "24/7", caption: "Support You Can Count On" },
+      team: {
+        label: "Team Members",
+        title: "Our Hard working Members",
+        members: [
+          { name: "Marcus Reed", role: "Lead Plumber", image: "img/team-1.jpg" },
+          { name: "Diego Alvarez", role: "Drainage Specialist", image: "img/team-2.jpg" },
+          { name: "Sofia Lindgren", role: "Fixture Technician", image: "img/team-3.jpg" }
+        ]
+      },
+      testimonials: {
+        label: "Testimonials",
+        title: "Trusted by 10,000+ Customers",
+        items: [
+          { quote: "They found a leak two other plumbers missed and fixed it the same morning. Honest, fast and tidy.", author: "Hannah Brooks", role: "Homeowner" },
+          { quote: "Our main drain was completely blocked on a Sunday night. BlueDrop arrived within the hour. Lifesavers.", author: "Tom Whitfield", role: "Café Owner" },
+          { quote: "Clear pricing, friendly technician, and zero mess left behind. Exactly what you want from a plumber.", author: "Priya Nair", role: "Property Manager" }
+        ]
+      },
+      process: {
+        label: "How It Works",
+        title: "Fixing Your Plumbing the Simple Way",
+        steps: [
+          { number: "01", title: "Schedule Your Service", desc: "Call us or book online in just a few clicks. Tell us what's wrong, we'll confirm your appointment." },
+          { number: "02", title: "We Inspect & Fix", desc: "Our technician arrives on time, diagnoses the issue and explains the solution clearly." },
+          { number: "03", title: "Enjoy Peace of Mind", desc: "Once the job's done, we double-check everything, clean up, and ensure you're 100% satisfied." }
+        ]
+      },
+      gallery: {
+        label: "Project Gallery",
+        title: "Gallery of Trusted Repairs & Installations",
+        images: ["img/gallery-1.jpg", "img/gallery-2.jpg", "img/gallery-3.jpg", "img/gallery-4.jpg"]
+      },
+      faq: {
+        label: "FAQ",
+        title: "Frequently Asked Questions",
+        items: [
+          { question: "Do you offer 24/7 emergency plumbing?", answer: "Yes. Our emergency line is open around the clock, every day of the year. A licensed technician is always on call for urgent leaks, blockages and burst pipes." },
+          { question: "Are your plumbers licensed and insured?", answer: "Every BlueDrop technician is fully licensed, background-checked and insured, so you can feel completely confident letting us into your home." },
+          { question: "How much does a call-out cost?", answer: "We give clear, upfront pricing before any work begins. You'll always approve the quote first, with no surprise charges added afterward." },
+          { question: "How quickly can you come out?", answer: "For emergencies we aim to be on-site within the hour. For scheduled work we'll book the earliest slot that suits you, often same-day." }
+        ]
+      },
+      cta: {
+        label: "Let's discuss",
+        title: "Book Your Service",
+        text: "Tell us what's wrong and pick a time that works. We'll confirm your appointment and get your home flowing again.",
+        fields: { name: "Your name", email: "Email address", message: "Describe your plumbing issue" },
+        button: "Book Now",
+        image: "img/cta.jpg"
+      },
+      footer: {
+        tagline: "Modern plumbing care for your home — licensed, on time, and available 24/7.",
+        columns: [
+          { heading: "Company", links: ["Home", "About Us", "Services"] },
+          { heading: "Services", links: ["Leak Detection", "Drain Cleaning", "Sewer Lines"] },
+          { heading: "Legal & Policy", links: ["Privacy Policy", "Terms and Conditions"] }
+        ],
+        copyright: "Copyright & design © 2026 BlueDrop, Inc. All rights reserved"
+      }
+    };
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #3B3B3B; margin: 0; }
+    h1,h2,h3,h4 { font-family: 'Outfit', sans-serif; }
+
+    /* Nav underline */
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px; background: #FDBC0D; transition: width .25s; }
+    .nav-link:hover::after { width: 100%; }
+
+    /* FAQ accordion */
+    .faq-item .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .faq-item.open .faq-answer { max-height: 320px; }
+    .faq-icon { transition: transform 0.3s ease; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* Process card grid texture */
+    .process-card { background-image: radial-gradient(rgba(0,0,0,0.05) 1px, transparent 1px); background-size: 22px 22px; }
+  </style>
+</head>
+<body class="antialiased">
+
+<!-- ───────── NAV ───────── -->
+<header class="absolute top-0 inset-x-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 pt-6 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" class="flex items-center gap-2.5">
+      <div class="w-9 h-9 bg-accent rounded-full flex items-center justify-center">
+        <svg class="w-5 h-5 text-ink" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
+      </div>
+      <span class="text-white font-display font-semibold text-xl tracking-tight" data-sg-path="brand">BlueDrop</span>
+    </a>
+    <!-- Links -->
+    <nav class="hidden md:flex items-center gap-9">
+      <a href="#about" class="nav-link text-white/85 hover:text-white text-sm font-medium" data-sg-path="nav.links[0]">Pages</a>
+      <a href="#about" class="nav-link text-white/85 hover:text-white text-sm font-medium" data-sg-path="nav.links[1]">About</a>
+      <a href="#services" class="nav-link text-white/85 hover:text-white text-sm font-medium" data-sg-path="nav.links[2]">Services</a>
+      <a href="#contact" class="nav-link text-white/85 hover:text-white text-sm font-medium" data-sg-path="nav.links[3]">Contact</a>
+    </nav>
+    <!-- CTA -->
+    <a href="#contact" class="hidden sm:inline-flex items-center gap-2 bg-ink text-white font-medium text-sm px-5 py-2.5 rounded-full hover:bg-ink/90 transition-all">
+      <span class="w-2 h-2 rounded-full bg-accent"></span>
+      <span data-sg-path="nav.cta">Call us: +1 406 555 0190</span>
+    </a>
+  </div>
+</header>
+
+<!-- ───────── HERO ───────── -->
+<section class="relative bg-primary overflow-hidden min-h-[640px] flex items-center">
+  <div class="max-w-7xl mx-auto w-full px-6 pt-32 pb-16 grid md:grid-cols-2 gap-10 items-center">
+    <!-- Left: copy -->
+    <div data-sg-reveal>
+      <div class="inline-flex items-center gap-2 bg-accent text-ink rounded-full px-3.5 py-1.5 mb-7 text-xs font-semibold">
+        <span class="text-accent-foreground">★</span>
+        <span data-sg-path="hero.badge">4.9 Rated by Satisfied Customers</span>
+      </div>
+      <h1 class="text-white font-display font-semibold leading-[1.04] text-5xl md:text-6xl lg:text-7xl mb-6">
+        <span data-sg-path="hero.titleA">All type of</span><br/>
+        <span data-sg-path="hero.titleB">Plumbing Care</span><br/>
+        <span data-sg-path="hero.titleC">for your home</span>
+      </h1>
+      <p class="text-white/80 text-base md:text-lg mb-9 max-w-md leading-relaxed" data-sg-path="hero.tagline">
+        We provide all types of plumbing care to keep your home safe, comfortable and worry free.
+      </p>
+      <a href="#contact" class="inline-flex items-center gap-2 bg-accent text-ink font-semibold px-7 py-4 rounded-full hover:brightness-105 transition-all text-sm shadow-lg shadow-black/10" data-sg-path="hero.cta">
+        Book a Free Consultation
+      </a>
+      <div class="flex items-center gap-3 mt-9">
+        <div class="flex -space-x-2.5">
+          <img src="img/team-1.jpg" alt="" class="w-9 h-9 rounded-full border-2 border-primary object-cover" />
+          <img src="img/team-2.jpg" alt="" class="w-9 h-9 rounded-full border-2 border-primary object-cover" />
+          <img src="img/team-3.jpg" alt="" class="w-9 h-9 rounded-full border-2 border-primary object-cover" />
+        </div>
+        <span class="text-white/80 text-xs max-w-[160px] leading-snug" data-sg-path="hero.proof">10,000+ individuals who trust BlueDrop</span>
+      </div>
+    </div>
+    <!-- Right: image -->
+    <div class="relative" data-sg-reveal>
+      <div class="rounded-xl4 overflow-hidden shadow-2xl shadow-black/20">
+        <img data-sg-img="hero.image" src="img/hero.jpg" alt="Plumber at work" class="w-full h-[440px] md:h-[520px] object-cover" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── WHY CHOOSE US ───────── -->
+<section id="about" class="bg-white py-20 md:py-28 px-6">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+    <!-- Left: stacked images -->
+    <div class="relative h-[460px]" data-sg-parallax>
+      <div class="absolute top-0 left-0 w-[62%] rounded-xl3 overflow-hidden shadow-xl">
+        <img data-sg-img="why.image1" src="img/why-1.jpg" alt="" class="w-full h-[300px] object-cover" />
+      </div>
+      <div class="absolute bottom-0 right-0 w-[58%] rounded-xl3 overflow-hidden shadow-xl border-4 border-white">
+        <img data-sg-img="why.image2" src="img/why-2.jpg" alt="" class="w-full h-[300px] object-cover" />
+      </div>
+    </div>
+    <!-- Right: copy -->
+    <div data-sg-reveal>
+      <span class="text-primary font-semibold text-sm uppercase tracking-wider" data-sg-path="why.label">Why Choose Us</span>
+      <h2 class="text-ink font-semibold text-4xl md:text-5xl mt-3 mb-5 leading-tight" data-sg-path="why.title">Why Choose Our Plumbing Team</h2>
+      <p class="text-mutedlt text-base mb-9 max-w-lg leading-relaxed" data-sg-path="why.text">We're not just plumbers — we're a dependable team of professionals committed to solving your problems quickly and efficiently.</p>
+
+      <ul class="space-y-5">
+        <li class="flex gap-4 items-start">
+          <span class="w-9 h-9 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+            <svg class="w-4.5 h-4.5 text-primary" width="18" height="18" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </span>
+          <div>
+            <div class="font-semibold text-ink mb-1" data-sg-path="why.points[0].title">Licensed Technicians</div>
+            <div class="text-mutedlt text-sm leading-relaxed" data-sg-path="why.points[0].desc">Expert care from fully licensed technicians.</div>
+          </div>
+        </li>
+        <li class="flex gap-4 items-start">
+          <span class="w-9 h-9 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+            <svg class="w-4.5 h-4.5 text-primary" width="18" height="18" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </span>
+          <div>
+            <div class="font-semibold text-ink mb-1" data-sg-path="why.points[1].title">24/7 Emergency Support</div>
+            <div class="text-mutedlt text-sm leading-relaxed" data-sg-path="why.points[1].desc">Always here to help whenever you need us.</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── SERVICES ───────── -->
+<section id="services" class="bg-accent py-20 md:py-28 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-12 max-w-2xl" data-sg-reveal>
+      <span class="text-ink/70 font-semibold text-sm uppercase tracking-wider" data-sg-path="services.label">Our Services</span>
+      <h2 class="text-ink font-semibold text-4xl md:text-5xl mt-3 leading-tight" data-sg-path="services.title">Plumbing Services That Keep Life Flowing</h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <!-- Service 0 -->
+      <div class="bg-white rounded-xl3 overflow-hidden shadow-sm hover:shadow-xl transition-shadow" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="services.items[0].image" src="img/service-leak.jpg" alt="" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+        </div>
+        <div class="p-6">
+          <h3 class="font-semibold text-lg text-ink mb-2" data-sg-path="services.items[0].title">Leak Detection &amp; Repair</h3>
+          <p class="text-mutedlt text-sm leading-relaxed" data-sg-path="services.items[0].desc">We locate hidden leaks fast and fix them at the source, before they damage your home.</p>
+        </div>
+      </div>
+
+      <!-- Service 1 -->
+      <div class="bg-white rounded-xl3 overflow-hidden shadow-sm hover:shadow-xl transition-shadow" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="services.items[1].image" src="img/service-drain.jpg" alt="" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+        </div>
+        <div class="p-6">
+          <h3 class="font-semibold text-lg text-ink mb-2" data-sg-path="services.items[1].title">Drain Cleaning</h3>
+          <p class="text-mutedlt text-sm leading-relaxed" data-sg-path="services.items[1].desc">Clogged or slow drains cleared with safe, high-pressure methods that keep water moving.</p>
+        </div>
+      </div>
+
+      <!-- Service 2 -->
+      <div class="bg-white rounded-xl3 overflow-hidden shadow-sm hover:shadow-xl transition-shadow" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="services.items[2].image" src="img/service-sewer.jpg" alt="" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+        </div>
+        <div class="p-6">
+          <h3 class="font-semibold text-lg text-ink mb-2" data-sg-path="services.items[2].title">Sewer Line Services</h3>
+          <p class="text-mutedlt text-sm leading-relaxed" data-sg-path="services.items[2].desc">Camera inspections, repairs and replacements for sewer lines you can count on.</p>
+        </div>
+      </div>
+
+      <!-- Service 3 -->
+      <div class="bg-white rounded-xl3 overflow-hidden shadow-sm hover:shadow-xl transition-shadow" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="services.items[3].image" src="img/service-faucet.jpg" alt="" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+        </div>
+        <div class="p-6">
+          <h3 class="font-semibold text-lg text-ink mb-2" data-sg-path="services.items[3].title">Faucet &amp; Fixture Repair</h3>
+          <p class="text-mutedlt text-sm leading-relaxed" data-sg-path="services.items[3].desc">Dripping taps and worn fixtures repaired or upgraded with precision and care.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ───────── ABOUT ───────── -->
+<section class="bg-white py-20 md:py-28 px-6">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+    <div data-sg-reveal>
+      <span class="text-primary font-semibold text-sm uppercase tracking-wider" data-sg-path="about.label">About Us</span>
+      <h2 class="text-ink font-semibold text-4xl md:text-5xl mt-3 mb-6 leading-tight" data-sg-path="about.title">Your Trusted Plumbing Experts in Town</h2>
+      <p class="text-mutedlt text-base mb-9 max-w-md leading-relaxed" data-sg-path="about.text">From quick fixes to major repairs, our skilled professionals are committed to delivering reliable service with a personal touch.</p>
+      <a href="#about" class="inline-flex items-center gap-2 bg-accent text-ink font-semibold px-7 py-3.5 rounded-full hover:brightness-105 transition-all text-sm" data-sg-path="about.cta">More About Us</a>
+    </div>
+    <div class="rounded-xl4 overflow-hidden shadow-xl" data-sg-parallax>
+      <img data-sg-img="about.image" src="img/about.jpg" alt="" class="w-full h-[440px] object-cover" />
+    </div>
+  </div>
+</section>
+
+<!-- ───────── 24/7 STAT ───────── -->
+<section class="bg-white pb-20 md:pb-28 px-6">
+  <div class="max-w-3xl mx-auto text-center" data-sg-reveal>
+    <div class="text-ink font-display font-semibold text-7xl md:text-8xl mb-3" data-sg-path="stat.value">24/7</div>
+    <p class="text-muted text-xl" data-sg-path="stat.caption">Support You Can Count On</p>
+  </div>
+</section>
+
+<!-- ───────── TEAM ───────── -->
+<section class="bg-bg py-20 md:py-28 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14" data-sg-reveal>
+      <span class="text-primary font-semibold text-sm uppercase tracking-wider" data-sg-path="team.label">Team Members</span>
+      <h2 class="text-ink font-semibold text-4xl md:text-5xl mt-3" data-sg-path="team.title">Our Hard working Members</h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      <!-- Member 0 -->
+      <div class="group" data-sg-reveal>
+        <div class="rounded-xl3 overflow-hidden shadow-sm mb-5">
+          <img data-sg-img="team.members[0].image" src="img/team-1.jpg" alt="" class="w-full h-[340px] object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <h3 class="font-semibold text-lg text-ink" data-sg-path="team.members[0].name">Marcus Reed</h3>
+        <p class="text-primary text-sm font-medium" data-sg-path="team.members[0].role">Lead Plumber</p>
+      </div>
+      <!-- Member 1 -->
+      <div class="group" data-sg-reveal>
+        <div class="rounded-xl3 overflow-hidden shadow-sm mb-5">
+          <img data-sg-img="team.members[1].image" src="img/team-2.jpg" alt="" class="w-full h-[340px] object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <h3 class="font-semibold text-lg text-ink" data-sg-path="team.members[1].name">Diego Alvarez</h3>
+        <p class="text-primary text-sm font-medium" data-sg-path="team.members[1].role">Drainage Specialist</p>
+      </div>
+      <!-- Member 2 -->
+      <div class="group" data-sg-reveal>
+        <div class="rounded-xl3 overflow-hidden shadow-sm mb-5">
+          <img data-sg-img="team.members[2].image" src="img/team-3.jpg" alt="" class="w-full h-[340px] object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <h3 class="font-semibold text-lg text-ink" data-sg-path="team.members[2].name">Sofia Lindgren</h3>
+        <p class="text-primary text-sm font-medium" data-sg-path="team.members[2].role">Fixture Technician</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── TESTIMONIALS ───────── -->
+<section class="bg-primary py-20 md:py-28 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14" data-sg-reveal>
+      <span class="text-white/80 font-semibold text-sm uppercase tracking-wider" data-sg-path="testimonials.label">Testimonials</span>
+      <h2 class="text-white font-semibold text-4xl md:text-5xl mt-3" data-sg-path="testimonials.title">Trusted by 10,000+ Customers</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- T0 -->
+      <div class="bg-white rounded-xl3 p-8 flex flex-col gap-5" data-sg-reveal>
+        <div class="flex text-accent text-lg">★★★★★</div>
+        <p class="text-muted text-sm leading-relaxed flex-1" data-sg-path="testimonials.items[0].quote">"They found a leak two other plumbers missed and fixed it the same morning. Honest, fast and tidy."</p>
+        <div>
+          <div class="font-semibold text-ink text-sm" data-sg-path="testimonials.items[0].author">Hannah Brooks</div>
+          <div class="text-mutedlt text-xs" data-sg-path="testimonials.items[0].role">Homeowner</div>
+        </div>
+      </div>
+      <!-- T1 -->
+      <div class="bg-white rounded-xl3 p-8 flex flex-col gap-5" data-sg-reveal>
+        <div class="flex text-accent text-lg">★★★★★</div>
+        <p class="text-muted text-sm leading-relaxed flex-1" data-sg-path="testimonials.items[1].quote">"Our main drain was completely blocked on a Sunday night. BlueDrop arrived within the hour. Lifesavers."</p>
+        <div>
+          <div class="font-semibold text-ink text-sm" data-sg-path="testimonials.items[1].author">Tom Whitfield</div>
+          <div class="text-mutedlt text-xs" data-sg-path="testimonials.items[1].role">Café Owner</div>
+        </div>
+      </div>
+      <!-- T2 -->
+      <div class="bg-white rounded-xl3 p-8 flex flex-col gap-5" data-sg-reveal>
+        <div class="flex text-accent text-lg">★★★★★</div>
+        <p class="text-muted text-sm leading-relaxed flex-1" data-sg-path="testimonials.items[2].quote">"Clear pricing, friendly technician, and zero mess left behind. Exactly what you want from a plumber."</p>
+        <div>
+          <div class="font-semibold text-ink text-sm" data-sg-path="testimonials.items[2].author">Priya Nair</div>
+          <div class="text-mutedlt text-xs" data-sg-path="testimonials.items[2].role">Property Manager</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── PROCESS (3 STEPS) ───────── -->
+<section class="bg-white py-20 md:py-28 px-6">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+    <!-- Left: heading -->
+    <div data-sg-reveal>
+      <span class="text-primary font-semibold text-sm uppercase tracking-wider" data-sg-path="process.label">How It Works</span>
+      <h2 class="text-ink font-semibold text-4xl md:text-5xl mt-3 leading-tight" data-sg-path="process.title">Fixing Your Plumbing the Simple Way</h2>
+    </div>
+    <!-- Right: step cards -->
+    <div class="space-y-5">
+      <!-- Step 0 -->
+      <div class="process-card bg-accent rounded-xl3 p-7" data-sg-reveal>
+        <div class="text-ink font-display font-semibold text-3xl mb-3" data-sg-path="process.steps[0].number">01</div>
+        <h3 class="font-semibold text-lg text-ink mb-2" data-sg-path="process.steps[0].title">Schedule Your Service</h3>
+        <p class="text-ink/70 text-sm leading-relaxed" data-sg-path="process.steps[0].desc">Call us or book online in just a few clicks. Tell us what's wrong, we'll confirm your appointment.</p>
+      </div>
+      <!-- Step 1 -->
+      <div class="process-card bg-accent rounded-xl3 p-7" data-sg-reveal>
+        <div class="text-ink font-display font-semibold text-3xl mb-3" data-sg-path="process.steps[1].number">02</div>
+        <h3 class="font-semibold text-lg text-ink mb-2" data-sg-path="process.steps[1].title">We Inspect &amp; Fix</h3>
+        <p class="text-ink/70 text-sm leading-relaxed" data-sg-path="process.steps[1].desc">Our technician arrives on time, diagnoses the issue and explains the solution clearly.</p>
+      </div>
+      <!-- Step 2 -->
+      <div class="process-card bg-accent rounded-xl3 p-7" data-sg-reveal>
+        <div class="text-ink font-display font-semibold text-3xl mb-3" data-sg-path="process.steps[2].number">03</div>
+        <h3 class="font-semibold text-lg text-ink mb-2" data-sg-path="process.steps[2].title">Enjoy Peace of Mind</h3>
+        <p class="text-ink/70 text-sm leading-relaxed" data-sg-path="process.steps[2].desc">Once the job's done, we double-check everything, clean up, and ensure you're 100% satisfied.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── GALLERY ───────── -->
+<section class="bg-bg py-20 md:py-28 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14" data-sg-reveal>
+      <span class="text-primary font-semibold text-sm uppercase tracking-wider" data-sg-path="gallery.label">Project Gallery</span>
+      <h2 class="text-ink font-semibold text-4xl md:text-5xl mt-3 max-w-2xl mx-auto leading-tight" data-sg-path="gallery.title">Gallery of Trusted Repairs &amp; Installations</h2>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="rounded-xl3 overflow-hidden aspect-[3/4]" data-sg-reveal>
+        <img data-sg-img="gallery.images[0]" src="img/gallery-1.jpg" alt="" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+      </div>
+      <div class="rounded-xl3 overflow-hidden aspect-[3/4]" data-sg-reveal>
+        <img data-sg-img="gallery.images[1]" src="img/gallery-2.jpg" alt="" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+      </div>
+      <div class="rounded-xl3 overflow-hidden aspect-[3/4]" data-sg-reveal>
+        <img data-sg-img="gallery.images[2]" src="img/gallery-3.jpg" alt="" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+      </div>
+      <div class="rounded-xl3 overflow-hidden aspect-[3/4]" data-sg-reveal>
+        <img data-sg-img="gallery.images[3]" src="img/gallery-4.jpg" alt="" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── FAQ ───────── -->
+<section class="bg-white py-20 md:py-28 px-6">
+  <div class="max-w-3xl mx-auto">
+    <div class="mb-12 text-center" data-sg-reveal>
+      <span class="text-primary font-semibold text-sm uppercase tracking-wider" data-sg-path="faq.label">FAQ</span>
+      <h2 class="text-ink font-semibold text-4xl md:text-5xl mt-3" data-sg-path="faq.title">Frequently Asked Questions</h2>
+    </div>
+
+    <ul class="space-y-3">
+      <!-- FAQ 0 -->
+      <li class="faq-item open bg-bg rounded-xl2 overflow-hidden" data-sg-reveal>
+        <button class="w-full text-left px-6 py-5 flex items-center justify-between gap-4 focus:outline-none" onclick="toggleFaq(this)">
+          <span class="font-semibold text-ink text-sm" data-sg-path="faq.items[0].question">Do you offer 24/7 emergency plumbing?</span>
+          <span class="faq-icon text-2xl text-primary flex-shrink-0 font-light leading-none">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-5">
+          <p class="text-mutedlt text-sm leading-relaxed" data-sg-path="faq.items[0].answer">Yes. Our emergency line is open around the clock, every day of the year. A licensed technician is always on call for urgent leaks, blockages and burst pipes.</p>
+        </div>
+      </li>
+      <!-- FAQ 1 -->
+      <li class="faq-item bg-bg rounded-xl2 overflow-hidden" data-sg-reveal>
+        <button class="w-full text-left px-6 py-5 flex items-center justify-between gap-4 focus:outline-none" onclick="toggleFaq(this)">
+          <span class="font-semibold text-ink text-sm" data-sg-path="faq.items[1].question">Are your plumbers licensed and insured?</span>
+          <span class="faq-icon text-2xl text-primary flex-shrink-0 font-light leading-none">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-5">
+          <p class="text-mutedlt text-sm leading-relaxed" data-sg-path="faq.items[1].answer">Every BlueDrop technician is fully licensed, background-checked and insured, so you can feel completely confident letting us into your home.</p>
+        </div>
+      </li>
+      <!-- FAQ 2 -->
+      <li class="faq-item bg-bg rounded-xl2 overflow-hidden" data-sg-reveal>
+        <button class="w-full text-left px-6 py-5 flex items-center justify-between gap-4 focus:outline-none" onclick="toggleFaq(this)">
+          <span class="font-semibold text-ink text-sm" data-sg-path="faq.items[2].question">How much does a call-out cost?</span>
+          <span class="faq-icon text-2xl text-primary flex-shrink-0 font-light leading-none">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-5">
+          <p class="text-mutedlt text-sm leading-relaxed" data-sg-path="faq.items[2].answer">We give clear, upfront pricing before any work begins. You'll always approve the quote first, with no surprise charges added afterward.</p>
+        </div>
+      </li>
+      <!-- FAQ 3 -->
+      <li class="faq-item bg-bg rounded-xl2 overflow-hidden" data-sg-reveal>
+        <button class="w-full text-left px-6 py-5 flex items-center justify-between gap-4 focus:outline-none" onclick="toggleFaq(this)">
+          <span class="font-semibold text-ink text-sm" data-sg-path="faq.items[3].question">How quickly can you come out?</span>
+          <span class="faq-icon text-2xl text-primary flex-shrink-0 font-light leading-none">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-5">
+          <p class="text-mutedlt text-sm leading-relaxed" data-sg-path="faq.items[3].answer">For emergencies we aim to be on-site within the hour. For scheduled work we'll book the earliest slot that suits you, often same-day.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ───────── BOOKING CTA ───────── -->
+<section id="contact" class="relative bg-ink overflow-hidden">
+  <!-- Background image -->
+  <div class="absolute inset-0" data-sg-parallax>
+    <img data-sg-img="cta.image" src="img/cta.jpg" alt="" class="w-full h-full object-cover opacity-30" />
+    <div class="absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-ink/40"></div>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center">
+    <div data-sg-reveal>
+      <span class="text-accent font-semibold text-sm uppercase tracking-wider" data-sg-path="cta.label">Let's discuss</span>
+      <h2 class="text-white font-semibold text-4xl md:text-5xl mt-3 mb-5 leading-tight" data-sg-path="cta.title">Book Your Service</h2>
+      <p class="text-white/70 text-base max-w-md leading-relaxed" data-sg-path="cta.text">Tell us what's wrong and pick a time that works. We'll confirm your appointment and get your home flowing again.</p>
+    </div>
+
+    <!-- Booking form (demo, non-functional) -->
+    <div class="bg-white rounded-xl4 p-8 shadow-2xl" data-sg-reveal>
+      <form onsubmit="return false" class="space-y-4">
+        <input type="text" data-sg-path="cta.fields.name" placeholder="Your name" class="w-full border border-line rounded-xl2 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
+        <input type="email" data-sg-path="cta.fields.email" placeholder="Email address" class="w-full border border-line rounded-xl2 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
+        <textarea rows="4" data-sg-path="cta.fields.message" placeholder="Describe your plumbing issue" class="w-full border border-line rounded-xl2 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"></textarea>
+        <button type="submit" class="w-full bg-primary text-white font-semibold py-3.5 rounded-full hover:bg-primary/90 transition-all text-sm" data-sg-path="cta.button">Book Now</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── FOOTER ───────── -->
+<footer class="bg-ink text-white pt-16 pb-8 px-6 border-t border-white/10">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-4 gap-12 mb-12">
+      <!-- Brand -->
+      <div class="md:col-span-1">
+        <div class="flex items-center gap-2.5 mb-4">
+          <div class="w-9 h-9 bg-accent rounded-full flex items-center justify-center">
+            <svg class="w-5 h-5 text-ink" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
+          </div>
+          <span class="font-display font-semibold text-xl" data-sg-path="brand">BlueDrop</span>
+        </div>
+        <p class="text-white/50 text-sm leading-relaxed max-w-xs" data-sg-path="footer.tagline">Modern plumbing care for your home — licensed, on time, and available 24/7.</p>
+      </div>
+
+      <!-- Column 0 -->
+      <div>
+        <h4 class="font-semibold text-sm mb-4 text-white/80" data-sg-path="footer.columns[0].heading">Company</h4>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[0]">Home</a></li>
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[1]">About Us</a></li>
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[2]">Services</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 1 -->
+      <div>
+        <h4 class="font-semibold text-sm mb-4 text-white/80" data-sg-path="footer.columns[1].heading">Services</h4>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[1].links[0]">Leak Detection</a></li>
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[1].links[1]">Drain Cleaning</a></li>
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[1].links[2]">Sewer Lines</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 2 -->
+      <div>
+        <h4 class="font-semibold text-sm mb-4 text-white/80" data-sg-path="footer.columns[2].heading">Legal &amp; Policy</h4>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[2].links[0]">Privacy Policy</a></li>
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[2].links[1]">Terms and Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 pt-8 text-center">
+      <p class="text-white/30 text-xs" data-sg-path="footer.copyright">Copyright &amp; design © 2026 BlueDrop, Inc. All rights reserved</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ───────── STANDARD HYDRATION + GSAP BLOCK ───────── -->
+<script>
+  (function () {
+    var C = window.__SITE_CONTENT__ || {};
+    function get(p) {
+      return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+        .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+    }
+    // Hydrate texts (inputs/textarea → placeholder, others → textContent)
+    document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-path'));
+      if (v == null || typeof v === 'object') return;
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = v;
+      else el.textContent = v;
+    });
+    // Hydrate images (img.src or background-image)
+    document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-img'));
+      if (v == null) return;
+      if (el.tagName === 'IMG') el.src = v;
+      else el.style.backgroundImage = "url('" + v + "')";
+    });
+    // Animations: reveal/parallax au scroll (re-création GSAP, pas une capture)
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+        gsap.from(el, {
+          opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+        });
+      });
+      gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+        gsap.to(el, {
+          yPercent: -15, ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+      });
+      // ROBUSTESSE : recalcule les positions après chargement des images + filet anti-page-blanche
+      window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+      setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+      setTimeout(function () {
+        document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+          if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+        });
+      }, 2200);
+    }
+  })();
+</script>
+
+<!-- FAQ toggle -->
+<script>
+  function toggleFaq(btn) {
+    var item = btn.closest('.faq-item');
+    var isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function (el) { el.classList.remove('open'); });
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+
+</body>
+</html>

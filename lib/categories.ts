@@ -91,7 +91,7 @@ export const CATEGORIES: Category[] = [
     briefPlaceholder:
       "Ex. Atelier Beaumont, ébéniste à Nantes.\nMobilier sur mesure, bois massif, pièces uniques.\nDevis sous 48 h.",
     exampleDomain: "beaumont.akyra.io",
-    templateIds: ["cleaning-services", "eco-garden-care"],
+    templateIds: ["cleaning-services", "eco-garden-care", "plumber-pro", "plumber-modern", "plumber-emergency", "electrician-pro", "multi-trade"],
     defaultTemplateId: "cleaning-services",
     testimonial: {
       quote:
@@ -110,7 +110,7 @@ export const CATEGORIES: Category[] = [
     briefPlaceholder:
       "Ex. Alex, designer & directeur artistique à Paris.\nIdentités de marque, sites, direction créative.\nDisponible en freelance.",
     exampleDomain: "alex.akyra.io",
-    templateIds: ["creative-portfolio"],
+    templateIds: ["creative-portfolio", "studio-portfolio"],
     defaultTemplateId: "creative-portfolio",
     testimonial: {
       quote:
@@ -129,7 +129,7 @@ export const CATEGORIES: Category[] = [
     briefPlaceholder:
       "Ex. Healix, app de suivi santé.\nTracking, alertes, abonnement.\nEssai gratuit.",
     exampleDomain: "healix.akyra.io",
-    templateIds: ["health-saas"],
+    templateIds: ["health-saas", "analytics-saas"],
     defaultTemplateId: "health-saas",
     testimonial: {
       quote:

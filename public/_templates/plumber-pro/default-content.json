@@ -1,0 +1,281 @@
+{
+  "meta": {
+    "title": "Aqualis – Plombier de confiance, urgence 24/7",
+    "description": "Plomberie moderne : réparation, installation et urgence 24/7. Une équipe qualifiée et un service fiable pour votre maison et votre entreprise."
+  },
+  "brand": "Aqualis",
+  "topbar": {
+    "phone": "(01) 23 45 67 89",
+    "hours": "08h00 – 19h00",
+    "area": "Trouver une zone d'intervention"
+  },
+  "nav": {
+    "links": [
+      "Accueil",
+      "À propos",
+      "Services",
+      "Blog",
+      "Pages"
+    ],
+    "phone": "+33 1 80 05 55 76",
+    "cta": "Nous contacter"
+  },
+  "hero": {
+    "eyebrow": "Spécialistes plomberie certifiés",
+    "title": "Des services de plomberie sur lesquels vous pouvez compter",
+    "tagline": "Une plomberie fiable, abordable et disponible 24/7 pour tous vos besoins, à la maison comme en entreprise.",
+    "cta": "Prendre rendez-vous",
+    "reviews": "8K+",
+    "reviewsLabel": "Avis clients",
+    "image": "/_templates/plumber-pro/img/hero.jpg"
+  },
+  "intro": {
+    "label": "Notre introduction",
+    "title": "Chez Aqualis, fort de plusieurs années d'expérience, notre équipe qualifiée",
+    "sideTitle": "La satisfaction client et la qualité d'exécution sont au cœur de tout ce que nous faisons.",
+    "sideText": "Nos professionnels qualifiés s'engagent à fournir des solutions haut de gamme avec un service irréprochable. Nous privilégions un travail de qualité pour que chaque chantier soit réussi du premier coup.",
+    "image": "/_templates/plumber-pro/img/intro.jpg",
+    "stats": [
+      {
+        "value": "12+",
+        "label": "Années d'expérience"
+      },
+      {
+        "value": "4+",
+        "label": "Certifications"
+      },
+      {
+        "value": "24/7",
+        "label": "Service d'urgence"
+      }
+    ],
+    "cta": "En savoir plus"
+  },
+  "services": {
+    "label": "Nos services",
+    "title": "Des solutions de plomberie fiables",
+    "subtitle": "Notre équipe qualifiée gère tout, des fuites aux installations, avec précision, rapidité et durabilité.",
+    "cta": "Voir tous les services",
+    "items": [
+      {
+        "title": "Dépannage plomberie d'urgence",
+        "desc": "Intervention rapide 24/7 pour les fuites, ruptures de canalisation et urgences, afin de limiter les dégâts.",
+        "icon": "drop"
+      },
+      {
+        "title": "Débouchage de canalisations",
+        "desc": "Service de débouchage rapide et complet pour fuites, bouchons et obstructions dans votre logement.",
+        "icon": "wrench"
+      },
+      {
+        "title": "Installation & remplacement",
+        "desc": "Solutions d'installation rapides pour bouchons, fuites et chantiers, livrées dans les délais.",
+        "icon": "pipe"
+      },
+      {
+        "title": "Chauffe-eau & ballon",
+        "desc": "Service d'urgence permanent pour vos problèmes de chauffe-eau, réparations rapides et dégâts limités.",
+        "icon": "heater"
+      }
+    ]
+  },
+  "steps": {
+    "label": "Comment ça marche",
+    "title": "Des étapes simples pour démarrer dès maintenant",
+    "subtitle": "Notre équipe qualifiée gère tout, des fuites aux installations, avec précision, rapidité et durabilité.",
+    "cta": "Nous contacter",
+    "items": [
+      {
+        "title": "Réservez un service",
+        "desc": "Planifiez votre intervention en ligne ou par téléphone en quelques étapes simples — rapide et pratique."
+      },
+      {
+        "title": "Recevez un diagnostic",
+        "desc": "Nos plombiers arrivent à l'heure, évaluent le problème avec soin et proposent la meilleure solution."
+      },
+      {
+        "title": "On répare",
+        "desc": "Nous intervenons avec des outils de qualité et des techniques éprouvées pour une réparation durable."
+      },
+      {
+        "title": "L'esprit tranquille",
+        "desc": "Avec notre garantie de bonne exécution et un service fiable, votre plomberie est entre de bonnes mains."
+      }
+    ]
+  },
+  "stats": {
+    "label": "Nos chiffres",
+    "title": "Une meilleure plomberie pour chaque espace",
+    "subtitle": "Des résultats mesurables qui font la différence, intervention après intervention.",
+    "items": [
+      {
+        "value": "8K+",
+        "label": "Avis clients"
+      },
+      {
+        "value": "12+",
+        "label": "Années d'expérience"
+      },
+      {
+        "value": "98%",
+        "label": "Clients satisfaits"
+      },
+      {
+        "value": "24/7",
+        "label": "Disponibilité urgence"
+      }
+    ]
+  },
+  "testimonials": {
+    "label": "Témoignages",
+    "title": "De vrais avis honnêtes de vrais clients",
+    "items": [
+      {
+        "quote": "Aqualis nous a sauvés ! Une grosse fuite en pleine nuit, et leur équipe est arrivée en moins d'une heure. Rapide, professionnel et très sympa — ils ont réglé le problème vite et tout laissé impeccable. Je recommande vivement pour une intervention fiable et sans stress !",
+        "author": "Julien Caron",
+        "role": "Propriétaire",
+        "rating": 4,
+        "avatar": "/_templates/plumber-pro/img/avatar-1.jpg"
+      },
+      {
+        "quote": "J'ai appelé Aqualis pour remplacer un chauffe-eau, et ils ont dépassé mes attentes. Le technicien était courtois et soigneux.",
+        "author": "Olivia Bonnet",
+        "role": "Gestionnaire d'immeuble",
+        "rating": 4,
+        "avatar": "/_templates/plumber-pro/img/avatar-2.jpg"
+      },
+      {
+        "quote": "Un service impeccable du début à la fin. La prise de rendez-vous a été simple, ils sont arrivés à l'heure et ont débouché notre évier rapidement.",
+        "author": "Marc Leblanc",
+        "role": "Chef d'entreprise",
+        "rating": 4,
+        "avatar": "/_templates/plumber-pro/img/avatar-3.jpg"
+      },
+      {
+        "quote": "Nous avons travaillé avec plusieurs plombiers, mais Aqualis sort du lot. Réactif et une équipe vraiment agréable.",
+        "author": "Sophie Chastel",
+        "role": "Chef d'entreprise",
+        "rating": 4,
+        "avatar": "/_templates/plumber-pro/img/avatar-4.jpg"
+      }
+    ]
+  },
+  "team": {
+    "label": "Notre équipe",
+    "title": "Rencontrez les professionnels d'Aqualis",
+    "members": [
+      {
+        "name": "Jean Carrère",
+        "role": "Plombier responsable",
+        "image": "/_templates/plumber-pro/img/team-1.jpg"
+      },
+      {
+        "name": "Marina López",
+        "role": "Plombière responsable",
+        "image": "/_templates/plumber-pro/img/team-2.jpg"
+      },
+      {
+        "name": "Damien Kessler",
+        "role": "Installation de canalisations",
+        "image": "/_templates/plumber-pro/img/team-3.jpg"
+      }
+    ]
+  },
+  "faq": {
+    "label": "FAQ",
+    "title": "Tout ce que vous devez savoir",
+    "subtitle": "Réserver votre intervention est très simple : choisissez votre service, une date et un créneau, et c'est réglé.",
+    "items": [
+      {
+        "question": "Comment prendre rendez-vous ?",
+        "answer": "La réservation en ligne ne prend que quelques minutes. Choisissez votre service, sélectionnez une date et un créneau pratiques, et confirmez instantanément en quelques clics."
+      },
+      {
+        "question": "Intervenez-vous vraiment 24/7 en urgence ?",
+        "answer": "Oui — notre service d'urgence est disponible jour et nuit, week-ends compris, pour les fuites, ruptures de canalisation et tout incident nécessitant une intervention rapide."
+      },
+      {
+        "question": "Vos plombiers sont-ils certifiés ?",
+        "answer": "Tous nos plombiers sont qualifiés, certifiés et assurés. Chacun suit une formation continue avant d'intervenir chez un client."
+      },
+      {
+        "question": "Que se passe-t-il si je ne suis pas satisfait ?",
+        "answer": "Votre satisfaction est notre priorité. Si le résultat ne vous convient pas, contactez-nous sous 24h et nous renvoyons une équipe sans frais supplémentaires."
+      }
+    ]
+  },
+  "blog": {
+    "label": "Notre blog",
+    "title": "Conseils plomberie & actualités",
+    "subtitle": "Notre équipe qualifiée gère tout, des fuites aux installations, avec précision, rapidité et durabilité.",
+    "cta": "Voir tous les articles",
+    "featured": [
+      {
+        "author": "Émilie Carrère",
+        "date": "1 sept. 2025",
+        "title": "5 problèmes de plomberie courants et comment les régler facilement chez soi.",
+        "excerpt": "Des solutions simples pour les soucis courants — fuites, bouchons et basse pression — pour économiser temps et argent.",
+        "image": "/_templates/plumber-pro/img/blog-1.jpg"
+      },
+      {
+        "author": "Émilie Carrère",
+        "date": "1 sept. 2025",
+        "title": "Pourquoi ne jamais ignorer un robinet qui fuit, et ce que ça peut vous coûter.",
+        "excerpt": "Évitez les soucis de plomberie grâce à des réparations rapides pour les fuites, bouchons et bien plus.",
+        "image": "/_templates/plumber-pro/img/blog-2.jpg"
+      }
+    ],
+    "list": [
+      {
+        "title": "Le guide du propriétaire pour l'entretien de la plomberie.",
+        "author": "Nathalie Roy",
+        "date": "1 sept. 2025"
+      },
+      {
+        "title": "Faire soi-même ou appeler un pro — quel est le bon choix ?",
+        "author": "Théo Sicard",
+        "date": "1 sept. 2025"
+      },
+      {
+        "title": "Stopper la fuite : réparer un robinet qui goutte en toute simplicité.",
+        "author": "Alex Tournier",
+        "date": "1 sept. 2025"
+      }
+    ]
+  },
+  "cta": {
+    "title": "Besoin d'un plombier ? Démarrons dès aujourd'hui",
+    "subtitle": "Ne laissez plus une fuite gâcher votre journée. Notre équipe intervient vite, proprement et avec le sourire.",
+    "button": "Prendre rendez-vous",
+    "phone": "(01) 23 45 67 89"
+  },
+  "footer": {
+    "tagline": "Une plomberie professionnelle, soignée et fiable, pour que votre logement reste sain au quotidien.",
+    "columns": [
+      {
+        "heading": "Entreprise",
+        "links": [
+          "Accueil",
+          "À propos",
+          "Blog"
+        ]
+      },
+      {
+        "heading": "Services",
+        "links": [
+          "Urgence 24/7",
+          "Débouchage",
+          "Installation"
+        ]
+      },
+      {
+        "heading": "Légal",
+        "links": [
+          "Politique de confidentialité",
+          "Conditions générales"
+        ]
+      }
+    ],
+    "copyright": "© 2026 Aqualis. Tous droits réservés."
+  }
+}

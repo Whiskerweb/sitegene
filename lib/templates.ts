@@ -1,5 +1,5 @@
 /** Identifiants des templates disponibles (photographes pour l'instant). */
-export const TEMPLATE_IDS = ["alice-r", "potozon", "target", "cleaning-services", "eco-garden-care", "creative-portfolio", "health-saas", "luxury-wedding", "wedding-fine-art", "jazz-vocalist", "hiphop-producer", "electronic-collective", "indie-band", "music-festival", "podcast-audio", "dj-electro"] as const;
+export const TEMPLATE_IDS = ["alice-r", "potozon", "target", "cleaning-services", "eco-garden-care", "creative-portfolio", "health-saas", "luxury-wedding", "wedding-fine-art", "jazz-vocalist", "hiphop-producer", "electronic-collective", "indie-band", "music-festival", "podcast-audio", "dj-electro", "studio-portfolio", "analytics-saas", "plumber-pro", "plumber-emergency", "multi-trade", "plumber-modern", "electrician-pro"] as const;
 export type TemplateId = (typeof TEMPLATE_IDS)[number];
 
 export function isTemplateId(x: string): x is TemplateId {

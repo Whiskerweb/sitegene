@@ -30,12 +30,22 @@ const SECTIONS: { title: string; cta: { label: string; href: string }; ids: stri
   {
     title: "Artisans & services",
     cta: { label: "Voir les artisans", href: "/modeles" },
-    ids: ["cleaning-services", "eco-garden-care", "arelec", "eloctix"],
+    ids: [
+      "plumber-pro",
+      "electrician-pro",
+      "multi-trade",
+      "plumber-modern",
+      "plumber-emergency",
+      "cleaning-services",
+      "eco-garden-care",
+      "arelec",
+      "eloctix",
+    ],
   },
   {
     title: "Portfolio & SaaS",
     cta: { label: "Tous les modèles", href: "/modeles" },
-    ids: ["creative-portfolio", "health-saas"],
+    ids: ["studio-portfolio", "creative-portfolio", "analytics-saas", "health-saas"],
   },
 ];
 

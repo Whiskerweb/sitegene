@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-sg-path="meta.title">Mörk Studio — Art Direction & Digital Design</title>
+  <meta name="description" data-sg-path="meta.description" content="Mörk Studio is an independent design practice blending art direction, brand identity and code into bold digital experiences with structure, flow and intent." />
+
+  <!-- Google Fonts: Inter (Inter Display equivalent) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#000000',
+            paper: '#ffffff',
+            electric: '#0000ee',
+            sky: '#0099ff',
+            mute: '#999999',
+            dim: '#666666',
+            faint: '#bbbbbb',
+            line: '#222222',
+            hairline: 'rgba(187,187,187,0.2)',
+          },
+          fontFamily: {
+            sans: ['"Inter"', 'system-ui', 'sans-serif'],
+          },
+          fontSize: {
+            'mega':    ['clamp(72px,17vw,236px)', { lineHeight: '0.82', letterSpacing: '-0.03em' }],
+            'huge':    ['clamp(40px,7vw,80px)',   { lineHeight: '1.0',  letterSpacing: '-0.03em' }],
+            'big':     ['clamp(28px,4.4vw,49px)', { lineHeight: '1.08', letterSpacing: '-0.02em' }],
+            'price':   ['clamp(48px,6vw,79px)',   { lineHeight: '1.0',  letterSpacing: '-0.03em' }],
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- __SITE_CONTENT__ — single source of truth for all copy + image paths -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ ||  window.__SITE_CONTENT__ || {
+      meta: {
+        title: "Mörk Studio — Art Direction & Digital Design",
+        description: "Mörk Studio is an independent design practice blending art direction, brand identity and code into bold digital experiences with structure, flow and intent."
+      },
+      brand: "MÖRK STUDIO",
+      wordmark: "Mörk",
+      nav: ["Work", "Studio", "Contact"],
+      hero: {
+        headline: "Pattern, dimension and moments that connect and leave a bold impression.",
+        tags: ["Art Direction", "Branding", "Strategy"]
+      },
+      clients: {
+        label: "Featured Projects プロジェクト",
+        index: "INDEX — 00",
+        meta: "CREATIVE DEVELOPMENT",
+        logos: ["Cairo", "Orbit", "Chen", "Manila", "Nova"]
+      },
+      projects: {
+        intro: "Every project is a chance to blend design and development, shaping bold interactive ideas into sleek digital realities — built with intent, speed, and visual clarity that attracts lot of peoples.",
+        cta: "See Works",
+        items: [
+          { title: "Halo Wear",   index: "(01)", image: "img/project1.jpg" },
+          { title: "Sonder Goods", index: "(02)", image: "img/project2.jpg" },
+          { title: "Lucent Lab",   index: "(03)", image: "img/project3.jpg" },
+          { title: "Arc & Bloom",  index: "(04)", image: "img/project4.jpg" },
+          { title: "Atelier Nara", index: "(05)", image: "img/project5.jpg" }
+        ]
+      },
+      statement: {
+        label: "Personal Profile プロフィール",
+        index: "DROP — 05",
+        meta: "VISUAL THINKER",
+        text: "Blending design and code with functional clarity and creative precision. Delivering thoughtful digital systems with structure, flow, and expressive interaction.",
+        portrait1: "img/portrait1.jpg",
+        portrait2: "img/portrait2.jpg",
+        body: "We bridge creative direction with real-world execution, combining design and development into one seamless workflow to deliver digital experiences that are thoughtful, fast, and built to perform.",
+        profile: "img/profile.jpg"
+      },
+      capabilities: {
+        label: "Capabilities サービス内容",
+        index: "(WDX® — 04)",
+        meta: "DIGITAL EXECUTION",
+        cols: ["Precise", "Structured", "Focused", "Visual Language"],
+        items: [
+          { no: "01", name: "Art Direction",    desc: "We guide every visual decision from start to finish, ensuring clarity, emotion, and impact across every touchpoint." },
+          { no: "02", name: "Brand Identity",   desc: "From strategy to execution, we shape consistent brand systems that speak clearly and feel uniquely ownable." },
+          { no: "03", name: "Motion Direction", desc: "We use motion as a design tool — adding clarity, rhythm, and energy to digital experiences with intention." },
+          { no: "04", name: "Framer Sites",     desc: "Design meets execution with real-time, scalable websites that are fast, flexible, and effortless to manage." }
+        ]
+      },
+      experience: {
+        label: "Experience エクスペリエンス",
+        index: "(WDX® — 05)",
+        meta: "DIGITAL CRAFT",
+        cols: ["Global", "Creative Collabs", "Studio", "Creative Partnerships"],
+        rows: [
+          { studio: "Clavmen Studio", period: "2022 - present", role: "Art Director & Designer", city: "Tokyo" },
+          { studio: "Modular Eight",  period: "2020 – 2022",    role: "Senior Developer",        city: "Osaka" },
+          { studio: "Haus of Signal", period: "2018 – 2020",    role: "Creative Technologist",   city: "Berlin" },
+          { studio: "Studio Orbit",   period: "2016 – 2018",    role: "UI/UX Designer",          city: "Dallas" },
+          { studio: "Novaform Labs",  period: "2014 – 2016",    role: "Junior Designer",         city: "Kyoto" }
+        ]
+      },
+      testimonials: {
+        label: "Testimonials レビュー",
+        index: "(WDX® — 06)",
+        meta: "REAL FEEDBACK",
+        cta: "Get in Touch",
+        items: [
+          { quote: "Mörk elevated every layer of our brand’s online presence. From motion details to structural layout, every piece felt crafted and intentional. The site not only looked beautiful but performed well too — and the entire collaboration process was smooth.", name: "Lisa Kuroda", role: "Founder, Studio Analog", avatar: "img/avatar1.jpg", logo: "Cairo" },
+          { quote: "Mörk approaches every project with a deep sense of purpose. The work is never just about the surface — it’s about how each element functions, connects, and flows. They bring logic, sharpness, and confidence to every decision.", name: "Daniel Reyes", role: "Director, Framehaus", avatar: "img/avatar2.jpg", logo: "Cairo" },
+          { quote: "Their ability to merge storytelling with clean interaction design is unmatched. Mörk understands not just how things should look, but why they should look that way — and that insight came through in every part of the work.", name: "Mei Tanaka", role: "UX Designer, Nuro", avatar: "img/avatar3.jpg", logo: "Cairo" },
+          { quote: "Working with Mörk was more than just hiring a designer — it felt like bringing on a creative partner who truly understood our goals. They took our raw ideas, added clarity, and transformed them into something that not only looked stunning.", name: "Julian Pierce", role: "Director, Vektor Inc.", avatar: "img/avatar4.jpg", logo: "Cairo" },
+          { quote: "Mörk brings a rare balance of creativity and discipline. Incredibly fast without ever sacrificing attention to detail. From early ideation to the final product, the process is intentional, the communication is clear.", name: "Hana Samoto", role: "CEO, Willow Studio", avatar: "img/avatar5.jpg", logo: "Cairo" }
+        ]
+      },
+      awards: {
+        label: "Awards アワード",
+        index: "(WDX® — 07)",
+        meta: "SELECTED HONORS",
+        cols: ["Awwwards", "CSSD", "Framer", "Dribbble"],
+        items: [
+          { count: "27x", name: "Awwwards", desc: "Recognized for bold interaction, structured visual rhythm, and design consistency across creative categories.", thumb: "img/award1.jpg" },
+          { count: "14x", name: "FWA",      desc: "Awarded for outstanding execution, seamless animation, and originality in modern digital experiences.", thumb: "img/award2.jpg" },
+          { count: "09x", name: "CSSDA",    desc: "Celebrated for front-end excellence, design innovation, and development precision across multiple showcases.", thumb: "img/award3.jpg" },
+          { count: "08x", name: "Dribbble", desc: "Highlighted for strong typographic systems, visual hierarchy, and thoughtful layout built with intent.", thumb: "img/award4.jpg" }
+        ]
+      },
+      partners: {
+        label: "Brand Partners パートナー",
+        index: "(WDX® — 08)",
+        meta: "CREATIVE TEAMS",
+        wordmark: "Cairo",
+        cards: [
+          { city: "Manila", image: "img/gallery1.jpg" },
+          { city: "Oslo",   image: "img/gallery2.jpg" },
+          { city: "Tokyo",  image: "img/gallery3.jpg" }
+        ]
+      },
+      pricing: {
+        label: "Project Pricing プラン",
+        index: "(WDX® — 09)",
+        meta: "CUSTOM QUOTES",
+        cols: ["Custom Options", "Transparent", "Design Packages", "Pricing Tiers"],
+        plans: [
+          { price: "$99",  unit: "/Month", name: "Starter Plan",    desc: "Perfect for small launches and personal sites that need a fast online presence.", features: ["One-page Framer site", "Custom layout & visuals", "Mobile responsive", "Basic SEO setup"] },
+          { price: "$299", unit: "/Month", name: "Growth Plan",     desc: "Designed for growing brands that need flexibility and CMS support.", features: ["Up to 5 pages", "Framer CMS-powered sections", "Motion & interactions", "Advanced SEO setup"] },
+          { price: "$899", unit: "/Month", name: "Full Scope Plan",  desc: "Best for studios or teams needing structure and enterprise-level execution.", features: ["10+ pages with CMS", "Advanced layout strategy", "Custom motion systems", "Priority support"] }
+        ]
+      },
+      footer: {
+        brand: "MÖRK STUDIO",
+        tagline: "Independent design practice. Available worldwide.",
+        nav_label: "Navigate",
+        nav: ["Work", "Studio", "Awards", "Contact"],
+        social_label: "Social",
+        social: ["Instagram", "Behance", "X (Twitter)", "LinkedIn"],
+        email: "hello@morkstudio.com",
+        copyright: "© 2024 Mörk Studio — All rights reserved.",
+        back_to_top: "Back to Top"
+      }
+    };
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; background: #000; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #000; color: #fff; overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Section eyebrow row (small caps meta strip) */
+    .eyebrow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 24px;
+      padding: 16px 0;
+      border-top: 1px solid rgba(187,187,187,0.18);
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      color: #999;
+    }
+    .eyebrow .e-left  { justify-self: start;  display:flex; align-items:center; gap:7px; }
+    .eyebrow .e-mid   { justify-self: center; }
+    .eyebrow .e-right { justify-self: end; text-transform: uppercase; letter-spacing: 0.08em; }
+    .eyebrow .reg::before { content:'©'; margin-right: 6px; }
+
+    /* Sticky column header used in capabilities/experience/awards/pricing */
+    .sticky-cols {
+      background: #fff; color: #000;
+      display: grid;
+      padding: 12px 40px;
+      font-size: 14px; font-weight: 600;
+    }
+
+    /* Outlined pill button */
+    .pill {
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid #fff; border-radius: 999px;
+      padding: 14px 28px;
+      font-size: 14px; font-weight: 600; letter-spacing: 0.02em;
+      color: #fff; text-decoration: none;
+      transition: background .25s, color .25s;
+    }
+    .pill:hover { background:#fff; color:#000; }
+
+    /* Cursor dot */
+    #cursor-dot {
+      width: 7px; height: 7px; background:#fff; border-radius:50%;
+      position: fixed; top:0; left:0; pointer-events:none; z-index:9999;
+      transform: translate(-50%,-50%); transition: transform .12s ease;
+      mix-blend-mode: difference;
+    }
+
+    /* nav */
+    nav { mix-blend-mode: difference; }
+
+    /* project card hover */
+    .proj-card img { transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .6s; }
+    .proj-card:hover img { transform: scale(1.04); filter: grayscale(0); }
+
+    .row-link { transition: opacity .25s; }
+    .row-link:hover { opacity: .55; }
+
+    @media (max-width: 860px) {
+      .sticky-cols { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="cursor-dot"></div>
+
+<!-- ===== NAV ===== -->
+<nav class="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-6 md:px-10 py-6">
+  <a href="#top" class="text-[13px] font-bold tracking-[0.14em] uppercase" data-sg-path="brand">MÖRK STUDIO</a>
+  <ul class="hidden md:flex gap-8 list-none text-[13px] tracking-[0.04em]">
+    <li><a href="#work"    class="row-link" data-sg-path="nav[0]">Work</a></li>
+    <li><a href="#studio"  class="row-link" data-sg-path="nav[1]">Studio</a></li>
+    <li><a href="#contact" class="row-link" data-sg-path="nav[2]">Contact</a></li>
+  </ul>
+  <div class="text-[12px] tracking-[0.08em] tabular-nums opacity-70" id="nav-clock">LOCAL / 00:00:00</div>
+</nav>
+
+<main id="top">
+
+  <!-- ===== HERO ===== -->
+  <section class="relative px-6 md:px-10 pt-40 md:pt-44 pb-0" data-sg-reveal>
+    <h1 class="max-w-[680px] text-big font-medium text-white" data-sg-path="hero.headline">
+      Pattern, dimension and moments that connect and leave a bold impression.
+    </h1>
+
+    <!-- categories row -->
+    <div class="relative mt-24 md:mt-32">
+      <div class="bg-white text-black grid grid-cols-1 md:grid-cols-3 max-w-[1000px]">
+        <div class="px-2 py-2.5 text-[15px] font-medium border-b md:border-b-0 md:border-r border-black/10" data-sg-path="hero.tags[0]">Art Direction</div>
+        <div class="px-2 py-2.5 text-[15px] font-medium border-b md:border-b-0 md:border-r border-black/10 text-center" data-sg-path="hero.tags[1]">Branding</div>
+        <div class="px-2 py-2.5 text-[15px] font-medium" data-sg-path="hero.tags[2]">Strategy</div>
+      </div>
+    </div>
+
+    <!-- giant wordmark -->
+    <div class="mt-8 md:mt-10 select-none leading-none">
+      <span class="text-mega font-semibold tracking-[-0.04em] text-white whitespace-nowrap" data-sg-reveal>
+        <span data-sg-path="wordmark">Mörk</span><span class="align-super text-[0.22em] font-medium">™</span>
+      </span>
+    </div>
+  </section>
+
+  <!-- ===== CLIENTS + FEATURED PROJECTS ===== -->
+  <section id="work" class="px-6 md:px-10 pt-24 md:pt-32">
+    <!-- client logos row -->
+    <div class="flex flex-wrap items-center justify-between gap-x-10 gap-y-6 pb-10">
+      <span class="text-[19px] font-bold row-link" data-sg-path="clients.logos[0]">Cairo</span>
+      <span class="text-[19px] font-bold row-link" data-sg-path="clients.logos[1]">Orbit</span>
+      <span class="text-[19px] font-bold row-link" data-sg-path="clients.logos[2]">Chen</span>
+      <span class="text-[19px] font-bold row-link" data-sg-path="clients.logos[3]">Manila</span>
+      <span class="text-[19px] font-bold row-link italic" data-sg-path="clients.logos[4]">Nova</span>
+    </div>
+
+    <div class="eyebrow">
+      <span class="e-left reg" data-sg-path="clients.label">Featured Projects プロジェクト</span>
+      <span class="e-mid" data-sg-path="clients.index">INDEX — 00</span>
+      <span class="e-right" data-sg-path="clients.meta">CREATIVE DEVELOPMENT</span>
+    </div>
+
+    <!-- intro + cta -->
+    <div class="max-w-[420px] mt-20 md:mt-28" data-sg-reveal>
+      <p class="text-[14px] leading-[1.6] text-faint" data-sg-path="projects.intro">
+        Every project is a chance to blend design and development, shaping bold interactive ideas into sleek digital realities — built with intent, speed, and visual clarity that attracts lot of peoples.
+      </p>
+      <a href="#contact" class="pill mt-7" data-sg-path="projects.cta">See Works</a>
+    </div>
+
+    <!-- staggered project cards -->
+    <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-x-10">
+      <!-- 0 -->
+      <figure class="proj-card mt-4 md:mt-40" data-sg-reveal data-sg-parallax>
+        <div class="overflow-hidden bg-line aspect-[4/3]">
+          <img class="w-full h-full object-cover" style="filter:grayscale(.1)" data-sg-img="projects.items[0].image" src="img/project1.jpg" alt="" loading="lazy" />
+        </div>
+        <figcaption class="flex items-center justify-between pt-3 text-[14px]">
+          <span class="font-medium" data-sg-path="projects.items[0].title">Halo Wear</span>
+          <span class="text-mute" data-sg-path="projects.items[0].index">(01)</span>
+        </figcaption>
+      </figure>
+      <!-- 1 -->
+      <figure class="proj-card mt-12 md:mt-12" data-sg-reveal data-sg-parallax>
+        <div class="overflow-hidden bg-line aspect-[4/3]">
+          <img class="w-full h-full object-cover" style="filter:grayscale(.1)" data-sg-img="projects.items[1].image" src="img/project2.jpg" alt="" loading="lazy" />
+        </div>
+        <figcaption class="flex items-center justify-between pt-3 text-[14px]">
+          <span class="font-medium" data-sg-path="projects.items[1].title">Sonder Goods</span>
+          <span class="text-mute" data-sg-path="projects.items[1].index">(02)</span>
+        </figcaption>
+      </figure>
+      <!-- 2 -->
+      <figure class="proj-card mt-12 md:mt-48 md:col-start-1" data-sg-reveal data-sg-parallax>
+        <div class="overflow-hidden bg-line aspect-[3/4] max-w-[420px] mx-auto">
+          <img class="w-full h-full object-cover" style="filter:grayscale(.1)" data-sg-img="projects.items[2].image" src="img/project3.jpg" alt="" loading="lazy" />
+        </div>
+        <figcaption class="flex items-center justify-between pt-3 text-[14px] max-w-[420px] mx-auto">
+          <span class="font-medium" data-sg-path="projects.items[2].title">Lucent Lab</span>
+          <span class="text-mute" data-sg-path="projects.items[2].index">(03)</span>
+        </figcaption>
+      </figure>
+      <!-- 3 -->
+      <figure class="proj-card mt-12 md:mt-12" data-sg-reveal data-sg-parallax>
+        <div class="overflow-hidden bg-line aspect-[4/3]">
+          <img class="w-full h-full object-cover" style="filter:grayscale(.1)" data-sg-img="projects.items[3].image" src="img/project4.jpg" alt="" loading="lazy" />
+        </div>
+        <figcaption class="flex items-center justify-between pt-3 text-[14px]">
+          <span class="font-medium" data-sg-path="projects.items[3].title">Arc & Bloom</span>
+          <span class="text-mute" data-sg-path="projects.items[3].index">(04)</span>
+        </figcaption>
+      </figure>
+      <!-- 4 -->
+      <figure class="proj-card mt-12 md:mt-40 md:col-start-2" data-sg-reveal data-sg-parallax>
+        <div class="overflow-hidden bg-line aspect-[4/3]">
+          <img class="w-full h-full object-cover" style="filter:grayscale(.1)" data-sg-img="projects.items[4].image" src="img/project5.jpg" alt="" loading="lazy" />
+        </div>
+        <figcaption class="flex items-center justify-between pt-3 text-[14px]">
+          <span class="font-medium" data-sg-path="projects.items[4].title">Atelier Nara</span>
+          <span class="text-mute" data-sg-path="projects.items[4].index">(05)</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== STATEMENT / PERSONAL PROFILE ===== -->
+  <section id="studio" class="px-6 md:px-10 pt-28 md:pt-40">
+    <div class="eyebrow">
+      <span class="e-left reg" data-sg-path="statement.label">Personal Profile プロフィール</span>
+      <span class="e-mid" data-sg-path="statement.index">DROP — 05</span>
+      <span class="e-right" data-sg-path="statement.meta">VISUAL THINKER</span>
+    </div>
+
+    <div class="relative mt-20 md:mt-28">
+      <p class="max-w-[760px] text-huge font-medium text-faint" data-sg-reveal>
+        <span data-sg-path="statement.text">Blending design and code with functional clarity and creative precision. Delivering thoughtful digital systems with structure, flow, and expressive interaction.</span>
+      </p>
+
+      <!-- floating portraits -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-16 items-start">
+        <figure class="max-w-[280px]" data-sg-reveal data-sg-parallax>
+          <img class="w-full aspect-[3/4] object-cover" data-sg-img="statement.portrait1" src="img/portrait1.jpg" alt="" loading="lazy" />
+        </figure>
+        <div class="md:pt-40" data-sg-reveal>
+          <img class="w-full max-w-[320px] aspect-[4/3] object-cover ml-auto" data-sg-img="statement.portrait2" src="img/portrait2.jpg" alt="" loading="lazy" />
+          <p class="max-w-[360px] ml-auto mt-6 text-[14px] leading-[1.6] text-mute" data-sg-path="statement.body">
+            We bridge creative direction with real-world execution, combining design and development into one seamless workflow to deliver digital experiences that are thoughtful, fast, and built to perform.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CAPABILITIES ===== -->
+  <section class="pt-28 md:pt-40">
+    <div class="px-6 md:px-10">
+      <div class="eyebrow">
+        <span class="e-left reg" data-sg-path="capabilities.label">Capabilities サービス内容</span>
+        <span class="e-mid" data-sg-path="capabilities.index">(WDX® — 04)</span>
+        <span class="e-right" data-sg-path="capabilities.meta">DIGITAL EXECUTION</span>
+      </div>
+    </div>
+
+    <div class="sticky-cols grid-cols-4 mt-16" data-sg-reveal>
+      <span data-sg-path="capabilities.cols[0]">Precise</span>
+      <span data-sg-path="capabilities.cols[1]">Structured</span>
+      <span data-sg-path="capabilities.cols[2]">Focused</span>
+      <span data-sg-path="capabilities.cols[3]">Visual Language</span>
+    </div>
+
+    <div class="px-6 md:px-10">
+      <!-- cap 0 -->
+      <div class="grid grid-cols-1 md:grid-cols-[80px_1fr_1fr] gap-4 md:gap-10 items-start py-8 border-b border-line" data-sg-reveal>
+        <span class="text-[14px] text-mute" data-sg-path="capabilities.items[0].no">01</span>
+        <span class="text-[23px] font-medium" data-sg-path="capabilities.items[0].name">Art Direction</span>
+        <span class="text-[13px] leading-[1.55] text-mute max-w-[360px] md:justify-self-end" data-sg-path="capabilities.items[0].desc">We guide every visual decision from start to finish, ensuring clarity, emotion, and impact across every touchpoint.</span>
+      </div>
+      <!-- cap 1 -->
+      <div class="grid grid-cols-1 md:grid-cols-[80px_1fr_1fr] gap-4 md:gap-10 items-start py-8 border-b border-line" data-sg-reveal>
+        <span class="text-[14px] text-mute" data-sg-path="capabilities.items[1].no">02</span>
+        <span class="text-[23px] font-medium" data-sg-path="capabilities.items[1].name">Brand Identity</span>
+        <span class="text-[13px] leading-[1.55] text-mute max-w-[360px] md:justify-self-end" data-sg-path="capabilities.items[1].desc">From strategy to execution, we shape consistent brand systems that speak clearly and feel uniquely ownable.</span>
+      </div>
+      <!-- cap 2 -->
+      <div class="grid grid-cols-1 md:grid-cols-[80px_1fr_1fr] gap-4 md:gap-10 items-start py-8 border-b border-line" data-sg-reveal>
+        <span class="text-[14px] text-mute" data-sg-path="capabilities.items[2].no">03</span>
+        <span class="text-[23px] font-medium" data-sg-path="capabilities.items[2].name">Motion Direction</span>
+        <span class="text-[13px] leading-[1.55] text-mute max-w-[360px] md:justify-self-end" data-sg-path="capabilities.items[2].desc">We use motion as a design tool — adding clarity, rhythm, and energy to digital experiences with intention.</span>
+      </div>
+      <!-- cap 3 -->
+      <div class="grid grid-cols-1 md:grid-cols-[80px_1fr_1fr] gap-4 md:gap-10 items-start py-8 border-b border-line" data-sg-reveal>
+        <span class="text-[14px] text-mute" data-sg-path="capabilities.items[3].no">04</span>
+        <span class="text-[23px] font-medium" data-sg-path="capabilities.items[3].name">Framer Sites</span>
+        <span class="text-[13px] leading-[1.55] text-mute max-w-[360px] md:justify-self-end" data-sg-path="capabilities.items[3].desc">Design meets execution with real-time, scalable websites that are fast, flexible, and effortless to manage.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STATEMENT 2 + SEE WORKS ===== -->
+  <section class="px-6 md:px-10 pt-28 md:pt-40 text-center">
+    <a href="#work" class="pill" data-sg-path="projects.cta">See Works</a>
+  </section>
+
+  <!-- ===== EXPERIENCE TABLE ===== -->
+  <section class="pt-28 md:pt-40">
+    <div class="px-6 md:px-10">
+      <div class="eyebrow">
+        <span class="e-left reg" data-sg-path="experience.label">Experience エクスペリエンス</span>
+        <span class="e-mid" data-sg-path="experience.index">(WDX® — 05)</span>
+        <span class="e-right" data-sg-path="experience.meta">DIGITAL CRAFT</span>
+      </div>
+      <!-- signature portrait -->
+      <div class="flex justify-end mt-10">
+        <img class="w-[180px] aspect-[3/4] object-cover" data-sg-img="statement.profile" src="img/profile.jpg" alt="" loading="lazy" data-sg-parallax />
+      </div>
+    </div>
+
+    <div class="sticky-cols grid-cols-4 mt-10" data-sg-reveal>
+      <span data-sg-path="experience.cols[0]">Global</span>
+      <span data-sg-path="experience.cols[1]">Creative Collabs</span>
+      <span data-sg-path="experience.cols[2]">Studio</span>
+      <span data-sg-path="experience.cols[3]">Creative Partnerships</span>
+    </div>
+
+    <div class="px-6 md:px-10 pt-6">
+      <!-- row 0 -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 py-5 border-b border-line text-[15px]" data-sg-reveal>
+        <span data-sg-path="experience.rows[0].studio">Clavmen Studio</span>
+        <span class="text-faint" data-sg-path="experience.rows[0].period">2022 - present</span>
+        <span data-sg-path="experience.rows[0].role">Art Director & Designer</span>
+        <span class="text-right" data-sg-path="experience.rows[0].city">Tokyo</span>
+      </div>
+      <!-- row 1 -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 py-5 border-b border-line text-[15px]" data-sg-reveal>
+        <span data-sg-path="experience.rows[1].studio">Modular Eight</span>
+        <span class="text-faint" data-sg-path="experience.rows[1].period">2020 – 2022</span>
+        <span data-sg-path="experience.rows[1].role">Senior Developer</span>
+        <span class="text-right" data-sg-path="experience.rows[1].city">Osaka</span>
+      </div>
+      <!-- row 2 -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 py-5 border-b border-line text-[15px]" data-sg-reveal>
+        <span data-sg-path="experience.rows[2].studio">Haus of Signal</span>
+        <span class="text-faint" data-sg-path="experience.rows[2].period">2018 – 2020</span>
+        <span data-sg-path="experience.rows[2].role">Creative Technologist</span>
+        <span class="text-right" data-sg-path="experience.rows[2].city">Berlin</span>
+      </div>
+      <!-- row 3 -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 py-5 border-b border-line text-[15px]" data-sg-reveal>
+        <span data-sg-path="experience.rows[3].studio">Studio Orbit</span>
+        <span class="text-faint" data-sg-path="experience.rows[3].period">2016 – 2018</span>
+        <span data-sg-path="experience.rows[3].role">UI/UX Designer</span>
+        <span class="text-right" data-sg-path="experience.rows[3].city">Dallas</span>
+      </div>
+      <!-- row 4 -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 py-5 border-b border-line text-[15px]" data-sg-reveal>
+        <span data-sg-path="experience.rows[4].studio">Novaform Labs</span>
+        <span class="text-faint" data-sg-path="experience.rows[4].period">2014 – 2016</span>
+        <span data-sg-path="experience.rows[4].role">Junior Designer</span>
+        <span class="text-right" data-sg-path="experience.rows[4].city">Kyoto</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="px-6 md:px-10 pt-28 md:pt-40">
+    <div class="eyebrow">
+      <span class="e-left reg" data-sg-path="testimonials.label">Testimonials レビュー</span>
+      <span class="e-mid" data-sg-path="testimonials.index">(WDX® — 06)</span>
+      <span class="e-right" data-sg-path="testimonials.meta">REAL FEEDBACK</span>
+    </div>
+
+    <div class="text-center pt-16">
+      <a href="#contact" class="pill" data-sg-path="testimonials.cta">Get in Touch</a>
+    </div>
+
+    <!-- staggered testimonial cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 mt-16 max-w-[1100px] mx-auto">
+      <!-- t0 -->
+      <article class="border border-hairline rounded-2xl p-7 mt-4" data-sg-reveal>
+        <p class="text-[16px] leading-[1.55] text-white" data-sg-path="testimonials.items[0].quote">"Mörk elevated every layer of our brand’s online presence..."</p>
+        <div class="flex items-center justify-between mt-7">
+          <div class="flex items-center gap-3">
+            <img class="w-10 h-10 rounded-full object-cover" data-sg-img="testimonials.items[0].avatar" src="img/avatar1.jpg" alt="" loading="lazy" />
+            <div>
+              <p class="text-[14px] font-medium flex items-center gap-1">
+                <span data-sg-path="testimonials.items[0].name">Lisa Kuroda</span>
+                <span class="text-sky text-[12px]">✔</span>
+              </p>
+              <p class="text-[12px] text-mute" data-sg-path="testimonials.items[0].role">Founder, Studio Analog</p>
+            </div>
+          </div>
+          <span class="text-[19px] font-bold" data-sg-path="testimonials.items[0].logo">Cairo</span>
+        </div>
+      </article>
+      <!-- t1 -->
+      <article class="border border-hairline rounded-2xl p-7 mt-12 md:mt-48" data-sg-reveal>
+        <p class="text-[16px] leading-[1.55] text-white" data-sg-path="testimonials.items[1].quote">"Mörk approaches every project with a deep sense of purpose..."</p>
+        <div class="flex items-center justify-between mt-7">
+          <div class="flex items-center gap-3">
+            <img class="w-10 h-10 rounded-full object-cover" data-sg-img="testimonials.items[1].avatar" src="img/avatar2.jpg" alt="" loading="lazy" />
+            <div>
+              <p class="text-[14px] font-medium flex items-center gap-1">
+                <span data-sg-path="testimonials.items[1].name">Daniel Reyes</span>
+                <span class="text-sky text-[12px]">✔</span>
+              </p>
+              <p class="text-[12px] text-mute" data-sg-path="testimonials.items[1].role">Director, Framehaus</p>
+            </div>
+          </div>
+          <span class="text-[19px] font-bold" data-sg-path="testimonials.items[1].logo">Cairo</span>
+        </div>
+      </article>
+      <!-- t2 -->
+      <article class="border border-hairline rounded-2xl p-7 mt-12 md:-mt-24" data-sg-reveal>
+        <p class="text-[16px] leading-[1.55] text-white" data-sg-path="testimonials.items[2].quote">"Their ability to merge storytelling with clean interaction design is unmatched..."</p>
+        <div class="flex items-center justify-between mt-7">
+          <div class="flex items-center gap-3">
+            <img class="w-10 h-10 rounded-full object-cover" data-sg-img="testimonials.items[2].avatar" src="img/avatar3.jpg" alt="" loading="lazy" />
+            <div>
+              <p class="text-[14px] font-medium flex items-center gap-1">
+                <span data-sg-path="testimonials.items[2].name">Mei Tanaka</span>
+                <span class="text-sky text-[12px]">✔</span>
+              </p>
+              <p class="text-[12px] text-mute" data-sg-path="testimonials.items[2].role">UX Designer, Nuro</p>
+            </div>
+          </div>
+          <span class="text-[19px] font-bold" data-sg-path="testimonials.items[2].logo">Cairo</span>
+        </div>
+      </article>
+      <!-- t3 -->
+      <article class="border border-hairline rounded-2xl p-7 mt-12" data-sg-reveal>
+        <p class="text-[16px] leading-[1.55] text-white" data-sg-path="testimonials.items[3].quote">"Working with Mörk was more than just hiring a designer..."</p>
+        <div class="flex items-center justify-between mt-7">
+          <div class="flex items-center gap-3">
+            <img class="w-10 h-10 rounded-full object-cover" data-sg-img="testimonials.items[3].avatar" src="img/avatar4.jpg" alt="" loading="lazy" />
+            <div>
+              <p class="text-[14px] font-medium flex items-center gap-1">
+                <span data-sg-path="testimonials.items[3].name">Julian Pierce</span>
+                <span class="text-sky text-[12px]">✔</span>
+              </p>
+              <p class="text-[12px] text-mute" data-sg-path="testimonials.items[3].role">Director, Vektor Inc.</p>
+            </div>
+          </div>
+          <span class="text-[19px] font-bold" data-sg-path="testimonials.items[3].logo">Cairo</span>
+        </div>
+      </article>
+      <!-- t4 -->
+      <article class="border border-hairline rounded-2xl p-7 mt-12 md:col-start-2 md:-mt-16" data-sg-reveal>
+        <p class="text-[16px] leading-[1.55] text-white" data-sg-path="testimonials.items[4].quote">"Mörk brings a rare balance of creativity and discipline..."</p>
+        <div class="flex items-center justify-between mt-7">
+          <div class="flex items-center gap-3">
+            <img class="w-10 h-10 rounded-full object-cover" data-sg-img="testimonials.items[4].avatar" src="img/avatar5.jpg" alt="" loading="lazy" />
+            <div>
+              <p class="text-[14px] font-medium flex items-center gap-1">
+                <span data-sg-path="testimonials.items[4].name">Hana Samoto</span>
+                <span class="text-sky text-[12px]">✔</span>
+              </p>
+              <p class="text-[12px] text-mute" data-sg-path="testimonials.items[4].role">CEO, Willow Studio</p>
+            </div>
+          </div>
+          <span class="text-[19px] font-bold" data-sg-path="testimonials.items[4].logo">Cairo</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== AWARDS ===== -->
+  <section class="pt-28 md:pt-40">
+    <div class="px-6 md:px-10">
+      <div class="eyebrow">
+        <span class="e-left reg" data-sg-path="awards.label">Awards アワード</span>
+        <span class="e-mid" data-sg-path="awards.index">(WDX® — 07)</span>
+        <span class="e-right" data-sg-path="awards.meta">SELECTED HONORS</span>
+      </div>
+    </div>
+
+    <div class="sticky-cols grid-cols-4 mt-16" data-sg-reveal>
+      <span data-sg-path="awards.cols[0]">Awwwards</span>
+      <span data-sg-path="awards.cols[1]">CSSD</span>
+      <span data-sg-path="awards.cols[2]">Framer</span>
+      <span data-sg-path="awards.cols[3]">Dribbble</span>
+    </div>
+
+    <div class="px-6 md:px-10">
+      <!-- award 0 -->
+      <div class="grid grid-cols-1 md:grid-cols-[80px_1fr_1.2fr_auto] gap-5 md:gap-10 items-center py-8 border-b border-line" data-sg-reveal>
+        <span class="text-[15px]" data-sg-path="awards.items[0].count">27x</span>
+        <span class="text-[19px] font-medium" data-sg-path="awards.items[0].name">Awwwards</span>
+        <span class="text-[13px] leading-[1.5] text-mute max-w-[320px]" data-sg-path="awards.items[0].desc">Recognized for bold interaction, structured visual rhythm, and design consistency across creative categories.</span>
+        <img class="w-28 h-20 object-cover rounded" data-sg-img="awards.items[0].thumb" src="img/award1.jpg" alt="" loading="lazy" />
+      </div>
+      <!-- award 1 -->
+      <div class="grid grid-cols-1 md:grid-cols-[80px_1fr_1.2fr_auto] gap-5 md:gap-10 items-center py-8 border-b border-line" data-sg-reveal>
+        <span class="text-[15px]" data-sg-path="awards.items[1].count">14x</span>
+        <span class="text-[19px] font-medium" data-sg-path="awards.items[1].name">FWA</span>
+        <span class="text-[13px] leading-[1.5] text-mute max-w-[320px]" data-sg-path="awards.items[1].desc">Awarded for outstanding execution, seamless animation, and originality in modern digital experiences.</span>
+        <img class="w-28 h-20 object-cover rounded" data-sg-img="awards.items[1].thumb" src="img/award2.jpg" alt="" loading="lazy" />
+      </div>
+      <!-- award 2 -->
+      <div class="grid grid-cols-1 md:grid-cols-[80px_1fr_1.2fr_auto] gap-5 md:gap-10 items-center py-8 border-b border-line" data-sg-reveal>
+        <span class="text-[15px]" data-sg-path="awards.items[2].count">09x</span>
+        <span class="text-[19px] font-medium" data-sg-path="awards.items[2].name">CSSDA</span>
+        <span class="text-[13px] leading-[1.5] text-mute max-w-[320px]" data-sg-path="awards.items[2].desc">Celebrated for front-end excellence, design innovation, and development precision across multiple showcases.</span>
+        <img class="w-28 h-20 object-cover rounded" data-sg-img="awards.items[2].thumb" src="img/award3.jpg" alt="" loading="lazy" />
+      </div>
+      <!-- award 3 -->
+      <div class="grid grid-cols-1 md:grid-cols-[80px_1fr_1.2fr_auto] gap-5 md:gap-10 items-center py-8 border-b border-line" data-sg-reveal>
+        <span class="text-[15px]" data-sg-path="awards.items[3].count">08x</span>
+        <span class="text-[19px] font-medium" data-sg-path="awards.items[3].name">Dribbble</span>
+        <span class="text-[13px] leading-[1.5] text-mute max-w-[320px]" data-sg-path="awards.items[3].desc">Highlighted for strong typographic systems, visual hierarchy, and thoughtful layout built with intent.</span>
+        <img class="w-28 h-20 object-cover rounded" data-sg-img="awards.items[3].thumb" src="img/award4.jpg" alt="" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BRAND PARTNERS / GALLERY ===== -->
+  <section class="px-6 md:px-10 pt-28 md:pt-40">
+    <div class="eyebrow">
+      <span class="e-left reg" data-sg-path="partners.label">Brand Partners パートナー</span>
+      <span class="e-mid" data-sg-path="partners.index">(WDX® — 08)</span>
+      <span class="e-right" data-sg-path="partners.meta">CREATIVE TEAMS</span>
+    </div>
+
+    <div class="relative min-h-[420px] md:min-h-[560px] mt-16">
+      <h3 class="text-center text-[40px] md:text-[64px] font-bold tracking-[-0.03em]" data-sg-path="partners.wordmark">Cairo</h3>
+
+      <!-- floating gallery cards -->
+      <figure class="absolute left-[6%] top-[40%] w-[200px] md:w-[260px] -rotate-3" data-sg-reveal data-sg-parallax>
+        <img class="w-full aspect-[4/3] object-cover rounded-lg shadow-2xl" data-sg-img="partners.cards[0].image" src="img/gallery1.jpg" alt="" loading="lazy" />
+        <figcaption class="absolute inset-0 flex items-center justify-center text-white font-medium text-[15px] drop-shadow" data-sg-path="partners.cards[0].city">Manila</figcaption>
+      </figure>
+      <figure class="absolute right-[6%] top-[8%] w-[210px] md:w-[280px] rotate-2" data-sg-reveal data-sg-parallax>
+        <img class="w-full aspect-[3/4] object-cover rounded-lg shadow-2xl" data-sg-img="partners.cards[1].image" src="img/gallery2.jpg" alt="" loading="lazy" />
+        <figcaption class="absolute inset-0 flex items-center justify-center text-white font-medium text-[15px] drop-shadow" data-sg-path="partners.cards[1].city">Oslo</figcaption>
+      </figure>
+      <figure class="absolute left-[40%] top-[60%] w-[180px] md:w-[230px] rotate-1" data-sg-reveal data-sg-parallax>
+        <img class="w-full aspect-[4/3] object-cover rounded-lg shadow-2xl" data-sg-img="partners.cards[2].image" src="img/gallery3.jpg" alt="" loading="lazy" />
+        <figcaption class="absolute inset-0 flex items-center justify-center text-white font-medium text-[15px] drop-shadow" data-sg-path="partners.cards[2].city">Tokyo</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== PRICING ===== -->
+  <section class="pt-28 md:pt-40">
+    <div class="px-6 md:px-10">
+      <div class="eyebrow">
+        <span class="e-left reg" data-sg-path="pricing.label">Project Pricing プラン</span>
+        <span class="e-mid" data-sg-path="pricing.index">(WDX® — 09)</span>
+        <span class="e-right" data-sg-path="pricing.meta">CUSTOM QUOTES</span>
+      </div>
+    </div>
+
+    <div class="sticky-cols grid-cols-4 mt-16" data-sg-reveal>
+      <span data-sg-path="pricing.cols[0]">Custom Options</span>
+      <span data-sg-path="pricing.cols[1]">Transparent</span>
+      <span data-sg-path="pricing.cols[2]">Design Packages</span>
+      <span data-sg-path="pricing.cols[3]">Pricing Tiers</span>
+    </div>
+
+    <div class="px-6 md:px-10 mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- plan 0 -->
+      <div class="border border-line rounded-2xl p-8" data-sg-reveal>
+        <p class="text-price font-medium"><span data-sg-path="pricing.plans[0].price">$99</span><span class="text-[16px] text-mute align-baseline" data-sg-path="pricing.plans[0].unit">/Month</span></p>
+        <p class="text-[19px] font-medium mt-6" data-sg-path="pricing.plans[0].name">Starter Plan</p>
+        <p class="text-[14px] text-mute mt-3 leading-[1.5]" data-sg-path="pricing.plans[0].desc">Perfect for small launches and personal sites that need a fast online presence.</p>
+        <ul class="mt-7 space-y-3 text-[15px] border-t border-line pt-6 list-none">
+          <li class="flex items-center gap-3"><span class="text-faint">✓</span><span data-sg-path="pricing.plans[0].features[0]">One-page Framer site</span></li>
+          <li class="flex items-center gap-3"><span class="text-faint">✓</span><span data-sg-path="pricing.plans[0].features[1]">Custom layout & visuals</span></li>
+          <li class="flex items-center gap-3"><span class="text-faint">✓</span><span data-sg-path="pricing.plans[0].features[2]">Mobile responsive</span></li>
+          <li class="flex items-center gap-3"><span class="text-faint">✓</span><span data-sg-path="pricing.plans[0].features[3]">Basic SEO setup</span></li>
+        </ul>
+      </div>
+      <!-- plan 1 -->
+      <div class="border border-line rounded-2xl p-8" data-sg-reveal>
+        <p class="text-price font-medium"><span data-sg-path="pricing.plans[1].price">$299</span><span class="text-[16px] text-mute align-baseline" data-sg-path="pricing.plans[1].unit">/Month</span></p>
+        <p class="text-[19px] font-medium mt-6" data-sg-path="pricing.plans[1].name">Growth Plan</p>
+        <p class="text-[14px] text-mute mt-3 leading-[1.5]" data-sg-path="pricing.plans[1].desc">Designed for growing brands that need flexibility and CMS support.</p>
+        <ul class="mt-7 space-y-3 text-[15px] border-t border-line pt-6 list-none">
+          <li class="flex items-center gap-3"><span class="text-faint">✓</span><span data-sg-path="pricing.plans[1].features[0]">Up to 5 pages</span></li>
+          <li class="flex items-center gap-3"><span class="text-faint">✓</span><span data-sg-path="pricing.plans[1].features[1]">Framer CMS-powered sections</span></li>
+          <li class="flex items-center gap-3"><span class="text-faint">✓</span><span data-sg-path="pricing.plans[1].features[2]">Motion & interactions</span></li>
+          <li class="flex items-center gap-3"><span class="text-faint">✓</span><span data-sg-path="pricing.plans[1].features[3]">Advanced SEO setup</span></li>
+        </ul>
+      </div>
+      <!-- plan 2 -->
+      <div class="border border-line rounded-2xl p-8" data-sg-reveal>
+        <p class="text-price font-medium"><span data-sg-path="pricing.plans[2].price">$899</span><span class="text-[16px] text-mute align-baseline" data-sg-path="pricing.plans[2].unit">/Month</span></p>
+        <p class="text-[19px] font-medium mt-6" data-sg-path="pricing.plans[2].name">Full Scope Plan</p>
+        <p class="text-[14px] text-mute mt-3 leading-[1.5]" data-sg-path="pricing.plans[2].desc">Best for studios or teams needing structure and enterprise-level execution.</p>
+        <ul class="mt-7 space-y-3 text-[15px] border-t border-line pt-6 list-none">
+          <li class="flex items-center gap-3"><span class="text-faint">✓</span><span data-sg-path="pricing.plans[2].features[0]">10+ pages with CMS</span></li>
+          <li class="flex items-center gap-3"><span class="text-faint">✓</span><span data-sg-path="pricing.plans[2].features[1]">Advanced layout strategy</span></li>
+          <li class="flex items-center gap-3"><span class="text-faint">✓</span><span data-sg-path="pricing.plans[2].features[2]">Custom motion systems</span></li>
+          <li class="flex items-center gap-3"><span class="text-faint">✓</span><span data-sg-path="pricing.plans[2].features[3]">Priority support</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer id="contact" class="mt-28 md:mt-40 bg-white text-black px-6 md:px-10 pt-20 pb-10">
+  <div class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr_auto] gap-12 border-b border-black/10 pb-16">
+    <div>
+      <h2 class="text-huge font-bold tracking-[-0.03em]" data-sg-path="footer.brand">MÖRK STUDIO</h2>
+      <p class="text-[14px] text-dim mt-4 max-w-[280px]" data-sg-path="footer.tagline">Independent design practice. Available worldwide.</p>
+      <a href="#" class="inline-block mt-6 text-[15px] font-medium border-b border-black pb-0.5" data-sg-path="footer.email">hello@morkstudio.com</a>
+    </div>
+
+    <div>
+      <p class="text-[11px] tracking-[0.12em] uppercase text-dim mb-4" data-sg-path="footer.nav_label">Navigate</p>
+      <ul class="space-y-3 list-none text-[15px]">
+        <li><a href="#work"    class="row-link" data-sg-path="footer.nav[0]">Work</a></li>
+        <li><a href="#studio"  class="row-link" data-sg-path="footer.nav[1]">Studio</a></li>
+        <li><a href="#"        class="row-link" data-sg-path="footer.nav[2]">Awards</a></li>
+        <li><a href="#contact" class="row-link" data-sg-path="footer.nav[3]">Contact</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="text-[11px] tracking-[0.12em] uppercase text-dim mb-4" data-sg-path="footer.social_label">Social</p>
+      <ul class="space-y-3 list-none text-[15px]">
+        <li><a href="#" class="row-link" data-sg-path="footer.social[0]">Instagram</a></li>
+        <li><a href="#" class="row-link" data-sg-path="footer.social[1]">Behance</a></li>
+        <li><a href="#" class="row-link" data-sg-path="footer.social[2]">X (Twitter)</a></li>
+        <li><a href="#" class="row-link" data-sg-path="footer.social[3]">LinkedIn</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <a href="#top" class="text-[12px] tracking-[0.08em] uppercase row-link inline-flex items-center gap-2" data-sg-path="footer.back_to_top">↑ Back to Top</a>
+    </div>
+  </div>
+
+  <p class="text-[12px] text-dim mt-8" data-sg-path="footer.copyright">© 2024 Mörk Studio — All rights reserved.</p>
+</footer>
+
+<!-- ===== STANDARD HYDRATION + GSAP BLOCK (Akyra template runtime) ===== -->
+<script>
+  (function () {
+    var C = window.__SITE_CONTENT__ || {};
+    function get(p) {
+      return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+        .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+    }
+    document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-path'));
+      if (v != null && typeof v !== 'object') el.textContent = v;
+    });
+    document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-img'));
+      if (v == null) return;
+      if (el.tagName === 'IMG') el.src = v;
+      else el.style.backgroundImage = "url('" + v + "')";
+    });
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+        gsap.from(el, {
+          opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+        });
+      });
+      gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+        gsap.to(el, {
+          yPercent: -12, ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+      });
+      window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+      setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+      setTimeout(function () {
+        document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+          if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+        });
+      }, 2200);
+    }
+  })();
+
+  // Live clock
+  function updateClock() {
+    var n = new Date();
+    var p = function (x){ return String(x).padStart(2,'0'); };
+    var nc = document.getElementById('nav-clock');
+    if (nc) nc.textContent = 'LOCAL / ' + p(n.getHours()) + ':' + p(n.getMinutes()) + ':' + p(n.getSeconds());
+  }
+  updateClock(); setInterval(updateClock, 1000);
+
+  // Cursor dot
+  var dot = document.getElementById('cursor-dot');
+  if (dot) document.addEventListener('mousemove', function (e) {
+    dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
+  });
+</script>
+</body>
+</html>

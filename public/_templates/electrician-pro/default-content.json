@@ -1,0 +1,182 @@
+{
+  "meta": {
+    "title": "Ohmly – Licensed Electricians You Can Rely On",
+    "description": "Licensed and certified electricians delivering fast, safe and affordable solutions for homes and businesses."
+  },
+  "brand": "Ohmly",
+  "nav": {
+    "rating": "4.8+ Ratings",
+    "links": [
+      "About",
+      "Services",
+      "Why us",
+      "Pricing",
+      "Contact"
+    ],
+    "cta": "Get a quote"
+  },
+  "hero": {
+    "title": "Safe & Reliable electrical solutions",
+    "tagline": "Licensed & certified electricians delivering fast, safe, and affordable solutions for homes and businesses.",
+    "cta": "Book your service",
+    "badge": "Made in Demo",
+    "image": "/_templates/electrician-pro/img/hero.jpg"
+  },
+  "services": {
+    "label": "Services",
+    "title": "Trusted solutions for all your electrical needs",
+    "items": [
+      {
+        "title": "Residential Wiring",
+        "image": "/_templates/electrician-pro/img/s-wiring.jpg"
+      },
+      {
+        "title": "Lighting Installation",
+        "image": "/_templates/electrician-pro/img/s-lighting.jpg"
+      },
+      {
+        "title": "Panel Upgrades",
+        "image": "/_templates/electrician-pro/img/s-panel.jpg"
+      },
+      {
+        "title": "Commercial Electrical",
+        "image": "/_templates/electrician-pro/img/s-commercial.jpg"
+      },
+      {
+        "title": "Electrical Repairs",
+        "image": "/_templates/electrician-pro/img/s-repairs.jpg"
+      },
+      {
+        "title": "Safety Inspections",
+        "image": "/_templates/electrician-pro/img/s-inspection.jpg"
+      }
+    ]
+  },
+  "why": {
+    "label": "Why us",
+    "title": "Why homeowners and businesses choose us",
+    "statValue": "1,000",
+    "statLabel": "Jobs Completed",
+    "cards": {
+      "response": {
+        "title": "At your door within hours"
+      },
+      "experience": {
+        "title": "Over 15+ years experience",
+        "image": "/_templates/electrician-pro/img/why-bulb.jpg"
+      },
+      "safety": {
+        "title": "Safety comes first always"
+      },
+      "care": {
+        "title": "We care about you",
+        "image": "/_templates/electrician-pro/img/why-care.jpg"
+      },
+      "quality": {
+        "title": "Quality work done right",
+        "image": "/_templates/electrician-pro/img/why-quality.jpg"
+      }
+    }
+  },
+  "testimonials": {
+    "label": "Testimonials",
+    "title": "What clients say about our electrical services",
+    "items": [
+      {
+        "quote": "They fixed a sudden outage and responded fast. The electrician fully ensured everything was safe and clean.",
+        "author": "James Anderson",
+        "role": "Homeowner",
+        "rating": 5
+      },
+      {
+        "quote": "Installed our new lighting perfectly and tidied everything as they went. Friendly, on time, and very professional.",
+        "author": "Jenifer Martinez",
+        "role": "Property Manager",
+        "rating": 5
+      },
+      {
+        "quote": "They upgraded our electrical panel safely and explained everything clearly. Very neat and professional work.",
+        "author": "Daniel Brooks",
+        "role": "Homeowner",
+        "rating": 5
+      },
+      {
+        "quote": "Installed smart switches throughout our home. Everything works perfectly and looks clean. Communication was excellent.",
+        "author": "Sophie Laurent",
+        "role": "Business Owner",
+        "rating": 5
+      }
+    ]
+  },
+  "pricing": {
+    "label": "Pricing",
+    "title": "Pricing designed around your needs",
+    "image": "/_templates/electrician-pro/img/pricing.jpg",
+    "standard": {
+      "name": "Standard Service Rate",
+      "rate": "$85",
+      "unit": "/ Hour",
+      "included": [
+        "On-site diagnostics",
+        "Repairs & installations",
+        "Safety inspection included",
+        "Transparent hourly billing"
+      ]
+    },
+    "custom": {
+      "tag": "Custom Electrical Solutions",
+      "name": "Custom",
+      "cta": "Request Quote",
+      "included": [
+        "Full home wiring",
+        "Renovation & upgrades",
+        "Commercial installations",
+        "Tailored project planning"
+      ]
+    }
+  },
+  "faq": {
+    "label": "FAQ",
+    "title": "Everything you need to know",
+    "items": [
+      {
+        "question": "How quickly can you arrive for service?",
+        "answer": "For urgent calls we aim to be at your door within a couple of hours. For scheduled work we book a slot that fits your day, and you always get a confirmed arrival window."
+      },
+      {
+        "question": "Are you licensed and insured?",
+        "answer": "Yes. Every electrician on our team is fully licensed, certified, and insured, so your home or business is protected on every job."
+      },
+      {
+        "question": "How does your hourly pricing work?",
+        "answer": "Our standard service rate is billed transparently by the hour, with no hidden fees. You approve any parts or extra work before we start."
+      },
+      {
+        "question": "Do you provide quotes for large projects?",
+        "answer": "Absolutely. For renovations, rewiring, or commercial installations we provide a detailed custom quote with a clear scope and timeline."
+      },
+      {
+        "question": "Do you offer emergency electrical services?",
+        "answer": "Yes, we offer fast-response emergency support for outages, sparking outlets, and other urgent electrical issues, day or night."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Need urgent electrical help?",
+    "subtitle": "We respond quickly to urgent electrical issues, delivering safe and reliable solutions when you need them most.",
+    "phone": "+1(969) 234 4242",
+    "image": "/_templates/electrician-pro/img/cta.jpg"
+  },
+  "footer": {
+    "tagline": "Ohmly is a professional electrician service built for fast response, clear pricing, and trust-building work that turns visitors into customers.",
+    "links": [
+      "About",
+      "Services",
+      "Why us",
+      "Testimonials",
+      "Pricing",
+      "Contact"
+    ],
+    "copyright": "© 2026 Ohmly. All rights reserved."
+  }
+}

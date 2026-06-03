@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-sg-path="meta.title">Ohmly – Licensed Electricians You Can Rely On</title>
+  <meta name="description" data-sg-path="meta.description" content="Licensed and certified electricians delivering fast, safe and affordable solutions for homes and businesses." />
+
+  <!-- Google Fonts: Manrope (headings, 800) + Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FF7417',   /* orange accent */
+            primaryDark: '#FF7A30',
+            ink:     '#0A0A0A',    /* near-black headings / dark sections */
+            bg:      '#F2F2F2',    /* light section bg */
+            muted:   '#696969',    /* body text muted */
+            border:  '#EDEDED',    /* card borders */
+            star:    '#FF7417',
+          },
+          fontFamily: {
+            sans:    ['"Inter"', 'sans-serif'],
+            display: ['"Manrope"', 'sans-serif'],
+          },
+          borderRadius: {
+            'xl2': '18px',
+            'xl3': '28px',
+          },
+        }
+      }
+    };
+  </script>
+
+  <!-- __SITE_CONTENT__ — single source of truth for all copy + image paths (DEMO content) -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ ||  window.__SITE_CONTENT__ || {
+      meta: {
+        title: "Ohmly – Licensed Electricians You Can Rely On",
+        description: "Licensed and certified electricians delivering fast, safe and affordable solutions for homes and businesses."
+      },
+      brand: "Ohmly",
+      nav: {
+        rating: "4.8+ Ratings",
+        links: ["About", "Services", "Why us", "Pricing", "Contact"],
+        cta: "Get a quote"
+      },
+      hero: {
+        title:   "Safe & Reliable electrical solutions",
+        tagline: "Licensed & certified electricians delivering fast, safe, and affordable solutions for homes and businesses.",
+        cta:     "Book your service",
+        badge:   "Made in Demo",
+        image:   "img/hero.jpg"
+      },
+      services: {
+        label: "Services",
+        title: "Trusted solutions for all your electrical needs",
+        items: [
+          { title: "Residential Wiring",     image: "img/s-wiring.jpg" },
+          { title: "Lighting Installation",  image: "img/s-lighting.jpg" },
+          { title: "Panel Upgrades",         image: "img/s-panel.jpg" },
+          { title: "Commercial Electrical",  image: "img/s-commercial.jpg" },
+          { title: "Electrical Repairs",     image: "img/s-repairs.jpg" },
+          { title: "Safety Inspections",     image: "img/s-inspection.jpg" }
+        ]
+      },
+      why: {
+        label: "Why us",
+        title: "Why homeowners and businesses choose us",
+        statValue: "1,000",
+        statLabel: "Jobs Completed",
+        cards: {
+          response:   { title: "At your door within hours" },
+          experience: { title: "Over 15+ years experience", image: "img/why-bulb.jpg" },
+          safety:     { title: "Safety comes first always" },
+          care:       { title: "We care about you",       image: "img/why-care.jpg" },
+          quality:    { title: "Quality work done right",  image: "img/why-quality.jpg" }
+        }
+      },
+      testimonials: {
+        label: "Testimonials",
+        title: "What clients say about our electrical services",
+        items: [
+          { quote: "They fixed a sudden outage and responded fast. The electrician fully ensured everything was safe and clean.",                author: "James Anderson", role: "Homeowner",        rating: 5 },
+          { quote: "Installed our new lighting perfectly and tidied everything as they went. Friendly, on time, and very professional.",          author: "Jenifer Martinez", role: "Property Manager", rating: 5 },
+          { quote: "They upgraded our electrical panel safely and explained everything clearly. Very neat and professional work.",               author: "Daniel Brooks",   role: "Homeowner",         rating: 5 },
+          { quote: "Installed smart switches throughout our home. Everything works perfectly and looks clean. Communication was excellent.",      author: "Sophie Laurent",  role: "Business Owner",    rating: 5 }
+        ]
+      },
+      pricing: {
+        label: "Pricing",
+        title: "Pricing designed around your needs",
+        image: "img/pricing.jpg",
+        standard: {
+          name:   "Standard Service Rate",
+          rate:   "$85",
+          unit:   "/ Hour",
+          included: ["On-site diagnostics", "Repairs & installations", "Safety inspection included", "Transparent hourly billing"]
+        },
+        custom: {
+          tag:    "Custom Electrical Solutions",
+          name:   "Custom",
+          cta:    "Request Quote",
+          included: ["Full home wiring", "Renovation & upgrades", "Commercial installations", "Tailored project planning"]
+        }
+      },
+      faq: {
+        label: "FAQ",
+        title: "Everything you need to know",
+        items: [
+          { question: "How quickly can you arrive for service?",      answer: "For urgent calls we aim to be at your door within a couple of hours. For scheduled work we book a slot that fits your day, and you always get a confirmed arrival window." },
+          { question: "Are you licensed and insured?",                answer: "Yes. Every electrician on our team is fully licensed, certified, and insured, so your home or business is protected on every job." },
+          { question: "How does your hourly pricing work?",           answer: "Our standard service rate is billed transparently by the hour, with no hidden fees. You approve any parts or extra work before we start." },
+          { question: "Do you provide quotes for large projects?",    answer: "Absolutely. For renovations, rewiring, or commercial installations we provide a detailed custom quote with a clear scope and timeline." },
+          { question: "Do you offer emergency electrical services?",  answer: "Yes, we offer fast-response emergency support for outages, sparking outlets, and other urgent electrical issues, day or night." }
+        ]
+      },
+      cta: {
+        title:    "Need urgent electrical help?",
+        subtitle: "We respond quickly to urgent electrical issues, delivering safe and reliable solutions when you need them most.",
+        phone:    "+1(969) 234 4242",
+        image:    "img/cta.jpg"
+      },
+      footer: {
+        tagline: "Ohmly is a professional electrician service built for fast response, clear pricing, and trust-building work that turns visitors into customers.",
+        links: ["About", "Services", "Why us", "Testimonials", "Pricing", "Contact"],
+        copyright: "© 2026 Ohmly. All rights reserved."
+      }
+    };
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #0A0A0A; margin: 0; }
+    h1,h2,h3 { font-family: 'Manrope', sans-serif; }
+
+    /* FAQ accordion */
+    .faq-item .faq-answer { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+    .faq-item.open .faq-answer { max-height: 320px; }
+    .faq-icon { transition: transform .3s ease; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* Hero faint guide-lines (decorative arcs like the original) */
+    .hero-lines { background-image:
+        radial-gradient(120% 100% at 100% 0%, rgba(255,116,23,0.07) 0%, transparent 45%);
+    }
+    .nav-link { position: relative; }
+    .nav-link::after { content:''; position:absolute; left:0; bottom:-3px; width:0; height:2px; background:#FF7417; transition:width .25s; }
+    .nav-link:hover::after { width:100%; }
+  </style>
+</head>
+<body class="antialiased bg-white">
+
+<!-- ───────── NAV ───────── -->
+<nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-border">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5L19.5 10H13l0-8z"/></svg>
+      </div>
+      <span class="text-ink font-display font-extrabold text-lg tracking-tight" data-sg-path="brand">Ohmly</span>
+    </a>
+    <!-- Links -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#about"    class="nav-link text-muted hover:text-ink text-sm font-medium transition-colors" data-sg-path="nav.links[0]">About</a>
+      <a href="#services" class="nav-link text-muted hover:text-ink text-sm font-medium transition-colors" data-sg-path="nav.links[1]">Services</a>
+      <a href="#why"      class="nav-link text-muted hover:text-ink text-sm font-medium transition-colors" data-sg-path="nav.links[2]">Why us</a>
+      <a href="#pricing"  class="nav-link text-muted hover:text-ink text-sm font-medium transition-colors" data-sg-path="nav.links[3]">Pricing</a>
+      <a href="#contact"  class="nav-link text-muted hover:text-ink text-sm font-medium transition-colors" data-sg-path="nav.links[4]">Contact</a>
+    </div>
+    <!-- CTA -->
+    <a href="#contact" class="bg-primary text-white font-semibold text-sm px-5 py-2.5 rounded-full hover:brightness-105 transition-all" data-sg-path="nav.cta">Get a quote</a>
+  </div>
+</nav>
+
+<!-- ───────── HERO ───────── -->
+<section class="relative bg-white hero-lines overflow-hidden">
+  <div class="max-w-5xl mx-auto px-6 pt-16 pb-10 text-center" data-sg-reveal>
+    <!-- Rating pill -->
+    <div class="inline-flex items-center gap-2 mb-7">
+      <span class="text-star text-sm tracking-tight">★★★★★</span>
+      <span class="text-muted text-sm font-medium" data-sg-path="nav.rating">4.8+ Ratings</span>
+    </div>
+    <h1 class="text-ink font-extrabold text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight max-w-3xl mx-auto mb-6" data-sg-path="hero.title">
+      Safe &amp; Reliable electrical solutions
+    </h1>
+    <p class="text-muted text-base md:text-lg max-w-xl mx-auto mb-8" data-sg-path="hero.tagline">
+      Licensed &amp; certified electricians delivering fast, safe, and affordable solutions for homes and businesses.
+    </p>
+    <a href="#services" class="inline-flex items-center gap-2 bg-primary text-white font-semibold px-7 py-3.5 rounded-full hover:brightness-105 transition-all text-sm">
+      <span data-sg-path="hero.cta">Book your service</span>
+    </a>
+  </div>
+  <!-- Hero image -->
+  <div class="max-w-6xl mx-auto px-6 pb-16">
+    <div class="relative rounded-xl3 overflow-hidden shadow-xl" data-sg-parallax>
+      <img data-sg-img="hero.image" src="img/hero.jpg" alt="Electrician at work" class="w-full h-[420px] md:h-[520px] object-cover" />
+      <div class="absolute bottom-5 right-5 bg-white text-ink text-xs font-semibold px-4 py-2 rounded-full shadow-md flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-primary"></span>
+        <span data-sg-path="hero.badge">Made in Demo</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── SERVICES ───────── -->
+<section id="services" class="bg-white py-20 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12" data-sg-reveal>
+      <span class="inline-flex items-center gap-2 text-primary font-semibold text-xs uppercase tracking-wider mb-4">
+        <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+        <span data-sg-path="services.label">Services</span>
+      </span>
+      <h2 class="text-ink font-extrabold text-4xl md:text-5xl tracking-tight max-w-2xl mx-auto" data-sg-path="services.title">Trusted solutions for all your electrical needs</h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Service card 0 -->
+      <div class="relative rounded-xl2 overflow-hidden group" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="services.items[0].image" src="img/s-wiring.jpg" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <div class="absolute top-3 left-3 bg-white/95 backdrop-blur rounded-full pl-4 pr-2 py-1.5 flex items-center gap-3 shadow-sm">
+          <span class="text-ink font-semibold text-sm" data-sg-path="services.items[0].title">Residential Wiring</span>
+          <span class="w-7 h-7 bg-primary rounded-full flex items-center justify-center"><svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </div>
+      </div>
+
+      <!-- Service card 1 -->
+      <div class="relative rounded-xl2 overflow-hidden group" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="services.items[1].image" src="img/s-lighting.jpg" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <div class="absolute top-3 left-3 bg-white/95 backdrop-blur rounded-full pl-4 pr-2 py-1.5 flex items-center gap-3 shadow-sm">
+          <span class="text-ink font-semibold text-sm" data-sg-path="services.items[1].title">Lighting Installation</span>
+          <span class="w-7 h-7 bg-primary rounded-full flex items-center justify-center"><svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </div>
+      </div>
+
+      <!-- Service card 2 -->
+      <div class="relative rounded-xl2 overflow-hidden group" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="services.items[2].image" src="img/s-panel.jpg" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <div class="absolute top-3 left-3 bg-white/95 backdrop-blur rounded-full pl-4 pr-2 py-1.5 flex items-center gap-3 shadow-sm">
+          <span class="text-ink font-semibold text-sm" data-sg-path="services.items[2].title">Panel Upgrades</span>
+          <span class="w-7 h-7 bg-primary rounded-full flex items-center justify-center"><svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </div>
+      </div>
+
+      <!-- Service card 3 -->
+      <div class="relative rounded-xl2 overflow-hidden group" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="services.items[3].image" src="img/s-commercial.jpg" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <div class="absolute top-3 left-3 bg-white/95 backdrop-blur rounded-full pl-4 pr-2 py-1.5 flex items-center gap-3 shadow-sm">
+          <span class="text-ink font-semibold text-sm" data-sg-path="services.items[3].title">Commercial Electrical</span>
+          <span class="w-7 h-7 bg-primary rounded-full flex items-center justify-center"><svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </div>
+      </div>
+
+      <!-- Service card 4 -->
+      <div class="relative rounded-xl2 overflow-hidden group" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="services.items[4].image" src="img/s-repairs.jpg" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <div class="absolute top-3 left-3 bg-white/95 backdrop-blur rounded-full pl-4 pr-2 py-1.5 flex items-center gap-3 shadow-sm">
+          <span class="text-ink font-semibold text-sm" data-sg-path="services.items[4].title">Electrical Repairs</span>
+          <span class="w-7 h-7 bg-primary rounded-full flex items-center justify-center"><svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </div>
+      </div>
+
+      <!-- Service card 5 -->
+      <div class="relative rounded-xl2 overflow-hidden group" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="services.items[5].image" src="img/s-inspection.jpg" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <div class="absolute top-3 left-3 bg-white/95 backdrop-blur rounded-full pl-4 pr-2 py-1.5 flex items-center gap-3 shadow-sm">
+          <span class="text-ink font-semibold text-sm" data-sg-path="services.items[5].title">Safety Inspections</span>
+          <span class="w-7 h-7 bg-primary rounded-full flex items-center justify-center"><svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ───────── WHY US ───────── -->
+<section id="why" class="bg-white py-20 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12" data-sg-reveal>
+      <span class="inline-flex items-center gap-2 text-primary font-semibold text-xs uppercase tracking-wider mb-4">
+        <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+        <span data-sg-path="why.label">Why us</span>
+      </span>
+      <h2 class="text-ink font-extrabold text-4xl md:text-5xl tracking-tight max-w-2xl mx-auto" data-sg-path="why.title">Why homeowners and businesses choose us</h2>
+    </div>
+
+    <!-- Bento grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+      <!-- Stat card -->
+      <div class="bg-bg rounded-xl2 p-8 flex flex-col justify-center" data-sg-reveal>
+        <div class="text-star text-base mb-3">★★★★★</div>
+        <div class="text-ink font-extrabold text-5xl tracking-tight mb-1" data-sg-path="why.statValue">1,000</div>
+        <div class="text-muted text-sm" data-sg-path="why.statLabel">Jobs Completed</div>
+      </div>
+
+      <!-- Response (dark) -->
+      <div class="bg-ink rounded-xl2 p-8 flex flex-col justify-between min-h-[200px] relative overflow-hidden" data-sg-reveal>
+        <svg class="w-10 h-10 text-primary mb-6" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <h3 class="text-white font-bold text-2xl tracking-tight" data-sg-path="why.cards.response.title">At your door within hours</h3>
+      </div>
+
+      <!-- Experience (image) -->
+      <div class="relative rounded-xl2 overflow-hidden min-h-[200px]" data-sg-reveal>
+        <img data-sg-img="why.cards.experience.image" src="img/why-bulb.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+        <h3 class="absolute bottom-6 left-6 right-6 text-white font-bold text-2xl tracking-tight" data-sg-path="why.cards.experience.title">Over 15+ years experience</h3>
+      </div>
+
+      <!-- Safety (light, split) -->
+      <div class="bg-bg rounded-xl2 p-8 flex items-center md:col-span-1" data-sg-reveal>
+        <h3 class="text-ink font-bold text-2xl tracking-tight" data-sg-path="why.cards.safety.title">Safety comes first always</h3>
+      </div>
+
+      <!-- Care (image) -->
+      <div class="relative rounded-xl2 overflow-hidden min-h-[200px]" data-sg-reveal>
+        <img data-sg-img="why.cards.care.image" src="img/why-care.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+        <h3 class="absolute bottom-6 left-6 right-6 text-white font-bold text-2xl tracking-tight" data-sg-path="why.cards.care.title">We care about you</h3>
+      </div>
+
+      <!-- Quality (image) -->
+      <div class="relative rounded-xl2 overflow-hidden min-h-[200px]" data-sg-reveal>
+        <img data-sg-img="why.cards.quality.image" src="img/why-quality.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+        <h3 class="absolute bottom-6 left-6 right-6 text-white font-bold text-2xl tracking-tight" data-sg-path="why.cards.quality.title">Quality work done right</h3>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ───────── TESTIMONIALS ───────── -->
+<section id="about" class="bg-white py-20 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12" data-sg-reveal>
+      <span class="inline-flex items-center gap-2 text-primary font-semibold text-xs uppercase tracking-wider mb-4">
+        <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+        <span data-sg-path="testimonials.label">Testimonials</span>
+      </span>
+      <h2 class="text-ink font-extrabold text-4xl md:text-5xl tracking-tight max-w-2xl mx-auto" data-sg-path="testimonials.title">What clients say about our electrical services</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- Testimonial 0 -->
+      <div class="bg-bg rounded-xl2 p-7 flex flex-col gap-4" data-sg-reveal>
+        <div class="flex text-star text-sm">★★★★★</div>
+        <p class="text-muted text-sm leading-relaxed flex-1" data-sg-path="testimonials.items[0].quote">They fixed a sudden outage and responded fast. The electrician fully ensured everything was safe and clean.</p>
+        <div class="flex items-center gap-3 pt-2">
+          <span class="w-9 h-9 rounded-full bg-primary/15 text-primary font-semibold flex items-center justify-center text-sm">JA</span>
+          <div>
+            <div class="font-semibold text-ink text-sm" data-sg-path="testimonials.items[0].author">James Anderson</div>
+            <div class="text-muted text-xs" data-sg-path="testimonials.items[0].role">Homeowner</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 1 -->
+      <div class="bg-bg rounded-xl2 p-7 flex flex-col gap-4" data-sg-reveal>
+        <div class="flex text-star text-sm">★★★★★</div>
+        <p class="text-muted text-sm leading-relaxed flex-1" data-sg-path="testimonials.items[1].quote">Installed our new lighting perfectly and tidied everything as they went. Friendly, on time, and very professional.</p>
+        <div class="flex items-center gap-3 pt-2">
+          <span class="w-9 h-9 rounded-full bg-primary/15 text-primary font-semibold flex items-center justify-center text-sm">JM</span>
+          <div>
+            <div class="font-semibold text-ink text-sm" data-sg-path="testimonials.items[1].author">Jenifer Martinez</div>
+            <div class="text-muted text-xs" data-sg-path="testimonials.items[1].role">Property Manager</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 2 -->
+      <div class="bg-bg rounded-xl2 p-7 flex flex-col gap-4" data-sg-reveal>
+        <div class="flex text-star text-sm">★★★★★</div>
+        <p class="text-muted text-sm leading-relaxed flex-1" data-sg-path="testimonials.items[2].quote">They upgraded our electrical panel safely and explained everything clearly. Very neat and professional work.</p>
+        <div class="flex items-center gap-3 pt-2">
+          <span class="w-9 h-9 rounded-full bg-primary/15 text-primary font-semibold flex items-center justify-center text-sm">DB</span>
+          <div>
+            <div class="font-semibold text-ink text-sm" data-sg-path="testimonials.items[2].author">Daniel Brooks</div>
+            <div class="text-muted text-xs" data-sg-path="testimonials.items[2].role">Homeowner</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 3 -->
+      <div class="bg-bg rounded-xl2 p-7 flex flex-col gap-4" data-sg-reveal>
+        <div class="flex text-star text-sm">★★★★★</div>
+        <p class="text-muted text-sm leading-relaxed flex-1" data-sg-path="testimonials.items[3].quote">Installed smart switches throughout our home. Everything works perfectly and looks clean. Communication was excellent.</p>
+        <div class="flex items-center gap-3 pt-2">
+          <span class="w-9 h-9 rounded-full bg-primary/15 text-primary font-semibold flex items-center justify-center text-sm">SL</span>
+          <div>
+            <div class="font-semibold text-ink text-sm" data-sg-path="testimonials.items[3].author">Sophie Laurent</div>
+            <div class="text-muted text-xs" data-sg-path="testimonials.items[3].role">Business Owner</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ───────── PRICING ───────── -->
+<section id="pricing" class="bg-white py-20 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12" data-sg-reveal>
+      <span class="inline-flex items-center gap-2 text-primary font-semibold text-xs uppercase tracking-wider mb-4">
+        <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+        <span data-sg-path="pricing.label">Pricing</span>
+      </span>
+      <h2 class="text-ink font-extrabold text-4xl md:text-5xl tracking-tight max-w-xl mx-auto" data-sg-path="pricing.title">Pricing designed around your needs</h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+
+      <!-- Left image -->
+      <div class="relative rounded-xl2 overflow-hidden min-h-[420px]" data-sg-reveal>
+        <img data-sg-img="pricing.image" src="img/pricing.jpg" alt="Electrician with cabling" class="absolute inset-0 w-full h-full object-cover" />
+      </div>
+
+      <!-- Right: two plan cards -->
+      <div class="flex flex-col gap-6">
+
+        <!-- Standard -->
+        <div class="bg-bg rounded-xl2 p-8" data-sg-reveal>
+          <div class="text-muted text-xs font-semibold uppercase tracking-wider mb-4 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+            <span data-sg-path="pricing.standard.name">Standard Service Rate</span>
+          </div>
+          <div class="flex items-end gap-2 mb-6">
+            <span class="text-ink font-extrabold text-5xl tracking-tight" data-sg-path="pricing.standard.rate">$85</span>
+            <span class="text-muted text-sm mb-1.5" data-sg-path="pricing.standard.unit">/ Hour</span>
+          </div>
+          <div class="grid grid-cols-2 gap-y-3 gap-x-6">
+            <div class="flex items-center gap-2 text-ink text-sm"><svg class="w-4 h-4 text-primary flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-sg-path="pricing.standard.included[0]">On-site diagnostics</span></div>
+            <div class="flex items-center gap-2 text-ink text-sm"><svg class="w-4 h-4 text-primary flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-sg-path="pricing.standard.included[1]">Repairs &amp; installations</span></div>
+            <div class="flex items-center gap-2 text-ink text-sm"><svg class="w-4 h-4 text-primary flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-sg-path="pricing.standard.included[2]">Safety inspection included</span></div>
+            <div class="flex items-center gap-2 text-ink text-sm"><svg class="w-4 h-4 text-primary flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-sg-path="pricing.standard.included[3]">Transparent hourly billing</span></div>
+          </div>
+        </div>
+
+        <!-- Custom -->
+        <div class="bg-bg rounded-xl2 p-8" data-sg-reveal>
+          <div class="text-muted text-xs font-semibold uppercase tracking-wider mb-4 flex items-center gap-2">
+            <svg class="w-3.5 h-3.5 text-primary" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5L19.5 10H13l0-8z"/></svg>
+            <span data-sg-path="pricing.custom.tag">Custom Electrical Solutions</span>
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-6">
+            <div>
+              <div class="text-ink font-extrabold text-5xl tracking-tight mb-5" data-sg-path="pricing.custom.name">Custom</div>
+              <a href="#contact" class="inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 py-3 rounded-full hover:brightness-105 transition-all text-sm" data-sg-path="pricing.custom.cta">Request Quote</a>
+            </div>
+            <div class="space-y-2.5">
+              <div class="text-muted text-xs font-semibold mb-1">What's included :</div>
+              <div class="flex items-center gap-2 text-ink text-sm"><svg class="w-4 h-4 text-primary flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-sg-path="pricing.custom.included[0]">Full home wiring</span></div>
+              <div class="flex items-center gap-2 text-ink text-sm"><svg class="w-4 h-4 text-primary flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-sg-path="pricing.custom.included[1]">Renovation &amp; upgrades</span></div>
+              <div class="flex items-center gap-2 text-ink text-sm"><svg class="w-4 h-4 text-primary flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-sg-path="pricing.custom.included[2]">Commercial installations</span></div>
+              <div class="flex items-center gap-2 text-ink text-sm"><svg class="w-4 h-4 text-primary flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-sg-path="pricing.custom.included[3]">Tailored project planning</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── FAQ ───────── -->
+<section class="bg-white py-20 px-6">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-start">
+    <div data-sg-reveal>
+      <span class="inline-flex items-center gap-2 text-primary font-semibold text-xs uppercase tracking-wider mb-4">
+        <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+        <span data-sg-path="faq.label">FAQ</span>
+      </span>
+      <h2 class="text-ink font-extrabold text-4xl md:text-5xl tracking-tight" data-sg-path="faq.title">Everything you need to know</h2>
+    </div>
+
+    <ul class="space-y-3" id="faq-list">
+
+      <!-- FAQ 0 -->
+      <li class="faq-item open bg-bg rounded-xl2 overflow-hidden" data-sg-reveal>
+        <button class="w-full text-left px-6 py-5 flex items-center justify-between gap-4 focus:outline-none" onclick="toggleFaq(this)">
+          <span class="font-semibold text-ink text-sm" data-sg-path="faq.items[0].question">How quickly can you arrive for service?</span>
+          <span class="faq-icon text-2xl text-primary flex-shrink-0 font-light leading-none">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-5"><p class="text-muted text-sm leading-relaxed" data-sg-path="faq.items[0].answer">For urgent calls we aim to be at your door within a couple of hours. For scheduled work we book a slot that fits your day, and you always get a confirmed arrival window.</p></div>
+      </li>
+
+      <!-- FAQ 1 -->
+      <li class="faq-item bg-bg rounded-xl2 overflow-hidden" data-sg-reveal>
+        <button class="w-full text-left px-6 py-5 flex items-center justify-between gap-4 focus:outline-none" onclick="toggleFaq(this)">
+          <span class="font-semibold text-ink text-sm" data-sg-path="faq.items[1].question">Are you licensed and insured?</span>
+          <span class="faq-icon text-2xl text-primary flex-shrink-0 font-light leading-none">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-5"><p class="text-muted text-sm leading-relaxed" data-sg-path="faq.items[1].answer">Yes. Every electrician on our team is fully licensed, certified, and insured, so your home or business is protected on every job.</p></div>
+      </li>
+
+      <!-- FAQ 2 -->
+      <li class="faq-item bg-bg rounded-xl2 overflow-hidden" data-sg-reveal>
+        <button class="w-full text-left px-6 py-5 flex items-center justify-between gap-4 focus:outline-none" onclick="toggleFaq(this)">
+          <span class="font-semibold text-ink text-sm" data-sg-path="faq.items[2].question">How does your hourly pricing work?</span>
+          <span class="faq-icon text-2xl text-primary flex-shrink-0 font-light leading-none">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-5"><p class="text-muted text-sm leading-relaxed" data-sg-path="faq.items[2].answer">Our standard service rate is billed transparently by the hour, with no hidden fees. You approve any parts or extra work before we start.</p></div>
+      </li>
+
+      <!-- FAQ 3 -->
+      <li class="faq-item bg-bg rounded-xl2 overflow-hidden" data-sg-reveal>
+        <button class="w-full text-left px-6 py-5 flex items-center justify-between gap-4 focus:outline-none" onclick="toggleFaq(this)">
+          <span class="font-semibold text-ink text-sm" data-sg-path="faq.items[3].question">Do you provide quotes for large projects?</span>
+          <span class="faq-icon text-2xl text-primary flex-shrink-0 font-light leading-none">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-5"><p class="text-muted text-sm leading-relaxed" data-sg-path="faq.items[3].answer">Absolutely. For renovations, rewiring, or commercial installations we provide a detailed custom quote with a clear scope and timeline.</p></div>
+      </li>
+
+      <!-- FAQ 4 -->
+      <li class="faq-item bg-bg rounded-xl2 overflow-hidden" data-sg-reveal>
+        <button class="w-full text-left px-6 py-5 flex items-center justify-between gap-4 focus:outline-none" onclick="toggleFaq(this)">
+          <span class="font-semibold text-ink text-sm" data-sg-path="faq.items[4].question">Do you offer emergency electrical services?</span>
+          <span class="faq-icon text-2xl text-primary flex-shrink-0 font-light leading-none">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-5"><p class="text-muted text-sm leading-relaxed" data-sg-path="faq.items[4].answer">Yes, we offer fast-response emergency support for outages, sparking outlets, and other urgent electrical issues, day or night.</p></div>
+      </li>
+
+    </ul>
+  </div>
+</section>
+
+<!-- ───────── CTA (urgent help) ───────── -->
+<section id="contact" class="bg-white pb-20 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="relative bg-bg rounded-xl3 overflow-hidden px-8 md:px-14 py-14 grid md:grid-cols-2 gap-8 items-center" data-sg-reveal>
+      <div>
+        <h2 class="text-ink font-extrabold text-4xl md:text-5xl tracking-tight mb-4" data-sg-path="cta.title">Need urgent electrical help?</h2>
+        <p class="text-muted text-base md:text-lg max-w-md mb-8" data-sg-path="cta.subtitle">We respond quickly to urgent electrical issues, delivering safe and reliable solutions when you need them most.</p>
+        <a href="#" class="inline-flex items-center gap-3 bg-primary text-white font-semibold px-7 py-4 rounded-full hover:brightness-105 transition-all text-sm">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+          <span data-sg-path="cta.phone">+1(969) 234 4242</span>
+        </a>
+      </div>
+      <div class="relative h-56 md:h-72 rounded-xl2 overflow-hidden">
+        <img data-sg-img="cta.image" src="img/cta.jpg" alt="Emergency electrical" class="absolute inset-0 w-full h-full object-cover" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── FOOTER ───────── -->
+<footer class="bg-ink text-white pt-16 pb-8 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-12 mb-12">
+      <!-- Brand -->
+      <div class="max-w-sm">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5L19.5 10H13l0-8z"/></svg>
+          </div>
+          <span class="font-display font-extrabold text-xl text-primary" data-sg-path="brand">Ohmly</span>
+        </div>
+        <p class="text-white/50 text-sm leading-relaxed" data-sg-path="footer.tagline">Ohmly is a professional electrician service built for fast response, clear pricing, and trust-building work that turns visitors into customers.</p>
+      </div>
+
+      <!-- Links + socials -->
+      <div class="md:text-right">
+        <div class="flex flex-wrap md:justify-end gap-x-6 gap-y-2 mb-6">
+          <a href="#about"    class="text-white/70 hover:text-white text-sm transition-colors" data-sg-path="footer.links[0]">About</a>
+          <a href="#services" class="text-white/70 hover:text-white text-sm transition-colors" data-sg-path="footer.links[1]">Services</a>
+          <a href="#why"      class="text-white/70 hover:text-white text-sm transition-colors" data-sg-path="footer.links[2]">Why us</a>
+          <a href="#about"    class="text-white/70 hover:text-white text-sm transition-colors" data-sg-path="footer.links[3]">Testimonials</a>
+          <a href="#pricing"  class="text-white/70 hover:text-white text-sm transition-colors" data-sg-path="footer.links[4]">Pricing</a>
+          <a href="#contact"  class="text-white/70 hover:text-white text-sm transition-colors" data-sg-path="footer.links[5]">Contact</a>
+        </div>
+        <div class="flex md:justify-end gap-3">
+          <span class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"><svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h3l-7.5 8.5L22 22h-6l-4.7-6.1L5.8 22H3l8-9L2 2h6l4.3 5.6L18 2z"/></svg></span>
+          <span class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"><svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0022 12z"/></svg></span>
+          <span class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"><svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 1.8.25 2.2.42.6.2 1 .46 1.4.86.4.4.66.8.86 1.4.17.4.36 1 .42 2.2.07 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.25 1.8-.42 2.2-.2.6-.46 1-.86 1.4-.4.4-.8.66-1.4.86-.4.17-1 .36-2.2.42-1.3.07-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.06-1.8-.25-2.2-.42-.6-.2-1-.46-1.4-.86-.4-.4-.66-.8-.86-1.4-.17-.4-.36-1-.42-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-1.8.42-2.2.2-.6.46-1 .86-1.4.4-.4.8-.66 1.4-.86.4-.17 1-.36 2.2-.42C8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1018.6 12 6.6 6.6 0 0012 5.4zm0 10.9A4.3 4.3 0 1116.3 12 4.3 4.3 0 0112 16.3zm6.9-11.1a1.5 1.5 0 11-1.5-1.5 1.5 1.5 0 011.5 1.5z"/></svg></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-3">
+      <p class="text-white/40 text-xs" data-sg-path="footer.copyright">© 2026 Ohmly. All rights reserved.</p>
+      <p class="text-white/40 text-xs">Built with the Akyra template engine</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ───────── STANDARD HYDRATION + GSAP BLOCK ───────── -->
+<script>
+  (function () {
+    var C = window.__SITE_CONTENT__ || {};
+    function get(p) {
+      return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+        .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+    }
+    // Hydrate texts
+    document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-path'));
+      if (v != null && typeof v !== 'object') el.textContent = v;
+    });
+    // Hydrate images (img.src or background-image)
+    document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-img'));
+      if (v == null) return;
+      if (el.tagName === 'IMG') el.src = v;
+      else el.style.backgroundImage = "url('" + v + "')";
+    });
+    // Animations: reveal/parallax au scroll (re-création GSAP, pas une capture)
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+        gsap.from(el, {
+          opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+        });
+      });
+      gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+        gsap.to(el, {
+          yPercent: -12, ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+      });
+      // ROBUSTESSE : recalcule positions apres chargement des images + filet anti-page-blanche
+      window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+      setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+      setTimeout(function () {
+        document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+          if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+        });
+      }, 2200);
+    }
+  })();
+</script>
+
+<!-- FAQ toggle -->
+<script>
+  function toggleFaq(btn) {
+    var item = btn.closest('.faq-item');
+    var isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(el) { el.classList.remove('open'); });
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+</body>
+</html>

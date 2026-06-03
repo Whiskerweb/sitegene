@@ -1,0 +1,320 @@
+{
+  "meta": {
+    "title": "Mörk Studio — Art Direction & Digital Design",
+    "description": "Mörk Studio is an independent design practice blending art direction, brand identity and code into bold digital experiences with structure, flow and intent."
+  },
+  "brand": "MÖRK STUDIO",
+  "wordmark": "Mörk",
+  "nav": [
+    "Work",
+    "Studio",
+    "Contact"
+  ],
+  "hero": {
+    "headline": "Pattern, dimension and moments that connect and leave a bold impression.",
+    "tags": [
+      "Art Direction",
+      "Branding",
+      "Strategy"
+    ]
+  },
+  "clients": {
+    "label": "Featured Projects プロジェクト",
+    "index": "INDEX — 00",
+    "meta": "CREATIVE DEVELOPMENT",
+    "logos": [
+      "Cairo",
+      "Orbit",
+      "Chen",
+      "Manila",
+      "Nova"
+    ]
+  },
+  "projects": {
+    "intro": "Every project is a chance to blend design and development, shaping bold interactive ideas into sleek digital realities — built with intent, speed, and visual clarity that attracts lot of peoples.",
+    "cta": "See Works",
+    "items": [
+      {
+        "title": "Halo Wear",
+        "index": "(01)",
+        "image": "/_templates/studio-portfolio/img/project1.jpg"
+      },
+      {
+        "title": "Sonder Goods",
+        "index": "(02)",
+        "image": "/_templates/studio-portfolio/img/project2.jpg"
+      },
+      {
+        "title": "Lucent Lab",
+        "index": "(03)",
+        "image": "/_templates/studio-portfolio/img/project3.jpg"
+      },
+      {
+        "title": "Arc & Bloom",
+        "index": "(04)",
+        "image": "/_templates/studio-portfolio/img/project4.jpg"
+      },
+      {
+        "title": "Atelier Nara",
+        "index": "(05)",
+        "image": "/_templates/studio-portfolio/img/project5.jpg"
+      }
+    ]
+  },
+  "statement": {
+    "label": "Personal Profile プロフィール",
+    "index": "DROP — 05",
+    "meta": "VISUAL THINKER",
+    "text": "Blending design and code with functional clarity and creative precision. Delivering thoughtful digital systems with structure, flow, and expressive interaction.",
+    "portrait1": "/_templates/studio-portfolio/img/portrait1.jpg",
+    "portrait2": "/_templates/studio-portfolio/img/portrait2.jpg",
+    "body": "We bridge creative direction with real-world execution, combining design and development into one seamless workflow to deliver digital experiences that are thoughtful, fast, and built to perform.",
+    "profile": "/_templates/studio-portfolio/img/profile.jpg"
+  },
+  "capabilities": {
+    "label": "Capabilities サービス内容",
+    "index": "(WDX® — 04)",
+    "meta": "DIGITAL EXECUTION",
+    "cols": [
+      "Precise",
+      "Structured",
+      "Focused",
+      "Visual Language"
+    ],
+    "items": [
+      {
+        "no": "01",
+        "name": "Art Direction",
+        "desc": "We guide every visual decision from start to finish, ensuring clarity, emotion, and impact across every touchpoint."
+      },
+      {
+        "no": "02",
+        "name": "Brand Identity",
+        "desc": "From strategy to execution, we shape consistent brand systems that speak clearly and feel uniquely ownable."
+      },
+      {
+        "no": "03",
+        "name": "Motion Direction",
+        "desc": "We use motion as a design tool — adding clarity, rhythm, and energy to digital experiences with intention."
+      },
+      {
+        "no": "04",
+        "name": "Framer Sites",
+        "desc": "Design meets execution with real-time, scalable websites that are fast, flexible, and effortless to manage."
+      }
+    ]
+  },
+  "experience": {
+    "label": "Experience エクスペリエンス",
+    "index": "(WDX® — 05)",
+    "meta": "DIGITAL CRAFT",
+    "cols": [
+      "Global",
+      "Creative Collabs",
+      "Studio",
+      "Creative Partnerships"
+    ],
+    "rows": [
+      {
+        "studio": "Clavmen Studio",
+        "period": "2022 - present",
+        "role": "Art Director & Designer",
+        "city": "Tokyo"
+      },
+      {
+        "studio": "Modular Eight",
+        "period": "2020 – 2022",
+        "role": "Senior Developer",
+        "city": "Osaka"
+      },
+      {
+        "studio": "Haus of Signal",
+        "period": "2018 – 2020",
+        "role": "Creative Technologist",
+        "city": "Berlin"
+      },
+      {
+        "studio": "Studio Orbit",
+        "period": "2016 – 2018",
+        "role": "UI/UX Designer",
+        "city": "Dallas"
+      },
+      {
+        "studio": "Novaform Labs",
+        "period": "2014 – 2016",
+        "role": "Junior Designer",
+        "city": "Kyoto"
+      }
+    ]
+  },
+  "testimonials": {
+    "label": "Testimonials レビュー",
+    "index": "(WDX® — 06)",
+    "meta": "REAL FEEDBACK",
+    "cta": "Get in Touch",
+    "items": [
+      {
+        "quote": "Mörk elevated every layer of our brand’s online presence. From motion details to structural layout, every piece felt crafted and intentional. The site not only looked beautiful but performed well too — and the entire collaboration process was smooth.",
+        "name": "Lisa Kuroda",
+        "role": "Founder, Studio Analog",
+        "avatar": "/_templates/studio-portfolio/img/avatar1.jpg",
+        "logo": "Cairo"
+      },
+      {
+        "quote": "Mörk approaches every project with a deep sense of purpose. The work is never just about the surface — it’s about how each element functions, connects, and flows. They bring logic, sharpness, and confidence to every decision.",
+        "name": "Daniel Reyes",
+        "role": "Director, Framehaus",
+        "avatar": "/_templates/studio-portfolio/img/avatar2.jpg",
+        "logo": "Cairo"
+      },
+      {
+        "quote": "Their ability to merge storytelling with clean interaction design is unmatched. Mörk understands not just how things should look, but why they should look that way — and that insight came through in every part of the work.",
+        "name": "Mei Tanaka",
+        "role": "UX Designer, Nuro",
+        "avatar": "/_templates/studio-portfolio/img/avatar3.jpg",
+        "logo": "Cairo"
+      },
+      {
+        "quote": "Working with Mörk was more than just hiring a designer — it felt like bringing on a creative partner who truly understood our goals. They took our raw ideas, added clarity, and transformed them into something that not only looked stunning.",
+        "name": "Julian Pierce",
+        "role": "Director, Vektor Inc.",
+        "avatar": "/_templates/studio-portfolio/img/avatar4.jpg",
+        "logo": "Cairo"
+      },
+      {
+        "quote": "Mörk brings a rare balance of creativity and discipline. Incredibly fast without ever sacrificing attention to detail. From early ideation to the final product, the process is intentional, the communication is clear.",
+        "name": "Hana Samoto",
+        "role": "CEO, Willow Studio",
+        "avatar": "/_templates/studio-portfolio/img/avatar5.jpg",
+        "logo": "Cairo"
+      }
+    ]
+  },
+  "awards": {
+    "label": "Awards アワード",
+    "index": "(WDX® — 07)",
+    "meta": "SELECTED HONORS",
+    "cols": [
+      "Awwwards",
+      "CSSD",
+      "Framer",
+      "Dribbble"
+    ],
+    "items": [
+      {
+        "count": "27x",
+        "name": "Awwwards",
+        "desc": "Recognized for bold interaction, structured visual rhythm, and design consistency across creative categories.",
+        "thumb": "/_templates/studio-portfolio/img/award1.jpg"
+      },
+      {
+        "count": "14x",
+        "name": "FWA",
+        "desc": "Awarded for outstanding execution, seamless animation, and originality in modern digital experiences.",
+        "thumb": "/_templates/studio-portfolio/img/award2.jpg"
+      },
+      {
+        "count": "09x",
+        "name": "CSSDA",
+        "desc": "Celebrated for front-end excellence, design innovation, and development precision across multiple showcases.",
+        "thumb": "/_templates/studio-portfolio/img/award3.jpg"
+      },
+      {
+        "count": "08x",
+        "name": "Dribbble",
+        "desc": "Highlighted for strong typographic systems, visual hierarchy, and thoughtful layout built with intent.",
+        "thumb": "/_templates/studio-portfolio/img/award4.jpg"
+      }
+    ]
+  },
+  "partners": {
+    "label": "Brand Partners パートナー",
+    "index": "(WDX® — 08)",
+    "meta": "CREATIVE TEAMS",
+    "wordmark": "Cairo",
+    "cards": [
+      {
+        "city": "Manila",
+        "image": "/_templates/studio-portfolio/img/gallery1.jpg"
+      },
+      {
+        "city": "Oslo",
+        "image": "/_templates/studio-portfolio/img/gallery2.jpg"
+      },
+      {
+        "city": "Tokyo",
+        "image": "/_templates/studio-portfolio/img/gallery3.jpg"
+      }
+    ]
+  },
+  "pricing": {
+    "label": "Project Pricing プラン",
+    "index": "(WDX® — 09)",
+    "meta": "CUSTOM QUOTES",
+    "cols": [
+      "Custom Options",
+      "Transparent",
+      "Design Packages",
+      "Pricing Tiers"
+    ],
+    "plans": [
+      {
+        "price": "$99",
+        "unit": "/Month",
+        "name": "Starter Plan",
+        "desc": "Perfect for small launches and personal sites that need a fast online presence.",
+        "features": [
+          "One-page Framer site",
+          "Custom layout & visuals",
+          "Mobile responsive",
+          "Basic SEO setup"
+        ]
+      },
+      {
+        "price": "$299",
+        "unit": "/Month",
+        "name": "Growth Plan",
+        "desc": "Designed for growing brands that need flexibility and CMS support.",
+        "features": [
+          "Up to 5 pages",
+          "Framer CMS-powered sections",
+          "Motion & interactions",
+          "Advanced SEO setup"
+        ]
+      },
+      {
+        "price": "$899",
+        "unit": "/Month",
+        "name": "Full Scope Plan",
+        "desc": "Best for studios or teams needing structure and enterprise-level execution.",
+        "features": [
+          "10+ pages with CMS",
+          "Advanced layout strategy",
+          "Custom motion systems",
+          "Priority support"
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "brand": "MÖRK STUDIO",
+    "tagline": "Independent design practice. Available worldwide.",
+    "nav_label": "Navigate",
+    "nav": [
+      "Work",
+      "Studio",
+      "Awards",
+      "Contact"
+    ],
+    "social_label": "Social",
+    "social": [
+      "Instagram",
+      "Behance",
+      "X (Twitter)",
+      "LinkedIn"
+    ],
+    "email": "hello@morkstudio.com",
+    "copyright": "© 2024 Mörk Studio — All rights reserved.",
+    "back_to_top": "Back to Top"
+  }
+}
