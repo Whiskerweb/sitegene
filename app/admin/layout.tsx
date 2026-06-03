@@ -34,6 +34,9 @@ export default async function AdminLayout({
               <Link href="/admin/notes" className="hover:text-paper">
                 Demandes
               </Link>
+              <Link href="/admin/crm" className="hover:text-paper">
+                Prospection
+              </Link>
             </nav>
           </div>
           <div className="flex items-center gap-3 text-sm text-faint">
