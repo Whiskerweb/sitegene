@@ -1,16 +1,10 @@
-import GenerationFlow from "@/components/create/GenerationFlow";
+import { redirect } from "next/navigation";
 
-export const metadata = {
-  title: "Akyra — Votre site se construit…",
-  robots: { index: false, follow: false },
-};
-
-/** Tunnel de génération : chargement scénarisé → révélation du site. */
+/**
+ * Ancien tunnel de génération remplacé par le parcours d'onboarding gamifié.
+ * On conserve la route pour rediriger d'éventuels liens vers /onboarding
+ * (l'onboarding gère lui-même l'auth : renvoi vers la home si non connecté).
+ */
 export default function CreatePage() {
-  return (
-    <main className="bg-ink-900 text-paper min-h-[100dvh]">
-      <GenerationFlow />
-    </main>
-  );
+  redirect("/onboarding");
 }
-

@@ -3,13 +3,57 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { grantCredits } from "@/lib/credits-server";
 import { SIGNUP_CREDITS } from "@/lib/stripe";
 import { sendReceipt } from "@/lib/email/send";
+import { isValidSlug, normalizeSlug } from "@/lib/templates";
 
 export type FulfillResult = {
   email: string | null;
   token: string | null;
   siteId: string | null;
   userId: string | null;
+  /** Tunnel self-serve : le site appartenait déjà au payeur (mis en ligne ici). */
+  selfServe: boolean;
+  /** Slug attribué au go-live self-serve (sinon null → nommage via /welcome/name). */
+  slug: string | null;
 };
+
+type Admin = ReturnType<typeof createAdminClient>;
+
+/** Slug unique dérivé d'une base (suffixe -2, -3… en cas de collision). */
+async function deriveUniqueSlug(admin: Admin, base: string, siteId: string): Promise<string> {
+  let root = normalizeSlug(base);
+  if (!isValidSlug(root)) root = `studio-${siteId.slice(0, 6)}`;
+  let candidate = root;
+  for (let i = 2; i < 50; i++) {
+    const { data: clash } = await admin
+      .from("sites")
+      .select("id")
+      .eq("slug", candidate)
+      .maybeSingle();
+    if (!clash || clash.id === siteId) return candidate;
+    candidate = `${root}-${i}`.slice(0, 40);
+  }
+  return `${root}-${siteId.slice(0, 6)}`.slice(0, 40);
+}
+
+/** Met le site en ligne (publie la dernière version + slug + statut live). */
+async function goLive(admin: Admin, siteId: string, slugBase: string): Promise<string> {
+  const slug = await deriveUniqueSlug(admin, slugBase, siteId);
+  const { data: sc } = await admin
+    .from("site_content")
+    .select("id")
+    .eq("site_id", siteId)
+    .order("version", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (sc) {
+    await admin.from("site_content").update({ is_published: true }).eq("id", sc.id);
+  }
+  await admin
+    .from("sites")
+    .update({ slug, status: "live", published_at: new Date().toISOString() })
+    .eq("id", siteId);
+  return slug;
+}
 
 /** Trouve ou crée un utilisateur Supabase par email. */
 async function ensureUser(
@@ -48,8 +92,18 @@ export async function fulfillPayment(
     : { data: null };
   const siteId = code?.site_id ?? null;
 
-  if (!email) return { email: null, token, siteId, userId: null };
-  const userId = await ensureUser(admin, email);
+  // Self-serve : le site appartient DÉJÀ au payeur (compte créé au gate landing).
+  // Sinon (outreach) : on crée/retrouve le compte par email comme avant.
+  const { data: site } = siteId
+    ? await admin.from("sites").select("owner_user_id, status").eq("id", siteId).maybeSingle()
+    : { data: null };
+  const ownerId = (site?.owner_user_id as string) || null;
+  const selfServe = Boolean(ownerId);
+
+  if (!selfServe && !email) {
+    return { email: null, token, siteId, userId: null, selfServe: false, slug: null };
+  }
+  const userId = ownerId ?? (await ensureUser(admin, email as string));
 
   // Idempotence : si le paiement est déjà enregistré, ne rien refaire.
   const { data: existing } = await admin
@@ -57,7 +111,10 @@ export async function fulfillPayment(
     .select("id")
     .eq("stripe_session_id", session.id)
     .maybeSingle();
-  if (existing) return { email, token, siteId, userId };
+  if (existing) {
+    const slug = selfServe ? await currentSlug(admin, siteId) : null;
+    return { email, token, siteId, userId, selfServe, slug };
+  }
 
   const { data: payment } = await admin
     .from("payments")
@@ -89,7 +146,7 @@ export async function fulfillPayment(
         .maybeSingle();
       firstName = prospect?.first_name ?? null;
     }
-    await sendReceipt(admin, { to: email, firstName });
+    if (email) await sendReceipt(admin, { to: email, firstName });
     // Si ce prospect était dans une séquence de prospection : converti → stop.
     if (code?.prospect_id) {
       await admin
@@ -104,12 +161,52 @@ export async function fulfillPayment(
   if (code?.id) {
     await admin.from("prospect_codes").update({ status: "paid" }).eq("id", code.id);
   }
+
+  let slug: string | null = null;
   if (siteId) {
-    await admin.from("sites").update({ owner_user_id: userId }).eq("id", siteId);
+    if (selfServe) {
+      // Site déjà finalisé pendant l'onboarding → mise en ligne immédiate.
+      const base = await slugBaseForSite(admin, siteId, code?.prospect_id ?? null);
+      slug = await goLive(admin, siteId, base);
+    } else {
+      // Outreach : on attribue le site, le slug est choisi sur /welcome/name.
+      await admin.from("sites").update({ owner_user_id: userId }).eq("id", siteId);
+    }
     await admin.from("events").insert({ token, site_id: siteId, type: "purchased" });
   }
 
-  return { email, token, siteId, userId };
+  return { email, token, siteId, userId, selfServe, slug };
+}
+
+/** Slug courant d'un site (pour le retour idempotent). */
+async function currentSlug(admin: Admin, siteId: string | null): Promise<string | null> {
+  if (!siteId) return null;
+  const { data } = await admin.from("sites").select("slug").eq("id", siteId).maybeSingle();
+  return (data?.slug as string) ?? null;
+}
+
+/** Base de slug self-serve : marque de l'onboarding, sinon prénom du prospect. */
+async function slugBaseForSite(
+  admin: Admin,
+  siteId: string,
+  prospectId: string | null,
+): Promise<string> {
+  const { data: ob } = await admin
+    .from("site_onboarding")
+    .select("intake")
+    .eq("site_id", siteId)
+    .maybeSingle();
+  const brand = (ob?.intake as { brand?: string } | null)?.brand;
+  if (brand) return brand;
+  if (prospectId) {
+    const { data: p } = await admin
+      .from("prospects")
+      .select("first_name")
+      .eq("id", prospectId)
+      .maybeSingle();
+    if (p?.first_name) return p.first_name as string;
+  }
+  return "studio";
 }
 
 /**

@@ -21,6 +21,13 @@ export async function GET(request: Request) {
   }
 
   const result = await fulfillPayment(session);
+
+  // Self-serve : le client est déjà connecté et son site vient d'être mis en
+  // ligne → direction le dashboard, pas de nommage ni d'auto-login.
+  if (result.selfServe) {
+    return NextResponse.redirect(`${origin}/dashboard?welcome=1`);
+  }
+
   if (!result.email) return NextResponse.redirect(`${origin}/login`);
 
   // Auto-login : génère un token magic-link côté serveur et le consomme (pose la session).

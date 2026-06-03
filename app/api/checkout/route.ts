@@ -20,6 +20,13 @@ export async function POST(request: Request) {
     return new Response("Lien invalide ou expiré.", { status: 400 });
   }
 
+  // Self-serve si le site appartient déjà à un client (gate landing) → on revient
+  // à l'onboarding en cas d'annulation ; outreach → on revient au reveal.
+  const { data: site } = code.site_id
+    ? await admin.from("sites").select("owner_user_id").eq("id", code.site_id).maybeSingle()
+    : { data: null };
+  const selfServe = Boolean(site?.owner_user_id);
+
   const origin = new URL(request.url).origin;
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
@@ -36,9 +43,9 @@ export async function POST(request: Request) {
         },
       },
     ],
-    metadata: { token, site_id: code.site_id ?? "" },
+    metadata: { token, site_id: code.site_id ?? "", flow: selfServe ? "self_serve" : "outreach" },
     success_url: `${origin}/welcome?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${origin}/r/${token}`,
+    cancel_url: selfServe ? `${origin}/onboarding` : `${origin}/r/${token}`,
   });
 
   if (!session.url) {

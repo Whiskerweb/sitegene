@@ -6,6 +6,8 @@ import { Sparkles, ArrowRight, Image as ImageIcon } from "lucide-react";
 import RotatingText from "@/components/ui/RotatingText";
 import { setIntake } from "@/lib/intake-store";
 import { DEFAULT_CATEGORY } from "@/lib/categories";
+import { createClient } from "@/lib/supabase/client";
+import AuthGate from "@/components/auth/AuthGate";
 
 const ROTATING = [
   "votre site en 30 secondes",
@@ -20,6 +22,7 @@ export default function Hero() {
   const router = useRouter();
   const [prompt, setPrompt] = useState("");
   const [photos, setPhotos] = useState<File[]>([]);
+  const [gateOpen, setGateOpen] = useState(false);
   const fileRef = useRef<HTMLInputElement | null>(null);
 
   function addPhotos(list: FileList | null) {
@@ -28,9 +31,25 @@ export default function Hero() {
     setPhotos((prev) => [...prev, ...imgs].slice(0, 12));
   }
 
-  function submit() {
-    setIntake({ categoryId: DEFAULT_CATEGORY.id, brief: prompt.trim(), photos, company: "" });
-    router.push("/create");
+  // Bulle → gate compte → onboarding gamifié. Si déjà connecté, on file droit.
+  async function submit() {
+    const brief = prompt.trim();
+    setIntake({ categoryId: DEFAULT_CATEGORY.id, brief, photos, company: "" });
+    try {
+      sessionStorage.setItem("akyra_brief", brief);
+    } catch {
+      /* sessionStorage indispo */
+    }
+    try {
+      const { data } = await createClient().auth.getUser();
+      if (data.user) {
+        router.push("/onboarding");
+        return;
+      }
+    } catch {
+      /* pas de session → gate */
+    }
+    setGateOpen(true);
   }
 
   return (
@@ -130,6 +149,13 @@ export default function Hero() {
           <span className="font-semibold text-[rgb(var(--m-muted))]">2 400 créateurs</span>.
         </p>
       </div>
+
+      <AuthGate
+        open={gateOpen}
+        onClose={() => setGateOpen(false)}
+        brief={prompt.trim()}
+        onAuthed={() => router.push("/onboarding")}
+      />
     </section>
   );
 }
