@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { AuthSplit } from "@/components/ui/auth-split";
 import { AkyraMark } from "@/components/ui/Logo";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [next, setNext] = useState("/dashboard");
   const [initialError, setInitialError] = useState<string | undefined>();
 
@@ -19,14 +21,24 @@ export default function LoginPage() {
     }
   }, []);
 
-  async function sendMagicLink(email: string) {
+  // Étape 1 : envoyer un code à 6 chiffres (pas de lien, donc pas de redirect).
+  async function sendCode(email: string) {
     const supabase = createClient();
-    const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
-    const { error } = await supabase.auth.signInWithOtp({
+    const { error } = await supabase.auth.signInWithOtp({ email });
+    if (error) return { error: error.message };
+  }
+
+  // Étape 2 : vérifier le code → ouvre la session côté client, puis redirige.
+  async function verifyCode(email: string, code: string) {
+    const supabase = createClient();
+    const { error } = await supabase.auth.verifyOtp({
       email,
-      options: { emailRedirectTo: redirectTo },
+      token: code,
+      type: "email",
     });
     if (error) return { error: error.message };
+    router.push(next);
+    router.refresh();
   }
 
   return (
@@ -35,11 +47,12 @@ export default function LoginPage() {
       logo={<AkyraMark size={28} tone="dark" />}
       homeHref="/"
       title="Connexion"
-      subtitle="Entrez votre email, on vous envoie un lien sécurisé."
+      subtitle="Entrez votre email, on vous envoie un code à 6 chiffres."
       quote="Votre site pro vous attend."
       quoteAuthor="Akyra"
       imageSrc="/landing/tpl-alice-r.png"
-      onSubmitEmail={sendMagicLink}
+      onSubmitEmail={sendCode}
+      onVerifyCode={verifyCode}
       initialError={initialError}
       background={
         <div className="absolute inset-0 bg-ink-900">

@@ -199,7 +199,7 @@ otp_expiry = 3600
 # versionnée — à reporter dans Dashboard → Auth → Email Templates tant que le
 # projet distant n'est pas géré par `supabase config push`.
 [auth.email.template.magic_link]
-subject = "Votre lien de connexion Akyra"
+subject = "Votre code de connexion Akyra"
 content_path = "./supabase/templates/magic_link.html"
 
 [auth.email.template.confirmation]
