@@ -137,6 +137,17 @@ export const REALISATIONS: Realisation[] = [
     link: "/s/wedding-fine-art",
     badge: "Nouveau",
   },
+  {
+    id: "jazz-vocalist",
+    title: "Marina — Vocaliste jazz & soul",
+    category: "Musicien",
+    categoryId: "musicien",
+    views: 91,
+    thumb: "/landing/tpl-jazz-vocalist.png",
+    link: "/s/jazz-vocalist",
+    featured: true,
+    badge: "Nouveau",
+  },
 ];
 
 /** Filtres de catégorie pour /modeles (dérivés des réalisations + « bientôt »). */
@@ -146,7 +157,7 @@ export const SHOWCASE_FILTERS: { id: string; label: string; soon?: boolean }[] =
   { id: "artisan", label: "Artisan" },
   { id: "portfolio", label: "Portfolio" },
   { id: "saas", label: "SaaS" },
-  { id: "musicien", label: "Musicien", soon: true },
+  { id: "musicien", label: "Musicien" },
 ];
 
 export const FEATURED = REALISATIONS.filter((r) => r.featured);

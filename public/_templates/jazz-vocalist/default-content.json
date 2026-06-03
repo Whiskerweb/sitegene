@@ -1,0 +1,151 @@
+{
+  "brand": "Marina Cole",
+  "cta": "Get in Touch",
+  "nav": [
+    "About",
+    "Releases",
+    "Testimonials",
+    "Dates",
+    "Contact"
+  ],
+  "hero": {
+    "eyebrow": "London · United Kingdom",
+    "title": "Marina Cole",
+    "tagline": "Vocalist performing jazz and soul across London and the UK.",
+    "leftLabel": "Jazz · Soul · Blues",
+    "rightLabel": "Est. 2014",
+    "image": "/_templates/jazz-vocalist/img/hero.jpg"
+  },
+  "about": {
+    "label": "About",
+    "p1": "A London-based jazz and soul vocalist with over a decade performing in some of the city's most respected rooms. Her voice moves comfortably across the Great American Songbook, contemporary jazz standards and soul classics, a repertoire broad enough to suit any room, always delivered with the same attention.",
+    "p2": "She performs solo with piano accompaniment, as a duo with guitar or with her full quartet, and has built a reputation for sets that feel tailored rather than rehearsed. Every booking begins with a conversation about the evening, the space, the guests, the atmosphere. The music follows from there and forward.",
+    "tags": [
+      "Jazz Standards",
+      "Soul",
+      "Blues",
+      "Bossa Nova",
+      "Gospel",
+      "Swing"
+    ],
+    "image": "/_templates/jazz-vocalist/img/about.jpg"
+  },
+  "venues": [
+    "Ronnie Scott's",
+    "606 Club",
+    "Pizza Express Jazz Club",
+    "Vortex Jazz Club",
+    "The Jazz Cafe",
+    "Toulouse Lautrec",
+    "Quaglino's",
+    "Oriole",
+    "The Crazy Coqs",
+    "Nightjar"
+  ],
+  "releasesLabel": "Releases",
+  "releases": [
+    {
+      "title": "After Midnight",
+      "artist": "Marina Cole",
+      "genre": "Swing",
+      "cover": "/_templates/jazz-vocalist/img/mic1.jpg"
+    },
+    {
+      "title": "Checkered Shoes",
+      "artist": "Marina Cole",
+      "genre": "Blues",
+      "cover": "/_templates/jazz-vocalist/img/mic2.jpg"
+    },
+    {
+      "title": "Raincheck",
+      "artist": "Marina Cole",
+      "genre": "Bossa Nova",
+      "cover": "/_templates/jazz-vocalist/img/about.jpg"
+    },
+    {
+      "title": "Hold Me Till Dawn",
+      "artist": "Marina Cole",
+      "genre": "Soul",
+      "cover": "/_templates/jazz-vocalist/img/hero.jpg"
+    },
+    {
+      "title": "Velvet on My Collar",
+      "artist": "Marina Cole",
+      "genre": "Jazz",
+      "cover": "/_templates/jazz-vocalist/img/crowd.jpg"
+    }
+  ],
+  "perfImage": "/_templates/jazz-vocalist/img/perf.jpg",
+  "testimonialsLabel": "Testimonials",
+  "testimonials": [
+    {
+      "quote": "“Marina brings a rare warmth to every performance, our audience is captivated from the first note. She's become a favourite at the club.”",
+      "author": "— Marcus Hale, Manager",
+      "place": "Blue Note Lounge, London"
+    },
+    {
+      "quote": "“Having Marina perform at our hotel adds an unmistakable sense of elegance. Guests often stay longer, she creates a truly special atmosphere.”",
+      "author": "— Sofia Laurent, Events Director",
+      "place": "The Langham Hotel, Manchester"
+    },
+    {
+      "quote": "“Marina is incredibly professional and adaptable to any setting. She elevated our corporate event and left a lasting impression on every guest.”",
+      "author": "— Daniel Reed, Head of Events",
+      "place": "Apex Group, London"
+    },
+    {
+      "quote": "“There's an intimacy to Marina's voice that draws people in instantly. Every performance feels personal, as if she's singing just for you.”",
+      "author": "— Elena Rossi, Curator",
+      "place": "Velvet Evenings, Milan"
+    }
+  ],
+  "datesLabel": "Dates",
+  "dates": [
+    {
+      "date": "21 Apr 2026",
+      "time": "21:00",
+      "title": "Paris After Dark: A Jazz Affair",
+      "venue": "Le Duc des Lombards, Paris, France"
+    },
+    {
+      "date": "1 Apr 2026",
+      "time": "19:00",
+      "title": "Midnight Improvisations in the Old Town",
+      "venue": "The Jazz Bar, Edinburgh, UK"
+    },
+    {
+      "date": "18 Mar 2026",
+      "time": "20:00",
+      "title": "Northern Grooves, Timeless Pulse",
+      "venue": "Band on the Wall, Manchester, UK"
+    },
+    {
+      "date": "5 Mar 2026",
+      "time": "19:30",
+      "title": "Intimate Echoes in East London",
+      "venue": "Servant Jazz Quarters, London, UK"
+    },
+    {
+      "date": "24 Feb 2026",
+      "time": "20:00",
+      "title": "Parisian Nights, London Soul",
+      "venue": "Toulouse Lautrec Jazz Club, London, UK"
+    }
+  ],
+  "datesMore": "Older dates →",
+  "contact": {
+    "title": "Get in Touch",
+    "text": "Available for private dining, hotel residencies, corporate events and special occasions across London and the UK.",
+    "contactLabel": "Contact me on",
+    "email": "hello@marinacole.com",
+    "findLabel": "Find me on",
+    "socials": [
+      "Instagram",
+      "YouTube",
+      "Spotify"
+    ],
+    "copyright": "© Marina Cole",
+    "credit": "Vocalist · jazz & soul",
+    "image": "/_templates/jazz-vocalist/img/crowd.jpg"
+  }
+}

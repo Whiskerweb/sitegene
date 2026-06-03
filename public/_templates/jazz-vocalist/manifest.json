@@ -1,0 +1,278 @@
+{
+  "id": "jazz-vocalist",
+  "name": "Marina — Vocaliste jazz/soul",
+  "schema": 2,
+  "pageTypes": [
+    "home"
+  ],
+  "sections": {
+    "home": [
+      "brand",
+      "cta",
+      "nav",
+      "hero",
+      "about",
+      "venues",
+      "releasesLabel",
+      "releases",
+      "perfImage",
+      "testimonialsLabel",
+      "testimonials",
+      "datesLabel",
+      "dates",
+      "datesMore",
+      "contact"
+    ]
+  },
+  "photos": [
+    {
+      "slot": "p1",
+      "path": "hero.image",
+      "role": "hero",
+      "required": true,
+      "note": "hero · image"
+    },
+    {
+      "slot": "p2",
+      "path": "about.image",
+      "role": "image",
+      "required": true,
+      "note": "about · image"
+    },
+    {
+      "slot": "p3",
+      "path": "releases[].cover",
+      "role": "cover",
+      "required": true,
+      "note": "releases · cover"
+    },
+    {
+      "slot": "p4",
+      "path": "perfImage",
+      "role": "image",
+      "required": true,
+      "note": "perfImage"
+    },
+    {
+      "slot": "p5",
+      "path": "contact.image",
+      "role": "image",
+      "required": true,
+      "note": "contact · image"
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "brand",
+        "label": "brand",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "nav[]",
+        "label": "nav",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "cta",
+        "label": "cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.eyebrow",
+        "label": "hero · eyebrow",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.title",
+        "label": "hero · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.tagline",
+        "label": "hero · tagline",
+        "type": "text",
+        "maxLen": 94
+      },
+      {
+        "path": "hero.leftLabel",
+        "label": "hero · leftLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.rightLabel",
+        "label": "hero · rightLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.label",
+        "label": "about · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "about.p1",
+        "label": "about · p1",
+        "type": "text",
+        "maxLen": 493
+      },
+      {
+        "path": "about.p2",
+        "label": "about · p2",
+        "type": "text",
+        "maxLen": 494
+      },
+      {
+        "path": "about.tags[]",
+        "label": "about · tags",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "venues[]",
+        "label": "venues",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "releasesLabel",
+        "label": "releasesLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "releases[].title",
+        "label": "releases · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "releases[].artist",
+        "label": "releases · artist",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "releases[].genre",
+        "label": "releases · genre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonialsLabel",
+        "label": "testimonialsLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials[].quote",
+        "label": "testimonials · quote",
+        "type": "text",
+        "maxLen": 219
+      },
+      {
+        "path": "testimonials[].author",
+        "label": "testimonials · author",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "testimonials[].place",
+        "label": "testimonials · place",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "datesLabel",
+        "label": "datesLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "dates[].date",
+        "label": "dates · date",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "dates[].time",
+        "label": "dates · time",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "dates[].title",
+        "label": "dates · title",
+        "type": "text",
+        "maxLen": 50
+      },
+      {
+        "path": "dates[].venue",
+        "label": "dates · venue",
+        "type": "text",
+        "maxLen": 54
+      },
+      {
+        "path": "datesMore",
+        "label": "datesMore",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.title",
+        "label": "contact · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.text",
+        "label": "contact · text",
+        "type": "text",
+        "maxLen": 181
+      },
+      {
+        "path": "contact.contactLabel",
+        "label": "contact · contactLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.email",
+        "label": "contact · email",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.findLabel",
+        "label": "contact · findLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.socials[]",
+        "label": "contact · socials",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.copyright",
+        "label": "contact · copyright",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contact.credit",
+        "label": "contact · credit",
+        "type": "text",
+        "maxLen": 40
+      }
+    ]
+  }
+}

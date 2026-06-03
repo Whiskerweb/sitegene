@@ -11,6 +11,7 @@ const HTML_TEMPLATES = [
   "health-saas",
   "luxury-wedding",
   "wedding-fine-art",
+  "jazz-vocalist",
 ];
 
 function getPath(obj: unknown, path: string): unknown {

@@ -67,13 +67,13 @@ export const CATEGORIES: Category[] = [
     id: "musicien",
     label: "Musicien",
     cyclingWord: "musicien",
-    active: false,
+    active: true,
     tagline: "Votre univers sonore, enfin en ligne.",
     briefPlaceholder:
       "Ex. Léo, producteur & DJ à Marseille.\nÉlectro chaleureuse, sets live, clips.\nDisponible pour clubs et festivals.",
     exampleDomain: "leo.akyra.io",
-    templateIds: [],
-    defaultTemplateId: "alice-r",
+    templateIds: ["jazz-vocalist"],
+    defaultTemplateId: "jazz-vocalist",
     testimonial: {
       quote:
         "Mes dates, mes sons, mon univers — tout au même endroit. Les bookers adorent.",
