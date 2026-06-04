@@ -175,6 +175,48 @@ export function eventLabel(value: string): string {
 }
 
 // ---------------------------------------------------------------------------
+// Recommandation de template (« l'IA a trouvé votre style »)
+// ---------------------------------------------------------------------------
+
+/**
+ * Spécialité photographe → template dont l'univers colle le mieux. L'ordre des
+ * entrées fait office de priorité quand plusieurs spécialités sont cochées
+ * (le mariage l'emporte sur le reste, etc.).
+ */
+const PHOTO_EVENT_TEMPLATE: [event: string, templateId: string][] = [
+  ["mariage", "luxury-wedding"],
+  ["grossesse", "portrait-lifestyle"],
+  ["famille", "portrait-lifestyle"],
+  ["portrait", "portrait-fineart"],
+  ["mode", "portrait-fineart"],
+  ["immobilier", "landscape-prints"],
+  ["culinaire", "photo-vintage"],
+  ["animalier", "portrait-lifestyle"],
+  ["corporate", "photographer-freelance"],
+  ["evenementiel", "photographer-freelance"],
+];
+
+/**
+ * Template que « l'IA » recommande à la fin de la conversation, déduit des
+ * réponses. Pur et partagé client/serveur : le client peut calculer la
+ * recommandation localement, sans aller-retour. Repli : défaut fourni par
+ * l'appelant (template phare de la catégorie).
+ */
+export function recommendTemplateForIntake(
+  intake: Intake,
+  fallbackTemplateId: string,
+): string {
+  const types = intake.eventTypes ?? [];
+  if (types.length > 0) {
+    for (const [event, templateId] of PHOTO_EVENT_TEMPLATE) {
+      if (types.includes(event)) return templateId;
+    }
+    return "photographer-freelance";
+  }
+  return fallbackTemplateId;
+}
+
+// ---------------------------------------------------------------------------
 // Adaptation des sections (ajuster la template au client, sans l'imposer)
 // ---------------------------------------------------------------------------
 

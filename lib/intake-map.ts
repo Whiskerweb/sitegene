@@ -209,3 +209,30 @@ export function photoSlotUrls(
   }
   return out;
 }
+
+/** Placeholder neutre servi quand le client n'a fourni aucune photo. */
+export const PHOTO_PLACEHOLDER_URL = "/img/photo-placeholder.svg";
+
+/**
+ * Carte de remplacement des slots photo. Le site construit ne doit JAMAIS
+ * garder une photo de démo (le client ne s'y reconnaîtrait pas) :
+ *  - ≥ 1 photo client → ses photos sont CYCLÉES sur tous les slots ;
+ *  - 0 photo → tous les slots passent sur `emptySlotUrl` (placeholder neutre),
+ *    sauf si `emptySlotUrl` est null/omis (mode démo conservé — tunnel outreach,
+ *    où les visuels de démo font partie du site pré-fait).
+ */
+export function buildPhotoMap(
+  slots: string[],
+  photoUrls: string[],
+  emptySlotUrl?: string | null,
+): Record<string, string> {
+  const map: Record<string, string> = {};
+  if (photoUrls.length > 0) {
+    slots.forEach((slot, i) => {
+      map[slot] = photoUrls[i % photoUrls.length];
+    });
+  } else if (emptySlotUrl) {
+    for (const slot of slots) map[slot] = emptySlotUrl;
+  }
+  return map;
+}

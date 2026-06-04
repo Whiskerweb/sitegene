@@ -17,7 +17,13 @@ import { fetchDefaultContent, fetchTemplateManifest } from "@/lib/site-server";
 import { getCategory, DEFAULT_CATEGORY } from "@/lib/categories";
 import { isTemplateId, type TemplateId } from "@/lib/templates";
 import { dropSectionsForIntake, eventLabel, type Intake } from "@/lib/onboarding-config";
-import { intakeToOverrides, photoSlotUrls, type TemplateManifest } from "@/lib/intake-map";
+import {
+  buildPhotoMap,
+  intakeToOverrides,
+  photoSlotUrls,
+  PHOTO_PLACEHOLDER_URL,
+  type TemplateManifest,
+} from "@/lib/intake-map";
 import { briefToOverrides } from "@/lib/mistral";
 
 export type OnboardingState = {
@@ -253,10 +259,22 @@ export async function appendPhotoUrls(
 // Construction du contenu (mapping déterministe via lib/intake-map)
 // ---------------------------------------------------------------------------
 
+/**
+ * Mode de remplissage des slots photo quand le client n'a fourni aucune image :
+ *  - "demo" (défaut, tunnel outreach) : les visuels de démo restent ;
+ *  - "placeholder" (self-serve) : aplats neutres — jamais une photo d'inconnu
+ *    sur un site présenté comme « le sien ».
+ * Dès qu'il y a ≥ 1 photo client, elles sont cyclées sur TOUS les slots.
+ */
+export type EmptyPhotoMode = "demo" | "placeholder";
+
+export type BuildOpts = { emptyPhotos?: EmptyPhotoMode };
+
 /** Construit le contenu final d'un intake (v2 SPA ou plat HTML), adapté au métier. */
 export async function buildDraftContent(
   origin: string,
   state: { intake: Intake; categoryId: string; templateId: TemplateId },
+  opts?: BuildOpts,
 ): Promise<AnyContent | null> {
   const baseContent = (await fetchDefaultContent(origin, state.templateId)) as
     | Record<string, unknown>
@@ -272,15 +290,14 @@ export async function buildDraftContent(
   const overrides = intakeToOverrides(state.intake, baseContent, manifest);
 
   // Photos déposées → slots catégorisés par rôle (hero → services → galerie,
-  // jamais un avatar/logo), pilotés par manifest.photos.
-  const imageMap: Record<string, string> = {};
-  const photoUrls = state.intake.photoUrls ?? [];
-  if (photoUrls.length > 0) {
-    const slots = photoSlotUrls(baseContent, state.templateId, manifest);
-    for (let i = 0; i < photoUrls.length && i < slots.length; i++) {
-      imageMap[slots[i]] = photoUrls[i];
-    }
-  }
+  // jamais un avatar/logo), pilotés par manifest.photos. Les photos client sont
+  // CYCLÉES sur tous les slots — aucune photo de démo ne survit.
+  const slots = photoSlotUrls(baseContent, state.templateId, manifest);
+  const imageMap = buildPhotoMap(
+    slots,
+    state.intake.photoUrls ?? [],
+    opts?.emptyPhotos === "placeholder" ? PHOTO_PLACEHOLDER_URL : null,
+  );
 
   const content = buildContent(baseContent, overrides, imageMap);
 
@@ -309,6 +326,7 @@ export async function regenerateForSite(
   origin: string,
   siteId: string,
   templateOverride?: TemplateId,
+  opts?: BuildOpts,
 ): Promise<{ content: AnyContent; templateId: TemplateId } | null> {
   const admin = createAdminClient();
   const { data: ob } = await admin
@@ -326,7 +344,7 @@ export async function regenerateForSite(
       ? ob.chosen_template_id
       : recommendedTemplate(categoryId));
 
-  const content = await buildDraftContent(origin, { intake, categoryId, templateId });
+  const content = await buildDraftContent(origin, { intake, categoryId, templateId }, opts);
   if (!content) return null;
   return { content, templateId };
 }
@@ -346,66 +364,23 @@ function briefFromIntake(intake: Intake & { categoryId?: string }): string {
 }
 
 /**
- * Fige la DA choisie : persiste le template, écrit le contenu final dans la
- * version v1 (non publiée) et passe l'étape au paywall. Le contenu est enrichi
- * par l'IA (briefToOverrides : réécriture FR de tous les champs éditables,
- * best-effort) — les faits du client (marque, contact, prestations) gardent
- * toujours le dernier mot.
+ * Fige la DA choisie : persiste le template, écrit le contenu final
+ * DÉTERMINISTE dans la dernière version (non publiée) et passe l'étape au
+ * paywall — AUCUNE IA avant la persistance (un échec/timeout d'enrichissement
+ * ne doit jamais laisser le site sur le template par défaut). L'enrichissement
+ * IA suit, best-effort : inline ici (tunnel outreach, `enrich !== false`) ou
+ * via un appel séparé à `enrichFinalContent` (self-serve : l'écran de
+ * construction pilote les deux étapes).
  */
 export async function finalizeChoice(
   origin: string,
   siteId: string,
   templateId: TemplateId,
+  opts?: { enrich?: boolean } & BuildOpts,
 ): Promise<boolean> {
   const admin = createAdminClient();
-  const built = await regenerateForSite(origin, siteId, templateId);
+  const built = await regenerateForSite(origin, siteId, templateId, opts);
   if (!built) return false;
-
-  // Enrichissement IA (fallback silencieux : le mapping déterministe reste).
-  try {
-    const { data: ob } = await admin
-      .from("site_onboarding")
-      .select("intake")
-      .eq("site_id", siteId)
-      .maybeSingle();
-    const intake = (ob?.intake ?? {}) as Intake & { categoryId?: string };
-    const brief = briefFromIntake(intake);
-    if (brief.trim().length > 10) {
-      const baseContent = (await fetchDefaultContent(origin, templateId)) as
-        | Record<string, unknown>
-        | null;
-      const manifest = (await fetchTemplateManifest(origin, templateId)) as
-        | TemplateManifest
-        | null;
-      if (baseContent) {
-        const category = getCategory(intake.categoryId ?? "") ?? DEFAULT_CATEGORY;
-        const enriched = await briefToOverrides({
-          brief,
-          manifest,
-          defaultContent: baseContent,
-          categoryLabel: category.label,
-        });
-        // Les réponses explicites du client écrasent l'IA (jamais l'inverse) ;
-        // et on ne pose jamais un chemin absent du contenu construit (sections
-        // retirées par l'adaptation métier → pas de recréation partielle).
-        const facts = intakeToOverrides(intake, baseContent, manifest);
-        const merged = Object.fromEntries(
-          Object.entries({ ...enriched, ...facts }).filter(
-            ([p]) => getPath(built.content, p) !== undefined,
-          ),
-        );
-        if (Object.keys(merged).length > 0) {
-          built.content = buildContent(
-            built.content as Record<string, unknown>,
-            merged,
-            {},
-          ) as AnyContent;
-        }
-      }
-    }
-  } catch (e) {
-    console.error("[onboarding/finalize] enrich:", e instanceof Error ? e.message : e);
-  }
 
   await admin.from("sites").update({ template_id: templateId }).eq("id", siteId);
 
@@ -440,5 +415,74 @@ export async function finalizeChoice(
     })
     .eq("site_id", siteId);
 
+  if (opts?.enrich !== false) await enrichFinalContent(origin, siteId);
   return true;
+}
+
+/**
+ * Enrichissement IA du contenu final (réécriture FR de tous les champs texte du
+ * template choisi, à partir du brief + réponses). Best-effort et idempotent :
+ * relit le contenu persisté, applique {IA, puis faits client par-dessus} et ne
+ * touche jamais un chemin absent (sections retirées par l'adaptation métier).
+ * Renvoie false si rien n'a été enrichi (IA indisponible, timeout, déjà fait…)
+ * — le contenu déterministe reste, le site est utilisable tel quel.
+ */
+export async function enrichFinalContent(origin: string, siteId: string): Promise<boolean> {
+  const admin = createAdminClient();
+  try {
+    const { data: ob } = await admin
+      .from("site_onboarding")
+      .select("intake, chosen_template_id")
+      .eq("site_id", siteId)
+      .maybeSingle();
+    if (!ob?.chosen_template_id || !isTemplateId(ob.chosen_template_id)) return false;
+    const templateId = ob.chosen_template_id;
+    const intake = (ob.intake ?? {}) as Intake & { categoryId?: string };
+
+    const brief = briefFromIntake(intake);
+    if (brief.trim().length <= 10) return false;
+
+    const { data: sc } = await admin
+      .from("site_content")
+      .select("id, content_json")
+      .eq("site_id", siteId)
+      .order("version", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    const current = sc?.content_json as Record<string, unknown> | undefined;
+    if (!sc || !current) return false;
+
+    const baseContent = (await fetchDefaultContent(origin, templateId)) as
+      | Record<string, unknown>
+      | null;
+    if (!baseContent) return false;
+    const manifest = (await fetchTemplateManifest(origin, templateId)) as
+      | TemplateManifest
+      | null;
+
+    const category = getCategory(intake.categoryId ?? "") ?? DEFAULT_CATEGORY;
+    const enriched = await briefToOverrides({
+      brief,
+      manifest,
+      defaultContent: baseContent,
+      categoryLabel: category.label,
+      timeoutMs: 35_000,
+    });
+    // Les réponses explicites du client écrasent l'IA (jamais l'inverse) ; et
+    // on ne pose jamais un chemin absent du contenu persisté.
+    const facts = intakeToOverrides(intake, baseContent, manifest);
+    const merged = Object.fromEntries(
+      Object.entries({ ...enriched, ...facts }).filter(
+        ([p]) => getPath(current, p) !== undefined,
+      ),
+    );
+    if (Object.keys(merged).length === 0) return false;
+
+    const next = buildContent(current, merged, {});
+    await admin.from("site_content").update({ content_json: next }).eq("id", sc.id);
+    return true;
+  } catch (e) {
+    console.error("[onboarding/enrich]", e instanceof Error ? e.message : e);
+    return false;
+  }
 }

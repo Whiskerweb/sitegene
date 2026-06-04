@@ -1,5 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { intakeToOverrides, photoSlotUrls } from "./intake-map";
+import {
+  buildPhotoMap,
+  intakeToOverrides,
+  photoSlotUrls,
+  PHOTO_PLACEHOLDER_URL,
+} from "./intake-map";
+import { recommendTemplateForIntake } from "./onboarding-config";
 
 /* ---- Lignée HTML (clone-site) : contenu PLAT, manifest type cleaning-services */
 const HTML_CONTENT = {
@@ -125,5 +131,54 @@ describe("photoSlotUrls — slots catégorisés par rôle", () => {
     expect(photoSlotUrls(content, "alice-r", null)).toEqual([
       "/_templates/alice-r/img/p1.jpg",
     ]);
+  });
+});
+
+describe("buildPhotoMap — jamais une photo de démo sur le site construit", () => {
+  const slots = ["demo/h.jpg", "demo/s1.jpg", "demo/s2.jpg", "demo/g1.jpg", "demo/g2.jpg"];
+
+  it("cycle les photos client sur TOUS les slots", () => {
+    const map = buildPhotoMap(slots, ["c1.jpg", "c2.jpg"]);
+    expect(map).toEqual({
+      "demo/h.jpg": "c1.jpg",
+      "demo/s1.jpg": "c2.jpg",
+      "demo/s2.jpg": "c1.jpg",
+      "demo/g1.jpg": "c2.jpg",
+      "demo/g2.jpg": "c1.jpg",
+    });
+  });
+  it("assez de photos → mapping 1:1 sans répétition", () => {
+    const urls = ["a", "b", "c", "d", "e"];
+    const map = buildPhotoMap(slots, urls);
+    expect(Object.values(map)).toEqual(urls);
+  });
+  it("0 photo + placeholder → tous les slots neutralisés", () => {
+    const map = buildPhotoMap(slots, [], PHOTO_PLACEHOLDER_URL);
+    expect(Object.values(map)).toEqual(slots.map(() => PHOTO_PLACEHOLDER_URL));
+  });
+  it("0 photo sans placeholder (outreach) → démo conservée", () => {
+    expect(buildPhotoMap(slots, [], null)).toEqual({});
+    expect(buildPhotoMap(slots, [])).toEqual({});
+  });
+});
+
+describe("recommendTemplateForIntake — le style que « l'IA » propose", () => {
+  it("mariage l'emporte sur les autres spécialités", () => {
+    expect(
+      recommendTemplateForIntake({ eventTypes: ["portrait", "mariage"] }, "alice-r"),
+    ).toBe("luxury-wedding");
+  });
+  it("portrait → portrait-fineart", () => {
+    expect(recommendTemplateForIntake({ eventTypes: ["portrait"] }, "alice-r")).toBe(
+      "portrait-fineart",
+    );
+  });
+  it("spécialité inconnue → photographer-freelance", () => {
+    expect(recommendTemplateForIntake({ eventTypes: ["autre"] }, "alice-r")).toBe(
+      "photographer-freelance",
+    );
+  });
+  it("aucune réponse → repli sur le template phare fourni", () => {
+    expect(recommendTemplateForIntake({}, "alice-r")).toBe("alice-r");
   });
 });

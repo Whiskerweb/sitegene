@@ -192,6 +192,82 @@ Renvoie le JSON.`;
 
 type EditableField = { path?: string; type?: string; maxLen?: number };
 
+type TextField = { path: string; maxLen: number; current: string };
+
+/**
+ * Champs TEXTE concrets d'un contenu, depuis manifest.fields.editable : étend
+ * les listes `[]` selon le contenu réel et préfixe par chaque base de page
+ * (format multi-pages { pages: [{ content }] } ou racine). Sans cette
+ * expansion, getPath renvoie undefined et AUCUN champ n'est réécrit.
+ */
+function collectTextFields(
+  manifest: unknown,
+  content: Record<string, unknown>,
+): TextField[] {
+  const editable: EditableField[] =
+    ((manifest as Record<string, unknown> | null)?.fields as
+      | Record<string, unknown>
+      | undefined)?.editable as EditableField[] | undefined ?? [];
+
+  const pages = (content as { pages?: unknown[] }).pages;
+  const bases =
+    Array.isArray(pages) && pages.length > 0
+      ? pages.map((_, i) => `pages[${i}].content`)
+      : [""];
+
+  const join = (base: string, p: string) => (base ? `${base}.${p}` : p);
+
+  // Étend un chemin manifest ("services[].name") en chemins concrets selon le
+  // nombre réel d'éléments du tableau, sous une base donnée.
+  function expandPath(base: string, path: string): string[] {
+    const m = path.match(/^(.*?)\[\]\.(.+)$/);
+    if (!m) return [join(base, path)];
+    const [, arrPath, rest] = m;
+    const arr = getPath(content, join(base, arrPath));
+    if (!Array.isArray(arr)) return [];
+    return arr.map((_, i) => join(base, `${arrPath}[${i}].${rest}`));
+  }
+
+  const textFields = editable.filter(
+    (f) =>
+      f &&
+      typeof f.path === "string" &&
+      (f.type === "text" || f.type === "textarea"),
+  );
+
+  return textFields
+    .flatMap((f) =>
+      bases.flatMap((base) =>
+        expandPath(base, f.path as string).map((p) => ({
+          path: p,
+          maxLen: f.maxLen ?? 120,
+        })),
+      ),
+    )
+    .map(({ path, maxLen }) => {
+      const current = getPath(content, path);
+      if (typeof current !== "string" || !current) return null;
+      return { path, maxLen, current };
+    })
+    .filter(Boolean) as TextField[];
+}
+
+/** Filtre la réponse JSON de l'IA : chemins connus uniquement, bornés par maxLen. */
+function clampOverrides(
+  obj: Record<string, unknown>,
+  fields: TextField[],
+): Record<string, string> {
+  const limits = new Map(fields.map((f) => [f.path, f.maxLen]));
+  const out: Record<string, string> = {};
+  for (const [path, value] of Object.entries(obj)) {
+    const max = limits.get(path);
+    if (max == null || typeof value !== "string") continue;
+    const v = value.trim().slice(0, max);
+    if (v) out[path] = v;
+  }
+  return out;
+}
+
 /**
  * Personnalise un site PRO existant à partir d'un brief libre : réécrit les
  * champs TEXTE concrets (sans liste `[]`) du template pour qu'ils collent au
@@ -210,58 +286,7 @@ export async function briefToOverrides(input: {
   const { brief, manifest, defaultContent, categoryLabel } = input;
   if (!process.env.MISTRAL_API_KEY) return {};
 
-  const editable: EditableField[] =
-    ((manifest as Record<string, unknown> | null)?.fields as
-      | Record<string, unknown>
-      | undefined)?.editable as EditableField[] | undefined ?? [];
-
-  // Le contenu peut être au format multi-pages ({ pages: [{ content }] }) ou
-  // à la racine (ancien format). Les chemins du manifest sont relatifs au
-  // contenu d'une page (ex. "hero.title[0]") : on les préfixe par chaque base
-  // réelle. Sinon getPath renvoie undefined et AUCUN champ n'est traduit
-  // (→ site démo anglais).
-  const pages = (defaultContent as { pages?: unknown[] }).pages;
-  const bases =
-    Array.isArray(pages) && pages.length > 0
-      ? pages.map((_, i) => `pages[${i}].content`)
-      : [""];
-
-  const join = (base: string, p: string) => (base ? `${base}.${p}` : p);
-
-  // Étend un chemin manifest ("services[].name") en chemins concrets selon le
-  // nombre réel d'éléments du tableau, sous une base donnée.
-  function expandPath(base: string, path: string): string[] {
-    const m = path.match(/^(.*?)\[\]\.(.+)$/);
-    if (!m) return [join(base, path)];
-    const [, arrPath, rest] = m;
-    const arr = getPath(defaultContent, join(base, arrPath));
-    if (!Array.isArray(arr)) return [];
-    return arr.map((_, i) => join(base, `${arrPath}[${i}].${rest}`));
-  }
-
-  const textFields = editable.filter(
-    (f) =>
-      f &&
-      typeof f.path === "string" &&
-      (f.type === "text" || f.type === "textarea"),
-  );
-
-  const fields = bases
-    .flatMap((base) =>
-      textFields.flatMap((f) =>
-        expandPath(base, f.path as string).map((p) => ({
-          path: p,
-          maxLen: f.maxLen ?? 120,
-        })),
-      ),
-    )
-    .map(({ path, maxLen }) => {
-      const current = getPath(defaultContent, path);
-      if (typeof current !== "string" || !current) return null;
-      return { path, maxLen, current };
-    })
-    .filter(Boolean) as { path: string; maxLen: number; current: string }[];
-
+  const fields = collectTextFields(manifest, defaultContent);
   if (fields.length === 0) return {};
 
   const system = `Tu personnalises un site vitrine PRO déjà conçu, à partir d'un brief client (métier : ${categoryLabel}). Le contenu actuel est en anglais générique : tu dois le RÉÉCRIRE entièrement dans la langue du brief (si le brief est en français, TOUT en français), adapté au client, ton professionnel, élégant et concret — jamais "IA générique" ni grandiloquent.
@@ -304,14 +329,70 @@ Renvoie le JSON.`;
   } catch {
     return {};
   }
+  return clampOverrides(obj, fields);
+}
 
-  const limits = new Map(fields.map((f) => [f.path, f.maxLen]));
-  const out: Record<string, string> = {};
-  for (const [path, value] of Object.entries(obj)) {
-    const max = limits.get(path);
-    if (max == null || typeof value !== "string") continue;
-    const v = value.trim().slice(0, max);
-    if (v) out[path] = v;
+/**
+ * Boucle d'ajustement gratuite de l'onboarding : le client décrit ce qui ne va
+ * pas sur SON site fini (« le titre ne me ressemble pas », « le ton est trop
+ * pompeux »…) et l'IA corrige UNIQUEMENT les champs concernés. Renvoie un map
+ * { path: valeur } restreint aux champs éditables du manifest (mêmes bornes
+ * maxLen que briefToOverrides) — vide si l'IA est indisponible ou si la
+ * demande ne se traduit pas en texte (mise en page, photos…).
+ */
+export async function feedbackToOverrides(input: {
+  feedback: string;
+  manifest: unknown;
+  content: Record<string, unknown>;
+  brief?: string;
+  timeoutMs?: number;
+}): Promise<Record<string, string>> {
+  const { feedback, manifest, content, brief } = input;
+  if (!process.env.MISTRAL_API_KEY) return {};
+
+  const fields = collectTextFields(manifest, content);
+  if (fields.length === 0) return {};
+
+  const system = `Tu RETOUCHES les textes d'un site vitrine qui vient d'être généré pour un client. Le client signale un problème : corrige UNIQUEMENT les champs concernés par sa remarque — ne réécris RIEN d'autre.
+
+RÈGLES:
+- Réponds en JSON STRICT { "<path>": "<texte>", ... } avec SEULEMENT les chemins à corriger (sous-ensemble des chemins fournis). Aucune autre clé.
+- Si la remarque ne porte pas sur du texte (photos, couleurs, mise en page) ou est incompréhensible → renvoie {} (objet vide).
+- Respecte STRICTEMENT maxLen (caractères) et le rôle de chaque champ (un titre reste court, une description 1-2 phrases).
+- Français professionnel et naturel, fidèle au client — jamais grandiloquent ni « IA générique ».
+- N'invente ni email, ni téléphone, ni chiffres.`;
+
+  const user = `${brief ? `Contexte client :\n"""${brief.slice(0, 600)}"""\n\n` : ""}Remarque du client sur son site :
+"""${feedback.slice(0, 600)}"""
+
+Champs du site (path · maxLen · texte actuel) :
+${fields.map((f) => `- ${f.path} · ${f.maxLen} · ${JSON.stringify(f.current)}`).join("\n")}
+
+Renvoie le JSON (uniquement les chemins à corriger).`;
+
+  let raw: string;
+  try {
+    raw = await Promise.race([
+      chat(
+        [
+          { role: "system", content: system },
+          { role: "user", content: user },
+        ],
+        { json: true, maxTokens: 2500 },
+      ),
+      new Promise<string>((_, reject) =>
+        setTimeout(() => reject(new Error("timeout")), input.timeoutMs ?? 35000),
+      ),
+    ]);
+  } catch {
+    return {};
   }
-  return out;
+
+  let obj: Record<string, unknown>;
+  try {
+    obj = JSON.parse(raw);
+  } catch {
+    return {};
+  }
+  return clampOverrides(obj, fields);
 }
