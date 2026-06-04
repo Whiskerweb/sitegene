@@ -113,7 +113,7 @@ Pré-remplit intake + photos   →   /start/<token>
   site dépublié (`live` → `revealed`-équivalent, non public) et retour au paywall.
 - Annulation pendant l'essai (lien dans le bandeau / settings) : site dépublié, aucune charge.
 
-### G. Données (nouvelle migration `0015_trial_tunnel.sql`)
+### G. Données (nouvelle migration `0017_trial_tunnel.sql` — 0015/0016 déjà prises)
 
 - `sites.trial_ends_at timestamptz`, `sites.billing_status text`
   (`none | trialing | paid | canceled | payment_failed`).
