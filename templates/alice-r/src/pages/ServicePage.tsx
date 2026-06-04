@@ -16,7 +16,7 @@ export default function ServicePage() {
           as="h1"
           className="max-w-3xl text-4xl font-medium leading-[1.1] text-white sm:text-5xl md:text-6xl"
         >
-          {content.title ?? 'Session'}
+          {content.title ?? 'Séance'}
         </FadeIn>
         {content.description ? (
           <FadeIn delay={0.1}>
@@ -27,7 +27,7 @@ export default function ServicePage() {
         ) : null}
       </section>
 
-      <Gallery heading={content.galleryHeading ?? 'Recent work'} images={content.gallery} />
+      <Gallery heading={content.galleryHeading ?? 'Travaux récents'} images={content.gallery} />
 
       {pricing.length ? (
         <section className="mx-auto max-w-3xl px-6 md:px-10">

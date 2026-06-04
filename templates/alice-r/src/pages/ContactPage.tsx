@@ -16,7 +16,7 @@ export default function ContactPage() {
           as="h1"
           className="max-w-3xl text-4xl font-medium leading-[1.1] text-white sm:text-5xl md:text-6xl"
         >
-          {content.title ?? 'Get in touch'}
+          {content.title ?? 'Écrivez-moi'}
         </FadeIn>
         {content.intro ? (
           <FadeIn delay={0.1}>
@@ -40,7 +40,7 @@ export default function ContactPage() {
 
         {zones.length ? (
           <FadeIn delay={0.2}>
-            <p className="mt-10 text-xs uppercase tracking-[0.2em] text-white/45">Where I shoot</p>
+            <p className="mt-10 text-xs uppercase tracking-[0.2em] text-white/45">Où je photographie</p>
             <div className="mt-3 flex flex-wrap gap-2">
               {zones.map((z) => (
                 <span key={z} className="rounded-full border border-white/20 px-4 py-1.5 text-sm font-medium text-white/80">

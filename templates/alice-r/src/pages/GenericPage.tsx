@@ -46,7 +46,7 @@ export default function GenericPage() {
           )
         }
         if (b.kind === 'gallery') {
-          return <Gallery key={i} heading={b.heading ?? 'Gallery'} images={b.images} />
+          return <Gallery key={i} heading={b.heading ?? 'Galerie'} images={b.images} />
         }
         return (
           <section key={i} className="mx-auto max-w-6xl px-6 py-12 md:px-10">

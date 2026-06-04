@@ -41,7 +41,7 @@ export default function FeaturedQuote({ data: featuredQuote }: { data?: Featured
               href="#contact"
               className="mt-10 inline-flex min-h-[48px] items-center gap-2 rounded-full border border-white/40 px-7 py-3 text-sm font-medium text-white transition-colors hover:bg-white/10"
             >
-              Book a session
+              Réserver une séance
               <ArrowUpRight size={16} />
             </a>
           </FadeIn>

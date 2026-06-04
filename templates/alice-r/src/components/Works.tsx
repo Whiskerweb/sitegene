@@ -9,7 +9,7 @@ export default function Works({ items: works = [] }: { items?: Work[] }) {
         as="h2"
         className="mb-12 text-3xl font-medium leading-tight text-white sm:text-4xl md:text-5xl"
       >
-        Selected work
+        Projets choisis
       </FadeIn>
 
       <div className="grid gap-8 sm:grid-cols-2">

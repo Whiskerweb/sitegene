@@ -15,7 +15,7 @@ export default function FAQ({ items: faqs = [] }: { items?: Faq[] }) {
         as="h2"
         className="mb-12 text-center text-3xl font-medium text-white sm:text-4xl md:text-5xl"
       >
-        Frequently asked
+        Questions fréquentes
       </FadeIn>
 
       <div className="border-t border-white/12">

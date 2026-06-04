@@ -15,7 +15,7 @@ export default function Services({ intro: servicesIntro, items: services = [] }:
           as="h2"
           className="text-3xl font-medium leading-tight text-white sm:text-4xl md:text-5xl"
         >
-          Services I offer
+          Mes prestations
         </FadeIn>
         <FadeIn delay={0.1} data-sg-path="servicesIntro" className="max-w-xs text-sm leading-relaxed text-white/55">
           {servicesIntro}

@@ -69,61 +69,61 @@ const HOME_CONTENT = {
 
   hero: {
     brand: 'Alice R',
-    title: ['Create Timeless Photos', 'That Tell Your Story'],
+    title: ['Des photos intemporelles', 'qui racontent votre histoire'],
     subtitle:
-      'Professional photography for personal moments, brands, and unforgettable memories.',
-    cta: 'Book a Session',
+      'Photographie professionnelle pour vos moments de vie, vos marques et vos souvenirs inoubliables.',
+    cta: 'Réserver une séance',
   },
 
   features: [
-    { title: 'Fast Delivery', body: 'Get your edited gallery in a short time' },
-    { title: 'Personal Approach', body: 'Every shoot is tailored to your vision' },
-    { title: 'Natural Style', body: 'Authentic photos with emotion and elegance' },
+    { title: 'Livraison rapide', body: 'Votre galerie retouchée, livrée en quelques jours' },
+    { title: 'Approche personnelle', body: 'Chaque séance est pensée autour de votre vision' },
+    { title: 'Style naturel', body: 'Des photos authentiques, pleines d’émotion et d’élégance' },
   ] as Feature[],
 
   // Citation mise en avant
   featuredQuote: {
-    text: 'Alice has a rare gift — she captures the feeling of a moment, not just the moment itself. Every photo feels like a memory we get to keep forever.',
+    text: 'Alice a un don rare — elle capture l’émotion d’un instant, pas seulement l’instant. Chaque photo est un souvenir que l’on garde pour toujours.',
     name: 'Élise Caron',
-    role: 'Wedding Client',
+    role: 'Mariée',
     avatar: img(7),
     images: [img(4), img(12)],
   },
 
   // Grand texte révélé au scroll
   scrollText:
-    'Photography, to me, is more than an image — it is a feeling preserved. I chase light, emotion and the unrepeatable in-between moments that make a story worth telling.',
+    'La photographie, pour moi, est plus qu’une image — c’est une émotion préservée. Je cherche la lumière, l’émotion et ces instants suspendus, uniques, qui font qu’une histoire mérite d’être racontée.',
 
   // Services (accordéon)
   servicesIntro:
-    'From quiet portraits to full brand stories, every session is crafted around your vision.',
+    'Du portrait intimiste à l’histoire de marque complète, chaque séance est construite autour de votre vision.',
   services: [
     {
       n: '01',
-      name: 'Portrait Sessions',
-      desc: 'Timeless portraits that reveal personality, mood and the quiet story behind every face.',
-      tags: ['Studio', 'Editorial', 'Headshots'],
+      name: 'Séances portrait',
+      desc: 'Des portraits intemporels qui révèlent la personnalité, l’humeur et l’histoire silencieuse de chaque visage.',
+      tags: ['Studio', 'Éditorial', 'Portraits pro'],
       img: img(1),
     },
     {
       n: '02',
-      name: 'Weddings & Events',
-      desc: 'Candid, emotional coverage of weddings and gatherings as they truly unfold.',
-      tags: ['Weddings', 'Engagements', 'Travel'],
+      name: 'Mariages & événements',
+      desc: 'Une couverture sincère et émouvante de vos mariages et réceptions, tels qu’ils se vivent vraiment.',
+      tags: ['Mariages', 'Fiançailles', 'Destination'],
       img: img(5),
     },
     {
       n: '03',
-      name: 'Family Sessions',
-      desc: 'Warm, natural family moments captured in light that feels soft, intimate and honest.',
-      tags: ['Newborn', 'Lifestyle', 'Generations'],
+      name: 'Séances famille',
+      desc: 'Des moments de famille chaleureux et naturels, dans une lumière douce, intime et honnête.',
+      tags: ['Naissance', 'Lifestyle', 'Générations'],
       img: img(4),
     },
     {
       n: '04',
-      name: 'Brand & Editorial',
-      desc: 'Refined visual stories that bring your products and brand to life with elegance.',
-      tags: ['Product', 'Campaigns', 'Lookbooks'],
+      name: 'Marque & éditorial',
+      desc: 'Des histoires visuelles raffinées qui donnent vie à vos produits et à votre marque avec élégance.',
+      tags: ['Produit', 'Campagnes', 'Lookbooks'],
       img: img(6),
     },
   ] as Service[],
@@ -135,38 +135,38 @@ const HOME_CONTENT = {
 
   // Works (grille projets)
   works: [
-    { date: 'January 2026', category: 'Fashion Editorial', title: 'Golden Hour', desc: 'An editorial chasing the last warm light of the day across soft, textured fabrics.', img: img(3) },
-    { date: 'December 2025', category: 'Family Sessions', title: "Zoe's First Days", desc: 'The earliest moments of life captured in a calm, cozy setting with soft natural light.', img: img(8) },
-    { date: 'November 2025', category: 'Wedding', title: 'A Quiet Vow', desc: 'An intimate ceremony documented in candid, emotional frames from dawn to dusk.', img: img(9) },
-    { date: 'October 2025', category: 'Brand & Editorial', title: 'Maison Verte', desc: 'A brand story inspired by nature, warmth and organic, hand-made beauty.', img: img(6) },
+    { date: 'Janvier 2026', category: 'Éditorial mode', title: 'Heure dorée', desc: 'Un éditorial à la poursuite des dernières lumières chaudes du jour, sur des étoffes douces et texturées.', img: img(3) },
+    { date: 'Décembre 2025', category: 'Séances famille', title: 'Les premiers jours de Zoé', desc: 'Les tout premiers instants d’une vie, capturés dans un cocon calme baigné de lumière naturelle.', img: img(8) },
+    { date: 'Novembre 2025', category: 'Mariage', title: 'Un serment murmuré', desc: 'Une cérémonie intime documentée en images sincères et émouvantes, de l’aube au crépuscule.', img: img(9) },
+    { date: 'Octobre 2025', category: 'Marque & éditorial', title: 'Maison Verte', desc: 'Une histoire de marque inspirée par la nature, la chaleur et la beauté de l’artisanat.', img: img(6) },
   ] as Work[],
 
   // Stats + CTA « beyond the frame »
   beyond: {
-    title: 'Capture Beyond the Frame',
-    body: 'Every shoot is a collaboration. I take the time to understand your story, then translate it into images that feel honest, warm and lasting.',
-    cta: 'Start your story',
+    title: 'Capturer au-delà du cadre',
+    body: 'Chaque séance est une collaboration. Je prends le temps de comprendre votre histoire, puis je la traduis en images sincères, chaleureuses et durables.',
+    cta: 'Commencer votre histoire',
     stats: [
-      { v: '10+', l: 'Years behind the lens' },
-      { v: '320', l: 'Stories captured' },
-      { v: '24', l: 'Awards & features' },
+      { v: '10+', l: 'Années derrière l’objectif' },
+      { v: '320', l: 'Histoires racontées' },
+      { v: '24', l: 'Prix & publications' },
     ],
   },
 
   // Témoignages
   testimonials: [
-    { text: 'Alice captured our wedding with such artistry. Every frame feels alive and honest.', name: 'Amara Okafor', role: 'Wedding Client', avatar: img(7) },
-    { text: 'The most effortless shoot I have ever done. The results spoke louder than any words could.', name: 'Lukas Meyer', role: 'Creative Director', avatar: img(8) },
-    { text: 'Genuine, patient and ridiculously talented. Our family session felt like a quiet afternoon together.', name: 'Sofia Bianchi', role: 'Family Session', avatar: img(9) },
+    { text: 'Alice a photographié notre mariage avec un art fou. Chaque image est vivante et sincère.', name: 'Amara Okafor', role: 'Mariée', avatar: img(7) },
+    { text: 'La séance la plus naturelle que j’aie jamais vécue. Le résultat parle de lui-même.', name: 'Lukas Meyer', role: 'Directeur artistique', avatar: img(8) },
+    { text: 'Sincère, patiente et terriblement talentueuse. Notre séance famille a eu la douceur d’un après-midi tranquille.', name: 'Sofia Bianchi', role: 'Séance famille', avatar: img(9) },
   ] as Testimonial[],
 
   // FAQ (accordéon)
   faqs: [
-    { q: 'How do I book a session?', a: 'Reach out via the contact form or email, share your vision and preferred dates, and I will send a tailored proposal within 48 hours.' },
-    { q: 'What is included in a shoot?', a: 'Pre-shoot planning, the session itself, professional retouching and a private online gallery with high-resolution downloads.' },
-    { q: 'How long until I get my photos?', a: 'Edited galleries are delivered within 7 to 14 days depending on the scope of the project.' },
-    { q: 'Do you travel for shoots?', a: 'Absolutely — I work locally and am available worldwide for the right project.' },
-    { q: 'Can I order prints?', a: 'Yes, fine-art prints and albums are available as add-ons in premium quality, hand-checked before shipping.' },
+    { q: 'Comment réserver une séance ?', a: 'Écrivez-moi via le formulaire de contact ou par email, partagez votre vision et vos dates — je vous envoie une proposition sur mesure sous 48 h.' },
+    { q: 'Que comprend une séance ?', a: 'La préparation en amont, la séance elle-même, la retouche professionnelle et une galerie privée en ligne avec téléchargements haute définition.' },
+    { q: 'Sous quel délai vais-je recevoir mes photos ?', a: 'Les galeries retouchées sont livrées sous 7 à 14 jours selon l’ampleur du projet.' },
+    { q: 'Vous déplacez-vous ?', a: 'Absolument — je travaille localement et me déplace partout dans le monde pour les beaux projets.' },
+    { q: 'Puis-je commander des tirages ?', a: 'Oui — tirages fine-art et albums sont disponibles en option, en qualité premium, vérifiés à la main avant expédition.' },
   ] as Faq[],
 
   // Galerie — liste des vignettes (chemins relatifs réécrits en absolus au dump).
@@ -207,10 +207,10 @@ const DEFAULT_CONTENT = {
       title: 'Portfolio — Alice R',
       meta: { description: 'Une sélection de séances portraits, mariages et éditoriaux.' },
       content: {
-        title: 'Through my lens',
-        intro: 'A selection of recent stories — portraits, weddings, editorials.',
+        title: 'À travers mon objectif',
+        intro: 'Une sélection d’histoires récentes — portraits, mariages, éditoriaux.',
         galleries: [
-          { category: 'Selected work', images: [10, 11, 12, 13, 1, 2, 3, 4, 5, 6, 7, 8].map(img) },
+          { category: 'Sélection', images: [10, 11, 12, 13, 1, 2, 3, 4, 5, 6, 7, 8].map(img) },
           { category: 'Portraits', images: [1, 7, 8, 9, 4].map(img) },
         ],
       },
@@ -233,14 +233,14 @@ const DEFAULT_CONTENT = {
       title: 'Contact — Alice R',
       meta: { description: 'Réservez votre séance photo avec Alice R.' },
       content: {
-        title: 'Let’s create something together',
-        intro: 'Tell me about your project and preferred dates — I reply within 48 hours.',
+        title: 'Créons quelque chose ensemble',
+        intro: 'Parlez-moi de votre projet et de vos dates — je réponds sous 48 h.',
         email: 'hello@alicer.studio',
-        zones: ['Paris', 'Worldwide on request'],
+        zones: ['Paris', 'Monde entier sur demande'],
         pricing: [
-          { name: 'Portrait Session', price: 'from €350', detail: '1h studio or outdoor, 20 edited photos' },
-          { name: 'Weddings & Events', price: 'from €1 800', detail: 'Full-day coverage, private gallery' },
-          { name: 'Brand & Editorial', price: 'on quote', detail: 'Half or full-day shoot, usage rights' },
+          { name: 'Séance portrait', price: 'dès 350 €', detail: '1 h en studio ou en extérieur, 20 photos retouchées' },
+          { name: 'Mariages & événements', price: 'dès 1 800 €', detail: 'Journée complète, galerie privée' },
+          { name: 'Marque & éditorial', price: 'sur devis', detail: 'Demi-journée ou journée, droits d’usage inclus' },
         ],
         faqs: HOME_CONTENT.faqs,
       },
