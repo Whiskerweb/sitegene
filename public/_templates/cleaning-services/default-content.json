@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Neatly – Local Cleaning Services You Can Count On",
-    "description": "Professional home cleaning services you can truly trust and rely on. Book online in minutes."
+    "title": "Neatly – Services de Nettoyage de Confiance près de Chez Vous",
+    "description": "Nettoyage professionnel pour la maison, fiable et sur mesure. Réservez en ligne en quelques clics et profitez d’un intérieur impeccable."
   },
   "brand": "Neatly",
   "topbar": {
@@ -10,205 +10,205 @@
   },
   "nav": {
     "links": [
-      "About",
+      "À propos",
       "Services",
-      "Blogs",
+      "Blog",
       "Contact"
     ],
-    "cta": "Book Now"
+    "cta": "Réserver maintenant"
   },
   "hero": {
     "rating": "4.7",
-    "ratingText": "Trusted reviews from Google & Yelp!",
-    "title": "Local Cleaning Services You Can Count On",
-    "tagline": "Experience the ultimate in professional home cleaning services that you can truly trust and rely on.",
-    "cta": "Call us: +403-394-9940",
+    "ratingText": "Avis vérifiés Google & Yelp",
+    "title": "Des Services de Nettoyage Fiables et Professionnels",
+    "tagline": "Des prestations de nettoyage haut de gamme pour votre maison, alliant fiabilité, qualité et respect de l’environnement.",
+    "cta": "Appelez-nous : +403-394-9940",
     "image": "/_templates/cleaning-services/img/hero.jpg"
   },
-  "badge": "We're a top-notch 5-star contractor!",
+  "badge": "Prestataire premium noté 5 étoiles !",
   "services": {
-    "label": "Eco-Friendly Cleaning",
+    "label": "Nettoyage Écologique",
     "items": [
       {
-        "title": "Eco-Friendly Cleaning",
-        "desc": "We proudly offer eco-friendly cleaning options using safer products that don't compromise on results.",
+        "title": "Nettoyage Écoresponsable",
+        "desc": "Des solutions de nettoyage écologiques, utilisant des produits sûrs et performants, pour un intérieur sain sans compromis.",
         "image": "/_templates/cleaning-services/img/service-spray.jpg"
       },
       {
-        "title": "Regular Home Cleaning",
-        "desc": "Our regular cleaning service keeps your home consistently clean and comfortable.",
+        "title": "Nettoyage Régulier",
+        "desc": "Un service sur mesure pour maintenir votre maison propre et accueillante, semaine après semaine.",
         "image": "/_templates/cleaning-services/img/service-vacuuming.jpg"
       },
       {
-        "title": "Floor Cleaning & Care",
-        "desc": "We clean all kinds of floors using safe and eco-friendly methods that really work.",
+        "title": "Entretien des Sols",
+        "desc": "Nettoyage et soin de tous types de sols avec des méthodes douces et écologiques, pour un résultat impeccable.",
         "image": "/_templates/cleaning-services/img/service-floor.jpg"
       },
       {
-        "title": "Kitchen Cleaning",
-        "desc": "Our regular cleaning service keeps your home consistently clean and comfortable.",
+        "title": "Nettoyage de Cuisine",
+        "desc": "Un service minutieux pour une cuisine étincelante, alliant propreté irréprochable et respect des normes d’hygiène.",
         "image": "/_templates/cleaning-services/img/service-detail.jpg"
       }
     ]
   },
   "trust": {
-    "paragraph": "Every cleaner is meticulously background-checked and thoroughly trained before entering your home. We don't compromise on who we send, so you can feel completely confident about safety, professionalism, and respect for your personal space."
+    "paragraph": "Chaque professionnel est rigoureusement sélectionné, formé et vérifié avant d’intervenir chez vous. Nous garantissons des agents dignes de confiance, respectueux de votre espace et de votre sécurité."
   },
   "howItWorks": {
-    "title": "How Neatly Works",
-    "subtitle": "Please select the service you want, choose a date, and let us know how long you need it for in minutes.",
+    "title": "Comment ça marche ?",
+    "subtitle": "Choisissez votre service, sélectionnez une date et indiquez la durée nécessaire. C’est simple et rapide.",
     "steps": [
       {
         "number": "1.",
-        "title": "Book Your Cleaning",
-        "desc": "Choose your service, select a date, and specify how long you need in total minutes."
+        "title": "Réservez en Ligne",
+        "desc": "Sélectionnez le service souhaité, choisissez une date et précisez la durée en quelques clics."
       },
       {
         "number": "2.",
-        "title": "We Handle the Cleaning",
-        "desc": "A trusted, trained, background-checked professional cleans your home with care."
+        "title": "Nettoyage Professionnel",
+        "desc": "Un expert formé et vérifié intervient chez vous pour un nettoyage soigné et efficace."
       },
       {
         "number": "3.",
-        "title": "Enjoy a Fresh Home",
-        "desc": "Kick back and enjoy a chill, comfy spot where you can relax and feel right at home."
+        "title": "Profitez de Votre Intérieur",
+        "desc": "Détendez-vous dans un espace propre et rafraîchi, où tout est pensé pour votre confort."
       }
     ]
   },
   "stats": [
     {
       "value": "4.7",
-      "label": "Average Rating"
+      "label": "Note Moyenne"
     },
     {
       "value": "1.2k+",
-      "label": "Homes Cleaned"
+      "label": "Maisons Nettoyées"
     },
     {
       "value": "300+",
-      "label": "Regular Clients"
+      "label": "Clients Fidèles"
     },
     {
       "value": "100%",
-      "label": "Background-Checked Staff"
+      "label": "Équipe Vérifiée"
     }
   ],
   "whyUs": {
-    "title": "Save Your Time",
-    "subtitle": "We clean so you don't have to. Get your valuable time back for work, family, or much-needed rest.",
+    "title": "Gagnez du Temps",
+    "subtitle": "Confiez-nous le ménage et consacrez votre temps à ce qui compte vraiment : travail, famille ou détente.",
     "image": "/_templates/cleaning-services/img/why-us.jpg",
     "features": [
       {
-        "title": "Save Time Every Week",
-        "desc": "Hiring a professional to clean your space effectively frees up your valuable time for work, family, or relaxation."
+        "title": "Temps Libre Garanti",
+        "desc": "Un service professionnel vous libère des tâches ménagères pour profiter pleinement de votre journée."
       },
       {
-        "title": "Feel Safe Letting Us In",
-        "desc": "Every cleaner is background-checked and vetted so you always feel secure."
+        "title": "Sécurité et Sérénité",
+        "desc": "Nos agents sont soigneusement sélectionnés et formés pour intervenir en toute confiance chez vous."
       },
       {
-        "title": "Simple, Stress-Free Booking",
-        "desc": "Book in minutes online. No calls, no hassle. Just pick your slot and we handle the rest."
+        "title": "Réservation Simplifiée",
+        "desc": "Réservez en quelques minutes en ligne, sans appel ni complication. Nous nous occupons de tout."
       },
       {
-        "title": "Trusted by Happy Customers",
-        "desc": "Hundreds of 5-star reviews from homeowners and professionals across the city."
+        "title": "Recommandés par nos Clients",
+        "desc": "Des centaines d’avis 5 étoiles de la part de particuliers et professionnels satisfaits dans toute la région."
       }
     ]
   },
   "testimonials": {
-    "title": "Trusted by Happy Customers",
-    "subtitle": "After the cleaning, the house didn't just look clean—it felt clean. The air felt fresher, and everything was more comfortable.",
+    "title": "Ils Nous Recommandent",
+    "subtitle": "Après notre passage, votre maison n’est pas seulement propre : elle respire la fraîcheur et le bien-être.",
     "items": [
       {
-        "quote": "I work long hours and struggle to keep things tidy. This service made it easy, and the cleaner did a fantastic job without rushing.",
+        "quote": "Je travaille beaucoup et j’avais du mal à tout gérer. Ce service a tout changé : l’agent a fait un travail remarquable, sans précipitation.",
         "author": "Daniel Carter",
         "role": "Software Engineer"
       },
       {
-        "quote": "I've tried several cleaning services, but this one is the most reliable. Booking was easy, they were on time, and the house felt clean.",
+        "quote": "J’ai testé plusieurs services, mais celui-ci est le plus fiable. Réservation simple, ponctualité et résultat impeccable.",
         "author": "Sarah Mitchell",
         "role": "Marketing Manager"
       },
       {
-        "quote": "I used their cleaning service, and it looked absolutely fantastic. The property was ready for viewing the very same day.",
+        "quote": "J’ai fait appel à eux pour un nettoyage complet, et le résultat était exceptionnel. La maison était prête pour une visite le jour même.",
         "author": "Michael Thompson",
         "role": "Real Estate Agent"
       },
       {
-        "quote": "I'm particular about cleanliness, and they met my expectations. Attention to detail was noticeable, especially in the kitchen space.",
+        "quote": "Je suis très exigeante sur la propreté, et ils ont dépassé mes attentes. Leur minutie, surtout en cuisine, était impressionnante.",
         "author": "Emily Rogers",
         "role": "Interior Designer"
       },
       {
-        "quote": "The team was super friendly and really professional. They went the extra mile to make everything shine. Totally recommend them!",
+        "quote": "L’équipe était sympathique et ultra-professionnelle. Ils ont tout fait briller avec soin. Je les recommande sans hésiter !",
         "author": "James Wilson",
         "role": "Project Manager"
       }
     ]
   },
   "features": {
-    "title": "Reliable & On Time",
-    "subtitle": "Our cleaners always show up right on time, so your day stays on track and everything keeps running smoothly.",
+    "title": "Fiabilité et Ponctualité",
+    "subtitle": "Nos professionnels interviennent toujours à l’heure pour que votre journée se déroule sans imprévu.",
     "items": [
-      "Consistent Results You Can Rely On",
-      "Flexible to Fit Your Lifestyle",
-      "Results That Feel Different",
-      "A Healthier Home Environment"
+      "Des Résultats Constants et Fiables",
+      "Adaptés à Votre Rythme de Vie",
+      "Un Nettoyage Qui Fait la Différence",
+      "Un Environnement Plus Sain chez Vous"
     ]
   },
   "faq": {
-    "title": "Frequently Asked Questions",
-    "subtitle": "Booking your cleaning is super easy! Just hop on our website, pick your service, choose a date and time, and you're all set.",
+    "title": "Questions Fréquentes",
+    "subtitle": "Réserver est ultra-simple : choisissez votre service, sélectionnez une date et une heure, et validez en quelques clics.",
     "items": [
       {
-        "question": "How do I book a cleaning?",
-        "answer": "Booking online is a breeze and takes only a few minutes. Simply choose your desired service, select a convenient date and time, and confirm your booking instantly with just a few clicks."
+        "question": "Comment réserver un nettoyage ?",
+        "answer": "La réservation en ligne est rapide : sélectionnez le service, choisissez une date et une heure, puis confirmez en quelques étapes."
       },
       {
-        "question": "Are your cleaners trained and background-checked?",
-        "answer": "Yes — every cleaner goes through a thorough background check and training program before being assigned to any client's home."
+        "question": "Vos agents sont-ils formés ?",
+        "answer": "Oui, chaque agent est vérifié, formé et préparé pour intervenir chez vous en toute sécurité et professionnalisme."
       },
       {
-        "question": "What cleaning supplies do you use?",
-        "answer": "We use eco-friendly, non-toxic cleaning products that are safe for children, pets, and the environment, without compromising on results."
+        "question": "Quels produits utilisez-vous ?",
+        "answer": "Nous utilisons des produits écologiques et non toxiques, sûrs pour les enfants, les animaux et l’environnement, sans sacrifier l’efficacité."
       },
       {
-        "question": "What if I'm not satisfied with the cleaning?",
-        "answer": "Your satisfaction is our priority. If you're not happy with the results, contact us within 24 hours and we'll send a team back to re-clean at no extra charge."
+        "question": "Que faire en cas d’insatisfaction ?",
+        "answer": "Votre satisfaction est notre priorité. Si le résultat ne vous convient pas, contactez-nous sous 24h pour une reprise gratuite."
       }
     ]
   },
   "cta": {
-    "title": "Let's Clean Your Place",
-    "subtitle": "Stop stressing over cleaning and start enjoying life more! Let our dedicated crew take care of all the chores for you.",
+    "title": "Un Intérieur Impeccable",
+    "subtitle": "Oubliez le stress du ménage et profitez pleinement de votre temps libre. Notre équipe s’occupe de tout.",
     "phone": "+403-394-9940",
-    "caption": "We provide professional cleaning with attention to detail, making your space shine every day."
+    "caption": "Un nettoyage professionnel et méticuleux pour un intérieur qui respire la propreté au quotidien."
   },
   "footer": {
-    "tagline": "We provide professional cleaning with attention to detail, making your space shine every day.",
+    "tagline": "Un nettoyage professionnel et méticuleux pour un intérieur qui respire la propreté au quotidien.",
     "columns": [
       {
-        "heading": "Company",
+        "heading": "Entreprise",
         "links": [
-          "Home",
-          "About Us",
-          "Blogs"
+          "Accueil",
+          "Qui sommes-nous",
+          "Articles"
         ]
       },
       {
-        "heading": "More",
+        "heading": "Autres",
         "links": [
-          "Services",
-          "Contact",
-          "Book"
+          "Nos services",
+          "Contactez-nous",
+          "Réserver"
         ]
       },
       {
-        "heading": "Legal & Policy",
+        "heading": "Mentions légales",
         "links": [
-          "Privacy Policy",
-          "Terms and Conditions"
+          "Politique de confidentialité",
+          "Conditions générales"
         ]
       }
     ],

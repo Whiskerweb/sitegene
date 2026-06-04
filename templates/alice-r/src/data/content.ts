@@ -187,7 +187,7 @@ const DEFAULT_CONTENT = {
       { label: 'Contact', to: '/contact' },
     ],
     footer: {
-      title: 'Every Frame Tells a Story. Let’s Create Yours.',
+      title: 'Chaque image raconte une histoire. Écrivons la vôtre.',
       email: 'hello@alicer.studio',
       socials: ['Instagram', 'Pinterest', 'Behance'],
     },
