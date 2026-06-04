@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-sg-path="meta.title">Ocean West Studio | Contact</title>
+  <meta name="description" data-sg-path="meta.description" content="Luxury wedding photography & cinematography — capturing authentic stories worldwide.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CDN: Tailwind + GSAP + ScrollTrigger -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Iconify for FAQ icons -->
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:     '#0A0A0A',
+            inkDeep: '#020617',
+            bg:      '#FAF8F5',
+            bgLight: '#f9f9f9',
+            accent:  '#455CE9',
+            sage:    '#738065',
+            muted:   '#333333',
+          },
+          fontFamily: {
+            sans: ['"Google Sans Flex"', 'Arial', 'sans-serif'],
+            narrow: ['"Arial Narrow"', 'Arial', 'sans-serif'],
+          },
+          letterSpacing: {
+            wide2: '0.2em',
+            wide15: '0.15em',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Google Sans Flex', Arial, sans-serif; }
+    .font-narrow { font-family: 'Arial Narrow', Arial, sans-serif; }
+
+    /* FAQ details marker */
+    details summary::-webkit-details-marker { display: none; }
+
+    /* Custom select arrow */
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1.5rem;
+    }
+  </style>
+
+  <!-- ============================================================
+       SINGLE SOURCE OF TRUTH — edit here or via Akyra editor
+       ============================================================ -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+  "meta": {
+    "title": "Ocean West Studio | Photographie de Mariage de Luxe",
+    "description": "Photographie et cinématographie de mariage haut de gamme — capturer des histoires authentiques à travers le monde."
+  },
+  "brand": "Ocean West Studio",
+  "spinningBadge": "MARIAGES • FILMS • PHOTOGRAPHIE • OCEAN WEST STUDIO •",
+  "nav": [
+    "Accueil",
+    "Mini-séances",
+    "Prestations",
+    "Portfolio",
+    "À propos",
+    "Contact"
+  ],
+  "hero": {
+    "title1": "Mariage",
+    "title2": "Photographie",
+    "tagline": "Si vous cherchez un photographe de mariage authentique, capable de saisir l’essence de votre histoire et de vos émotions, vous êtes au bon endroit. En tant que photographe haut de gamme, je vais bien au-delà des images traditionnelles pour créer des souvenirs uniques et inoubliables.",
+    "image": "/_templates/luxury-wedding/img/hero.jpg"
+  },
+  "logos": {
+    "label": "Élégance mise en avant",
+    "items": [
+      "VOGUE",
+      "Brides",
+      "Style Me Pretty",
+      "The Knot"
+    ]
+  },
+  "philosophy": {
+    "text": "Pas de panique ! Je comprends vos inquiétudes et je suis là pour vous simplifier les choses. Mon équipe et moi vous aiderons à vous sentir <em>à l’aise, naturels</em> et à <em>profiter</em> de chaque instant. Notre objectif ? Restituer qui vous êtes vraiment, de la manière la plus <em>authentique</em> possible, capturer toute l’excitation, les larmes, la joie, et créer des photos et vidéos qui dureront <em>pour toujours</em>.",
+    "imageRight": "/_templates/luxury-wedding/img/philosophy-portrait.jpg",
+    "imageLeft": "/_templates/luxury-wedding/img/philosophy-portrait-left.jpg"
+  },
+  "team": {
+    "label": "Les Fondateurs",
+    "heading1": "Vision & Savoir-faire",
+    "heading2": "Derrière l’objectif",
+    "intro": "Depuis plus de dix ans, nous documentons des histoires d’amour aux quatre coins du monde. Notre approche allie la précision éditoriale à l’intuition brute du reportage. Nous ne prenons pas simplement des photos : nous créons des héritages.",
+    "members": [
+      {
+        "name": "Heena Malhotra",
+        "role": "Lead Photographer",
+        "bio": "Elena apporte un regard éditorial et une approche discrète, garantissant que chaque image soit composée avec intention pour immortaliser l’atmosphère éphémère et les regards furtifs de votre journée.",
+        "image": "/_templates/luxury-wedding/img/team-photographer.jpg"
+      },
+      {
+        "name": "Eddie Licea",
+        "role": "Lead Cinematographer",
+        "bio": "Julian transforme l’émotion brute en héritages cinématographiques. Son approche narrative met en valeur l’architecture grandiose et l’énergie dynamique de votre célébration.",
+        "image": "/_templates/luxury-wedding/img/team-cinematographer.jpg"
+      }
+    ]
+  },
+  "services": {
+    "label": "Prestations",
+    "intro": "Nos solutions sont conçues sur mesure pour s’adapter à la vision unique de votre célébration, alliant art, fiabilité et élégance à chaque étape de votre parcours.",
+    "items": [
+      {
+        "title": "Images Éditoriales & Intemporelles",
+        "desc": "Des photographies soigneusement sélectionnées, capturant aussi bien les grands moments que les détails discrets. Nous privilégions la lumière naturelle, des compositions raffinées et l’émotion brute pour créer un héritage visuel qui vous ressemble.",
+        "category": "Photographie",
+        "image": "/_templates/luxury-wedding/img/service-photography.jpg"
+      },
+      {
+        "title": "Films Cinématographiques & Émotionnels",
+        "desc": "Des portraits animés qui racontent le récit de votre journée. Nous réalisons des films élégants et chargés d’émotion, accompagnés d’une bande-son sur mesure, pour préserver l’atmosphère, les vœux échangés et l’énergie dynamique de votre célébration.",
+        "category": "Vidéographie",
+        "image": "/_templates/luxury-wedding/img/service-videography.jpg"
+      },
+      {
+        "title": "Retransmission en Direct de Mariage",
+        "desc": "Partagez vos moments les plus précieux en temps réel avec vos proches, où qu’ils soient dans le monde. Nous assurons une diffusion multi-caméras avec une qualité audio optimale pour que personne ne manque votre célébration.",
+        "category": "Retransmission",
+        "image": "/_templates/luxury-wedding/img/service-broadcasting.jpg"
+      }
+    ]
+  },
+  "portfolio": {
+    "heading1": "Sélection d’œuvres",
+    "subheading": "Moments que l’on revisite",
+    "intro": "Ces images sont choisies encore et encore, pour la beauté et l’émotion qu’elles dégagent. Observez, laissez-vous inspirer et ressentez — peut-être résonneront-elles en vous aujourd’hui et feront-elles partie de votre héritage.",
+    "caption1": {
+      "title": "Beauté discrète",
+      "body": "Des instants où l’élégance naturelle se révèle avec simplicité, assurance et sans artifice."
+    },
+    "caption2": {
+      "title": "Harmonie naturelle",
+      "body": "Des liens dont la forme, l’énergie et le rythme créent une profonde sensation d’harmonie au premier regard."
+    },
+    "gallery": [
+      {
+        "image": "/_templates/luxury-wedding/img/gallery-rings.jpg",
+        "alt": "Détail des alliances"
+      },
+      {
+        "image": "/_templates/luxury-wedding/img/gallery-bouquet.jpg",
+        "alt": "Détail du bouquet de la mariée"
+      },
+      {
+        "imageBlur": "/_templates/luxury-wedding/img/gallery-bride-blur.jpg",
+        "imageSharp": "/_templates/luxury-wedding/img/gallery-bride-sharp.jpg",
+        "alt": "Portrait de la mariée"
+      },
+      {
+        "image": "/_templates/luxury-wedding/img/gallery-table.jpg",
+        "alt": "Décoration de table de mariage"
+      },
+      {
+        "imageBlur": "/_templates/luxury-wedding/img/gallery-couple-blur.jpg",
+        "imageSharp": "/_templates/luxury-wedding/img/gallery-couple-sharp.jpg",
+        "alt": "Couple en marche"
+      },
+      {
+        "image": "/_templates/luxury-wedding/img/gallery-dancing.jpg",
+        "alt": "Danse de célébration"
+      },
+      {
+        "image": "/_templates/luxury-wedding/img/gallery-champagne.jpg",
+        "alt": "Toast au champagne"
+      },
+      {
+        "image": "/_templates/luxury-wedding/img/gallery-dress.jpg",
+        "alt": "Détail de la robe de mariée"
+      }
+    ]
+  },
+  "testimonial": {
+    "quote": "Faire appel à Ocean West a été le meilleur investissement que nous ayons fait. Leur présence était apaisante, et le résultat final mériterait les pages d’un magazine. Ils ont capturé notre amour exactement tel que nous l’avons vécu.",
+    "name": "Eleanor & James",
+    "venue": "Château de Villette, France"
+  },
+  "faq": {
+    "label": "Informations",
+    "heading": "Investissement & FAQ",
+    "items": [
+      {
+        "q": "Proposez-vous des forfaits sur mesure ?",
+        "a": "Oui ! Nous adaptons nos forfaits en fonction du nombre d’heures dont vous avez besoin."
+      },
+      {
+        "q": "Y a-t-il un acompte à verser ?",
+        "a": "Oui, nous demandons un contrat signé et un acompte non remboursable de 30 % pour réserver votre date et ga"
+      },
+      {
+        "q": "Combien de temps faut-il attendre pour recevoi",
+        "a": "Pour une célébration d’une journée complète, vous recevrez votre galerie soigneusement sélectionnée et vot"
+      },
+      {
+        "q": "Fournissez-vous les fichiers bruts ?",
+        "a": "Non, nous ne fournissons pas les fichiers bruts. Notre processus de retouche et d’étalonnage des couleurs "
+      },
+      {
+        "q": "Pouvons-nous demander des prises de vue spécif",
+        "a": "Absolument. Avant votre célébration, nous vous enverrons un questionnaire détaillé pour recueillir vos dem"
+      }
+    ]
+  },
+  "contact": {
+    "heading": "Commencez votre aventure",
+    "intro": "Nous acceptons un nombre limité de projets chaque année pour garantir à chaque couple une attention et un savoir-faire exceptionnels. Veuillez partager les détails de votre célébration ci-dessous.",
+    "email": "hello@oceanweststudio.com",
+    "location": "Seattle / Monde entier"
+  },
+  "portfolioPage": {
+    "title": "Portfolio",
+    "intro": "Une sélection de mariages que nous avons eu l’honneur d’immortaliser. Des regards, des gestes, des lumières — chaque image est un fragment d’une histoire vraie, façonnée avec patience et émotion.",
+    "images": [
+      "/_templates/luxury-wedding/img/gallery-rings.jpg",
+      "/_templates/luxury-wedding/img/gallery-bouquet.jpg",
+      "/_templates/luxury-wedding/img/gallery-bride-sharp.jpg",
+      "/_templates/luxury-wedding/img/gallery-table.jpg",
+      "/_templates/luxury-wedding/img/gallery-couple-sharp.jpg",
+      "/_templates/luxury-wedding/img/gallery-dancing.jpg",
+      "/_templates/luxury-wedding/img/gallery-champagne.jpg",
+      "/_templates/luxury-wedding/img/gallery-dress.jpg",
+      "/_templates/luxury-wedding/img/service-photography.jpg",
+      "/_templates/luxury-wedding/img/service-videography.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Contact",
+    "intro": "Parlons de votre célébration. Racontez-nous votre histoire, votre lieu, votre date — nous reviendrons vers vous avec attention et nos disponibilités.",
+    "email": "hello@oceanweststudio.com",
+    "phone": "+33 1 84 80 00 00"
+  }
+};
+  </script>
+</head>
+
+<body class="antialiased text-white bg-ink" style="-webkit-font-smoothing:antialiased;">
+
+  <!-- ============================================================
+       NAVIGATION
+       ============================================================ -->
+  <nav class="z-50 text-white w-full absolute top-0" data-sg-reveal>
+    <div class="flex h-28 max-w-[100rem] ml-auto mr-auto pl-6 pr-6 lg:px-12 items-center justify-between">
+
+      <!-- Left links -->
+      <div class="hidden lg:flex items-center justify-end space-x-6 xl:space-x-10 w-2/5">
+        <a href="#" data-sg-page="/" class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap" data-sg-path="nav[0]">Home</a>
+        <a href="#" data-sg-page="/" class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap" data-sg-path="nav[2]">Services</a>
+      </div>
+
+      <!-- Center logo (SVG — two overlapping circles) -->
+      <div class="flex w-1/5 justify-center">
+        <a href="#" data-sg-page="/" class="inline-block hover:opacity-80 transition-opacity">
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="21" cy="24" r="14" stroke="white" stroke-width="1.5"/>
+            <circle cx="27" cy="24" r="14" stroke="white" stroke-width="1.5"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Right links -->
+      <div class="hidden lg:flex w-2/5 space-x-6 xl:space-x-10 items-center justify-start">
+        <a href="#" data-sg-page="portfolio" class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap" data-sg-path="nav[3]">Portfolio •</a>
+        <a href="#" data-sg-page="contact" class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap" data-sg-path="nav[5]">Contact</a>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <div class="lg:hidden flex w-2/5 items-center justify-end">
+        <button class="text-white text-3xl" aria-label="Menu">&#9776;</button>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ============================================================
+       PAGE HEADER
+       ============================================================ -->
+  <section class="bg-ink text-white pt-44 pb-16 md:pt-52 md:pb-20 border-b border-white/5" data-sg-reveal>
+    <div class="max-w-[100rem] mx-auto px-6 lg:px-12">
+      <span class="uppercase block text-sm font-thin text-gray-500 tracking-[0.2em] mb-8">Ocean West Studio</span>
+      <h1 class="text-6xl sm:text-7xl lg:text-[7rem] font-thin text-white tracking-tighter leading-[0.9] mb-10"
+          data-sg-path="contactPage.title">Contact</h1>
+      <p class="text-xl lg:text-2xl leading-relaxed text-gray-400 font-thin max-w-2xl"
+         data-sg-path="contactPage.intro">
+        Parlons de votre célébration.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       CONTACT DETAILS + REASSURANCE
+       ============================================================ -->
+  <section class="md:py-32 bg-ink text-white pt-20 pb-24">
+    <div class="max-w-[90rem] mx-auto px-6 lg:px-12 grid lg:grid-cols-5 gap-16 lg:gap-24 items-start">
+
+      <!-- Left: coordinates -->
+      <div class="lg:col-span-2" data-sg-reveal>
+        <h2 class="font-narrow text-4xl md:text-5xl tracking-tighter text-white font-thin mb-10 leading-tight">
+          <em class="font-extralight">Écrivez</em>-nous
+        </h2>
+
+        <div class="space-y-10">
+          <!-- Email -->
+          <div>
+            <span class="uppercase text-xs font-thin text-gray-500 tracking-[0.2em] block mb-3">Email</span>
+            <a href="mailto:hello@oceanweststudio.com"
+               class="text-2xl lg:text-3xl font-thin text-white hover:text-gray-300 transition-colors break-all"
+               data-sg-path="contactPage.email">hello@oceanweststudio.com</a>
+          </div>
+
+          <!-- Phone -->
+          <div>
+            <span class="uppercase text-xs font-thin text-gray-500 tracking-[0.2em] block mb-3">Téléphone</span>
+            <span class="text-2xl lg:text-3xl font-thin text-white"
+                  data-sg-path="contactPage.phone">+33 1 84 80 00 00</span>
+          </div>
+
+          <!-- Location -->
+          <div>
+            <span class="uppercase text-xs font-thin text-gray-500 tracking-[0.2em] block mb-3">Studio</span>
+            <span class="text-lg font-extralight text-gray-300" data-sg-path="contact.location">Seattle / Monde entier</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: reassurance blocks -->
+      <div class="lg:col-span-3 grid sm:grid-cols-2 gap-px bg-white/10 border border-white/10" data-sg-reveal>
+
+        <div class="bg-ink p-8 lg:p-10">
+          <iconify-icon icon="solar:map-point-linear" class="text-3xl text-sage mb-6 block"></iconify-icon>
+          <h3 class="text-sm uppercase tracking-[0.2em] text-white font-extralight mb-4">Zones d’intervention</h3>
+          <p class="text-base font-extralight text-gray-400 leading-relaxed">
+            Basés en Île-de-France, nous nous déplaçons partout en France et à l’international. Les célébrations en destination sont notre passion.
+          </p>
+        </div>
+
+        <div class="bg-ink p-8 lg:p-10">
+          <iconify-icon icon="solar:clock-circle-linear" class="text-3xl text-sage mb-6 block"></iconify-icon>
+          <h3 class="text-sm uppercase tracking-[0.2em] text-white font-extralight mb-4">Délai de réponse</h3>
+          <p class="text-base font-extralight text-gray-400 leading-relaxed">
+            Nous répondons à chaque demande sous 48 heures ouvrées, avec une première proposition de disponibilités et de forfaits.
+          </p>
+        </div>
+
+        <div class="bg-ink p-8 lg:p-10">
+          <iconify-icon icon="solar:calendar-linear" class="text-3xl text-sage mb-6 block"></iconify-icon>
+          <h3 class="text-sm uppercase tracking-[0.2em] text-white font-extralight mb-4">Réservation</h3>
+          <p class="text-base font-extralight text-gray-400 leading-relaxed">
+            Nous acceptons un nombre limité de mariages chaque année. Réservez votre date tôt pour garantir notre disponibilité.
+          </p>
+        </div>
+
+        <div class="bg-ink p-8 lg:p-10">
+          <iconify-icon icon="solar:gallery-linear" class="text-3xl text-sage mb-6 block"></iconify-icon>
+          <h3 class="text-sm uppercase tracking-[0.2em] text-white font-extralight mb-4">Livraison</h3>
+          <p class="text-base font-extralight text-gray-400 leading-relaxed">
+            Galerie soigneusement sélectionnée et film cinématographique livrés sous 8 à 10 semaines après votre célébration.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       INQUIRY FORM
+       ============================================================ -->
+  <section class="py-24 md:py-32 bg-inkDeep text-white border-t border-white/5" data-sg-reveal>
+    <div class="max-w-3xl mx-auto px-6 lg:px-12">
+      <h2 class="font-narrow text-4xl md:text-5xl tracking-tighter text-white font-thin mb-12 leading-tight text-center"
+          data-sg-path="contact.heading">Commencez votre aventure</h2>
+
+      <form class="space-y-12" onsubmit="return false;">
+        <div class="grid md:grid-cols-2 gap-10">
+          <div>
+            <label class="block text-sm uppercase tracking-[0.2em] text-gray-500 mb-3 font-extralight">Nom &amp; Prénom</label>
+            <input type="text" class="w-full bg-transparent border-b border-gray-700 py-3 text-2xl text-white font-thin focus:border-white focus:outline-none transition-colors" required>
+          </div>
+          <div>
+            <label class="block text-sm uppercase tracking-[0.2em] text-gray-500 mb-3 font-extralight">Adresse email</label>
+            <input type="email" class="w-full bg-transparent border-b border-gray-700 py-3 text-2xl text-white font-thin focus:border-white focus:outline-none transition-colors" required>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-10">
+          <div>
+            <label class="block text-sm uppercase tracking-[0.2em] text-gray-500 mb-3 font-extralight">Date du mariage</label>
+            <input type="text" class="w-full bg-transparent border-b border-gray-700 py-3 text-2xl text-white font-thin focus:border-white focus:outline-none transition-colors" placeholder="JJ/MM/AAAA">
+          </div>
+          <div>
+            <label class="block text-sm uppercase tracking-[0.2em] text-gray-500 mb-3 font-extralight">Prestation souhaitée</label>
+            <select class="w-full bg-transparent border-b border-gray-700 py-3 text-2xl text-white font-thin focus:border-white focus:outline-none transition-colors cursor-pointer">
+              <option value="full"   class="bg-ink text-white">Expérience complète (Photo, Vidéo, Direct)</option>
+              <option value="photo"  class="bg-ink text-white">Photographie</option>
+              <option value="video"  class="bg-ink text-white">Vidéographie</option>
+              <option value="stream" class="bg-ink text-white">Retransmission en direct</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm uppercase tracking-[0.2em] text-gray-500 mb-3 font-extralight">Parlez-nous de votre vision</label>
+          <textarea rows="4" class="w-full bg-transparent border-b border-gray-700 py-3 text-2xl text-white font-thin focus:border-white focus:outline-none transition-colors resize-none"></textarea>
+        </div>
+
+        <button type="submit"
+                class="w-full md:w-auto bg-white text-ink px-12 py-4 text-sm uppercase tracking-[0.2em] font-thin hover:bg-gray-200 transition-colors duration-300 flex items-center gap-3">
+          Envoyer ma demande
+          <iconify-icon icon="solar:arrow-right-linear" class="text-base"></iconify-icon>
+        </button>
+      </form>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FAQ (réutilise les chemins existants)
+       ============================================================ -->
+  <section class="py-24 md:py-32 bg-white border-t border-ink/10" data-sg-reveal>
+    <div class="max-w-4xl mx-auto px-6 lg:px-12">
+      <div class="mb-16 md:mb-20 text-center">
+        <span class="uppercase tracking-[0.2em] text-sm font-thin text-gray-500 mb-4 block"
+              data-sg-path="faq.label">Informations</span>
+        <h2 class="font-narrow text-5xl md:text-6xl tracking-tighter text-ink font-thin"
+            data-sg-path="faq.heading">Investissement &amp; FAQ</h2>
+      </div>
+
+      <div class="space-y-6">
+
+        <details class="group border-b border-ink/10 pb-6">
+          <summary class="flex items-center justify-between cursor-pointer list-none">
+            <h3 class="text-sm md:text-base uppercase tracking-[0.2em] text-ink font-extralight pr-4"
+                data-sg-path="faq.items[0].q">Proposez-vous des forfaits sur mesure ?</h3>
+            <span class="relative flex-shrink-0 ml-1.5 w-6 h-6 flex items-center justify-center">
+              <iconify-icon icon="solar:add-linear" class="absolute text-xl text-ink opacity-70 group-open:opacity-0 transition-opacity duration-300"></iconify-icon>
+              <iconify-icon icon="solar:minus-linear" class="absolute text-xl text-ink opacity-0 group-open:opacity-70 transition-opacity duration-300"></iconify-icon>
+            </span>
+          </summary>
+          <div class="mt-6 text-gray-600 font-extralight text-lg leading-relaxed">
+            <p data-sg-path="faq.items[0].a">Oui ! Nous adaptons nos forfaits en fonction du nombre d’heures dont vous avez besoin.</p>
+          </div>
+        </details>
+
+        <details class="group border-b border-ink/10 pb-6">
+          <summary class="flex items-center justify-between cursor-pointer list-none">
+            <h3 class="text-sm md:text-base uppercase tracking-[0.2em] text-ink font-extralight pr-4"
+                data-sg-path="faq.items[1].q">Y a-t-il un acompte à verser ?</h3>
+            <span class="relative flex-shrink-0 ml-1.5 w-6 h-6 flex items-center justify-center">
+              <iconify-icon icon="solar:add-linear" class="absolute text-xl text-ink opacity-70 group-open:opacity-0 transition-opacity duration-300"></iconify-icon>
+              <iconify-icon icon="solar:minus-linear" class="absolute text-xl text-ink opacity-0 group-open:opacity-70 transition-opacity duration-300"></iconify-icon>
+            </span>
+          </summary>
+          <div class="mt-6 text-gray-600 font-extralight text-lg leading-relaxed">
+            <p data-sg-path="faq.items[1].a">Oui, nous demandons un contrat signé et un acompte non remboursable de 30 %.</p>
+          </div>
+        </details>
+
+        <details class="group border-b border-ink/10 pb-6">
+          <summary class="flex items-center justify-between cursor-pointer list-none">
+            <h3 class="text-sm md:text-base uppercase tracking-[0.2em] text-ink font-extralight pr-4"
+                data-sg-path="faq.items[2].q">Combien de temps faut-il attendre pour recevoir nos images ?</h3>
+            <span class="relative flex-shrink-0 ml-1.5 w-6 h-6 flex items-center justify-center">
+              <iconify-icon icon="solar:add-linear" class="absolute text-xl text-ink opacity-70 group-open:opacity-0 transition-opacity duration-300"></iconify-icon>
+              <iconify-icon icon="solar:minus-linear" class="absolute text-xl text-ink opacity-0 group-open:opacity-70 transition-opacity duration-300"></iconify-icon>
+            </span>
+          </summary>
+          <div class="mt-6 text-gray-600 font-extralight text-lg leading-relaxed">
+            <p data-sg-path="faq.items[2].a">Pour une célébration d’une journée complète, vous recevrez votre galerie soigneusement sélectionnée et votre film sous 8 à 10 semaines.</p>
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="bg-inkDeep text-white py-16 border-t border-white/5">
+    <div class="max-w-[100rem] mx-auto px-6 lg:px-12 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+      <a href="#" data-sg-page="/" class="inline-flex items-center gap-4 hover:opacity-80 transition-opacity">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="21" cy="24" r="14" stroke="white" stroke-width="1.5"/>
+          <circle cx="27" cy="24" r="14" stroke="white" stroke-width="1.5"/>
+        </svg>
+        <span class="font-narrow text-2xl tracking-tighter text-white font-thin" data-sg-path="brand">Ocean West Studio</span>
+      </a>
+      <nav class="flex flex-wrap gap-x-8 gap-y-3">
+        <a href="#" data-sg-page="/" class="uppercase text-xs font-thin tracking-[0.2em] text-gray-400 hover:text-white transition-colors" data-sg-path="nav[0]">Accueil</a>
+        <a href="#" data-sg-page="portfolio" class="uppercase text-xs font-thin tracking-[0.2em] text-gray-400 hover:text-white transition-colors" data-sg-path="nav[3]">Portfolio</a>
+        <a href="#" data-sg-page="contact" class="uppercase text-xs font-thin tracking-[0.2em] text-gray-400 hover:text-white transition-colors" data-sg-path="nav[5]">Contact</a>
+      </nav>
+      <a href="mailto:hello@oceanweststudio.com" class="uppercase text-xs font-thin tracking-[0.2em] text-gray-300 hover:text-white transition-colors" data-sg-path="contactPage.email">hello@oceanweststudio.com</a>
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       HYDRATION + GSAP ANIMATIONS (standard Akyra block)
+       ============================================================ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      // Hydrate texts (innerHTML for richtext fields like philosophy)
+      var RICH_PATHS = new Set(['philosophy.text']);
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var path = el.getAttribute('data-sg-path');
+        var v = get(path);
+        if (v == null || typeof v === 'object') return;
+        if (RICH_PATHS.has(path)) el.innerHTML = v;
+        else el.textContent = v;
+      });
+      // Hydrate images (img.src or background-image)
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      // Animations: reveal + parallax (GSAP recreation, not 1:1 capture)
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, {
+            opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+          });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, {
+            yPercent: -15, ease: 'none',
+            scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+          });
+        });
+        // ROBUSTESSE : recalcule les positions après chargement des images
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        // Filet ultime anti-page-blanche
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

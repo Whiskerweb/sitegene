@@ -154,17 +154,20 @@
       {
         "title": "Masterclass : Tournages de Photographie de Paysage",
         "duration": "18 leçons",
-        "desc": "La formation commence par les bases pour trouver des lieux de prise de vue exceptionnels et couvre tout ce que vous devez savoir pour capturer de superbes photographies de paysage — cadrage, composition, réglages de l'appareil, positionnement, visualisation des prises de vue et bien plus encore."
+        "desc": "La formation commence par les bases pour trouver des lieux de prise de vue exceptionnels et couvre tout ce que vous devez savoir pour capturer de superbes photographies de paysage — cadrage, composition, réglages de l'appareil, positionnement, visualisation des prises de vue et bien plus encore.",
+        "image": "/_templates/landscape-prints/img/course1.jpg"
       },
       {
         "title": "Guide Ultime de la Photographie du Ciel Nocturne",
         "duration": "12 leçons",
-        "desc": "Tout ce qu'il faut savoir pour photographier l'astrophotographie — des meilleurs réglages à utiliser, trépieds et équipements, lieux de prise de vue, et comment créer de magnifiques images composites en post-production. Passez à la vitesse supérieure en photographie du ciel nocturne."
+        "desc": "Tout ce qu'il faut savoir pour photographier l'astrophotographie — des meilleurs réglages à utiliser, trépieds et équipements, lieux de prise de vue, et comment créer de magnifiques images composites en post-production. Passez à la vitesse supérieure en photographie du ciel nocturne.",
+        "image": "/_templates/landscape-prints/img/course2.jpg"
       },
       {
         "title": "L'Art de la Retouche pour les Paysages",
         "duration": "15 leçons",
-        "desc": "Un flux de travail de retouche complet et reproductible : création de masques de luminosité, étalonnage des couleurs pour l'ambiance, techniques de dodge & burn, et finalisation d'un fichier prêt pour l'impression, adapté à une présentation en galerie."
+        "desc": "Un flux de travail de retouche complet et reproductible : création de masques de luminosité, étalonnage des couleurs pour l'ambiance, techniques de dodge & burn, et finalisation d'un fichier prêt pour l'impression, adapté à une présentation en galerie.",
+        "image": "/_templates/landscape-prints/img/course3.jpg"
       }
     ]
   },
@@ -305,5 +308,29 @@
       "YouTube",
       "Behance"
     ]
+  },
+  "portfolioPage": {
+    "title": "Portfolio",
+    "intro": "Une sélection de paysages rapportés de mes expéditions — des fjords du Grand Nord aux déserts brûlés de lumière. Chaque image est le fruit d'une longue attente, à l'heure exacte où la nature se livre.",
+    "images": [
+      "/_templates/landscape-prints/img/g1.jpg",
+      "/_templates/landscape-prints/img/g4.jpg",
+      "/_templates/landscape-prints/img/g7.jpg",
+      "/_templates/landscape-prints/img/g2.jpg",
+      "/_templates/landscape-prints/img/g5.jpg",
+      "/_templates/landscape-prints/img/g8.jpg",
+      "/_templates/landscape-prints/img/g3.jpg",
+      "/_templates/landscape-prints/img/g6.jpg",
+      "/_templates/landscape-prints/img/g9.jpg",
+      "/_templates/landscape-prints/img/g10.jpg",
+      "/_templates/landscape-prints/img/g11.jpg",
+      "/_templates/landscape-prints/img/g12.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Contact",
+    "intro": "Tirages, commandes sur mesure, projets éditoriaux ou simple bonjour — écrivez-moi. Je réponds personnellement à chaque message, généralement sous 48 heures.",
+    "email": "hello@orinvale.com",
+    "phone": "+47 55 12 34 56"
   }
 }

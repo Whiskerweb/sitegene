@@ -12,6 +12,13 @@ const HTML_TEMPLATES = [
   "luxury-wedding",
   "wedding-fine-art",
   "jazz-vocalist",
+  // Photographes multi-pages (portfolio.html + contact.html)
+  "wedding-warm",
+  "portrait-fineart",
+  "portrait-lifestyle",
+  "photographer-freelance",
+  "photo-vintage",
+  "landscape-prints",
 ];
 
 function getPath(obj: unknown, path: string): unknown {

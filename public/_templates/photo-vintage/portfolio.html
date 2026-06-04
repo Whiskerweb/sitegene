@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-sg-path="meta.title">Halcyon Films | Vintage Photography Studio</title>
-  <meta name="description" data-sg-path="meta.description" content="Vintage-toned photography studio — weddings, engagements, maternity & brand shoots told with timeless, emotional storytelling.">
+  <title data-sg-path="meta.title">Halcyon Films | Studio Photo Vintage & Émotion</title>
+  <meta name="description" data-sg-path="meta.description" content="Studio photo aux tons vintage — mariages, fiançailles, grossesse et shooting de marque, sublimés par une narration intemporelle et pleine d’émotion.">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,26 +46,9 @@
     body { font-family: 'Archivo', Arial, sans-serif; }
     .font-serif { font-family: 'Libre Caslon Text', Georgia, serif; }
 
-    /* Floating hero photos */
-    .float-photo { box-shadow: 0 20px 50px rgba(0,0,0,0.35); }
-
-    /* Marquee */
-    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    .marquee-track { display: inline-flex; white-space: nowrap; animation: marquee 28s linear infinite; }
-
     /* Project image hover */
     .project-card img { transition: transform 1.4s cubic-bezier(0.16,1,0.3,1); }
     .project-card:hover img { transform: scale(1.06); }
-
-    /* Strip image hover */
-    .strip-cell img { transition: transform 1.2s ease-out, filter 0.8s ease; }
-    .strip-cell:hover img { transform: scale(1.05); }
-
-    /* Soft floating animation */
-    @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
-    .floaty   { animation: floaty 6s ease-in-out infinite; }
-    .floaty-2 { animation: floaty 7.5s ease-in-out infinite; }
-    .floaty-3 { animation: floaty 8.5s ease-in-out infinite; }
   </style>
 
   <!-- ============================================================
@@ -204,7 +187,7 @@
     "response": "Réponse sous 24 à 48 h ouvrées, avec une proposition personnalisée."
   }
 };
-</script>
+  </script>
 </head>
 
 <body class="antialiased bg-maroon text-peach" style="-webkit-font-smoothing:antialiased;">
@@ -225,137 +208,67 @@
 
 
   <!-- ============================================================
-       HERO
+       PAGE HEADER
        ============================================================ -->
-  <section class="relative min-h-screen bg-maroon overflow-hidden flex flex-col justify-center pt-28 pb-16">
-
-    <!-- Floating scattered photos -->
-    <img data-sg-img="hero.photo1" src="img/hero-1.jpg" alt=""
-         class="float-photo floaty absolute left-0 top-16 w-40 md:w-56 aspect-[3/4] object-cover rounded-sm rotate-[-6deg] opacity-95" data-sg-parallax>
-    <img data-sg-img="hero.photo2" src="img/hero-2.jpg" alt=""
-         class="float-photo floaty-2 absolute right-6 md:right-24 top-28 w-36 md:w-52 aspect-[3/4] object-cover rounded-sm rotate-[5deg] opacity-95" data-sg-parallax>
-    <img data-sg-img="hero.photo3" src="img/hero-3.jpg" alt=""
-         class="float-photo floaty-3 hidden md:block absolute left-[34%] bottom-12 w-40 lg:w-48 aspect-[3/4] object-cover rounded-sm rotate-[-3deg] opacity-95" data-sg-parallax>
-
+  <section class="relative bg-maroon overflow-hidden pt-36 md:pt-44 pb-20 md:pb-28">
     <div class="relative z-10 max-w-[100rem] mx-auto px-6 lg:px-12 w-full">
-      <!-- Badge subtitle -->
-      <p class="max-w-xs text-xs md:text-sm font-bold uppercase tracking-wide15 text-peach/90 mb-12 md:mb-20"
-         data-sg-path="hero.badge">
-        Our passionate photographers deliver stunning visuals.
+      <p class="font-serif italic text-2xl md:text-4xl text-peach/80 mb-3">
+        <span class="text-coral mr-3">&#10022;</span>portfolio
       </p>
-
-      <!-- Big headline -->
-      <h1 class="font-sans font-black uppercase leading-[0.86] tracking-tighter text-peach text-6xl sm:text-7xl md:text-8xl lg:text-[9rem]">
-        <span class="inline-flex items-baseline flex-wrap gap-x-4">
-          <span data-sg-path="hero.line1pre">VINTAGE</span>
-          <em class="font-serif italic font-normal lowercase tracking-normal text-5xl sm:text-6xl md:text-7xl lg:text-8xl" data-sg-path="hero.line1em">experiences</em>
-        </span>
-        <br>
-        <span data-sg-path="hero.line2">THROUGH LENS</span>
-      </h1>
+      <h1 class="font-sans font-black uppercase leading-[0.86] tracking-tighter text-peach text-6xl sm:text-7xl md:text-8xl lg:text-[9rem]"
+          data-sg-path="portfolioPage.title">NOTRE PORTFOLIO</h1>
+      <p class="mt-10 max-w-2xl text-xs md:text-sm font-bold uppercase tracking-wide15 text-peach/90 leading-relaxed"
+         data-sg-path="portfolioPage.intro">Une sélection de nos plus belles séances.</p>
     </div>
   </section>
 
 
   <!-- ============================================================
-       MISSION STATEMENT
+       GALLERY (masonry vintage grid)
        ============================================================ -->
-  <section class="bg-peach text-maroon py-24 md:py-32 rounded-t-[2.5rem] -mt-8 relative z-20" data-sg-reveal>
-    <div class="max-w-3xl mx-auto px-6 text-center">
-      <p class="font-sans font-bold uppercase text-2xl md:text-3xl lg:text-4xl leading-snug tracking-tight text-maroon/90"
-         data-sg-path="mission.text">
-        At Halcyon Films, we are passionate storytellers &amp; capturing timeless moments with a touch of vintage elegance.
-      </p>
-      <div class="mt-12 flex items-center justify-center text-coral">
-        <span class="text-lg">&#10022;</span>
-      </div>
-    </div>
-  </section>
+  <section class="bg-peach text-maroon py-16 md:py-24 rounded-t-[2.5rem] -mt-8 relative z-20" data-sg-reveal>
+    <div class="max-w-[100rem] mx-auto px-4 md:px-6 lg:px-12">
+      <div class="columns-1 sm:columns-2 lg:columns-3 gap-3 md:gap-5 [column-fill:_balance]">
 
+        <figure class="project-card break-inside-avoid mb-3 md:mb-5 overflow-hidden rounded-md bg-cocoa/15">
+          <img data-sg-img="portfolioPage.images[0]" src="img/project-1.jpg" alt="Réalisation Halcyon Films" class="w-full h-auto object-cover">
+        </figure>
+        <figure class="project-card break-inside-avoid mb-3 md:mb-5 overflow-hidden rounded-md bg-cocoa/15">
+          <img data-sg-img="portfolioPage.images[1]" src="img/strip-1.jpg" alt="Réalisation Halcyon Films" class="w-full h-auto object-cover">
+        </figure>
+        <figure class="project-card break-inside-avoid mb-3 md:mb-5 overflow-hidden rounded-md bg-cocoa/15">
+          <img data-sg-img="portfolioPage.images[2]" src="img/hero-1.jpg" alt="Réalisation Halcyon Films" class="w-full h-auto object-cover">
+        </figure>
+        <figure class="project-card break-inside-avoid mb-3 md:mb-5 overflow-hidden rounded-md bg-cocoa/15">
+          <img data-sg-img="portfolioPage.images[3]" src="img/strip-2.jpg" alt="Réalisation Halcyon Films" class="w-full h-auto object-cover">
+        </figure>
+        <figure class="project-card break-inside-avoid mb-3 md:mb-5 overflow-hidden rounded-md bg-cocoa/15">
+          <img data-sg-img="portfolioPage.images[4]" src="img/project-2.jpg" alt="Réalisation Halcyon Films" class="w-full h-auto object-cover">
+        </figure>
+        <figure class="project-card break-inside-avoid mb-3 md:mb-5 overflow-hidden rounded-md bg-cocoa/15">
+          <img data-sg-img="portfolioPage.images[5]" src="img/hero-2.jpg" alt="Réalisation Halcyon Films" class="w-full h-auto object-cover">
+        </figure>
+        <figure class="project-card break-inside-avoid mb-3 md:mb-5 overflow-hidden rounded-md bg-cocoa/15">
+          <img data-sg-img="portfolioPage.images[6]" src="img/strip-3.jpg" alt="Réalisation Halcyon Films" class="w-full h-auto object-cover">
+        </figure>
+        <figure class="project-card break-inside-avoid mb-3 md:mb-5 overflow-hidden rounded-md bg-cocoa/15">
+          <img data-sg-img="portfolioPage.images[7]" src="img/marquee-1.jpg" alt="Réalisation Halcyon Films" class="w-full h-auto object-cover">
+        </figure>
+        <figure class="project-card break-inside-avoid mb-3 md:mb-5 overflow-hidden rounded-md bg-cocoa/15">
+          <img data-sg-img="portfolioPage.images[8]" src="img/hero-3.jpg" alt="Réalisation Halcyon Films" class="w-full h-auto object-cover">
+        </figure>
+        <figure class="project-card break-inside-avoid mb-3 md:mb-5 overflow-hidden rounded-md bg-cocoa/15">
+          <img data-sg-img="portfolioPage.images[9]" src="img/strip-4.jpg" alt="Réalisation Halcyon Films" class="w-full h-auto object-cover">
+        </figure>
+        <figure class="project-card break-inside-avoid mb-3 md:mb-5 overflow-hidden rounded-md bg-cocoa/15">
+          <img data-sg-img="portfolioPage.images[10]" src="img/hero-4.jpg" alt="Réalisation Halcyon Films" class="w-full h-auto object-cover">
+        </figure>
 
-  <!-- ============================================================
-       IMAGE STRIP
-       ============================================================ -->
-  <section class="bg-peach pb-4" data-sg-reveal>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 px-2 md:px-3">
-      <div class="strip-cell overflow-hidden rounded-sm aspect-[4/5] bg-cocoa/20">
-        <img data-sg-img="strip[0].image" src="img/strip-1.jpg" alt="Vintage portrait" class="w-full h-full object-cover">
-      </div>
-      <div class="strip-cell overflow-hidden rounded-sm aspect-[4/5] bg-cocoa/20">
-        <img data-sg-img="strip[1].image" src="img/strip-2.jpg" alt="Editorial close-up" class="w-full h-full object-cover">
-      </div>
-      <div class="strip-cell overflow-hidden rounded-sm aspect-[4/5] bg-cocoa/20">
-        <img data-sg-img="strip[2].image" src="img/strip-3.jpg" alt="Sunlit portrait" class="w-full h-full object-cover">
-      </div>
-      <div class="strip-cell overflow-hidden rounded-sm aspect-[4/5] bg-cocoa/20">
-        <img data-sg-img="strip[3].image" src="img/strip-4.jpg" alt="Couple golden hour" class="w-full h-full object-cover">
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ============================================================
-       FEATURED WORK
-       ============================================================ -->
-  <section id="portfolio" class="bg-coral text-cocoa py-24 md:py-36 rounded-t-[2.5rem] relative z-10">
-    <div class="max-w-[100rem] mx-auto px-6 lg:px-12">
-
-      <!-- Header -->
-      <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-10 mb-20 md:mb-32" data-sg-reveal>
-        <h2 class="font-sans font-black uppercase leading-[0.85] tracking-tighter text-cocoa text-6xl md:text-8xl lg:text-[8rem]">
-          <span class="inline-flex items-baseline gap-x-4 flex-wrap">
-            <span data-sg-path="featured.label1">OUR</span>
-            <em class="font-serif italic font-normal lowercase tracking-normal text-4xl md:text-6xl lg:text-7xl" data-sg-path="featured.labelEm">work</em>
-            <span class="text-coral">&#10022;</span>
-          </span>
-          <br>
-          <span data-sg-path="featured.label2">FEATURED</span>
-        </h2>
-
-        <div class="lg:max-w-xs lg:pt-2">
-          <p class="text-xs md:text-sm font-bold uppercase tracking-wide15 text-cocoa/80 leading-relaxed mb-8"
-             data-sg-path="featured.intro">
-            Our work showcases the breadth of our talent and the care we bring to every endeavor.
-          </p>
-          <ul class="space-y-2 text-right">
-            <li class="text-sm font-bold uppercase tracking-wide15 text-cocoa"><span data-sg-path="featured.tags[0]">Wedding</span> <span class="text-cocoa/40">&#8599;</span></li>
-            <li class="text-sm font-bold uppercase tracking-wide15 text-cocoa"><span data-sg-path="featured.tags[1]">Engagements</span> <span class="text-cocoa/40">&#8599;</span></li>
-            <li class="text-sm font-bold uppercase tracking-wide15 text-cocoa"><span data-sg-path="featured.tags[2]">Commercial</span> <span class="text-cocoa/40">&#8599;</span></li>
-            <li class="text-sm font-bold uppercase tracking-wide15 text-cocoa"><span data-sg-path="featured.tags[3]">The Bump Shoot</span> <span class="text-cocoa/40">&#8599;</span></li>
-          </ul>
-        </div>
       </div>
 
-      <!-- Projects: staggered -->
-      <div class="grid lg:grid-cols-2 gap-x-12 gap-y-20 md:gap-y-28">
-
-        <!-- Project 1 -->
-        <div class="project-card lg:max-w-md" data-sg-reveal>
-          <div class="overflow-hidden rounded-md aspect-[5/4] bg-cocoa/20 mb-6">
-            <img data-sg-img="featured.projects[0].image" src="img/project-1.jpg" alt="Lily & Jack's Brand Shoot" class="w-full h-full object-cover">
-          </div>
-          <div class="flex items-start justify-between gap-6">
-            <h3 class="text-sm font-bold uppercase tracking-wide15 text-cocoa leading-snug" data-sg-path="featured.projects[0].title">Lily &amp; Jack's Brand Shoot</h3>
-            <span class="text-sm font-bold uppercase tracking-wide15 text-cocoa/70 text-right whitespace-pre-line" data-sg-path="featured.projects[0].location">Santorini, Greece</span>
-          </div>
-        </div>
-
-        <!-- Project 2 (offset down) -->
-        <div class="project-card lg:max-w-md lg:ml-auto lg:mt-40" data-sg-reveal>
-          <div class="overflow-hidden rounded-md aspect-[5/4] bg-cocoa/20 mb-6">
-            <img data-sg-img="featured.projects[1].image" src="img/project-2.jpg" alt="Ava & Leo's Wedding Day" class="w-full h-full object-cover">
-          </div>
-          <div class="flex items-start justify-between gap-6">
-            <h3 class="text-sm font-bold uppercase tracking-wide15 text-cocoa leading-snug" data-sg-path="featured.projects[1].title">Ava &amp; Leo's Wedding Day</h3>
-            <span class="text-sm font-bold uppercase tracking-wide15 text-cocoa/70 text-right whitespace-pre-line" data-sg-path="featured.projects[1].location">Paris, France</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- See more -->
-      <div class="mt-24 md:mt-32 flex justify-center" data-sg-reveal>
-        <a href="#" data-sg-page="portfolio" class="group inline-flex items-end gap-3 font-sans font-black uppercase tracking-tighter text-cocoa text-5xl md:text-7xl lg:text-8xl hover:text-maroon transition-colors">
-          <span data-sg-path="featured.seeMore">See More</span>
+      <div class="mt-16 md:mt-24 flex justify-center" data-sg-reveal>
+        <a href="#" data-sg-page="contact" class="group inline-flex items-end gap-3 font-sans font-black uppercase tracking-tighter text-maroon text-5xl md:text-7xl lg:text-8xl hover:text-coral transition-colors">
+          <span>Travaillons ensemble</span>
           <span class="text-4xl md:text-6xl pb-2 group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform">&#8599;</span>
         </a>
       </div>
@@ -364,76 +277,8 @@
 
 
   <!-- ============================================================
-       MARQUEE
+       FOOTER
        ============================================================ -->
-  <section class="bg-peach py-12 md:py-20 overflow-hidden">
-    <div class="marquee-track">
-      <span class="font-sans font-black uppercase tracking-tighter text-maroon text-6xl md:text-8xl lg:text-[8rem] px-6 flex items-center gap-8">
-        <span data-sg-path="marquee.words">PHOTOGRAPHY</span> <span class="text-coral">&#10022;</span> <span data-sg-path="marquee.words2">AGENCY</span> <span class="text-coral">&#10022;</span>
-      </span>
-      <span class="font-sans font-black uppercase tracking-tighter text-maroon text-6xl md:text-8xl lg:text-[8rem] px-6 flex items-center gap-8" aria-hidden="true">
-        PHOTOGRAPHY <span class="text-coral">&#10022;</span> AGENCY <span class="text-coral">&#10022;</span>
-      </span>
-    </div>
-    <div class="flex justify-center mt-10">
-      <img data-sg-img="marquee.image" src="img/marquee-1.jpg" alt="Featured editorial"
-           class="floaty w-44 md:w-56 aspect-[4/5] object-cover rounded-md shadow-xl rotate-[-2deg]" data-sg-parallax
-           onerror="this.style.display='none'">
-    </div>
-  </section>
-
-
-  <!-- ============================================================
-       TESTIMONIAL
-       ============================================================ -->
-  <section class="bg-peach text-maroon py-28 md:py-40" data-sg-reveal>
-    <div class="max-w-4xl mx-auto px-6 text-center relative">
-      <span class="font-serif text-[10rem] leading-none text-maroon/10 absolute left-1/2 -translate-x-1/2 -top-8 select-none pointer-events-none">&#8220;</span>
-      <p class="relative font-sans font-bold uppercase text-2xl md:text-4xl lg:text-5xl leading-snug tracking-tight text-maroon"
-         data-sg-path="testimonial.quote">
-        "Capture fleeting moments. Frame memories with stunning clarity. Photography freezes time and turns life's beauty into forever art."
-      </p>
-      <div class="mt-16 flex flex-col items-center">
-        <img data-sg-img="testimonial.avatar" src="img/testimonial.jpg" alt="Vivian Guillen"
-             class="w-14 h-14 rounded-full object-cover border-2 border-maroon/20 mb-5">
-        <span class="text-sm font-bold uppercase tracking-wide2 text-maroon" data-sg-path="testimonial.name">Vivian Guillen</span>
-        <span class="font-serif italic text-base text-maroon/70 mt-1" data-sg-path="testimonial.role">Founder &amp; CEO, Amberlight Co.</span>
-        <div class="flex gap-2 mt-6">
-          <span class="w-2 h-2 rounded-full bg-maroon"></span>
-          <span class="w-2 h-2 rounded-full bg-maroon/30"></span>
-          <span class="w-2 h-2 rounded-full bg-maroon/30"></span>
-        </div>
-      </div>
-      <div class="mt-16 flex items-center justify-center gap-4 text-maroon/30">
-        <span class="h-px w-24 bg-maroon/20"></span>
-        <span class="text-coral text-sm">&#10022;</span>
-        <span class="h-px w-24 bg-maroon/20"></span>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ============================================================
-       CONTACT CTA + FOOTER
-       ============================================================ -->
-  <section id="contact" class="bg-peach text-maroon pt-8 pb-24 md:pb-32" data-sg-reveal>
-    <div class="max-w-[100rem] mx-auto px-6 lg:px-12 text-center">
-      <p class="font-serif italic text-3xl md:text-5xl text-maroon mb-2">
-        <span class="text-coral mr-3">&#10022;</span><span data-sg-path="contact.getIn">get in</span>
-      </p>
-      <div class="relative inline-block">
-        <h2 class="font-sans font-black uppercase tracking-tighter text-maroon text-7xl md:text-9xl lg:text-[12rem] leading-none flex items-end justify-center gap-4">
-          <span data-sg-path="contact.touch">TOUCH</span>
-          <span class="text-5xl md:text-7xl pb-4">&#8599;</span>
-        </h2>
-      </div>
-      <div class="mt-8 font-serif italic text-lg md:text-xl text-maroon/80 space-y-1">
-        <p data-sg-path="contact.website">www.halcyonfilms.com</p>
-        <p data-sg-path="contact.phone">+1 (415) 802-7740</p>
-      </div>
-    </div>
-  </section>
-
   <footer class="bg-cocoa text-coral pt-24 md:pt-32 pb-12 rounded-t-[2.5rem]">
     <div class="max-w-[100rem] mx-auto px-6 lg:px-12">
 

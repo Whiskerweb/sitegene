@@ -21,6 +21,10 @@
     "Contact",
     "Plus de modèles"
   ],
+  "navPages": {
+    "portfolio": "Portfolio",
+    "contact": "Contact"
+  },
   "hero": {
     "titleLine1": "Immortaliser les plus",
     "titleLine2": "beaux instants",
@@ -235,5 +239,29 @@
       "Twitter",
       "LinkedIn"
     ]
+  },
+  "portfolioPage": {
+    "title": "Portfolio",
+    "intro": "Une sélection d’images réalisées au fil des séances et des reportages — portraits, voyages, événements et projets personnels.",
+    "images": [
+      "/_templates/photographer-freelance/img/album-travel.jpg",
+      "/_templates/photographer-freelance/img/album-concept.jpg",
+      "/_templates/photographer-freelance/img/album-aerial.jpg",
+      "/_templates/photographer-freelance/img/album-product.jpg",
+      "/_templates/photographer-freelance/img/album-wildlife.jpg",
+      "/_templates/photographer-freelance/img/exp-documentary.jpg",
+      "/_templates/photographer-freelance/img/exp-event.jpg",
+      "/_templates/photographer-freelance/img/exp-corporate.jpg",
+      "/_templates/photographer-freelance/img/exp-editorial.jpg",
+      "/_templates/photographer-freelance/img/blog-candid.jpg",
+      "/_templates/photographer-freelance/img/blog-golden.jpg",
+      "/_templates/photographer-freelance/img/about.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Contact",
+    "intro": "Un projet, une séance ou une simple question ? Écrivez-moi : je réponds personnellement à chaque demande sous 24 heures.",
+    "email": "leon@email.com",
+    "phone": "+33 6 12 34 56 78"
   }
 }

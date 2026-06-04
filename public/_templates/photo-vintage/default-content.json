@@ -103,5 +103,30 @@
       "LinkedIn",
       "Facebook"
     ]
+  },
+  "portfolioPage": {
+    "title": "NOTRE PORTFOLIO",
+    "intro": "Une sélection de nos plus belles séances — mariages, portraits et instants volés, sublimés par notre signature vintage.",
+    "images": [
+      "/_templates/photo-vintage/img/project-1.jpg",
+      "/_templates/photo-vintage/img/strip-1.jpg",
+      "/_templates/photo-vintage/img/hero-1.jpg",
+      "/_templates/photo-vintage/img/strip-2.jpg",
+      "/_templates/photo-vintage/img/project-2.jpg",
+      "/_templates/photo-vintage/img/hero-2.jpg",
+      "/_templates/photo-vintage/img/strip-3.jpg",
+      "/_templates/photo-vintage/img/marquee-1.jpg",
+      "/_templates/photo-vintage/img/hero-3.jpg",
+      "/_templates/photo-vintage/img/strip-4.jpg",
+      "/_templates/photo-vintage/img/hero-4.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "ÉCRIVONS VOTRE HISTOIRE",
+    "intro": "Parlez-nous de votre projet, de votre date et de vos envies. Nous répondons à chaque message avec attention.",
+    "email": "bonjour@halcyonfilms.com",
+    "phone": "+1 (415) 802-7740",
+    "zones": "Disponibles à Paris, en France et partout en Europe — déplacements à l’international sur demande.",
+    "response": "Réponse sous 24 à 48 h ouvrées, avec une proposition personnalisée."
   }
 }

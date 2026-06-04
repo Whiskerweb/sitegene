@@ -198,5 +198,29 @@
     ],
     "copyright": "© 2026 Lumière Studio",
     "image": "/_templates/wedding-warm/img/footer.jpg"
+  },
+  "portfolioPage": {
+    "title": "Le Portfolio",
+    "intro": "Une sélection d'instants saisis au fil des saisons — mariages, portraits et séances éditoriales, là où la lumière raconte tout.",
+    "images": [
+      "/_templates/wedding-warm/img/work1.jpg",
+      "/_templates/wedding-warm/img/wed4.jpg",
+      "/_templates/wedding-warm/img/por5.jpg",
+      "/_templates/wedding-warm/img/edi2.jpg",
+      "/_templates/wedding-warm/img/work3.jpg",
+      "/_templates/wedding-warm/img/wed2.jpg",
+      "/_templates/wedding-warm/img/journal1.jpg",
+      "/_templates/wedding-warm/img/por1.jpg",
+      "/_templates/wedding-warm/img/edi5.jpg",
+      "/_templates/wedding-warm/img/work4.jpg",
+      "/_templates/wedding-warm/img/wed5.jpg",
+      "/_templates/wedding-warm/img/testimonial.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Prendre Contact",
+    "intro": "J'accepte un nombre limité de collaborations chaque année, pour offrir à chacune toute l'attention qu'elle mérite. Écrivez-moi pour réserver votre date.",
+    "email": "bonjour@lumiere-studio.fr",
+    "phone": "+33 6 12 34 56 78"
   }
 }

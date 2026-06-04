@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elise Maes | Contact</title>
+
+  <!-- CDNs -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+  <!-- Tailwind config: palette + fonts -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:   '#fbf7ef',  /* bg-light / primary background */
+            sand:    '#eee9df',  /* bg-mid / footer background */
+            ink:     '#141414',  /* bg-dark / text-dark */
+            bark:    '#2a2825',  /* services section background */
+          },
+          fontFamily: {
+            sans:  ['"Instrument Sans"', 'sans-serif'],
+            serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Instrument Sans', sans-serif; background-color: #fbf7ef; color: #141414; }
+    .font-serif { font-family: 'Instrument Serif', serif; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SINGLE SOURCE OF TRUTH — edit here to rebrand the template
+       ═══════════════════════════════════════════════════════════ -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+  "brand": "Elise Maes",
+  "brandInitials": "EM",
+  "location": "50.8503° N, 4.3517° E",
+  "locationLabel": "Bruxelles, BE",
+  "tagline": "Évasions romantiques et mariages intimistes. Basée à Bruxelles, Belgique. Disponible où que vous soyez.",
+  "instagram": "@ELISEMAESPHOTO",
+  "copyright": "© ELISE MAES 2026 | MENTIONS LÉGALES",
+  "hero": {
+    "region": "Belgique",
+    "title1": "AUTHENTIQUE",
+    "title2": "PHOTOGRAPHIE",
+    "subtitle": "pour les amoureux au cœur sauvage",
+    "image": "/_templates/wedding-fine-art/img/hero.jpg"
+  },
+  "intro": {
+    "eyebrow": "Couples | Mariages | Évasions | Éditorial",
+    "heading1": "RÉCITS CINÉMATOGRAPHIQUES SPONTANÉS",
+    "heading2": "QUI VOUS RESSEMBLENT",
+    "body": "Basée à Bruxelles et toujours prête à voyager là où votre histoire vous mène, je capture avec sensibilité les moments vrais et spontanés qui font de votre amour une histoire unique. Qu’il s’agisse d’une évasion en montagne balayée par le vent, d’une cérémonie dans un château historique ou d’une séance photo intimiste dans une ville pavée, j’aborde chaque shooting avec intention, curiosité et un profond respect.",
+    "cta": "En savoir plus",
+    "imageLeft": "/_templates/wedding-fine-art/img/intro-left.jpg",
+    "imageRight": "/_templates/wedding-fine-art/img/intro-right.jpg"
+  },
+  "services": {
+    "tabs": [
+      "01 Couples",
+      "02 Évasions",
+      "03 Mariages intimistes",
+      "04 Éditorial"
+    ],
+    "heading": "PRESTATIONS",
+    "body1": "Je propose une gamme de services photographiques conçus pour les couples qui écrivent leur histoire à leur manière. Que vous rêviez d’une cérémonie pieds nus dans les Highlands écossais, d’un échange de vœux au sommet enneigé des Alpes ou de photos de fiançailles dans une ville européenne chargée d’histoire, je suis là pour immortaliser chaque instant, sauvage et précieux, avec authenticité et émotion.",
+    "body2": "Mon approche est journalistique, sensible et toujours ancrée dans le réel. Car les plus beaux moments sont souvent ceux qu’on n’a pas prévus.",
+    "cta": "Voir les forfaits",
+    "imageMain": "/_templates/wedding-fine-art/img/services-main.jpg",
+    "imageDetail": "/_templates/wedding-fine-art/img/services-detail.jpg"
+  },
+  "about": {
+    "heading1": "RENCONTREZ VOTRE",
+    "heading2": "PHOTOGRAPHE",
+    "paragraph1": "Salut, moi c’est Elise — amoureuse d’architecture, chasseuse de lumière et grande adepte des détours improvisés dans des ruelles inconnues. Je crois profondément à la magie des connexions humaines, et c’est cette énergie que j’apporte à chaque histoire d’amour que je photographie.",
+    "paragraph2": "Je suis là pour les couples qui s’émerveillent dans les vieilles villes, qui préfèrent les ruines historiques aux salles bondées, et qui choisiraient une balade sur les pavés plutôt qu’une allée traditionnelle. Mon style mêle documentaire et éditorial, avec une attention particulière aux moments vrais et spontanés.",
+    "links": [
+      {
+        "label": "Faire ma connaissance",
+        "num": "01"
+      },
+      {
+        "label": "Voir mon expérience + forfaits",
+        "num": "02"
+      },
+      {
+        "label": "Parcourir mon portfolio",
+        "num": "03"
+      }
+    ],
+    "imageMain": "/_templates/wedding-fine-art/img/about-main.jpg",
+    "imageDetail": "/_templates/wedding-fine-art/img/about-detail.jpg"
+  },
+  "testimonials": [
+    {
+      "quote": "Elise a su capturer l’essence même de notre journée. En regardant les photos, c’est comme revivre chaque émotion, chaque instant. La lumière, l’ambiance, les moments discrets… Tout a été immortalisé avec une telle justesse. Nous n’aurions pas pu rêver d’une meilleure conteuse pour notre histoire.",
+      "couple": "Sophie + Marc"
+    }
+  ],
+  "cta": {
+    "heading1": "PARTONS À L’AVENTURE",
+    "heading2": "DE VOTRE AMOUR",
+    "button": "Contactez-moi",
+    "image": "/_templates/wedding-fine-art/img/cta.jpg"
+  },
+  "gallery": [
+    {
+      "image": "/_templates/wedding-fine-art/img/ig1.jpg"
+    },
+    {
+      "image": "/_templates/wedding-fine-art/img/ig2.jpg"
+    },
+    {
+      "image": "/_templates/wedding-fine-art/img/ig3.jpg"
+    },
+    {
+      "image": "/_templates/wedding-fine-art/img/ig4.jpg"
+    },
+    {
+      "image": "/_templates/wedding-fine-art/img/ig5.jpg"
+    }
+  ],
+  "nav": [
+    "Instagram",
+    "Pinterest",
+    "Tiktok",
+    "Journal"
+  ],
+  "menu": {
+    "home": "Accueil",
+    "portfolio": "Portfolio",
+    "contact": "Contact"
+  },
+  "portfolioPage": {
+    "title": "PORTFOLIO",
+    "intro": "Une sélection d’histoires d’amour photographiées au fil des saisons — évasions, mariages intimistes et instants volés, ici comme ailleurs.",
+    "images": [
+      "/_templates/wedding-fine-art/img/hero.jpg",
+      "/_templates/wedding-fine-art/img/intro-left.jpg",
+      "/_templates/wedding-fine-art/img/intro-right.jpg",
+      "/_templates/wedding-fine-art/img/services-main.jpg",
+      "/_templates/wedding-fine-art/img/services-detail.jpg",
+      "/_templates/wedding-fine-art/img/about-main.jpg",
+      "/_templates/wedding-fine-art/img/about-detail.jpg",
+      "/_templates/wedding-fine-art/img/cta.jpg",
+      "/_templates/wedding-fine-art/img/ig1.jpg",
+      "/_templates/wedding-fine-art/img/ig2.jpg",
+      "/_templates/wedding-fine-art/img/ig3.jpg",
+      "/_templates/wedding-fine-art/img/ig4.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "CONTACT",
+    "intro": "Parlons de votre histoire. Évasion lointaine, mariage intimiste ou séance de fiançailles — racontez-moi votre projet et je reviendrai vers vous avec plaisir.",
+    "email": "hello@elisemaes.com",
+    "phone": "+32 478 12 34 56",
+    "areasTitle": "ZONES D’INTERVENTION",
+    "areasBody": "Basée à Bruxelles, je photographie partout en Belgique et voyage à travers l’Europe et le monde. Les déplacements font partie de l’aventure.",
+    "responseTitle": "DÉLAI DE RÉPONSE",
+    "responseBody": "Je réponds personnellement à chaque message sous 48 heures ouvrées. Mon agenda se remplit vite : n’hésitez pas à me contacter tôt pour réserver votre date."
+  }
+};
+  </script>
+</head>
+
+<body class="antialiased">
+
+  <!-- ══════════════════ NAVIGATION ══════════════════ -->
+  <header class="flex text-ink w-full z-50 px-6 py-8 absolute top-0 items-center justify-between">
+    <nav class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-light">
+      <a href="#" data-sg-page="/" class="hover:opacity-60 transition-opacity" data-sg-path="menu.home">Accueil</a>
+      <a href="#" data-sg-page="portfolio" class="hover:opacity-60 transition-opacity" data-sg-path="menu.portfolio">Portfolio</a>
+      <a href="#" data-sg-page="contact" class="hover:opacity-60 transition-opacity" data-sg-path="menu.contact">Contact</a>
+    </nav>
+
+    <a href="#" data-sg-page="/" class="md:text-2xl uppercase flex items-center gap-3 text-xl text-ink tracking-widest">
+      <span class="text-2xl italic tracking-tighter font-serif opacity-100" data-sg-path="brandInitials">EM</span>
+      <span class="md:text-base text-sm font-light tracking-widest pt-1" data-sg-path="brand">Elise Maes</span>
+    </a>
+
+    <button class="flex flex-col focus:outline-none p-2 gap-y-1.5" aria-label="Menu">
+      <span class="w-6 bg-current block" style="height:1px"></span>
+      <span class="w-6 bg-current block" style="height:1px"></span>
+    </button>
+  </header>
+
+  <!-- ══════════════════ PAGE HEADER ══════════════════ -->
+  <section class="pt-40 md:pt-52 pb-16 md:pb-20 px-6 bg-cream" data-sg-reveal>
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-6xl md:text-8xl font-serif tracking-tight leading-none mb-8" data-sg-path="contactPage.title">CONTACT</h1>
+      <p class="text-lg md:text-xl text-black/70 font-light max-w-2xl mx-auto leading-relaxed" data-sg-path="contactPage.intro">
+        Parlons de votre histoire.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════ COORDONNÉES ══════════════════ -->
+  <section class="pb-16 md:pb-24 px-6 bg-cream" data-sg-reveal>
+    <div class="max-w-4xl mx-auto text-center">
+      <span class="text-xs md:text-sm uppercase tracking-[0.2em] text-black/50 font-light mb-6 block">Écrivez-moi</span>
+      <a href="mailto:hello@elisemaes.com" class="font-serif italic text-4xl md:text-6xl tracking-tight hover:text-black/60 transition-colors break-all" data-sg-path="contactPage.email">hello@elisemaes.com</a>
+      <p class="mt-8 text-sm md:text-base uppercase tracking-widest font-light text-black/60">
+        <span class="text-black/40">Téléphone — </span>
+        <a href="#" class="hover:text-black transition-colors" data-sg-path="contactPage.phone">+32 478 12 34 56</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════ RÉASSURANCE ══════════════════ -->
+  <section class="bg-bark text-[#eee9df] py-20 md:py-28 px-6" data-sg-reveal>
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
+      <div>
+        <h2 class="text-sm uppercase tracking-widest font-light text-white/50 mb-4" data-sg-path="contactPage.areasTitle">ZONES D’INTERVENTION</h2>
+        <p class="text-lg md:text-xl font-light text-white/80 leading-relaxed" data-sg-path="contactPage.areasBody">
+          Basée à Bruxelles, je photographie partout en Belgique et voyage à travers l’Europe et le monde.
+        </p>
+      </div>
+      <div>
+        <h2 class="text-sm uppercase tracking-widest font-light text-white/50 mb-4" data-sg-path="contactPage.responseTitle">DÉLAI DE RÉPONSE</h2>
+        <p class="text-lg md:text-xl font-light text-white/80 leading-relaxed" data-sg-path="contactPage.responseBody">
+          Je réponds personnellement à chaque message sous 48 heures ouvrées.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ TÉMOIGNAGE ══════════════════ -->
+  <section class="py-24 md:py-32 px-6 bg-ink text-cream" data-sg-reveal>
+    <div class="max-w-4xl mx-auto text-center relative">
+      <svg class="absolute -top-8 -left-4 md:-top-12 md:-left-12 w-8 h-8 md:w-14 md:h-14 text-white/10" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
+      </svg>
+      <p class="text-2xl md:text-4xl font-serif italic leading-[1.3] tracking-tight mb-12" data-sg-path="testimonials[0].quote">
+        "Elise a su capturer l’essence même de notre journée."
+      </p>
+      <span class="text-sm uppercase tracking-widest font-light text-white/60" data-sg-path="testimonials[0].couple">Sophie + Marc</span>
+    </div>
+  </section>
+
+  <!-- ══════════════════ FOOTER ══════════════════ -->
+  <footer class="bg-sand pt-16 md:pt-24 pb-8 px-6" data-sg-reveal>
+    <div class="max-w-7xl mx-auto">
+
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
+        <a href="#" data-sg-page="/" class="text-2xl md:text-3xl uppercase tracking-widest flex items-center gap-3 text-ink">
+          <span class="font-serif tracking-tighter italic text-3xl" data-sg-path="brandInitials">EM</span>
+          <span class="tracking-widest font-light text-base md:text-lg pt-1" data-sg-path="brand">Elise Maes</span>
+        </a>
+        <span class="text-xs uppercase tracking-widest text-black/50 font-light" data-sg-path="location">
+          50.8503° N, 4.3517° E
+        </span>
+      </div>
+
+      <!-- Instagram / gallery grid -->
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-4 mb-16">
+        <a href="#" class="block aspect-square overflow-hidden group">
+          <img data-sg-img="gallery[0].image" src="img/ig1.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale-[0.3]" alt="Gallery 1">
+        </a>
+        <a href="#" class="block aspect-square overflow-hidden group">
+          <img data-sg-img="gallery[1].image" src="img/ig2.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale-[0.3]" alt="Gallery 2">
+        </a>
+        <a href="#" class="block aspect-square overflow-hidden group hidden md:block">
+          <img data-sg-img="gallery[2].image" src="img/ig3.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale-[0.3]" alt="Gallery 3">
+        </a>
+        <a href="#" class="block aspect-square overflow-hidden group hidden md:block">
+          <img data-sg-img="gallery[3].image" src="img/ig4.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale-[0.3]" alt="Gallery 4">
+        </a>
+        <a href="#" class="block aspect-square overflow-hidden group hidden md:block">
+          <img data-sg-img="gallery[4].image" src="img/ig5.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale-[0.3]" alt="Gallery 5">
+        </a>
+      </div>
+
+      <div class="flex flex-col md:flex-row justify-between items-start gap-12 mb-24">
+        <p class="max-w-sm text-sm md:text-base text-black/70 font-light leading-relaxed" data-sg-path="tagline">
+          Évasions romantiques et mariages intimistes. Basée à Bruxelles, Belgique.
+        </p>
+        <div class="text-left md:text-right">
+          <span class="block text-sm uppercase tracking-widest font-light mb-2">Suivez-moi</span>
+          <a href="#" class="text-sm uppercase tracking-widest font-medium hover:text-black/60 transition-colors" data-sg-path="instagram">@ELISEMAESPHOTO</a>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-black/10 text-xs md:text-sm uppercase tracking-widest font-light gap-6">
+        <div class="flex flex-wrap justify-center gap-6 md:gap-8">
+          <a href="#" data-sg-page="/" class="hover:text-black/60 transition-colors" data-sg-path="menu.home">Accueil</a>
+          <a href="#" data-sg-page="portfolio" class="hover:text-black/60 transition-colors" data-sg-path="menu.portfolio">Portfolio</a>
+          <a href="#" data-sg-page="contact" class="hover:text-black/60 transition-colors" data-sg-path="menu.contact">Contact</a>
+        </div>
+        <div class="flex flex-col md:flex-row items-center gap-4 text-black/50">
+          <span data-sg-path="copyright">© ELISE MAES 2026 | MENTIONS LÉGALES</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════════════
+       STANDARD HYDRATION + GSAP BLOCK (verbatim from guide)
+       ══════════════════════════════════════════════════════ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      // Hydrate texts
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      // Hydrate images (img.src or background-image)
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      // Animations: reveal/parallax on scroll (GSAP recreation, not a capture)
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, {
+            opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+          });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, {
+            yPercent: -15, ease: 'none',
+            scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+          });
+        });
+        // ROBUSTNESS: recalculate positions after images load
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

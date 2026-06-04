@@ -5,6 +5,18 @@
   "pageTypes": [
     "home"
   ],
+  "pages": [
+    {
+      "slug": "/portfolio",
+      "file": "portfolio.html",
+      "title": "Portfolio"
+    },
+    {
+      "slug": "/contact",
+      "file": "contact.html",
+      "title": "Contact"
+    }
+  ],
   "sections": {
     "home": [
       "meta",
@@ -69,6 +81,12 @@
       "role": "avatar",
       "required": true,
       "note": "testimonial · avatar"
+    },
+    {
+      "slot": "pf1",
+      "path": "portfolioPage.images[]",
+      "role": "gallery",
+      "required": false
     }
   ],
   "fields": {
@@ -264,6 +282,54 @@
         "label": "footer · social",
         "type": "text",
         "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.title",
+        "label": "portfolioPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.intro",
+        "label": "portfolioPage · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.title",
+        "label": "contactPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.intro",
+        "label": "contactPage · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.email",
+        "label": "contactPage · email",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.phone",
+        "label": "contactPage · phone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.zones",
+        "label": "contactPage · zones",
+        "type": "text",
+        "maxLen": 140
+      },
+      {
+        "path": "contactPage.response",
+        "label": "contactPage · response",
+        "type": "text",
+        "maxLen": 140
       }
     ]
   }

@@ -5,6 +5,10 @@
   "pageTypes": [
     "home"
   ],
+  "pages": [
+    { "slug": "/portfolio", "file": "portfolio.html", "title": "Portfolio" },
+    { "slug": "/contact", "file": "contact.html", "title": "Contact" }
+  ],
   "sections": {
     "home": [
       "meta",
@@ -86,6 +90,13 @@
       "role": "image",
       "required": true,
       "note": "about · story"
+    },
+    {
+      "slot": "pf1",
+      "path": "portfolioPage.images[]",
+      "role": "gallery",
+      "required": false,
+      "note": "portfolioPage · images"
     }
   ],
   "fields": {
@@ -407,6 +418,42 @@
         "label": "contact · location",
         "type": "text",
         "maxLen": 56
+      },
+      {
+        "path": "portfolioPage.title",
+        "label": "portfolioPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.intro",
+        "label": "portfolioPage · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.title",
+        "label": "contactPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.intro",
+        "label": "contactPage · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.email",
+        "label": "contactPage · email",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.phone",
+        "label": "contactPage · phone",
+        "type": "text",
+        "maxLen": 40
       }
     ]
   }

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-sg-path="meta.title">Ocean West Studio | Portfolio</title>
+  <meta name="description" data-sg-path="meta.description" content="Luxury wedding photography & cinematography — capturing authentic stories worldwide.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CDN: Tailwind + GSAP + ScrollTrigger -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Iconify for FAQ icons -->
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:     '#0A0A0A',
+            inkDeep: '#020617',
+            bg:      '#FAF8F5',
+            bgLight: '#f9f9f9',
+            accent:  '#455CE9',
+            sage:    '#738065',
+            muted:   '#333333',
+          },
+          fontFamily: {
+            sans: ['"Google Sans Flex"', 'Arial', 'sans-serif'],
+            narrow: ['"Arial Narrow"', 'Arial', 'sans-serif'],
+          },
+          letterSpacing: {
+            wide2: '0.2em',
+            wide15: '0.15em',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Google Sans Flex', Arial, sans-serif; }
+    .font-narrow { font-family: 'Arial Narrow', Arial, sans-serif; }
+
+    /* Gallery hover scale (shared DA pattern) */
+    .gallery-cell img { transition: transform 1.5s ease-out; }
+    .gallery-cell:hover img { transform: scale(1.05); }
+
+    /* Spinning text badge */
+    @keyframes spin-slow { to { transform: rotate(360deg); } }
+    .spin-slow { animation: spin-slow 20s linear infinite; transform-origin: 50px 50px; }
+  </style>
+
+  <!-- ============================================================
+       SINGLE SOURCE OF TRUTH — edit here or via Akyra editor
+       ============================================================ -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+  "meta": {
+    "title": "Ocean West Studio | Photographie de Mariage de Luxe",
+    "description": "Photographie et cinématographie de mariage haut de gamme — capturer des histoires authentiques à travers le monde."
+  },
+  "brand": "Ocean West Studio",
+  "spinningBadge": "MARIAGES • FILMS • PHOTOGRAPHIE • OCEAN WEST STUDIO •",
+  "nav": [
+    "Accueil",
+    "Mini-séances",
+    "Prestations",
+    "Portfolio",
+    "À propos",
+    "Contact"
+  ],
+  "hero": {
+    "title1": "Mariage",
+    "title2": "Photographie",
+    "tagline": "Si vous cherchez un photographe de mariage authentique, capable de saisir l’essence de votre histoire et de vos émotions, vous êtes au bon endroit. En tant que photographe haut de gamme, je vais bien au-delà des images traditionnelles pour créer des souvenirs uniques et inoubliables.",
+    "image": "/_templates/luxury-wedding/img/hero.jpg"
+  },
+  "logos": {
+    "label": "Élégance mise en avant",
+    "items": [
+      "VOGUE",
+      "Brides",
+      "Style Me Pretty",
+      "The Knot"
+    ]
+  },
+  "philosophy": {
+    "text": "Pas de panique ! Je comprends vos inquiétudes et je suis là pour vous simplifier les choses. Mon équipe et moi vous aiderons à vous sentir <em>à l’aise, naturels</em> et à <em>profiter</em> de chaque instant. Notre objectif ? Restituer qui vous êtes vraiment, de la manière la plus <em>authentique</em> possible, capturer toute l’excitation, les larmes, la joie, et créer des photos et vidéos qui dureront <em>pour toujours</em>.",
+    "imageRight": "/_templates/luxury-wedding/img/philosophy-portrait.jpg",
+    "imageLeft": "/_templates/luxury-wedding/img/philosophy-portrait-left.jpg"
+  },
+  "team": {
+    "label": "Les Fondateurs",
+    "heading1": "Vision & Savoir-faire",
+    "heading2": "Derrière l’objectif",
+    "intro": "Depuis plus de dix ans, nous documentons des histoires d’amour aux quatre coins du monde. Notre approche allie la précision éditoriale à l’intuition brute du reportage. Nous ne prenons pas simplement des photos : nous créons des héritages.",
+    "members": [
+      {
+        "name": "Heena Malhotra",
+        "role": "Lead Photographer",
+        "bio": "Elena apporte un regard éditorial et une approche discrète, garantissant que chaque image soit composée avec intention pour immortaliser l’atmosphère éphémère et les regards furtifs de votre journée.",
+        "image": "/_templates/luxury-wedding/img/team-photographer.jpg"
+      },
+      {
+        "name": "Eddie Licea",
+        "role": "Lead Cinematographer",
+        "bio": "Julian transforme l’émotion brute en héritages cinématographiques. Son approche narrative met en valeur l’architecture grandiose et l’énergie dynamique de votre célébration.",
+        "image": "/_templates/luxury-wedding/img/team-cinematographer.jpg"
+      }
+    ]
+  },
+  "services": {
+    "label": "Prestations",
+    "intro": "Nos solutions sont conçues sur mesure pour s’adapter à la vision unique de votre célébration, alliant art, fiabilité et élégance à chaque étape de votre parcours.",
+    "items": [
+      {
+        "title": "Images Éditoriales & Intemporelles",
+        "desc": "Des photographies soigneusement sélectionnées, capturant aussi bien les grands moments que les détails discrets. Nous privilégions la lumière naturelle, des compositions raffinées et l’émotion brute pour créer un héritage visuel qui vous ressemble.",
+        "category": "Photographie",
+        "image": "/_templates/luxury-wedding/img/service-photography.jpg"
+      },
+      {
+        "title": "Films Cinématographiques & Émotionnels",
+        "desc": "Des portraits animés qui racontent le récit de votre journée. Nous réalisons des films élégants et chargés d’émotion, accompagnés d’une bande-son sur mesure, pour préserver l’atmosphère, les vœux échangés et l’énergie dynamique de votre célébration.",
+        "category": "Vidéographie",
+        "image": "/_templates/luxury-wedding/img/service-videography.jpg"
+      },
+      {
+        "title": "Retransmission en Direct de Mariage",
+        "desc": "Partagez vos moments les plus précieux en temps réel avec vos proches, où qu’ils soient dans le monde. Nous assurons une diffusion multi-caméras avec une qualité audio optimale pour que personne ne manque votre célébration.",
+        "category": "Retransmission",
+        "image": "/_templates/luxury-wedding/img/service-broadcasting.jpg"
+      }
+    ]
+  },
+  "portfolio": {
+    "heading1": "Sélection d’œuvres",
+    "subheading": "Moments que l’on revisite",
+    "intro": "Ces images sont choisies encore et encore, pour la beauté et l’émotion qu’elles dégagent. Observez, laissez-vous inspirer et ressentez — peut-être résonneront-elles en vous aujourd’hui et feront-elles partie de votre héritage.",
+    "caption1": {
+      "title": "Beauté discrète",
+      "body": "Des instants où l’élégance naturelle se révèle avec simplicité, assurance et sans artifice."
+    },
+    "caption2": {
+      "title": "Harmonie naturelle",
+      "body": "Des liens dont la forme, l’énergie et le rythme créent une profonde sensation d’harmonie au premier regard."
+    },
+    "gallery": [
+      {
+        "image": "/_templates/luxury-wedding/img/gallery-rings.jpg",
+        "alt": "Détail des alliances"
+      },
+      {
+        "image": "/_templates/luxury-wedding/img/gallery-bouquet.jpg",
+        "alt": "Détail du bouquet de la mariée"
+      },
+      {
+        "imageBlur": "/_templates/luxury-wedding/img/gallery-bride-blur.jpg",
+        "imageSharp": "/_templates/luxury-wedding/img/gallery-bride-sharp.jpg",
+        "alt": "Portrait de la mariée"
+      },
+      {
+        "image": "/_templates/luxury-wedding/img/gallery-table.jpg",
+        "alt": "Décoration de table de mariage"
+      },
+      {
+        "imageBlur": "/_templates/luxury-wedding/img/gallery-couple-blur.jpg",
+        "imageSharp": "/_templates/luxury-wedding/img/gallery-couple-sharp.jpg",
+        "alt": "Couple en marche"
+      },
+      {
+        "image": "/_templates/luxury-wedding/img/gallery-dancing.jpg",
+        "alt": "Danse de célébration"
+      },
+      {
+        "image": "/_templates/luxury-wedding/img/gallery-champagne.jpg",
+        "alt": "Toast au champagne"
+      },
+      {
+        "image": "/_templates/luxury-wedding/img/gallery-dress.jpg",
+        "alt": "Détail de la robe de mariée"
+      }
+    ]
+  },
+  "testimonial": {
+    "quote": "Faire appel à Ocean West a été le meilleur investissement que nous ayons fait. Leur présence était apaisante, et le résultat final mériterait les pages d’un magazine. Ils ont capturé notre amour exactement tel que nous l’avons vécu.",
+    "name": "Eleanor & James",
+    "venue": "Château de Villette, France"
+  },
+  "faq": {
+    "label": "Informations",
+    "heading": "Investissement & FAQ",
+    "items": [
+      {
+        "q": "Proposez-vous des forfaits sur mesure ?",
+        "a": "Oui ! Nous adaptons nos forfaits en fonction du nombre d’heures dont vous avez besoin."
+      },
+      {
+        "q": "Y a-t-il un acompte à verser ?",
+        "a": "Oui, nous demandons un contrat signé et un acompte non remboursable de 30 % pour réserver votre date et ga"
+      },
+      {
+        "q": "Combien de temps faut-il attendre pour recevoi",
+        "a": "Pour une célébration d’une journée complète, vous recevrez votre galerie soigneusement sélectionnée et vot"
+      },
+      {
+        "q": "Fournissez-vous les fichiers bruts ?",
+        "a": "Non, nous ne fournissons pas les fichiers bruts. Notre processus de retouche et d’étalonnage des couleurs "
+      },
+      {
+        "q": "Pouvons-nous demander des prises de vue spécif",
+        "a": "Absolument. Avant votre célébration, nous vous enverrons un questionnaire détaillé pour recueillir vos dem"
+      }
+    ]
+  },
+  "contact": {
+    "heading": "Commencez votre aventure",
+    "intro": "Nous acceptons un nombre limité de projets chaque année pour garantir à chaque couple une attention et un savoir-faire exceptionnels. Veuillez partager les détails de votre célébration ci-dessous.",
+    "email": "hello@oceanweststudio.com",
+    "location": "Seattle / Monde entier"
+  },
+  "portfolioPage": {
+    "title": "Portfolio",
+    "intro": "Une sélection de mariages que nous avons eu l’honneur d’immortaliser. Des regards, des gestes, des lumières — chaque image est un fragment d’une histoire vraie, façonnée avec patience et émotion.",
+    "images": [
+      "/_templates/luxury-wedding/img/gallery-rings.jpg",
+      "/_templates/luxury-wedding/img/gallery-bouquet.jpg",
+      "/_templates/luxury-wedding/img/gallery-bride-sharp.jpg",
+      "/_templates/luxury-wedding/img/gallery-table.jpg",
+      "/_templates/luxury-wedding/img/gallery-couple-sharp.jpg",
+      "/_templates/luxury-wedding/img/gallery-dancing.jpg",
+      "/_templates/luxury-wedding/img/gallery-champagne.jpg",
+      "/_templates/luxury-wedding/img/gallery-dress.jpg",
+      "/_templates/luxury-wedding/img/service-photography.jpg",
+      "/_templates/luxury-wedding/img/service-videography.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Contact",
+    "intro": "Parlons de votre célébration. Racontez-nous votre histoire, votre lieu, votre date — nous reviendrons vers vous avec attention et nos disponibilités.",
+    "email": "hello@oceanweststudio.com",
+    "phone": "+33 1 84 80 00 00"
+  }
+};
+  </script>
+</head>
+
+<body class="antialiased text-white bg-ink" style="-webkit-font-smoothing:antialiased;">
+
+  <!-- ============================================================
+       NAVIGATION
+       ============================================================ -->
+  <nav class="z-50 text-white w-full absolute top-0" data-sg-reveal>
+    <div class="flex h-28 max-w-[100rem] ml-auto mr-auto pl-6 pr-6 lg:px-12 items-center justify-between">
+
+      <!-- Left links -->
+      <div class="hidden lg:flex items-center justify-end space-x-6 xl:space-x-10 w-2/5">
+        <a href="#" data-sg-page="/" class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap" data-sg-path="nav[0]">Home</a>
+        <a href="#" data-sg-page="/" class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap" data-sg-path="nav[2]">Services</a>
+      </div>
+
+      <!-- Center logo (SVG — two overlapping circles) -->
+      <div class="flex w-1/5 justify-center">
+        <a href="#" data-sg-page="/" class="inline-block hover:opacity-80 transition-opacity">
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="21" cy="24" r="14" stroke="white" stroke-width="1.5"/>
+            <circle cx="27" cy="24" r="14" stroke="white" stroke-width="1.5"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Right links -->
+      <div class="hidden lg:flex w-2/5 space-x-6 xl:space-x-10 items-center justify-start">
+        <a href="#" data-sg-page="portfolio" class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap" data-sg-path="nav[3]">Portfolio •</a>
+        <a href="#" data-sg-page="contact" class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap" data-sg-path="nav[5]">Contact</a>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <div class="lg:hidden flex w-2/5 items-center justify-end">
+        <button class="text-white text-3xl" aria-label="Menu">&#9776;</button>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ============================================================
+       PAGE HEADER
+       ============================================================ -->
+  <section class="bg-ink text-white pt-44 pb-20 md:pt-52 md:pb-28 border-b border-white/5" data-sg-reveal>
+    <div class="max-w-[100rem] mx-auto px-6 lg:px-12">
+      <span class="uppercase block text-sm font-thin text-gray-500 tracking-[0.2em] mb-8">Ocean West Studio</span>
+      <h1 class="text-6xl sm:text-7xl lg:text-[7rem] font-thin text-white tracking-tighter leading-[0.9] mb-10"
+          data-sg-path="portfolioPage.title">Portfolio</h1>
+      <p class="text-xl lg:text-2xl leading-relaxed text-gray-400 font-thin max-w-2xl"
+         data-sg-path="portfolioPage.intro">
+        Une sélection de mariages que nous avons eu l’honneur d’immortaliser.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       GALLERY GRID
+       ============================================================ -->
+  <section class="md:py-32 overflow-hidden text-white bg-ink pt-20 pb-24">
+    <div class="max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-2 lg:gap-3 bg-black" data-sg-reveal>
+
+        <!-- Cell 1 — tall feature -->
+        <div class="gallery-cell row-span-2 bg-zinc-900 overflow-hidden relative aspect-[3/4] lg:aspect-auto">
+          <img data-sg-img="portfolioPage.images[0]" src="img/gallery-rings.jpg"
+               alt="Mariage — Ocean West Studio" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Cell 2 -->
+        <div class="gallery-cell aspect-square bg-zinc-900 overflow-hidden relative">
+          <img data-sg-img="portfolioPage.images[1]" src="img/gallery-bouquet.jpg"
+               alt="Mariage — Ocean West Studio" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Cell 3 -->
+        <div class="gallery-cell aspect-square bg-zinc-900 overflow-hidden relative">
+          <img data-sg-img="portfolioPage.images[2]" src="img/gallery-bride-sharp.jpg"
+               alt="Mariage — Ocean West Studio" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Cell 4 -->
+        <div class="gallery-cell aspect-square bg-zinc-900 overflow-hidden relative">
+          <img data-sg-img="portfolioPage.images[3]" src="img/gallery-table.jpg"
+               alt="Mariage — Ocean West Studio" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Cell 5 — wide feature -->
+        <div class="gallery-cell col-span-2 bg-zinc-900 overflow-hidden relative aspect-[2/1]">
+          <img data-sg-img="portfolioPage.images[4]" src="img/gallery-couple-sharp.jpg"
+               alt="Mariage — Ocean West Studio" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Cell 6 -->
+        <div class="gallery-cell aspect-square bg-zinc-900 overflow-hidden relative">
+          <img data-sg-img="portfolioPage.images[5]" src="img/gallery-dancing.jpg"
+               alt="Mariage — Ocean West Studio" class="w-full h-full object-cover grayscale">
+        </div>
+
+        <!-- Cell 7 -->
+        <div class="gallery-cell aspect-square bg-zinc-900 overflow-hidden relative">
+          <img data-sg-img="portfolioPage.images[6]" src="img/gallery-champagne.jpg"
+               alt="Mariage — Ocean West Studio" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Cell 8 — tall feature -->
+        <div class="gallery-cell row-span-2 bg-zinc-900 overflow-hidden relative aspect-[3/4] lg:aspect-auto">
+          <img data-sg-img="portfolioPage.images[7]" src="img/gallery-dress.jpg"
+               alt="Mariage — Ocean West Studio" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Cell 9 -->
+        <div class="gallery-cell aspect-square bg-zinc-900 overflow-hidden relative">
+          <img data-sg-img="portfolioPage.images[8]" src="img/service-photography.jpg"
+               alt="Mariage — Ocean West Studio" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Cell 10 -->
+        <div class="gallery-cell aspect-square bg-zinc-900 overflow-hidden relative">
+          <img data-sg-img="portfolioPage.images[9]" src="img/service-videography.jpg"
+               alt="Mariage — Ocean West Studio" class="w-full h-full object-cover">
+        </div>
+
+      </div>
+
+      <!-- CTA -->
+      <div class="mt-20 md:mt-28 flex flex-col items-center text-center" data-sg-reveal>
+        <h2 class="font-narrow text-4xl md:text-5xl tracking-tighter text-white font-thin mb-8 leading-tight">
+          <em class="font-extralight">Votre</em> histoire mérite ces images
+        </h2>
+        <a href="#" data-sg-page="contact"
+           class="bg-white text-ink px-12 py-4 text-sm uppercase tracking-[0.2em] font-thin hover:bg-gray-200 transition-colors duration-300 inline-flex items-center gap-3">
+          Nous contacter
+          <iconify-icon icon="solar:arrow-right-linear" class="text-base"></iconify-icon>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="bg-inkDeep text-white py-16 border-t border-white/5">
+    <div class="max-w-[100rem] mx-auto px-6 lg:px-12 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+      <a href="#" data-sg-page="/" class="inline-flex items-center gap-4 hover:opacity-80 transition-opacity">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="21" cy="24" r="14" stroke="white" stroke-width="1.5"/>
+          <circle cx="27" cy="24" r="14" stroke="white" stroke-width="1.5"/>
+        </svg>
+        <span class="font-narrow text-2xl tracking-tighter text-white font-thin" data-sg-path="brand">Ocean West Studio</span>
+      </a>
+      <nav class="flex flex-wrap gap-x-8 gap-y-3">
+        <a href="#" data-sg-page="/" class="uppercase text-xs font-thin tracking-[0.2em] text-gray-400 hover:text-white transition-colors" data-sg-path="nav[0]">Accueil</a>
+        <a href="#" data-sg-page="portfolio" class="uppercase text-xs font-thin tracking-[0.2em] text-gray-400 hover:text-white transition-colors" data-sg-path="nav[3]">Portfolio</a>
+        <a href="#" data-sg-page="contact" class="uppercase text-xs font-thin tracking-[0.2em] text-gray-400 hover:text-white transition-colors" data-sg-path="nav[5]">Contact</a>
+      </nav>
+      <a href="#" data-sg-page="contact" class="uppercase text-xs font-thin tracking-[0.2em] text-gray-300 hover:text-white transition-colors" data-sg-path="contactPage.email">hello@oceanweststudio.com</a>
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       HYDRATION + GSAP ANIMATIONS (standard Akyra block)
+       ============================================================ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      // Hydrate texts (innerHTML for richtext fields like philosophy)
+      var RICH_PATHS = new Set(['philosophy.text']);
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var path = el.getAttribute('data-sg-path');
+        var v = get(path);
+        if (v == null || typeof v === 'object') return;
+        if (RICH_PATHS.has(path)) el.innerHTML = v;
+        else el.textContent = v;
+      });
+      // Hydrate images (img.src or background-image)
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      // Animations: reveal + parallax (GSAP recreation, not 1:1 capture)
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, {
+            opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+          });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, {
+            yPercent: -15, ease: 'none',
+            scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+          });
+        });
+        // ROBUSTESSE : recalcule les positions après chargement des images
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        // Filet ultime anti-page-blanche
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-sg-path="portfolioPage.title">Portfolio | Lumière Studio</title>
+  <meta name="description" data-sg-path="portfolioPage.intro" content="Une sélection de mariages, portraits et séances éditoriales — lumière naturelle et narration intemporelle.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CDN: Tailwind + GSAP + ScrollTrigger -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:    '#050505',
+            black:  '#000000',
+            cream:  '#F5F1EC',
+            blue:   '#0000EE',
+            gold:   '#C1A55F',
+            muted:  '#5C5C5C',
+          },
+          fontFamily: {
+            serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+            sans:  ['"Archivo"', 'Inter', 'Arial', 'sans-serif'],
+          },
+          letterSpacing: {
+            wide2:  '0.2em',
+            wide15: '0.15em',
+            wide3:  '0.3em',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Archivo', Inter, Arial, sans-serif; background:#F5F1EC; }
+    .font-serif { font-family: 'Instrument Serif', Georgia, serif; }
+
+    /* Nav link underline */
+    .nav-link { position: relative; }
+    .nav-link::after { content:''; position:absolute; left:0; bottom:-4px; width:0; height:1px; background:currentColor; transition:width .4s ease; }
+    .nav-link:hover::after { width:100%; }
+
+    .btn-line { transition: background-color .4s ease, color .4s ease, border-color .4s ease; }
+
+    /* Gallery tile hover (DA héritée des work-card / strip-img) */
+    .gal-tile img { transition: transform 1.6s cubic-bezier(0.22,1,0.36,1), filter 1s ease; }
+    .gal-tile:hover img { transform: scale(1.05); }
+  </style>
+
+  <!-- ============================================================
+       SINGLE SOURCE OF TRUTH — guard (default content COMPLET)
+       ============================================================ -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+      meta: {
+        title: "Lumière Studio | Photographe Mariage & Portrait éditorial",
+        description: "Photographe de mariage et portrait haut de gamme — lumière naturelle, émotion et narration intemporelle."
+      },
+      brand: "Lumière",
+      brandFull: "Lumière",
+      brandTag: "(PHOTOGRAPHE)",
+      nav: ["Accueil", "À propos", "Services", "Portfolio", "Journal", "Contact"],
+
+      hero: {
+        title1: "Capturer Vos",
+        title2: "Instants Précieux",
+        tagline: "Des moments saisis avec intention, lumière et une narration intemporelle.",
+        cta: "Voir les services",
+        image: "img/hero.jpg"
+      },
+
+      about: {
+        label: "À propos",
+        heading: "Bonjour, ici Camille !",
+        paragraphs: [
+          "Chasseuse de lumière et gardienne de souvenirs, attirée par l'entre-deux. Mon travail prend racine dans l'émotion, dans la magie tranquille du quotidien — la peau baignée de soleil, le lin qui ondule sous la brise, une main tenue une seconde de trop.",
+          "Une approche douce, naturelle et sincère pour révéler qui vous êtes vraiment."
+        ],
+        cta: "En savoir plus",
+        portrait: "img/about-portrait.jpg",
+        detail: "img/about-detail.jpg"
+      },
+
+      services: {
+        label: "Services",
+        intro: "Je propose une gamme de prestations photographiques, capturant les moments qui comptent le plus pour vous.",
+        cta: "Voir les services",
+        items: [
+          {
+            title: "Couverture Mariage",
+            desc: "Le jour du mariage n'est pas une suite de moments à capturer — c'est un sentiment à ressentir. Je documente la journée comme un fil rouge intime, de la lumière du matin jusqu'à la dernière danse.",
+            cta: "En savoir plus",
+            strip: ["img/wed1.jpg", "img/wed2.jpg", "img/wed3.jpg", "img/wed4.jpg", "img/wed5.jpg"]
+          },
+          {
+            title: "Portrait & Mariée",
+            desc: "Certaines saisons de la vie méritent d'être documentées. Que vous marquiez une étape ou souhaitiez simplement des images sincères — une séance baignée d'une lumière naturelle, douce et sans pose.",
+            cta: "En savoir plus",
+            strip: ["img/por1.jpg", "img/por2.jpg", "img/por3.jpg", "img/por4.jpg", "img/por5.jpg"]
+          },
+          {
+            title: "Éditorial & Marque",
+            desc: "Une étude de lumière, de silhouette et de calme. Ces séances mêlent émotion et précision éditoriale — élégantes, intemporelles, pensées pour respirer.",
+            cta: "En savoir plus",
+            strip: ["img/edi1.jpg", "img/edi2.jpg", "img/edi3.jpg", "img/edi4.jpg", "img/edi5.jpg"]
+          }
+        ]
+      },
+
+      portfolio: {
+        heading: "Travaux Choisis",
+        intro: "Parcourez une collection curée de moments qui ont trouvé leur place dans le cœur de mes clients.",
+        cta: "Voir le portfolio",
+        works: [
+          { index: "01", title: "Séance Mariée", category: "Mariage",       image: "img/work1.jpg" },
+          { index: "02", title: "Élopement",     category: "Mariage",       image: "img/work2.jpg" },
+          { index: "03", title: "Éditorial",     category: "Événements de prestige", image: "img/work3.jpg" },
+          { index: "04", title: "Sienna & Matteo", category: "Mariage",     image: "img/work4.jpg" }
+        ]
+      },
+
+      testimonials: {
+        label: "Avis clients",
+        heading: "Mots de Clients",
+        intro: "Voici ce que les couples disent de notre collaboration. Des moments réels, des expériences réelles, des retours sincères.",
+        image: "img/testimonial.jpg",
+        items: [
+          {
+            quote: "Camille était présente exactement quand il le fallait, et discrète quand cela comptait le plus. Notre galerie nous a fait pleurer plus d'une fois avant même d'avoir fini de la regarder.",
+            name: "Claire & Antoine"
+          }
+        ]
+      },
+
+      faq: {
+        heading: "Questions",
+        intro: "Vous avez besoin de réponses utiles pour comprendre comment se déroule la collaboration ? C'est simple.",
+        cta: "Poser une question",
+        items: [
+          { q: "Combien de temps à l'avance faut-il réserver ?", a: "Je réserve généralement 6 à 9 mois à l'avance pour les portraits, et 8 à 12 mois pour les mariages. Cela dit, je garde toujours quelques créneaux de dernière minute quand mon agenda le permet." },
+          { q: "Vous déplacez-vous ?", a: "Oui, avec plaisir. Je photographie partout en France et à l'étranger. Les frais de déplacement sont précisés dès le devis." },
+          { q: "Pouvez-vous nous aider à planifier le déroulé ?", a: "Absolument. Avant le grand jour, je partage un questionnaire complet et un planning indicatif pour que la lumière soit toujours de votre côté." },
+          { q: "Que faut-il porter pour une séance ?", a: "Privilégiez des matières naturelles et des tons neutres. Je vous envoie un guide de style personnalisé après réservation." },
+          { q: "Quand recevons-nous nos images ?", a: "Comptez 2 à 3 semaines pour une séance portrait, et 8 à 10 semaines pour une galerie de mariage complète et soigneusement éditée." },
+          { q: "Et si la météo ne coopère pas ?", a: "La lumière douce d'un ciel couvert est souvent la plus flatteuse. En cas de pluie, nous prévoyons une alternative en intérieur ou reprogrammons sans frais." }
+        ]
+      },
+
+      journal: {
+        heading: "Journal",
+        intro: "Curieux de ce qui se cache derrière une séance réussie ? Découvrez mes derniers conseils et coulisses.",
+        cta: "Voir les articles",
+        posts: [
+          { title: "Comment choisir le photographe de mariage idéal", date: "2 MARS 2026", tag: "Mariage", image: "img/journal1.jpg" },
+          { title: "Diana & Wayne — un mariage au bord du lac à Marseille", date: "11 FÉV. 2026", tag: "Mariage", image: "img/journal2.jpg" }
+        ]
+      },
+
+      cta: {
+        heading: "On Commence ?",
+        intro: "J'adorerais travailler avec vous. Pour préserver une source d'inspiration constante, j'accepte un nombre limité de collaborations chaque année. Écrivez-moi pour réserver votre date.",
+        button: "Prendre contact",
+        image: "img/cta.jpg"
+      },
+
+      footer: {
+        nav: ["Accueil", "À propos", "Services", "Portfolio", "Journal", "Contact"],
+        socials: ["Instagram", "Pinterest", "Facebook", "LinkedIn"],
+        email: "bonjour@lumiere-studio.fr",
+        phone: "+33 6 12 34 56 78",
+        legal: ["Confidentialité", "Conditions générales", "Cookies"],
+        copyright: "© 2026 Lumière Studio",
+        image: "img/footer.jpg"
+      },
+
+      portfolioPage: {
+        title: "Le Portfolio",
+        intro: "Une sélection d'instants saisis au fil des saisons — mariages, portraits et séances éditoriales, là où la lumière raconte tout.",
+        images: [
+          "img/work1.jpg",
+          "img/wed4.jpg",
+          "img/por5.jpg",
+          "img/edi2.jpg",
+          "img/work3.jpg",
+          "img/wed2.jpg",
+          "img/journal1.jpg",
+          "img/por1.jpg",
+          "img/edi5.jpg",
+          "img/work4.jpg",
+          "img/wed5.jpg",
+          "img/testimonial.jpg"
+        ]
+      },
+
+      contactPage: {
+        title: "Prendre Contact",
+        intro: "J'accepte un nombre limité de collaborations chaque année, pour offrir à chacune toute l'attention qu'elle mérite. Écrivez-moi pour réserver votre date.",
+        email: "bonjour@lumiere-studio.fr",
+        phone: "+33 6 12 34 56 78"
+      }
+    };
+  </script>
+</head>
+
+<body class="antialiased text-ink bg-cream" style="-webkit-font-smoothing:antialiased;">
+
+  <!-- ============================================================
+       NAVIGATION
+       ============================================================ -->
+  <nav class="fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-6 flex items-center justify-between mix-blend-difference text-white">
+    <div class="flex items-center gap-8 text-[11px] tracking-wide2 uppercase font-medium">
+      <a href="#" data-sg-page="/"         class="nav-link" data-sg-path="nav.0">Accueil</a>
+      <a href="#" data-sg-page="portfolio" class="nav-link" data-sg-path="nav.3">Portfolio</a>
+    </div>
+    <a href="#" data-sg-page="/" class="font-serif text-2xl md:text-3xl tracking-wide" data-sg-path="brand">Lumière</a>
+    <div class="flex items-center gap-8 text-[11px] tracking-wide2 uppercase font-medium">
+      <a href="#" data-sg-page="contact" class="nav-link" data-sg-path="nav.5">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       PAGE HEADER
+       ============================================================ -->
+  <header class="bg-cream text-ink pt-40 md:pt-52 pb-16 md:pb-24 px-6 md:px-12">
+    <div class="max-w-4xl mx-auto text-center" data-sg-reveal>
+      <span class="text-[11px] uppercase tracking-wide2 text-muted block mb-6" data-sg-path="brandTag">(PHOTOGRAPHE)</span>
+      <h1 class="font-serif text-6xl md:text-8xl leading-[0.95] mb-8" data-sg-path="portfolioPage.title">Le Portfolio</h1>
+      <p class="text-muted text-sm md:text-base leading-relaxed max-w-xl mx-auto" data-sg-path="portfolioPage.intro">Une sélection d'instants saisis au fil des saisons — mariages, portraits et séances éditoriales, là où la lumière raconte tout.</p>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       GALERIE — masonry (columns) dans la DA du template
+       ============================================================ -->
+  <section class="bg-cream text-ink pb-24 md:pb-36 px-6 md:px-12">
+    <div class="max-w-7xl mx-auto columns-1 sm:columns-2 lg:columns-3 gap-4 md:gap-6 [column-fill:_balance]">
+      <div class="gal-tile overflow-hidden mb-4 md:mb-6 break-inside-avoid" data-sg-reveal><img data-sg-img="portfolioPage.images[0]" src="img/work1.jpg" alt="" class="w-full h-auto object-cover"></div>
+      <div class="gal-tile overflow-hidden mb-4 md:mb-6 break-inside-avoid" data-sg-reveal><img data-sg-img="portfolioPage.images[1]" src="img/wed4.jpg" alt="" class="w-full h-auto object-cover"></div>
+      <div class="gal-tile overflow-hidden mb-4 md:mb-6 break-inside-avoid" data-sg-reveal><img data-sg-img="portfolioPage.images[2]" src="img/por5.jpg" alt="" class="w-full h-auto object-cover"></div>
+      <div class="gal-tile overflow-hidden mb-4 md:mb-6 break-inside-avoid" data-sg-reveal><img data-sg-img="portfolioPage.images[3]" src="img/edi2.jpg" alt="" class="w-full h-auto object-cover"></div>
+      <div class="gal-tile overflow-hidden mb-4 md:mb-6 break-inside-avoid" data-sg-reveal><img data-sg-img="portfolioPage.images[4]" src="img/work3.jpg" alt="" class="w-full h-auto object-cover"></div>
+      <div class="gal-tile overflow-hidden mb-4 md:mb-6 break-inside-avoid" data-sg-reveal><img data-sg-img="portfolioPage.images[5]" src="img/wed2.jpg" alt="" class="w-full h-auto object-cover"></div>
+      <div class="gal-tile overflow-hidden mb-4 md:mb-6 break-inside-avoid" data-sg-reveal><img data-sg-img="portfolioPage.images[6]" src="img/journal1.jpg" alt="" class="w-full h-auto object-cover"></div>
+      <div class="gal-tile overflow-hidden mb-4 md:mb-6 break-inside-avoid" data-sg-reveal><img data-sg-img="portfolioPage.images[7]" src="img/por1.jpg" alt="" class="w-full h-auto object-cover"></div>
+      <div class="gal-tile overflow-hidden mb-4 md:mb-6 break-inside-avoid" data-sg-reveal><img data-sg-img="portfolioPage.images[8]" src="img/edi5.jpg" alt="" class="w-full h-auto object-cover"></div>
+      <div class="gal-tile overflow-hidden mb-4 md:mb-6 break-inside-avoid" data-sg-reveal><img data-sg-img="portfolioPage.images[9]" src="img/work4.jpg" alt="" class="w-full h-auto object-cover"></div>
+      <div class="gal-tile overflow-hidden mb-4 md:mb-6 break-inside-avoid" data-sg-reveal><img data-sg-img="portfolioPage.images[10]" src="img/wed5.jpg" alt="" class="w-full h-auto object-cover"></div>
+      <div class="gal-tile overflow-hidden mb-4 md:mb-6 break-inside-avoid" data-sg-reveal><img data-sg-img="portfolioPage.images[11]" src="img/testimonial.jpg" alt="" class="w-full h-auto object-cover"></div>
+    </div>
+
+    <div class="text-center mt-20" data-sg-reveal>
+      <a href="#" data-sg-page="contact" class="btn-line inline-block border border-ink/40 text-[11px] tracking-wide2 uppercase px-8 py-4 hover:bg-ink hover:text-cream" data-sg-path="cta.button">Prendre contact</a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER — black
+       ============================================================ -->
+  <footer class="bg-black text-cream px-6 md:px-12 py-16 md:py-20">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div>
+        <a href="#" data-sg-page="/" class="font-serif text-6xl md:text-7xl block leading-none" data-sg-path="brandFull">Lumière</a>
+        <span class="text-[10px] uppercase tracking-wide2 text-cream/50" data-sg-path="brandTag">(PHOTOGRAPHE)</span>
+        <div class="mt-8 overflow-hidden w-44 aspect-[4/3]"><img data-sg-img="footer.image" src="img/footer.jpg" alt="" class="w-full h-full object-cover"></div>
+      </div>
+      <nav class="flex flex-col gap-2 text-2xl md:text-3xl">
+        <a href="#" data-sg-page="/"         class="hover:text-white/60" data-sg-path="footer.nav[0]">Accueil</a>
+        <a href="#" data-sg-page="portfolio" class="hover:text-white/60" data-sg-path="footer.nav[3]">Portfolio</a>
+        <a href="#" data-sg-page="contact"   class="hover:text-white/60" data-sg-path="footer.nav[5]">Contact</a>
+      </nav>
+      <div class="flex flex-col gap-6 text-sm">
+        <div class="flex flex-col gap-1">
+          <a href="#" class="hover:text-white/60" data-sg-path="footer.socials[0]">Instagram</a>
+          <a href="#" class="hover:text-white/60" data-sg-path="footer.socials[1]">Pinterest</a>
+          <a href="#" class="hover:text-white/60" data-sg-path="footer.socials[2]">Facebook</a>
+          <a href="#" class="hover:text-white/60" data-sg-path="footer.socials[3]">LinkedIn</a>
+        </div>
+        <div class="flex flex-col gap-1 text-cream/70">
+          <a href="#" class="hover:text-white" data-sg-path="footer.email">bonjour@lumiere-studio.fr</a>
+          <span data-sg-path="footer.phone">+33 6 12 34 56 78</span>
+        </div>
+        <div class="flex flex-col gap-1 text-[11px] uppercase tracking-wide2 text-cream/50 mt-4">
+          <a href="#" class="hover:text-white" data-sg-path="footer.legal[0]">Confidentialité</a>
+          <a href="#" class="hover:text-white" data-sg-path="footer.legal[1]">Conditions générales</a>
+          <a href="#" class="hover:text-white" data-sg-path="footer.legal[2]">Cookies</a>
+          <span class="mt-4" data-sg-path="footer.copyright">© 2026 Lumière Studio</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       HYDRATATION + ANIMATIONS (bloc standard Akyra)
+       ============================================================ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, {
+            opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+          });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, {
+            yPercent: -15, ease: 'none',
+            scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+          });
+        });
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -162,5 +162,27 @@
     "intro": "Nous acceptons un nombre limité de projets chaque année pour garantir à chaque couple une attention et un savoir-faire exceptionnels. Veuillez partager les détails de votre célébration ci-dessous.",
     "email": "hello@oceanweststudio.com",
     "location": "Seattle / Monde entier"
+  },
+  "portfolioPage": {
+    "title": "Portfolio",
+    "intro": "Une sélection de mariages que nous avons eu l’honneur d’immortaliser. Des regards, des gestes, des lumières — chaque image est un fragment d’une histoire vraie, façonnée avec patience et émotion.",
+    "images": [
+      "/_templates/luxury-wedding/img/gallery-rings.jpg",
+      "/_templates/luxury-wedding/img/gallery-bouquet.jpg",
+      "/_templates/luxury-wedding/img/gallery-bride-sharp.jpg",
+      "/_templates/luxury-wedding/img/gallery-table.jpg",
+      "/_templates/luxury-wedding/img/gallery-couple-sharp.jpg",
+      "/_templates/luxury-wedding/img/gallery-dancing.jpg",
+      "/_templates/luxury-wedding/img/gallery-champagne.jpg",
+      "/_templates/luxury-wedding/img/gallery-dress.jpg",
+      "/_templates/luxury-wedding/img/service-photography.jpg",
+      "/_templates/luxury-wedding/img/service-videography.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Contact",
+    "intro": "Parlons de votre célébration. Racontez-nous votre histoire, votre lieu, votre date — nous reviendrons vers vous avec attention et nos disponibilités.",
+    "email": "hello@oceanweststudio.com",
+    "phone": "+33 1 84 80 00 00"
   }
 }

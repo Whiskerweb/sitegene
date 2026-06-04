@@ -75,7 +75,9 @@
     "galleryCount": "[09]",
     "archive": "Archive",
     "archiveCount": "[30]",
-    "contact": "Contact"
+    "contact": "Contact",
+    "home": "Accueil",
+    "portfolio": "Portfolio"
   },
   "hero": {
     "location": "[LONDRES, ROYAUME-UNI]",
@@ -255,6 +257,34 @@
     "button": "Envoyer votre message",
     "image": "/_templates/portrait-fineart/img/contact.jpg"
   },
+  "portfolioPage": {
+    "title": "Le Portfolio",
+    "intro": "Une sélection resserrée de portraits, de mariages et d'images éditoriales — chaque cadre choisi pour la justesse de sa lumière et la sincérité de l'instant.",
+    "images": [
+      "/_templates/portrait-fineart/img/work-1.jpg",
+      "/_templates/portrait-fineart/img/work-2.jpg",
+      "/_templates/portrait-fineart/img/work-3.jpg",
+      "/_templates/portrait-fineart/img/work-4.jpg",
+      "/_templates/portrait-fineart/img/work-5.jpg",
+      "/_templates/portrait-fineart/img/work-6.jpg",
+      "/_templates/portrait-fineart/img/work-7.jpg",
+      "/_templates/portrait-fineart/img/work-8.jpg",
+      "/_templates/portrait-fineart/img/work-9.jpg",
+      "/_templates/portrait-fineart/img/arc-2.jpg",
+      "/_templates/portrait-fineart/img/arc-5.jpg",
+      "/_templates/portrait-fineart/img/arc-9.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Prenons contact",
+    "intro": "Pour une séance portrait, un mariage ou un projet éditorial, écrivez-moi quelques mots sur ce que vous imaginez — je réponds personnellement à chaque message.",
+    "email": "hello@adrienroy.com",
+    "phone": "+44 7911 123456",
+    "zonesLabel": "[ ZONES D'INTERVENTION ]",
+    "zones": "Basé à Londres, je photographie partout au Royaume-Uni et me déplace à l'international sur demande.",
+    "delayLabel": "[ DÉLAI DE RÉPONSE ]",
+    "delay": "Je réponds à chaque demande sous 24 à 48 heures, du lundi au samedi."
+  },
   "footer": {
     "locationLabel": "[MA LOCALISATION]",
     "location1": "Basé à Londres,",
@@ -304,6 +334,7 @@
           <span class="mono font-semibold" data-sg-path="brand">ADRIEN ROY</span>
         </a>
         <nav class="hidden md:flex items-center gap-7 lg:gap-9">
+          <a href="#" data-sg-page="/" class="mono hover:opacity-60 transition-opacity" data-sg-path="nav.home">Accueil</a>
           <a href="#categories" class="mono hover:opacity-60 transition-opacity" data-sg-path="nav.about">About me</a>
           <a href="#work" class="mono hover:opacity-60 transition-opacity flex items-center gap-1.5">
             <span data-sg-path="nav.gallery">Gallery</span>
@@ -313,7 +344,8 @@
             <span data-sg-path="nav.archive">Archive</span>
             <span class="opacity-60" data-sg-path="nav.archiveCount">[30]</span>
           </a>
-          <a href="#contact" class="mono hover:opacity-60 transition-opacity" data-sg-path="nav.contact">Contact</a>
+          <a href="#" data-sg-page="portfolio" class="mono hover:opacity-60 transition-opacity" data-sg-path="nav.portfolio">Portfolio</a>
+          <a href="#" data-sg-page="contact" class="mono hover:opacity-60 transition-opacity" data-sg-path="nav.contact">Contact</a>
         </nav>
         <button class="md:hidden text-2xl" aria-label="Menu">&#9776;</button>
       </div>

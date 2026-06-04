@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-sg-path="portfolioPage.title">Portfolio — Adrien Roy</title>
+  <meta name="description" data-sg-path="meta.description" content="Fine-art portrait and wedding photographer based in London — natural light, quiet emotion, timeless elegance.">
+
+  <!-- Fonts: Manrope (display + body) — matches captured type scale -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CDN: Tailwind + GSAP + ScrollTrigger -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:    '#0A0A0A',
+            night:  '#12141D',
+            bg:     '#FFFFFF',
+            bgSoft: '#FBFBFB',
+            line:   '#E7E7E7',
+            muted:  '#999999',
+            accent: '#0000EE',
+          },
+          fontFamily: {
+            sans: ['Manrope', 'system-ui', 'sans-serif'],
+          },
+          letterSpacing: {
+            tightest: '-0.04em',
+            tight2:   '-0.025em',
+            mono:     '0.14em',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Manrope', system-ui, sans-serif; }
+    .display { letter-spacing: -0.04em; }
+    /* Image hover scale (gallery cells) */
+    .img-zoom img { transition: transform 1.4s cubic-bezier(0.22,1,0.36,1); }
+    .img-zoom:hover img { transform: scale(1.045); }
+    /* Mono label */
+    .mono { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; }
+  </style>
+
+  <!-- ============================================================
+       SINGLE SOURCE OF TRUTH — edit here or via Akyra editor
+       (all copy & images are DEMO placeholders, freely replaceable)
+       ============================================================ -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ ||  window.__SITE_CONTENT__ || {
+  "meta": {
+    "title": "Adrien Roy | Photographie de Portrait & Mariage d'Art",
+    "description": "Photographe de portrait et mariage d'art basé à Londres — lumière naturelle, émotion discrète, élégance intemporelle."
+  },
+  "brand": "ADRIEN ROY",
+  "nav": {
+    "about": "À propos",
+    "gallery": "Galerie",
+    "galleryCount": "[09]",
+    "archive": "Archive",
+    "archiveCount": "[30]",
+    "contact": "Contact",
+    "home": "Accueil",
+    "portfolio": "Portfolio"
+  },
+  "hero": {
+    "location": "[LONDRES, ROYAUME-UNI]",
+    "title": "Une photographie signature alliant art, émotion et élégance naturelle intemporelle.",
+    "image": "/_templates/portrait-fineart/img/hero.jpg"
+  },
+  "intro": {
+    "text": "Je crée chaque image avec soin, en mariant lumière naturelle et émotion pour capturer des portraits sincères et intemporels qui racontent votre histoire.",
+    "thumbs": [
+      { "image": "/_templates/portrait-fineart/img/thumb-1.jpg", "alt": "Portrait en lumière douce" },
+      { "image": "/_templates/portrait-fineart/img/thumb-2.jpg", "alt": "Portrait studio discret" },
+      { "image": "/_templates/portrait-fineart/img/thumb-3.jpg", "alt": "Instantané en extérieur" },
+      { "image": "/_templates/portrait-fineart/img/thumb-4.jpg", "alt": "Détail à l'heure dorée" },
+      { "image": "/_templates/portrait-fineart/img/thumb-5.jpg", "alt": "Profil contre la lumière" }
+    ]
+  },
+  "categories": {
+    "items": [
+      { "name": "Portraits", "number": "/01", "desc": "Des portraits intimes et discrets, construits autour de la lumière naturelle et des moments spontanés.", "image": "/_templates/portrait-fineart/img/cat-1.jpg" },
+      { "name": "Mariages", "number": "/02", "desc": "Des récits de mariage documentaires — l'émotion avant tout, la pose en dernier, le tout dans un style intemporel.", "image": "/_templates/portrait-fineart/img/cat-2.jpg" },
+      { "name": "Éditorial", "number": "/03", "desc": "Des images éditoriales et de marque réfléchies, avec un regard calme, raffiné et contemporain.", "image": "/_templates/portrait-fineart/img/cat-3.jpg" },
+      { "name": "Nature morte", "number": "/04", "desc": "Texture, lumière et sérénité — des objets et détails photographiés avec patience.", "image": "/_templates/portrait-fineart/img/cat-4.jpg" }
+    ]
+  },
+  "work": {
+    "label": "[ SÉLECTION DE TRAVAUX ]",
+    "heading1": "Sélection",
+    "heading2": "de travaux",
+    "projects": [
+      { "title": "Lior, en Clair-Obscur", "meta": "Portrait — 2024", "image": "/_templates/portrait-fineart/img/work-1.jpg" },
+      { "title": "Fleur de Silence", "meta": "Éditorial — 2024", "image": "/_templates/portrait-fineart/img/work-2.jpg" },
+      { "title": "The Rinaldi Gaze", "meta": "Portrait — 2023", "image": "/_templates/portrait-fineart/img/work-3.jpg" },
+      { "title": "The Whitmore Stillness", "meta": "Mariage — 2024", "image": "/_templates/portrait-fineart/img/work-4.jpg" },
+      { "title": "Valeria in the Wild Light", "meta": "Portrait — 2023", "image": "/_templates/portrait-fineart/img/work-5.jpg" },
+      { "title": "Before the Sea", "meta": "Éditorial — 2024", "image": "/_templates/portrait-fineart/img/work-6.jpg" },
+      { "title": "Salt in the Smoke", "meta": "Nature morte — 2023", "image": "/_templates/portrait-fineart/img/work-7.jpg" },
+      { "title": "Lova, in Bloom", "meta": "Portrait — 2024", "image": "/_templates/portrait-fineart/img/work-8.jpg" },
+      { "title": "Beneath the Blue", "meta": "Éditorial — 2023", "image": "/_templates/portrait-fineart/img/work-9.jpg" }
+    ]
+  },
+  "statement": {
+    "text": "Je crée chaque image avec soin, en mariant lumière naturelle et émotion pour capturer des portraits sincères et intemporels qui racontent votre histoire."
+  },
+  "archive": {
+    "label": "[ L'ARCHIVE ]",
+    "heading1": "Le Regard",
+    "heading2": "qui Persiste",
+    "intro": "Un aperçu plus large et sans filtre — trente images qui ne rentraient pas dans une seule histoire, rassemblées ici pour l'œil attentif.",
+    "images": [
+      { "image": "/_templates/portrait-fineart/img/arc-1.jpg" },
+      { "image": "/_templates/portrait-fineart/img/arc-2.jpg" },
+      { "image": "/_templates/portrait-fineart/img/arc-3.jpg" },
+      { "image": "/_templates/portrait-fineart/img/arc-4.jpg" },
+      { "image": "/_templates/portrait-fineart/img/arc-5.jpg" },
+      { "image": "/_templates/portrait-fineart/img/arc-6.jpg" },
+      { "image": "/_templates/portrait-fineart/img/arc-7.jpg" },
+      { "image": "/_templates/portrait-fineart/img/arc-8.jpg" },
+      { "image": "/_templates/portrait-fineart/img/arc-9.jpg" },
+      { "image": "/_templates/portrait-fineart/img/arc-10.jpg" },
+      { "image": "/_templates/portrait-fineart/img/arc-11.jpg" },
+      { "image": "/_templates/portrait-fineart/img/arc-12.jpg" }
+    ]
+  },
+  "contact": {
+    "label": "[ PRENONS CONTACT ]",
+    "heading1": "J'aimerais",
+    "heading2": "vous entendre",
+    "fields": {
+      "name": "Commençons par votre nom",
+      "reach": "Où puis-je vous joindre ?",
+      "shoot": "Quel type de séance souhaitez-vous réserver ?",
+      "message": "Message",
+      "messageHint": "Parlez-moi un peu de ce que vous recherchez"
+    },
+    "shootOptions": [ "Sélectionnez un type", "Séance portrait", "Mariage", "Éditorial / marque", "Autre" ],
+    "button": "Envoyer votre message",
+    "image": "/_templates/portrait-fineart/img/contact.jpg"
+  },
+  "portfolioPage": {
+    "title": "Le Portfolio",
+    "intro": "Une sélection resserrée de portraits, de mariages et d'images éditoriales — chaque cadre choisi pour la justesse de sa lumière et la sincérité de l'instant.",
+    "images": [
+      "/_templates/portrait-fineart/img/work-1.jpg",
+      "/_templates/portrait-fineart/img/work-2.jpg",
+      "/_templates/portrait-fineart/img/work-3.jpg",
+      "/_templates/portrait-fineart/img/work-4.jpg",
+      "/_templates/portrait-fineart/img/work-5.jpg",
+      "/_templates/portrait-fineart/img/work-6.jpg",
+      "/_templates/portrait-fineart/img/work-7.jpg",
+      "/_templates/portrait-fineart/img/work-8.jpg",
+      "/_templates/portrait-fineart/img/work-9.jpg",
+      "/_templates/portrait-fineart/img/arc-2.jpg",
+      "/_templates/portrait-fineart/img/arc-5.jpg",
+      "/_templates/portrait-fineart/img/arc-9.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Prenons contact",
+    "intro": "Pour une séance portrait, un mariage ou un projet éditorial, écrivez-moi quelques mots sur ce que vous imaginez — je réponds personnellement à chaque message.",
+    "email": "hello@adrienroy.com",
+    "phone": "+44 7911 123456",
+    "zonesLabel": "[ ZONES D'INTERVENTION ]",
+    "zones": "Basé à Londres, je photographie partout au Royaume-Uni et me déplace à l'international sur demande.",
+    "delayLabel": "[ DÉLAI DE RÉPONSE ]",
+    "delay": "Je réponds à chaque demande sous 24 à 48 heures, du lundi au samedi."
+  },
+  "footer": {
+    "locationLabel": "[MA LOCALISATION]",
+    "location1": "Basé à Londres,",
+    "location2": "Royaume-Uni",
+    "menuLabel": "[MENU]",
+    "menu": [ "À propos", "Galerie", "Archive", "Contact" ],
+    "exploreLabel": "[DÉCOUVRIR PLUS]",
+    "explore": [ "Instagram", "Pexels", "Unsplash", "Lummi" ],
+    "reachLabel": "[N'HÉSITEZ PAS À ME CONTACTER]",
+    "email": "hello@adrienroy.com",
+    "phone": "+44 7911 123456"
+  }
+};
+  </script>
+</head>
+
+<body class="antialiased text-ink bg-bg" style="-webkit-font-smoothing:antialiased;">
+
+  <!-- ============================================================
+       HEADER / NAV (light variant for inner page)
+       ============================================================ -->
+  <header class="sticky top-0 inset-x-0 z-30 bg-bg/90 backdrop-blur border-b border-line">
+    <div class="max-w-[100rem] mx-auto px-6 lg:px-10 h-20 flex items-center justify-between text-ink">
+      <a href="#" data-sg-page="/" class="flex items-center gap-2.5">
+        <span class="w-5 h-5 rounded-full bg-ink flex items-center justify-center">
+          <span class="w-2 h-2 rounded-full bg-bg"></span>
+        </span>
+        <span class="mono font-semibold" data-sg-path="brand">ADRIEN ROY</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-7 lg:gap-9">
+        <a href="#" data-sg-page="/" class="mono hover:opacity-60 transition-opacity" data-sg-path="nav.home">Accueil</a>
+        <a href="#" data-sg-page="portfolio" class="mono hover:opacity-60 transition-opacity" data-sg-path="nav.portfolio">Portfolio</a>
+        <a href="#" data-sg-page="contact" class="mono hover:opacity-60 transition-opacity" data-sg-path="nav.contact">Contact</a>
+      </nav>
+      <button class="md:hidden text-2xl" aria-label="Menu">&#9776;</button>
+    </div>
+  </header>
+
+
+  <!-- ============================================================
+       PAGE HEADER
+       ============================================================ -->
+  <section class="bg-bg pt-20 lg:pt-28 pb-12 lg:pb-16">
+    <div class="max-w-[100rem] mx-auto px-6 lg:px-10">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end" data-sg-reveal>
+        <div class="lg:col-span-8">
+          <h1 class="display text-ink font-medium leading-[0.98] text-5xl sm:text-6xl lg:text-7xl"
+              data-sg-path="portfolioPage.title">Le Portfolio</h1>
+        </div>
+        <div class="lg:col-span-4">
+          <p class="text-ink/60 text-base lg:text-lg font-light leading-relaxed max-w-md"
+             data-sg-path="portfolioPage.intro">Une sélection resserrée de portraits, de mariages et d'images éditoriales.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       PORTFOLIO GALLERY (fine-art masonry via columns)
+       ============================================================ -->
+  <section class="bg-bg pb-20 lg:pb-28 border-t border-line pt-12 lg:pt-16">
+    <div class="max-w-[100rem] mx-auto px-6 lg:px-10">
+      <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 lg:gap-5 [column-fill:_balance]" data-sg-reveal>
+        <div class="img-zoom mb-4 lg:mb-5 break-inside-avoid overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="portfolioPage.images[0]" src="img/work-1.jpg" alt="" class="w-full h-auto object-cover"></div>
+        <div class="img-zoom mb-4 lg:mb-5 break-inside-avoid overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="portfolioPage.images[1]" src="img/work-2.jpg" alt="" class="w-full h-auto object-cover"></div>
+        <div class="img-zoom mb-4 lg:mb-5 break-inside-avoid overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="portfolioPage.images[2]" src="img/work-3.jpg" alt="" class="w-full h-auto object-cover"></div>
+        <div class="img-zoom mb-4 lg:mb-5 break-inside-avoid overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="portfolioPage.images[3]" src="img/work-4.jpg" alt="" class="w-full h-auto object-cover"></div>
+        <div class="img-zoom mb-4 lg:mb-5 break-inside-avoid overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="portfolioPage.images[4]" src="img/work-5.jpg" alt="" class="w-full h-auto object-cover"></div>
+        <div class="img-zoom mb-4 lg:mb-5 break-inside-avoid overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="portfolioPage.images[5]" src="img/work-6.jpg" alt="" class="w-full h-auto object-cover"></div>
+        <div class="img-zoom mb-4 lg:mb-5 break-inside-avoid overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="portfolioPage.images[6]" src="img/work-7.jpg" alt="" class="w-full h-auto object-cover"></div>
+        <div class="img-zoom mb-4 lg:mb-5 break-inside-avoid overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="portfolioPage.images[7]" src="img/work-8.jpg" alt="" class="w-full h-auto object-cover"></div>
+        <div class="img-zoom mb-4 lg:mb-5 break-inside-avoid overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="portfolioPage.images[8]" src="img/work-9.jpg" alt="" class="w-full h-auto object-cover"></div>
+        <div class="img-zoom mb-4 lg:mb-5 break-inside-avoid overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="portfolioPage.images[9]" src="img/arc-2.jpg" alt="" class="w-full h-auto object-cover"></div>
+        <div class="img-zoom mb-4 lg:mb-5 break-inside-avoid overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="portfolioPage.images[10]" src="img/arc-5.jpg" alt="" class="w-full h-auto object-cover"></div>
+        <div class="img-zoom mb-4 lg:mb-5 break-inside-avoid overflow-hidden rounded-sm bg-bgSoft"><img data-sg-img="portfolioPage.images[11]" src="img/arc-9.jpg" alt="" class="w-full h-auto object-cover"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       STATEMENT BAND (centered)
+       ============================================================ -->
+  <section class="bg-bgSoft py-24 lg:py-36 border-t border-line">
+    <div class="max-w-4xl mx-auto px-6 text-center" data-sg-reveal>
+      <p class="display text-ink font-medium leading-[1.2] text-2xl sm:text-3xl lg:text-[2.4rem]"
+         data-sg-path="statement.text">Je crée chaque image avec soin, en mariant lumière naturelle et émotion pour capturer des portraits sincères et intemporels qui racontent votre histoire.</p>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="bg-bg pt-16 pb-12 border-t border-line">
+    <div class="max-w-[100rem] mx-auto px-6 lg:px-10 grid grid-cols-2 lg:grid-cols-4 gap-10">
+      <div>
+        <span class="mono text-muted block mb-4" data-sg-path="footer.locationLabel">[MA LOCALISATION]</span>
+        <p class="text-ink font-light text-lg leading-snug">
+          <span data-sg-path="footer.location1">Basé à Londres,</span><br>
+          <span data-sg-path="footer.location2">Royaume-Uni</span>
+        </p>
+      </div>
+      <div>
+        <span class="mono text-muted block mb-4" data-sg-path="footer.menuLabel">[MENU]</span>
+        <ul class="space-y-2 text-ink font-light text-lg">
+          <li><a href="#" data-sg-page="/" class="hover:opacity-60 transition-opacity" data-sg-path="nav.home">Accueil</a></li>
+          <li><a href="#" data-sg-page="portfolio" class="hover:opacity-60 transition-opacity" data-sg-path="nav.portfolio">Portfolio</a></li>
+          <li><a href="#" data-sg-page="contact" class="hover:opacity-60 transition-opacity" data-sg-path="nav.contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="mono text-muted block mb-4" data-sg-path="footer.exploreLabel">[DÉCOUVRIR PLUS]</span>
+        <ul class="space-y-2 text-ink font-light text-lg">
+          <li><a href="#" class="hover:opacity-60 transition-opacity" data-sg-path="footer.explore[0]">Instagram</a></li>
+          <li><a href="#" class="hover:opacity-60 transition-opacity" data-sg-path="footer.explore[1]">Pexels</a></li>
+          <li><a href="#" class="hover:opacity-60 transition-opacity" data-sg-path="footer.explore[2]">Unsplash</a></li>
+          <li><a href="#" class="hover:opacity-60 transition-opacity" data-sg-path="footer.explore[3]">Lummi</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="mono text-muted block mb-4" data-sg-path="footer.reachLabel">[N'HÉSITEZ PAS À ME CONTACTER]</span>
+        <p class="text-ink font-light text-lg leading-snug">
+          <a href="#" class="hover:opacity-60 transition-opacity" data-sg-path="footer.email">hello@adrienroy.com</a><br>
+          <span class="text-ink/70" data-sg-path="footer.phone">+44 7911 123456</span>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       HYDRATION + GSAP ANIMATIONS (standard Akyra block)
+       ============================================================ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, {
+            opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+          });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, {
+            yPercent: -12, ease: 'none',
+            scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+          });
+        });
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

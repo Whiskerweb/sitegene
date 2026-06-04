@@ -84,5 +84,27 @@
     "instagram": "Instagram : @clara.whitfield",
     "email": "Email : hello@clarawhitfield.com",
     "background": "/_templates/portrait-lifestyle/img/studio.jpg"
+  },
+  "portfolioPage": {
+    "title": "Portfolio",
+    "intro": "Une sélection d'instants suspendus — portraits intimes et fragments de vie. Chaque image est le reflet d'une rencontre, d'une lumière, d'une émotion saisie au plus juste.",
+    "images": [
+      "/_templates/portrait-lifestyle/img/work1.jpg",
+      "/_templates/portrait-lifestyle/img/life1.jpg",
+      "/_templates/portrait-lifestyle/img/work3.jpg",
+      "/_templates/portrait-lifestyle/img/work2.jpg",
+      "/_templates/portrait-lifestyle/img/life2.jpg",
+      "/_templates/portrait-lifestyle/img/work6.jpg",
+      "/_templates/portrait-lifestyle/img/work4.jpg",
+      "/_templates/portrait-lifestyle/img/life3.jpg",
+      "/_templates/portrait-lifestyle/img/work5.jpg",
+      "/_templates/portrait-lifestyle/img/hero-portrait.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Contact",
+    "intro": "Parlons de votre projet. Que ce soit pour un portrait, une séance lifestyle ou une collaboration, je serais ravie d'échanger sur vos envies et de donner vie à votre histoire.",
+    "email": "hello@clarawhitfield.com",
+    "phone": "+33 1 84 80 12 34"
   }
 }

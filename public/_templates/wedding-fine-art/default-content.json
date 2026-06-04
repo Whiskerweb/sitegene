@@ -92,5 +92,38 @@
     "Pinterest",
     "Tiktok",
     "Journal"
-  ]
+  ],
+  "menu": {
+    "home": "Accueil",
+    "portfolio": "Portfolio",
+    "contact": "Contact"
+  },
+  "portfolioPage": {
+    "title": "PORTFOLIO",
+    "intro": "Une sélection d’histoires d’amour photographiées au fil des saisons — évasions, mariages intimistes et instants volés, ici comme ailleurs.",
+    "images": [
+      "/_templates/wedding-fine-art/img/hero.jpg",
+      "/_templates/wedding-fine-art/img/intro-left.jpg",
+      "/_templates/wedding-fine-art/img/intro-right.jpg",
+      "/_templates/wedding-fine-art/img/services-main.jpg",
+      "/_templates/wedding-fine-art/img/services-detail.jpg",
+      "/_templates/wedding-fine-art/img/about-main.jpg",
+      "/_templates/wedding-fine-art/img/about-detail.jpg",
+      "/_templates/wedding-fine-art/img/cta.jpg",
+      "/_templates/wedding-fine-art/img/ig1.jpg",
+      "/_templates/wedding-fine-art/img/ig2.jpg",
+      "/_templates/wedding-fine-art/img/ig3.jpg",
+      "/_templates/wedding-fine-art/img/ig4.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "CONTACT",
+    "intro": "Parlons de votre histoire. Évasion lointaine, mariage intimiste ou séance de fiançailles — racontez-moi votre projet et je reviendrai vers vous avec plaisir.",
+    "email": "hello@elisemaes.com",
+    "phone": "+32 478 12 34 56",
+    "areasTitle": "ZONES D’INTERVENTION",
+    "areasBody": "Basée à Bruxelles, je photographie partout en Belgique et voyage à travers l’Europe et le monde. Les déplacements font partie de l’aventure.",
+    "responseTitle": "DÉLAI DE RÉPONSE",
+    "responseBody": "Je réponds personnellement à chaque message sous 48 heures ouvrées. Mon agenda se remplit vite : n’hésitez pas à me contacter tôt pour réserver votre date."
+  }
 }
