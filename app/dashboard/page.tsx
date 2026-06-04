@@ -13,24 +13,43 @@ import { BorderBeam } from "@/components/ui/border-beam";
 import { SitePreview } from "@/components/ui/SitePreview";
 import { SiteActions } from "@/components/ui/SiteActions";
 import { IconCloud } from "@/components/ui/icons";
+import PaywallModal from "@/components/dashboard/PaywallModal";
+import TrialBanner from "@/components/dashboard/TrialBanner";
 
 export const dynamic = "force-dynamic";
 
 const fmtDate = (d?: string | null) =>
   d ? new Date(d).toLocaleDateString("fr-FR", { day: "2-digit", month: "long" }) : "—";
 
-export default async function MonSite() {
+export default async function MonSite({
+  searchParams,
+}: {
+  searchParams: Promise<{ paywall?: string; fromChat?: string }>;
+}) {
   const user = await requireUser();
   const admin = createAdminClient();
+  const sp = await searchParams;
 
   const { data: site } = await admin
     .from("sites")
-    .select("id, slug, status, template_id, published_at, created_at")
+    .select(
+      "id, slug, status, template_id, published_at, created_at, billing_status, trial_ends_at",
+    )
     .eq("owner_user_id", user.id)
     .order("created_at", { ascending: false })
     .limit(1)
     .maybeSingle();
   const balance = await getBalance(admin, user.id);
+
+  const { data: ob } = site
+    ? await admin
+        .from("site_onboarding")
+        .select("intake")
+        .eq("site_id", site.id)
+        .maybeSingle()
+    : { data: null };
+  const firstName =
+    ((ob?.intake as { brand?: string } | null)?.brand ?? "").split(" ")[0] || null;
 
   if (!site) {
     return (
@@ -72,6 +91,8 @@ export default async function MonSite() {
   const allNotes = notes ?? [];
   const inProgress = allNotes.filter((n) => n.status === "open" || n.status === "in_progress").length;
   const isLive = site.status === "live" && !!site.slug;
+  const billing = (site.billing_status as string) ?? "none";
+  const locked = !isLive && ["none", "canceled", "payment_failed"].includes(billing);
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
   const fullUrl = site.slug ? `${appUrl}/s/${site.slug}` : "";
 
@@ -81,6 +102,10 @@ export default async function MonSite() {
         title="Mon site"
         subtitle="Votre portfolio, en un coup d'œil."
       />
+
+      {billing === "trialing" && site.trial_ends_at && (
+        <TrialBanner siteId={site.id} trialEndsAt={site.trial_ends_at as string} />
+      )}
 
       {job && (
         <GlassCard className="mb-6 flex items-center gap-3 border border-sky-300 p-4">
@@ -127,12 +152,28 @@ export default async function MonSite() {
 
         {!isLive && (
           <div className="mt-5 flex flex-wrap gap-3">
-            {lastContent && (
-              <Button href="/editor">Modifier mon site</Button>
+            {locked ? (
+              <PaywallModal
+                siteId={site.id}
+                firstName={firstName}
+                defaultOpen={Boolean(sp.paywall) || Boolean(sp.fromChat)}
+                trigger={<Button>Publier mon site</Button>}
+              />
+            ) : (
+              lastContent && <Button href="/editor">Modifier mon site</Button>
             )}
-            <Button href="/dashboard/modifications" variant="subtle">
-              Voir mes options
-            </Button>
+            {locked && lastContent && (
+              <PaywallModal
+                siteId={site.id}
+                firstName={firstName}
+                trigger={<Button variant="subtle">Modifier mon site</Button>}
+              />
+            )}
+            {!locked && (
+              <Button href="/dashboard/modifications" variant="subtle">
+                Voir mes options
+              </Button>
+            )}
           </div>
         )}
       </GlassCard>

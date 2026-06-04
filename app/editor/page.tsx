@@ -20,12 +20,21 @@ export default async function EditorPage({
 
   const { data: site } = await admin
     .from("sites")
-    .select("id, slug, status, template_id")
+    .select("id, slug, status, template_id, billing_status")
     .eq("owner_user_id", user.id)
     .order("created_at", { ascending: false })
     .limit(1)
     .maybeSingle();
   if (!site || !site.template_id) redirect("/dashboard");
+  // Garde-fou : site verrouillé (ni en ligne, ni en essai/payé) → paywall.
+  if (
+    site.status !== "live" &&
+    ["none", "canceled", "payment_failed"].includes(
+      (site.billing_status as string) ?? "none",
+    )
+  ) {
+    redirect("/dashboard?paywall=1");
+  }
 
   const balance = await getBalance(admin, user.id);
 
