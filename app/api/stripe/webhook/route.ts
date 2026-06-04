@@ -47,6 +47,9 @@ export async function POST(request: Request) {
           await fulfillTrialStart(s);
         } else if (s.metadata?.kind === "topup") {
           await fulfillTopup(s);
+        } else if (s.mode === "setup") {
+          // Session setup inconnue (pas de flow trial_50) : rien à honorer.
+          console.warn("[webhook] setup session ignorée:", s.id);
         } else {
           // Flux historique : mise en ligne 50 €.
           await fulfillPayment(s);

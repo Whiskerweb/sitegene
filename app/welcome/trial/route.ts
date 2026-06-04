@@ -11,9 +11,14 @@ export async function GET(request: Request) {
   const sessionId = searchParams.get("session_id");
   if (!sessionId) return NextResponse.redirect(`${origin}/dashboard`);
 
-  const session = await stripe.checkout.sessions.retrieve(sessionId);
-  if (session.mode === "setup" && session.status === "complete") {
-    await fulfillTrialStart(session);
+  try {
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    if (session.mode === "setup" && session.status === "complete") {
+      await fulfillTrialStart(session);
+    }
+  } catch (e) {
+    console.error("[welcome/trial]", e);
+    return NextResponse.redirect(`${origin}/dashboard`);
   }
   return NextResponse.redirect(`${origin}/dashboard?trial=1`);
 }
