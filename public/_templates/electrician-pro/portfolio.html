@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-sg-path="meta.title">Ohmly – Électriciens agréés sur qui compter</title>
+  <meta name="description" data-sg-path="meta.description" content="Électriciens agréés et certifiés proposant des solutions rapides, sûres et abordables pour les particuliers et les professionnels." />
+
+  <!-- Google Fonts: Manrope (headings, 800) + Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FF7417',   /* orange accent */
+            primaryDark: '#FF7A30',
+            ink:     '#0A0A0A',    /* near-black headings / dark sections */
+            bg:      '#F2F2F2',    /* light section bg */
+            muted:   '#696969',    /* body text muted */
+            border:  '#EDEDED',    /* card borders */
+            star:    '#FF7417',
+          },
+          fontFamily: {
+            sans:    ['"Inter"', 'sans-serif'],
+            display: ['"Manrope"', 'sans-serif'],
+          },
+          borderRadius: {
+            'xl2': '18px',
+            'xl3': '28px',
+          },
+        }
+      }
+    };
+  </script>
+
+  <!-- __SITE_CONTENT__ — single source of truth for all copy + image paths (DEMO content) -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+  "meta": {
+    "title": "Ohmly – Électriciens agréés sur qui compter",
+    "description": "Électriciens agréés et certifiés proposant des solutions rapides, sûres et abordables pour les particuliers et les professionnels."
+  },
+  "brand": "Ohmly",
+  "nav": {
+    "rating": "4,8+ Avis",
+    "links": [
+      "À propos",
+      "Prestations",
+      "Pourquoi nous",
+      "Tarifs",
+      "Contact"
+    ],
+    "cta": "Demander un devis"
+  },
+  "hero": {
+    "title": "Solutions électriques sûres et fiables",
+    "tagline": "Électriciens agréés et certifiés pour des interventions rapides, sécurisées et économiques chez vous ou en entreprise.",
+    "cta": "Réserver une intervention",
+    "badge": "Made in Demo",
+    "image": "/_templates/electrician-pro/img/hero.jpg"
+  },
+  "services": {
+    "label": "Prestations",
+    "title": "Des solutions fiables pour tous vos besoins électriques",
+    "items": [
+      {
+        "title": "Électricité résidentielle",
+        "image": "/_templates/electrician-pro/img/s-wiring.jpg"
+      },
+      {
+        "title": "Installation d'éclairage",
+        "image": "/_templates/electrician-pro/img/s-lighting.jpg"
+      },
+      {
+        "title": "Mise à niveau de tableau",
+        "image": "/_templates/electrician-pro/img/s-panel.jpg"
+      },
+      {
+        "title": "Électricité commerciale",
+        "image": "/_templates/electrician-pro/img/s-commercial.jpg"
+      },
+      {
+        "title": "Dépannage électrique",
+        "image": "/_templates/electrician-pro/img/s-repairs.jpg"
+      },
+      {
+        "title": "Contrôles de sécurité",
+        "image": "/_templates/electrician-pro/img/s-inspection.jpg"
+      }
+    ]
+  },
+  "why": {
+    "label": "Pourquoi nous",
+    "title": "Pourquoi les particuliers et professionnels nous choisissent",
+    "statValue": "1,000",
+    "statLabel": "Interventions réalisées",
+    "cards": {
+      "response": {
+        "title": "À votre porte en quelques heures"
+      },
+      "experience": {
+        "title": "Plus de 15 ans d'expérience",
+        "image": "/_templates/electrician-pro/img/why-bulb.jpg"
+      },
+      "safety": {
+        "title": "La sécurité avant tout"
+      },
+      "care": {
+        "title": "Nous prenons soin de vous",
+        "image": "/_templates/electrician-pro/img/why-care.jpg"
+      },
+      "quality": {
+        "title": "Travail soigné et durable",
+        "image": "/_templates/electrician-pro/img/why-quality.jpg"
+      }
+    }
+  },
+  "testimonials": {
+    "label": "Témoignages",
+    "title": "Ce que nos clients disent de nos services électriques",
+    "items": [
+      {
+        "quote": "Ils ont résolu une panne soudaine en un temps record. L'électricien a tout vérifié pour garantir sécurité et propreté.",
+        "author": "James Anderson",
+        "role": "Homeowner",
+        "rating": 5
+      },
+      {
+        "quote": "Installation parfaite de notre nouvel éclairage, avec un rangement impeccable. Ponctuels, aimables et très professionnels.",
+        "author": "Jenifer Martinez",
+        "role": "Property Manager",
+        "rating": 5
+      },
+      {
+        "quote": "Ils ont modernisé notre tableau électrique en toute sécurité et nous ont tout expliqué clairement. Travail soigné et professionnel.",
+        "author": "Daniel Brooks",
+        "role": "Homeowner",
+        "rating": 5
+      },
+      {
+        "quote": "Installation d'interrupteurs connectés dans toute la maison. Tout fonctionne parfaitement et l'ensemble est très propre. Communication excellente.",
+        "author": "Sophie Laurent",
+        "role": "Business Owner",
+        "rating": 5
+      }
+    ]
+  },
+  "pricing": {
+    "label": "Tarifs",
+    "title": "Des tarifs adaptés à vos besoins",
+    "image": "/_templates/electrician-pro/img/pricing.jpg",
+    "standard": {
+      "name": "Tarif standard d'intervention",
+      "rate": "$85",
+      "unit": "/ Hour",
+      "included": [
+        "Diagnostic sur site",
+        "Réparations et installations",
+        "Contrôle de sécurité inclus",
+        "Facturation horaire transparente"
+      ]
+    },
+    "custom": {
+      "tag": "Solutions électriques sur mesure",
+      "name": "Sur devis",
+      "cta": "Demander un devis",
+      "included": [
+        "Électricité complète du logement",
+        "Rénovation et mises à niveau",
+        "Installations commerciales",
+        "Planification sur mesure"
+      ]
+    }
+  },
+  "faq": {
+    "label": "FAQ",
+    "title": "Tout ce que vous devez savoir",
+    "items": [
+      {
+        "question": "Combien de temps mettez-vous pour intervenir ?",
+        "answer": "Pour les urgences, nous visons une intervention sous quelques heures. Pour les rendez-vous planifiés, nous choisissons un créneau adapté à votre emploi du temps et vous confirmons une plage horaire précise."
+      },
+      {
+        "question": "Êtes-vous agréés et assurés ?",
+        "answer": "Oui. Tous nos électriciens sont pleinement agréés, certifiés et assurés, garantissant ainsi la protection de votre domicile ou de votre entreprise à chaque intervention."
+      },
+      {
+        "question": "Comment fonctionne votre tarification horaire ?",
+        "answer": "Notre tarif standard est facturé à l'heure, de manière transparente et sans frais cachés. Vous validez toute pièce ou travail supplémentaire avant que nous ne commencions."
+      },
+      {
+        "question": "Proposez-vous des devis pour les gros projets ?",
+        "answer": "Absolument. Pour les rénovations, les réfections électriques ou les installations commerciales, nous fournissons un devis détaillé avec un cahier des charges clair et un calendrier précis."
+      },
+      {
+        "question": "Proposez-vous des interventions d'urgence ?",
+        "answer": "Oui, nous assurons un service d'urgence à réponse rapide pour les coupures, les prises qui grésillent ou tout autre problème électrique urgent, de jour comme de nuit."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Besoin d'une intervention électrique urgente ",
+    "subtitle": "Nous intervenons rapidement en cas de problème électrique, en proposant des solutions sûres et fiables au moment où vous en avez le plus besoin.",
+    "phone": "+1(969) 234 4242",
+    "image": "/_templates/electrician-pro/img/cta.jpg"
+  },
+  "footer": {
+    "tagline": "Ohmly est un service d'électriciens professionnels conçu pour des interventions rapides, une tarification claire et un travail de confiance qui transforme les visiteurs en clients.",
+    "links": [
+      "À propos",
+      "Prestations",
+      "Pourquoi nous",
+      "Témoignages",
+      "Tarifs",
+      "Contact"
+    ],
+    "copyright": "© 2026 Ohmly. Tous droits réservés."
+  },
+  "portfolioPage": {
+    "title": "Nos réalisations",
+    "intro": "Des chantiers menés du diagnostic à la mise en service : tableaux remis aux normes, éclairages sur mesure et installations soignées chez les particuliers comme en entreprise.",
+    "captions": [
+      "Réfection complète d'un tableau électrique",
+      "Installation d'un éclairage encastré sur mesure",
+      "Mise aux normes d'un local commercial",
+      "Pose de prises et points de charge sécurisés",
+      "Câblage propre et étiqueté en armoire",
+      "Rénovation électrique d'une maison ancienne",
+      "Intervention de dépannage en urgence",
+      "Contrôle de sécurité et diagnostic complet",
+      "Installation d'éclairage extérieur paysager",
+      "Domotique et interrupteurs connectés"
+    ],
+    "images": [
+      "/_templates/electrician-pro/img/s-panel.jpg",
+      "/_templates/electrician-pro/img/s-lighting.jpg",
+      "/_templates/electrician-pro/img/s-commercial.jpg",
+      "/_templates/electrician-pro/img/s-wiring.jpg",
+      "/_templates/electrician-pro/img/why-quality.jpg",
+      "/_templates/electrician-pro/img/hero.jpg",
+      "/_templates/electrician-pro/img/s-repairs.jpg",
+      "/_templates/electrician-pro/img/s-inspection.jpg",
+      "/_templates/electrician-pro/img/cta.jpg",
+      "/_templates/electrician-pro/img/why-care.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Contact & devis",
+    "intro": "Une panne, un projet ou une simple question ? Décrivez votre besoin : nous vous répondons rapidement avec un devis clair et sans engagement.",
+    "phoneLabel": "Appelez-nous directement",
+    "phone": "+1(969) 234 4242",
+    "email": "contact@ohmly.fr",
+    "emailLabel": "Écrivez-nous par e-mail",
+    "zonesTitle": "Zones d'intervention",
+    "zones": [
+      "Paris et toute l'Île-de-France",
+      "Hauts-de-Seine (92)",
+      "Val-de-Marne (94)",
+      "Seine-Saint-Denis (93)"
+    ],
+    "promiseTitle": "Réponse sous 2 heures",
+    "promiseText": "Toute demande reçue en journée reçoit une réponse sous 2 heures ouvrées. Pour les urgences, nous intervenons le jour même.",
+    "ctaTitle": "Demandez votre devis gratuit",
+    "ctaText": "Un électricien agréé étudie votre projet et vous transmet un devis détaillé, transparent et sans frais cachés.",
+    "cta": "Demander un devis",
+    "reassurance": [
+      "Électriciens agréés, certifiés et assurés",
+      "Devis gratuit et sans engagement",
+      "Tarification transparente, aucun frais caché"
+    ]
+  }
+};
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #0A0A0A; margin: 0; }
+    h1,h2,h3 { font-family: 'Manrope', sans-serif; }
+
+    .hero-lines { background-image:
+        radial-gradient(120% 100% at 100% 0%, rgba(255,116,23,0.07) 0%, transparent 45%);
+    }
+    .nav-link { position: relative; }
+    .nav-link::after { content:''; position:absolute; left:0; bottom:-3px; width:0; height:2px; background:#FF7417; transition:width .25s; }
+    .nav-link:hover::after { width:100%; }
+  </style>
+</head>
+<body class="antialiased bg-white">
+
+<!-- ───────── NAV ───────── -->
+<nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-border">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" data-sg-page="/" class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5L19.5 10H13l0-8z"/></svg>
+      </div>
+      <span class="text-ink font-display font-extrabold text-lg tracking-tight" data-sg-path="brand">Ohmly</span>
+    </a>
+    <!-- Links -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#" data-sg-page="/"         class="nav-link text-muted hover:text-ink text-sm font-medium transition-colors">Accueil</a>
+      <a href="#" data-sg-page="portfolio" class="nav-link text-ink text-sm font-semibold transition-colors">Nos réalisations</a>
+      <a href="#" data-sg-page="contact"   class="nav-link text-muted hover:text-ink text-sm font-medium transition-colors">Contact &amp; devis</a>
+    </div>
+    <!-- CTA -->
+    <a href="#" data-sg-page="contact" class="bg-primary text-white font-semibold text-sm px-5 py-2.5 rounded-full hover:brightness-105 transition-all" data-sg-path="nav.cta">Demander un devis</a>
+  </div>
+</nav>
+
+<!-- ───────── PORTFOLIO HEADER ───────── -->
+<section class="relative bg-white hero-lines overflow-hidden">
+  <div class="max-w-5xl mx-auto px-6 pt-20 pb-12 text-center" data-sg-reveal>
+    <span class="inline-flex items-center gap-2 text-primary font-semibold text-xs uppercase tracking-wider mb-5">
+      <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+      <span>Réalisations</span>
+    </span>
+    <h1 class="text-ink font-extrabold text-5xl md:text-6xl leading-[1.05] tracking-tight max-w-3xl mx-auto mb-6" data-sg-path="portfolioPage.title">
+      Nos réalisations
+    </h1>
+    <p class="text-muted text-base md:text-lg max-w-2xl mx-auto" data-sg-path="portfolioPage.intro">
+      Des chantiers menés du diagnostic à la mise en service.
+    </p>
+  </div>
+</section>
+
+<!-- ───────── GALLERY ───────── -->
+<section class="bg-white pb-24 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- 0 -->
+      <figure class="relative rounded-xl2 overflow-hidden group" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="portfolioPage.images[0]" src="img/s-panel.jpg" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <figcaption class="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur rounded-full px-4 py-2 text-ink font-semibold text-xs shadow-sm" data-sg-path="portfolioPage.captions[0]">Réfection complète d'un tableau électrique</figcaption>
+      </figure>
+
+      <!-- 1 -->
+      <figure class="relative rounded-xl2 overflow-hidden group" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="portfolioPage.images[1]" src="img/s-lighting.jpg" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <figcaption class="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur rounded-full px-4 py-2 text-ink font-semibold text-xs shadow-sm" data-sg-path="portfolioPage.captions[1]">Installation d'un éclairage encastré sur mesure</figcaption>
+      </figure>
+
+      <!-- 2 -->
+      <figure class="relative rounded-xl2 overflow-hidden group" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="portfolioPage.images[2]" src="img/s-commercial.jpg" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <figcaption class="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur rounded-full px-4 py-2 text-ink font-semibold text-xs shadow-sm" data-sg-path="portfolioPage.captions[2]">Mise aux normes d'un local commercial</figcaption>
+      </figure>
+
+      <!-- 3 -->
+      <figure class="relative rounded-xl2 overflow-hidden group" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="portfolioPage.images[3]" src="img/s-wiring.jpg" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <figcaption class="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur rounded-full px-4 py-2 text-ink font-semibold text-xs shadow-sm" data-sg-path="portfolioPage.captions[3]">Pose de prises et points de charge sécurisés</figcaption>
+      </figure>
+
+      <!-- 4 -->
+      <figure class="relative rounded-xl2 overflow-hidden group" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="portfolioPage.images[4]" src="img/why-quality.jpg" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <figcaption class="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur rounded-full px-4 py-2 text-ink font-semibold text-xs shadow-sm" data-sg-path="portfolioPage.captions[4]">Câblage propre et étiqueté en armoire</figcaption>
+      </figure>
+
+      <!-- 5 -->
+      <figure class="relative rounded-xl2 overflow-hidden group" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="portfolioPage.images[5]" src="img/hero.jpg" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <figcaption class="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur rounded-full px-4 py-2 text-ink font-semibold text-xs shadow-sm" data-sg-path="portfolioPage.captions[5]">Rénovation électrique d'une maison ancienne</figcaption>
+      </figure>
+
+      <!-- 6 -->
+      <figure class="relative rounded-xl2 overflow-hidden group" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="portfolioPage.images[6]" src="img/s-repairs.jpg" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <figcaption class="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur rounded-full px-4 py-2 text-ink font-semibold text-xs shadow-sm" data-sg-path="portfolioPage.captions[6]">Intervention de dépannage en urgence</figcaption>
+      </figure>
+
+      <!-- 7 -->
+      <figure class="relative rounded-xl2 overflow-hidden group" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="portfolioPage.images[7]" src="img/s-inspection.jpg" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <figcaption class="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur rounded-full px-4 py-2 text-ink font-semibold text-xs shadow-sm" data-sg-path="portfolioPage.captions[7]">Contrôle de sécurité et diagnostic complet</figcaption>
+      </figure>
+
+      <!-- 8 -->
+      <figure class="relative rounded-xl2 overflow-hidden group" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="portfolioPage.images[8]" src="img/cta.jpg" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <figcaption class="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur rounded-full px-4 py-2 text-ink font-semibold text-xs shadow-sm" data-sg-path="portfolioPage.captions[8]">Installation d'éclairage extérieur paysager</figcaption>
+      </figure>
+
+      <!-- 9 -->
+      <figure class="relative rounded-xl2 overflow-hidden group" data-sg-reveal>
+        <div class="aspect-[4/3] overflow-hidden">
+          <img data-sg-img="portfolioPage.images[9]" src="img/why-care.jpg" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <figcaption class="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur rounded-full px-4 py-2 text-ink font-semibold text-xs shadow-sm" data-sg-path="portfolioPage.captions[9]">Domotique et interrupteurs connectés</figcaption>
+      </figure>
+
+    </div>
+
+    <!-- CTA bar -->
+    <div class="mt-16 relative bg-bg rounded-xl3 overflow-hidden px-8 md:px-14 py-12 flex flex-col md:flex-row items-center justify-between gap-6" data-sg-reveal>
+      <h2 class="text-ink font-extrabold text-3xl md:text-4xl tracking-tight max-w-lg" data-sg-path="cta.title">Besoin d'une intervention électrique urgente</h2>
+      <a href="#" data-sg-page="contact" class="inline-flex items-center gap-2 bg-primary text-white font-semibold px-7 py-4 rounded-full hover:brightness-105 transition-all text-sm whitespace-nowrap" data-sg-path="nav.cta">Demander un devis</a>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── FOOTER ───────── -->
+<footer class="bg-ink text-white pt-16 pb-8 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-12 mb-12">
+      <!-- Brand -->
+      <div class="max-w-sm">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5L19.5 10H13l0-8z"/></svg>
+          </div>
+          <span class="font-display font-extrabold text-xl text-primary" data-sg-path="brand">Ohmly</span>
+        </div>
+        <p class="text-white/50 text-sm leading-relaxed" data-sg-path="footer.tagline">Ohmly est un service d'électriciens professionnels conçu pour des interventions rapides, une tarification claire et un travail de confiance qui transforme les visiteurs en clients.</p>
+      </div>
+
+      <!-- Links + socials -->
+      <div class="md:text-right">
+        <div class="flex flex-wrap md:justify-end gap-x-6 gap-y-2 mb-6">
+          <a href="#" data-sg-page="/"         class="text-white/70 hover:text-white text-sm transition-colors">Accueil</a>
+          <a href="#" data-sg-page="portfolio" class="text-white/70 hover:text-white text-sm transition-colors">Nos réalisations</a>
+          <a href="#" data-sg-page="contact"   class="text-white/70 hover:text-white text-sm transition-colors">Contact &amp; devis</a>
+        </div>
+        <div class="flex md:justify-end gap-3">
+          <span class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"><svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h3l-7.5 8.5L22 22h-6l-4.7-6.1L5.8 22H3l8-9L2 2h6l4.3 5.6L18 2z"/></svg></span>
+          <span class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"><svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0022 12z"/></svg></span>
+          <span class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"><svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 1.8.25 2.2.42.6.2 1 .46 1.4.86.4.4.66.8.86 1.4.17.4.36 1 .42 2.2.07 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.25 1.8-.42 2.2-.2.6-.46 1-.86 1.4-.4.4-.8.66-1.4.86-.4.17-1 .36-2.2.42-1.3.07-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.06-1.8-.25-2.2-.42-.6-.2-1-.46-1.4-.86-.4-.4-.66-.8-.86-1.4-.17-.4-.36-1-.42-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-1.8.42-2.2.2-.6.46-1 .86-1.4.4-.4.8-.66 1.4-.86.4-.17 1-.36 2.2-.42C8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1018.6 12 6.6 6.6 0 0012 5.4zm0 10.9A4.3 4.3 0 1116.3 12 4.3 4.3 0 0112 16.3zm6.9-11.1a1.5 1.5 0 11-1.5-1.5 1.5 1.5 0 011.5 1.5z"/></svg></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-3">
+      <p class="text-white/40 text-xs" data-sg-path="footer.copyright">© 2026 Ohmly. Tous droits réservés.</p>
+      <p class="text-white/40 text-xs">Built with the Akyra template engine</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ───────── STANDARD HYDRATION + GSAP BLOCK ───────── -->
+<script>
+  (function () {
+    var C = window.__SITE_CONTENT__ || {};
+    function get(p) {
+      return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+        .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+    }
+    // Hydrate texts
+    document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-path'));
+      if (v != null && typeof v !== 'object') el.textContent = v;
+    });
+    // Hydrate images (img.src or background-image)
+    document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-img'));
+      if (v == null) return;
+      if (el.tagName === 'IMG') el.src = v;
+      else el.style.backgroundImage = "url('" + v + "')";
+    });
+    // Animations: reveal/parallax au scroll (re-création GSAP, pas une capture)
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+        gsap.from(el, {
+          opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+        });
+      });
+      gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+        gsap.to(el, {
+          yPercent: -12, ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+      });
+      // ROBUSTESSE : recalcule positions apres chargement des images + filet anti-page-blanche
+      window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+      setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+      setTimeout(function () {
+        document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+          if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+        });
+      }, 2200);
+    }
+  })();
+</script>
+</body>
+</html>

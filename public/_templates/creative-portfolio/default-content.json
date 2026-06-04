@@ -99,5 +99,36 @@
       "Instagram"
     ],
     "back_to_top": "Haut de page"
+  },
+  "portfolioPage": {
+    "title": "Projets",
+    "intro": "Une sélection de projets de marque et d’interfaces conçus avec exigence. Chaque réalisation part d’une intention claire et se construit autour d’une idée forte, jusqu’au moindre détail.",
+    "images": [
+      "/_templates/creative-portfolio/img/project1.jpg",
+      "/_templates/creative-portfolio/img/project2.jpg",
+      "/_templates/creative-portfolio/img/project3.jpg",
+      "/_templates/creative-portfolio/img/project4.jpg",
+      "/_templates/creative-portfolio/img/about.jpg",
+      "/_templates/creative-portfolio/img/project2.jpg",
+      "/_templates/creative-portfolio/img/project1.jpg",
+      "/_templates/creative-portfolio/img/project4.jpg",
+      "/_templates/creative-portfolio/img/project3.jpg",
+      "/_templates/creative-portfolio/img/about.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Contact",
+    "intro": "Un projet en tête ? Parlons-en. Décrivez votre marque, vos objectifs et votre échéance — je reviens vers vous rapidement avec une première lecture et mes disponibilités.",
+    "email": "hello@alexmorgan.design",
+    "availability": "Disponible pour de nouveaux projets — Été / Automne 2026",
+    "location": "Paris — collaborations à distance partout dans le monde",
+    "collab_label": "Collaborations recherchées",
+    "collabs": [
+      "Identité de marque & refonte",
+      "Sites web & landing pages",
+      "Direction artistique & design produit"
+    ],
+    "response_label": "Délai de réponse",
+    "response": "Je réponds à chaque message sous 48 heures ouvrées, avec une première proposition de cadrage et de planning."
   }
 }

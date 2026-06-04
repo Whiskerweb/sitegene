@@ -5,6 +5,18 @@
   "pageTypes": [
     "home"
   ],
+  "pages": [
+    {
+      "slug": "/portfolio",
+      "file": "portfolio.html",
+      "title": "Études de cas"
+    },
+    {
+      "slug": "/contact",
+      "file": "contact.html",
+      "title": "Contact"
+    }
+  ],
   "sections": {
     "home": [
       "meta",
@@ -30,6 +42,12 @@
       "role": "hero",
       "required": true,
       "note": "hero · image"
+    },
+    {
+      "slot": "pf1",
+      "path": "portfolioPage.images[]",
+      "role": "gallery",
+      "required": false
     }
   ],
   "fields": {
@@ -423,6 +441,114 @@
         "label": "footer · copyright",
         "type": "text",
         "maxLen": 72
+      },
+      {
+        "path": "portfolioPage.title",
+        "label": "portfolioPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.intro",
+        "label": "portfolioPage · intro",
+        "type": "text",
+        "maxLen": 160
+      },
+      {
+        "path": "portfolioPage.cases[].tag",
+        "label": "portfolioPage · cases · tag",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.cases[].title",
+        "label": "portfolioPage · cases · title",
+        "type": "text",
+        "maxLen": 66
+      },
+      {
+        "path": "portfolioPage.cases[].body",
+        "label": "portfolioPage · cases · body",
+        "type": "text",
+        "maxLen": 160
+      },
+      {
+        "path": "portfolioPage.cases[].metric",
+        "label": "portfolioPage · cases · metric",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.cases[].metric_label",
+        "label": "portfolioPage · cases · metric_label",
+        "type": "text",
+        "maxLen": 53
+      },
+      {
+        "path": "contactPage.title",
+        "label": "contactPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.intro",
+        "label": "contactPage · intro",
+        "type": "text",
+        "maxLen": 160
+      },
+      {
+        "path": "contactPage.email",
+        "label": "contactPage · email",
+        "type": "text",
+        "maxLen": 60
+      },
+      {
+        "path": "contactPage.phone",
+        "label": "contactPage · phone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.response_promise",
+        "label": "contactPage · response_promise",
+        "type": "text",
+        "maxLen": 90
+      },
+      {
+        "path": "contactPage.cta_label",
+        "label": "contactPage · cta_label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.address_label",
+        "label": "contactPage · address_label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.address",
+        "label": "contactPage · address",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.hours_label",
+        "label": "contactPage · hours_label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.hours",
+        "label": "contactPage · hours",
+        "type": "text",
+        "maxLen": 60
+      },
+      {
+        "path": "contactPage.reassurance[]",
+        "label": "contactPage · reassurance",
+        "type": "text",
+        "maxLen": 60
       }
     ]
   }

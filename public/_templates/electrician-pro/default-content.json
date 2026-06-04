@@ -178,5 +178,58 @@
       "Contact"
     ],
     "copyright": "© 2026 Ohmly. Tous droits réservés."
+  },
+  "portfolioPage": {
+    "title": "Nos réalisations",
+    "intro": "Des chantiers menés du diagnostic à la mise en service : tableaux remis aux normes, éclairages sur mesure et installations soignées chez les particuliers comme en entreprise.",
+    "captions": [
+      "Réfection complète d'un tableau électrique",
+      "Installation d'un éclairage encastré sur mesure",
+      "Mise aux normes d'un local commercial",
+      "Pose de prises et points de charge sécurisés",
+      "Câblage propre et étiqueté en armoire",
+      "Rénovation électrique d'une maison ancienne",
+      "Intervention de dépannage en urgence",
+      "Contrôle de sécurité et diagnostic complet",
+      "Installation d'éclairage extérieur paysager",
+      "Domotique et interrupteurs connectés"
+    ],
+    "images": [
+      "/_templates/electrician-pro/img/s-panel.jpg",
+      "/_templates/electrician-pro/img/s-lighting.jpg",
+      "/_templates/electrician-pro/img/s-commercial.jpg",
+      "/_templates/electrician-pro/img/s-wiring.jpg",
+      "/_templates/electrician-pro/img/why-quality.jpg",
+      "/_templates/electrician-pro/img/hero.jpg",
+      "/_templates/electrician-pro/img/s-repairs.jpg",
+      "/_templates/electrician-pro/img/s-inspection.jpg",
+      "/_templates/electrician-pro/img/cta.jpg",
+      "/_templates/electrician-pro/img/why-care.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Contact & devis",
+    "intro": "Une panne, un projet ou une simple question ? Décrivez votre besoin : nous vous répondons rapidement avec un devis clair et sans engagement.",
+    "phoneLabel": "Appelez-nous directement",
+    "phone": "+1(969) 234 4242",
+    "email": "contact@ohmly.fr",
+    "emailLabel": "Écrivez-nous par e-mail",
+    "zonesTitle": "Zones d'intervention",
+    "zones": [
+      "Paris et toute l'Île-de-France",
+      "Hauts-de-Seine (92)",
+      "Val-de-Marne (94)",
+      "Seine-Saint-Denis (93)"
+    ],
+    "promiseTitle": "Réponse sous 2 heures",
+    "promiseText": "Toute demande reçue en journée reçoit une réponse sous 2 heures ouvrées. Pour les urgences, nous intervenons le jour même.",
+    "ctaTitle": "Demandez votre devis gratuit",
+    "ctaText": "Un électricien agréé étudie votre projet et vous transmet un devis détaillé, transparent et sans frais cachés.",
+    "cta": "Demander un devis",
+    "reassurance": [
+      "Électriciens agréés, certifiés et assurés",
+      "Devis gratuit et sans engagement",
+      "Tarification transparente, aucun frais caché"
+    ]
   }
 }

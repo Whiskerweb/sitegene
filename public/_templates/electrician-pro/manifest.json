@@ -5,6 +5,18 @@
   "pageTypes": [
     "home"
   ],
+  "pages": [
+    {
+      "slug": "/portfolio",
+      "file": "portfolio.html",
+      "title": "Nos réalisations"
+    },
+    {
+      "slug": "/contact",
+      "file": "contact.html",
+      "title": "Contact & devis"
+    }
+  ],
   "sections": {
     "home": [
       "meta",
@@ -69,6 +81,12 @@
       "role": "image",
       "required": true,
       "note": "cta · image"
+    },
+    {
+      "slot": "pf1",
+      "path": "portfolioPage.images[]",
+      "role": "gallery",
+      "required": false
     }
   ],
   "fields": {
@@ -354,6 +372,108 @@
         "label": "footer · copyright",
         "type": "text",
         "maxLen": 54
+      },
+      {
+        "path": "portfolioPage.title",
+        "label": "portfolioPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.intro",
+        "label": "portfolioPage · intro",
+        "type": "text",
+        "maxLen": 244
+      },
+      {
+        "path": "portfolioPage.captions[]",
+        "label": "portfolioPage · captions",
+        "type": "text",
+        "maxLen": 66
+      },
+      {
+        "path": "contactPage.title",
+        "label": "contactPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.intro",
+        "label": "contactPage · intro",
+        "type": "text",
+        "maxLen": 196
+      },
+      {
+        "path": "contactPage.phoneLabel",
+        "label": "contactPage · phoneLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.phone",
+        "label": "contactPage · phone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.email",
+        "label": "contactPage · email",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.emailLabel",
+        "label": "contactPage · emailLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.zonesTitle",
+        "label": "contactPage · zonesTitle",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.zones[]",
+        "label": "contactPage · zones",
+        "type": "text",
+        "maxLen": 42
+      },
+      {
+        "path": "contactPage.promiseTitle",
+        "label": "contactPage · promiseTitle",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.promiseText",
+        "label": "contactPage · promiseText",
+        "type": "text",
+        "maxLen": 171
+      },
+      {
+        "path": "contactPage.ctaTitle",
+        "label": "contactPage · ctaTitle",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.ctaText",
+        "label": "contactPage · ctaText",
+        "type": "text",
+        "maxLen": 154
+      },
+      {
+        "path": "contactPage.cta",
+        "label": "contactPage · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.reassurance[]",
+        "label": "contactPage · reassurance",
+        "type": "text",
+        "maxLen": 57
       }
     ]
   }

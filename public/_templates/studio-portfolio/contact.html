@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-sg-path="meta.title">Mörk Studio — Contact</title>
+  <meta name="description" data-sg-path="meta.description" content="Mörk Studio est une agence indépendante qui fusionne direction artistique, identité de marque et développement pour créer des expériences digitales audacieuses, structurées et intentionnelles." />
+
+  <!-- Google Fonts: Inter (Inter Display equivalent) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#000000',
+            paper: '#ffffff',
+            electric: '#0000ee',
+            sky: '#0099ff',
+            mute: '#999999',
+            dim: '#666666',
+            faint: '#bbbbbb',
+            line: '#222222',
+            hairline: 'rgba(187,187,187,0.2)',
+          },
+          fontFamily: {
+            sans: ['"Inter"', 'system-ui', 'sans-serif'],
+          },
+          fontSize: {
+            'mega':    ['clamp(72px,17vw,236px)', { lineHeight: '0.82', letterSpacing: '-0.03em' }],
+            'huge':    ['clamp(40px,7vw,80px)',   { lineHeight: '1.0',  letterSpacing: '-0.03em' }],
+            'big':     ['clamp(28px,4.4vw,49px)', { lineHeight: '1.08', letterSpacing: '-0.02em' }],
+            'price':   ['clamp(48px,6vw,79px)',   { lineHeight: '1.0',  letterSpacing: '-0.03em' }],
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- __SITE_CONTENT__ — single source of truth for all copy + image paths -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+  "meta": {
+    "title": "Mörk Studio — Direction artistique & Design digital",
+    "description": "Mörk Studio est une agence indépendante qui fusionne direction artistique, identité de marque et développement pour créer des expériences digitales audacieuses, structurées et intentionnelles."
+  },
+  "brand": "MÖRK STUDIO",
+  "wordmark": "Mörk",
+  "nav": [
+    "Réalisations",
+    "Projets",
+    "Contact"
+  ],
+  "footer": {
+    "brand": "MÖRK STUDIO",
+    "tagline": "Agence de design indépendante. Disponible dans le monde entier.",
+    "nav_label": "Navigation",
+    "nav": [
+      "Réalisations",
+      "Projets",
+      "Récompenses",
+      "Contact"
+    ],
+    "social_label": "Réseaux",
+    "social": [
+      "Instagram",
+      "Behance",
+      "X (Twitter)",
+      "LinkedIn"
+    ],
+    "email": "hello@morkstudio.com",
+    "copyright": "© 2024 Mörk Studio — Tous droits réservés.",
+    "back_to_top": "Retour en haut"
+  },
+  "contactPage": {
+    "label": "Get in Touch コンタクト",
+    "index": "INDEX — 02",
+    "meta": "NOUVELLES COLLABORATIONS",
+    "title": "Contact",
+    "intro": "Un projet en tête ? Une marque à faire émerger ? Écrivez-nous : nous étudions chaque demande avec attention et revenons vers vous sous 48 heures avec une première piste créative.",
+    "email": "hello@morkstudio.com",
+    "availability": "Carnet ouvert — disponibilités à partir du printemps 2025",
+    "location": "Paris / À distance, partout dans le monde",
+    "response_label": "Délai de réponse",
+    "response": "Nous répondons à chaque demande sous 48 heures ouvrées, avec une première lecture de votre projet et nos disponibilités.",
+    "collab_label": "Types de collaborations",
+    "collabs": [
+      "Identité de marque & refonte",
+      "Direction artistique web & sites Framer",
+      "Motion design & systèmes de contenu",
+      "Conseil & art direction d'équipes"
+    ]
+  }
+};
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; background: #000; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #000; color: #fff; overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Section eyebrow row (small caps meta strip) */
+    .eyebrow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 24px;
+      padding: 16px 0;
+      border-top: 1px solid rgba(187,187,187,0.18);
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      color: #999;
+    }
+    .eyebrow .e-left  { justify-self: start;  display:flex; align-items:center; gap:7px; }
+    .eyebrow .e-mid   { justify-self: center; }
+    .eyebrow .e-right { justify-self: end; text-transform: uppercase; letter-spacing: 0.08em; }
+    .eyebrow .reg::before { content:'©'; margin-right: 6px; }
+
+    /* Outlined pill button */
+    .pill {
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid #fff; border-radius: 999px;
+      padding: 14px 28px;
+      font-size: 14px; font-weight: 600; letter-spacing: 0.02em;
+      color: #fff; text-decoration: none;
+      transition: background .25s, color .25s;
+    }
+    .pill:hover { background:#fff; color:#000; }
+
+    /* Cursor dot */
+    #cursor-dot {
+      width: 7px; height: 7px; background:#fff; border-radius:50%;
+      position: fixed; top:0; left:0; pointer-events:none; z-index:9999;
+      transform: translate(-50%,-50%); transition: transform .12s ease;
+      mix-blend-mode: difference;
+    }
+
+    /* nav */
+    nav { mix-blend-mode: difference; }
+
+    .row-link { transition: opacity .25s; }
+    .row-link:hover { opacity: .55; }
+
+    /* Big email link */
+    .mega-email {
+      display: inline-block;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: #fff;
+      border-bottom: 1px solid #333;
+      padding-bottom: 6px;
+      transition: border-color .25s, opacity .25s;
+      word-break: break-word;
+    }
+    .mega-email:hover { border-color: #fff; opacity: .85; }
+
+    /* Collaboration rows */
+    .collab-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid #222;
+      font-size: 21px; font-weight: 500; letter-spacing: -0.01em;
+    }
+    .collab-row::after { content: '→'; color: #999; font-size: 15px; }
+  </style>
+</head>
+<body>
+
+<div id="cursor-dot"></div>
+
+<!-- ===== NAV ===== -->
+<nav class="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-6 md:px-10 py-6">
+  <a href="#" data-sg-page="/" class="text-[13px] font-bold tracking-[0.14em] uppercase" data-sg-path="brand">MÖRK STUDIO</a>
+  <ul class="hidden md:flex gap-8 list-none text-[13px] tracking-[0.04em]">
+    <li><a href="#" data-sg-page="/"         class="row-link" data-sg-path="nav[0]">Réalisations</a></li>
+    <li><a href="#" data-sg-page="portfolio" class="row-link" data-sg-path="nav[1]">Projets</a></li>
+    <li><a href="#" data-sg-page="contact"   class="row-link" data-sg-path="nav[2]">Contact</a></li>
+  </ul>
+  <div class="text-[12px] tracking-[0.08em] tabular-nums opacity-70" id="nav-clock">LOCAL / 00:00:00</div>
+</nav>
+
+<main id="top">
+
+  <!-- ===== PAGE HEADER ===== -->
+  <section class="px-6 md:px-10 pt-40 md:pt-44">
+    <div class="eyebrow">
+      <span class="e-left reg" data-sg-path="contactPage.label">Get in Touch コンタクト</span>
+      <span class="e-mid" data-sg-path="contactPage.index">INDEX — 02</span>
+      <span class="e-right" data-sg-path="contactPage.meta">NOUVELLES COLLABORATIONS</span>
+    </div>
+
+    <h1 class="mt-10 md:mt-14 text-mega font-semibold tracking-[-0.04em] leading-[0.82]" data-sg-reveal>
+      <span data-sg-path="contactPage.title">Contact</span>
+    </h1>
+
+    <p class="max-w-[640px] mt-8 md:mt-10 text-[15px] leading-[1.6] text-faint" data-sg-reveal data-sg-path="contactPage.intro">
+      Un projet en tête ? Une marque à faire émerger ? Écrivez-nous.
+    </p>
+  </section>
+
+  <!-- ===== CONTACT BODY ===== -->
+  <section class="px-6 md:px-10 pt-24 md:pt-32">
+    <div class="grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-16 md:gap-24 items-start">
+
+      <!-- Left: email + meta -->
+      <div data-sg-reveal>
+        <p class="text-[11px] tracking-[0.12em] uppercase text-dim mb-5">Écrivez-nous</p>
+        <a class="mega-email text-big" data-sg-path="contactPage.email" href="mailto:hello@morkstudio.com">hello@morkstudio.com</a>
+
+        <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-12">
+          <div>
+            <p class="text-[11px] tracking-[0.12em] uppercase text-dim mb-3" data-sg-path="contactPage.response_label">Délai de réponse</p>
+            <p class="text-[15px] leading-[1.6] text-faint max-w-[320px]" data-sg-path="contactPage.response">
+              Nous répondons à chaque demande sous 48 heures ouvrées.
+            </p>
+          </div>
+          <div>
+            <p class="text-[11px] tracking-[0.12em] uppercase text-dim mb-3">Disponibilités</p>
+            <p class="text-[17px] font-medium leading-[1.45] tracking-[-0.01em] text-white max-w-[320px]" data-sg-path="contactPage.availability">
+              Carnet ouvert — disponibilités à partir du printemps 2025
+            </p>
+          </div>
+          <div>
+            <p class="text-[11px] tracking-[0.12em] uppercase text-dim mb-3">Localisation</p>
+            <p class="text-[15px] leading-[1.6] text-faint max-w-[320px]" data-sg-path="contactPage.location">
+              Paris / À distance, partout dans le monde
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: collaborations -->
+      <div data-sg-reveal>
+        <p class="text-[11px] tracking-[0.12em] uppercase text-dim mb-5" data-sg-path="contactPage.collab_label">Types de collaborations</p>
+        <div class="border-t border-line">
+          <div class="collab-row" data-sg-path="contactPage.collabs[0]">Identité de marque &amp; refonte</div>
+          <div class="collab-row" data-sg-path="contactPage.collabs[1]">Direction artistique web &amp; sites Framer</div>
+          <div class="collab-row" data-sg-path="contactPage.collabs[2]">Motion design &amp; systèmes de contenu</div>
+          <div class="collab-row" data-sg-path="contactPage.collabs[3]">Conseil &amp; art direction d'équipes</div>
+        </div>
+
+        <a class="pill mt-12" data-sg-path="contactPage.email" href="mailto:hello@morkstudio.com">hello@morkstudio.com</a>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="mt-28 md:mt-40 bg-white text-black px-6 md:px-10 pt-20 pb-10">
+  <div class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr_auto] gap-12 border-b border-black/10 pb-16">
+    <div>
+      <h2 class="text-huge font-bold tracking-[-0.03em]" data-sg-path="footer.brand">MÖRK STUDIO</h2>
+      <p class="text-[14px] text-dim mt-4 max-w-[280px]" data-sg-path="footer.tagline">Agence de design indépendante. Disponible dans le monde entier.</p>
+      <a href="#" data-sg-page="contact" class="inline-block mt-6 text-[15px] font-medium border-b border-black pb-0.5" data-sg-path="footer.email">hello@morkstudio.com</a>
+    </div>
+
+    <div>
+      <p class="text-[11px] tracking-[0.12em] uppercase text-dim mb-4" data-sg-path="footer.nav_label">Navigation</p>
+      <ul class="space-y-3 list-none text-[15px]">
+        <li><a href="#" data-sg-page="/"         class="row-link" data-sg-path="footer.nav[0]">Réalisations</a></li>
+        <li><a href="#" data-sg-page="portfolio" class="row-link" data-sg-path="footer.nav[1]">Projets</a></li>
+        <li><a href="#" data-sg-page="/"         class="row-link" data-sg-path="footer.nav[2]">Récompenses</a></li>
+        <li><a href="#" data-sg-page="contact"   class="row-link" data-sg-path="footer.nav[3]">Contact</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="text-[11px] tracking-[0.12em] uppercase text-dim mb-4" data-sg-path="footer.social_label">Réseaux</p>
+      <ul class="space-y-3 list-none text-[15px]">
+        <li><a href="#" class="row-link" data-sg-path="footer.social[0]">Instagram</a></li>
+        <li><a href="#" class="row-link" data-sg-path="footer.social[1]">Behance</a></li>
+        <li><a href="#" class="row-link" data-sg-path="footer.social[2]">X (Twitter)</a></li>
+        <li><a href="#" class="row-link" data-sg-path="footer.social[3]">LinkedIn</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <a href="#" data-sg-page="/" class="text-[12px] tracking-[0.08em] uppercase row-link inline-flex items-center gap-2" data-sg-path="footer.back_to_top">↑ Retour en haut</a>
+    </div>
+  </div>
+
+  <p class="text-[12px] text-dim mt-8" data-sg-path="footer.copyright">© 2024 Mörk Studio — Tous droits réservés.</p>
+</footer>
+
+<!-- ===== STANDARD HYDRATION + GSAP BLOCK (Akyra template runtime) ===== -->
+<script>
+  (function () {
+    var C = window.__SITE_CONTENT__ || {};
+    function get(p) {
+      return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+        .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+    }
+    document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-path'));
+      if (v != null && typeof v !== 'object') {
+        if (el.tagName === 'A' && (el.getAttribute('href') || '').indexOf('mailto:') === 0) {
+          el.textContent = v; el.setAttribute('href', 'mailto:' + v);
+        } else {
+          el.textContent = v;
+        }
+      }
+    });
+    document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-img'));
+      if (v == null) return;
+      if (el.tagName === 'IMG') el.src = v;
+      else el.style.backgroundImage = "url('" + v + "')";
+    });
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+        gsap.from(el, {
+          opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+        });
+      });
+      gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+        gsap.to(el, {
+          yPercent: -12, ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+      });
+      window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+      setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+      setTimeout(function () {
+        document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+          if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+        });
+      }, 2200);
+    }
+  })();
+
+  // Live clock
+  function updateClock() {
+    var n = new Date();
+    var p = function (x){ return String(x).padStart(2,'0'); };
+    var nc = document.getElementById('nav-clock');
+    if (nc) nc.textContent = 'LOCAL / ' + p(n.getHours()) + ':' + p(n.getMinutes()) + ':' + p(n.getSeconds());
+  }
+  updateClock(); setInterval(updateClock, 1000);
+
+  // Cursor dot
+  var dot = document.getElementById('cursor-dot');
+  if (dot) document.addEventListener('mousemove', function (e) {
+    dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
+  });
+</script>
+</body>
+</html>

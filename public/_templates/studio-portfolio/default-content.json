@@ -7,7 +7,7 @@
   "wordmark": "Mörk",
   "nav": [
     "Réalisations",
-    "Studio",
+    "Projets",
     "Contact"
   ],
   "hero": {
@@ -302,7 +302,7 @@
     "nav_label": "Navigation",
     "nav": [
       "Réalisations",
-      "Studio",
+      "Projets",
       "Récompenses",
       "Contact"
     ],
@@ -316,5 +316,46 @@
     "email": "hello@morkstudio.com",
     "copyright": "© 2024 Mörk Studio — Tous droits réservés.",
     "back_to_top": "Retour en haut"
+  },
+  "portfolioPage": {
+    "label": "Selected Work プロジェクト",
+    "index": "INDEX — 01",
+    "meta": "ÉTUDES DE CAS",
+    "title": "Projets",
+    "intro": "Une sélection d'identités, d'interfaces et de directions artistiques conçues au studio. Chaque projet conjugue rigueur typographique, système visuel cohérent et exécution soignée jusqu'au moindre pixel.",
+    "cta": "Démarrer un projet",
+    "images": [
+      "/_templates/studio-portfolio/img/project1.jpg",
+      "/_templates/studio-portfolio/img/project2.jpg",
+      "/_templates/studio-portfolio/img/project3.jpg",
+      "/_templates/studio-portfolio/img/project4.jpg",
+      "/_templates/studio-portfolio/img/project5.jpg",
+      "/_templates/studio-portfolio/img/gallery1.jpg",
+      "/_templates/studio-portfolio/img/gallery2.jpg",
+      "/_templates/studio-portfolio/img/gallery3.jpg",
+      "/_templates/studio-portfolio/img/portrait1.jpg",
+      "/_templates/studio-portfolio/img/portrait2.jpg",
+      "/_templates/studio-portfolio/img/award1.jpg",
+      "/_templates/studio-portfolio/img/profile.jpg"
+    ]
+  },
+  "contactPage": {
+    "label": "Get in Touch コンタクト",
+    "index": "INDEX — 02",
+    "meta": "NOUVELLES COLLABORATIONS",
+    "title": "Contact",
+    "intro": "Un projet en tête ? Une marque à faire émerger ? Écrivez-nous : nous étudions chaque demande avec attention et revenons vers vous sous 48 heures avec une première piste créative.",
+    "email": "hello@morkstudio.com",
+    "availability": "Carnet ouvert — disponibilités à partir du printemps 2025",
+    "location": "Paris / À distance, partout dans le monde",
+    "response_label": "Délai de réponse",
+    "response": "Nous répondons à chaque demande sous 48 heures ouvrées, avec une première lecture de votre projet et nos disponibilités.",
+    "collab_label": "Types de collaborations",
+    "collabs": [
+      "Identité de marque & refonte",
+      "Direction artistique web & sites Framer",
+      "Motion design & systèmes de contenu",
+      "Conseil & art direction d'équipes"
+    ]
   }
 }

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-sg-path="portfolioPage.title">Études de cas – Healix</title>
+  <meta name="description" data-sg-path="portfolioPage.intro" content="Comment des cliniques, mutuelles et équipes santé déploient Healix." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- CDNs -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0a0a0a',
+            ink:     '#0a0a0a',
+            muted:   '#3b3b3b',
+            bg:      '#ffffff',
+            surface: '#f0f5f6',
+            accent:  '#ffce8a',
+            border:  'rgba(136,152,171,0.5)',
+          },
+          fontFamily: {
+            sans: ['Urbanist', 'ui-sans-serif', 'system-ui'],
+            inter: ['Inter', 'ui-sans-serif'],
+          },
+          spacing: {
+            '22': '5.5rem',
+            '30': '7.5rem',
+            '45': '11.25rem',
+            '70': '17.5rem',
+            '75': '18.75rem',
+            '98': '24.5rem',
+            '107': '26.75rem',
+            '123': '30.75rem',
+            '140': '35rem',
+          },
+          fontSize: {
+            '46': ['2.875rem', {lineHeight: '1.1'}],
+            '54': ['3.375rem', {lineHeight: '1.05'}],
+            '72': ['4.5rem',   {lineHeight: '1.0'}],
+            '80': ['5rem',     {lineHeight: '1.0'}],
+          },
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* ---- Global ---- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Urbanist', sans-serif; background: #fff; color: #0a0a0a; overflow-x: hidden; }
+
+    /* ---- Tag pill ---- */
+    .tag-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(240,245,246,0.9); border: 1px solid rgba(136,152,171,0.35);
+      border-radius: 999px; padding: 5px 14px; font-size: 13px; font-weight: 500; color: #3b3b3b;
+    }
+    .tag-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: #0a0a0a; flex-shrink: 0; }
+
+    /* ---- Nav ---- */
+    .nav-link { font-size: 15px; font-weight: 500; color: #0a0a0a; transition: color .2s; }
+    .nav-link:hover { color: #555; }
+
+    /* ---- Btn ---- */
+    .btn-primary {
+      background: #0a0a0a; color: #fff; font-weight: 600; font-size: 15px;
+      border-radius: 999px; padding: 10px 24px; white-space: nowrap; transition: opacity .2s;
+    }
+    .btn-primary:hover { opacity: .8; }
+    .btn-outline {
+      border: 1.5px solid rgba(10,10,10,0.3); color: #0a0a0a; font-weight: 600; font-size: 15px;
+      border-radius: 999px; padding: 10px 24px; white-space: nowrap; transition: background .2s;
+    }
+    .btn-outline:hover { background: #f0f5f6; }
+    .btn-ghost { font-size: 14px; font-weight: 600; color: #0a0a0a; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-ghost svg { transition: transform .2s; }
+    .btn-ghost:hover svg { transform: translateX(3px); }
+
+    /* ---- Case card ---- */
+    .case-card {
+      background: #f0f5f6; border-radius: 24px; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .case-card-img { width: 100%; height: 240px; object-fit: cover; }
+    .case-metric { font-size: 2rem; font-weight: 700; line-height: 1; }
+
+    /* ---- Gallery tile ---- */
+    .gallery-tile { border-radius: 20px; overflow: hidden; background: #f0f5f6; }
+    .gallery-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .gallery-tile:hover img { transform: scale(1.05); }
+
+    /* ---- Scroll-driven reveal ---- */
+    [data-sg-reveal] { will-change: opacity, transform; }
+  </style>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SINGLE SOURCE OF TRUTH — guard partagé (objet PLAT)
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+  "meta": {
+    "title": "Healix – L’alliance de la santé et de l’innovation",
+    "description": "Du bien-être au quotidien aux analyses santé avancées, notre plateforme vous accompagne à chaque étape."
+  },
+  "brand": "Healix",
+  "nav": [
+    "Toutes les pages",
+    "Fonctionnalités",
+    "Tarifs",
+    "Avis",
+    "Études de cas",
+    "Contact"
+  ],
+  "cta": "Commencer gratuitement",
+  "footer": {
+    "brand": "Healix",
+    "links_left": [
+      "À propos",
+      "Articles & Conseils"
+    ],
+    "links_right": [
+      "Centre d'Aide",
+      "Nous Contacter",
+      "Politique de Confidentialité",
+      "Conditions Générales"
+    ],
+    "copyright": "Copyright © 2024 Healix. Tous droits réservés."
+  },
+  "portfolioPage": {
+    "title": "Études de cas",
+    "intro": "Comment des cliniques, mutuelles et équipes santé déploient Healix pour suivre, prévenir et améliorer le quotidien de leurs patients.",
+    "images": [
+      "/_templates/health-saas/img/hero-doctor.jpg",
+      "/_templates/health-saas/img/doctor-male.jpg",
+      "/_templates/health-saas/img/couple-jogging.jpg",
+      "/_templates/health-saas/img/dna-science.jpg",
+      "/_templates/health-saas/img/couple-jogging.jpg",
+      "/_templates/health-saas/img/hero-doctor.jpg",
+      "/_templates/health-saas/img/dna-science.jpg",
+      "/_templates/health-saas/img/doctor-male.jpg"
+    ],
+    "cases": [
+      {
+        "tag": "Cardiologie",
+        "title": "Suivi cardiaque à distance pour 4 200 patients",
+        "body": "Un centre hospitalier réduit ses réhospitalisations en surveillant les constantes en continu et en déclenchant des alertes ciblées.",
+        "metric": "−34%",
+        "metric_label": "Réhospitalisations en 6 mois"
+      },
+      {
+        "tag": "Prévention",
+        "title": "Programme bien-être pour une mutuelle régionale",
+        "body": "Objectifs personnalisés et rappels intelligents pour 18 000 adhérents, avec un engagement quotidien mesuré dans l’application.",
+        "metric": "+61%",
+        "metric_label": "Adhérents actifs chaque semaine"
+      },
+      {
+        "tag": "Télésanté",
+        "title": "Chat médical intégré au parcours de soin",
+        "body": "Les patients échangent avec des professionnels agréés en quelques minutes, fluidifiant le triage et la continuité des soins.",
+        "metric": "4 min",
+        "metric_label": "Délai moyen de première réponse"
+      },
+      {
+        "tag": "Recherche",
+        "title": "Cohorte de données santé anonymisées",
+        "body": "Une équipe de recherche exploite des données chiffrées et consenties pour affiner ses modèles de prévention des maladies chroniques.",
+        "metric": "78%",
+        "metric_label": "Précision des alertes prédictives"
+      }
+    ]
+  },
+  "contactPage": {
+    "title": "Contact",
+    "intro": "Parlons de votre parcours santé. Notre équipe vous accompagne pour déployer Healix dans votre structure ou votre quotidien.",
+    "email": "contact@healix.io",
+    "phone": "+33 1 86 76 00 00",
+    "response_promise": "Réponse garantie sous 24 heures ouvrées, par un expert santé dédié.",
+    "cta_label": "Demander une démo",
+    "address_label": "Siège",
+    "address": "12 rue de la Santé, 75013 Paris",
+    "hours_label": "Disponibilité",
+    "hours": "Du lundi au vendredi, 9h – 18h (CET)",
+    "reassurance": [
+      "Données chiffrées et hébergées en Europe",
+      "Conformité RGPD et secret médical",
+      "Accompagnement humain à chaque étape"
+    ]
+  }
+};
+</script>
+
+<!-- ═══════════════ NAVBAR ═══════════════ -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-black/5">
+  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" data-sg-page="/" class="flex items-center gap-2 font-bold text-xl">
+      <span class="w-8 h-8 rounded-full bg-black flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5" stroke="white" stroke-width="2"/><circle cx="8" cy="8" r="2" fill="white"/></svg>
+      </span>
+      <span data-sg-path="brand">Healix</span>
+    </a>
+
+    <!-- Nav links -->
+    <nav class="hidden md:flex items-center gap-8">
+      <a href="#" data-sg-page="/" class="nav-link" data-sg-path="nav[0]">Toutes les pages</a>
+      <a href="#" data-sg-page="portfolio" class="nav-link" data-sg-path="nav[4]">Études de cas</a>
+      <a href="#" data-sg-page="contact" class="nav-link" data-sg-path="nav[5]">Contact</a>
+    </nav>
+
+    <!-- CTA -->
+    <a href="#" data-sg-page="contact" class="btn-primary hidden md:inline-block" data-sg-path="cta">Commencer gratuitement</a>
+
+    <!-- Mobile hamburger -->
+    <button class="md:hidden p-2" aria-label="Menu" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect y="4" width="22" height="2" rx="1" fill="black"/><rect y="10" width="22" height="2" rx="1" fill="black"/><rect y="16" width="22" height="2" rx="1" fill="black"/></svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-black/5 px-6 py-4 flex flex-col gap-4">
+    <a href="#" data-sg-page="/" class="nav-link" data-sg-path="nav[0]">Toutes les pages</a>
+    <a href="#" data-sg-page="portfolio" class="nav-link" data-sg-path="nav[4]">Études de cas</a>
+    <a href="#" data-sg-page="contact" class="nav-link" data-sg-path="nav[5]">Contact</a>
+    <a href="#" data-sg-page="contact" class="btn-primary text-center" data-sg-path="cta">Commencer gratuitement</a>
+  </div>
+</header>
+
+<!-- Spacer for fixed nav -->
+<div class="h-16"></div>
+
+<!-- ═══════════════ HEADER ÉTUDES DE CAS ═══════════════ -->
+<section class="bg-white pt-16 pb-12">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="max-w-3xl" data-sg-reveal>
+      <span class="tag-pill mb-6"><span class="dot"></span>Résultats vérifiés</span>
+      <h1 class="font-semibold text-4xl md:text-72 leading-[1.02] tracking-tight mt-6" data-sg-path="portfolioPage.title">
+        Études de cas
+      </h1>
+      <p class="text-base md:text-lg text-muted max-w-2xl mt-5" data-sg-path="portfolioPage.intro">
+        Comment des cliniques, mutuelles et équipes santé déploient Healix pour suivre, prévenir et améliorer le quotidien de leurs patients.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CAS D'USAGE (cartes détaillées) ═══════════════ -->
+<section class="py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <!-- Case 1 -->
+      <div class="case-card" data-sg-reveal>
+        <img class="case-card-img" data-sg-img="portfolioPage.images[0]" src="img/hero-doctor.jpg" alt="Étude de cas santé" />
+        <div class="p-8 flex flex-col gap-4">
+          <span class="tag-pill self-start text-xs" data-sg-path="portfolioPage.cases[0].tag">Cardiologie</span>
+          <h3 class="font-semibold text-2xl" data-sg-path="portfolioPage.cases[0].title">Suivi cardiaque à distance pour 4 200 patients</h3>
+          <p class="text-sm text-muted" data-sg-path="portfolioPage.cases[0].body">Un centre hospitalier réduit ses réhospitalisations en surveillant les constantes en continu.</p>
+          <div class="flex items-end gap-3 mt-2">
+            <span class="case-metric" data-sg-path="portfolioPage.cases[0].metric">−34%</span>
+            <span class="text-sm text-muted mb-1" data-sg-path="portfolioPage.cases[0].metric_label">Réhospitalisations en 6 mois</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 2 -->
+      <div class="case-card" data-sg-reveal>
+        <img class="case-card-img" data-sg-img="portfolioPage.images[1]" src="img/doctor-male.jpg" alt="Étude de cas santé" />
+        <div class="p-8 flex flex-col gap-4">
+          <span class="tag-pill self-start text-xs" data-sg-path="portfolioPage.cases[1].tag">Prévention</span>
+          <h3 class="font-semibold text-2xl" data-sg-path="portfolioPage.cases[1].title">Programme bien-être pour une mutuelle régionale</h3>
+          <p class="text-sm text-muted" data-sg-path="portfolioPage.cases[1].body">Objectifs personnalisés et rappels intelligents pour 18 000 adhérents.</p>
+          <div class="flex items-end gap-3 mt-2">
+            <span class="case-metric" data-sg-path="portfolioPage.cases[1].metric">+61%</span>
+            <span class="text-sm text-muted mb-1" data-sg-path="portfolioPage.cases[1].metric_label">Adhérents actifs chaque semaine</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 3 -->
+      <div class="case-card" data-sg-reveal>
+        <img class="case-card-img" data-sg-img="portfolioPage.images[2]" src="img/couple-jogging.jpg" alt="Étude de cas santé" />
+        <div class="p-8 flex flex-col gap-4">
+          <span class="tag-pill self-start text-xs" data-sg-path="portfolioPage.cases[2].tag">Télésanté</span>
+          <h3 class="font-semibold text-2xl" data-sg-path="portfolioPage.cases[2].title">Chat médical intégré au parcours de soin</h3>
+          <p class="text-sm text-muted" data-sg-path="portfolioPage.cases[2].body">Les patients échangent avec des professionnels agréés en quelques minutes.</p>
+          <div class="flex items-end gap-3 mt-2">
+            <span class="case-metric" data-sg-path="portfolioPage.cases[2].metric">4 min</span>
+            <span class="text-sm text-muted mb-1" data-sg-path="portfolioPage.cases[2].metric_label">Délai moyen de première réponse</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 4 -->
+      <div class="case-card" data-sg-reveal>
+        <img class="case-card-img" data-sg-img="portfolioPage.images[3]" src="img/dna-science.jpg" alt="Étude de cas santé" />
+        <div class="p-8 flex flex-col gap-4">
+          <span class="tag-pill self-start text-xs" data-sg-path="portfolioPage.cases[3].tag">Recherche</span>
+          <h3 class="font-semibold text-2xl" data-sg-path="portfolioPage.cases[3].title">Cohorte de données santé anonymisées</h3>
+          <p class="text-sm text-muted" data-sg-path="portfolioPage.cases[3].body">Une équipe de recherche exploite des données chiffrées et consenties.</p>
+          <div class="flex items-end gap-3 mt-2">
+            <span class="case-metric" data-sg-path="portfolioPage.cases[3].metric">78%</span>
+            <span class="text-sm text-muted mb-1" data-sg-path="portfolioPage.cases[3].metric_label">Précision des alertes prédictives</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ GALERIE VISUELLE ═══════════════ -->
+<section class="py-16 bg-surface">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="mb-10" data-sg-reveal>
+      <h2 class="font-semibold text-3xl md:text-46 leading-tight">En images</h2>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="gallery-tile aspect-square" data-sg-reveal><img data-sg-img="portfolioPage.images[0]" src="img/hero-doctor.jpg" alt="Visuel Healix" /></div>
+      <div class="gallery-tile aspect-square" data-sg-reveal><img data-sg-img="portfolioPage.images[1]" src="img/doctor-male.jpg" alt="Visuel Healix" /></div>
+      <div class="gallery-tile aspect-square" data-sg-reveal><img data-sg-img="portfolioPage.images[2]" src="img/couple-jogging.jpg" alt="Visuel Healix" /></div>
+      <div class="gallery-tile aspect-square" data-sg-reveal><img data-sg-img="portfolioPage.images[3]" src="img/dna-science.jpg" alt="Visuel Healix" /></div>
+      <div class="gallery-tile aspect-square" data-sg-reveal><img data-sg-img="portfolioPage.images[4]" src="img/couple-jogging.jpg" alt="Visuel Healix" /></div>
+      <div class="gallery-tile aspect-square" data-sg-reveal><img data-sg-img="portfolioPage.images[5]" src="img/hero-doctor.jpg" alt="Visuel Healix" /></div>
+      <div class="gallery-tile aspect-square" data-sg-reveal><img data-sg-img="portfolioPage.images[6]" src="img/dna-science.jpg" alt="Visuel Healix" /></div>
+      <div class="gallery-tile aspect-square" data-sg-reveal><img data-sg-img="portfolioPage.images[7]" src="img/doctor-male.jpg" alt="Visuel Healix" /></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CTA BAND ═══════════════ -->
+<section class="py-24 bg-white" data-sg-reveal>
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 bg-surface rounded-3xl px-10 py-12">
+      <h2 class="font-semibold text-2xl md:text-3xl leading-tight max-w-lg" data-sg-path="contactPage.intro">
+        Parlons de votre parcours santé.
+      </h2>
+      <a href="#" data-sg-page="contact" class="btn-primary" data-sg-path="contactPage.cta_label">Demander une démo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="bg-white border-t border-black/5 py-12">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-10">
+      <a href="#" data-sg-page="/" class="flex items-center gap-2 font-bold text-xl self-start">
+        <span class="w-8 h-8 rounded-full bg-black flex items-center justify-center">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5" stroke="white" stroke-width="2"/><circle cx="8" cy="8" r="2" fill="white"/></svg>
+        </span>
+        <span data-sg-path="footer.brand">Healix</span>
+      </a>
+      <div class="flex gap-12">
+        <div class="flex flex-col gap-3">
+          <a href="#" data-sg-page="/" class="text-sm text-muted hover:text-black transition-colors" data-sg-path="footer.links_left[0]">À propos</a>
+          <a href="#" data-sg-page="/" class="text-sm text-muted hover:text-black transition-colors" data-sg-path="footer.links_left[1]">Articles & Conseils</a>
+        </div>
+        <div class="flex flex-col gap-3">
+          <a href="#" data-sg-page="/" class="text-sm text-muted hover:text-black transition-colors" data-sg-path="footer.links_right[0]">Centre d'Aide</a>
+          <a href="#" data-sg-page="contact" class="text-sm text-muted hover:text-black transition-colors" data-sg-path="footer.links_right[1]">Nous Contacter</a>
+          <a href="#" data-sg-page="/" class="text-sm text-muted hover:text-black transition-colors" data-sg-path="footer.links_right[2]">Politique de Confidentialité</a>
+          <a href="#" data-sg-page="/" class="text-sm text-muted hover:text-black transition-colors" data-sg-path="footer.links_right[3]">Conditions Générales</a>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-black/5 pt-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <p class="text-sm text-muted" data-sg-path="footer.copyright">Copyright © 2024 Healix. Tous droits réservés.</p>
+      <div class="flex items-center gap-4">
+        <a href="#" aria-label="Twitter" class="text-muted hover:text-black transition-colors">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><path d="M14.5 1h2.5l-5.5 6.3L18 17h-5.1l-3.9-5.1L4.5 17H2l5.8-6.6L1.5 1H6.7l3.5 4.6L14.5 1zm-.9 14.4h1.4L4.5 2.4H3L13.6 15.4z"/></svg>
+        </a>
+        <a href="#" aria-label="Facebook" class="text-muted hover:text-black transition-colors">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><path d="M17 9a8 8 0 1 0-9.25 7.9V11.4H5.7V9h2.05V7.2c0-2 1.2-3.1 3-3.1.87 0 1.77.15 1.77.15v1.95h-1c-.98 0-1.29.61-1.29 1.23V9h2.2l-.35 2.4H10.2V16.9A8 8 0 0 0 17 9z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram" class="text-muted hover:text-black transition-colors">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="14" height="14" rx="4"/><circle cx="9" cy="9" r="3.5"/><circle cx="13.5" cy="4.5" r=".5" fill="currentColor"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════
+     STANDARD HYDRATION + GSAP BLOCK — paste verbatim
+     ═══════════════════════════════════════════════════════ -->
+<script>
+  (function () {
+    var C = window.__SITE_CONTENT__ || {};
+    function get(p) {
+      return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+        .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+    }
+    // Hydrate texts
+    document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-path'));
+      if (v != null && typeof v !== 'object') el.textContent = v;
+    });
+    // Hydrate images
+    document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-img'));
+      if (v == null) return;
+      if (el.tagName === 'IMG') el.src = v;
+      else el.style.backgroundImage = "url('" + v + "')";
+    });
+    // GSAP scroll animations
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+        gsap.from(el, {
+          opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 85%' }
+        });
+      });
+      gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+        gsap.to(el, {
+          yPercent: -15, ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+      });
+    }
+  })();
+</script>
+
+<script>
+  /* Filet de securite reveals (durable) */
+  (function () {
+    function refresh() { if (window.ScrollTrigger) ScrollTrigger.refresh(); }
+    window.addEventListener('load', refresh);
+    setTimeout(refresh, 700);
+    setTimeout(function () {
+      document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+        if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+      });
+    }, 2200);
+  })();
+</script>
+</body>
+</html>

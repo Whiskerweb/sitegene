@@ -8,7 +8,9 @@
     "Toutes les pages",
     "Fonctionnalités",
     "Tarifs",
-    "Avis"
+    "Avis",
+    "Études de cas",
+    "Contact"
   ],
   "cta": "Commencer gratuitement",
   "hero": {
@@ -320,5 +322,66 @@
       "Conditions Générales"
     ],
     "copyright": "Copyright © 2024 Healix. Tous droits réservés."
+  },
+  "portfolioPage": {
+    "title": "Études de cas",
+    "intro": "Comment des cliniques, mutuelles et équipes santé déploient Healix pour suivre, prévenir et améliorer le quotidien de leurs patients.",
+    "images": [
+      "/_templates/health-saas/img/hero-doctor.jpg",
+      "/_templates/health-saas/img/doctor-male.jpg",
+      "/_templates/health-saas/img/couple-jogging.jpg",
+      "/_templates/health-saas/img/dna-science.jpg",
+      "/_templates/health-saas/img/couple-jogging.jpg",
+      "/_templates/health-saas/img/hero-doctor.jpg",
+      "/_templates/health-saas/img/dna-science.jpg",
+      "/_templates/health-saas/img/doctor-male.jpg"
+    ],
+    "cases": [
+      {
+        "tag": "Cardiologie",
+        "title": "Suivi cardiaque à distance pour 4 200 patients",
+        "body": "Un centre hospitalier réduit ses réhospitalisations en surveillant les constantes en continu et en déclenchant des alertes ciblées.",
+        "metric": "−34%",
+        "metric_label": "Réhospitalisations en 6 mois"
+      },
+      {
+        "tag": "Prévention",
+        "title": "Programme bien-être pour une mutuelle régionale",
+        "body": "Objectifs personnalisés et rappels intelligents pour 18 000 adhérents, avec un engagement quotidien mesuré dans l’application.",
+        "metric": "+61%",
+        "metric_label": "Adhérents actifs chaque semaine"
+      },
+      {
+        "tag": "Télésanté",
+        "title": "Chat médical intégré au parcours de soin",
+        "body": "Les patients échangent avec des professionnels agréés en quelques minutes, fluidifiant le triage et la continuité des soins.",
+        "metric": "4 min",
+        "metric_label": "Délai moyen de première réponse"
+      },
+      {
+        "tag": "Recherche",
+        "title": "Cohorte de données santé anonymisées",
+        "body": "Une équipe de recherche exploite des données chiffrées et consenties pour affiner ses modèles de prévention des maladies chroniques.",
+        "metric": "78%",
+        "metric_label": "Précision des alertes prédictives"
+      }
+    ]
+  },
+  "contactPage": {
+    "title": "Contact",
+    "intro": "Parlons de votre parcours santé. Notre équipe vous accompagne pour déployer Healix dans votre structure ou votre quotidien.",
+    "email": "contact@healix.io",
+    "phone": "+33 1 86 76 00 00",
+    "response_promise": "Réponse garantie sous 24 heures ouvrées, par un expert santé dédié.",
+    "cta_label": "Demander une démo",
+    "address_label": "Siège",
+    "address": "12 rue de la Santé, 75013 Paris",
+    "hours_label": "Disponibilité",
+    "hours": "Du lundi au vendredi, 9h – 18h (CET)",
+    "reassurance": [
+      "Données chiffrées et hébergées en Europe",
+      "Conformité RGPD et secret médical",
+      "Accompagnement humain à chaque étape"
+    ]
   }
 }

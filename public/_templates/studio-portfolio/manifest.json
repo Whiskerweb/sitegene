@@ -5,6 +5,10 @@
   "pageTypes": [
     "home"
   ],
+  "pages": [
+    { "slug": "/portfolio", "file": "portfolio.html", "title": "Projets" },
+    { "slug": "/contact", "file": "contact.html", "title": "Contact" }
+  ],
   "sections": {
     "home": [
       "meta",
@@ -73,6 +77,13 @@
       "role": "image",
       "required": true,
       "note": "partners · cards · image"
+    },
+    {
+      "slot": "pf1",
+      "path": "portfolioPage.images[]",
+      "role": "gallery",
+      "required": false,
+      "note": "portfolioPage · images"
     }
   ],
   "fields": {
@@ -514,6 +525,114 @@
         "label": "footer · copyright",
         "type": "text",
         "maxLen": 66
+      },
+      {
+        "path": "portfolioPage.label",
+        "label": "portfolioPage · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.index",
+        "label": "portfolioPage · index",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.meta",
+        "label": "portfolioPage · meta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.title",
+        "label": "portfolioPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.intro",
+        "label": "portfolioPage · intro",
+        "type": "text",
+        "maxLen": 260
+      },
+      {
+        "path": "portfolioPage.cta",
+        "label": "portfolioPage · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.label",
+        "label": "contactPage · label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.index",
+        "label": "contactPage · index",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.meta",
+        "label": "contactPage · meta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.title",
+        "label": "contactPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.intro",
+        "label": "contactPage · intro",
+        "type": "text",
+        "maxLen": 260
+      },
+      {
+        "path": "contactPage.email",
+        "label": "contactPage · email",
+        "type": "text",
+        "maxLen": 60
+      },
+      {
+        "path": "contactPage.response_label",
+        "label": "contactPage · response_label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.response",
+        "label": "contactPage · response",
+        "type": "text",
+        "maxLen": 200
+      },
+      {
+        "path": "contactPage.availability",
+        "label": "contactPage · availability",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.location",
+        "label": "contactPage · location",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.collab_label",
+        "label": "contactPage · collab_label",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.collabs[]",
+        "label": "contactPage · collabs",
+        "type": "text",
+        "maxLen": 60
       }
     ]
   }
