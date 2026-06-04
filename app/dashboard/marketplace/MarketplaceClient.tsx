@@ -1,7 +1,14 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { fadeUp, stagger } from "@/lib/motion";
@@ -14,6 +21,7 @@ import { CopyButton } from "@/components/ui/CopyButton";
 import { Spinner } from "@/components/ui/Spinner";
 import {
   IconCheck,
+  IconChevron,
   IconCredit,
   IconExternal,
   IconSpark,
@@ -26,6 +34,9 @@ type TplCard = {
   style: string;
   owned: boolean;
   current: boolean;
+  recommended: boolean;
+  categoryId: string;
+  categoryLabel: string;
 };
 
 type FxCard = {
@@ -36,6 +47,13 @@ type FxCard = {
   compatible: boolean;
   accent: { from: string; to: string };
 };
+
+type CategoryChip = { id: string; label: string; count: number };
+
+/** Vue de la boutique : accueil (2 rangées) ou catalogue complet, pilotée par ?view=. */
+type View = "home" | "templates" | "effects";
+type TplSort = "reco" | "name" | "owned";
+type FxSort = "featured" | "name" | "owned" | "compatible";
 
 type Modal =
   | { kind: "confirm"; itemType: "template" | "effect"; id: string; name: string; price: number }
@@ -49,6 +67,113 @@ const btnPrimary =
   "inline-flex items-center justify-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white shadow-cloud-sm transition-all duration-200 hover:-translate-y-px hover:bg-brand-700 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50";
 const btnSubtle =
   "inline-flex items-center justify-center gap-1.5 rounded-full border border-sky-300 bg-white/70 px-4 py-2 text-sm font-semibold text-slate transition-colors hover:bg-sky-100 hover:text-night disabled:pointer-events-none disabled:opacity-50";
+const selectCtl =
+  "rounded-full border border-sky-300 bg-surface px-3 py-1.5 text-[13px] font-semibold text-night outline-none transition-colors hover:bg-sky-100";
+
+/**
+ * Monte ses enfants (vignette iframe) uniquement quand le cadre approche du
+ * viewport — la boutique n'embarque ainsi que les aperçus réellement visibles,
+ * que ce soit dans les rangées défilantes ou les grilles complètes.
+ */
+function LazyMount({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setShow(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "260px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className="relative aspect-[16/10] w-full overflow-hidden bg-white">
+      {show ? children : <div className="absolute inset-0 animate-pulse bg-sky-100/60" />}
+    </div>
+  );
+}
+
+/**
+ * Rangée défilante horizontalement (molette/swipe) avec flèches de navigation
+ * sur desktop ; la scrollbar est masquée, la carte coupée au bord sert
+ * d'affordance « il y a plus à droite ».
+ */
+function Carousel({ ariaLabel, children }: { ariaLabel: string; children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [can, setCan] = useState({ left: false, right: false });
+
+  const update = useCallback(() => {
+    const el = ref.current;
+    if (!el) return;
+    setCan({
+      left: el.scrollLeft > 8,
+      right: el.scrollLeft < el.scrollWidth - el.clientWidth - 8,
+    });
+  }, []);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [update]);
+
+  const nudge = (dir: 1 | -1) => {
+    const el = ref.current;
+    el?.scrollBy({ left: dir * Math.round(el.clientWidth * 0.85), behavior: "smooth" });
+  };
+
+  const arrow =
+    "absolute top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-sky-300 bg-surface text-night shadow-cloud-sm transition-colors hover:bg-sky-100 md:grid";
+
+  return (
+    <div className="relative">
+      <motion.div
+        ref={ref}
+        role="region"
+        aria-label={ariaLabel}
+        onScroll={update}
+        initial="hidden"
+        animate="visible"
+        variants={stagger}
+        className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {children}
+      </motion.div>
+      {can.left && (
+        <button
+          type="button"
+          aria-label="Faire défiler vers la gauche"
+          onClick={() => nudge(-1)}
+          className={`${arrow} -left-3`}
+        >
+          <IconChevron size={17} className="rotate-180" />
+        </button>
+      )}
+      {can.right && (
+        <button
+          type="button"
+          aria-label="Faire défiler vers la droite"
+          onClick={() => nudge(1)}
+          className={`${arrow} -right-3`}
+        >
+          <IconChevron size={17} />
+        </button>
+      )}
+    </div>
+  );
+}
 
 export function MarketplaceClient({
   hasSite,
@@ -56,8 +181,8 @@ export function MarketplaceClient({
   categoryLabel,
   templatePrice,
   effectPrice,
-  recommended,
-  others,
+  templates,
+  categories,
   effects,
 }: {
   hasSite: boolean;
@@ -65,26 +190,64 @@ export function MarketplaceClient({
   categoryLabel: string;
   templatePrice: number;
   effectPrice: number;
-  recommended: TplCard[];
-  others: TplCard[];
+  templates: TplCard[];
+  categories: CategoryChip[];
   effects: FxCard[];
 }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [balance, setBalance] = useState(initialBalance);
   const [ownedTpl, setOwnedTpl] = useState<Set<string>>(
-    () => new Set(recommended.concat(others).filter((t) => t.owned).map((t) => t.id)),
+    () => new Set(templates.filter((t) => t.owned).map((t) => t.id)),
   );
   const [ownedFx, setOwnedFx] = useState<Set<string>>(
     () => new Set(effects.filter((e) => e.owned).map((e) => e.id)),
   );
   const [currentTpl, setCurrentTpl] = useState<string | null>(
-    () => recommended.concat(others).find((t) => t.current)?.id ?? null,
+    () => templates.find((t) => t.current)?.id ?? null,
   );
   const [modal, setModal] = useState<Modal>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fxName = useMemo(() => new Map(effects.map((e) => [e.id, e.name])), [effects]);
+  // Vue courante depuis l'URL (?view=templates|effects) — pushState natif,
+  // synchronisé avec useSearchParams par le routeur Next, back/forward inclus.
+  const viewParam = searchParams.get("view");
+  const view: View = viewParam === "templates" || viewParam === "effects" ? viewParam : "home";
+  const go = useCallback((v: View) => {
+    window.history.pushState(null, "", v === "home" ? "/dashboard/marketplace" : `?view=${v}`);
+    window.scrollTo({ top: 0 });
+  }, []);
+
+  // Tri / filtres des catalogues complets (état conservé entre les vues).
+  const [tplFilter, setTplFilter] = useState("all");
+  const [tplSort, setTplSort] = useState<TplSort>("reco");
+  const [fxSort, setFxSort] = useState<FxSort>("featured");
+
+  const isTplOwned = useCallback(
+    (t: TplCard) => ownedTpl.has(t.id) || t.id === currentTpl,
+    [ownedTpl, currentTpl],
+  );
+
+  // Position d'affichage par carte (CSS order) : l'ordre DOM reste stable pour
+  // que trier/filtrer ne déplace aucun nœud — sinon les iframes rechargeraient.
+  const tplOrder = useMemo(() => {
+    let list = templates.filter((t) => tplFilter === "all" || t.categoryId === tplFilter);
+    if (tplSort === "name") list = [...list].sort((a, b) => a.name.localeCompare(b.name, "fr"));
+    else if (tplSort === "owned")
+      list = [...list].sort((a, b) => Number(isTplOwned(b)) - Number(isTplOwned(a)));
+    return new Map(list.map((t, i) => [t.id, i]));
+  }, [templates, tplFilter, tplSort, isTplOwned]);
+
+  const fxOrder = useMemo(() => {
+    let list = effects;
+    if (fxSort === "name") list = [...list].sort((a, b) => a.name.localeCompare(b.name, "fr"));
+    else if (fxSort === "owned")
+      list = [...list].sort((a, b) => Number(ownedFx.has(b.id)) - Number(ownedFx.has(a.id)));
+    else if (fxSort === "compatible")
+      list = [...list].sort((a, b) => Number(b.compatible) - Number(a.compatible));
+    return new Map(list.map((e, i) => [e.id, i]));
+  }, [effects, fxSort, ownedFx]);
 
   /** Achat (template ou effet) — le serveur fait autorité sur le prix. */
   const purchase = useCallback(
@@ -155,80 +318,198 @@ export function MarketplaceClient({
     [router],
   );
 
-  const renderTplCard = (t: TplCard, large: boolean) => {
-    const owned = ownedTpl.has(t.id) || t.id === currentTpl;
+  const tplCard = (t: TplCard) => {
+    const owned = isTplOwned(t);
     const current = t.id === currentTpl;
     return (
-      <motion.div key={t.id} variants={fadeUp}>
-        <div className="group relative h-full overflow-hidden rounded-[20px] border border-sky-300 bg-surface shadow-cloud-sm transition-transform duration-200 hover:-translate-y-0.5">
-          {current && (
-            <BorderBeam size={220} duration={7} borderWidth={2} colorFrom="#2563eb" colorTo="#22d3ee" />
-          )}
-          <div className="relative overflow-hidden border-b border-sky-200">
+      <div className="group relative h-full overflow-hidden rounded-[20px] border border-sky-300 bg-surface shadow-cloud-sm transition-transform duration-200 hover:-translate-y-0.5">
+        {current && (
+          <BorderBeam size={220} duration={7} borderWidth={2} colorFrom="#2563eb" colorTo="#22d3ee" />
+        )}
+        <div className="relative overflow-hidden border-b border-sky-200">
+          <LazyMount>
             <SitePreview src={`/api/template-demo?id=${t.id}`} />
-            <div className="absolute right-2.5 top-2.5 flex gap-1.5">
-              {current ? (
-                <Badge tone="brand">Template actuel</Badge>
-              ) : owned ? (
-                <Badge tone="success">
-                  <IconCheck size={12} /> Possédé
-                </Badge>
-              ) : (
-                <Badge tone="neutral">{templatePrice} crédits</Badge>
-              )}
+          </LazyMount>
+          {t.recommended && !current && (
+            <div className="absolute left-2.5 top-2.5">
+              <Badge tone="brand">
+                <IconStar4 size={11} /> Pour vous
+              </Badge>
             </div>
-          </div>
-          <div className={large ? "p-4" : "p-3"}>
-            <h3 className={`font-archivo font-semibold text-night ${large ? "text-base" : "text-[15px]"}`}>
-              {t.name}
-            </h3>
-            <p className="mt-0.5 text-[13px] text-mist">{t.style}</p>
-            <div className="mt-3 flex items-center gap-2">
-              {current ? (
-                <span className="inline-flex items-center gap-1.5 text-sm font-medium text-mist">
-                  <IconCheck size={14} /> Appliqué à votre site
-                </span>
-              ) : owned ? (
-                <button
-                  type="button"
-                  className={btnPrimary}
-                  disabled={!hasSite || busy}
-                  onClick={() => applyTemplate(t.id, t.name)}
-                >
-                  Appliquer à mon site
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className={btnSubtle}
-                  disabled={busy}
-                  onClick={() =>
-                    setModal({
-                      kind: "confirm",
-                      itemType: "template",
-                      id: t.id,
-                      name: t.name,
-                      price: templatePrice,
-                    })
-                  }
-                >
-                  <IconCredit size={15} /> Débloquer · {templatePrice} ✦
-                </button>
-              )}
-              <a
-                href={`/preview/${t.id}`}
-                target="_blank"
-                rel="noreferrer"
-                className="ml-auto inline-flex items-center gap-1 text-[13px] font-medium text-slate transition-colors hover:text-night"
-              >
-                Aperçu <IconExternal size={13} />
-              </a>
-            </div>
+          )}
+          <div className="absolute right-2.5 top-2.5 flex gap-1.5">
+            {current ? (
+              <Badge tone="brand">Template actuel</Badge>
+            ) : owned ? (
+              <Badge tone="success">
+                <IconCheck size={12} /> Possédé
+              </Badge>
+            ) : (
+              <Badge tone="neutral">{templatePrice} crédits</Badge>
+            )}
           </div>
         </div>
-      </motion.div>
+        <div className="p-4">
+          <h3 className="font-archivo text-[15px] font-semibold text-night">{t.name}</h3>
+          <p className="mt-0.5 text-[13px] text-mist">{t.style}</p>
+          <div className="mt-3 flex items-center gap-2">
+            {current ? (
+              <span className="inline-flex items-center gap-1.5 text-sm font-medium text-mist">
+                <IconCheck size={14} /> Appliqué à votre site
+              </span>
+            ) : owned ? (
+              <button
+                type="button"
+                className={btnPrimary}
+                disabled={!hasSite || busy}
+                onClick={() => applyTemplate(t.id, t.name)}
+              >
+                Appliquer à mon site
+              </button>
+            ) : (
+              <button
+                type="button"
+                className={btnSubtle}
+                disabled={busy}
+                onClick={() =>
+                  setModal({
+                    kind: "confirm",
+                    itemType: "template",
+                    id: t.id,
+                    name: t.name,
+                    price: templatePrice,
+                  })
+                }
+              >
+                <IconCredit size={15} /> Débloquer · {templatePrice} ✦
+              </button>
+            )}
+            <a
+              href={`/preview/${t.id}`}
+              target="_blank"
+              rel="noreferrer"
+              className="ml-auto inline-flex items-center gap-1 text-[13px] font-medium text-slate transition-colors hover:text-night"
+            >
+              Aperçu <IconExternal size={13} />
+            </a>
+          </div>
+        </div>
+      </div>
     );
   };
+
+  const fxCard = (e: FxCard) => {
+    const owned = ownedFx.has(e.id);
+    return (
+      <div className="group relative h-full overflow-hidden rounded-[20px] border border-sky-300 bg-surface shadow-cloud-sm transition-transform duration-200 hover:-translate-y-0.5">
+        <div className="relative overflow-hidden border-b border-sky-200">
+          <LazyMount>
+            <SitePreview src={`/api/fx-demo?id=${e.id}`} />
+          </LazyMount>
+          <div className="absolute right-2.5 top-2.5">
+            {owned ? (
+              <Badge tone="success">
+                <IconCheck size={12} /> Possédé
+              </Badge>
+            ) : (
+              <Badge tone="neutral">{effectPrice} crédits</Badge>
+            )}
+          </div>
+          <div
+            className="absolute left-0 top-0 h-1 w-full"
+            style={{ background: `linear-gradient(90deg, ${e.accent.from}, ${e.accent.to})` }}
+          />
+        </div>
+        <div className="p-4">
+          <h3 className="font-archivo text-base font-semibold text-night">{e.name}</h3>
+          <p className="mt-1 text-[13px] leading-relaxed text-slate">{e.description}</p>
+          {!e.compatible && (
+            <p className="mt-1.5 text-xs font-medium text-mist">
+              Bientôt disponible sur votre template actuel.
+            </p>
+          )}
+          <div className="mt-3 flex items-center gap-2">
+            {owned ? (
+              <button
+                type="button"
+                className={btnPrimary}
+                disabled={!hasSite || !e.compatible || busy}
+                onClick={() => integrate(e.id)}
+                title={
+                  e.compatible
+                    ? "Choisir la section dans l'éditeur"
+                    : "Indisponible sur votre template actuel"
+                }
+              >
+                <IconStar4 size={14} /> Intégrer à mon site
+              </button>
+            ) : (
+              <button
+                type="button"
+                className={btnSubtle}
+                disabled={busy}
+                onClick={() =>
+                  setModal({
+                    kind: "confirm",
+                    itemType: "effect",
+                    id: e.id,
+                    name: e.name,
+                    price: effectPrice,
+                  })
+                }
+              >
+                <IconCredit size={15} /> Débloquer · {effectPrice} ✦
+              </button>
+            )}
+            <a
+              href={`/api/fx-demo?id=${e.id}`}
+              target="_blank"
+              rel="noreferrer"
+              className="ml-auto inline-flex items-center gap-1 text-[13px] font-medium text-slate transition-colors hover:text-night"
+            >
+              Démo live <IconExternal size={13} />
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  /** Tuile de fin de rangée — même action que le bouton « Voir tout ». */
+  const seeAllTile = (v: Exclude<View, "home">, count: number) => (
+    <div className="shrink-0 snap-start self-stretch">
+      <button
+        type="button"
+        onClick={() => go(v)}
+        className="flex h-full w-[150px] flex-col items-center justify-center gap-2.5 rounded-[20px] border border-dashed border-sky-300 bg-surface/60 px-4 text-sm font-semibold text-slate transition-colors hover:bg-sky-100 hover:text-night"
+      >
+        <span className="grid h-9 w-9 place-items-center rounded-full border border-sky-300 bg-surface">
+          <IconChevron size={16} />
+        </span>
+        Voir tout ({count})
+      </button>
+    </div>
+  );
+
+  const seeAllBtn = (v: Exclude<View, "home">, count: number) => (
+    <button
+      type="button"
+      onClick={() => go(v)}
+      className="inline-flex items-center gap-1 rounded-full border border-sky-300 bg-white/70 px-3.5 py-1.5 text-[13px] font-semibold text-slate transition-colors hover:bg-sky-100 hover:text-night"
+    >
+      Voir tout ({count}) <IconChevron size={14} />
+    </button>
+  );
+
+  const backBtn = (
+    <button
+      type="button"
+      onClick={() => go("home")}
+      className="inline-flex items-center gap-1 rounded-full border border-sky-300 bg-white/70 px-3.5 py-1.5 text-[13px] font-semibold text-slate transition-colors hover:bg-sky-100 hover:text-night"
+    >
+      <IconChevron size={14} className="rotate-180" /> Formules
+    </button>
+  );
 
   return (
     <>
@@ -253,145 +534,184 @@ export function MarketplaceClient({
         </div>
       )}
 
-      {/* Templates — la catégorie du client d'abord */}
-      <section>
-        <div className="mb-3 flex items-center gap-2">
-          <h2 className="font-archivo text-lg font-semibold text-night">
-            Templates · Recommandés pour vous
-          </h2>
-          <Badge tone="brand">{categoryLabel}</Badge>
-        </div>
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={stagger}
-          className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
-        >
-          {recommended.map((t) => renderTplCard(t, true))}
-        </motion.div>
-      </section>
+      {view === "home" && (
+        <>
+          {/* Rangée Templates — la catégorie du client d'abord */}
+          <section>
+            <div className="mb-1 flex flex-wrap items-center gap-2">
+              <h2 className="font-archivo text-lg font-semibold text-night">Templates</h2>
+              <Badge tone="brand">{categoryLabel}</Badge>
+              <div className="ml-auto">{seeAllBtn("templates", templates.length)}</div>
+            </div>
+            <p className="mb-4 text-sm text-slate">
+              Les styles {categoryLabel} d'abord — faites défiler pour découvrir tous les univers.
+            </p>
+            <Carousel ariaLabel="Templates">
+              {templates.map((t) => (
+                <motion.div
+                  key={t.id}
+                  variants={fadeUp}
+                  className="w-[290px] shrink-0 snap-start sm:w-[330px]"
+                >
+                  {tplCard(t)}
+                </motion.div>
+              ))}
+              {seeAllTile("templates", templates.length)}
+            </Carousel>
+          </section>
 
-      {others.length > 0 && (
-        <section className="mt-10">
-          <h2 className="mb-3 font-archivo text-lg font-semibold text-night">Autres styles</h2>
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={stagger}
-            className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
-          >
-            {others.map((t) => renderTplCard(t, false))}
-          </motion.div>
-        </section>
+          {/* Rangée Effets — le top du catalogue, défilable */}
+          <section className="mt-10">
+            <div className="mb-1 flex flex-wrap items-center gap-2">
+              <h2 className="font-archivo text-lg font-semibold text-night">Effets & composants</h2>
+              <Badge tone="brand">
+                <IconSpark size={12} /> Nouveau
+              </Badge>
+              <div className="ml-auto">{seeAllBtn("effects", effects.length)}</div>
+            </div>
+            <p className="mb-4 max-w-[68ch] text-sm leading-relaxed text-slate">
+              Des animations premium à intégrer sur votre site : achetez un effet une fois (
+              {effectPrice} crédits, licence liée à votre compte), puis demandez à l'IA de le
+              placer exactement où vous voulez — l'intégration est incluse.
+            </p>
+            {effects.length === 0 ? (
+              <GlassCard className="border border-sky-300 p-6 text-sm text-slate">
+                Les premiers effets arrivent très bientôt.
+              </GlassCard>
+            ) : (
+              <Carousel ariaLabel="Effets et composants">
+                {effects.map((e) => (
+                  <motion.div
+                    key={e.id}
+                    variants={fadeUp}
+                    className="w-[290px] shrink-0 snap-start sm:w-[330px]"
+                  >
+                    {fxCard(e)}
+                  </motion.div>
+                ))}
+                {seeAllTile("effects", effects.length)}
+              </Carousel>
+            )}
+          </section>
+        </>
       )}
 
-      {/* Effets */}
-      <section className="mt-12">
-        <div className="mb-1 flex items-center gap-2">
-          <h2 className="font-archivo text-lg font-semibold text-night">Effets & composants</h2>
-          <Badge tone="brand">
-            <IconSpark size={12} /> Nouveau
-          </Badge>
-        </div>
-        <p className="mb-4 max-w-[68ch] text-sm leading-relaxed text-slate">
-          Des animations premium à intégrer sur votre site : achetez un effet une fois ({effectPrice}{" "}
-          crédits, licence liée à votre compte), puis demandez à l'IA de le placer exactement où
-          vous voulez — l'intégration est incluse.
-        </p>
-        {effects.length === 0 ? (
-          <GlassCard className="border border-sky-300 p-6 text-sm text-slate">
-            Les premiers effets arrivent très bientôt.
-          </GlassCard>
-        ) : (
+      {view === "templates" && (
+        <section>
+          <div className="mb-3 flex flex-wrap items-center gap-2.5">
+            {backBtn}
+            <h2 className="font-archivo text-lg font-semibold text-night">Tous les templates</h2>
+            <span className="text-sm font-medium text-mist">{tplOrder.size}</span>
+            <label className="ml-auto inline-flex items-center gap-2 text-[13px] font-medium text-slate">
+              Trier
+              <select
+                aria-label="Trier les templates"
+                value={tplSort}
+                onChange={(ev) => setTplSort(ev.target.value as TplSort)}
+                className={selectCtl}
+              >
+                <option value="reco">Recommandés d'abord</option>
+                <option value="name">Nom A → Z</option>
+                <option value="owned">Possédés d'abord</option>
+              </select>
+            </label>
+          </div>
+          <div className="mb-5 flex flex-wrap gap-1.5">
+            {[{ id: "all", label: "Tous", count: templates.length }, ...categories].map((c) => {
+              const active = tplFilter === c.id;
+              return (
+                <button
+                  key={c.id}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => setTplFilter(c.id)}
+                  className={
+                    active
+                      ? "rounded-full bg-brand px-3.5 py-1.5 text-[13px] font-semibold text-white shadow-cloud-sm"
+                      : "rounded-full border border-sky-300 bg-white/70 px-3.5 py-1.5 text-[13px] font-semibold text-slate transition-colors hover:bg-sky-100 hover:text-night"
+                  }
+                >
+                  {c.label} <span className="opacity-65">{c.count}</span>
+                </button>
+              );
+            })}
+          </div>
           <motion.div
             initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
+            animate="visible"
             variants={stagger}
             className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
           >
-            {effects.map((e) => {
-              const owned = ownedFx.has(e.id);
+            {templates.map((t) => {
+              const pos = tplOrder.get(t.id);
               return (
-                <motion.div key={e.id} variants={fadeUp}>
-                  <div className="group relative h-full overflow-hidden rounded-[20px] border border-sky-300 bg-surface shadow-cloud-sm transition-transform duration-200 hover:-translate-y-0.5">
-                    <div className="relative overflow-hidden border-b border-sky-200">
-                      <SitePreview src={`/api/fx-demo?id=${e.id}`} />
-                      <div className="absolute right-2.5 top-2.5">
-                        {owned ? (
-                          <Badge tone="success">
-                            <IconCheck size={12} /> Possédé
-                          </Badge>
-                        ) : (
-                          <Badge tone="neutral">{effectPrice} crédits</Badge>
-                        )}
-                      </div>
-                      <div
-                        className="absolute left-0 top-0 h-1 w-full"
-                        style={{
-                          background: `linear-gradient(90deg, ${e.accent.from}, ${e.accent.to})`,
-                        }}
-                      />
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-archivo text-base font-semibold text-night">{e.name}</h3>
-                      <p className="mt-1 text-[13px] leading-relaxed text-slate">{e.description}</p>
-                      {!e.compatible && (
-                        <p className="mt-1.5 text-xs font-medium text-mist">
-                          Bientôt disponible sur votre template actuel.
-                        </p>
-                      )}
-                      <div className="mt-3 flex items-center gap-2">
-                        {owned ? (
-                          <button
-                            type="button"
-                            className={btnPrimary}
-                            disabled={!hasSite || !e.compatible || busy}
-                            onClick={() => integrate(e.id)}
-                            title={
-                              e.compatible
-                                ? "Choisir la section dans l'éditeur"
-                                : "Indisponible sur votre template actuel"
-                            }
-                          >
-                            <IconStar4 size={14} /> Intégrer à mon site
-                          </button>
-                        ) : (
-                          <button
-                            type="button"
-                            className={btnSubtle}
-                            disabled={busy}
-                            onClick={() =>
-                              setModal({
-                                kind: "confirm",
-                                itemType: "effect",
-                                id: e.id,
-                                name: e.name,
-                                price: effectPrice,
-                              })
-                            }
-                          >
-                            <IconCredit size={15} /> Débloquer · {effectPrice} ✦
-                          </button>
-                        )}
-                        <a
-                          href={`/api/fx-demo?id=${e.id}`}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="ml-auto inline-flex items-center gap-1 text-[13px] font-medium text-slate transition-colors hover:text-night"
-                        >
-                          Démo live <IconExternal size={13} />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+                <motion.div
+                  key={t.id}
+                  variants={fadeUp}
+                  className={pos === undefined ? "hidden" : undefined}
+                  style={pos === undefined ? undefined : { order: pos }}
+                >
+                  {tplCard(t)}
                 </motion.div>
               );
             })}
           </motion.div>
-        )}
-      </section>
+        </section>
+      )}
+
+      {view === "effects" && (
+        <section>
+          <div className="mb-3 flex flex-wrap items-center gap-2.5">
+            {backBtn}
+            <h2 className="font-archivo text-lg font-semibold text-night">Tous les effets</h2>
+            <span className="text-sm font-medium text-mist">{effects.length}</span>
+            <label className="ml-auto inline-flex items-center gap-2 text-[13px] font-medium text-slate">
+              Trier
+              <select
+                aria-label="Trier les effets"
+                value={fxSort}
+                onChange={(ev) => setFxSort(ev.target.value as FxSort)}
+                className={selectCtl}
+              >
+                <option value="featured">En avant</option>
+                <option value="name">Nom A → Z</option>
+                <option value="owned">Possédés d'abord</option>
+                <option value="compatible">Compatibles d'abord</option>
+              </select>
+            </label>
+          </div>
+          <p className="mb-5 max-w-[68ch] text-sm leading-relaxed text-slate">
+            Achetez un effet une fois ({effectPrice} crédits, licence liée à votre compte), puis
+            demandez à l'IA de le placer exactement où vous voulez — l'intégration est incluse.
+          </p>
+          {effects.length === 0 ? (
+            <GlassCard className="border border-sky-300 p-6 text-sm text-slate">
+              Les premiers effets arrivent très bientôt.
+            </GlassCard>
+          ) : (
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={stagger}
+              className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+            >
+              {effects.map((e) => {
+                const pos = fxOrder.get(e.id);
+                return (
+                  <motion.div
+                    key={e.id}
+                    variants={fadeUp}
+                    className={pos === undefined ? "hidden" : undefined}
+                    style={pos === undefined ? undefined : { order: pos }}
+                  >
+                    {fxCard(e)}
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          )}
+        </section>
+      )}
 
       {/* Modals */}
       {modal && (

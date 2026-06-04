@@ -3,7 +3,12 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { getBalance } from "@/lib/credits-server";
 import { ownedItems } from "@/lib/marketplace-server";
 import { listEffects } from "@/lib/effects";
-import { categoryForTemplate, getCategory, DEFAULT_CATEGORY } from "@/lib/categories";
+import {
+  ACTIVE_CATEGORIES,
+  categoryForTemplate,
+  getCategory,
+  DEFAULT_CATEGORY,
+} from "@/lib/categories";
 import { TEMPLATE_IDS, isSpaTemplate, templateMeta } from "@/lib/templates";
 import { EFFECT_PRICE_CREDITS, TEMPLATE_PRICE_CREDITS } from "@/lib/marketplace";
 import { MarketplaceClient } from "./MarketplaceClient";
@@ -47,16 +52,31 @@ export default async function MarketplacePage() {
     categoryForTemplate(site?.template_id ?? "") ??
     DEFAULT_CATEGORY;
 
-  const tpl = (id: string) => ({
-    id,
-    ...templateMeta(id),
-    owned: owned.templates.has(id),
-    current: id === site?.template_id,
-  });
-  const recommended = category.templateIds.map(tpl);
-  const others = TEMPLATE_IDS.filter(
-    (id) => !(category.templateIds as readonly string[]).includes(id),
-  ).map(tpl);
+  const tpl = (id: string, recommended: boolean) => {
+    const cat = categoryForTemplate(id);
+    return {
+      id,
+      ...templateMeta(id),
+      owned: owned.templates.has(id),
+      current: id === site?.template_id,
+      recommended,
+      categoryId: cat?.id ?? "autres",
+      categoryLabel: cat?.label ?? "Autres",
+    };
+  };
+  // Recommandés (catégorie du client) d'abord — c'est l'ordre « En avant ».
+  const templates = [
+    ...category.templateIds.map((id) => tpl(id, true)),
+    ...TEMPLATE_IDS.filter(
+      (id) => !(category.templateIds as readonly string[]).includes(id),
+    ).map((id) => tpl(id, false)),
+  ];
+  const categories = [
+    ...ACTIVE_CATEGORIES.map((c) => ({ id: c.id as string, label: c.label })),
+    { id: "autres", label: "Autres" },
+  ]
+    .map((c) => ({ ...c, count: templates.filter((t) => t.categoryId === c.id).length }))
+    .filter((c) => c.count > 0);
 
   const spaSite = !!site?.template_id && isSpaTemplate(site.template_id);
   const effects = listEffects().map((e) => ({
@@ -75,8 +95,8 @@ export default async function MarketplacePage() {
       categoryLabel={category.label}
       templatePrice={TEMPLATE_PRICE_CREDITS}
       effectPrice={EFFECT_PRICE_CREDITS}
-      recommended={recommended}
-      others={others}
+      templates={templates}
+      categories={categories}
       effects={effects}
     />
   );
