@@ -169,6 +169,8 @@
     "Contact"
   ],
   "navCta": "Devis gratuit",
+  "navPortfolio": "Nos réalisations",
+  "navContact": "Contact & devis",
   "hero": {
     "tagline": "Transformez votre espace extérieur en toute simplicité",
     "description": "Créez un espace extérieur plus vert et plus beau grâce à notre expertise en jardinage et en aménagement paysager.",
@@ -394,6 +396,57 @@
     "address": "123 Greenway Street, City Name",
     "hours": "Lun – Sam : 8 h 00 – 18 h 00",
     "copyright": "© 2026 Eco Garden Care. Tous droits réservés."
+  },
+  "portfolioPage": {
+    "title": "Nos réalisations",
+    "intro": "Chaque jardin raconte une histoire. Découvrez nos chantiers récents : tontes, tailles, créations paysagères et entretiens menés avec soin, partout dans la région.",
+    "kicker": "Galerie",
+    "ctaTitle": "Votre projet mérite le même soin",
+    "ctaText": "Inspiré par nos réalisations ? Parlons de votre extérieur. Audit gratuit et devis détaillé sous 24 h.",
+    "cta": "Demander un devis",
+    "captions": [
+      "Création d’un massif fleuri durable",
+      "Tonte et remise en forme de pelouse",
+      "Taille raisonnée de haies et arbustes",
+      "Aménagement d’une allée paysagère",
+      "Entretien complet d’un jardin de ville",
+      "Plantation d’arbres et de vivaces",
+      "Nettoyage saisonnier d’automne",
+      "Pose de gazon et engazonnement",
+      "Réfection d’une bordure de jardin",
+      "Mise en valeur d’une terrasse végétalisée"
+    ],
+    "images": [
+      "/_templates/eco-garden-care/img/gallery1.jpg",
+      "/_templates/eco-garden-care/img/gallery2.jpg",
+      "/_templates/eco-garden-care/img/gallery3.jpg",
+      "/_templates/eco-garden-care/img/gallery4.jpg",
+      "/_templates/eco-garden-care/img/service-shrub.jpg",
+      "/_templates/eco-garden-care/img/service-lawn.jpg",
+      "/_templates/eco-garden-care/img/service-maintenance.jpg",
+      "/_templates/eco-garden-care/img/about.jpg",
+      "/_templates/eco-garden-care/img/process.jpg",
+      "/_templates/eco-garden-care/img/cta-bg.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Contact & devis",
+    "intro": "Un projet de jardin, une pelouse à entretenir ou une haie à tailler ? Décrivez-nous votre besoin : nous revenons vers vous rapidement avec un devis clair et sans engagement.",
+    "kicker": "Parlons de votre extérieur",
+    "phoneLabel": "Appelez-nous directement",
+    "phone": "+1 (000) 123-4567",
+    "emailLabel": "Écrivez-nous",
+    "email": "info@gardencare.com",
+    "zonesLabel": "Zones d’intervention",
+    "zones": "Centre-ville, périphérie et communes alentour dans un rayon de 30 km.",
+    "hoursLabel": "Horaires",
+    "hours": "Lun – Sam : 8 h 00 – 18 h 00",
+    "promiseTitle": "Réponse sous 24 h",
+    "promiseText": "Nous nous engageons à répondre à chaque demande sous 24 heures ouvrées, avec un audit gratuit de votre jardin avant tout devis.",
+    "reassure1": "Devis gratuit et détaillé",
+    "reassure2": "Audit du jardin offert",
+    "reassure3": "Jardiniers assurés et qualifiés",
+    "cta": "Demander un devis"
   }
 };
   </script>
@@ -411,9 +464,11 @@
 
     <!-- Nav links -->
     <nav class="hidden md:flex items-center gap-8">
+      <a href="#" data-sg-page="/" class="nav-link">Accueil</a>
       <a href="#about"    class="nav-link" data-sg-path="nav[0]">About</a>
       <a href="#services" class="nav-link" data-sg-path="nav[1]">Services</a>
-      <a href="#contact"  class="nav-link" data-sg-path="nav[2]">Contact</a>
+      <a href="#" data-sg-page="portfolio" class="nav-link" data-sg-path="navPortfolio">Nos réalisations</a>
+      <a href="#" data-sg-page="contact"  class="nav-link" data-sg-path="navContact">Contact &amp; devis</a>
     </nav>
 
     <!-- CTA -->
@@ -430,9 +485,11 @@
 
   <!-- Mobile menu -->
   <div id="mobile-menu" class="hidden md:hidden bg-bg border-t border-ink/5 px-6 py-4 flex flex-col gap-4">
+    <a href="#" data-sg-page="/" class="nav-link">Accueil</a>
     <a href="#about"    class="nav-link" data-sg-path="nav[0]">About</a>
     <a href="#services" class="nav-link" data-sg-path="nav[1]">Services</a>
-    <a href="#contact"  class="nav-link" data-sg-path="nav[2]">Contact</a>
+    <a href="#" data-sg-page="portfolio" class="nav-link" data-sg-path="navPortfolio">Nos réalisations</a>
+    <a href="#" data-sg-page="contact"  class="nav-link" data-sg-path="navContact">Contact &amp; devis</a>
     <a href="#contact"  class="btn-primary self-start" data-sg-path="navCta">Get A Free Quote</a>
   </div>
 </header>

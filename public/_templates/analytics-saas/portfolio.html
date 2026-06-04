@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-sg-path="meta.title">Northpeak — L'IA au service de la croissance commerciale</title>
+  <meta name="description" data-sg-path="meta.description" content="Northpeak transforme vos données commerciales en insights pilotés par l'IA." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- CDNs -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:     '#1e2b3a',
+            muted:   '#465478',
+            bg:      '#f9fafb',
+            surface: '#ffffff',
+            cyan:    '#80e5ff',
+            indigo:  '#5b63d8',
+            iris:    '#7584d6',
+            violet:  '#545c9e',
+            soft:    '#dfe1f5',
+            ribbon:  '#7d86f0',
+            line:    '#e5e8eb',
+          },
+          fontFamily: {
+            sans: ['Manrope', 'ui-sans-serif', 'system-ui'],
+            inter: ['Inter', 'ui-sans-serif'],
+          },
+          fontSize: {
+            'd1': ['5rem',    {lineHeight: '1.02'}],
+            'd2': ['3.5rem',  {lineHeight: '1.05'}],
+            'd3': ['2.5rem',  {lineHeight: '1.1'}],
+          },
+          spacing: { '30': '7.5rem', '38': '9.5rem', '45': '11.25rem' },
+        }
+      }
+    };
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Manrope', sans-serif; color: #1e2b3a; background: #f9fafb; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    .grad-title { background: linear-gradient(95deg, #80e5ff 0%, #7584d6 40%, #545c9e 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .grad-soft  { background: linear-gradient(120deg, #eef0fb 0%, #f6f3ff 50%, #f9fafb 100%); }
+    .aurora { position: absolute; border-radius: 9999px; filter: blur(60px); opacity: .55; pointer-events: none; }
+    .pill-btn { box-shadow: 0 10px 24px -8px rgba(125,134,240,.55); }
+    .card-dot { background-image: radial-gradient(rgba(117,132,214,.18) 1px, transparent 1px); background-size: 10px 10px; }
+    .stat-shine { background: linear-gradient(135deg,#ffffff 0%,#f3f4fb 100%); }
+    .gallery-cell img { transition: transform 1.2s ease-out; }
+    .gallery-cell:hover img { transform: scale(1.06); }
+  </style>
+</head>
+<body class="bg-bg text-ink font-sans">
+
+  <!-- ═══════════ SITE CONTENT (single source of truth) ═══════════ -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+      "brand": "Northpeak",
+      "meta": {
+        "title": "Northpeak — L'IA au service de la croissance commerciale",
+        "description": "Northpeak transforme vos données commerciales en insights pilotés par l'IA. Boostez votre croissance avec des analyses intelligentes, des intégrations et des tableaux de bord conçus pour les équipes modernes."
+      },
+      "nav": {
+        "links": [
+          "Fonctionnement",
+          "Intégrations",
+          "Performance",
+          "Tarifs",
+          "FAQ"
+        ],
+        "cta": "Demander une démo"
+      },
+      "hero": {
+        "kicker": "PLATEFORME D'ANALYSE IA",
+        "title_a": "Boostez votre croissance",
+        "title_b": "with",
+        "title_c": "IA Intelligente",
+        "title_d": "insights",
+        "subtitle": "Transformez votre entreprise en un clic grâce à un accompagnement analytique puissant et en temps réel.",
+        "cta_primary": "Essai gratuit",
+        "cta_secondary": "Fonctionnement",
+        "proof_label": "PARTENARIATS EN PLEINE CROISSANCE DANS LE MONDE",
+        "logos": [
+          "avocadoo",
+          "nanowise",
+          "NEXUSGATE",
+          "Spitfire",
+          "GESSLER"
+        ]
+      },
+      "dashboard": {
+        "sidebar": [
+          "Tableau de bord",
+          "Campagnes",
+          "Analyses",
+          "Intégrations",
+          "Rapports",
+          "Performance",
+          "Paramètres"
+        ],
+        "panel_title": "Vue d'ensemble de la performance",
+        "kpi": [
+          {
+            "label": "Croissance cette semaine",
+            "value": "$45,800",
+            "delta": "+8.4%"
+          },
+          {
+            "label": "Campagnes actives",
+            "value": "24",
+            "delta": "+5 nouvelles"
+          },
+          {
+            "label": "Insights générés par l'IA",
+            "value": "1,250",
+            "delta": "+12%"
+          }
+        ],
+        "chart_a_title": "Analyse de performance",
+        "chart_b_title": "Répartition des ressources",
+        "legend": [
+          "Budget des campagnes",
+          "Utilisation des intégrations",
+          "Traitement IA",
+          "Ressources IA"
+        ]
+      },
+      "bento": {
+        "a_title": "Posez vos questions à l'IA",
+        "a_text": "Analyse conversationnelle — interrogez vos données en langage naturel.",
+        "b_value": "3x",
+        "b_text": "Cycles de reporting accélérés",
+        "c_title": "Rapports personnalisés",
+        "c_text": "Analyse des revenus exportable et personnalisée en un clic.",
+        "d_title": "Intégrations instantanées",
+        "d_text": "Connectez vos plateformes préférées et synchronisez en quelques secondes.",
+        "e_title": "Stratégies simplifiées",
+        "e_text": "Playbooks prêts à l'emploi, adaptés à vos objectifs.",
+        "f_title": "Optimisation des processus",
+        "f_text": "Automatisez les tâches répétitives, concentrez-vous sur les décisions."
+      },
+      "steps": {
+        "kicker": "FONCTIONNEMENT",
+        "title_a": "Découvrez notre processus",
+        "title_b": "simple et efficace",
+        "subtitle": "Commencez en toute simplicité et voyez votre entreprise prospérer dès le départ, avec un accompagnement personnalisé à chaque étape.",
+        "items": [
+          {
+            "tag": "Étape 1",
+            "title": "Inscription & Profil",
+            "text": "Créez votre compte avec notre processus d'installation guidé. Accédez instantanément à votre tableau de bord personnalisé."
+          },
+          {
+            "tag": "Étape 2",
+            "title": "Personnalisation",
+            "text": "Partagez vos objectifs et préférences. Nous adaptons votre expérience avec des insights pilotés par l'IA."
+          },
+          {
+            "tag": "Étape 3",
+            "title": "Stratégie",
+            "text": "Mettez en œuvre des stratégies basées sur les données, alignées sur vos objectifs. Optimisez votre performance en temps réel."
+          },
+          {
+            "tag": "Étape 4",
+            "title": "Analyser & Développer",
+            "text": "Suivez vos succès grâce à des analyses claires. Développez ce qui fonctionne et optimisez pour la croissance."
+          }
+        ],
+        "cta_text": "Intégration fluide avec un accompagnement d'experts",
+        "cta_btn": "Se connecter"
+      },
+      "integration": {
+        "kicker": "INTÉGRATIONS",
+        "title_a": "Des intégrations puissantes",
+        "title_b": "simplifiées",
+        "subtitle": "Unifiez vos plateformes préférées au sein d'un écosystème puissant pour une collaboration fluide et une efficacité renforcée.",
+        "feature_label": "Architecture avancée",
+        "feature_title": "Module d'analyse",
+        "feature_text": "Optimisez vos intégrations grâce à des métriques de performance en temps réel.",
+        "orb_label": "AI³",
+        "orb_text": "Couche d'intelligence unifiée",
+        "layout_text": "Espaces de travail flexibles",
+        "uptime_value": "99%",
+        "uptime_text": "Disponibilité garantie",
+        "footnote": "Vos plateformes préférées sont prêtes à être connectées.",
+        "cta_text": "Bénéficiez de l'assistance de nos spécialistes en intégration",
+        "cta_btn": "Support instantané"
+      },
+      "performance": {
+        "kicker": "PERFORMANCES",
+        "title_a": "Nos Jalons,",
+        "title_b": "votre Atout",
+        "subtitle": "Une croissance mesurable à l’échelle mondiale, grâce à chaque campagne lancée, utilisateur accompagné et solution pilotée par l’IA.",
+        "stats": [
+          {
+            "label": "Campagnes Lancées",
+            "value": "12K+"
+          },
+          {
+            "label": "Utilisateurs Actifs",
+            "value": "40K"
+          },
+          {
+            "label": "Analyses IA Générées",
+            "value": "8M"
+          },
+          {
+            "label": "Engagement Mondial",
+            "value": "95K"
+          },
+          {
+            "label": "Satisfaction Client",
+            "value": "98%"
+          },
+          {
+            "label": "Solutions Stratégiques",
+            "value": "320"
+          }
+        ],
+        "cta_text": "Découvrez notre moteur d’analyses et comment nous transformons les entreprises à travers le monde.",
+        "cta_btn": "Démonstration Analytique"
+      },
+      "founders": {
+        "kicker": "À PROPOS",
+        "title": "Rencontrez les Fondateurs",
+        "subtitle": "Les esprits derrière des solutions innovantes, qui façonnent la technologie de demain dès aujourd’hui, avec une expertise au service de l’avenir des entreprises.",
+        "people": [
+          {
+            "name": "Elena Marsh",
+            "role": "Co-founder & CEO",
+            "image": "/_templates/analytics-saas/img/founder1.jpg"
+          },
+          {
+            "name": "Daniel Okafor",
+            "role": "Co-founder & CTO",
+            "image": "/_templates/analytics-saas/img/founder2.jpg"
+          },
+          {
+            "name": "Priya Nair",
+            "role": "Co-founder & Head of AI",
+            "image": "/_templates/analytics-saas/img/founder3.jpg"
+          }
+        ],
+        "story_title": "Notre Histoire —",
+        "story_p1": "Trois amis unis par une passion commune pour l’IA se sont rencontrés à l’université. Après d’innombrables sessions de codage alimentées par le café, nous avons livré notre premier prototype à une poignée d’équipes qui ont cru en notre vision.",
+        "story_p2": "Aujourd’hui, soutenus par certains des meilleurs acteurs du secteur technologique, nous rendons l’analytique avancée accessible aux entreprises du monde entier — sans la complexité des solutions d’entreprise.",
+        "story_p3": "Nous sommes des leaders dans les solutions d’entreprise pilotées par l’IA, permettant aux entreprises de prendre des décisions plus intelligentes, basées sur les données. Notre équipe allie une expertise approfondie en IA à une réelle compréhension des enjeux business pour des résultats concrets.",
+        "badge": "Soutenu par des leaders du secteur",
+        "culture_title": "La Vie chez Northpeak",
+        "culture_text": "Notre culture à travers le regard de l’équipe",
+        "culture_btn": "Rejoignez-Nous",
+        "culture_image": "/_templates/analytics-saas/img/culture.jpg",
+        "cta_text": "Découvrez toute l’histoire",
+        "cta_btn": "En Savoir Plus"
+      },
+      "testimonials": {
+        "kicker": "AVIS CLIENTS",
+        "title_a": "Ce Que Nos",
+        "title_b": "Clients Disent",
+        "subtitle": "Comment nos clients boostent leur croissance grâce à des analyses avancées et pilotées par l’IA.",
+        "featured": {
+          "name": "David Pierce",
+          "role": "Marketing Consultant at Apex",
+          "image": "/_templates/analytics-saas/img/feature.jpg",
+          "quote": "Northpeak nous a offert une source unique de vérité. Les insights IA ont révélé des opportunités que notre équipe aurait totalement manquées."
+        },
+        "items": [
+          {
+            "name": "Greg Weingartner",
+            "role": "CEO at Nexusgate",
+            "image": "/_templates/analytics-saas/img/t1.jpg",
+            "quote": "Depuis la mise en place de cette solution, nous avons constaté une amélioration spectaculaire de notre efficacité analytique. Les insights IA nous ont aidés à identifier des opportunités que nous aurions ignorées."
+          },
+          {
+            "name": "Jhon Lande",
+            "role": "Marketing Director at Spitfire",
+            "image": "/_templates/analytics-saas/img/t2.jpg",
+            "quote": "L’automatisation de la plateforme a fluidifié notre workflow et nettement amélioré la productivité de toute l’équipe."
+          },
+          {
+            "name": "Mara Velez",
+            "role": "Growth Lead at Gessler",
+            "image": "/_templates/analytics-saas/img/t3.jpg",
+            "quote": "Northpeak fournit des données exploitables qui ont transformé notre processus de décision, passant de l’intuition à des preuves tangibles."
+          },
+          {
+            "name": "Sofia Klein",
+            "role": "Ops Lead at Avocadoo",
+            "image": "/_templates/analytics-saas/img/t4.jpg",
+            "quote": "L’intégration a pris une après-midi. En une semaine, nous générions des rapports qui prenaient auparavant des jours à nos analystes."
+          }
+        ]
+      },
+      "pricing": {
+        "kicker": "TARIFS",
+        "title_a": "Découvrez",
+        "title_b": "Nos Offres",
+        "subtitle": "Des formules mensuelles ultra-flexibles et des abonnements annuels économiques.",
+        "toggle_monthly": "Mensuel",
+        "toggle_annual": "Annuel",
+        "plans": [
+          {
+            "name": "Essentiel",
+            "price": "$29",
+            "period": "/month",
+            "features": [
+              "Analytique de Base",
+              "Campagnes Limitées",
+              "Accès Communauté",
+              "Support Standard"
+            ],
+            "cta": "Acheter",
+            "featured": false
+          },
+          {
+            "name": "Avancé",
+            "price": "$79",
+            "period": "/month",
+            "features": [
+              "Toutes les fonctionnalités Essentiel",
+              "Campagnes Illimitées",
+              "Prédictions IA avancées",
+              "Support prioritaire",
+              "Outils de collaboration d’équipe"
+            ],
+            "cta": "Acheter",
+            "featured": true
+          },
+          {
+            "name": "Entreprise",
+            "price": "$199",
+            "period": "/month",
+            "features": [
+              "Toutes les fonctionnalités Avancé",
+              "Modèles IA sur mesure",
+              "Accès API",
+              "Intégrations avancées",
+              "Support prioritaire 24/7",
+              "Sessions de formation"
+            ],
+            "cta": "Contacter les Ventes",
+            "featured": false
+          }
+        ],
+        "proof_label": "APPROUVÉ PAR LES LEADERS DU MARCHÉ",
+        "logos": [
+          "Spitfire",
+          "avocadoo",
+          "nanowise",
+          "NEXUSGATE",
+          "GESSLER"
+        ],
+        "cta_text": "Hésitez sur le choix de votre formule ?",
+        "cta_btn": "Parlez à un Expert"
+      },
+      "faq": {
+        "kicker": "FAQ",
+        "title_a": "Questions fréquentes",
+        "title_b": "À propos de Northpeak",
+        "subtitle": "Des réponses simples pour tout clarifier.",
+        "items": [
+          {
+            "q": "La plateforme est-elle adaptée aux débutants ?",
+            "a": "Absolument. Northpeak propose une configuration guidée, des paramètres par défaut pertinents et des insights en langage clair, pour que vous puissiez en tirer profit dès le premier jour, sans équipe data."
+          },
+          {
+            "q": "Quelle est la précision des insights IA ?",
+            "a": "Nos modèles sont évalués en continu par rapport à vos résultats passés. Vous voyez toujours le niveau de confiance derrière chaque recommandation, pour garder le contrôle."
+          },
+          {
+            "q": "Puis-je intégrer mes outils existants ?",
+            "a": "Oui. Northpeak se connecte en quelques secondes aux plateformes que vous utilisez déjà, sans travail d'ingénierie pour les intégrations les plus courantes."
+          },
+          {
+            "q": "Quelles mesures de sécurité appliquez-vous ?",
+            "a": "Les données sont chiffrées en transit et au repos, avec des contrôles d'accès basés sur les rôles et un journal d'audit. Vos données ne sont jamais utilisées pour entraîner des modèles partagés."
+          },
+          {
+            "q": "À quelle fréquence les insights sont-ils mis à jour ?",
+            "a": "Les tableaux de bord se rafraîchissent en quasi temps réel à l'arrivée de nouvelles données, et les insights stratégiques sont recalculés tout au long de la journée."
+          },
+          {
+            "q": "Quel type de support proposez-vous ?",
+            "a": "Chaque formule inclut un support. Les formules Advanced et Enterprise ajoutent des canaux prioritaires et 24/7, ainsi qu'un spécialiste dédié pour l'onboarding."
+          }
+        ],
+        "cta_text": "Des questions restantes ?",
+        "cta_btn": "Obtenir de l'aide"
+      },
+      "finalcta": {
+        "title": "Prêt ? Parlons-en !",
+        "subtitle": "Bénéficiez d'insights d'experts et de réponses adaptées à vos besoins métiers et à votre transformation.",
+        "cta_primary": "Réserver un appel",
+        "cta_secondary": "2 créneaux disponibles",
+        "marquee": [
+          "Analyse prédictive",
+          "Croissance d'entreprise",
+          "Automatisation intelligente",
+          "Planification stratégique"
+        ]
+      },
+      "footer": {
+        "newsletter_title": "Restez informé",
+        "newsletter_text": "Soyez le premier à connaître les nouveautés",
+        "email_placeholder": "Votre email",
+        "col1": [
+          "Accueil",
+          "Fonctionnalités",
+          "Fonctionnement",
+          "Intégration",
+          "Performance",
+          "Tarifs",
+          "FAQ"
+        ],
+        "col2": [
+          "À propos",
+          "Témoignages clients",
+          "Réserver un appel",
+          "Blog",
+          "Contact"
+        ],
+        "copyright": "Copyright © Northpeak 2026"
+      },
+      "portfolioPage": {
+        "title": "Études de cas",
+        "intro": "Des équipes data, growth et finance qui transforment leurs chiffres en décisions. Découvrez comment elles pilotent leur croissance avec Northpeak.",
+        "kicker": "RÉSULTATS CLIENTS",
+        "metrics": [
+          {
+            "value": "+38%",
+            "label": "Revenu récurrent moyen"
+          },
+          {
+            "value": "3,2x",
+            "label": "Vitesse de reporting"
+          },
+          {
+            "value": "14 j",
+            "label": "Délai moyen de déploiement"
+          }
+        ],
+        "cases": [
+          {
+            "sector": "E-commerce",
+            "title": "Avocadoo unifie ses données et accélère ses décisions",
+            "summary": "En connectant ses canaux d'acquisition à Northpeak, l'équipe growth a réduit son temps de reporting de plusieurs jours à quelques minutes.",
+            "result": "+42% de marge sur les campagnes"
+          },
+          {
+            "sector": "SaaS B2B",
+            "title": "Nexusgate anticipe le churn grâce aux insights IA",
+            "summary": "Les modèles prédictifs ont mis en évidence les comptes à risque avant la résiliation, déclenchant des actions de rétention ciblées.",
+            "result": "-27% de résiliation trimestrielle"
+          },
+          {
+            "sector": "Fintech",
+            "title": "Spitfire industrialise son pilotage financier",
+            "summary": "Tableaux de bord temps réel et alertes automatiques ont remplacé les feuilles de calcul manuelles partagées entre les équipes.",
+            "result": "8 h économisées par semaine"
+          },
+          {
+            "sector": "Marketplace",
+            "title": "Gessler optimise l'allocation de son budget média",
+            "summary": "L'analyse conversationnelle a permis aux équipes non techniques d'interroger les données et de réallouer le budget en continu.",
+            "result": "+31% de ROAS global"
+          },
+          {
+            "sector": "Logiciel RH",
+            "title": "Nanowise structure sa croissance internationale",
+            "summary": "Une source unique de vérité a aligné les équipes commerciales et produit sur les mêmes indicateurs de performance.",
+            "result": "5 marchés pilotés depuis un seul tableau de bord"
+          },
+          {
+            "sector": "Média",
+            "title": "Apex transforme l'audience en revenu prévisible",
+            "summary": "Les rapports personnalisés exportables ont fluidifié la relation avec les annonceurs et accéléré les cycles de vente.",
+            "result": "2x de cycles de reporting"
+          }
+        ],
+        "images": [
+          "/_templates/analytics-saas/img/feature.jpg",
+          "/_templates/analytics-saas/img/culture.jpg",
+          "/_templates/analytics-saas/img/t1.jpg",
+          "/_templates/analytics-saas/img/t2.jpg",
+          "/_templates/analytics-saas/img/t3.jpg",
+          "/_templates/analytics-saas/img/t4.jpg",
+          "/_templates/analytics-saas/img/founder1.jpg",
+          "/_templates/analytics-saas/img/founder2.jpg",
+          "/_templates/analytics-saas/img/founder3.jpg"
+        ],
+        "cta_text": "Vous aussi, transformez vos données en croissance.",
+        "cta_btn": "Demander une démo"
+      },
+      "contactPage": {
+        "title": "Contact",
+        "intro": "Parlons de vos enjeux data et croissance. Réservez une démo personnalisée et voyez Northpeak à l'œuvre sur vos propres indicateurs.",
+        "kicker": "PARLONS-EN",
+        "email": "hello@northpeak.io",
+        "email_label": "Écrivez-nous",
+        "response_promise": "Réponse garantie sous 24 h ouvrées",
+        "cta_btn": "Demander une démo",
+        "phone_label": "Téléphone",
+        "phone": "+33 1 84 80 00 00",
+        "hours_label": "Disponibilité",
+        "hours": "Du lundi au vendredi, 9 h – 18 h (CET)",
+        "address_label": "Bureaux",
+        "address": "12 rue de la Croissance, 75002 Paris",
+        "reassurances": [
+          {
+            "title": "Démo personnalisée",
+            "text": "Une session de 30 minutes calée sur vos données et vos objectifs, sans engagement."
+          },
+          {
+            "title": "Accompagnement expert",
+            "text": "Un spécialiste analytics vous guide de la connexion des sources aux premiers insights."
+          },
+          {
+            "title": "Données sécurisées",
+            "text": "Chiffrement en transit et au repos, contrôles d'accès et confidentialité garantie."
+          }
+        ]
+      }
+    };
+  </script>
+
+  <!-- ═══════════ NAVBAR (floating pill) ═══════════ -->
+  <header class="fixed top-4 inset-x-0 z-50 flex justify-center px-4">
+    <nav class="w-full max-w-3xl bg-white/70 backdrop-blur-xl border border-white/60 rounded-full shadow-[0_10px_40px_-12px_rgba(84,92,158,.35)] px-3 py-2 flex items-center justify-between">
+      <a href="#" data-sg-page="/" class="flex items-center gap-2 pl-3">
+        <span class="grid place-items-center w-7 h-7 rounded-lg bg-gradient-to-br from-iris to-violet text-white text-xs font-bold">N</span>
+        <span class="font-bold text-lg tracking-tight text-ink" data-sg-path="brand">Northpeak</span>
+      </a>
+      <ul class="hidden md:flex items-center gap-6 text-sm text-muted font-medium">
+        <li><a href="#" data-sg-page="/" class="hover:text-ink transition">Accueil</a></li>
+        <li><a href="#" data-sg-page="portfolio" class="hover:text-ink transition">Études de cas</a></li>
+        <li><a href="#" data-sg-page="contact" class="hover:text-ink transition">Contact</a></li>
+      </ul>
+      <a href="#" data-sg-page="contact" class="pill-btn inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-iris to-violet text-white text-sm font-semibold px-4 py-2">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
+        <span data-sg-path="nav.cta">Demander une démo</span>
+      </a>
+    </nav>
+  </header>
+
+  <main id="top">
+
+  <!-- ═══════════ HERO / INTRO ═══════════ -->
+  <section class="relative overflow-hidden pt-36 pb-16 grad-soft">
+    <div class="aurora w-[420px] h-[420px] -top-20 left-[8%]" style="background:#b7c0e8;"></div>
+    <div class="aurora w-[380px] h-[380px] top-10 right-[6%]" style="background:#a5a4fa;"></div>
+    <div class="aurora w-[300px] h-[300px] top-40 left-[40%]" style="background:#80e5ff;"></div>
+    <div class="relative max-w-4xl mx-auto px-6 text-center">
+      <span class="inline-flex items-center gap-2 rounded-full bg-white/70 border border-white/70 px-4 py-1.5 text-xs font-semibold tracking-wide text-muted mb-7" data-sg-reveal>
+        <span class="w-2 h-2 rounded-full bg-iris"></span>
+        <span data-sg-path="portfolioPage.kicker">RÉSULTATS CLIENTS</span>
+      </span>
+      <h1 class="font-sans font-semibold text-d3 md:text-d2 tracking-tight grad-title" data-sg-path="portfolioPage.title" data-sg-reveal>Études de cas</h1>
+      <p class="mx-auto max-w-xl text-muted text-lg mt-6" data-sg-path="portfolioPage.intro" data-sg-reveal>Intro</p>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-12 max-w-3xl mx-auto">
+          <div class="rounded-2xl bg-surface border border-line p-7 stat-shine text-center" data-sg-reveal>
+            <p class="text-4xl font-extrabold grad-title" data-sg-path="portfolioPage.metrics[0].value">+0%</p>
+            <p class="text-sm text-muted mt-2" data-sg-path="portfolioPage.metrics[0].label">Indicateur</p>
+          </div>
+          <div class="rounded-2xl bg-surface border border-line p-7 stat-shine text-center" data-sg-reveal>
+            <p class="text-4xl font-extrabold grad-title" data-sg-path="portfolioPage.metrics[1].value">+0%</p>
+            <p class="text-sm text-muted mt-2" data-sg-path="portfolioPage.metrics[1].label">Indicateur</p>
+          </div>
+          <div class="rounded-2xl bg-surface border border-line p-7 stat-shine text-center" data-sg-reveal>
+            <p class="text-4xl font-extrabold grad-title" data-sg-path="portfolioPage.metrics[2].value">+0%</p>
+            <p class="text-sm text-muted mt-2" data-sg-path="portfolioPage.metrics[2].label">Indicateur</p>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CASE STUDIES ═══════════ -->
+  <section class="py-20 md:py-24">
+    <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <article class="rounded-2xl bg-surface border border-line p-7 card-dot flex flex-col" data-sg-reveal>
+          <span class="inline-block self-start rounded-full bg-iris/10 text-violet text-xs font-semibold px-3 py-1.5 mb-5" data-sg-path="portfolioPage.cases[0].sector">Secteur</span>
+          <h3 class="text-xl font-bold leading-snug" data-sg-path="portfolioPage.cases[0].title">Titre de l'étude</h3>
+          <p class="text-sm text-muted mt-3 flex-1" data-sg-path="portfolioPage.cases[0].summary">Résumé</p>
+          <div class="flex items-center gap-2 mt-6 pt-5 border-t border-line">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7584d6" stroke-width="2"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+            <span class="text-sm font-bold text-violet" data-sg-path="portfolioPage.cases[0].result">Résultat</span>
+          </div>
+        </article>
+        <article class="rounded-2xl bg-surface border border-line p-7 card-dot flex flex-col" data-sg-reveal>
+          <span class="inline-block self-start rounded-full bg-iris/10 text-violet text-xs font-semibold px-3 py-1.5 mb-5" data-sg-path="portfolioPage.cases[1].sector">Secteur</span>
+          <h3 class="text-xl font-bold leading-snug" data-sg-path="portfolioPage.cases[1].title">Titre de l'étude</h3>
+          <p class="text-sm text-muted mt-3 flex-1" data-sg-path="portfolioPage.cases[1].summary">Résumé</p>
+          <div class="flex items-center gap-2 mt-6 pt-5 border-t border-line">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7584d6" stroke-width="2"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+            <span class="text-sm font-bold text-violet" data-sg-path="portfolioPage.cases[1].result">Résultat</span>
+          </div>
+        </article>
+        <article class="rounded-2xl bg-surface border border-line p-7 card-dot flex flex-col" data-sg-reveal>
+          <span class="inline-block self-start rounded-full bg-iris/10 text-violet text-xs font-semibold px-3 py-1.5 mb-5" data-sg-path="portfolioPage.cases[2].sector">Secteur</span>
+          <h3 class="text-xl font-bold leading-snug" data-sg-path="portfolioPage.cases[2].title">Titre de l'étude</h3>
+          <p class="text-sm text-muted mt-3 flex-1" data-sg-path="portfolioPage.cases[2].summary">Résumé</p>
+          <div class="flex items-center gap-2 mt-6 pt-5 border-t border-line">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7584d6" stroke-width="2"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+            <span class="text-sm font-bold text-violet" data-sg-path="portfolioPage.cases[2].result">Résultat</span>
+          </div>
+        </article>
+        <article class="rounded-2xl bg-surface border border-line p-7 card-dot flex flex-col" data-sg-reveal>
+          <span class="inline-block self-start rounded-full bg-iris/10 text-violet text-xs font-semibold px-3 py-1.5 mb-5" data-sg-path="portfolioPage.cases[3].sector">Secteur</span>
+          <h3 class="text-xl font-bold leading-snug" data-sg-path="portfolioPage.cases[3].title">Titre de l'étude</h3>
+          <p class="text-sm text-muted mt-3 flex-1" data-sg-path="portfolioPage.cases[3].summary">Résumé</p>
+          <div class="flex items-center gap-2 mt-6 pt-5 border-t border-line">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7584d6" stroke-width="2"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+            <span class="text-sm font-bold text-violet" data-sg-path="portfolioPage.cases[3].result">Résultat</span>
+          </div>
+        </article>
+        <article class="rounded-2xl bg-surface border border-line p-7 card-dot flex flex-col" data-sg-reveal>
+          <span class="inline-block self-start rounded-full bg-iris/10 text-violet text-xs font-semibold px-3 py-1.5 mb-5" data-sg-path="portfolioPage.cases[4].sector">Secteur</span>
+          <h3 class="text-xl font-bold leading-snug" data-sg-path="portfolioPage.cases[4].title">Titre de l'étude</h3>
+          <p class="text-sm text-muted mt-3 flex-1" data-sg-path="portfolioPage.cases[4].summary">Résumé</p>
+          <div class="flex items-center gap-2 mt-6 pt-5 border-t border-line">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7584d6" stroke-width="2"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+            <span class="text-sm font-bold text-violet" data-sg-path="portfolioPage.cases[4].result">Résultat</span>
+          </div>
+        </article>
+        <article class="rounded-2xl bg-surface border border-line p-7 card-dot flex flex-col" data-sg-reveal>
+          <span class="inline-block self-start rounded-full bg-iris/10 text-violet text-xs font-semibold px-3 py-1.5 mb-5" data-sg-path="portfolioPage.cases[5].sector">Secteur</span>
+          <h3 class="text-xl font-bold leading-snug" data-sg-path="portfolioPage.cases[5].title">Titre de l'étude</h3>
+          <p class="text-sm text-muted mt-3 flex-1" data-sg-path="portfolioPage.cases[5].summary">Résumé</p>
+          <div class="flex items-center gap-2 mt-6 pt-5 border-t border-line">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7584d6" stroke-width="2"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+            <span class="text-sm font-bold text-violet" data-sg-path="portfolioPage.cases[5].result">Résultat</span>
+          </div>
+        </article>
+    </div>
+  </section>
+
+  <!-- ═══════════ GALLERY ═══════════ -->
+  <section class="py-12 md:py-16 grad-soft">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-5">
+        <figure class="gallery-cell relative rounded-2xl overflow-hidden border border-line bg-surface" data-sg-reveal>
+          <img data-sg-img="portfolioPage.images[0]" src="img/feature.jpg" alt="" class="w-full h-64 object-cover" loading="lazy" />
+        </figure>
+        <figure class="gallery-cell relative rounded-2xl overflow-hidden border border-line bg-surface" data-sg-reveal>
+          <img data-sg-img="portfolioPage.images[1]" src="img/culture.jpg" alt="" class="w-full h-64 object-cover" loading="lazy" />
+        </figure>
+        <figure class="gallery-cell relative rounded-2xl overflow-hidden border border-line bg-surface" data-sg-reveal>
+          <img data-sg-img="portfolioPage.images[2]" src="img/t1.jpg" alt="" class="w-full h-64 object-cover" loading="lazy" />
+        </figure>
+        <figure class="gallery-cell relative rounded-2xl overflow-hidden border border-line bg-surface" data-sg-reveal>
+          <img data-sg-img="portfolioPage.images[3]" src="img/t2.jpg" alt="" class="w-full h-64 object-cover" loading="lazy" />
+        </figure>
+        <figure class="gallery-cell relative rounded-2xl overflow-hidden border border-line bg-surface" data-sg-reveal>
+          <img data-sg-img="portfolioPage.images[4]" src="img/t3.jpg" alt="" class="w-full h-64 object-cover" loading="lazy" />
+        </figure>
+        <figure class="gallery-cell relative rounded-2xl overflow-hidden border border-line bg-surface" data-sg-reveal>
+          <img data-sg-img="portfolioPage.images[5]" src="img/t4.jpg" alt="" class="w-full h-64 object-cover" loading="lazy" />
+        </figure>
+        <figure class="gallery-cell relative rounded-2xl overflow-hidden border border-line bg-surface" data-sg-reveal>
+          <img data-sg-img="portfolioPage.images[6]" src="img/founder1.jpg" alt="" class="w-full h-64 object-cover" loading="lazy" />
+        </figure>
+        <figure class="gallery-cell relative rounded-2xl overflow-hidden border border-line bg-surface" data-sg-reveal>
+          <img data-sg-img="portfolioPage.images[7]" src="img/founder2.jpg" alt="" class="w-full h-64 object-cover" loading="lazy" />
+        </figure>
+        <figure class="gallery-cell relative rounded-2xl overflow-hidden border border-line bg-surface" data-sg-reveal>
+          <img data-sg-img="portfolioPage.images[8]" src="img/founder3.jpg" alt="" class="w-full h-64 object-cover" loading="lazy" />
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CTA ═══════════ -->
+  <section class="relative overflow-hidden bg-ribbon text-white py-20">
+    <div class="aurora w-[360px] h-[360px] -bottom-20 left-[5%]" style="background:#a5a4fa;opacity:.5"></div>
+    <div class="aurora w-[300px] h-[300px] top-0 right-[8%]" style="background:#80e5ff;opacity:.4"></div>
+    <div class="relative max-w-3xl mx-auto px-6 text-center" data-sg-reveal>
+      <h2 class="text-d3 md:text-d2 font-semibold tracking-tight" data-sg-path="portfolioPage.cta_text">Transformez vos données en croissance.</h2>
+      <div class="flex flex-wrap items-center justify-center gap-3 mt-8">
+        <a href="#" data-sg-page="contact" class="rounded-full bg-white text-ink font-semibold px-7 py-3.5 hover:bg-white/90 transition" data-sg-path="portfolioPage.cta_btn">Demander une démo</a>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="bg-ribbon text-white pt-20 pb-10 relative overflow-hidden">
+    <div class="aurora w-[300px] h-[300px] -bottom-20 left-0" style="background:#a5a4fa;opacity:.45"></div>
+    <div class="relative max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div>
+          <a href="#" data-sg-page="/" class="flex items-center gap-2">
+            <span class="grid place-items-center w-7 h-7 rounded-lg bg-white/20 text-white text-xs font-bold">N</span>
+            <span class="font-bold text-lg" data-sg-path="brand">Northpeak</span>
+          </a>
+          <h3 class="text-2xl font-bold mt-6" data-sg-path="footer.newsletter_title">Restez informé</h3>
+          <p class="text-white/80 mt-1" data-sg-path="footer.newsletter_text">Soyez le premier à connaître les nouveautés</p>
+          <form class="flex items-center gap-2 border-b border-white/40 mt-6 max-w-xs pb-2" onsubmit="return false">
+            <input type="email" class="bg-transparent flex-1 placeholder-white/60 text-white outline-none text-sm" data-sg-attr-placeholder="footer.email_placeholder" placeholder="Votre email" />
+            <button class="text-white" aria-label="S'abonner">→</button>
+          </form>
+          <div class="flex items-center gap-4 mt-8 text-white/80">
+            <a href="#" aria-label="X" class="hover:text-white"><svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><path d="M14.5 1h2.5l-5.5 6.3L18 17h-5.1l-3.9-5.1L4.5 17H2l5.8-6.6L1.5 1H6.7l3.5 4.6L14.5 1z"/></svg></a>
+            <a href="#" aria-label="LinkedIn" class="hover:text-white"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5.01A2.5 2.5 0 014.98 3.5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4 0 4.7 2.4 4.7 5.5V21h-4v-5.3c0-1.3 0-2.9-1.8-2.9s-2.05 1.4-2.05 2.8V21H10z"/></svg></a>
+            <a href="#" aria-label="Instagram" class="hover:text-white"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="14" height="14" rx="4"/><circle cx="9" cy="9" r="3.5"/><circle cx="13.5" cy="4.5" r=".6" fill="currentColor"/></svg></a>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-8 lg:col-span-2 lg:justify-items-end">
+          <ul class="space-y-3 text-white/85">
+            <li><a href="#" data-sg-page="/" class="hover:text-white" data-sg-path="footer.col1[0]">Accueil</a></li>
+            <li><a href="#" data-sg-page="portfolio" class="hover:text-white">Études de cas</a></li>
+            <li><a href="#" data-sg-page="contact" class="hover:text-white">Contact</a></li>
+          </ul>
+          <ul class="space-y-3 text-white/85">
+            <li><a href="#" data-sg-page="contact" class="hover:text-white" data-sg-path="footer.col2[2]">Réserver un appel</a></li>
+            <li><a href="#" data-sg-page="contact" class="hover:text-white" data-sg-path="footer.col2[4]">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/20 mt-12 pt-6">
+        <p class="text-sm text-white/75" data-sg-path="footer.copyright">Copyright © Northpeak 2026</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════ STANDARD HYDRATION + GSAP BLOCK ═══════════ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      document.querySelectorAll('[data-sg-attr-placeholder]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-attr-placeholder'));
+        if (v != null) el.setAttribute('placeholder', v);
+      });
+      document.querySelectorAll('[data-sg-attr-href]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-attr-href'));
+        if (v != null) el.setAttribute('href', el.getAttribute('data-sg-href-prefix') ? el.getAttribute('data-sg-href-prefix') + v : v);
+      });
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, {
+            opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+          });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, {
+            yPercent: -15, ease: 'none',
+            scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+          });
+        });
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+</body>
+</html>

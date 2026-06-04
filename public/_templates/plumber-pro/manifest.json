@@ -5,6 +5,18 @@
   "pageTypes": [
     "home"
   ],
+  "pages": [
+    {
+      "slug": "/portfolio",
+      "file": "portfolio.html",
+      "title": "Nos réalisations"
+    },
+    {
+      "slug": "/contact",
+      "file": "contact.html",
+      "title": "Contact & devis"
+    }
+  ],
   "sections": {
     "home": [
       "meta",
@@ -59,6 +71,13 @@
       "role": "image",
       "required": true,
       "note": "blog · featured · image"
+    },
+    {
+      "slot": "pf1",
+      "path": "portfolioPage.images[]",
+      "role": "gallery",
+      "required": false,
+      "note": "portfolioPage · images"
     }
   ],
   "fields": {
@@ -494,6 +513,78 @@
         "label": "footer · copyright",
         "type": "text",
         "maxLen": 59
+      },
+      {
+        "path": "portfolioPage.title",
+        "label": "portfolioPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.intro",
+        "label": "portfolioPage · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "portfolioPage.captions[]",
+        "label": "portfolioPage · captions",
+        "type": "text",
+        "maxLen": 60
+      },
+      {
+        "path": "contactPage.title",
+        "label": "contactPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.intro",
+        "label": "contactPage · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.email",
+        "label": "contactPage · email",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.phone",
+        "label": "contactPage · phone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.areasTitle",
+        "label": "contactPage · areasTitle",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.areas",
+        "label": "contactPage · areas",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.responseTitle",
+        "label": "contactPage · responseTitle",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.response",
+        "label": "contactPage · response",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.cta",
+        "label": "contactPage · cta",
+        "type": "text",
+        "maxLen": 40
       }
     ]
   }

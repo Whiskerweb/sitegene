@@ -112,5 +112,58 @@
   "footer": {
     "copyright": "© 2026 Alex Stride",
     "credit": "DJ résident · House · EDM · Techno · Electro"
+  },
+  "navGallery": "Galerie",
+  "navBooking": "Booking & contact",
+  "portfolioPage": {
+    "title": "Galerie",
+    "intro": "Lumières, fumée et bras levés. L’univers visuel d’Alex Stride : photos live, captures presse et visuels de releases, set après set.",
+    "images": [
+      "/_templates/dj-electro/img/hero.jpg",
+      "/_templates/dj-electro/img/event1.jpg",
+      "/_templates/dj-electro/img/event2.jpg",
+      "/_templates/dj-electro/img/event3.jpg",
+      "/_templates/dj-electro/img/about.jpg",
+      "/_templates/dj-electro/img/testimonial.jpg",
+      "/_templates/dj-electro/img/hero.jpg",
+      "/_templates/dj-electro/img/event2.jpg",
+      "/_templates/dj-electro/img/event1.jpg",
+      "/_templates/dj-electro/img/about.jpg",
+      "/_templates/dj-electro/img/event3.jpg",
+      "/_templates/dj-electro/img/testimonial.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Booking & contact",
+    "intro": "Une date à caler, un festival, une soirée privée ? Écrivez-moi : chaque set est calibré pour votre salle et votre public.",
+    "bookingLabel": "Demande de booking",
+    "email": "hello@alexstride.com",
+    "phone": "+1 234 567 890",
+    "phoneLabel": "Téléphone",
+    "agencyLabel": "Management & presse",
+    "agency": "booking@alexstride.com",
+    "availabilityLabel": "Disponibilités & tournée",
+    "availability": "Calendrier ouvert pour la saison 2026-2027. Résidences le week-end, festivals en été, dates privées sur demande. Délai de réponse sous 48 h.",
+    "tour": [
+      {
+        "date": "30 Nov 2026",
+        "city": "Berlin, Allemagne",
+        "venue": "Techno Beats — entrepôt"
+      },
+      {
+        "date": "28 Dec 2026",
+        "city": "Amsterdam, Pays-Bas",
+        "venue": "Electro Fest — grande salle"
+      },
+      {
+        "date": "14 Feb 2027",
+        "city": "Paris, France",
+        "venue": "Dance Night — résidence"
+      }
+    ],
+    "techRiderLabel": "Fiche technique",
+    "techRider": "Régie DJ : 2 platines Pioneer CDJ-3000 + table DJM-900NXS2 (ou A9), monitoring de cabine actif type Pioneer XPRS. Façade : système line-array calibré pour la jauge, sub dédié, pression sonore stable sur l’ensemble du dancefloor. Lumière : pont avant + arrière, machine à fumée/haze, contrôle DMX synchronisable au set. Scène : table stable de 2 m minimum, alimentation dédiée et terre propre, accès technique 2 h avant l’ouverture pour balance. Backline et fiche détaillée envoyés sur confirmation de la date.",
+    "reassure": "Devis clair sous 48 h · Contrat et fiche technique fournis · Annulation encadrée",
+    "ctaEmail": "Écrire pour réserver"
   }
 }

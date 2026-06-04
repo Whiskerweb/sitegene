@@ -364,5 +364,104 @@
       "Contact"
     ],
     "copyright": "Copyright © Northpeak 2026"
+  },
+  "portfolioPage": {
+    "title": "Études de cas",
+    "intro": "Des équipes data, growth et finance qui transforment leurs chiffres en décisions. Découvrez comment elles pilotent leur croissance avec Northpeak.",
+    "kicker": "RÉSULTATS CLIENTS",
+    "metrics": [
+      {
+        "value": "+38%",
+        "label": "Revenu récurrent moyen"
+      },
+      {
+        "value": "3,2x",
+        "label": "Vitesse de reporting"
+      },
+      {
+        "value": "14 j",
+        "label": "Délai moyen de déploiement"
+      }
+    ],
+    "cases": [
+      {
+        "sector": "E-commerce",
+        "title": "Avocadoo unifie ses données et accélère ses décisions",
+        "summary": "En connectant ses canaux d'acquisition à Northpeak, l'équipe growth a réduit son temps de reporting de plusieurs jours à quelques minutes.",
+        "result": "+42% de marge sur les campagnes"
+      },
+      {
+        "sector": "SaaS B2B",
+        "title": "Nexusgate anticipe le churn grâce aux insights IA",
+        "summary": "Les modèles prédictifs ont mis en évidence les comptes à risque avant la résiliation, déclenchant des actions de rétention ciblées.",
+        "result": "-27% de résiliation trimestrielle"
+      },
+      {
+        "sector": "Fintech",
+        "title": "Spitfire industrialise son pilotage financier",
+        "summary": "Tableaux de bord temps réel et alertes automatiques ont remplacé les feuilles de calcul manuelles partagées entre les équipes.",
+        "result": "8 h économisées par semaine"
+      },
+      {
+        "sector": "Marketplace",
+        "title": "Gessler optimise l'allocation de son budget média",
+        "summary": "L'analyse conversationnelle a permis aux équipes non techniques d'interroger les données et de réallouer le budget en continu.",
+        "result": "+31% de ROAS global"
+      },
+      {
+        "sector": "Logiciel RH",
+        "title": "Nanowise structure sa croissance internationale",
+        "summary": "Une source unique de vérité a aligné les équipes commerciales et produit sur les mêmes indicateurs de performance.",
+        "result": "5 marchés pilotés depuis un seul tableau de bord"
+      },
+      {
+        "sector": "Média",
+        "title": "Apex transforme l'audience en revenu prévisible",
+        "summary": "Les rapports personnalisés exportables ont fluidifié la relation avec les annonceurs et accéléré les cycles de vente.",
+        "result": "2x de cycles de reporting"
+      }
+    ],
+    "images": [
+      "/_templates/analytics-saas/img/feature.jpg",
+      "/_templates/analytics-saas/img/culture.jpg",
+      "/_templates/analytics-saas/img/t1.jpg",
+      "/_templates/analytics-saas/img/t2.jpg",
+      "/_templates/analytics-saas/img/t3.jpg",
+      "/_templates/analytics-saas/img/t4.jpg",
+      "/_templates/analytics-saas/img/founder1.jpg",
+      "/_templates/analytics-saas/img/founder2.jpg",
+      "/_templates/analytics-saas/img/founder3.jpg"
+    ],
+    "cta_text": "Vous aussi, transformez vos données en croissance.",
+    "cta_btn": "Demander une démo"
+  },
+  "contactPage": {
+    "title": "Contact",
+    "intro": "Parlons de vos enjeux data et croissance. Réservez une démo personnalisée et voyez Northpeak à l'œuvre sur vos propres indicateurs.",
+    "kicker": "PARLONS-EN",
+    "email": "hello@northpeak.io",
+    "email_label": "Écrivez-nous",
+    "response_promise": "Réponse garantie sous 24 h ouvrées",
+    "cta_btn": "Demander une démo",
+    "phone_label": "Téléphone",
+    "phone": "+33 1 84 80 00 00",
+    "hours_label": "Disponibilité",
+    "hours": "Du lundi au vendredi, 9 h – 18 h (CET)",
+    "address_label": "Bureaux",
+    "address": "12 rue de la Croissance, 75002 Paris",
+    "reassurances": [
+      {
+        "title": "Démo personnalisée",
+        "text": "Une session de 30 minutes calée sur vos données et vos objectifs, sans engagement."
+      },
+      {
+        "title": "Accompagnement expert",
+        "text": "Un spécialiste analytics vous guide de la connexion des sources aux premiers insights."
+      },
+      {
+        "title": "Données sécurisées",
+        "text": "Chiffrement en transit et au repos, contrôles d'accès et confidentialité garantie."
+      }
+    ]
   }
 }

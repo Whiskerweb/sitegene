@@ -13,6 +13,11 @@
     ],
     "cta": "Appeler : 01 86 95 99 43"
   },
+  "navPages": {
+    "home": "Accueil",
+    "portfolio": "Nos réalisations",
+    "contact": "Contact & devis"
+  },
   "hero": {
     "title": "Tous vos travaux de plomberie, partout chez vous.",
     "tagline": "Qu'il s'agisse d'un robinet qui fuit ou d'une urgence majeure, nos professionnels expérimentés ne sont qu'à un appel de chez vous.",
@@ -189,5 +194,58 @@
       }
     ],
     "copyright": "Copyright © 2026 RAPIDPLOMB"
+  },
+  "portfolioPage": {
+    "title": "Nos réalisations",
+    "intro": "La meilleure preuve de notre savoir-faire, c'est le travail accompli. Fuites maîtrisées, chauffe-eau remplacés, salles d'eau rénovées : découvrez quelques-uns de nos chantiers récents, partout en ville.",
+    "kicker": "Chantiers & interventions",
+    "images": [
+      "/_templates/plumber-emergency/img/service-installation.jpg",
+      "/_templates/plumber-emergency/img/service-waterheater.jpg",
+      "/_templates/plumber-emergency/img/service-replacement.jpg",
+      "/_templates/plumber-emergency/img/service-backflow.jpg",
+      "/_templates/plumber-emergency/img/trust.jpg",
+      "/_templates/plumber-emergency/img/instant.jpg",
+      "/_templates/plumber-emergency/img/booking.jpg",
+      "/_templates/plumber-emergency/img/hero.jpg",
+      "/_templates/plumber-emergency/img/service-installation.jpg",
+      "/_templates/plumber-emergency/img/service-waterheater.jpg"
+    ],
+    "captions": [
+      "Installation complète de salle de bains",
+      "Remplacement de chauffe-eau",
+      "Réfection d'un réseau d'évacuation",
+      "Pose d'un clapet anti-retour",
+      "Rénovation d'un point d'eau cuisine",
+      "Intervention d'urgence sur fuite",
+      "Dépannage sous évier",
+      "Mise en eau après intervention",
+      "Raccordement neuf aux normes",
+      "Détartrage et entretien de ballon"
+    ],
+    "ctaTitle": "Un chantier en tête ? Parlons-en.",
+    "ctaText": "Décrivez-nous votre projet ou votre urgence : nous vous rappelons et vous établissons un devis clair, sans surprise.",
+    "cta": "Demander un devis"
+  },
+  "contactPage": {
+    "title": "Contact & devis",
+    "intro": "Une fuite, une panne, un projet de rénovation ? Appelez-nous ou écrivez-nous : nous vous répondons vite et vous établissons un devis gratuit et détaillé.",
+    "phone": "01 86 95 99 43",
+    "phoneLabel": "Appelez-nous, 24h/24 et 7j/7",
+    "email": "contact@rapidplomb.fr",
+    "emailLabel": "Écrivez-nous votre demande",
+    "zonesTitle": "Zones d'intervention",
+    "zones": [
+      "Paris & proche banlieue",
+      "Lyon et agglomération",
+      "Bordeaux centre & métropole",
+      "Saint-Étienne et alentours"
+    ],
+    "responseTitle": "Notre promesse de réactivité",
+    "responseText": "Pour toute urgence, un plombier vous rappelle en moins de 30 minutes. Pour un devis, vous recevez notre réponse sous 24 heures ouvrées.",
+    "cta": "Demander un devis",
+    "availability": "Disponible 24/7, appelez à tout moment",
+    "hoursTitle": "Horaires",
+    "hours": "Urgences : 24h/24, 7j/7 — Bureau : lun.–sam. 8h–20h"
   }
 }

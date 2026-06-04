@@ -5,6 +5,10 @@
   "pageTypes": [
     "home"
   ],
+  "pages": [
+    { "slug": "/portfolio", "file": "portfolio.html", "title": "Galerie" },
+    { "slug": "/contact", "file": "contact.html", "title": "Booking & contact" }
+  ],
   "sections": {
     "home": [
       "brand",
@@ -63,6 +67,12 @@
       "role": "image",
       "required": true,
       "note": "footer · image"
+    },
+    {
+      "slot": "pf1",
+      "path": "portfolioPage.images[]",
+      "role": "gallery",
+      "required": false
     }
   ],
   "fields": {
@@ -210,6 +220,78 @@
         "label": "footer · credit",
         "type": "text",
         "maxLen": 42
+      },
+      {
+        "path": "portfolioPage.title",
+        "label": "galerie · titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.intro",
+        "label": "galerie · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.title",
+        "label": "booking · titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.intro",
+        "label": "booking · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.email",
+        "label": "booking · email",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.phone",
+        "label": "booking · téléphone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.bookingLabel",
+        "label": "booking · libellé réservations",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.availabilityLabel",
+        "label": "booking · libellé disponibilités",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.availability",
+        "label": "booking · disponibilités",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.techLabel",
+        "label": "booking · libellé fiche technique",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.techRider",
+        "label": "booking · fiche technique",
+        "type": "textarea",
+        "maxLen": 600
+      },
+      {
+        "path": "contactPage.reassurance",
+        "label": "booking · réassurance",
+        "type": "text",
+        "maxLen": 120
       }
     ]
   }

@@ -208,7 +208,7 @@
 
   <!-- ============ NAV (bandeau marquee BOOKING · MENU) ============ -->
   <header class="fixed top-0 inset-x-0 z-50 border-b border-line bg-ink/70 backdrop-blur-sm overflow-hidden">
-    <div class="h-9 flex items-center">
+    <div class="h-9 flex items-center border-b border-line/60">
       <div class="marquee-track font-mono text-[11px] tracking-label uppercase text-muted">
         <span class="flex items-center">
           <span class="px-4" data-sg-path="ticker[0]">Booking</span><span class="text-accent">·</span>
@@ -228,6 +228,11 @@
         </span>
       </div>
     </div>
+    <nav class="h-11 flex items-center justify-center gap-6 sm:gap-10 font-mono text-[11px] tracking-label uppercase">
+      <a href="#" data-sg-page="/" class="text-paper hover:text-accent transition-colors">Accueil</a>
+      <a href="#" data-sg-page="portfolio" class="text-muted hover:text-accent transition-colors">Galerie</a>
+      <a href="#" data-sg-page="contact" class="text-muted hover:text-accent transition-colors">Booking &amp; contact</a>
+    </nav>
   </header>
 
   <!-- ============ HERO ============ -->

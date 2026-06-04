@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NYXIS — Galerie</title>
+  <meta name="description" content="NYXIS — galerie : photos live, presse et visuels de releases du collectif électronique." />
+
+  <!-- Polices exactes extraites des tokens : MuseoModerno (display futuriste), Inter (corps) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=MuseoModerno:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    // Config Tailwind : palette + typo issues de la capture (tokens.json)
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#000000',     // texte / monogrammes
+            paper: '#f0f0f0',   // fond clair dominant
+            panel: '#212121',   // panneaux sombres
+            accent: '#0000ee',  // bleu électrique
+            white: '#ffffff',
+            muted: '#858585',   // gris secondaire
+          },
+          fontFamily: {
+            display: ['"MuseoModerno"', 'sans-serif'],
+            sans: ['"Inter"', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body { background: #f0f0f0; color: #000; }
+    .vtext { writing-mode: vertical-rl; text-orientation: mixed; }
+    .gcell img { transition: transform 1.2s ease-out, filter .6s ease; }
+    .gcell:hover img { transform: scale(1.05); }
+  </style>
+
+  <!-- Source unique de vérité (le serveur Akyra injecte le vrai contenu ; fallback de preview) -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+  "brand": "NYXIS",
+  "mono": "N",
+  "nav": [
+    "accueil",
+    "galerie",
+    "booking"
+  ],
+  "socials": [
+    "facebook",
+    "twitter",
+    "youtube"
+  ],
+  "hero": {
+    "title": "NYXIS",
+    "img1": "/_templates/electronic-collective/img/hero1.jpg",
+    "img2": "/_templates/electronic-collective/img/hero2.jpg",
+    "img3": "/_templates/electronic-collective/img/hero3.jpg"
+  },
+  "bio": {
+    "heading": "NYXIS",
+    "text": "NYXIS est le fruit d’un collectif de musique électronique né dans l’underground néon. Ce groupe avant-gardiste repousse les limites du son électronique avec des sets taillés pour les festivals et des paysages sonores audacieux. Alliant influences musicales variées et passion pour la technologie, les performances immersives de NYXIS transportent le public dans un univers où musique et machine s’unissent en une harmonie visionnaire.",
+    "img1": "/_templates/electronic-collective/img/bio1.jpg",
+    "img2": "/_templates/electronic-collective/img/bio2.jpg"
+  },
+  "tour": {
+    "label": "Tournée",
+    "label2": "d'été",
+    "dates": [
+      {
+        "venue": "The Redwood Room",
+        "city": "Berlin, DE",
+        "date": "12 juil. 2026"
+      },
+      {
+        "venue": "The Blue Moon Theatre",
+        "city": "Amsterdam, NL",
+        "date": "19 juil. 2026"
+      },
+      {
+        "venue": "The Electric Garden",
+        "city": "Barcelone, ES",
+        "date": "2 août 2026"
+      },
+      {
+        "venue": "The Silver Cathedral",
+        "city": "Londres, UK",
+        "date": "16 août 2026"
+      },
+      {
+        "venue": "The Emerald Palace",
+        "city": "Paris, FR",
+        "date": "30 août 2026"
+      }
+    ],
+    "img": "/_templates/electronic-collective/img/tour.jpg"
+  },
+  "release": {
+    "label": "Nouveau",
+    "label2": "Single",
+    "title": "Binary Beats",
+    "year": "2025",
+    "cover": "/_templates/electronic-collective/img/album-new.jpg",
+    "listenLabel": "Écouter sur",
+    "platforms": [
+      "Spotify",
+      "Youtube",
+      "Apple Music"
+    ]
+  },
+  "previous": {
+    "label": "Anciens",
+    "label2": "Titres",
+    "items": [
+      {
+        "title": "Electric Odyssey",
+        "year": "2022",
+        "cover": "/_templates/electronic-collective/img/album1.jpg"
+      },
+      {
+        "title": "Circuit Groove",
+        "year": "2022",
+        "cover": "/_templates/electronic-collective/img/album2.jpg"
+      },
+      {
+        "title": "Synthwave Serenade",
+        "year": "2020",
+        "cover": "/_templates/electronic-collective/img/album3.jpg"
+      },
+      {
+        "title": "Neon Pulse",
+        "year": "2021",
+        "cover": "/_templates/electronic-collective/img/album4.jpg"
+      }
+    ]
+  },
+  "contact": {
+    "managementLabel": "Gestion :",
+    "managementEmail": "m@nyxis.live",
+    "bookingLabel": "Réservations :",
+    "bookingEmail": "tv@nyxis.live",
+    "img": "/_templates/electronic-collective/img/contact.jpg"
+  },
+  "footer": {
+    "copyright": "© 2025 NYXIS",
+    "credit": "Collectif électronique · depuis 2014"
+  },
+  "portfolioPage": {
+    "title": "Galerie",
+    "intro": "Lumières stroboscopiques, foules en transe et visuels de releases : un fragment de l’univers NYXIS, capturé sur scène, en backstage et en studio.",
+    "images": [
+      "/_templates/electronic-collective/img/hero1.jpg",
+      "/_templates/electronic-collective/img/hero2.jpg",
+      "/_templates/electronic-collective/img/hero3.jpg",
+      "/_templates/electronic-collective/img/bio1.jpg",
+      "/_templates/electronic-collective/img/bio2.jpg",
+      "/_templates/electronic-collective/img/tour.jpg",
+      "/_templates/electronic-collective/img/album-new.jpg",
+      "/_templates/electronic-collective/img/album1.jpg",
+      "/_templates/electronic-collective/img/album2.jpg",
+      "/_templates/electronic-collective/img/album3.jpg",
+      "/_templates/electronic-collective/img/album4.jpg",
+      "/_templates/electronic-collective/img/contact.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Booking & contact",
+    "intro": "Programmateur, festival, salle ou marque : écrivez-nous pour faire monter NYXIS sur votre scène. Réponse sous 48 h ouvrées.",
+    "email": "tv@nyxis.live",
+    "phone": "+33 1 84 80 00 00",
+    "availabilityLabel": "Disponibilités",
+    "availabilityText": "Tournée d’été 2026 en cours de calage — créneaux ouverts en Europe sur les week-ends de juin à septembre. Dates club et B2B sur demande.",
+    "zonesLabel": "Zones",
+    "zonesText": "Basés à Paris, nous tournons partout en Europe et à l’international. Déplacements festival et destination assurés.",
+    "techRider": "Set DJ / live hybride (2 platines + table de mixage 4 voies type DJM-900, ou contrôleur fourni sur demande). Régie son : système diffusion calé pro (L-Acoustics / d&b) avec 2 retours de scène et un caisson DJ. Connectique : 1 entrée stéréo jack/RCA + DI. Lumière : pont face + contre, machine à brouillard et stroboscopes DMX pilotables ; un VJ peut être ajouté (sortie HDMI 1080p). Backline : booth stable à hauteur de taille, 4 prises 230 V protégées, accès Wi-Fi régie. Loge fermée, eau et serviettes. Balances 60 min avant ouverture des portes."
+  }
+};
+  </script>
+</head>
+
+<body class="font-sans antialiased bg-paper text-ink selection:bg-accent selection:text-white">
+
+  <!-- ============ HEADER / NAV ============ -->
+  <header class="relative z-30">
+    <div class="mx-auto max-w-6xl px-6 pt-6 flex items-center justify-between">
+      <a href="#" data-sg-page="/" class="font-display text-3xl text-ink hover:text-accent transition-colors" data-sg-path="mono">N</a>
+      <nav class="flex gap-6 font-sans text-sm text-ink">
+        <a href="#" data-sg-page="/" class="hover:text-accent transition-colors" data-sg-path="nav[0]">accueil</a>
+        <a href="#" data-sg-page="portfolio" class="text-accent transition-colors" data-sg-path="nav[1]">galerie</a>
+        <a href="#" data-sg-page="contact" class="hover:text-accent transition-colors" data-sg-path="nav[2]">booking</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ EN-TÊTE GALERIE ============ -->
+  <section class="mx-auto max-w-6xl px-6 pt-20 md:pt-28 pb-12" data-sg-reveal>
+    <h1 class="font-display text-6xl md:text-8xl lg:text-9xl tracking-tight text-ink leading-[0.9] mb-8" data-sg-path="portfolioPage.title">Galerie</h1>
+    <p class="font-sans text-sm md:text-base leading-relaxed text-ink/90 max-w-2xl" data-sg-path="portfolioPage.intro">
+      Lumières stroboscopiques, foules en transe et visuels de releases : un fragment de l’univers NYXIS, capturé sur scène, en backstage et en studio.
+    </p>
+  </section>
+
+  <!-- ============ GRILLE MÉDIA ============ -->
+  <section class="mx-auto max-w-6xl px-6 pb-24">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-1" data-sg-reveal>
+
+      <!-- cellule 1 — haute -->
+      <div class="gcell row-span-2 relative overflow-hidden bg-panel aspect-[3/4]">
+        <img src="img/hero1.jpg" alt="NYXIS — live" data-sg-img="portfolioPage.images[0]" class="absolute inset-0 w-full h-full object-cover" />
+      </div>
+      <!-- cellule 2 -->
+      <div class="gcell relative overflow-hidden bg-panel aspect-square">
+        <img src="img/hero2.jpg" alt="NYXIS — scène" data-sg-img="portfolioPage.images[1]" class="absolute inset-0 w-full h-full object-cover" />
+      </div>
+      <!-- cellule 3 -->
+      <div class="gcell relative overflow-hidden bg-panel aspect-square">
+        <img src="img/hero3.jpg" alt="NYXIS — public" data-sg-img="portfolioPage.images[2]" class="absolute inset-0 w-full h-full object-cover" />
+      </div>
+      <!-- cellule 4 — large -->
+      <div class="gcell col-span-2 relative overflow-hidden bg-panel aspect-[2/1]">
+        <img src="img/bio1.jpg" alt="NYXIS — backstage" data-sg-img="portfolioPage.images[3]" class="absolute inset-0 w-full h-full object-cover" />
+      </div>
+      <!-- cellule 5 -->
+      <div class="gcell relative overflow-hidden bg-panel aspect-square">
+        <img src="img/bio2.jpg" alt="NYXIS — portrait" data-sg-img="portfolioPage.images[4]" class="absolute inset-0 w-full h-full object-cover" />
+      </div>
+      <!-- cellule 6 -->
+      <div class="gcell relative overflow-hidden bg-panel aspect-square">
+        <img src="img/tour.jpg" alt="NYXIS — lasers" data-sg-img="portfolioPage.images[5]" class="absolute inset-0 w-full h-full object-cover" />
+      </div>
+      <!-- cellule 7 -->
+      <div class="gcell relative overflow-hidden bg-panel aspect-square">
+        <img src="img/album-new.jpg" alt="NYXIS — visuel release" data-sg-img="portfolioPage.images[6]" class="absolute inset-0 w-full h-full object-cover" />
+      </div>
+      <!-- cellule 8 -->
+      <div class="gcell relative overflow-hidden bg-panel aspect-square">
+        <img src="img/album1.jpg" alt="NYXIS — pochette" data-sg-img="portfolioPage.images[7]" class="absolute inset-0 w-full h-full object-cover" />
+      </div>
+      <!-- cellule 9 -->
+      <div class="gcell relative overflow-hidden bg-panel aspect-square">
+        <img src="img/album2.jpg" alt="NYXIS — pochette" data-sg-img="portfolioPage.images[8]" class="absolute inset-0 w-full h-full object-cover" />
+      </div>
+      <!-- cellule 10 — large -->
+      <div class="gcell col-span-2 relative overflow-hidden bg-panel aspect-[2/1]">
+        <img src="img/album3.jpg" alt="NYXIS — presse" data-sg-img="portfolioPage.images[9]" class="absolute inset-0 w-full h-full object-cover" />
+      </div>
+      <!-- cellule 11 -->
+      <div class="gcell relative overflow-hidden bg-panel aspect-square">
+        <img src="img/album4.jpg" alt="NYXIS — pochette" data-sg-img="portfolioPage.images[10]" class="absolute inset-0 w-full h-full object-cover" />
+      </div>
+      <!-- cellule 12 — haute -->
+      <div class="gcell row-span-2 relative overflow-hidden bg-panel aspect-[3/4]">
+        <img src="img/contact.jpg" alt="NYXIS — festival" data-sg-img="portfolioPage.images[11]" class="absolute inset-0 w-full h-full object-cover" />
+      </div>
+
+    </div>
+
+    <!-- CTA booking -->
+    <div class="mt-20 flex flex-col items-center text-center" data-sg-reveal>
+      <h2 class="font-display text-4xl md:text-5xl tracking-tight text-ink leading-[0.95] mb-8">Programmez NYXIS</h2>
+      <a href="#" data-sg-page="contact" class="border border-ink/30 rounded px-10 py-3 font-sans text-sm text-ink hover:bg-ink hover:text-paper transition-colors">Booking &amp; contact</a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="mt-12">
+    <!-- bandeau image + monogramme -->
+    <div class="relative h-[50vh] overflow-hidden bg-panel">
+      <img src="img/contact.jpg" alt="" data-sg-img="contact.img" class="absolute inset-0 w-full h-full object-cover" data-sg-parallax />
+      <div class="absolute inset-0 bg-ink/30"></div>
+      <div class="absolute inset-0 z-10 flex items-center justify-center">
+        <span class="font-display text-white text-7xl md:text-8xl" data-sg-path="mono">N</span>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-6xl px-6 py-8 flex flex-col sm:flex-row justify-between items-center gap-3 font-sans text-sm text-ink">
+      <nav class="flex gap-6">
+        <a href="#" data-sg-page="/" class="hover:text-accent transition-colors" data-sg-path="nav[0]">accueil</a>
+        <a href="#" data-sg-page="portfolio" class="hover:text-accent transition-colors" data-sg-path="nav[1]">galerie</a>
+        <a href="#" data-sg-page="contact" class="hover:text-accent transition-colors" data-sg-path="nav[2]">booking</a>
+      </nav>
+      <div class="flex gap-6">
+        <a href="#" class="hover:text-accent transition-colors" data-sg-path="socials[0]">facebook</a>
+        <a href="#" class="hover:text-accent transition-colors" data-sg-path="socials[1]">twitter</a>
+        <a href="#" class="hover:text-accent transition-colors" data-sg-path="socials[2]">youtube</a>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-6xl px-6 pb-8 flex flex-col sm:flex-row justify-between items-center gap-2 font-sans text-xs text-muted">
+      <span data-sg-path="footer.copyright">© 2025 NYXIS</span>
+      <span data-sg-path="footer.credit">Collectif électronique · depuis 2014</span>
+    </div>
+  </footer>
+
+  <!-- ============ HYDRATATION + ANIMATIONS (standard clone-site) ============ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, { opacity: 0, y: 40, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, { yPercent: -15, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } });
+        });
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

@@ -5,6 +5,10 @@
   "pageTypes": [
     "home"
   ],
+  "pages": [
+    { "slug": "/portfolio", "file": "portfolio.html", "title": "Galerie" },
+    { "slug": "/contact", "file": "contact.html", "title": "Booking & contact" }
+  ],
   "sections": {
     "home": [
       "brand",
@@ -51,6 +55,12 @@
       "role": "image",
       "required": true,
       "note": "experience · features · image"
+    },
+    {
+      "slot": "pf1",
+      "path": "portfolioPage.images[]",
+      "role": "gallery",
+      "required": false
     }
   ],
   "fields": {
@@ -318,6 +328,78 @@
         "label": "footer · credit",
         "type": "text",
         "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.title",
+        "label": "galerie · titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.intro",
+        "label": "galerie · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.title",
+        "label": "contact · titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.intro",
+        "label": "contact · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.bookingLabel",
+        "label": "contact · libellé booking",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.email",
+        "label": "contact · email",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.phone",
+        "label": "contact · téléphone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.availLabel",
+        "label": "contact · libellé disponibilités",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.availText",
+        "label": "contact · disponibilités",
+        "type": "textarea",
+        "maxLen": 240
+      },
+      {
+        "path": "contactPage.techTitle",
+        "label": "contact · titre fiche technique",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.techRider",
+        "label": "contact · fiche technique",
+        "type": "textarea",
+        "maxLen": 600
+      },
+      {
+        "path": "contactPage.reassure",
+        "label": "contact · réassurance",
+        "type": "textarea",
+        "maxLen": 200
       }
     ]
   }

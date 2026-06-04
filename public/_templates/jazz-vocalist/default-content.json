@@ -147,5 +147,43 @@
     "copyright": "© Marina Cole",
     "credit": "Chanteuse · jazz & soul",
     "image": "/_templates/jazz-vocalist/img/crowd.jpg"
+  },
+  "portfolioPage": {
+    "title": "Galerie",
+    "intro": "Scènes, clubs, sessions et visuels de releases : l'univers de Marina Cole en images, du grain des photos live aux portraits de presse en noir et blanc.",
+    "images": [
+      "/_templates/jazz-vocalist/img/hero.jpg",
+      "/_templates/jazz-vocalist/img/perf.jpg",
+      "/_templates/jazz-vocalist/img/crowd.jpg",
+      "/_templates/jazz-vocalist/img/about.jpg",
+      "/_templates/jazz-vocalist/img/mic1.jpg",
+      "/_templates/jazz-vocalist/img/mic2.jpg",
+      "/_templates/jazz-vocalist/img/perf.jpg",
+      "/_templates/jazz-vocalist/img/hero.jpg",
+      "/_templates/jazz-vocalist/img/crowd.jpg",
+      "/_templates/jazz-vocalist/img/about.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Booking & contact",
+    "intro": "Pour réserver une date, demander une fiche technique ou parler de votre soirée : un seul interlocuteur, une réponse rapide, une prestation taillée pour votre lieu.",
+    "bookingLabel": "Booking & demandes",
+    "email": "hello@marinacole.com",
+    "phoneLabel": "Téléphone",
+    "phone": "+44 20 7946 0123",
+    "availLabel": "Disponibilités & tournée",
+    "availText": "Saison 2026 : créneaux ouverts à Londres et en France de février à juin, puis en résidence l'automne. Les dîners privés et événements d'entreprise se réservent idéalement trois à six mois à l'avance.",
+    "format1Title": "Formats",
+    "format1Text": "Solo voix-piano, duo voix-guitare ou quartet complet. Set acoustique intimiste ou formule amplifiée selon la salle et le nombre d'invités.",
+    "format2Title": "Délai de réponse",
+    "format2Text": "Chaque demande reçoit une réponse sous 48 heures ouvrées, avec disponibilités, formules et devis personnalisé pour votre date.",
+    "format3Title": "Zones",
+    "format3Text": "Basée à Londres, en tournée régulière au Royaume-Uni et en France. Déplacements internationaux possibles pour les dates en destination.",
+    "format4Title": "Repertoire",
+    "format4Text": "Standards jazz, soul, blues, bossa et swing. Une playlist sur mesure se construit ensemble avant chaque soirée.",
+    "techLabel": "Fiche technique",
+    "techRider": "Scène minimale de 3 × 2 m, plateau stable et dégagé. Sonorisation : façade adaptée à la jauge, 2 retours de scène, 1 micro voix dynamique sur pied (type SM58) plus 2 entrées DI pour piano/clavier et guitare. Console 8 voies minimum avec ingénieur du son si la jauge dépasse 150 personnes. Alimentation 220 V à proximité du plateau. Éclairage chaud et tamisé, un face propre sur la chanteuse, projecteurs colorés proscrits. Loge fermée avec eau plate, tabouret de bar et miroir. Balances 90 minutes avant l'ouverture des portes.",
+    "copyright": "© Marina Cole",
+    "credit": "Booking · jazz & soul"
   }
 }

@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HALCYON — Booking & contact</title>
+  <meta name="description" content="HALCYON — booking : email de réservation, disponibilités, tournée et fiche technique du groupe." />
+
+  <!-- Polices exactes extraites des tokens : Bungee Hairline (display), Karla (corps), Inter (labels) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bungee+Hairline&family=Inter:wght@400;500&family=Karla:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    // Config Tailwind : palette + typo issues de la capture (tokens.json)
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#000000',
+            paper: '#fafafa',
+            soft: '#f1f1f1',
+            accent: '#0000ee',
+            panel: '#0f0f0f',
+            line: '#1a1a1a',
+            muted: '#a1a1a1',
+            dim: '#6f6e6e',
+          },
+          fontFamily: {
+            display: ['"Bungee Hairline"', 'sans-serif'],
+            body: ['Karla', 'sans-serif'],
+            mono: ['Inter', 'sans-serif'],
+          },
+          letterSpacing: { label: '0.22em', wide: '0.12em' },
+        },
+      },
+    };
+  </script>
+  <style>
+    body { background:#000; color:#fafafa; }
+    .display-title { letter-spacing: 0.14em; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .marquee-track { display:inline-flex; white-space:nowrap; animation: marquee 22s linear infinite; }
+  </style>
+
+  <!-- Source unique de vérité (le serveur Akyra injecte le vrai contenu ; fallback de preview) -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+  "brand": "HALCYON",
+  "ticker": [
+    "Réservations",
+    "Setlist"
+  ],
+  "heroCtas": [
+    "Le Groupe",
+    "Tournée",
+    "Écouter"
+  ],
+  "hero": {
+    "tagline": "Un projet musical indie audacieux et immersif.",
+    "image": "/_templates/indie-band/img/hero.jpg"
+  },
+  "band": {
+    "label": "Le Groupe",
+    "sub": "Découvrez nos derniers titres",
+    "body": "HALCYON est un trio né entre les sessions studio tardives et les scènes d’entrepôts déserts. Nous créons des paysages sonores denses et cinématiques — bandes analogiques, synthés usés et une voix qui ne tient pas en place. Puissants là où il le faut, subtils là où ça compte.",
+    "image1": "/_templates/indie-band/img/band1.jpg",
+    "image2": "/_templates/indie-band/img/band2.jpg"
+  },
+  "releasesLabel": "Dernières Sorties",
+  "releasesCta": "Écoutez les morceaux complets",
+  "releases": [
+    { "title": "Static Bloom", "cover": "/_templates/indie-band/img/single1.jpg" },
+    { "title": "Paper Cathedral", "cover": "/_templates/indie-band/img/single2.jpg" },
+    { "title": "Low Country Lights", "cover": "/_templates/indie-band/img/single3.jpg" }
+  ],
+  "tour": {
+    "label": "Tournée",
+    "regions": [
+      {
+        "name": "Europe",
+        "dates": [
+          { "city": "Barcelone, ES", "venue": "Razzmatazz 3", "date": "5 mars 2026", "time": "20h00", "status": "Billets" },
+          { "city": "Madrid, ES", "venue": "Sala Clamores", "date": "7 mai 2026", "time": "20h00", "status": "Billets" },
+          { "city": "Lyon, FR", "venue": "Le Sonic", "date": "9 mars 2026", "time": "20h30", "status": "Billets" },
+          { "city": "Milan, IT", "venue": "Circolo Magnolia", "date": "11 mars 2026", "time": "21h00", "status": "Billets" },
+          { "city": "Zurich, CH", "venue": "Moods", "date": "13 mars 2026", "time": "20h00", "status": "Complet" }
+        ]
+      },
+      {
+        "name": "Amérique du Sud",
+        "dates": [
+          { "city": "Quito, EC", "venue": "El Pobre Diablo", "date": "12 avril 2026", "time": "20h00", "status": "Billets" },
+          { "city": "Bogotá, CO", "venue": "Casa Babylon", "date": "10 avril 2026", "time": "21h00", "status": "Complet" },
+          { "city": "Lima, PE", "venue": "La Noche de Barranco", "date": "7 avril 2026", "time": "20h00", "status": "Billets" },
+          { "city": "Santiago, CL", "venue": "Club Chocolate", "date": "5 avril 2026", "time": "20h30", "status": "Billets" },
+          { "city": "Buenos Aires, AR", "venue": "La Trastienda", "date": "9 mars 2026", "time": "21h00", "status": "Complet" }
+        ]
+      }
+    ]
+  },
+  "videosLabel": "Vidéos",
+  "videos": [
+    { "title": "Static Bloom — Live au Razzmatazz", "cover": "/_templates/indie-band/img/video1.jpg" },
+    { "title": "Sessions Studio — Bande & Bruit", "cover": "/_templates/indie-band/img/video2.jpg" },
+    { "title": "Paper Cathedral — Clip Officiel", "cover": "/_templates/indie-band/img/video3.jpg" }
+  ],
+  "footer": {
+    "label": "Actualités",
+    "text": "Sans chichi, juste de la musique. Abonnez-vous pour les annonces de tournée et les titres inédits.",
+    "image": "/_templates/indie-band/img/footer.jpg",
+    "socials": [ "Instagram", "Spotify", "YouTube", "Bandcamp" ],
+    "copyright": "© HALCYON",
+    "credit": "Groupe indie · projet audio"
+  },
+  "portfolioPage": {
+    "title": "Galerie",
+    "intro": "Live, presse et visuels de releases — l’univers de HALCYON saisi dans le grain de la pellicule et la fumée des salles.",
+    "images": [
+      "/_templates/indie-band/img/hero.jpg",
+      "/_templates/indie-band/img/band1.jpg",
+      "/_templates/indie-band/img/band2.jpg",
+      "/_templates/indie-band/img/single1.jpg",
+      "/_templates/indie-band/img/single2.jpg",
+      "/_templates/indie-band/img/single3.jpg",
+      "/_templates/indie-band/img/video1.jpg",
+      "/_templates/indie-band/img/video2.jpg",
+      "/_templates/indie-band/img/video3.jpg",
+      "/_templates/indie-band/img/footer.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Booking & contact",
+    "intro": "Une date, un festival, une collaboration ? Écrivez-nous — on lit tout, on répond vite.",
+    "email": "booking@halcyon.band",
+    "phone": "+33 6 12 34 56 78",
+    "bookingLabel": "Réservations & tournée",
+    "availabilityLabel": "Disponibilités",
+    "availability": "Disponibles pour dates club, festivals et premières parties · Europe et Amérique du Sud · printemps–automne 2026.",
+    "techLabel": "Fiche technique",
+    "techRider": "Formation : trio (chant/guitare, basse/synthés, batterie). Plateau minimum 5 × 4 m. Façade : système 3 voies calibré, console 24 voies minimum, 4 retours bain de pied + 1 side-fill pour la batterie. Patch complet et plan de scène fournis sur demande. Lumière : 4 faces chaudes, contres froids et 2 machines à fumée — ambiance sombre et cinématique. Backline souhaité : ampli basse, deux combos guitare, kit batterie standard. Prévoir loge fermée, eau et restauration pour 3 personnes + 1 régie. Balances : 90 minutes.",
+    "reassurance": "Réponse sous 48 h · Contrat et fiche technique fournis · Plan de scène détaillé sur demande."
+  }
+};
+  </script>
+</head>
+
+<body class="font-body antialiased bg-ink text-paper selection:bg-accent selection:text-white">
+
+  <!-- ============ NAV (bandeau marquee + liens inter-pages) ============ -->
+  <header class="fixed top-0 inset-x-0 z-50 border-b border-line bg-ink/70 backdrop-blur-sm overflow-hidden">
+    <div class="h-9 flex items-center border-b border-line/60">
+      <div class="marquee-track font-mono text-[11px] tracking-label uppercase text-muted">
+        <span class="flex items-center">
+          <span class="px-4" data-sg-path="ticker[0]">Booking</span><span class="text-accent">·</span>
+          <span class="px-4" data-sg-path="ticker[1]">Menu</span><span class="text-accent">·</span>
+          <span class="px-4">Booking</span><span class="text-accent">·</span>
+          <span class="px-4">Menu</span><span class="text-accent">·</span>
+          <span class="px-4">Booking</span><span class="text-accent">·</span>
+          <span class="px-4">Menu</span><span class="text-accent">·</span>
+        </span>
+        <span class="flex items-center" aria-hidden="true">
+          <span class="px-4">Booking</span><span class="text-accent">·</span>
+          <span class="px-4">Menu</span><span class="text-accent">·</span>
+          <span class="px-4">Booking</span><span class="text-accent">·</span>
+          <span class="px-4">Menu</span><span class="text-accent">·</span>
+          <span class="px-4">Booking</span><span class="text-accent">·</span>
+          <span class="px-4">Menu</span><span class="text-accent">·</span>
+        </span>
+      </div>
+    </div>
+    <nav class="h-11 flex items-center justify-center gap-6 sm:gap-10 font-mono text-[11px] tracking-label uppercase">
+      <a href="#" data-sg-page="/" class="text-muted hover:text-accent transition-colors">Accueil</a>
+      <a href="#" data-sg-page="portfolio" class="text-muted hover:text-accent transition-colors">Galerie</a>
+      <a href="#" data-sg-page="contact" class="text-paper hover:text-accent transition-colors">Booking &amp; contact</a>
+    </nav>
+  </header>
+
+  <!-- ============ EN-TÊTE BOOKING ============ -->
+  <section class="mx-auto max-w-7xl px-6 md:px-10 pt-40 md:pt-48 pb-12 md:pb-20" data-sg-reveal>
+    <h1 class="font-display display-title uppercase text-paper text-5xl sm:text-7xl md:text-8xl leading-none" data-sg-path="contactPage.title">Booking & contact</h1>
+    <p class="mt-6 font-body text-paper/85 leading-relaxed max-w-xl text-lg" data-sg-path="contactPage.intro">Une date, un festival, une collaboration ? Écrivez-nous — on lit tout, on répond vite.</p>
+  </section>
+
+  <!-- ============ COORDONNÉES + DISPONIBILITÉS ============ -->
+  <section class="mx-auto max-w-7xl px-6 md:px-10 pb-20 md:pb-28" data-sg-reveal>
+    <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-start border-t border-line pt-12 md:pt-16">
+      <!-- Email mis en évidence -->
+      <div>
+        <p class="font-mono text-[11px] tracking-label uppercase text-muted" data-sg-path="contactPage.bookingLabel">Réservations & tournée</p>
+        <a href="#" class="block mt-4 font-display display-title uppercase text-paper text-2xl sm:text-3xl md:text-4xl break-words hover:text-accent transition-colors" data-sg-path="contactPage.email">booking@halcyon.band</a>
+        <p class="mt-6 font-mono text-[12px] tracking-wide uppercase text-muted" data-sg-path="contactPage.phone">+33 6 12 34 56 78</p>
+      </div>
+      <!-- Disponibilités -->
+      <div>
+        <p class="font-mono text-[11px] tracking-label uppercase text-muted" data-sg-path="contactPage.availabilityLabel">Disponibilités</p>
+        <p class="mt-4 font-body text-paper/85 leading-relaxed text-lg" data-sg-path="contactPage.availability">Disponibles pour dates club, festivals et premières parties · Europe et Amérique du Sud · printemps–automne 2026.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FICHE TECHNIQUE ============ -->
+  <section class="mx-auto max-w-7xl px-6 md:px-10 pb-20 md:pb-28" data-sg-reveal>
+    <div class="border border-line bg-panel p-8 md:p-12">
+      <h2 class="font-display display-title uppercase text-paper text-2xl md:text-4xl" data-sg-path="contactPage.techLabel">Fiche technique</h2>
+      <p class="mt-6 font-body text-muted leading-relaxed max-w-3xl" data-sg-path="contactPage.techRider">Formation : trio (chant/guitare, basse/synthés, batterie). Plateau minimum 5 × 4 m. Façade : système 3 voies calibré, console 24 voies minimum, 4 retours bain de pied + 1 side-fill pour la batterie. Patch complet et plan de scène fournis sur demande. Lumière : 4 faces chaudes, contres froids et 2 machines à fumée — ambiance sombre et cinématique. Backline souhaité : ampli basse, deux combos guitare, kit batterie standard. Prévoir loge fermée, eau et restauration pour 3 personnes + 1 régie. Balances : 90 minutes.</p>
+    </div>
+    <p class="mt-8 font-mono text-[11px] tracking-label uppercase text-dim" data-sg-path="contactPage.reassurance">Réponse sous 48 h · Contrat et fiche technique fournis · Plan de scène détaillé sur demande.</p>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="relative overflow-hidden border-t border-line">
+    <img src="img/footer.jpg" alt="" data-sg-img="footer.image" class="absolute inset-0 w-full h-full object-cover grayscale opacity-25" />
+    <div class="absolute inset-0 bg-ink/80"></div>
+
+    <div class="relative z-10 mx-auto max-w-5xl px-6 py-28 md:py-36 text-center" data-sg-reveal>
+      <h2 class="font-display display-title uppercase text-paper text-3xl md:text-6xl" data-sg-path="footer.label">Actualités</h2>
+      <p class="mt-6 font-body text-muted max-w-md mx-auto text-lg" data-sg-path="footer.text">Sans chichi, juste de la musique. Abonnez-vous pour les annonces de tournée et les titres inédits.</p>
+
+      <div class="mt-12 flex flex-wrap justify-center gap-x-8 gap-y-3 font-mono text-[11px] tracking-label uppercase">
+        <a href="#" class="text-paper hover:text-accent transition-colors" data-sg-path="footer.socials[0]">Instagram</a>
+        <a href="#" class="text-paper hover:text-accent transition-colors" data-sg-path="footer.socials[1]">Spotify</a>
+        <a href="#" class="text-paper hover:text-accent transition-colors" data-sg-path="footer.socials[2]">YouTube</a>
+        <a href="#" class="text-paper hover:text-accent transition-colors" data-sg-path="footer.socials[3]">Bandcamp</a>
+      </div>
+
+      <div class="mt-20 pt-8 border-t border-line/60 flex flex-col sm:flex-row justify-between items-center gap-3 font-mono text-[11px] tracking-wide uppercase text-dim">
+        <span data-sg-path="footer.copyright">© HALCYON</span>
+        <span data-sg-path="footer.credit">Groupe indie · projet audio</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ HYDRATATION + ANIMATIONS (standard clone-site) ============ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, { opacity: 0, y: 40, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, { yPercent: -15, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } });
+        });
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

@@ -126,5 +126,32 @@
   "footer": {
     "copyright": "© KAIRO",
     "credit": "Artiste hip-hop · producteur"
+  },
+  "portfolioPage": {
+    "title": "Galerie",
+    "intro": "Scène, backstage, presse et visuels de releases — l’univers de KAIRO, là où le son devient image. Des lumières crues, des regards francs et l’énergie brute des concerts.",
+    "images": [
+      "/_templates/hiphop-producer/img/hero.jpg",
+      "/_templates/hiphop-producer/img/portrait.jpg",
+      "/_templates/hiphop-producer/img/rel1.jpg",
+      "/_templates/hiphop-producer/img/rel2.jpg",
+      "/_templates/hiphop-producer/img/rel3.jpg",
+      "/_templates/hiphop-producer/img/rel4.jpg",
+      "/_templates/hiphop-producer/img/hero.jpg",
+      "/_templates/hiphop-producer/img/portrait.jpg",
+      "/_templates/hiphop-producer/img/rel2.jpg",
+      "/_templates/hiphop-producer/img/rel4.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Booking & contact",
+    "intro": "Pour les dates, les festivals, les featurings et les prods : un seul interlocuteur, une réponse rapide. Parlons de votre événement.",
+    "email": "booking@kairo-music.com",
+    "phone": "+33 6 12 34 56 78",
+    "availabilityLabel": "Disponibilités & tournée",
+    "availability": "Bookings ouverts pour la tournée d’automne 2026 (Europe) et la saison festivals 2027. Set DJ ou live band, 45 à 90 min, selon configuration.",
+    "manager": "Management — Studio Nightshift",
+    "techRiderLabel": "Fiche technique",
+    "techRider": "Set live de 45 à 90 min, formule MPC + DJ ou groupe complet (batterie, basse, claviers). Côté son : console numérique min. 24 voies, 2 wedges + side-fills, retour in-ear pour l’artiste, micro filaire dynamique (SM58 ou équivalent) + DI pour samplers. Côté lumière : plan blanc/bleu froid, 2 poursuites, machine à brouillard, blackout possible en intro. Loge fermée, eau, balance 60 min avant ouverture des portes."
   }
 }

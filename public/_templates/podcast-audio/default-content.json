@@ -5,7 +5,9 @@
     "Accueil",
     "À propos",
     "Épisodes",
-    "Écouter maintenant"
+    "Écouter maintenant",
+    "Galerie",
+    "Booking & contact"
   ],
   "hero": {
     "eyebrow": "Un podcast audio cinématographique",
@@ -63,5 +65,41 @@
       "West Podcast",
       "On The Air"
     ]
+  },
+  "portfolioPage": {
+    "title": "Galerie",
+    "intro": "Photos live, portraits presse et visuels de releases. L’univers visuel de l’artiste, capté entre la scène, le studio et les coulisses.",
+    "live": "Live & scène",
+    "press": "Presse & portraits",
+    "release": "Visuels de releases",
+    "ctaTitle": "Envie de programmer une date ?",
+    "ctaButton": "Booking & contact",
+    "images": [
+      "/_templates/podcast-audio/img/hero.jpg",
+      "/_templates/podcast-audio/img/ep1.jpg",
+      "/_templates/podcast-audio/img/host.jpg",
+      "/_templates/podcast-audio/img/ep2.jpg",
+      "/_templates/podcast-audio/img/cta.jpg",
+      "/_templates/podcast-audio/img/ep3.jpg",
+      "/_templates/podcast-audio/img/ep1.jpg",
+      "/_templates/podcast-audio/img/hero.jpg",
+      "/_templates/podcast-audio/img/ep2.jpg",
+      "/_templates/podcast-audio/img/cta.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Booking & contact",
+    "intro": "Pour les dates de concert, festivals, premières parties et collaborations. Écrivez-nous : on revient vite, avec disponibilités et conditions.",
+    "email": "booking@northwire.fm",
+    "phone": "+33 1 84 80 00 00",
+    "bookingLabel": "Booking & demandes de date",
+    "availLabel": "Disponibilités & tournée",
+    "availText": "Tournée en cours sur la saison 2026 — France, Belgique, Suisse. Nouvelles dates ajoutées chaque mois. Premières parties et formats acoustiques possibles sur demande.",
+    "zonesLabel": "Zones & déplacements",
+    "zonesText": "Basés à Paris, nous nous déplaçons partout en France et en Europe. Les dates à l’étranger se négocient selon le format et la logistique.",
+    "responseLabel": "Délai de réponse",
+    "responseText": "Chaque demande de booking reçoit une réponse sous 48 heures ouvrées, avec disponibilités et fourchette de cachet.",
+    "techLabel": "Fiche technique",
+    "techRider": "Format scène : trio (chant/guitare, basse, batterie). Backline souhaité : ampli basse 4×10, kit batterie complet (caisse claire 14\", cymbales). Façade min. 2 000 W adaptée à la jauge, retours : 3 wedges + 1 side-fill. Console numérique 16 voies, 2 micros chant (type SM58), DI pour basse et guitare. Lumière : face chaude + 2 contres, 4 PAR LED en douche, brouillard léger. Loge fermée, eau, accès scène 2 h avant balances. Régisseur son/lumière fourni par l’organisateur."
   }
 }

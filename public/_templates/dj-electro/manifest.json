@@ -5,6 +5,18 @@
   "pageTypes": [
     "home"
   ],
+  "pages": [
+    {
+      "slug": "/portfolio",
+      "file": "portfolio.html",
+      "title": "Galerie"
+    },
+    {
+      "slug": "/contact",
+      "file": "contact.html",
+      "title": "Booking & contact"
+    }
+  ],
   "sections": {
     "home": [
       "brand",
@@ -52,6 +64,12 @@
       "role": "image",
       "required": true,
       "note": "events · image"
+    },
+    {
+      "slot": "pf1",
+      "path": "portfolioPage.images[]",
+      "role": "gallery",
+      "required": false
     }
   ],
   "fields": {
@@ -287,6 +305,132 @@
       {
         "path": "footer.copyright",
         "label": "footer · copyright",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "navGallery",
+        "label": "nav · Galerie",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "navBooking",
+        "label": "nav · Booking & contact",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.title",
+        "label": "Galerie · titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.intro",
+        "label": "Galerie · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.title",
+        "label": "Booking · titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.intro",
+        "label": "Booking · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.bookingLabel",
+        "label": "Booking · libellé email",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.email",
+        "label": "Booking · email",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.phoneLabel",
+        "label": "Booking · libellé téléphone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.phone",
+        "label": "Booking · téléphone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.agencyLabel",
+        "label": "Booking · libellé management",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.agency",
+        "label": "Booking · email management",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.availabilityLabel",
+        "label": "Booking · libellé disponibilités",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.availability",
+        "label": "Booking · disponibilités",
+        "type": "textarea",
+        "maxLen": 300
+      },
+      {
+        "path": "contactPage.tour[].date",
+        "label": "Booking · tournée · date",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.tour[].city",
+        "label": "Booking · tournée · ville",
+        "type": "text",
+        "maxLen": 60
+      },
+      {
+        "path": "contactPage.tour[].venue",
+        "label": "Booking · tournée · lieu",
+        "type": "text",
+        "maxLen": 60
+      },
+      {
+        "path": "contactPage.techRiderLabel",
+        "label": "Booking · libellé fiche technique",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.techRider",
+        "label": "Booking · fiche technique",
+        "type": "textarea",
+        "maxLen": 600
+      },
+      {
+        "path": "contactPage.reassure",
+        "label": "Booking · réassurance",
+        "type": "text",
+        "maxLen": 120
+      },
+      {
+        "path": "contactPage.ctaEmail",
+        "label": "Booking · bouton email",
         "type": "text",
         "maxLen": 40
       }

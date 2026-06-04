@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alex Stride — Galerie · Live · Presse · Releases</title>
+  <meta name="description" content="L'univers visuel d'Alex Stride : photos live, captures presse et visuels de releases." />
+
+  <!-- Polices : Clash Display (titres) via Fontshare + Manrope (corps) via Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    // Config Tailwind : palette + typo issues de la capture (tokens.json)
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:    '#000000',  // fond principal noir
+            panel:  '#080807',  // cartes / panneaux
+            line:   'rgba(255,255,255,0.08)',
+            paper:  '#ffffff',  // texte clair
+            muted:  'rgba(255,255,255,0.75)',
+            faint:  'rgba(255,255,255,0.45)',
+            accent: '#fbd295',  // pêche / or (accent chaud)
+            blue:   '#0000ee',  // bleu électrique (accent froid)
+          },
+          fontFamily: {
+            display: ['"Clash Display"', 'sans-serif'],
+            sans:    ['Manrope', 'sans-serif'],
+            body:    ['"Open Sans"', 'sans-serif'],
+          },
+          letterSpacing: { label: '0.04em', tight: '-0.02em' },
+        },
+      },
+    };
+  </script>
+  <style>
+    body { background: #000; color: #fff; }
+    .outline-text {
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.12);
+    }
+    .marquee-track { animation: marquee 28s linear infinite; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .gallery-cell img { transition: transform 1.2s ease-out; }
+    .gallery-cell:hover img { transform: scale(1.06); }
+  </style>
+
+  <!-- Source unique de vérité (l'éditeur Akyra injecte le vrai contenu ; fallback de preview) -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+  "brand": "ALEX STRIDE",
+  "cta": "Réservez la date",
+  "nav": [
+    "À propos",
+    "Prestations",
+    "Témoignages",
+    "Contact"
+  ],
+  "hero": {
+    "eyebrow": "Alex Stride, DJ résident",
+    "title": "Un DJ qui fait danser votre club jusqu’au bout de la nuit",
+    "tagline": "Faites vibrer votre club au rythme des beats qui électrisent la foule. Plus de 10 ans aux platines pour transformer chaque soirée en un moment inoubliable.",
+    "ctaPrimary": "Contactez-moi",
+    "ctaSecondary": "Voir la vidéo",
+    "image": "/_templates/dj-electro/img/hero.jpg"
+  },
+  "stats": [
+    { "value": "10+", "label": "Années d’expérience" },
+    { "value": "120+", "label": "Clubs visités" },
+    { "value": "1K+", "label": "Prestations réalisées" },
+    { "value": "100K+", "label": "Auditeurs mensuels" }
+  ],
+  "about": {
+    "title": "DJ depuis toujours",
+    "p1": "Avec des années d’expérience aux platines, je propose des sets énergiques qui maintiennent le public en mouvement. Des grooves deep house aux moments intenses de techno, chaque prestation est conçue pour transformer votre lieu en une expérience électrisante.",
+    "p2": "Mon objectif ? Créer des nuits mémorables dont on parle bien après l’extinction des lumières.",
+    "cta": "Contactez-moi",
+    "image": "/_templates/dj-electro/img/about.jpg"
+  },
+  "services": {
+    "label": "Ce que je mixe",
+    "items": [
+      { "title": "House", "text": "Des ambiances house fluides et groovy pour installer l’ambiance parfaite et remplir la piste de danse." },
+      { "title": "EDM", "text": "Des sets EDM explosifs, riches en tubes incontournables pour booster l’énergie et enflammer la soirée." },
+      { "title": "Techno", "text": "Des morceaux techno profonds et pulsatifs pour une expérience immersive et intense sur la piste." },
+      { "title": "Electro", "text": "Des beats electro ultra-énergiques qui électrisent l’atmosphère et font danser la foule jusqu’au petit matin." }
+    ]
+  },
+  "testimonialsLabel": "Témoignages",
+  "testimonial": {
+    "title": "Ambiance inoubliable et pistes de danse bondées",
+    "quote": "Engager ce DJ a été la meilleure décision que nous ayons prise. Son énergie et sa sélection musicale ont gardé notre club plein jusqu’à la fermeture. Le public en redemandait, et nous avons déjà reçu des demandes pour le faire revenir !",
+    "author": "Pulse Nightclub",
+    "image": "/_templates/dj-electro/img/testimonial.jpg"
+  },
+  "eventsLabel": "Prochains événements",
+  "events": [
+    { "date": "30 Nov 2026", "title": "Techno Beats", "text": "Une session en entrepôt après l’aube à Berlin, Allemagne. Préparez-vous à des basses implacables et une piste bondée jusqu’au lever du soleil.", "image": "/_templates/dj-electro/img/event1.jpg" },
+    { "date": "28 Dec 2026", "title": "Electro Fest", "text": "Set électro en tête d’affiche à Amsterdam, Pays-Bas. Un final d’année haute tension conçu pour la grande salle.", "image": "/_templates/dj-electro/img/event2.jpg" },
+    { "date": "14 Feb 2027", "title": "Dance Night Paris", "title2": "", "text": "Résidence pour la Saint-Valentin à Paris, France. Deep house en début de soirée, house intense à minuit.", "image": "/_templates/dj-electro/img/event3.jpg" }
+  ],
+  "eventsCta": "Tous les événements",
+  "marquee": "DJ DE CONFIANCE POUR VOTRE ÉVÉNEMENT",
+  "contact": {
+    "title": "Prenons contact",
+    "text": "N’hésitez pas à poser vos questions ou à envoyer vos demandes professionnelles.",
+    "email": "hello@alexstride.com",
+    "phone": "+1 234 567 890",
+    "formName": "Nom",
+    "formEmail": "Email",
+    "formLocation": "Lieu",
+    "formPhone": "Téléphone",
+    "formMessage": "Message",
+    "formSubmit": "Envoyer",
+    "namePlaceholder": "Jane Smith",
+    "emailPlaceholder": "example@example.com",
+    "locationPlaceholder": "Club X, Paris",
+    "phonePlaceholder": "+123123123",
+    "messagePlaceholder": "Nous souhaitons vous engager pour notre club…"
+  },
+  "footer": {
+    "copyright": "© 2026 Alex Stride",
+    "credit": "DJ résident · House · EDM · Techno · Electro"
+  },
+  "navGallery": "Galerie",
+  "navBooking": "Booking & contact",
+  "portfolioPage": {
+    "title": "Galerie",
+    "intro": "Lumières, fumée et bras levés. L’univers visuel d’Alex Stride : photos live, captures presse et visuels de releases, set après set.",
+    "images": [
+      "/_templates/dj-electro/img/hero.jpg",
+      "/_templates/dj-electro/img/event1.jpg",
+      "/_templates/dj-electro/img/event2.jpg",
+      "/_templates/dj-electro/img/event3.jpg",
+      "/_templates/dj-electro/img/about.jpg",
+      "/_templates/dj-electro/img/testimonial.jpg",
+      "/_templates/dj-electro/img/hero.jpg",
+      "/_templates/dj-electro/img/event2.jpg",
+      "/_templates/dj-electro/img/event1.jpg",
+      "/_templates/dj-electro/img/about.jpg",
+      "/_templates/dj-electro/img/event3.jpg",
+      "/_templates/dj-electro/img/testimonial.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Booking & contact",
+    "intro": "Une date à caler, un festival, une soirée privée ? Écrivez-moi : chaque set est calibré pour votre salle et votre public.",
+    "bookingLabel": "Demande de booking",
+    "email": "hello@alexstride.com",
+    "phone": "+1 234 567 890",
+    "phoneLabel": "Téléphone",
+    "agencyLabel": "Management & presse",
+    "agency": "booking@alexstride.com",
+    "availabilityLabel": "Disponibilités & tournée",
+    "availability": "Calendrier ouvert pour la saison 2026-2027. Résidences le week-end, festivals en été, dates privées sur demande. Délai de réponse sous 48 h.",
+    "tour": [
+      { "date": "30 Nov 2026", "city": "Berlin, Allemagne", "venue": "Techno Beats — entrepôt" },
+      { "date": "28 Dec 2026", "city": "Amsterdam, Pays-Bas", "venue": "Electro Fest — grande salle" },
+      { "date": "14 Feb 2027", "city": "Paris, France", "venue": "Dance Night — résidence" }
+    ],
+    "techRiderLabel": "Fiche technique",
+    "techRider": "Régie DJ : 2 platines Pioneer CDJ-3000 + table DJM-900NXS2 (ou A9), monitoring de cabine actif type Pioneer XPRS. Façade : système line-array calibré pour la jauge, sub dédié, pression sonore stable sur l’ensemble du dancefloor. Lumière : pont avant + arrière, machine à fumée/haze, contrôle DMX synchronisable au set. Scène : table stable de 2 m minimum, alimentation dédiée et terre propre, accès technique 2 h avant l’ouverture pour balance. Backline et fiche détaillée envoyés sur confirmation de la date.",
+    "reassure": "Devis clair sous 48 h · Contrat et fiche technique fournis · Annulation encadrée",
+    "ctaEmail": "Écrire pour réserver"
+  }
+};
+  </script>
+</head>
+
+<body class="font-sans antialiased bg-ink text-paper selection:bg-accent selection:text-ink">
+
+  <!-- ============ NAV ============ -->
+  <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-ink/50 border-b border-line">
+    <nav class="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
+      <a href="#" data-sg-page="/" class="font-display font-bold text-lg tracking-tight text-paper" data-sg-path="brand">ALEX STRIDE</a>
+      <ul class="hidden md:flex items-center gap-8 font-sans text-[14px] text-muted">
+        <li><a href="#" data-sg-page="/" class="hover:text-paper transition-colors" data-sg-path="nav[0]">À propos</a></li>
+        <li><a href="#" data-sg-page="portfolio" class="text-paper transition-colors" data-sg-path="navGallery">Galerie</a></li>
+        <li><a href="#" data-sg-page="contact" class="hover:text-paper transition-colors" data-sg-path="navBooking">Booking &amp; contact</a></li>
+      </ul>
+      <a href="#" data-sg-page="contact" class="font-sans text-[14px] border border-line rounded-full px-5 py-2 text-paper hover:bg-paper hover:text-ink transition-colors" data-sg-path="cta">Réservez la date</a>
+    </nav>
+  </header>
+
+  <!-- ============ EN-TÊTE GALERIE ============ -->
+  <section class="relative pt-36 pb-16 md:pt-44 md:pb-20 overflow-hidden">
+    <div class="mx-auto max-w-7xl px-6">
+      <span class="block w-10 h-px bg-accent mb-6"></span>
+      <h1 class="font-display font-bold uppercase tracking-tight leading-[1.02] text-paper text-5xl md:text-7xl lg:text-[80px]" data-sg-path="portfolioPage.title">Galerie</h1>
+      <p class="mt-8 font-body text-base md:text-lg text-faint max-w-2xl" data-sg-path="portfolioPage.intro">
+        Lumières, fumée et bras levés. L’univers visuel d’Alex Stride : photos live, captures presse et visuels de releases, set après set.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ MARQUEE OUTLINE ============ -->
+  <div class="py-8 overflow-hidden select-none border-y border-line">
+    <div class="flex w-max marquee-track">
+      <div class="flex items-center gap-8 pr-8 font-display font-bold uppercase tracking-tight text-5xl md:text-7xl outline-text whitespace-nowrap">
+        <span data-sg-path="marquee">DJ DE CONFIANCE POUR VOTRE ÉVÉNEMENT</span><span class="text-accent/40">★</span>
+        <span>ALEX STRIDE</span><span class="text-accent/40">★</span>
+      </div>
+      <div class="flex items-center gap-8 pr-8 font-display font-bold uppercase tracking-tight text-5xl md:text-7xl outline-text whitespace-nowrap" aria-hidden="true">
+        <span>DJ DE CONFIANCE POUR VOTRE ÉVÉNEMENT</span><span class="text-accent/40">★</span>
+        <span>ALEX STRIDE</span><span class="text-accent/40">★</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ GRILLE GALERIE ============ -->
+  <section class="mx-auto max-w-7xl px-6 py-16 md:py-24" data-sg-reveal>
+    <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
+      <figure class="gallery-cell relative mb-6 break-inside-avoid rounded-3xl overflow-hidden ring-1 ring-line aspect-[4/5]">
+        <img src="img/hero.jpg" alt="Visuel live Alex Stride" data-sg-img="portfolioPage.images[0]" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent"></div>
+      </figure>
+      <figure class="gallery-cell relative mb-6 break-inside-avoid rounded-3xl overflow-hidden ring-1 ring-line aspect-square">
+        <img src="img/event1.jpg" alt="Visuel live Alex Stride" data-sg-img="portfolioPage.images[1]" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent"></div>
+      </figure>
+      <figure class="gallery-cell relative mb-6 break-inside-avoid rounded-3xl overflow-hidden ring-1 ring-line aspect-[3/4]">
+        <img src="img/event2.jpg" alt="Visuel live Alex Stride" data-sg-img="portfolioPage.images[2]" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent"></div>
+      </figure>
+      <figure class="gallery-cell relative mb-6 break-inside-avoid rounded-3xl overflow-hidden ring-1 ring-line aspect-square">
+        <img src="img/event3.jpg" alt="Visuel live Alex Stride" data-sg-img="portfolioPage.images[3]" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent"></div>
+      </figure>
+      <figure class="gallery-cell relative mb-6 break-inside-avoid rounded-3xl overflow-hidden ring-1 ring-line aspect-[4/5]">
+        <img src="img/about.jpg" alt="Portrait presse Alex Stride" data-sg-img="portfolioPage.images[4]" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent"></div>
+      </figure>
+      <figure class="gallery-cell relative mb-6 break-inside-avoid rounded-3xl overflow-hidden ring-1 ring-line aspect-[3/4]">
+        <img src="img/testimonial.jpg" alt="Dancefloor bondé" data-sg-img="portfolioPage.images[5]" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent"></div>
+      </figure>
+      <figure class="gallery-cell relative mb-6 break-inside-avoid rounded-3xl overflow-hidden ring-1 ring-line aspect-square">
+        <img src="img/hero.jpg" alt="Visuel live Alex Stride" data-sg-img="portfolioPage.images[6]" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent"></div>
+      </figure>
+      <figure class="gallery-cell relative mb-6 break-inside-avoid rounded-3xl overflow-hidden ring-1 ring-line aspect-[3/4]">
+        <img src="img/event2.jpg" alt="Visuel release Alex Stride" data-sg-img="portfolioPage.images[7]" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent"></div>
+      </figure>
+      <figure class="gallery-cell relative mb-6 break-inside-avoid rounded-3xl overflow-hidden ring-1 ring-line aspect-[4/5]">
+        <img src="img/event1.jpg" alt="Visuel live Alex Stride" data-sg-img="portfolioPage.images[8]" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent"></div>
+      </figure>
+      <figure class="gallery-cell relative mb-6 break-inside-avoid rounded-3xl overflow-hidden ring-1 ring-line aspect-square">
+        <img src="img/about.jpg" alt="Portrait presse Alex Stride" data-sg-img="portfolioPage.images[9]" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent"></div>
+      </figure>
+      <figure class="gallery-cell relative mb-6 break-inside-avoid rounded-3xl overflow-hidden ring-1 ring-line aspect-[3/4]">
+        <img src="img/event3.jpg" alt="Visuel live Alex Stride" data-sg-img="portfolioPage.images[10]" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent"></div>
+      </figure>
+      <figure class="gallery-cell relative mb-6 break-inside-avoid rounded-3xl overflow-hidden ring-1 ring-line aspect-[4/5]">
+        <img src="img/testimonial.jpg" alt="Dancefloor bondé" data-sg-img="portfolioPage.images[11]" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent"></div>
+      </figure>
+    </div>
+
+    <!-- CTA booking -->
+    <div class="flex justify-center mt-14">
+      <a href="#" data-sg-page="contact" class="inline-flex items-center justify-center font-sans text-[15px] font-medium rounded-full px-7 py-3 bg-accent text-ink hover:brightness-95 transition" data-sg-path="navBooking">Booking &amp; contact</a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="border-t border-line">
+    <div class="mx-auto max-w-7xl px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <a href="#" data-sg-page="/" class="font-display font-bold text-lg tracking-tight text-paper" data-sg-path="brand">ALEX STRIDE</a>
+      <div class="flex items-center gap-6 font-sans text-[13px] text-faint">
+        <a href="#" data-sg-page="/" class="hover:text-paper transition-colors" data-sg-path="nav[0]">À propos</a>
+        <a href="#" data-sg-page="portfolio" class="hover:text-paper transition-colors" data-sg-path="navGallery">Galerie</a>
+        <a href="#" data-sg-page="contact" class="hover:text-paper transition-colors" data-sg-path="navBooking">Booking &amp; contact</a>
+      </div>
+      <span class="font-sans text-[13px] text-faint" data-sg-path="footer.copyright">© 2026 Alex Stride</span>
+    </div>
+  </footer>
+
+  <!-- ============ HYDRATATION + ANIMATIONS (standard clone-site) ============ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      // Hydrate les textes
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      // Hydrate les placeholders de formulaire
+      document.querySelectorAll('[data-sg-ph]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-ph'));
+        if (v != null && typeof v !== 'object') el.setAttribute('placeholder', v);
+      });
+      // Hydrate les images (img.src ou background-image)
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      // Animations : reveal/parallax au scroll (re-création GSAP, pas une capture)
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, { opacity: 0, y: 40, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, { yPercent: -10, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } });
+        });
+        // ROBUSTESSE : recalcule après chargement des images + filet anti-page-blanche
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

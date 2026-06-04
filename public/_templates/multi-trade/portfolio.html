@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-sg-path="meta.title">Voltéo – Nos réalisations</title>
+  <meta name="description" data-sg-path="meta.description" content="Solutions intelligentes pour l'électricité, l'eau et le chauffage. Électriciens, plombiers et chauffagistes certifiés pour les particuliers et professionnels — disponibles 24h/24 et 7j/7." />
+
+  <!-- Google Fonts: Manrope (matches source) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#EF7615',   /* orange accent */
+            ink:     '#0B212D',   /* dark teal bg */
+            ink2:    '#0F2A38',   /* slightly lighter teal */
+            bg:      '#F0F5F9',   /* light section bg */
+            muted:   '#5A6B74',   /* muted body text */
+            border:  '#E2E9EE',   /* card borders */
+          },
+          fontFamily: {
+            sans: ['"Manrope"', 'sans-serif'],
+          },
+          borderRadius: {
+            'xl2': '16px',
+            'xl3': '24px',
+          },
+        }
+      }
+    };
+  </script>
+
+  <!-- __SITE_CONTENT__ — single source of truth for all copy + image paths (DEMO content) -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+      meta: {
+        title: "Voltéo – Experts en électricité, plomberie et chauffage",
+        description: "Solutions intelligentes pour l'électricité, l'eau et le chauffage. Électriciens, plombiers et chauffagistes certifiés pour les particuliers et professionnels — disponibles 24h/24 et 7j/7."
+      },
+      brand: "Voltéo",
+      topbar: { phone: "(555) 120-4480" },
+      nav: {
+        links: ["Services", "Fonctionnement", "À propos", "FAQ"],
+        home: "Accueil",
+        portfolio: "Nos réalisations",
+        contact: "Contact & devis",
+        cta: "Nous contacter"
+      },
+      portfolioPage: {
+        label: "Notre savoir-faire",
+        title: "Nos réalisations",
+        intro: "Tableaux électriques, salles de bain, chaudières, rénovations complètes : découvrez une sélection de chantiers menés par nos équipes chez des particuliers et des professionnels.",
+        statValue: "+1 200",
+        statLabel: "interventions réalisées",
+        ctaTitle: "Votre projet ressemble à l'un de ces chantiers ?",
+        ctaText: "Parlons-en. Nous vous établissons un devis clair et gratuit, sans engagement.",
+        cta: "Demander un devis",
+        images: [
+          "/_templates/multi-trade/img/service-electrical.jpg",
+          "/_templates/multi-trade/img/service-plumbing.jpg",
+          "/_templates/multi-trade/img/service-heating.jpg",
+          "/_templates/multi-trade/img/process.jpg",
+          "/_templates/multi-trade/img/about.jpg",
+          "/_templates/multi-trade/img/trust.jpg",
+          "/_templates/multi-trade/img/hero.jpg",
+          "/_templates/multi-trade/img/cta.jpg",
+          "/_templates/multi-trade/img/service-plumbing.jpg",
+          "/_templates/multi-trade/img/service-heating.jpg"
+        ],
+        captions: [
+          "Remplacement de tableau électrique aux normes — maison individuelle",
+          "Réfection complète de plomberie — appartement rénové",
+          "Installation de chaudière à condensation — pavillon",
+          "Mise en sécurité électrique — local commercial",
+          "Rénovation salle de bain clé en main — particulier",
+          "Diagnostic et entretien chauffage — copropriété",
+          "Création de point lumineux et câblage — extension",
+          "Dépannage d'urgence après dégât des eaux — logement"
+        ]
+      },
+      contactPage: {
+        label: "Contact & devis",
+        title: "Contact & devis",
+        intro: "Une panne, un projet, une simple question ? Appelez-nous ou écrivez-nous : nous vous répondons rapidement et établissons votre devis gratuitement.",
+        phoneLabel: "Appelez-nous directement",
+        phone: "(555) 120-4480",
+        phoneNote: "Du lundi au samedi, 8h – 19h · Urgences 24h/24 et 7j/7",
+        emailLabel: "Écrivez-nous",
+        email: "contact@volteo.com",
+        zonesLabel: "Zones d'intervention",
+        zones: "Nous intervenons dans toute la ville et les communes avoisinantes, dans un rayon de 30 km autour de notre atelier.",
+        promiseLabel: "Notre engagement",
+        promiseTitle: "Une réponse sous 2 heures ouvrées",
+        promiseText: "Chaque demande est traitée par un technicien, jamais par un standard automatisé. Devis clair, tarif fixe, aucune surprise.",
+        reassurance: [
+          "Devis gratuit et sans engagement",
+          "Techniciens certifiés et assurés",
+          "Délai d'intervention garanti",
+          "Tarifs transparents communiqués avant travaux"
+        ],
+        cta: "Demander un devis",
+        ctaNote: "Réponse garantie sous 2 heures ouvrées",
+        image: "/_templates/multi-trade/img/cta.jpg"
+      },
+      footer: {
+        tagline: "Nous servons avec fierté la région et les communes avoisinantes, en proposant des services à domicile rapides et fiables.",
+        phone: "(555) 120-4480",
+        email: "contact@volteo.com",
+        columns: [
+          { heading: "Entreprise", links: ["Accueil", "Services", "À propos", "FAQ", "Nous contacter"] },
+          { heading: "Services", links: ["Dépannage électrique", "Solutions de plomberie", "Systèmes de chauffage"] },
+          { heading: "Mentions légales", links: ["Politique de confidentialité", "Conditions d'utilisation", "Liens utiles"] }
+        ],
+        copyright: "© 2026 Voltéo. Modèle de démonstration."
+      }
+    };
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Manrope', sans-serif; background: #0B212D; color: #fff; margin: 0; }
+
+    /* Nav underline */
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; left: 0; bottom: -3px; width: 0; height: 2px; background: #EF7615; transition: width .25s; }
+    .nav-link:hover::after { width: 100%; }
+
+    /* Gallery hover */
+    .pf-card { position: relative; overflow: hidden; }
+    .pf-card img { transition: transform .7s ease; }
+    .pf-card:hover img { transform: scale(1.06); }
+  </style>
+</head>
+<body class="antialiased bg-ink text-white">
+
+<!-- ───────── NAV ───────── -->
+<nav class="absolute top-0 inset-x-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" data-sg-page="/" class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M11.3 1.046a1 1 0 01.7.954v5h3a1 1 0 01.78 1.625l-7 9A1 1 0 017 18v-5H4a1 1 0 01-.78-1.625l7-9a1 1 0 011.08-.329z"/></svg>
+      </div>
+      <span class="text-white font-extrabold text-xl tracking-tight" data-sg-path="brand">Voltéo</span>
+    </a>
+    <!-- Links -->
+    <div class="hidden lg:flex items-center gap-8">
+      <a href="#" data-sg-page="/"         class="nav-link text-white/80 hover:text-white text-sm font-medium transition-colors" data-sg-path="nav.home">Accueil</a>
+      <a href="#" data-sg-page="portfolio" class="nav-link text-white font-semibold text-sm transition-colors" data-sg-path="nav.portfolio">Nos réalisations</a>
+      <a href="#" data-sg-page="contact"   class="nav-link text-white/80 hover:text-white text-sm font-medium transition-colors" data-sg-path="nav.contact">Contact &amp; devis</a>
+    </div>
+    <div class="flex items-center gap-5">
+      <a href="#" data-sg-page="contact" class="hidden sm:inline-flex items-center gap-2 text-white/80 hover:text-white text-sm font-medium">
+        <svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+        <span data-sg-path="topbar.phone">(555) 120-4480</span>
+      </a>
+      <a href="#" data-sg-page="contact" class="bg-primary text-white font-semibold text-sm px-5 py-2.5 rounded-full hover:brightness-110 transition-all" data-sg-path="nav.cta">Nous contacter</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ───────── PAGE HEADER ───────── -->
+<section class="relative bg-ink overflow-hidden pt-40 pb-20 px-6">
+  <div class="absolute inset-0 opacity-20" data-sg-parallax>
+    <img data-sg-img="portfolioPage.images[6]" src="img/hero.jpg" alt="" class="w-full h-full object-cover" />
+    <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/90 to-ink/70"></div>
+  </div>
+  <div class="relative max-w-3xl mx-auto text-center" data-sg-reveal>
+    <span class="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider mb-6">
+      <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+      <span data-sg-path="portfolioPage.label">Notre savoir-faire</span>
+    </span>
+    <h1 class="text-white font-extrabold text-4xl md:text-6xl leading-[1.05] mb-6" data-sg-path="portfolioPage.title">Nos réalisations</h1>
+    <p class="text-white/70 text-lg max-w-2xl mx-auto" data-sg-path="portfolioPage.intro">Tableaux électriques, salles de bain, chaudières, rénovations complètes : découvrez une sélection de chantiers menés par nos équipes chez des particuliers et des professionnels.</p>
+    <div class="mt-10 inline-flex items-baseline gap-3">
+      <span class="text-primary font-extrabold text-4xl" data-sg-path="portfolioPage.statValue">+1 200</span>
+      <span class="text-white/60 text-sm" data-sg-path="portfolioPage.statLabel">interventions réalisées</span>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── GALLERY ───────── -->
+<section class="bg-white text-ink py-20 px-6">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    <!-- 0 (large) -->
+    <figure class="pf-card rounded-xl3 sm:col-span-2 h-[420px]" data-sg-reveal>
+      <img data-sg-img="portfolioPage.images[0]" src="img/service-electrical.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent"></div>
+      <figcaption class="absolute bottom-0 inset-x-0 p-6 text-white text-sm font-medium" data-sg-path="portfolioPage.captions[0]">Remplacement de tableau électrique aux normes — maison individuelle</figcaption>
+    </figure>
+    <!-- 1 -->
+    <figure class="pf-card rounded-xl3 h-[420px]" data-sg-reveal>
+      <img data-sg-img="portfolioPage.images[1]" src="img/service-plumbing.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent"></div>
+      <figcaption class="absolute bottom-0 inset-x-0 p-6 text-white text-sm font-medium" data-sg-path="portfolioPage.captions[1]">Réfection complète de plomberie — appartement rénové</figcaption>
+    </figure>
+    <!-- 2 -->
+    <figure class="pf-card rounded-xl3 h-[340px]" data-sg-reveal>
+      <img data-sg-img="portfolioPage.images[2]" src="img/service-heating.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent"></div>
+      <figcaption class="absolute bottom-0 inset-x-0 p-6 text-white text-sm font-medium" data-sg-path="portfolioPage.captions[2]">Installation de chaudière à condensation — pavillon</figcaption>
+    </figure>
+    <!-- 3 -->
+    <figure class="pf-card rounded-xl3 h-[340px]" data-sg-reveal>
+      <img data-sg-img="portfolioPage.images[3]" src="img/process.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent"></div>
+      <figcaption class="absolute bottom-0 inset-x-0 p-6 text-white text-sm font-medium" data-sg-path="portfolioPage.captions[3]">Mise en sécurité électrique — local commercial</figcaption>
+    </figure>
+    <!-- 4 -->
+    <figure class="pf-card rounded-xl3 h-[340px]" data-sg-reveal>
+      <img data-sg-img="portfolioPage.images[4]" src="img/about.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent"></div>
+      <figcaption class="absolute bottom-0 inset-x-0 p-6 text-white text-sm font-medium" data-sg-path="portfolioPage.captions[4]">Rénovation salle de bain clé en main — particulier</figcaption>
+    </figure>
+    <!-- 5 -->
+    <figure class="pf-card rounded-xl3 h-[340px]" data-sg-reveal>
+      <img data-sg-img="portfolioPage.images[5]" src="img/trust.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent"></div>
+      <figcaption class="absolute bottom-0 inset-x-0 p-6 text-white text-sm font-medium" data-sg-path="portfolioPage.captions[5]">Diagnostic et entretien chauffage — copropriété</figcaption>
+    </figure>
+    <!-- 6 -->
+    <figure class="pf-card rounded-xl3 h-[420px]" data-sg-reveal>
+      <img data-sg-img="portfolioPage.images[6]" src="img/hero.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent"></div>
+      <figcaption class="absolute bottom-0 inset-x-0 p-6 text-white text-sm font-medium" data-sg-path="portfolioPage.captions[6]">Création de point lumineux et câblage — extension</figcaption>
+    </figure>
+    <!-- 7 (large) -->
+    <figure class="pf-card rounded-xl3 sm:col-span-2 h-[420px]" data-sg-reveal>
+      <img data-sg-img="portfolioPage.images[7]" src="img/cta.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent"></div>
+      <figcaption class="absolute bottom-0 inset-x-0 p-6 text-white text-sm font-medium" data-sg-path="portfolioPage.captions[7]">Dépannage d'urgence après dégât des eaux — logement</figcaption>
+    </figure>
+    <!-- 8 -->
+    <figure class="pf-card rounded-xl3 h-[340px]" data-sg-reveal>
+      <img data-sg-img="portfolioPage.images[8]" src="img/service-plumbing.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-t from-ink/40 to-transparent"></div>
+    </figure>
+    <!-- 9 -->
+    <figure class="pf-card rounded-xl3 h-[340px]" data-sg-reveal>
+      <img data-sg-img="portfolioPage.images[9]" src="img/service-heating.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-t from-ink/40 to-transparent"></div>
+    </figure>
+  </div>
+</section>
+
+<!-- ───────── CTA BANNER ───────── -->
+<section class="bg-bg text-ink py-20 px-6">
+  <div class="max-w-5xl mx-auto bg-ink rounded-xl3 px-8 py-12 md:px-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6" data-sg-reveal>
+    <div>
+      <h2 class="text-white font-extrabold text-2xl md:text-3xl mb-2 leading-snug" data-sg-path="portfolioPage.ctaTitle">Votre projet ressemble à l'un de ces chantiers ?</h2>
+      <p class="text-white/60 text-sm md:text-base max-w-md" data-sg-path="portfolioPage.ctaText">Parlons-en. Nous vous établissons un devis clair et gratuit, sans engagement.</p>
+    </div>
+    <a href="#" data-sg-page="contact" class="inline-flex items-center gap-3 bg-primary text-white font-semibold px-7 py-4 rounded-full hover:brightness-110 transition-all text-sm whitespace-nowrap">
+      <span data-sg-path="portfolioPage.cta">Demander un devis</span>
+      <span class="w-6 h-6 bg-white rounded-full flex items-center justify-center"><svg class="w-3 h-3 text-primary" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+  </div>
+</section>
+
+<!-- ───────── FOOTER ───────── -->
+<footer class="bg-ink2 text-white pt-16 pb-8 px-6 border-t border-white/5">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-4 gap-12 mb-12">
+      <div class="md:col-span-1">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M11.3 1.046a1 1 0 01.7.954v5h3a1 1 0 01.78 1.625l-7 9A1 1 0 017 18v-5H4a1 1 0 01-.78-1.625l7-9a1 1 0 011.08-.329z"/></svg>
+          </div>
+          <span class="font-extrabold text-xl" data-sg-path="brand">Voltéo</span>
+        </div>
+        <p class="text-white/50 text-sm leading-relaxed mb-5" data-sg-path="footer.tagline">We proudly serve the local area and surrounding communities with fast and reliable home services.</p>
+        <p class="text-white/70 text-sm font-medium" data-sg-path="footer.phone">(555) 120-4480</p>
+        <p class="text-white/50 text-sm" data-sg-path="footer.email">contact@volteo.com</p>
+      </div>
+
+      <div>
+        <h4 class="font-semibold text-sm mb-4 text-white/80" data-sg-path="footer.columns[0].heading">Entreprise</h4>
+        <ul class="space-y-2">
+          <li><a href="#" data-sg-page="/" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[0]">Accueil</a></li>
+          <li><a href="#" data-sg-page="/" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[1]">Services</a></li>
+          <li><a href="#" data-sg-page="/" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[2]">À propos</a></li>
+          <li><a href="#" data-sg-page="/" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[3]">FAQ</a></li>
+          <li><a href="#" data-sg-page="contact" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[4]">Nous contacter</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-semibold text-sm mb-4 text-white/80" data-sg-path="footer.columns[1].heading">Services</h4>
+        <ul class="space-y-2">
+          <li><a href="#" data-sg-page="/" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[1].links[0]">Dépannage électrique</a></li>
+          <li><a href="#" data-sg-page="/" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[1].links[1]">Solutions de plomberie</a></li>
+          <li><a href="#" data-sg-page="/" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[1].links[2]">Systèmes de chauffage</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-semibold text-sm mb-4 text-white/80" data-sg-path="footer.columns[2].heading">Mentions légales</h4>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[2].links[0]">Politique de confidentialité</a></li>
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[2].links[1]">Conditions d'utilisation</a></li>
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[2].links[2]">Liens utiles</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 pt-8 text-center">
+      <p class="text-white/30 text-xs" data-sg-path="footer.copyright">© 2026 Voltéo. Modèle de démonstration.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ───────── STANDARD HYDRATION + GSAP BLOCK ───────── -->
+<script>
+  (function () {
+    var C = window.__SITE_CONTENT__ || {};
+    function get(p) {
+      return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+        .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+    }
+    document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-path'));
+      if (v != null && typeof v !== 'object') el.textContent = v;
+    });
+    document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-img'));
+      if (v == null) return;
+      if (el.tagName === 'IMG') el.src = v;
+      else el.style.backgroundImage = "url('" + v + "')";
+    });
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+        gsap.from(el, {
+          opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+        });
+      });
+      gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+        gsap.to(el, {
+          yPercent: -12, ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+      });
+      // ROBUSTESSE : recalcule positions après chargement images + filet anti-page-blanche
+      window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+      setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+      setTimeout(function () {
+        document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+          if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+        });
+      }, 2200);
+    }
+  })();
+</script>
+</body>
+</html>

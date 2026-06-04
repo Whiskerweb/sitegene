@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-sg-path="meta.title">Eco Garden Care – Expertise en Jardinage & Aménagement Paysager</title>
+  <meta name="description" data-sg-path="meta.description" content="Services professionnels d’entretien de jardin et de pelouse. Outils écologiques, jardiniers experts et assistance 24/7." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary:   '#BEDD25', /* lime accent */
+            ink:       '#1F1F1F', /* near-black text */
+            forest:    '#274839', /* dark green */
+            bg:        '#F2F1E7', /* warm cream bg */
+            muted:     '#606060', /* secondary text */
+            white:     '#FFFFFF',
+          },
+          fontFamily: {
+            sans:    ['Inter', 'sans-serif'],
+            display: ['Playfair Display', 'serif'],
+          },
+          spacing: {
+            '86':  '86px',
+            '100': '100px',
+            '110': '110px',
+            '120': '120px',
+            '150': '150px',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background-color: #F2F1E7; color: #1F1F1F; font-family: 'Inter', sans-serif; }
+
+    /* Navbar */
+    .nav-link { font-size: 14px; font-weight: 500; color: #1F1F1F; text-decoration: none; transition: color .2s; }
+    .nav-link:hover { color: #274839; }
+
+    /* Buttons */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #BEDD25; color: #1F1F1F; font-size: 15px; font-weight: 600;
+      padding: 12px 24px; border-radius: 50px; text-decoration: none;
+      transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: #afc91f; transform: translateY(-1px); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1.5px solid #1F1F1F; color: #1F1F1F; font-size: 15px; font-weight: 600;
+      padding: 12px 24px; border-radius: 50px; text-decoration: none;
+      transition: background .2s, color .2s;
+    }
+    .btn-outline:hover { background: #1F1F1F; color: #F2F1E7; }
+    .btn-dark {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #274839; color: #FFFFFF; font-size: 15px; font-weight: 600;
+      padding: 12px 24px; border-radius: 50px; text-decoration: none;
+      transition: background .2s;
+    }
+    .btn-dark:hover { background: #1d3429; }
+
+    /* Section labels */
+    .section-label {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 14px; font-weight: 500; color: #1F1F1F;
+      background: rgba(190,221,37,.18); border-radius: 50px;
+      padding: 6px 14px;
+    }
+    .section-label::before {
+      content: ''; display: inline-block;
+      width: 8px; height: 8px; border-radius: 50%; background: #BEDD25;
+    }
+
+    /* Contact cards */
+    .contact-card {
+      background: #fff; border-radius: 16px;
+      padding: 24px; border: 1px solid rgba(31,31,31,.08);
+    }
+    .contact-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: #274839; display: flex; align-items: center; justify-content: center;
+    }
+    .reassure-item { display: flex; gap: 10px; align-items: flex-start; }
+
+    /* Footer */
+    footer { background: #274839; color: #F2F1E7; }
+    .footer-link { font-size: 14px; color: rgba(242,241,231,.7); text-decoration: none; transition: color .2s; }
+    .footer-link:hover { color: #BEDD25; }
+  </style>
+
+  <!-- ════════════════════════════════════════════════
+       SINGLE SOURCE OF TRUTH — edit here or via Akyra
+  ════════════════════════════════════════════════ -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+  "meta": {
+    "title": "Eco Garden Care – Expertise en Jardinage & Aménagement Paysager",
+    "description": "Services professionnels d’entretien de jardin et de pelouse. Outils écologiques, jardiniers experts et assistance 24/7."
+  },
+  "brand": "Eco Garden Care",
+  "nav": [
+    "À propos",
+    "Services",
+    "Contact"
+  ],
+  "navCta": "Devis gratuit",
+  "navPortfolio": "Nos réalisations",
+  "navContact": "Contact & devis",
+  "hero": {
+    "tagline": "Transformez votre espace extérieur en toute simplicité",
+    "description": "Créez un espace extérieur plus vert et plus beau grâce à notre expertise en jardinage et en aménagement paysager.",
+    "cta": "Réservez votre service",
+    "image": "/_templates/eco-garden-care/img/hero.jpg"
+  },
+  "features": [
+    {
+      "icon": "🌿",
+      "title": "Jardiniers qualifiés",
+      "text": "Nos experts mettent leur savoir-faire au service de votre jardin pour le sublimer dès aujourd’hui."
+    },
+    {
+      "icon": "🌱",
+      "title": "Outils écologiques",
+      "text": "Nous utilisons des outils respectueux de l’environnement et des méthodes durables pour prendre soin de votre jardin."
+    },
+    {
+      "icon": "💬",
+      "title": "Support client 24/7",
+      "text": "Notre équipe est disponible à tout moment pour répondre à vos questions et vous accompagner."
+    }
+  ],
+  "about": {
+    "label": "À propos",
+    "title": "Engagés pour des espaces verts toujours plus beaux",
+    "description": "Nous créons et entretenons des espaces extérieurs frais, dynamiques et magnifiquement conçus, avec passion et expertise.",
+    "values": [
+      {
+        "title": "Qualité irréprochable",
+        "text": "Un service fiable, une communication claire et des résultats constants."
+      },
+      {
+        "title": "Soins sur mesure",
+        "text": "Des prestations adaptées à votre espace extérieur et à votre mode de vie."
+      }
+    ],
+    "cta": "Notre histoire",
+    "image": "/_templates/eco-garden-care/img/about.jpg"
+  },
+  "services": {
+    "label": "Nos services",
+    "title": "Nos expertises",
+    "items": [
+      {
+        "title": "Taille des arbustes",
+        "text": "Offrez à votre jardin un entretien impeccable grâce à notre service de taille d’arbustes. Prenez rendez-vous dès aujourd’hui.",
+        "image": "/_templates/eco-garden-care/img/service-shrub.jpg"
+      },
+      {
+        "title": "Entretien de jardin",
+        "text": "Avec notre prise en charge complète, votre jardin reste luxuriant, harmonieux et parfaitement entretenu.",
+        "image": "/_templates/eco-garden-care/img/service-lawn.jpg"
+      },
+      {
+        "title": "Aménagement paysager",
+        "text": "Valorisez votre propriété avec nos solutions d’aménagement paysager haut de gamme. Contactez-nous.",
+        "image": "/_templates/eco-garden-care/img/service-maintenance.jpg"
+      }
+    ],
+    "cta": "Découvrir nos services"
+  },
+  "stats": [
+    {
+      "number": "169",
+      "label": "Pelouses entretenues"
+    },
+    {
+      "number": "51",
+      "label": "Projets d’aménagement"
+    },
+    {
+      "number": "34",
+      "label": "Taux de satisfaction client %"
+    },
+    {
+      "number": "169",
+      "label": "Clients satisfaits"
+    }
+  ],
+  "cta_mid": {
+    "title": "Embellissez votre extérieur naturellement",
+    "text": "Notre équipe utilise des méthodes durables, des outils de qualité et des techniques respectueuses des plantes pour des pelouses éclatantes.",
+    "badge1": "Audit gratuit de votre jardin",
+    "badge2": "Outils écologiques et traitements sûrs",
+    "cta": "Devis gratuit",
+    "image": "/_templates/eco-garden-care/img/cta-bg.jpg"
+  },
+  "process": {
+    "label": "Notre méthode",
+    "title": "Fidèles à 12k clients satisfaits",
+    "image": "/_templates/eco-garden-care/img/process.jpg",
+    "steps": [
+      {
+        "number": "001",
+        "title": "Devis détaillé",
+        "text": "Nous vous fournissons une estimation précise après inspection de votre espace."
+      },
+      {
+        "number": "002",
+        "title": "Planification du service",
+        "text": "Choisissez une date et un horaire qui vous conviennent pour l’intervention."
+      },
+      {
+        "number": "003",
+        "title": "Réalisation du service",
+        "text": "Notre équipe intervient avec professionnalisme et minutie pour un résultat optimal."
+      },
+      {
+        "number": "004",
+        "title": "Suivi post-service",
+        "text": "Nous restons à votre écoute pour garantir votre entière satisfaction."
+      }
+    ]
+  },
+  "testimonials": {
+    "label": "Témoignages",
+    "title": "Appréciés de nos clients",
+    "subtitle": "Nos clients nous font confiance pour entretenir leurs jardins et pelouses avec dévouement, compétence et souci du détail.",
+    "items": [
+      {
+        "quote": "Un service exceptionnel ! Ma pelouse n’a jamais été aussi verte et saine. L’équipe a été professionnelle, ponctuelle et méticuleuse. Mon jardin est désormais un véritable havre de paix, coloré et vibrant.",
+        "name": "Daniel K.",
+        "role": "Commercial Property Manager",
+        "avatar": "/_templates/eco-garden-care/img/testimonial1.jpg"
+      },
+      {
+        "quote": "Un travail incroyable ! Notre pelouse fait l’admiration du quartier. Ponctuels, courtois et toujours irréprochables, je recommande leurs services à quiconque cherche un entretien de pelouse fiable.",
+        "name": "Angela R.",
+        "role": "Asset Management Specialist",
+        "avatar": "/_templates/eco-garden-care/img/testimonial2.jpg"
+      },
+      {
+        "quote": "Ils ont métamorphosé notre propriété en un paysage époustouflant. Leur équipe est professionnelle, efficace et attentive aux moindres détails. Je les recommande vivement pour un entretien de pelouse d’excellence.",
+        "name": "Jessica P.",
+        "role": "Property Investment Advisor",
+        "avatar": "/_templates/eco-garden-care/img/testimonial3.jpg"
+      }
+    ]
+  },
+  "gallery": {
+    "label": "Réalisations",
+    "title": "Notre galerie d’aménagements",
+    "cta": "Voir la galerie complète",
+    "images": [
+      "/_templates/eco-garden-care/img/gallery1.jpg",
+      "/_templates/eco-garden-care/img/gallery2.jpg",
+      "/_templates/eco-garden-care/img/gallery3.jpg",
+      "/_templates/eco-garden-care/img/gallery4.jpg"
+    ]
+  },
+  "faq": {
+    "label": "FAQ",
+    "title": "Questions fréquentes",
+    "cta_title": "Transformez votre jardin dès aujourd’hui",
+    "cta_text": "Donnez vie à votre jardin grâce à des soins experts et des solutions écologiques. Notre équipe de jardiniers qualifiés est prête à s’occuper de tout, de l’entretien courant aux projets plus ambitieux.",
+    "cta": "Nous contacter",
+    "items": [
+      {
+        "q": "À quelle fréquence dois-je faire entretenir ma pelouse ?",
+        "a": "Cela dépend de votre type de pelouse et de ses besoins, mais un entretien hebdomadaire ou bi-hebdomadaire permet de garder un espace extérieur sain et impeccable."
+      },
+      {
+        "q": "Quels sont les avantages de l’aération de ma pelouse ?",
+        "a": "L’aération réduit la compaction du sol, améliore l’absorption de l’eau et des nutriments, favorise un enracinement plus profond et donne une pelouse plus dense et plus résistante."
+      },
+      {
+        "q": "Quand est-il préférable de fertiliser ma pelouse ?",
+        "a": "Pour la plupart des gazons, le printemps et l’automne sont les périodes idéales. La fertilisation printanière stimule la croissance, tandis que celle d’automne renforce les racines avant l’hiver."
+      },
+      {
+        "q": "Comment lutter contre les mauvaises herbes dans ma pelouse ?",
+        "a": "Une tonte régulière, un arrosage adapté et une pelouse dense sont les meilleures défenses naturelles. Nous proposons également des traitements ciblés contre les mauvaises herbes."
+      },
+      {
+        "q": "Quel type de gazon convient le mieux à mon climat ?",
+        "a": "Cela dépend de votre région et de l’ensoleillement. Nos experts analyseront votre jardin et vous conseilleront la variété de gazon la plus adaptée lors de notre audit gratuit."
+      }
+    ]
+  },
+  "blog": {
+    "label": "Vie verte",
+    "title": "Le Blog des Experts",
+    "posts": [
+      {
+        "date": "10 janv. 2026",
+        "title": "Sublimez votre extérieur avec nos conseils d’experts",
+        "image": "/_templates/eco-garden-care/img/blog1.jpg"
+      },
+      {
+        "date": "8 janv. 2026",
+        "title": "Métamorphosez votre jardin avec nos astuces saisonnières",
+        "image": "/_templates/eco-garden-care/img/blog2.jpg"
+      },
+      {
+        "date": "19 janv. 2026",
+        "title": "Optimisez votre espace grâce aux solutions de jardinage vertical",
+        "image": "/_templates/eco-garden-care/img/blog3.jpg"
+      }
+    ]
+  },
+  "footer_cta": {
+    "title": "Offrez une nouvelle vie à votre jardin avec nos expert",
+    "text": "Laissez-vous séduire par un jardin plus vert et plus harmonieux, conçu sur mesure pour refléter vos envies.",
+    "cta": "Demandez un devis gratuit"
+  },
+  "footer": {
+    "tagline": "Nous proposons des services d’entretien d’espaces verts et de pelouses, conçus pour votre entière satisfaction.",
+    "quickLinks": [
+      "À propos",
+      "Nos prestations",
+      "Contactez-nous",
+      "Notre blog"
+    ],
+    "services": [
+      "Tonte de pelouse",
+      "Entretien de jardin",
+      "Taille d’arbres et arbustes",
+      "Nettoyages saisonniers"
+    ],
+    "email": "info@gardencare.com",
+    "phone": "+1 (000) 123-4567",
+    "address": "123 Greenway Street, City Name",
+    "hours": "Lun – Sam : 8 h 00 – 18 h 00",
+    "copyright": "© 2026 Eco Garden Care. Tous droits réservés."
+  },
+  "portfolioPage": {
+    "title": "Nos réalisations",
+    "intro": "Chaque jardin raconte une histoire. Découvrez nos chantiers récents : tontes, tailles, créations paysagères et entretiens menés avec soin, partout dans la région.",
+    "kicker": "Galerie",
+    "ctaTitle": "Votre projet mérite le même soin",
+    "ctaText": "Inspiré par nos réalisations ? Parlons de votre extérieur. Audit gratuit et devis détaillé sous 24 h.",
+    "cta": "Demander un devis",
+    "captions": [
+      "Création d’un massif fleuri durable",
+      "Tonte et remise en forme de pelouse",
+      "Taille raisonnée de haies et arbustes",
+      "Aménagement d’une allée paysagère",
+      "Entretien complet d’un jardin de ville",
+      "Plantation d’arbres et de vivaces",
+      "Nettoyage saisonnier d’automne",
+      "Pose de gazon et engazonnement",
+      "Réfection d’une bordure de jardin",
+      "Mise en valeur d’une terrasse végétalisée"
+    ],
+    "images": [
+      "/_templates/eco-garden-care/img/gallery1.jpg",
+      "/_templates/eco-garden-care/img/gallery2.jpg",
+      "/_templates/eco-garden-care/img/gallery3.jpg",
+      "/_templates/eco-garden-care/img/gallery4.jpg",
+      "/_templates/eco-garden-care/img/service-shrub.jpg",
+      "/_templates/eco-garden-care/img/service-lawn.jpg",
+      "/_templates/eco-garden-care/img/service-maintenance.jpg",
+      "/_templates/eco-garden-care/img/about.jpg",
+      "/_templates/eco-garden-care/img/process.jpg",
+      "/_templates/eco-garden-care/img/cta-bg.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Contact & devis",
+    "intro": "Un projet de jardin, une pelouse à entretenir ou une haie à tailler ? Décrivez-nous votre besoin : nous revenons vers vous rapidement avec un devis clair et sans engagement.",
+    "kicker": "Parlons de votre extérieur",
+    "phoneLabel": "Appelez-nous directement",
+    "phone": "+1 (000) 123-4567",
+    "emailLabel": "Écrivez-nous",
+    "email": "info@gardencare.com",
+    "zonesLabel": "Zones d’intervention",
+    "zones": "Centre-ville, périphérie et communes alentour dans un rayon de 30 km.",
+    "hoursLabel": "Horaires",
+    "hours": "Lun – Sam : 8 h 00 – 18 h 00",
+    "promiseTitle": "Réponse sous 24 h",
+    "promiseText": "Nous nous engageons à répondre à chaque demande sous 24 heures ouvrées, avec un audit gratuit de votre jardin avant tout devis.",
+    "reassure1": "Devis gratuit et détaillé",
+    "reassure2": "Audit du jardin offert",
+    "reassure3": "Jardiniers assurés et qualifiés",
+    "cta": "Demander un devis"
+  }
+};
+  </script>
+</head>
+<body>
+
+<!-- ═══════════════════════════ NAVBAR ═══════════════════════════ -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-bg/90 backdrop-blur-sm border-b border-ink/5">
+  <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" data-sg-page="/" class="flex items-center gap-2 text-[18px] font-semibold text-ink no-underline">
+      <span class="w-7 h-7 bg-primary rounded-full flex items-center justify-center text-xs">🌿</span>
+      <span data-sg-path="brand">Eco Garden Care</span>
+    </a>
+
+    <!-- Nav links -->
+    <nav class="hidden md:flex items-center gap-8">
+      <a href="#" data-sg-page="/" class="nav-link">Accueil</a>
+      <a href="#" data-sg-page="portfolio" class="nav-link" data-sg-path="navPortfolio">Nos réalisations</a>
+      <a href="#" data-sg-page="contact"  class="nav-link" data-sg-path="navContact">Contact &amp; devis</a>
+    </nav>
+
+    <!-- CTA -->
+    <a href="#" data-sg-page="contact" class="btn-primary text-sm hidden md:inline-flex" data-sg-path="navCta">
+      Devis gratuit
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+
+    <!-- Mobile menu toggle -->
+    <button class="md:hidden p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="#1F1F1F" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-bg border-t border-ink/5 px-6 py-4 flex flex-col gap-4">
+    <a href="#" data-sg-page="/" class="nav-link">Accueil</a>
+    <a href="#" data-sg-page="portfolio" class="nav-link" data-sg-path="navPortfolio">Nos réalisations</a>
+    <a href="#" data-sg-page="contact"  class="nav-link" data-sg-path="navContact">Contact &amp; devis</a>
+    <a href="#" data-sg-page="contact"  class="btn-primary self-start" data-sg-path="navCta">Devis gratuit</a>
+  </div>
+</header>
+
+<!-- ═══════════════════════════ PAGE HEADER ═══════════════════════════ -->
+<section class="pt-32 pb-12 bg-bg">
+  <div class="max-w-6xl mx-auto px-6 text-center" data-sg-reveal>
+    <span class="section-label mb-5 inline-flex" data-sg-path="contactPage.kicker">Parlons de votre extérieur</span>
+    <h1 class="text-4xl md:text-[56px] font-medium leading-tight text-ink mb-6"
+        style="font-family:'Playfair Display',serif;" data-sg-path="contactPage.title">
+      Contact &amp; devis
+    </h1>
+    <p class="text-[18px] text-muted max-w-2xl mx-auto leading-relaxed" data-sg-path="contactPage.intro">
+      Un projet de jardin ou une pelouse à entretenir ? Décrivez-nous votre besoin, nous revenons vers vous rapidement.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ PHONE HIGHLIGHT ═══════════════════════════ -->
+<section class="pb-8 bg-bg">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="bg-forest text-white rounded-3xl p-10 md:p-12 text-center" data-sg-reveal>
+      <p class="text-primary text-sm font-medium uppercase tracking-wider mb-3" data-sg-path="contactPage.phoneLabel">Appelez-nous directement</p>
+      <a href="tel:+10001234567" class="block text-4xl md:text-[56px] font-medium no-underline text-white hover:text-primary transition-colors"
+         style="font-family:'Playfair Display',serif;" data-sg-path="contactPage.phone">
+        +1 (000) 123-4567
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ CONTACT DETAILS ═══════════════════════════ -->
+<section class="py-12 bg-bg">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <!-- Email -->
+      <div class="contact-card" data-sg-reveal>
+        <div class="contact-icon mb-4">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M2 4a1 1 0 011-1h10a1 1 0 011 1v8a1 1 0 01-1 1H3a1 1 0 01-1-1V4z" stroke="#BEDD25" stroke-width="1.4"/><path d="M2 4l6 5 6-5" stroke="#BEDD25" stroke-width="1.4"/></svg>
+        </div>
+        <h3 class="text-[16px] font-medium text-ink mb-2" data-sg-path="contactPage.emailLabel">Écrivez-nous</h3>
+        <a href="mailto:info@gardencare.com" class="text-muted text-sm hover:text-forest transition-colors no-underline" data-sg-path="contactPage.email">info@gardencare.com</a>
+      </div>
+
+      <!-- Zones -->
+      <div class="contact-card" data-sg-reveal>
+        <div class="contact-icon mb-4">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C5.5 1.5 3.5 3.4 3.5 5.8c0 3.2 4.5 8.2 4.5 8.2s4.5-5 4.5-8.2C12.5 3.4 10.5 1.5 8 1.5z" stroke="#BEDD25" stroke-width="1.4"/><circle cx="8" cy="6" r="1.6" stroke="#BEDD25" stroke-width="1.4"/></svg>
+        </div>
+        <h3 class="text-[16px] font-medium text-ink mb-2" data-sg-path="contactPage.zonesLabel">Zones d’intervention</h3>
+        <p class="text-muted text-sm leading-relaxed" data-sg-path="contactPage.zones">Centre-ville, périphérie et communes alentour dans un rayon de 30 km.</p>
+      </div>
+
+      <!-- Hours -->
+      <div class="contact-card" data-sg-reveal>
+        <div class="contact-icon mb-4">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M8 1.5A5 5 0 118 11.5a5 5 0 010-10zm0 2.5v2.25l1.5 1.5" stroke="#BEDD25" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <h3 class="text-[16px] font-medium text-ink mb-2" data-sg-path="contactPage.hoursLabel">Horaires</h3>
+        <p class="text-muted text-sm leading-relaxed" data-sg-path="contactPage.hours">Lun – Sam : 8 h 00 – 18 h 00</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ PROMISE + REASSURANCE ═══════════════════════════ -->
+<section class="py-16 bg-bg">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+
+      <!-- Promise -->
+      <div data-sg-reveal>
+        <span class="section-label mb-4 inline-flex" data-sg-path="contactPage.promiseTitle">Réponse sous 24 h</span>
+        <p class="text-muted text-[16px] leading-relaxed mb-8" data-sg-path="contactPage.promiseText">
+          Nous nous engageons à répondre à chaque demande sous 24 heures ouvrées, avec un audit gratuit de votre jardin avant tout devis.
+        </p>
+
+        <!-- Reassurance points -->
+        <div class="space-y-4">
+          <div class="reassure-item">
+            <div class="w-7 h-7 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#1F1F1F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="text-ink text-sm font-medium" data-sg-path="contactPage.reassure1">Devis gratuit et détaillé</span>
+          </div>
+          <div class="reassure-item">
+            <div class="w-7 h-7 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#1F1F1F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="text-ink text-sm font-medium" data-sg-path="contactPage.reassure2">Audit du jardin offert</span>
+          </div>
+          <div class="reassure-item">
+            <div class="w-7 h-7 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#1F1F1F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="text-ink text-sm font-medium" data-sg-path="contactPage.reassure3">Jardiniers assurés et qualifiés</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA card -->
+      <div class="bg-forest text-white rounded-3xl p-10 flex flex-col justify-center text-center md:text-left" data-sg-reveal>
+        <h3 class="text-2xl md:text-3xl font-medium mb-4" style="font-family:'Playfair Display',serif;" data-sg-path="contactPage.kicker">
+          Parlons de votre extérieur
+        </h3>
+        <p class="text-white/70 text-sm leading-relaxed mb-8" data-sg-path="contactPage.intro">
+          Un projet de jardin ou une pelouse à entretenir ? Décrivez-nous votre besoin, nous revenons vers vous rapidement.
+        </p>
+        <a href="mailto:info@gardencare.com?subject=Demande%20de%20devis%20jardin" class="btn-primary self-center md:self-start" data-sg-path="contactPage.cta">
+          Demander un devis
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+<footer class="bg-forest text-white border-t border-white/10">
+  <div class="max-w-6xl mx-auto px-6 py-16">
+    <div class="grid md:grid-cols-4 gap-10">
+      <!-- Brand col -->
+      <div class="md:col-span-1">
+        <a href="#" data-sg-page="/" class="flex items-center gap-2 mb-4 no-underline">
+          <span class="w-7 h-7 bg-primary rounded-full flex items-center justify-center text-xs">🌿</span>
+          <span class="text-white font-semibold text-[16px]" data-sg-path="brand">Eco Garden Care</span>
+        </a>
+        <p class="text-white/60 text-sm leading-relaxed mb-6" data-sg-path="footer.tagline">
+          Nous proposons des services d’entretien d’espaces verts et de pelouses, conçus pour votre entière satisfaction.
+        </p>
+        <a href="#" data-sg-page="contact" class="btn-primary text-sm" data-sg-path="navCta">Devis gratuit</a>
+      </div>
+
+      <!-- Quick links -->
+      <div>
+        <h5 class="text-white font-medium mb-4 text-sm uppercase tracking-wider">Quick Links</h5>
+        <ul class="space-y-3">
+          <li><a href="#" data-sg-page="/"         class="footer-link">Accueil</a></li>
+          <li><a href="#" data-sg-page="portfolio" class="footer-link" data-sg-path="navPortfolio">Nos réalisations</a></li>
+          <li><a href="#" data-sg-page="contact"   class="footer-link" data-sg-path="navContact">Contact &amp; devis</a></li>
+          <li><a href="#" data-sg-page="/"          class="footer-link" data-sg-path="footer.quickLinks[3]">Our Blog</a></li>
+        </ul>
+      </div>
+
+      <!-- Services col -->
+      <div>
+        <h5 class="text-white font-medium mb-4 text-sm uppercase tracking-wider">Our Services</h5>
+        <ul class="space-y-3">
+          <li><a href="#" data-sg-page="/" class="footer-link" data-sg-path="footer.services[0]">Lawn Mowing</a></li>
+          <li><a href="#" data-sg-page="/" class="footer-link" data-sg-path="footer.services[1]">Garden Maintenance</a></li>
+          <li><a href="#" data-sg-page="/" class="footer-link" data-sg-path="footer.services[2]">Tree &amp; Shrub Trimming</a></li>
+          <li><a href="#" data-sg-page="/" class="footer-link" data-sg-path="footer.services[3]">Seasonal Cleanups</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact info -->
+      <div>
+        <h5 class="text-white font-medium mb-4 text-sm uppercase tracking-wider">Contact</h5>
+        <ul class="space-y-3">
+          <li>
+            <a class="footer-link flex gap-2 items-start" href="mailto:info@gardencare.com">
+              <svg class="mt-0.5 flex-shrink-0" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 4a1 1 0 011-1h10a1 1 0 011 1v8a1 1 0 01-1 1H3a1 1 0 01-1-1V4z" stroke="currentColor" stroke-width="1.4"/><path d="M2 4l6 5 6-5" stroke="currentColor" stroke-width="1.4"/></svg>
+              <span data-sg-path="footer.email">info@gardencare.com</span>
+            </a>
+          </li>
+          <li>
+            <a class="footer-link flex gap-2 items-start" href="tel:+10001234567">
+              <svg class="mt-0.5 flex-shrink-0" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 2.5A1.5 1.5 0 013.5 1h.879a1 1 0 01.95.684l.75 2.25a1 1 0 01-.274 1.05l-.98.98a9.04 9.04 0 004.21 4.21l.98-.98a1 1 0 011.05-.274l2.25.75A1 1 0 0114 10.621V11.5A1.5 1.5 0 0112.5 13C6.701 13 2 8.299 2 2.5z" stroke="currentColor" stroke-width="1.4"/></svg>
+              <span data-sg-path="footer.phone">+1 (000) 123-4567</span>
+            </a>
+          </li>
+          <li>
+            <span class="footer-link flex gap-2 items-start">
+              <svg class="mt-0.5 flex-shrink-0" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1.5A5 5 0 118 11.5a5 5 0 010-10zm0 2.5v2.25l1.5 1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <span data-sg-path="footer.hours">Mon – Sat: 8:00 AM – 6:00 PM</span>
+            </span>
+          </li>
+          <li>
+            <span class="footer-link flex gap-2 items-start">
+              <svg class="mt-0.5 flex-shrink-0" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM4.5 8h7" stroke="currentColor" stroke-width="1.4"/><path d="M8 4.5v7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <span data-sg-path="footer.address">123 Greenway Street, City Name</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 mt-12 pt-6 text-center">
+      <p class="text-white/40 text-xs" data-sg-path="footer.copyright">
+        © 2026 Eco Garden Care. All Rights Reserved.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     STANDARD HYDRATION + GSAP BLOCK — paste verbatim, do not modify
+═══════════════════════════════════════════════════════════════════ -->
+<script>
+  (function () {
+    var C = window.__SITE_CONTENT__ || {};
+    function get(p) {
+      return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+        .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+    }
+    // Hydrate les textes
+    document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-path'));
+      if (v != null && typeof v !== 'object') el.textContent = v;
+    });
+    // Hydrate les images (img.src ou background-image)
+    document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-img'));
+      if (v == null) return;
+      if (el.tagName === 'IMG') el.src = v;
+      else el.style.backgroundImage = "url('" + v + "')";
+    });
+    // Animations : reveal/parallax au scroll (re-création GSAP, pas une capture)
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+        gsap.fromTo(el,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 85%' }
+          }
+        );
+      });
+      gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+        gsap.to(el, {
+          yPercent: -15, ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+      });
+    }
+  })();
+</script>
+
+
+<script>
+  /* Filet de securite reveals (durable) : recalcule ScrollTrigger apres chargement des
+     images (positions fiables) et garantit qu'aucun [data-sg-reveal] ne reste invisible. */
+  (function () {
+    function refresh() { if (window.ScrollTrigger) ScrollTrigger.refresh(); }
+    window.addEventListener('load', refresh);
+    setTimeout(refresh, 700);
+    setTimeout(function () {
+      document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+        if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+      });
+    }, 2200);
+  })();
+</script>
+</body>
+</html>

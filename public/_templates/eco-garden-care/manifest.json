@@ -5,6 +5,18 @@
   "pageTypes": [
     "home"
   ],
+  "pages": [
+    {
+      "slug": "/portfolio",
+      "file": "portfolio.html",
+      "title": "Nos réalisations"
+    },
+    {
+      "slug": "/contact",
+      "file": "contact.html",
+      "title": "Contact & devis"
+    }
+  ],
   "sections": {
     "home": [
       "meta",
@@ -82,6 +94,13 @@
       "role": "image",
       "required": true,
       "note": "blog · posts · image"
+    },
+    {
+      "slot": "pf1",
+      "path": "portfolioPage.images[]",
+      "role": "gallery",
+      "required": false,
+      "note": "portfolioPage · images"
     }
   ],
   "fields": {
@@ -469,6 +488,162 @@
         "label": "footer · copyright",
         "type": "text",
         "maxLen": 70
+      },
+      {
+        "path": "navPortfolio",
+        "label": "nav · réalisations",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "navContact",
+        "label": "nav · contact",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.title",
+        "label": "portfolio · titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.intro",
+        "label": "portfolio · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "portfolioPage.kicker",
+        "label": "portfolio · sur-titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.ctaTitle",
+        "label": "portfolio · titre CTA",
+        "type": "text",
+        "maxLen": 50
+      },
+      {
+        "path": "portfolioPage.ctaText",
+        "label": "portfolio · texte CTA",
+        "type": "text",
+        "maxLen": 160
+      },
+      {
+        "path": "portfolioPage.cta",
+        "label": "portfolio · bouton CTA",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.captions[]",
+        "label": "portfolio · légendes",
+        "type": "text",
+        "maxLen": 60
+      },
+      {
+        "path": "contactPage.title",
+        "label": "contact · titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.intro",
+        "label": "contact · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.kicker",
+        "label": "contact · sur-titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.phoneLabel",
+        "label": "contact · libellé téléphone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.phone",
+        "label": "contact · téléphone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.emailLabel",
+        "label": "contact · libellé email",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.email",
+        "label": "contact · email",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.zonesLabel",
+        "label": "contact · libellé zones",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.zones",
+        "label": "contact · zones d’intervention",
+        "type": "text",
+        "maxLen": 120
+      },
+      {
+        "path": "contactPage.hoursLabel",
+        "label": "contact · libellé horaires",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.hours",
+        "label": "contact · horaires",
+        "type": "text",
+        "maxLen": 45
+      },
+      {
+        "path": "contactPage.promiseTitle",
+        "label": "contact · promesse titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.promiseText",
+        "label": "contact · promesse texte",
+        "type": "text",
+        "maxLen": 160
+      },
+      {
+        "path": "contactPage.reassure1",
+        "label": "contact · réassurance 1",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.reassure2",
+        "label": "contact · réassurance 2",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.reassure3",
+        "label": "contact · réassurance 3",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.cta",
+        "label": "contact · bouton CTA",
+        "type": "text",
+        "maxLen": 40
       }
     ]
   }

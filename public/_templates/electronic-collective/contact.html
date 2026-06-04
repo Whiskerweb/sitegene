@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NYXIS — Booking & contact</title>
+  <meta name="description" content="NYXIS — booking & contact : email de booking, disponibilités de tournée et fiche technique du collectif électronique." />
+
+  <!-- Polices exactes extraites des tokens : MuseoModerno (display futuriste), Inter (corps) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=MuseoModerno:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    // Config Tailwind : palette + typo issues de la capture (tokens.json)
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#000000',     // texte / monogrammes
+            paper: '#f0f0f0',   // fond clair dominant
+            panel: '#212121',   // panneaux sombres
+            accent: '#0000ee',  // bleu électrique
+            white: '#ffffff',
+            muted: '#858585',   // gris secondaire
+          },
+          fontFamily: {
+            display: ['"MuseoModerno"', 'sans-serif'],
+            sans: ['"Inter"', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body { background: #f0f0f0; color: #000; }
+    .vtext { writing-mode: vertical-rl; text-orientation: mixed; }
+  </style>
+
+  <!-- Source unique de vérité (le serveur Akyra injecte le vrai contenu ; fallback de preview) -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+  "brand": "NYXIS",
+  "mono": "N",
+  "nav": [
+    "accueil",
+    "galerie",
+    "booking"
+  ],
+  "socials": [
+    "facebook",
+    "twitter",
+    "youtube"
+  ],
+  "hero": {
+    "title": "NYXIS",
+    "img1": "/_templates/electronic-collective/img/hero1.jpg",
+    "img2": "/_templates/electronic-collective/img/hero2.jpg",
+    "img3": "/_templates/electronic-collective/img/hero3.jpg"
+  },
+  "bio": {
+    "heading": "NYXIS",
+    "text": "NYXIS est le fruit d’un collectif de musique électronique né dans l’underground néon. Ce groupe avant-gardiste repousse les limites du son électronique avec des sets taillés pour les festivals et des paysages sonores audacieux. Alliant influences musicales variées et passion pour la technologie, les performances immersives de NYXIS transportent le public dans un univers où musique et machine s’unissent en une harmonie visionnaire.",
+    "img1": "/_templates/electronic-collective/img/bio1.jpg",
+    "img2": "/_templates/electronic-collective/img/bio2.jpg"
+  },
+  "tour": {
+    "label": "Tournée",
+    "label2": "d'été",
+    "dates": [
+      {
+        "venue": "The Redwood Room",
+        "city": "Berlin, DE",
+        "date": "12 juil. 2026"
+      },
+      {
+        "venue": "The Blue Moon Theatre",
+        "city": "Amsterdam, NL",
+        "date": "19 juil. 2026"
+      },
+      {
+        "venue": "The Electric Garden",
+        "city": "Barcelone, ES",
+        "date": "2 août 2026"
+      },
+      {
+        "venue": "The Silver Cathedral",
+        "city": "Londres, UK",
+        "date": "16 août 2026"
+      },
+      {
+        "venue": "The Emerald Palace",
+        "city": "Paris, FR",
+        "date": "30 août 2026"
+      }
+    ],
+    "img": "/_templates/electronic-collective/img/tour.jpg"
+  },
+  "release": {
+    "label": "Nouveau",
+    "label2": "Single",
+    "title": "Binary Beats",
+    "year": "2025",
+    "cover": "/_templates/electronic-collective/img/album-new.jpg",
+    "listenLabel": "Écouter sur",
+    "platforms": [
+      "Spotify",
+      "Youtube",
+      "Apple Music"
+    ]
+  },
+  "previous": {
+    "label": "Anciens",
+    "label2": "Titres",
+    "items": [
+      {
+        "title": "Electric Odyssey",
+        "year": "2022",
+        "cover": "/_templates/electronic-collective/img/album1.jpg"
+      },
+      {
+        "title": "Circuit Groove",
+        "year": "2022",
+        "cover": "/_templates/electronic-collective/img/album2.jpg"
+      },
+      {
+        "title": "Synthwave Serenade",
+        "year": "2020",
+        "cover": "/_templates/electronic-collective/img/album3.jpg"
+      },
+      {
+        "title": "Neon Pulse",
+        "year": "2021",
+        "cover": "/_templates/electronic-collective/img/album4.jpg"
+      }
+    ]
+  },
+  "contact": {
+    "managementLabel": "Gestion :",
+    "managementEmail": "m@nyxis.live",
+    "bookingLabel": "Réservations :",
+    "bookingEmail": "tv@nyxis.live",
+    "img": "/_templates/electronic-collective/img/contact.jpg"
+  },
+  "footer": {
+    "copyright": "© 2025 NYXIS",
+    "credit": "Collectif électronique · depuis 2014"
+  },
+  "portfolioPage": {
+    "title": "Galerie",
+    "intro": "Lumières stroboscopiques, foules en transe et visuels de releases : un fragment de l’univers NYXIS, capturé sur scène, en backstage et en studio.",
+    "images": [
+      "/_templates/electronic-collective/img/hero1.jpg",
+      "/_templates/electronic-collective/img/hero2.jpg",
+      "/_templates/electronic-collective/img/hero3.jpg",
+      "/_templates/electronic-collective/img/bio1.jpg",
+      "/_templates/electronic-collective/img/bio2.jpg",
+      "/_templates/electronic-collective/img/tour.jpg",
+      "/_templates/electronic-collective/img/album-new.jpg",
+      "/_templates/electronic-collective/img/album1.jpg",
+      "/_templates/electronic-collective/img/album2.jpg",
+      "/_templates/electronic-collective/img/album3.jpg",
+      "/_templates/electronic-collective/img/album4.jpg",
+      "/_templates/electronic-collective/img/contact.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Booking & contact",
+    "intro": "Programmateur, festival, salle ou marque : écrivez-nous pour faire monter NYXIS sur votre scène. Réponse sous 48 h ouvrées.",
+    "email": "tv@nyxis.live",
+    "phone": "+33 1 84 80 00 00",
+    "availabilityLabel": "Disponibilités",
+    "availabilityText": "Tournée d’été 2026 en cours de calage — créneaux ouverts en Europe sur les week-ends de juin à septembre. Dates club et B2B sur demande.",
+    "zonesLabel": "Zones",
+    "zonesText": "Basés à Paris, nous tournons partout en Europe et à l’international. Déplacements festival et destination assurés.",
+    "techRider": "Set DJ / live hybride (2 platines + table de mixage 4 voies type DJM-900, ou contrôleur fourni sur demande). Régie son : système diffusion calé pro (L-Acoustics / d&b) avec 2 retours de scène et un caisson DJ. Connectique : 1 entrée stéréo jack/RCA + DI. Lumière : pont face + contre, machine à brouillard et stroboscopes DMX pilotables ; un VJ peut être ajouté (sortie HDMI 1080p). Backline : booth stable à hauteur de taille, 4 prises 230 V protégées, accès Wi-Fi régie. Loge fermée, eau et serviettes. Balances 60 min avant ouverture des portes."
+  }
+};
+  </script>
+</head>
+
+<body class="font-sans antialiased bg-paper text-ink selection:bg-accent selection:text-white">
+
+  <!-- ============ HEADER / NAV ============ -->
+  <header class="relative z-30">
+    <div class="mx-auto max-w-6xl px-6 pt-6 flex items-center justify-between">
+      <a href="#" data-sg-page="/" class="font-display text-3xl text-ink hover:text-accent transition-colors" data-sg-path="mono">N</a>
+      <nav class="flex gap-6 font-sans text-sm text-ink">
+        <a href="#" data-sg-page="/" class="hover:text-accent transition-colors" data-sg-path="nav[0]">accueil</a>
+        <a href="#" data-sg-page="portfolio" class="hover:text-accent transition-colors" data-sg-path="nav[1]">galerie</a>
+        <a href="#" data-sg-page="contact" class="text-accent transition-colors" data-sg-path="nav[2]">booking</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ EN-TÊTE BOOKING ============ -->
+  <section class="mx-auto max-w-6xl px-6 pt-20 md:pt-28 pb-12" data-sg-reveal>
+    <h1 class="font-display text-5xl md:text-7xl lg:text-8xl tracking-tight text-ink leading-[0.9] mb-8" data-sg-path="contactPage.title">Booking &amp; contact</h1>
+    <p class="font-sans text-sm md:text-base leading-relaxed text-ink/90 max-w-2xl" data-sg-path="contactPage.intro">
+      Programmateur, festival, salle ou marque : écrivez-nous pour faire monter NYXIS sur votre scène. Réponse sous 48 h ouvrées.
+    </p>
+  </section>
+
+  <!-- ============ EMAIL BOOKING EN ÉVIDENCE ============ -->
+  <section class="mx-auto max-w-6xl px-6 pb-16" data-sg-reveal>
+    <div class="bg-panel text-white p-8 md:p-14">
+      <span class="font-sans text-xs uppercase tracking-[0.2em] text-white/60 block mb-5">Demande de booking</span>
+      <a href="#" class="font-display text-3xl md:text-5xl lg:text-6xl tracking-tight text-white hover:text-accent transition-colors break-all" data-sg-path="contactPage.email">tv@nyxis.live</a>
+      <div class="mt-8 flex flex-wrap gap-x-12 gap-y-4 font-sans text-sm text-white/80">
+        <span>Tél. <span class="text-white" data-sg-path="contactPage.phone">+33 1 84 80 00 00</span></span>
+        <a href="#" class="hover:text-accent transition-colors" data-sg-path="socials[0]">facebook</a>
+        <a href="#" class="hover:text-accent transition-colors" data-sg-path="socials[1]">twitter</a>
+        <a href="#" class="hover:text-accent transition-colors" data-sg-path="socials[2]">youtube</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DISPONIBILITÉS / ZONES ============ -->
+  <section class="mx-auto max-w-6xl px-6 pb-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-1" data-sg-reveal>
+      <div class="border-t-2 border-ink p-8 bg-paper">
+        <h2 class="font-display text-2xl md:text-3xl tracking-tight text-ink mb-4" data-sg-path="contactPage.availabilityLabel">Disponibilités</h2>
+        <p class="font-sans text-sm md:text-base leading-relaxed text-ink/90" data-sg-path="contactPage.availabilityText">
+          Tournée d’été 2026 en cours de calage — créneaux ouverts en Europe sur les week-ends de juin à septembre. Dates club et B2B sur demande.
+        </p>
+      </div>
+      <div class="border-t-2 border-ink p-8 bg-paper">
+        <h2 class="font-display text-2xl md:text-3xl tracking-tight text-ink mb-4" data-sg-path="contactPage.zonesLabel">Zones</h2>
+        <p class="font-sans text-sm md:text-base leading-relaxed text-ink/90" data-sg-path="contactPage.zonesText">
+          Basés à Paris, nous tournons partout en Europe et à l’international. Déplacements festival et destination assurés.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FICHE TECHNIQUE (obligatoire) ============ -->
+  <section class="mx-auto max-w-6xl px-6 pb-24" data-sg-reveal>
+    <div class="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-10">
+      <h2 class="font-display text-4xl md:text-5xl tracking-tight text-ink leading-[0.95]">
+        <span>Fiche</span><br /><span>technique</span>
+      </h2>
+      <div class="border-l-2 border-accent pl-6">
+        <p class="font-sans text-sm md:text-base leading-relaxed text-ink/90" data-sg-path="contactPage.techRider">
+          Set DJ / live hybride (2 platines + table de mixage 4 voies type DJM-900, ou contrôleur fourni sur demande). Régie son : système diffusion calé pro (L-Acoustics / d&amp;b) avec 2 retours de scène et un caisson DJ. Connectique : 1 entrée stéréo jack/RCA + DI. Lumière : pont face + contre, machine à brouillard et stroboscopes DMX pilotables ; un VJ peut être ajouté (sortie HDMI 1080p). Backline : booth stable à hauteur de taille, 4 prises 230 V protégées, accès Wi-Fi régie. Loge fermée, eau et serviettes. Balances 60 min avant ouverture des portes.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="mt-12">
+    <!-- bandeau image + monogramme -->
+    <div class="relative h-[50vh] overflow-hidden bg-panel">
+      <img src="img/contact.jpg" alt="" data-sg-img="contact.img" class="absolute inset-0 w-full h-full object-cover" data-sg-parallax />
+      <div class="absolute inset-0 bg-ink/30"></div>
+      <div class="absolute inset-0 z-10 flex items-center justify-center">
+        <span class="font-display text-white text-7xl md:text-8xl" data-sg-path="mono">N</span>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-6xl px-6 py-8 flex flex-col sm:flex-row justify-between items-center gap-3 font-sans text-sm text-ink">
+      <nav class="flex gap-6">
+        <a href="#" data-sg-page="/" class="hover:text-accent transition-colors" data-sg-path="nav[0]">accueil</a>
+        <a href="#" data-sg-page="portfolio" class="hover:text-accent transition-colors" data-sg-path="nav[1]">galerie</a>
+        <a href="#" data-sg-page="contact" class="hover:text-accent transition-colors" data-sg-path="nav[2]">booking</a>
+      </nav>
+      <div class="flex gap-6">
+        <a href="#" class="hover:text-accent transition-colors" data-sg-path="socials[0]">facebook</a>
+        <a href="#" class="hover:text-accent transition-colors" data-sg-path="socials[1]">twitter</a>
+        <a href="#" class="hover:text-accent transition-colors" data-sg-path="socials[2]">youtube</a>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-6xl px-6 pb-8 flex flex-col sm:flex-row justify-between items-center gap-2 font-sans text-xs text-muted">
+      <span data-sg-path="footer.copyright">© 2025 NYXIS</span>
+      <span data-sg-path="footer.credit">Collectif électronique · depuis 2014</span>
+    </div>
+  </footer>
+
+  <!-- ============ HYDRATATION + ANIMATIONS (standard clone-site) ============ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, { opacity: 0, y: 40, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, { yPercent: -15, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } });
+        });
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

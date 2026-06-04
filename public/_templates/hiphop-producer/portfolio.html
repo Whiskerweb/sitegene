@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KAIRO — Galerie</title>
+  <meta name="description" content="KAIRO — galerie : photos live, presse et visuels de releases. L'univers visuel de l'artiste." />
+
+  <!-- Polices exactes extraites des tokens : Big Shoulders Display (display condensé extra-bold) + Inter (labels/corps) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;600;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    // Config Tailwind : palette + typo issues de la capture (tokens.json)
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#000000', paper: '#cccccc', white2: '#ffffff',
+            accent: '#0000ee', panel: '#0a0a0a', line: 'rgba(204,204,204,0.2)',
+          },
+          fontFamily: {
+            display: ['"Big Shoulders Display"', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+          },
+          letterSpacing: { label: '0.2em' },
+        },
+      },
+    };
+  </script>
+  <style>
+    body { background: #000; color: #ccc; }
+  </style>
+
+  <!-- Source unique de vérité (le serveur Akyra injecte le vrai contenu ; fallback de preview) -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+  "brand": "KAIRO",
+  "nav": [
+    "Sorties",
+    "Tournée",
+    "À propos",
+    "Réservations"
+  ],
+  "cta": "Réserver",
+  "hero": {
+    "badge": "Nouvelle sortie",
+    "titleLine1": "« Silent Ops »",
+    "titleLine2": "disponible maintenant",
+    "listen": [
+      { "label": "Écouter sur Apple Music", "href": "#" },
+      { "label": "Écouter sur Spotify", "href": "#" },
+      { "label": "Écouter sur YouTube Music", "href": "#" }
+    ],
+    "image": "/_templates/hiphop-producer/img/hero.jpg"
+  },
+  "releasesLabel": "Sorties",
+  "releases": [
+    { "title": "Silent Ops", "type": "Single · 2026", "cover": "/_templates/hiphop-producer/img/rel1.jpg" },
+    { "title": "Jet Black Skies", "type": "Album · 2025", "cover": "/_templates/hiphop-producer/img/rel2.jpg" },
+    { "title": "Burning Soul", "type": "Single · 2025", "cover": "/_templates/hiphop-producer/img/rel3.jpg" },
+    { "title": "Concrete Lullabies", "type": "EP · 2024", "cover": "/_templates/hiphop-producer/img/rel4.jpg" }
+  ],
+  "tourLabel": "#KAIROTour",
+  "tour": [
+    { "date": "12 SEP", "city": "Berlin, DE", "venue": "Astra Kulturhaus", "link": "Billets" },
+    { "date": "21 SEP", "city": "Paris, FR", "venue": "La Cigale", "link": "Billets" },
+    { "date": "04 OCT", "city": "London, UK", "venue": "Village Underground", "link": "Billets" },
+    { "date": "18 OCT", "city": "Amsterdam, NL", "venue": "Melkweg – Max", "link": "Billets" },
+    { "date": "02 NOV", "city": "Brussels, BE", "venue": "Ancienne Belgique", "link": "Billets" },
+    { "date": "15 NOV", "city": "Lyon, FR", "venue": "Le Transbordeur", "link": "Billets" },
+    { "date": "29 NOV", "city": "Madrid, ES", "venue": "Sala La Riviera", "link": "Billets" }
+  ],
+  "bio": {
+    "quote": "« Je suis KAIRO – artiste hip-hop et producteur. Des beats sombres, des histoires vraies et une énergie brute. Pas de faux-semblants – juste la vérité dans chaque texte. »",
+    "readMore": "Lire l’histoire complète",
+    "image": "/_templates/hiphop-producer/img/portrait.jpg"
+  },
+  "listenLabel": "Écoutez-moi sur",
+  "socials": [
+    { "label": "Spotify", "href": "#" },
+    { "label": "Apple Music", "href": "#" },
+    { "label": "YouTube", "href": "#" },
+    { "label": "SoundCloud", "href": "#" },
+    { "label": "Instagram", "href": "#" }
+  ],
+  "footer": {
+    "copyright": "© KAIRO",
+    "credit": "Artiste hip-hop · producteur"
+  },
+  "portfolioPage": {
+    "title": "Galerie",
+    "intro": "Scène, backstage, presse et visuels de releases — l’univers de KAIRO, là où le son devient image. Des lumières crues, des regards francs et l’énergie brute des concerts.",
+    "images": [
+      "/_templates/hiphop-producer/img/hero.jpg",
+      "/_templates/hiphop-producer/img/portrait.jpg",
+      "/_templates/hiphop-producer/img/rel1.jpg",
+      "/_templates/hiphop-producer/img/rel2.jpg",
+      "/_templates/hiphop-producer/img/rel3.jpg",
+      "/_templates/hiphop-producer/img/rel4.jpg",
+      "/_templates/hiphop-producer/img/hero.jpg",
+      "/_templates/hiphop-producer/img/portrait.jpg",
+      "/_templates/hiphop-producer/img/rel2.jpg",
+      "/_templates/hiphop-producer/img/rel4.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Booking & contact",
+    "intro": "Pour les dates, les festivals, les featurings et les prods : un seul interlocuteur, une réponse rapide. Parlons de votre événement.",
+    "email": "booking@kairo-music.com",
+    "phone": "+33 6 12 34 56 78",
+    "availabilityLabel": "Disponibilités & tournée",
+    "availability": "Bookings ouverts pour la tournée d’automne 2026 (Europe) et la saison festivals 2027. Set DJ ou live band, 45 à 90 min, selon configuration.",
+    "manager": "Management — Studio Nightshift",
+    "techRiderLabel": "Fiche technique",
+    "techRider": "Set live de 45 à 90 min, formule MPC + DJ ou groupe complet (batterie, basse, claviers). Côté son : console numérique min. 24 voies, 2 wedges + side-fills, retour in-ear pour l’artiste, micro filaire dynamique (SM58 ou équivalent) + DI pour samplers. Côté lumière : plan blanc/bleu froid, 2 poursuites, machine à brouillard, blackout possible en intro. Loge fermée, eau, balance 60 min avant ouverture des portes."
+  }
+};
+  </script>
+</head>
+
+<body class="font-sans antialiased bg-ink text-paper selection:bg-accent selection:text-white2">
+
+  <!-- ============ NAV ============ -->
+  <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-sm bg-ink/50">
+    <nav class="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
+      <ul class="hidden md:flex items-center gap-7 font-sans text-[11px] font-medium tracking-label uppercase text-paper/70">
+        <li><a href="#" data-sg-page="/" class="hover:text-white2 transition-colors">Accueil</a></li>
+        <li><a href="#" data-sg-page="portfolio" class="text-white2 transition-colors">Galerie</a></li>
+      </ul>
+      <a href="#" data-sg-page="/" class="font-display font-extrabold text-2xl tracking-wider uppercase text-white2 absolute left-1/2 -translate-x-1/2" data-sg-path="brand">KAIRO</a>
+      <ul class="hidden md:flex items-center gap-7 font-sans text-[11px] font-medium tracking-label uppercase text-paper/70">
+        <li><a href="#" data-sg-page="contact" class="hover:text-white2 transition-colors">Booking & contact</a></li>
+      </ul>
+      <a href="#" data-sg-page="contact" class="md:hidden font-sans text-[11px] font-medium tracking-label uppercase text-white2" data-sg-path="cta">Réserver</a>
+    </nav>
+  </header>
+
+  <!-- ============ PAGE HEADER ============ -->
+  <section class="relative pt-40 pb-16 md:pt-48 md:pb-20 border-b border-line overflow-hidden" data-sg-reveal>
+    <div class="mx-auto max-w-7xl px-6">
+      <span class="inline-block font-sans text-[10px] font-semibold tracking-label uppercase text-paper/50 mb-6" data-sg-path="brand">KAIRO</span>
+      <h1 class="font-display font-black uppercase leading-[0.9] text-white2 text-6xl sm:text-7xl md:text-8xl lg:text-[104px]" data-sg-path="portfolioPage.title">Galerie</h1>
+      <p class="mt-8 max-w-2xl font-sans text-base md:text-lg leading-relaxed text-paper/70" data-sg-path="portfolioPage.intro">
+        Scène, backstage, presse et visuels de releases — l’univers de KAIRO.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY GRID ============ -->
+  <section class="mx-auto max-w-7xl px-6 py-20 md:py-28">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3" data-sg-reveal>
+
+      <!-- 1 — tall feature -->
+      <figure class="group row-span-2 relative overflow-hidden bg-panel aspect-[3/4] md:aspect-auto">
+        <img src="img/hero.jpg" alt="KAIRO — live" data-sg-img="portfolioPage.images[0]" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      </figure>
+
+      <!-- 2 -->
+      <figure class="group relative overflow-hidden bg-panel aspect-square">
+        <img src="img/portrait.jpg" alt="KAIRO — portrait" data-sg-img="portfolioPage.images[1]" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      </figure>
+
+      <!-- 3 -->
+      <figure class="group relative overflow-hidden bg-panel aspect-square">
+        <img src="img/rel1.jpg" alt="KAIRO — visuel release" data-sg-img="portfolioPage.images[2]" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      </figure>
+
+      <!-- 4 — wide feature -->
+      <figure class="group col-span-2 relative overflow-hidden bg-panel aspect-[2/1]">
+        <img src="img/rel2.jpg" alt="KAIRO — visuel release" data-sg-img="portfolioPage.images[3]" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      </figure>
+
+      <!-- 5 -->
+      <figure class="group relative overflow-hidden bg-panel aspect-square">
+        <img src="img/rel3.jpg" alt="KAIRO — presse" data-sg-img="portfolioPage.images[4]" class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      </figure>
+
+      <!-- 6 -->
+      <figure class="group relative overflow-hidden bg-panel aspect-square">
+        <img src="img/rel4.jpg" alt="KAIRO — visuel release" data-sg-img="portfolioPage.images[5]" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      </figure>
+
+      <!-- 7 — tall feature -->
+      <figure class="group row-span-2 relative overflow-hidden bg-panel aspect-[3/4] md:aspect-auto">
+        <img src="img/hero.jpg" alt="KAIRO — live" data-sg-img="portfolioPage.images[6]" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      </figure>
+
+      <!-- 8 -->
+      <figure class="group relative overflow-hidden bg-panel aspect-square">
+        <img src="img/portrait.jpg" alt="KAIRO — portrait" data-sg-img="portfolioPage.images[7]" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      </figure>
+
+      <!-- 9 -->
+      <figure class="group relative overflow-hidden bg-panel aspect-square">
+        <img src="img/rel2.jpg" alt="KAIRO — visuel release" data-sg-img="portfolioPage.images[8]" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      </figure>
+
+      <!-- 10 — wide feature -->
+      <figure class="group col-span-2 relative overflow-hidden bg-panel aspect-[2/1]">
+        <img src="img/rel4.jpg" alt="KAIRO — visuel release" data-sg-img="portfolioPage.images[9]" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      </figure>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-20 md:mt-28 text-center" data-sg-reveal>
+      <h2 class="font-display font-extrabold uppercase tracking-wide text-white2 text-3xl md:text-4xl mb-8">Une date, un featuring, une prod ?</h2>
+      <a href="#" data-sg-page="contact" class="inline-block font-sans text-[11px] font-semibold tracking-label uppercase bg-accent text-white2 px-10 py-4 hover:bg-white2 hover:text-ink transition-colors">Booking & contact</a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="mx-auto max-w-7xl px-6 py-16 border-t border-line">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <a href="#" data-sg-page="/" class="font-display font-extrabold text-2xl tracking-wider uppercase text-white2 hover:text-accent transition-colors" data-sg-path="brand">KAIRO</a>
+      <nav class="flex flex-wrap gap-x-7 gap-y-2 font-sans text-[11px] font-medium tracking-label uppercase text-paper/60">
+        <a href="#" data-sg-page="/" class="hover:text-white2 transition-colors">Accueil</a>
+        <a href="#" data-sg-page="portfolio" class="hover:text-white2 transition-colors">Galerie</a>
+        <a href="#" data-sg-page="contact" class="hover:text-white2 transition-colors">Booking & contact</a>
+      </nav>
+      <div class="flex flex-col sm:flex-row gap-x-6 gap-y-1 font-sans text-[11px] tracking-label uppercase text-paper/50">
+        <span data-sg-path="footer.copyright">© KAIRO</span>
+        <span data-sg-path="footer.credit">Artiste hip-hop · producteur</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ HYDRATATION + ANIMATIONS (standard clone-site) ============ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, { opacity: 0, y: 40, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, { yPercent: -15, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } });
+        });
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

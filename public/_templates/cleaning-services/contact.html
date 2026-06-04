@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-sg-path="meta.title">Neatly – Contact &amp; devis</title>
+  <meta name="description" data-sg-path="meta.description" content="Professional home cleaning services you can truly trust and rely on. Book online in minutes." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary:  '#FEBF03',   /* yellow accent */
+            ink:      '#171206',   /* near-black dark bg */
+            bg:       '#F2F7F9',   /* light section bg */
+            muted:    '#5B5955',   /* body text muted */
+            border:   '#E5EAEC',   /* card borders */
+            white:    '#FFFFFF',
+            blue:     '#2B80F7',   /* rating stars / links */
+            danger:   '#F02A2B',   /* "red" badge */
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            inter: ['"Inter"', 'sans-serif'],
+          },
+          borderRadius: {
+            'xl2': '16px',
+            'xl3': '24px',
+          },
+        }
+      }
+    };
+  </script>
+
+  <!-- __SITE_CONTENT__ — single source of truth for all copy + image paths -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+  "meta": {
+    "title": "Neatly – Services de Nettoyage de Confiance près de Chez Vous",
+    "description": "Nettoyage professionnel pour la maison, fiable et sur mesure. Réservez en ligne en quelques clics et profitez d’un intérieur impeccable."
+  },
+  "brand": "Neatly",
+  "topbar": {
+    "phone": "+403-394-9940",
+    "email": "hello@neatly.com"
+  },
+  "nav": {
+    "links": [
+      "À propos",
+      "Services",
+      "Blog",
+      "Contact"
+    ],
+    "cta": "Réserver maintenant"
+  },
+  "hero": {
+    "rating": "4.7",
+    "ratingText": "Avis vérifiés Google & Yelp",
+    "title": "Des Services de Nettoyage Fiables et Professionnels",
+    "tagline": "Des prestations de nettoyage haut de gamme pour votre maison, alliant fiabilité, qualité et respect de l’environnement.",
+    "cta": "Appelez-nous : +403-394-9940",
+    "image": "/_templates/cleaning-services/img/hero.jpg"
+  },
+  "badge": "Prestataire premium noté 5 étoiles !",
+  "services": {
+    "label": "Nettoyage Écologique",
+    "items": [
+      {
+        "title": "Nettoyage Écoresponsable",
+        "desc": "Des solutions de nettoyage écologiques, utilisant des produits sûrs et performants, pour un intérieur sain sans compromis.",
+        "image": "/_templates/cleaning-services/img/service-spray.jpg"
+      },
+      {
+        "title": "Nettoyage Régulier",
+        "desc": "Un service sur mesure pour maintenir votre maison propre et accueillante, semaine après semaine.",
+        "image": "/_templates/cleaning-services/img/service-vacuuming.jpg"
+      },
+      {
+        "title": "Entretien des Sols",
+        "desc": "Nettoyage et soin de tous types de sols avec des méthodes douces et écologiques, pour un résultat impeccable.",
+        "image": "/_templates/cleaning-services/img/service-floor.jpg"
+      },
+      {
+        "title": "Nettoyage de Cuisine",
+        "desc": "Un service minutieux pour une cuisine étincelante, alliant propreté irréprochable et respect des normes d’hygiène.",
+        "image": "/_templates/cleaning-services/img/service-detail.jpg"
+      }
+    ]
+  },
+  "trust": {
+    "paragraph": "Chaque professionnel est rigoureusement sélectionné, formé et vérifié avant d’intervenir chez vous. Nous garantissons des agents dignes de confiance, respectueux de votre espace et de votre sécurité."
+  },
+  "howItWorks": {
+    "title": "Comment ça marche ?",
+    "subtitle": "Choisissez votre service, sélectionnez une date et indiquez la durée nécessaire. C’est simple et rapide.",
+    "steps": [
+      {
+        "number": "1.",
+        "title": "Réservez en Ligne",
+        "desc": "Sélectionnez le service souhaité, choisissez une date et précisez la durée en quelques clics."
+      },
+      {
+        "number": "2.",
+        "title": "Nettoyage Professionnel",
+        "desc": "Un expert formé et vérifié intervient chez vous pour un nettoyage soigné et efficace."
+      },
+      {
+        "number": "3.",
+        "title": "Profitez de Votre Intérieur",
+        "desc": "Détendez-vous dans un espace propre et rafraîchi, où tout est pensé pour votre confort."
+      }
+    ]
+  },
+  "stats": [
+    {
+      "value": "4.7",
+      "label": "Note Moyenne"
+    },
+    {
+      "value": "1.2k+",
+      "label": "Maisons Nettoyées"
+    },
+    {
+      "value": "300+",
+      "label": "Clients Fidèles"
+    },
+    {
+      "value": "100%",
+      "label": "Équipe Vérifiée"
+    }
+  ],
+  "whyUs": {
+    "title": "Gagnez du Temps",
+    "subtitle": "Confiez-nous le ménage et consacrez votre temps à ce qui compte vraiment : travail, famille ou détente.",
+    "image": "/_templates/cleaning-services/img/why-us.jpg",
+    "features": [
+      {
+        "title": "Temps Libre Garanti",
+        "desc": "Un service professionnel vous libère des tâches ménagères pour profiter pleinement de votre journée."
+      },
+      {
+        "title": "Sécurité et Sérénité",
+        "desc": "Nos agents sont soigneusement sélectionnés et formés pour intervenir en toute confiance chez vous."
+      },
+      {
+        "title": "Réservation Simplifiée",
+        "desc": "Réservez en quelques minutes en ligne, sans appel ni complication. Nous nous occupons de tout."
+      },
+      {
+        "title": "Recommandés par nos Clients",
+        "desc": "Des centaines d’avis 5 étoiles de la part de particuliers et professionnels satisfaits dans toute la région."
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "Ils Nous Recommandent",
+    "subtitle": "Après notre passage, votre maison n’est pas seulement propre : elle respire la fraîcheur et le bien-être.",
+    "items": [
+      {
+        "quote": "Je travaille beaucoup et j’avais du mal à tout gérer. Ce service a tout changé : l’agent a fait un travail remarquable, sans précipitation.",
+        "author": "Daniel Carter",
+        "role": "Software Engineer"
+      },
+      {
+        "quote": "J’ai testé plusieurs services, mais celui-ci est le plus fiable. Réservation simple, ponctualité et résultat impeccable.",
+        "author": "Sarah Mitchell",
+        "role": "Marketing Manager"
+      },
+      {
+        "quote": "J’ai fait appel à eux pour un nettoyage complet, et le résultat était exceptionnel. La maison était prête pour une visite le jour même.",
+        "author": "Michael Thompson",
+        "role": "Real Estate Agent"
+      },
+      {
+        "quote": "Je suis très exigeante sur la propreté, et ils ont dépassé mes attentes. Leur minutie, surtout en cuisine, était impressionnante.",
+        "author": "Emily Rogers",
+        "role": "Interior Designer"
+      },
+      {
+        "quote": "L’équipe était sympathique et ultra-professionnelle. Ils ont tout fait briller avec soin. Je les recommande sans hésiter !",
+        "author": "James Wilson",
+        "role": "Project Manager"
+      }
+    ]
+  },
+  "features": {
+    "title": "Fiabilité et Ponctualité",
+    "subtitle": "Nos professionnels interviennent toujours à l’heure pour que votre journée se déroule sans imprévu.",
+    "items": [
+      "Des Résultats Constants et Fiables",
+      "Adaptés à Votre Rythme de Vie",
+      "Un Nettoyage Qui Fait la Différence",
+      "Un Environnement Plus Sain chez Vous"
+    ]
+  },
+  "faq": {
+    "title": "Questions Fréquentes",
+    "subtitle": "Réserver est ultra-simple : choisissez votre service, sélectionnez une date et une heure, et validez en quelques clics.",
+    "items": [
+      {
+        "question": "Comment réserver un nettoyage ?",
+        "answer": "La réservation en ligne est rapide : sélectionnez le service, choisissez une date et une heure, puis confirmez en quelques étapes."
+      },
+      {
+        "question": "Vos agents sont-ils formés ?",
+        "answer": "Oui, chaque agent est vérifié, formé et préparé pour intervenir chez vous en toute sécurité et professionnalisme."
+      },
+      {
+        "question": "Quels produits utilisez-vous ?",
+        "answer": "Nous utilisons des produits écologiques et non toxiques, sûrs pour les enfants, les animaux et l’environnement, sans sacrifier l’efficacité."
+      },
+      {
+        "question": "Que faire en cas d’insatisfaction ?",
+        "answer": "Votre satisfaction est notre priorité. Si le résultat ne vous convient pas, contactez-nous sous 24h pour une reprise gratuite."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Un Intérieur Impeccable",
+    "subtitle": "Oubliez le stress du ménage et profitez pleinement de votre temps libre. Notre équipe s’occupe de tout.",
+    "phone": "+403-394-9940",
+    "caption": "Un nettoyage professionnel et méticuleux pour un intérieur qui respire la propreté au quotidien."
+  },
+  "footer": {
+    "tagline": "Un nettoyage professionnel et méticuleux pour un intérieur qui respire la propreté au quotidien.",
+    "columns": [
+      {
+        "heading": "Entreprise",
+        "links": [
+          "Accueil",
+          "Qui sommes-nous",
+          "Articles"
+        ]
+      },
+      {
+        "heading": "Autres",
+        "links": [
+          "Nos services",
+          "Contactez-nous",
+          "Réserver"
+        ]
+      },
+      {
+        "heading": "Mentions légales",
+        "links": [
+          "Politique de confidentialité",
+          "Conditions générales"
+        ]
+      }
+    ],
+    "copyright": "Copyright © 2026 Neatly"
+  },
+  "portfolioPage": {
+    "title": "Nos réalisations",
+    "intro": "Chaque intervention raconte une transformation. Découvrez en images nos chantiers de nettoyage : avant encombrés, après impeccables. La preuve que le soin du détail fait toute la différence.",
+    "images": [
+      "/_templates/cleaning-services/img/hero.jpg",
+      "/_templates/cleaning-services/img/service-spray.jpg",
+      "/_templates/cleaning-services/img/service-vacuuming.jpg",
+      "/_templates/cleaning-services/img/service-floor.jpg",
+      "/_templates/cleaning-services/img/service-detail.jpg",
+      "/_templates/cleaning-services/img/why-us.jpg",
+      "/_templates/cleaning-services/img/service-vacuuming.jpg",
+      "/_templates/cleaning-services/img/service-floor.jpg",
+      "/_templates/cleaning-services/img/service-spray.jpg",
+      "/_templates/cleaning-services/img/service-detail.jpg"
+    ],
+    "captions": [
+      "Cuisine entièrement dégraissée et désinfectée",
+      "Surfaces traitées avec des produits écologiques",
+      "Sols aspirés et soignés en profondeur",
+      "Carrelages ravivés, joints comme neufs",
+      "Sanitaires détartrés et assainis",
+      "Séjour remis à neuf après travaux",
+      "Entretien régulier de bureaux professionnels",
+      "Vitres et surfaces vitrées sans traces",
+      "Nettoyage de printemps complet",
+      "Remise en état après déménagement"
+    ],
+    "ctaTitle": "Votre intérieur mérite le même soin",
+    "ctaText": "Confiez-nous votre prochain chantier et constatez la différence par vous-même.",
+    "ctaButton": "Demander un devis gratuit"
+  },
+  "contactPage": {
+    "title": "Contact & devis",
+    "intro": "Un appartement, une maison, des bureaux ou une remise en état après travaux ? Dites-nous tout : nous vous établissons un devis clair et gratuit, sans engagement.",
+    "phoneLabel": "Appelez-nous directement",
+    "phone": "+403-394-9940",
+    "phoneNote": "Disponibles du lundi au samedi, de 8h à 19h.",
+    "emailLabel": "Écrivez-nous",
+    "email": "hello@neatly.com",
+    "zonesLabel": "Zones d’intervention",
+    "zones": "Nous intervenons dans toute la ville et sa périphérie, jusqu’à 30 km autour de notre agence. Déplacement offert pour toute première intervention.",
+    "delayLabel": "Délai de réponse",
+    "delay": "Nous répondons à chaque demande de devis sous 24 heures ouvrées, avec une estimation détaillée et un créneau d’intervention.",
+    "cta": "Demander un devis",
+    "reassurance": [
+      {
+        "title": "Devis gratuit & sans engagement",
+        "desc": "Une estimation transparente, détaillée poste par poste, sans aucun frais caché ni obligation de votre part."
+      },
+      {
+        "title": "Équipe assurée & vérifiée",
+        "desc": "Chaque intervenant est formé, assuré et soigneusement sélectionné pour entrer chez vous en toute confiance."
+      },
+      {
+        "title": "Produits écologiques",
+        "desc": "Nous utilisons des produits non toxiques, sûrs pour vos enfants, vos animaux et l’environnement."
+      },
+      {
+        "title": "Satisfaction garantie",
+        "desc": "Un détail vous échappe ? Nous repassons gratuitement sous 24h pour un résultat irréprochable."
+      }
+    ]
+  }
+};
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fff; color: #171206; margin: 0; }
+
+    /* Topbar ticker */
+    .ticker-wrap { overflow: hidden; }
+    .ticker { display: flex; white-space: nowrap; animation: ticker 18s linear infinite; }
+    .ticker-item { padding: 0 2.5rem; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* Smooth underline nav */
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; left: 0; bottom: -2px; width: 0; height: 2px; background: #FEBF03; transition: width .25s; }
+    .nav-link:hover::after { width: 100%; }
+  </style>
+</head>
+<body class="antialiased">
+
+<!-- ───────── TOPBAR ───────── -->
+<div class="bg-[#171206] text-white py-2 overflow-hidden text-sm font-medium" style="font-family:'Plus Jakarta Sans',sans-serif">
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span class="ticker-item flex items-center gap-2">
+        <svg class="w-4 h-4 text-primary inline" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11 19.79 19.79 0 01.07 2.18 2 2 0 012.03 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+        <span data-sg-path="topbar.phone">+403-394-9940</span>
+      </span>
+      <span class="ticker-item flex items-center gap-2">
+        <svg class="w-4 h-4 text-primary inline" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+        <span data-sg-path="topbar.email">hello@neatly.com</span>
+      </span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item flex items-center gap-2">
+        <svg class="w-4 h-4 text-primary inline" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11 19.79 19.79 0 01.07 2.18 2 2 0 012.03 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+        <span data-sg-path="topbar.phone">+403-394-9940</span>
+      </span>
+      <span class="ticker-item flex items-center gap-2">
+        <svg class="w-4 h-4 text-primary inline" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+        <span data-sg-path="topbar.email">hello@neatly.com</span>
+      </span>
+      <span class="ticker-item">·</span>
+    </div>
+  </div>
+</div>
+
+<!-- ───────── NAV ───────── -->
+<nav class="bg-[#171206] sticky top-0 z-50 border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" data-sg-page="/" class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+        <svg class="w-5 h-5 text-ink" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>
+      </div>
+      <span class="text-white font-bold text-lg tracking-tight" data-sg-path="brand">Neatly</span>
+    </a>
+    <!-- Links -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#" data-sg-page="/" class="nav-link text-white/80 hover:text-white text-sm font-medium transition-colors">Accueil</a>
+      <a href="#" data-sg-page="portfolio" class="nav-link text-white/80 hover:text-white text-sm font-medium transition-colors">Nos réalisations</a>
+      <a href="#" data-sg-page="contact" class="nav-link text-primary hover:text-white text-sm font-semibold transition-colors">Contact &amp; devis</a>
+    </div>
+    <!-- CTA -->
+    <a href="#" data-sg-page="contact" class="bg-primary text-ink font-semibold text-sm px-5 py-2.5 rounded-full hover:brightness-110 transition-all" data-sg-path="nav.cta">Réserver maintenant</a>
+  </div>
+</nav>
+
+<!-- ───────── PAGE HEADER ───────── -->
+<section class="bg-[#171206] py-20 md:py-28 px-6 relative overflow-hidden">
+  <div class="absolute -right-24 -top-24 w-72 h-72 bg-primary/10 rounded-full pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto relative z-10" data-sg-reveal>
+    <span class="inline-block bg-primary/10 text-primary font-semibold text-xs uppercase tracking-wider px-3 py-1.5 rounded-full mb-6">Devis gratuit sous 24h</span>
+    <h1 class="text-white font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6 max-w-3xl" data-sg-path="contactPage.title">Contact &amp; devis</h1>
+    <p class="text-white/70 text-lg leading-relaxed max-w-2xl" data-sg-path="contactPage.intro">
+      Dites-nous tout : nous vous établissons un devis clair et gratuit, sans engagement.
+    </p>
+  </div>
+</section>
+
+<!-- ───────── PHONE HIGHLIGHT ───────── -->
+<section class="bg-primary py-14 px-6 relative overflow-hidden">
+  <div class="absolute -left-16 -bottom-16 w-48 h-48 bg-black/5 rounded-full pointer-events-none"></div>
+  <div class="max-w-5xl mx-auto text-center relative z-10" data-sg-reveal>
+    <p class="text-ink/70 font-semibold text-xs uppercase tracking-wider mb-3" data-sg-path="contactPage.phoneLabel">Appelez-nous directement</p>
+    <a href="#" data-sg-path="contactPage.phone" class="inline-flex items-center gap-4 text-ink font-bold text-3xl md:text-5xl hover:opacity-80 transition-opacity">
+      <svg class="w-8 h-8 md:w-10 md:h-10" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+      +403-394-9940
+    </a>
+    <p class="text-ink/60 text-sm mt-4" data-sg-path="contactPage.phoneNote">Disponibles du lundi au samedi, de 8h à 19h.</p>
+  </div>
+</section>
+
+<!-- ───────── COORDINATES + DEVIS CTA ───────── -->
+<section class="bg-[#F2F7F9] py-20 px-6">
+  <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 items-stretch">
+
+    <!-- Left: email + zones + delay -->
+    <div class="space-y-6" data-sg-reveal>
+
+      <!-- Email card -->
+      <div class="bg-white rounded-xl2 p-8 shadow-sm flex items-start gap-5">
+        <span class="w-12 h-12 bg-primary/15 rounded-xl flex items-center justify-center flex-shrink-0">
+          <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+        </span>
+        <div>
+          <p class="text-muted text-xs uppercase tracking-wider font-semibold mb-1" data-sg-path="contactPage.emailLabel">Écrivez-nous</p>
+          <a href="#" class="text-ink font-bold text-lg md:text-xl hover:text-primary transition-colors break-all" data-sg-path="contactPage.email">hello@neatly.com</a>
+        </div>
+      </div>
+
+      <!-- Zones card -->
+      <div class="bg-white rounded-xl2 p-8 shadow-sm flex items-start gap-5">
+        <span class="w-12 h-12 bg-primary/15 rounded-xl flex items-center justify-center flex-shrink-0">
+          <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </span>
+        <div>
+          <p class="text-muted text-xs uppercase tracking-wider font-semibold mb-1" data-sg-path="contactPage.zonesLabel">Zones d’intervention</p>
+          <p class="text-muted text-sm leading-relaxed" data-sg-path="contactPage.zones">Nous intervenons dans toute la ville et sa périphérie.</p>
+        </div>
+      </div>
+
+      <!-- Delay card -->
+      <div class="bg-white rounded-xl2 p-8 shadow-sm flex items-start gap-5">
+        <span class="w-12 h-12 bg-primary/15 rounded-xl flex items-center justify-center flex-shrink-0">
+          <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </span>
+        <div>
+          <p class="text-muted text-xs uppercase tracking-wider font-semibold mb-1" data-sg-path="contactPage.delayLabel">Délai de réponse</p>
+          <p class="text-muted text-sm leading-relaxed" data-sg-path="contactPage.delay">Nous répondons à chaque demande sous 24 heures ouvrées.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right: devis CTA card -->
+    <div class="bg-[#171206] rounded-xl3 p-10 md:p-12 flex flex-col justify-center shadow-xl relative overflow-hidden" data-sg-reveal>
+      <div class="absolute -right-20 -top-20 w-56 h-56 bg-primary/10 rounded-full pointer-events-none"></div>
+      <div class="relative z-10">
+        <div class="flex text-primary text-lg mb-5">★★★★★</div>
+        <h2 class="text-white font-bold text-3xl md:text-4xl mb-4 leading-tight">Recevez votre devis personnalisé</h2>
+        <p class="text-white/60 text-base mb-8 leading-relaxed">
+          Décrivez-nous votre besoin : surface, type de prestation, fréquence souhaitée. Nous revenons vers vous rapidement avec une estimation claire et détaillée.
+        </p>
+        <a href="mailto:hello@neatly.com?subject=Demande%20de%20devis%20-%20Neatly&amp;body=Bonjour%2C%0A%0AType%20de%20local%20(maison%2Fappartement%2Fbureaux)%20%3A%0ASurface%20approximative%20%3A%0APrestation%20souhait%C3%A9e%20%3A%0AFr%C3%A9quence%20%3A%0AVille%2Fadresse%20%3A%0A%0AMerci%20de%20me%20recontacter."
+           class="inline-flex items-center gap-3 bg-primary text-ink font-semibold px-8 py-4 rounded-full hover:brightness-110 transition-all text-sm">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+          <span data-sg-path="contactPage.cta">Demander un devis</span>
+        </a>
+        <p class="text-white/40 text-xs mt-5">Réponse sous 24h · Sans engagement</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ───────── REASSURANCE ───────── -->
+<section class="bg-white py-20 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12" data-sg-reveal>
+      <h2 class="text-ink font-bold text-4xl mb-4">Pourquoi nous faire confiance</h2>
+      <p class="text-muted text-lg max-w-xl mx-auto">Des garanties concrètes, pensées pour votre tranquillité d’esprit du premier contact à la dernière finition.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <!-- Reassurance 0 -->
+      <div class="bg-[#F2F7F9] rounded-xl2 p-7 shadow-sm" data-sg-reveal>
+        <span class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-ink" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+        </span>
+        <h3 class="font-bold text-lg text-ink mb-2" data-sg-path="contactPage.reassurance[0].title">Devis gratuit &amp; sans engagement</h3>
+        <p class="text-muted text-sm leading-relaxed" data-sg-path="contactPage.reassurance[0].desc">Une estimation transparente, sans frais caché.</p>
+      </div>
+
+      <!-- Reassurance 1 -->
+      <div class="bg-[#F2F7F9] rounded-xl2 p-7 shadow-sm" data-sg-reveal>
+        <span class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-ink" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </span>
+        <h3 class="font-bold text-lg text-ink mb-2" data-sg-path="contactPage.reassurance[1].title">Équipe assurée &amp; vérifiée</h3>
+        <p class="text-muted text-sm leading-relaxed" data-sg-path="contactPage.reassurance[1].desc">Chaque intervenant est formé et assuré.</p>
+      </div>
+
+      <!-- Reassurance 2 -->
+      <div class="bg-[#F2F7F9] rounded-xl2 p-7 shadow-sm" data-sg-reveal>
+        <span class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-ink" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 3 2 5 2 7h10c0-2 2-4 2-7a7 7 0 00-7-7z"/><path d="M9 21h6"/></svg>
+        </span>
+        <h3 class="font-bold text-lg text-ink mb-2" data-sg-path="contactPage.reassurance[2].title">Produits écologiques</h3>
+        <p class="text-muted text-sm leading-relaxed" data-sg-path="contactPage.reassurance[2].desc">Des produits non toxiques et sûrs.</p>
+      </div>
+
+      <!-- Reassurance 3 -->
+      <div class="bg-[#F2F7F9] rounded-xl2 p-7 shadow-sm" data-sg-reveal>
+        <span class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-ink" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </span>
+        <h3 class="font-bold text-lg text-ink mb-2" data-sg-path="contactPage.reassurance[3].title">Satisfaction garantie</h3>
+        <p class="text-muted text-sm leading-relaxed" data-sg-path="contactPage.reassurance[3].desc">Nous repassons gratuitement sous 24h.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ───────── FOOTER ───────── -->
+<footer class="bg-[#171206] text-white pt-16 pb-8 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-4 gap-12 mb-12">
+      <!-- Brand -->
+      <div class="md:col-span-1">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-ink" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>
+          </div>
+          <span class="font-bold text-lg" data-sg-path="brand">Neatly</span>
+        </div>
+        <p class="text-white/50 text-sm leading-relaxed" data-sg-path="footer.tagline">We provide professional cleaning with attention to detail, making your space shine every day.</p>
+      </div>
+
+      <!-- Column 0: Company -->
+      <div>
+        <h4 class="font-semibold text-sm mb-4 text-white/80" data-sg-path="footer.columns[0].heading">Company</h4>
+        <ul class="space-y-2">
+          <li><a href="#" data-sg-page="/" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[0]">Home</a></li>
+          <li><a href="#" data-sg-page="/" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[1]">About Us</a></li>
+          <li><a href="#" data-sg-page="/" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[2]">Blogs</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 1: More -->
+      <div>
+        <h4 class="font-semibold text-sm mb-4 text-white/80" data-sg-path="footer.columns[1].heading">More</h4>
+        <ul class="space-y-2">
+          <li><a href="#" data-sg-page="portfolio" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[1].links[0]">Services</a></li>
+          <li><a href="#" data-sg-page="contact" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[1].links[1]">Contact</a></li>
+          <li><a href="#" data-sg-page="contact" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[1].links[2]">Book</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 2: Legal -->
+      <div>
+        <h4 class="font-semibold text-sm mb-4 text-white/80" data-sg-path="footer.columns[2].heading">Legal &amp; Policy</h4>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[2].links[0]">Privacy Policy</a></li>
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[2].links[1]">Terms and Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="border-t border-white/10 pt-8 text-center">
+      <p class="text-white/30 text-xs" data-sg-path="footer.copyright">Copyright © 2026 Neatly</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ───────── STANDARD HYDRATION + GSAP BLOCK ───────── -->
+<script>
+  (function () {
+    var C = window.__SITE_CONTENT__ || {};
+    function get(p) {
+      return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+        .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+    }
+    // Hydrate texts
+    document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-path'));
+      if (v != null && typeof v !== 'object') el.textContent = v;
+    });
+    // Hydrate images (img.src or background-image)
+    document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-img'));
+      if (v == null) return;
+      if (el.tagName === 'IMG') el.src = v;
+      else el.style.backgroundImage = "url('" + v + "')";
+    });
+    // Animations: reveal/parallax au scroll (re-création GSAP, pas une capture)
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+        gsap.from(el, {
+          opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 85%' }
+        });
+      });
+      gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+        gsap.to(el, {
+          yPercent: -15, ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+      });
+    }
+  })();
+</script>
+
+<script>
+  /* Filet de securite reveals (durable) : recalcule ScrollTrigger apres chargement des
+     images (positions fiables) et garantit qu'aucun [data-sg-reveal] ne reste invisible. */
+  (function () {
+    function refresh() { if (window.ScrollTrigger) ScrollTrigger.refresh(); }
+    window.addEventListener('load', refresh);
+    setTimeout(refresh, 700);
+    setTimeout(function () {
+      document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+        if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+      });
+    }, 2200);
+  })();
+</script>
+</body>
+</html>

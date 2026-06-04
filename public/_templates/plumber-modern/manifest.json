@@ -5,6 +5,18 @@
   "pageTypes": [
     "home"
   ],
+  "pages": [
+    {
+      "slug": "/portfolio",
+      "file": "portfolio.html",
+      "title": "Nos réalisations"
+    },
+    {
+      "slug": "/contact",
+      "file": "contact.html",
+      "title": "Contact & devis"
+    }
+  ],
   "sections": {
     "home": [
       "meta",
@@ -81,6 +93,13 @@
       "role": "image",
       "required": true,
       "note": "cta · image"
+    },
+    {
+      "slot": "pf1",
+      "path": "portfolioPage.images[]",
+      "role": "gallery",
+      "required": false,
+      "note": "portfolioPage · images"
     }
   ],
   "fields": {
@@ -408,6 +427,138 @@
         "label": "cta · button",
         "type": "text",
         "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.title",
+        "label": "portfolioPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.intro",
+        "label": "portfolioPage · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "portfolioPage.captions[]",
+        "label": "portfolioPage · captions",
+        "type": "text",
+        "maxLen": 60
+      },
+      {
+        "path": "portfolioPage.ctaTitle",
+        "label": "portfolioPage · ctaTitle",
+        "type": "text",
+        "maxLen": 50
+      },
+      {
+        "path": "portfolioPage.ctaText",
+        "label": "portfolioPage · ctaText",
+        "type": "text",
+        "maxLen": 160
+      },
+      {
+        "path": "portfolioPage.ctaButton",
+        "label": "portfolioPage · ctaButton",
+        "type": "text",
+        "maxLen": 30
+      },
+      {
+        "path": "contactPage.title",
+        "label": "contactPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.intro",
+        "label": "contactPage · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.phone",
+        "label": "contactPage · phone",
+        "type": "text",
+        "maxLen": 30
+      },
+      {
+        "path": "contactPage.phoneLabel",
+        "label": "contactPage · phoneLabel",
+        "type": "text",
+        "maxLen": 50
+      },
+      {
+        "path": "contactPage.email",
+        "label": "contactPage · email",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.emailLabel",
+        "label": "contactPage · emailLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.zonesLabel",
+        "label": "contactPage · zonesLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.zones",
+        "label": "contactPage · zones",
+        "type": "text",
+        "maxLen": 120
+      },
+      {
+        "path": "contactPage.responseLabel",
+        "label": "contactPage · responseLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.response",
+        "label": "contactPage · response",
+        "type": "text",
+        "maxLen": 120
+      },
+      {
+        "path": "contactPage.hoursLabel",
+        "label": "contactPage · hoursLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.hours",
+        "label": "contactPage · hours",
+        "type": "text",
+        "maxLen": 120
+      },
+      {
+        "path": "contactPage.ctaButton",
+        "label": "contactPage · ctaButton",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.reassurance1",
+        "label": "contactPage · reassurance1",
+        "type": "text",
+        "maxLen": 50
+      },
+      {
+        "path": "contactPage.reassurance2",
+        "label": "contactPage · reassurance2",
+        "type": "text",
+        "maxLen": 50
+      },
+      {
+        "path": "contactPage.reassurance3",
+        "label": "contactPage · reassurance3",
+        "type": "text",
+        "maxLen": 50
       },
       {
         "path": "footer.tagline",

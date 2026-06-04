@@ -10,6 +10,8 @@
     "Contact"
   ],
   "navCta": "Devis gratuit",
+  "navPortfolio": "Nos réalisations",
+  "navContact": "Contact & devis",
   "hero": {
     "tagline": "Transformez votre espace extérieur en toute simplicité",
     "description": "Créez un espace extérieur plus vert et plus beau grâce à notre expertise en jardinage et en aménagement paysager.",
@@ -235,5 +237,56 @@
     "address": "123 Greenway Street, City Name",
     "hours": "Lun – Sam : 8 h 00 – 18 h 00",
     "copyright": "© 2026 Eco Garden Care. Tous droits réservés."
+  },
+  "portfolioPage": {
+    "title": "Nos réalisations",
+    "intro": "Chaque jardin raconte une histoire. Découvrez nos chantiers récents : tontes, tailles, créations paysagères et entretiens menés avec soin, partout dans la région.",
+    "kicker": "Galerie",
+    "ctaTitle": "Votre projet mérite le même soin",
+    "ctaText": "Inspiré par nos réalisations ? Parlons de votre extérieur. Audit gratuit et devis détaillé sous 24 h.",
+    "cta": "Demander un devis",
+    "captions": [
+      "Création d’un massif fleuri durable",
+      "Tonte et remise en forme de pelouse",
+      "Taille raisonnée de haies et arbustes",
+      "Aménagement d’une allée paysagère",
+      "Entretien complet d’un jardin de ville",
+      "Plantation d’arbres et de vivaces",
+      "Nettoyage saisonnier d’automne",
+      "Pose de gazon et engazonnement",
+      "Réfection d’une bordure de jardin",
+      "Mise en valeur d’une terrasse végétalisée"
+    ],
+    "images": [
+      "/_templates/eco-garden-care/img/gallery1.jpg",
+      "/_templates/eco-garden-care/img/gallery2.jpg",
+      "/_templates/eco-garden-care/img/gallery3.jpg",
+      "/_templates/eco-garden-care/img/gallery4.jpg",
+      "/_templates/eco-garden-care/img/service-shrub.jpg",
+      "/_templates/eco-garden-care/img/service-lawn.jpg",
+      "/_templates/eco-garden-care/img/service-maintenance.jpg",
+      "/_templates/eco-garden-care/img/about.jpg",
+      "/_templates/eco-garden-care/img/process.jpg",
+      "/_templates/eco-garden-care/img/cta-bg.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Contact & devis",
+    "intro": "Un projet de jardin, une pelouse à entretenir ou une haie à tailler ? Décrivez-nous votre besoin : nous revenons vers vous rapidement avec un devis clair et sans engagement.",
+    "kicker": "Parlons de votre extérieur",
+    "phoneLabel": "Appelez-nous directement",
+    "phone": "+1 (000) 123-4567",
+    "emailLabel": "Écrivez-nous",
+    "email": "info@gardencare.com",
+    "zonesLabel": "Zones d’intervention",
+    "zones": "Centre-ville, périphérie et communes alentour dans un rayon de 30 km.",
+    "hoursLabel": "Horaires",
+    "hours": "Lun – Sam : 8 h 00 – 18 h 00",
+    "promiseTitle": "Réponse sous 24 h",
+    "promiseText": "Nous nous engageons à répondre à chaque demande sous 24 heures ouvrées, avec un audit gratuit de votre jardin avant tout devis.",
+    "reassure1": "Devis gratuit et détaillé",
+    "reassure2": "Audit du jardin offert",
+    "reassure3": "Jardiniers assurés et qualifiés",
+    "cta": "Demander un devis"
   }
 }

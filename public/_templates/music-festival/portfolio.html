@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SOLSTICE — Galerie</title>
+  <meta name="description" content="Galerie SOLSTICE — photos live, presse et visuels de release : l'univers visuel de l'artiste." />
+
+  <!-- Polices exactes extraites des tokens : Geist (display/corps), Geist Mono (labels/timecodes) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    // Config Tailwind : palette + typo issues de la capture (tokens.json)
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#000000',
+            paper: '#f6f6ea',
+            panel: '#343434',
+            panel2: '#3d3d3d',
+            line: 'rgba(255,255,255,0.14)',
+            muted: 'rgba(255,255,255,0.62)',
+            inkmuted: 'rgba(0,0,0,0.6)',
+            orange: '#fe470d',
+            blue: '#0000ee',
+          },
+          fontFamily: {
+            sans: ['Geist', 'system-ui', 'sans-serif'],
+            mono: ['"Geist Mono"', 'ui-monospace', 'monospace'],
+          },
+          letterSpacing: { label: '0.16em' },
+        },
+      },
+    };
+  </script>
+  <style>
+    body { background: #f6f6ea; color: #000; }
+  </style>
+
+  <!-- Source unique de vérité (le serveur Akyra injecte le vrai contenu ; fallback de preview) -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+  "brand": "SOLSTICE",
+  "wordmark": "SOL’26",
+  "cta": "Infos événement",
+  "nav": [
+    "Programmation",
+    "Horaire",
+    "Expérience",
+    "Billets",
+    "Témoignages"
+  ],
+  "hero": {
+    "title": "Solstice Sound 2026",
+    "tagline": "Trois jours de musique ininterrompue, d’artistes de renommée mondiale, d’ambiance électrique et de souvenirs inoubliables. Ne vous contentez pas d’écouter la musique — vivez-la.",
+    "cardTitle": "Prêt à en faire partie ?",
+    "cardText": "Un rassemblement d’artistes internationaux, de talents émergents et d’expériences immersives — bien plus qu’un festival, c’est un mouvement.",
+    "cardCta": "Infos événement",
+    "image": "/_templates/music-festival/img/hero.jpg"
+  },
+  "intro": "Des superstars aux légendes underground, découvrez une programmation éclectique sur plusieurs scènes et à travers tous les styles.",
+  "scale": {
+    "title": "L’ampleur de l’expérience"
+  },
+  "stats": [
+    { "value": "40+", "label": "Artistes sur 3 scènes" },
+    { "value": "3", "label": "Jours de musique non-stop" },
+    { "value": "12hrs", "label": "D’heures de son chaque jour" },
+    { "value": "25k", "label": "Festivaliers attendus" }
+  ],
+  "lineup": {
+    "label": "Programmation",
+    "title": "Têtes d’affiche & talents émergents",
+    "text": "Une sélection variée d’artistes, entre électro, indie et soul, pour animer chaque scène de l’après-midi jusqu’à l’after.",
+    "artists": [
+      { "name": "Arctic Echoes", "genre": "Indie · Scène Principale", "day": "Jour 1", "image": "/_templates/music-festival/img/artist1.jpg" },
+      { "name": "Nova Skyline", "genre": "Électro · The Grid", "day": "Jour 2", "image": "/_templates/music-festival/img/artist2.jpg" },
+      { "name": "Rafael & the Waves", "genre": "Soul · Garden Stage", "day": "Jour 2", "image": "/_templates/music-festival/img/artist3.jpg" },
+      { "name": "Luna Rae", "genre": "Pop · Scène Principale", "day": "Jour 3", "image": "/_templates/music-festival/img/artist4.jpg" }
+    ]
+  },
+  "schedule": {
+    "label": "Musique & culture sans interruption",
+    "text": "Chaque jour est rythmé par l’énergie, l’art, la gastronomie et des performances mémorables.",
+    "slots": [
+      { "time": "18:00", "day": "Jour 1", "index": "01", "title": "Ouverture des portes", "text": "Découvrez les lieux, explorez les scènes, les installations artistiques et le village gastronomique.", "image": "/_templates/music-festival/img/crowd1.jpg" },
+      { "time": "19:00", "day": "Jour 1", "index": "02", "title": "Premières parties", "text": "Des talents locaux et des étoiles montantes pour chauffer l’ambiance avec des sons frais.", "image": "/_templates/music-festival/img/guitarist.jpg" },
+      { "time": "20:00", "day": "Jour 1", "index": "03", "title": "Tête d’affiche – Scène Principale", "text": "Lancez la soirée avec des performances électrisantes de nos premiers artistes phares.", "image": "/_templates/music-festival/img/singer.jpg" },
+      { "time": "21:00", "day": "Jour 1", "index": "04", "title": "Sets tardifs", "text": "Des performances audacieuses et éclectiques illuminent les lieux après la tombée de la nuit.", "image": "/_templates/music-festival/img/crowd2.jpg" },
+      { "time": "23:00", "day": "Jour 1", "index": "05", "title": "DJs de l’after", "text": "Dansez ensemble jusqu’au bout de la nuit.", "image": "/_templates/music-festival/img/dj.jpg" }
+    ]
+  },
+  "experience": {
+    "title": "Bien plus que de la musique",
+    "text": "Chaque instant à Solstice est conçu pour vous offrir une expérience inoubliable.",
+    "features": [
+      { "title": "Installations artistiques", "text": "Des œuvres immersives de lumière et de son, disséminées sur le site, jour et nuit.", "image": "/_templates/music-festival/img/art.jpg" },
+      { "title": "Village gastronomique", "text": "Street food, boissons artisanales et chefs du monde entier réunis dans un espace en plein air.", "image": "/_templates/music-festival/img/food.jpg" },
+      { "title": "Fêtes jour & nuit", "text": "Des sets au lever du soleil aux afters de minuit — le rythme ne s’arrête jamais.", "image": "/_templates/music-festival/img/party.jpg" }
+    ]
+  },
+  "tickets": {
+    "title": "Un billet. Accès illimité.",
+    "text": "Votre passe pour 3 jours de musique, d’art, de gastronomie et de souvenirs inoubliables. Un seul billet vous donne accès à tout ce que le festival a à offrir.",
+    "passLabel": "Passe 3 jours",
+    "price": "$199",
+    "perks": [
+      "Toutes les scènes & performances",
+      "Installations artistiques & expériences ",
+      "Village gastronomique",
+      "Fêtes jour & nuit",
+      "Bracelet festival & kit d’accueil"
+    ],
+    "cta": "Rester informé"
+  },
+  "voices": {
+    "label": "Témoignages",
+    "title": "Ce qu’on en dit",
+    "testimonials": [
+      { "quote": "« Trois jours qui ont redéfini mon été. Chaque scène avait sa propre atmosphère, son propre univers. »", "author": "— Mara Devlin", "role": "Festival-goer, 2025" },
+      { "quote": "« Une production irréprochable et une programmation audacieuse. Sans conteste le festival le mieux pensé que j’ai couvert cette année. »", "author": "— Theo Marsh", "role": "Music journalist, Pulsewave" },
+      { "quote": "« Du village gastronomique aux afters, Solstice transforme un concert en une expérience à part entière. »", "author": "— Iris Caron", "role": "Returning attendee" }
+    ]
+  },
+  "footer": {
+    "tagline": "Rendez-vous sous les projecteurs.",
+    "copyright": "© 2026 Solstice Festival",
+    "credit": "Modèle de site pour festival",
+    "socials": [ "Instagram", "TikTok", "Spotify" ]
+  },
+  "portfolioPage": {
+    "title": "Galerie",
+    "intro": "Live, presse et visuels de release — l’univers visuel de l’artiste, scène après scène, lumière après lumière.",
+    "images": [
+      "/_templates/music-festival/img/hero.jpg",
+      "/_templates/music-festival/img/singer.jpg",
+      "/_templates/music-festival/img/guitarist.jpg",
+      "/_templates/music-festival/img/dj.jpg",
+      "/_templates/music-festival/img/crowd1.jpg",
+      "/_templates/music-festival/img/artist1.jpg",
+      "/_templates/music-festival/img/artist2.jpg",
+      "/_templates/music-festival/img/crowd2.jpg",
+      "/_templates/music-festival/img/party.jpg",
+      "/_templates/music-festival/img/artist3.jpg",
+      "/_templates/music-festival/img/art.jpg",
+      "/_templates/music-festival/img/artist4.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Booking & contact",
+    "intro": "Festivals, salles, soirées privées : on parle dates, line-up et conditions. Réponse sous 48 h ouvrées.",
+    "bookingLabel": "Demande de booking",
+    "email": "booking@solstice-music.com",
+    "phone": "+33 6 12 34 56 78",
+    "availLabel": "Disponibilités & tournée",
+    "availText": "Tournée ouverte de mars à octobre 2026. Créneaux festivals d’été déjà partiellement réservés — anticipez vos demandes pour les week-ends de juillet et août.",
+    "techTitle": "Fiche technique",
+    "techRider": "Format scène : live 4 musiciens + régie. Plateau minimum 6 × 4 m. Système de diffusion façade calibré (line array type d&b / L-Acoustics), 2 retours wedge + 1 ear-monitor stéréo. Console FOH 32 voies (Midas / DiGiCo). Backline : batterie complète, ampli basse, 2 combos guitare, clavier 88 touches. Lumière : 8 PAR LED, 4 lyres, contrôle DMX, machine à brouillard. Balances 60 min avant ouverture des portes. Fiche technique détaillée et plan de patch fournis sur demande.",
+    "reassure": "Devis clair, contrat et fiche technique transmis avant signature. Aucune avance demandée tant que la date n’est pas confirmée."
+  }
+};
+  </script>
+</head>
+
+<body class="font-sans antialiased bg-paper text-ink selection:bg-orange selection:text-white">
+
+  <!-- ============ NAV ============ -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-ink/85 backdrop-blur-sm text-paper">
+    <nav class="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
+      <a href="#" data-sg-page="/" class="font-mono text-sm tracking-label uppercase text-paper" data-sg-path="wordmark">SOL’26</a>
+      <ul class="hidden md:flex items-center gap-8 font-mono text-[12px] tracking-label uppercase text-muted">
+        <li><a href="#" data-sg-page="/" class="hover:text-paper transition-colors">Accueil</a></li>
+        <li><a href="#" data-sg-page="portfolio" class="text-paper transition-colors" data-sg-path="portfolioPage.title">Galerie</a></li>
+        <li><a href="#" data-sg-page="contact" class="hover:text-paper transition-colors" data-sg-path="contactPage.title">Booking &amp; contact</a></li>
+      </ul>
+      <a href="#" data-sg-page="contact" class="font-mono text-[12px] tracking-label uppercase bg-orange text-white rounded-sm px-4 py-2 hover:opacity-90 transition-opacity" data-sg-path="cta">Event Info</a>
+    </nav>
+  </header>
+
+  <!-- ============ EN-TÊTE GALERIE ============ -->
+  <section class="relative bg-ink text-paper overflow-hidden pt-16">
+    <div class="mx-auto max-w-7xl px-6 pt-20 pb-16 md:pt-28 md:pb-20" data-sg-reveal>
+      <p class="font-mono text-[12px] tracking-label uppercase text-orange mb-6">Univers visuel</p>
+      <h1 class="font-sans font-medium leading-[1.02] text-5xl md:text-7xl lg:text-[80px]" data-sg-path="portfolioPage.title">Galerie</h1>
+      <p class="mt-6 max-w-xl font-sans text-sm text-muted leading-relaxed" data-sg-path="portfolioPage.intro">
+        Live, presse et visuels de release — l’univers visuel de l’artiste, scène après scène, lumière après lumière.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ GRILLE MÉDIA ============ -->
+  <section class="bg-paper">
+    <div class="mx-auto max-w-7xl px-6 py-20 md:py-28">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-[200px] md:auto-rows-[260px] gap-4">
+
+        <figure class="group overflow-hidden rounded-lg bg-panel row-span-2" data-sg-reveal>
+          <img src="img/hero.jpg" alt="" data-sg-img="portfolioPage.images[0]" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        </figure>
+        <figure class="group overflow-hidden rounded-lg bg-panel" data-sg-reveal>
+          <img src="img/singer.jpg" alt="" data-sg-img="portfolioPage.images[1]" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        </figure>
+        <figure class="group overflow-hidden rounded-lg bg-panel" data-sg-reveal>
+          <img src="img/guitarist.jpg" alt="" data-sg-img="portfolioPage.images[2]" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        </figure>
+        <figure class="group overflow-hidden rounded-lg bg-panel row-span-2" data-sg-reveal>
+          <img src="img/dj.jpg" alt="" data-sg-img="portfolioPage.images[3]" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        </figure>
+        <figure class="group overflow-hidden rounded-lg bg-panel col-span-2" data-sg-reveal>
+          <img src="img/crowd1.jpg" alt="" data-sg-img="portfolioPage.images[4]" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        </figure>
+        <figure class="group overflow-hidden rounded-lg bg-panel" data-sg-reveal>
+          <img src="img/artist1.jpg" alt="" data-sg-img="portfolioPage.images[5]" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        </figure>
+        <figure class="group overflow-hidden rounded-lg bg-panel" data-sg-reveal>
+          <img src="img/artist2.jpg" alt="" data-sg-img="portfolioPage.images[6]" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        </figure>
+        <figure class="group overflow-hidden rounded-lg bg-panel row-span-2" data-sg-reveal>
+          <img src="img/crowd2.jpg" alt="" data-sg-img="portfolioPage.images[7]" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        </figure>
+        <figure class="group overflow-hidden rounded-lg bg-panel" data-sg-reveal>
+          <img src="img/party.jpg" alt="" data-sg-img="portfolioPage.images[8]" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        </figure>
+        <figure class="group overflow-hidden rounded-lg bg-panel" data-sg-reveal>
+          <img src="img/artist3.jpg" alt="" data-sg-img="portfolioPage.images[9]" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        </figure>
+        <figure class="group overflow-hidden rounded-lg bg-panel col-span-2" data-sg-reveal>
+          <img src="img/art.jpg" alt="" data-sg-img="portfolioPage.images[10]" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        </figure>
+        <figure class="group overflow-hidden rounded-lg bg-panel" data-sg-reveal>
+          <img src="img/artist4.jpg" alt="" data-sg-img="portfolioPage.images[11]" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        </figure>
+
+      </div>
+
+      <div class="mt-20 flex justify-center" data-sg-reveal>
+        <a href="#" data-sg-page="contact" class="font-mono text-[12px] tracking-label uppercase bg-ink text-paper rounded-sm px-6 py-4 hover:bg-orange transition-colors">Booker l’artiste</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="bg-ink text-paper overflow-hidden">
+    <div class="mx-auto max-w-7xl px-6 pt-20 pb-8">
+      <div class="flex flex-col md:flex-row justify-between gap-8" data-sg-reveal>
+        <p class="font-sans text-2xl md:text-3xl text-paper max-w-sm" data-sg-path="footer.tagline">See you under the lights.</p>
+        <div class="flex gap-6 font-mono text-[12px] tracking-label uppercase text-muted">
+          <a href="#" class="hover:text-orange transition-colors" data-sg-path="footer.socials[0]">Instagram</a>
+          <a href="#" class="hover:text-orange transition-colors" data-sg-path="footer.socials[1]">TikTok</a>
+          <a href="#" class="hover:text-orange transition-colors" data-sg-path="footer.socials[2]">Spotify</a>
+        </div>
+      </div>
+      <div class="mt-16 flex flex-col sm:flex-row justify-between items-center gap-3 font-mono text-[11px] tracking-wide uppercase text-muted/70 border-t border-line pt-6">
+        <span data-sg-path="footer.copyright">© 2026 Solstice Festival</span>
+        <span data-sg-path="footer.credit">A demo festival template</span>
+      </div>
+    </div>
+    <h2 class="font-sans font-semibold leading-none text-paper/95 text-[26vw] tracking-tight text-center -mb-[3vw] select-none pointer-events-none" data-sg-path="wordmark">SOL’26</h2>
+  </footer>
+
+  <!-- ============ HYDRATATION + ANIMATIONS (standard clone-site) ============ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, { opacity: 0, y: 40, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, { yPercent: -15, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } });
+        });
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

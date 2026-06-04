@@ -5,6 +5,18 @@
   "pageTypes": [
     "home"
   ],
+  "pages": [
+    {
+      "slug": "/portfolio",
+      "file": "portfolio.html",
+      "title": "Études de cas"
+    },
+    {
+      "slug": "/contact",
+      "file": "contact.html",
+      "title": "Contact"
+    }
+  ],
   "sections": {
     "home": [
       "brand",
@@ -52,6 +64,13 @@
       "role": "image",
       "required": true,
       "note": "testimonials · items · image"
+    },
+    {
+      "slot": "pf1",
+      "path": "portfolioPage.images[]",
+      "role": "gallery",
+      "required": false,
+      "note": "portfolioPage · images"
     }
   ],
   "fields": {
@@ -805,6 +824,162 @@
         "label": "footer · copyright",
         "type": "text",
         "maxLen": 42
+      },
+      {
+        "path": "portfolioPage.title",
+        "label": "études de cas · titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.intro",
+        "label": "études de cas · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "portfolioPage.kicker",
+        "label": "études de cas · sur-titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.metrics[].value",
+        "label": "études de cas · métrique · valeur",
+        "type": "text",
+        "maxLen": 16
+      },
+      {
+        "path": "portfolioPage.metrics[].label",
+        "label": "études de cas · métrique · libellé",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.cases[].sector",
+        "label": "études de cas · cas · secteur",
+        "type": "text",
+        "maxLen": 30
+      },
+      {
+        "path": "portfolioPage.cases[].title",
+        "label": "études de cas · cas · titre",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "portfolioPage.cases[].summary",
+        "label": "études de cas · cas · résumé",
+        "type": "text",
+        "maxLen": 200
+      },
+      {
+        "path": "portfolioPage.cases[].result",
+        "label": "études de cas · cas · résultat",
+        "type": "text",
+        "maxLen": 60
+      },
+      {
+        "path": "portfolioPage.cta_text",
+        "label": "études de cas · cta · texte",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "portfolioPage.cta_btn",
+        "label": "études de cas · cta · bouton",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.title",
+        "label": "contact · titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.intro",
+        "label": "contact · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.kicker",
+        "label": "contact · sur-titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.email",
+        "label": "contact · email",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.email_label",
+        "label": "contact · email · libellé",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.response_promise",
+        "label": "contact · promesse de réponse",
+        "type": "text",
+        "maxLen": 50
+      },
+      {
+        "path": "contactPage.cta_btn",
+        "label": "contact · cta · bouton",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.phone_label",
+        "label": "contact · téléphone · libellé",
+        "type": "text",
+        "maxLen": 30
+      },
+      {
+        "path": "contactPage.phone",
+        "label": "contact · téléphone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.hours_label",
+        "label": "contact · disponibilité · libellé",
+        "type": "text",
+        "maxLen": 30
+      },
+      {
+        "path": "contactPage.hours",
+        "label": "contact · disponibilité",
+        "type": "text",
+        "maxLen": 60
+      },
+      {
+        "path": "contactPage.address_label",
+        "label": "contact · bureaux · libellé",
+        "type": "text",
+        "maxLen": 30
+      },
+      {
+        "path": "contactPage.address",
+        "label": "contact · bureaux",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.reassurances[].title",
+        "label": "contact · réassurance · titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.reassurances[].text",
+        "label": "contact · réassurance · texte",
+        "type": "text",
+        "maxLen": 120
       }
     ]
   }

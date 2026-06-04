@@ -5,6 +5,18 @@
   "pageTypes": [
     "home"
   ],
+  "pages": [
+    {
+      "slug": "/portfolio",
+      "file": "portfolio.html",
+      "title": "Nos réalisations"
+    },
+    {
+      "slug": "/contact",
+      "file": "contact.html",
+      "title": "Contact & devis"
+    }
+  ],
   "sections": {
     "home": [
       "meta",
@@ -46,6 +58,12 @@
       "role": "image",
       "required": true,
       "note": "whyUs · image"
+    },
+    {
+      "slot": "pf1",
+      "path": "portfolioPage.images[]",
+      "role": "gallery",
+      "required": false
     }
   ],
   "fields": {
@@ -337,6 +355,126 @@
         "label": "footer · copyright",
         "type": "text",
         "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.title",
+        "label": "portfolioPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.intro",
+        "label": "portfolioPage · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "portfolioPage.captions[]",
+        "label": "portfolioPage · captions",
+        "type": "text",
+        "maxLen": 60
+      },
+      {
+        "path": "portfolioPage.ctaTitle",
+        "label": "portfolioPage · ctaTitle",
+        "type": "text",
+        "maxLen": 50
+      },
+      {
+        "path": "portfolioPage.ctaText",
+        "label": "portfolioPage · ctaText",
+        "type": "text",
+        "maxLen": 120
+      },
+      {
+        "path": "portfolioPage.ctaButton",
+        "label": "portfolioPage · ctaButton",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.title",
+        "label": "contactPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.intro",
+        "label": "contactPage · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.phoneLabel",
+        "label": "contactPage · phoneLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.phone",
+        "label": "contactPage · phone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.phoneNote",
+        "label": "contactPage · phoneNote",
+        "type": "text",
+        "maxLen": 60
+      },
+      {
+        "path": "contactPage.emailLabel",
+        "label": "contactPage · emailLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.email",
+        "label": "contactPage · email",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.zonesLabel",
+        "label": "contactPage · zonesLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.zones",
+        "label": "contactPage · zones",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.delayLabel",
+        "label": "contactPage · delayLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.delay",
+        "label": "contactPage · delay",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.cta",
+        "label": "contactPage · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.reassurance[].title",
+        "label": "contactPage · reassurance · title",
+        "type": "text",
+        "maxLen": 50
+      },
+      {
+        "path": "contactPage.reassurance[].desc",
+        "label": "contactPage · reassurance · desc",
+        "type": "text",
+        "maxLen": 150
       }
     ]
   }

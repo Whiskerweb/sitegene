@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-sg-path="meta.title">Voltéo – Contact & devis</title>
+  <meta name="description" data-sg-path="meta.description" content="Solutions intelligentes pour l'électricité, l'eau et le chauffage. Électriciens, plombiers et chauffagistes certifiés pour les particuliers et professionnels — disponibles 24h/24 et 7j/7." />
+
+  <!-- Google Fonts: Manrope (matches source) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#EF7615',   /* orange accent */
+            ink:     '#0B212D',   /* dark teal bg */
+            ink2:    '#0F2A38',   /* slightly lighter teal */
+            bg:      '#F0F5F9',   /* light section bg */
+            muted:   '#5A6B74',   /* muted body text */
+            border:  '#E2E9EE',   /* card borders */
+          },
+          fontFamily: {
+            sans: ['"Manrope"', 'sans-serif'],
+          },
+          borderRadius: {
+            'xl2': '16px',
+            'xl3': '24px',
+          },
+        }
+      }
+    };
+  </script>
+
+  <!-- __SITE_CONTENT__ — single source of truth for all copy + image paths (DEMO content) -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+      meta: {
+        title: "Voltéo – Experts en électricité, plomberie et chauffage",
+        description: "Solutions intelligentes pour l'électricité, l'eau et le chauffage. Électriciens, plombiers et chauffagistes certifiés pour les particuliers et professionnels — disponibles 24h/24 et 7j/7."
+      },
+      brand: "Voltéo",
+      topbar: { phone: "(555) 120-4480" },
+      nav: {
+        links: ["Services", "Fonctionnement", "À propos", "FAQ"],
+        home: "Accueil",
+        portfolio: "Nos réalisations",
+        contact: "Contact & devis",
+        cta: "Nous contacter"
+      },
+      portfolioPage: {
+        label: "Notre savoir-faire",
+        title: "Nos réalisations",
+        intro: "Tableaux électriques, salles de bain, chaudières, rénovations complètes : découvrez une sélection de chantiers menés par nos équipes chez des particuliers et des professionnels.",
+        statValue: "+1 200",
+        statLabel: "interventions réalisées",
+        ctaTitle: "Votre projet ressemble à l'un de ces chantiers ?",
+        ctaText: "Parlons-en. Nous vous établissons un devis clair et gratuit, sans engagement.",
+        cta: "Demander un devis",
+        images: [
+          "/_templates/multi-trade/img/service-electrical.jpg",
+          "/_templates/multi-trade/img/service-plumbing.jpg",
+          "/_templates/multi-trade/img/service-heating.jpg",
+          "/_templates/multi-trade/img/process.jpg",
+          "/_templates/multi-trade/img/about.jpg",
+          "/_templates/multi-trade/img/trust.jpg",
+          "/_templates/multi-trade/img/hero.jpg",
+          "/_templates/multi-trade/img/cta.jpg",
+          "/_templates/multi-trade/img/service-plumbing.jpg",
+          "/_templates/multi-trade/img/service-heating.jpg"
+        ],
+        captions: [
+          "Remplacement de tableau électrique aux normes — maison individuelle",
+          "Réfection complète de plomberie — appartement rénové",
+          "Installation de chaudière à condensation — pavillon",
+          "Mise en sécurité électrique — local commercial",
+          "Rénovation salle de bain clé en main — particulier",
+          "Diagnostic et entretien chauffage — copropriété",
+          "Création de point lumineux et câblage — extension",
+          "Dépannage d'urgence après dégât des eaux — logement"
+        ]
+      },
+      contactPage: {
+        label: "Contact & devis",
+        title: "Contact & devis",
+        intro: "Une panne, un projet, une simple question ? Appelez-nous ou écrivez-nous : nous vous répondons rapidement et établissons votre devis gratuitement.",
+        phoneLabel: "Appelez-nous directement",
+        phone: "(555) 120-4480",
+        phoneNote: "Du lundi au samedi, 8h – 19h · Urgences 24h/24 et 7j/7",
+        emailLabel: "Écrivez-nous",
+        email: "contact@volteo.com",
+        zonesLabel: "Zones d'intervention",
+        zones: "Nous intervenons dans toute la ville et les communes avoisinantes, dans un rayon de 30 km autour de notre atelier.",
+        promiseLabel: "Notre engagement",
+        promiseTitle: "Une réponse sous 2 heures ouvrées",
+        promiseText: "Chaque demande est traitée par un technicien, jamais par un standard automatisé. Devis clair, tarif fixe, aucune surprise.",
+        reassurance: [
+          "Devis gratuit et sans engagement",
+          "Techniciens certifiés et assurés",
+          "Délai d'intervention garanti",
+          "Tarifs transparents communiqués avant travaux"
+        ],
+        cta: "Demander un devis",
+        ctaNote: "Réponse garantie sous 2 heures ouvrées",
+        image: "/_templates/multi-trade/img/cta.jpg"
+      },
+      footer: {
+        tagline: "Nous servons avec fierté la région et les communes avoisinantes, en proposant des services à domicile rapides et fiables.",
+        phone: "(555) 120-4480",
+        email: "contact@volteo.com",
+        columns: [
+          { heading: "Entreprise", links: ["Accueil", "Services", "À propos", "FAQ", "Nous contacter"] },
+          { heading: "Services", links: ["Dépannage électrique", "Solutions de plomberie", "Systèmes de chauffage"] },
+          { heading: "Mentions légales", links: ["Politique de confidentialité", "Conditions d'utilisation", "Liens utiles"] }
+        ],
+        copyright: "© 2026 Voltéo. Modèle de démonstration."
+      }
+    };
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Manrope', sans-serif; background: #0B212D; color: #fff; margin: 0; }
+
+    /* Nav underline */
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; left: 0; bottom: -3px; width: 0; height: 2px; background: #EF7615; transition: width .25s; }
+    .nav-link:hover::after { width: 100%; }
+  </style>
+</head>
+<body class="antialiased bg-ink text-white">
+
+<!-- ───────── NAV ───────── -->
+<nav class="absolute top-0 inset-x-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" data-sg-page="/" class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M11.3 1.046a1 1 0 01.7.954v5h3a1 1 0 01.78 1.625l-7 9A1 1 0 017 18v-5H4a1 1 0 01-.78-1.625l7-9a1 1 0 011.08-.329z"/></svg>
+      </div>
+      <span class="text-white font-extrabold text-xl tracking-tight" data-sg-path="brand">Voltéo</span>
+    </a>
+    <!-- Links -->
+    <div class="hidden lg:flex items-center gap-8">
+      <a href="#" data-sg-page="/"         class="nav-link text-white/80 hover:text-white text-sm font-medium transition-colors" data-sg-path="nav.home">Accueil</a>
+      <a href="#" data-sg-page="portfolio" class="nav-link text-white/80 hover:text-white text-sm font-medium transition-colors" data-sg-path="nav.portfolio">Nos réalisations</a>
+      <a href="#" data-sg-page="contact"   class="nav-link text-white font-semibold text-sm transition-colors" data-sg-path="nav.contact">Contact &amp; devis</a>
+    </div>
+    <div class="flex items-center gap-5">
+      <a href="#" data-sg-page="contact" class="hidden sm:inline-flex items-center gap-2 text-white/80 hover:text-white text-sm font-medium">
+        <svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+        <span data-sg-path="topbar.phone">(555) 120-4480</span>
+      </a>
+      <a href="#" data-sg-page="/" class="bg-primary text-white font-semibold text-sm px-5 py-2.5 rounded-full hover:brightness-110 transition-all" data-sg-path="nav.home">Accueil</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ───────── PAGE HEADER + PHONE ───────── -->
+<section class="relative bg-ink overflow-hidden pt-40 pb-20 px-6">
+  <div class="absolute inset-0 opacity-25" data-sg-parallax>
+    <img data-sg-img="contactPage.image" src="img/cta.jpg" alt="" class="w-full h-full object-cover" />
+    <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/90 to-ink/70"></div>
+  </div>
+  <div class="relative max-w-3xl mx-auto text-center" data-sg-reveal>
+    <span class="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider mb-6">
+      <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+      <span data-sg-path="contactPage.label">Contact &amp; devis</span>
+    </span>
+    <h1 class="text-white font-extrabold text-4xl md:text-6xl leading-[1.05] mb-6" data-sg-path="contactPage.title">Contact &amp; devis</h1>
+    <p class="text-white/70 text-lg max-w-2xl mx-auto mb-12" data-sg-path="contactPage.intro">Une panne, un projet, une simple question ? Appelez-nous ou écrivez-nous : nous vous répondons rapidement et établissons votre devis gratuitement.</p>
+
+    <!-- Phone — very visible -->
+    <div class="inline-block bg-primary rounded-xl3 px-8 py-7 md:px-12 md:py-9 text-left max-w-md w-full" data-sg-reveal>
+      <div class="flex items-center gap-2 text-white/80 text-xs font-semibold uppercase tracking-wider mb-2">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+        <span data-sg-path="contactPage.phoneLabel">Appelez-nous directement</span>
+      </div>
+      <div class="text-white font-extrabold text-3xl md:text-4xl tracking-tight mb-2" data-sg-path="contactPage.phone">(555) 120-4480</div>
+      <div class="text-white/85 text-sm" data-sg-path="contactPage.phoneNote">Du lundi au samedi, 8h – 19h · Urgences 24h/24 et 7j/7</div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── INFO GRID ───────── -->
+<section class="bg-white text-ink py-20 px-6">
+  <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-6">
+    <!-- Email -->
+    <div class="bg-bg rounded-xl3 p-8" data-sg-reveal>
+      <span class="w-11 h-11 bg-primary/10 rounded-full flex items-center justify-center mb-5">
+        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+      </span>
+      <h3 class="font-bold text-ink text-lg mb-2" data-sg-path="contactPage.emailLabel">Écrivez-nous</h3>
+      <a href="mailto:contact@volteo.com" class="text-primary font-semibold text-base hover:underline break-all" data-sg-path="contactPage.email">contact@volteo.com</a>
+    </div>
+
+    <!-- Zones -->
+    <div class="bg-bg rounded-xl3 p-8" data-sg-reveal>
+      <span class="w-11 h-11 bg-primary/10 rounded-full flex items-center justify-center mb-5">
+        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+      </span>
+      <h3 class="font-bold text-ink text-lg mb-2" data-sg-path="contactPage.zonesLabel">Zones d'intervention</h3>
+      <p class="text-muted text-sm leading-relaxed" data-sg-path="contactPage.zones">Nous intervenons dans toute la ville et les communes avoisinantes, dans un rayon de 30 km autour de notre atelier.</p>
+    </div>
+
+    <!-- Promise (full width) -->
+    <div class="md:col-span-2 bg-ink rounded-xl3 p-8 md:p-10 flex flex-col md:flex-row md:items-center gap-6" data-sg-reveal>
+      <span class="w-12 h-12 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+      </span>
+      <div>
+        <span class="text-primary font-semibold text-xs uppercase tracking-wider" data-sg-path="contactPage.promiseLabel">Notre engagement</span>
+        <h3 class="text-white font-bold text-xl md:text-2xl mt-1 mb-2" data-sg-path="contactPage.promiseTitle">Une réponse sous 2 heures ouvrées</h3>
+        <p class="text-white/60 text-sm leading-relaxed max-w-2xl" data-sg-path="contactPage.promiseText">Chaque demande est traitée par un technicien, jamais par un standard automatisé. Devis clair, tarif fixe, aucune surprise.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── REASSURANCE + CTA ───────── -->
+<section class="bg-bg text-ink pb-24 px-6">
+  <div class="max-w-5xl mx-auto">
+    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+      <li class="flex items-center gap-3 bg-white rounded-xl2 border border-border px-5 py-4" data-sg-reveal>
+        <span class="w-7 h-7 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg></span>
+        <span class="font-semibold text-ink text-sm" data-sg-path="contactPage.reassurance[0]">Devis gratuit et sans engagement</span>
+      </li>
+      <li class="flex items-center gap-3 bg-white rounded-xl2 border border-border px-5 py-4" data-sg-reveal>
+        <span class="w-7 h-7 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg></span>
+        <span class="font-semibold text-ink text-sm" data-sg-path="contactPage.reassurance[1]">Techniciens certifiés et assurés</span>
+      </li>
+      <li class="flex items-center gap-3 bg-white rounded-xl2 border border-border px-5 py-4" data-sg-reveal>
+        <span class="w-7 h-7 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg></span>
+        <span class="font-semibold text-ink text-sm" data-sg-path="contactPage.reassurance[2]">Délai d'intervention garanti</span>
+      </li>
+      <li class="flex items-center gap-3 bg-white rounded-xl2 border border-border px-5 py-4" data-sg-reveal>
+        <span class="w-7 h-7 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg></span>
+        <span class="font-semibold text-ink text-sm" data-sg-path="contactPage.reassurance[3]">Tarifs transparents communiqués avant travaux</span>
+      </li>
+    </ul>
+
+    <div class="text-center" data-sg-reveal>
+      <a href="mailto:contact@volteo.com?subject=Demande%20de%20devis" class="inline-flex items-center gap-3 bg-primary text-white font-semibold px-8 py-4 rounded-full hover:brightness-110 transition-all text-base">
+        <span data-sg-path="contactPage.cta">Demander un devis</span>
+        <span class="w-6 h-6 bg-white rounded-full flex items-center justify-center"><svg class="w-3 h-3 text-primary" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <p class="text-muted text-sm mt-4" data-sg-path="contactPage.ctaNote">Réponse garantie sous 2 heures ouvrées</p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── FOOTER ───────── -->
+<footer class="bg-ink2 text-white pt-16 pb-8 px-6 border-t border-white/5">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-4 gap-12 mb-12">
+      <div class="md:col-span-1">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M11.3 1.046a1 1 0 01.7.954v5h3a1 1 0 01.78 1.625l-7 9A1 1 0 017 18v-5H4a1 1 0 01-.78-1.625l7-9a1 1 0 011.08-.329z"/></svg>
+          </div>
+          <span class="font-extrabold text-xl" data-sg-path="brand">Voltéo</span>
+        </div>
+        <p class="text-white/50 text-sm leading-relaxed mb-5" data-sg-path="footer.tagline">We proudly serve the local area and surrounding communities with fast and reliable home services.</p>
+        <p class="text-white/70 text-sm font-medium" data-sg-path="footer.phone">(555) 120-4480</p>
+        <p class="text-white/50 text-sm" data-sg-path="footer.email">contact@volteo.com</p>
+      </div>
+
+      <div>
+        <h4 class="font-semibold text-sm mb-4 text-white/80" data-sg-path="footer.columns[0].heading">Entreprise</h4>
+        <ul class="space-y-2">
+          <li><a href="#" data-sg-page="/" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[0]">Accueil</a></li>
+          <li><a href="#" data-sg-page="/" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[1]">Services</a></li>
+          <li><a href="#" data-sg-page="/" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[2]">À propos</a></li>
+          <li><a href="#" data-sg-page="/" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[3]">FAQ</a></li>
+          <li><a href="#" data-sg-page="contact" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[4]">Nous contacter</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-semibold text-sm mb-4 text-white/80" data-sg-path="footer.columns[1].heading">Services</h4>
+        <ul class="space-y-2">
+          <li><a href="#" data-sg-page="/" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[1].links[0]">Dépannage électrique</a></li>
+          <li><a href="#" data-sg-page="/" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[1].links[1]">Solutions de plomberie</a></li>
+          <li><a href="#" data-sg-page="/" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[1].links[2]">Systèmes de chauffage</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-semibold text-sm mb-4 text-white/80" data-sg-path="footer.columns[2].heading">Mentions légales</h4>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[2].links[0]">Politique de confidentialité</a></li>
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[2].links[1]">Conditions d'utilisation</a></li>
+          <li><a href="#" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[2].links[2]">Liens utiles</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 pt-8 text-center">
+      <p class="text-white/30 text-xs" data-sg-path="footer.copyright">© 2026 Voltéo. Modèle de démonstration.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ───────── STANDARD HYDRATION + GSAP BLOCK ───────── -->
+<script>
+  (function () {
+    var C = window.__SITE_CONTENT__ || {};
+    function get(p) {
+      return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+        .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+    }
+    document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-path'));
+      if (v != null && typeof v !== 'object') el.textContent = v;
+    });
+    document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-img'));
+      if (v == null) return;
+      if (el.tagName === 'IMG') el.src = v;
+      else el.style.backgroundImage = "url('" + v + "')";
+    });
+    // mailto enrichment from content (phone/email reflected into the quote CTA)
+    var cp = (window.__SITE_CONTENT__ || {}).contactPage || {};
+    if (cp.email) {
+      document.querySelectorAll('a[href^="mailto:"]').forEach(function (a) {
+        var hasSubject = a.getAttribute('href').indexOf('subject=') !== -1;
+        a.setAttribute('href', 'mailto:' + cp.email + (hasSubject ? '?subject=Demande%20de%20devis' : ''));
+      });
+    }
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+        gsap.from(el, {
+          opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+        });
+      });
+      gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+        gsap.to(el, {
+          yPercent: -12, ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+      });
+      // ROBUSTESSE : recalcule positions après chargement images + filet anti-page-blanche
+      window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+      setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+      setTimeout(function () {
+        document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+          if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+        });
+      }, 2200);
+    }
+  })();
+</script>
+</body>
+</html>

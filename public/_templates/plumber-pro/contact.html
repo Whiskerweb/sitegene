@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-sg-path="meta.title">Aqualis – Plombier de confiance, urgence 24/7</title>
+  <meta name="description" data-sg-path="meta.description" content="Plomberie moderne : réparation, installation et urgence 24/7. Une équipe qualifiée et un service fiable pour votre maison et votre entreprise." />
+
+  <!-- Google Fonts (Manrope) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0059A9',   /* plumbing blue accent */
+            blue2:   '#2672B6',   /* lighter blue (cards on blue) */
+            ink:     '#010A11',   /* near-black navy */
+            bg:      '#F2F5F9',   /* light section bg */
+            muted:   '#5B5E66',   /* body text muted */
+            border:  '#E4E8EE',   /* card borders */
+            white:   '#FFFFFF',
+            danger:  '#F2181E',   /* red CTA / accent */
+          },
+          fontFamily: {
+            sans: ['"Manrope"', 'sans-serif'],
+          },
+          borderRadius: {
+            'xl2': '16px',
+            'xl3': '24px',
+          },
+        }
+      }
+    };
+  </script>
+
+  <!-- __SITE_CONTENT__ — single source of truth for all copy + image paths -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+      meta: {
+        title: "Aqualis – Plombier de confiance, urgence 24/7",
+        description: "Plomberie moderne : réparation, installation et urgence 24/7. Une équipe qualifiée et un service fiable pour votre maison et votre entreprise."
+      },
+      brand: "Aqualis",
+      topbar: {
+        phone: "(01) 23 45 67 89",
+        hours: "08h00 – 19h00",
+        area: "Trouver une zone d'intervention"
+      },
+      nav: {
+        links: ["Accueil", "À propos", "Services", "Blog", "Pages"],
+        phone: "+33 1 80 05 55 76",
+        cta: "Nous contacter"
+      },
+      hero: {
+        eyebrow: "Spécialistes plomberie certifiés",
+        title: "Des services de plomberie sur lesquels vous pouvez compter",
+        tagline: "Une plomberie fiable, abordable et disponible 24/7 pour tous vos besoins, à la maison comme en entreprise.",
+        cta: "Prendre rendez-vous",
+        reviews: "8K+",
+        reviewsLabel: "Avis clients",
+        image: "/_templates/plumber-pro/img/hero.jpg"
+      },
+      intro: {
+        label: "Notre introduction",
+        title: "Chez Aqualis, fort de plusieurs années d'expérience, notre équipe qualifiée",
+        sideTitle: "La satisfaction client et la qualité d'exécution sont au cœur de tout ce que nous faisons.",
+        sideText: "Nos professionnels qualifiés s'engagent à fournir des solutions haut de gamme avec un service irréprochable. Nous privilégions un travail de qualité pour que chaque chantier soit réussi du premier coup.",
+        image: "/_templates/plumber-pro/img/intro.jpg",
+        stats: [
+          { value: "12+", label: "Années d'expérience" },
+          { value: "4+",  label: "Certifications" },
+          { value: "24/7", label: "Service d'urgence" }
+        ],
+        cta: "En savoir plus"
+      },
+      services: {
+        label: "Nos services",
+        title: "Des solutions de plomberie fiables",
+        subtitle: "Notre équipe qualifiée gère tout, des fuites aux installations, avec précision, rapidité et durabilité.",
+        cta: "Voir tous les services",
+        items: [
+          { title: "Dépannage plomberie d'urgence", desc: "Intervention rapide 24/7 pour les fuites, ruptures de canalisation et urgences, afin de limiter les dégâts.", icon: "drop" },
+          { title: "Débouchage de canalisations", desc: "Service de débouchage rapide et complet pour fuites, bouchons et obstructions dans votre logement.", icon: "wrench" },
+          { title: "Installation & remplacement", desc: "Solutions d'installation rapides pour bouchons, fuites et chantiers, livrées dans les délais.", icon: "pipe" },
+          { title: "Chauffe-eau & ballon", desc: "Service d'urgence permanent pour vos problèmes de chauffe-eau, réparations rapides et dégâts limités.", icon: "heater" }
+        ]
+      },
+      steps: {
+        label: "Comment ça marche",
+        title: "Des étapes simples pour démarrer dès maintenant",
+        subtitle: "Notre équipe qualifiée gère tout, des fuites aux installations, avec précision, rapidité et durabilité.",
+        cta: "Nous contacter",
+        items: [
+          { title: "Réservez un service", desc: "Planifiez votre intervention en ligne ou par téléphone en quelques étapes simples — rapide et pratique." },
+          { title: "Recevez un diagnostic", desc: "Nos plombiers arrivent à l'heure, évaluent le problème avec soin et proposent la meilleure solution." },
+          { title: "On répare", desc: "Nous intervenons avec des outils de qualité et des techniques éprouvées pour une réparation durable." },
+          { title: "L'esprit tranquille", desc: "Avec notre garantie de bonne exécution et un service fiable, votre plomberie est entre de bonnes mains." }
+        ]
+      },
+      stats: {
+        label: "Nos chiffres",
+        title: "Une meilleure plomberie pour chaque espace",
+        subtitle: "Des résultats mesurables qui font la différence, intervention après intervention.",
+        items: [
+          { value: "8K+",  label: "Avis clients" },
+          { value: "12+",  label: "Années d'expérience" },
+          { value: "98%",  label: "Clients satisfaits" },
+          { value: "24/7", label: "Disponibilité urgence" }
+        ]
+      },
+      testimonials: {
+        label: "Témoignages",
+        title: "De vrais avis honnêtes de vrais clients",
+        items: [
+          { quote: "Aqualis nous a sauvés ! Une grosse fuite en pleine nuit, et leur équipe est arrivée en moins d'une heure. Rapide, professionnel et très sympa — ils ont réglé le problème vite et tout laissé impeccable. Je recommande vivement pour une intervention fiable et sans stress !", author: "Julien Caron", role: "Propriétaire", rating: 4, avatar: "/_templates/plumber-pro/img/avatar-1.jpg" },
+          { quote: "J'ai appelé Aqualis pour remplacer un chauffe-eau, et ils ont dépassé mes attentes. Le technicien était courtois et soigneux.", author: "Olivia Bonnet", role: "Gestionnaire d'immeuble", rating: 4, avatar: "/_templates/plumber-pro/img/avatar-2.jpg" },
+          { quote: "Un service impeccable du début à la fin. La prise de rendez-vous a été simple, ils sont arrivés à l'heure et ont débouché notre évier rapidement.", author: "Marc Leblanc", role: "Chef d'entreprise", rating: 4, avatar: "/_templates/plumber-pro/img/avatar-3.jpg" },
+          { quote: "Nous avons travaillé avec plusieurs plombiers, mais Aqualis sort du lot. Réactif et une équipe vraiment agréable.", author: "Sophie Chastel", role: "Chef d'entreprise", rating: 4, avatar: "/_templates/plumber-pro/img/avatar-4.jpg" }
+        ]
+      },
+      team: {
+        label: "Notre équipe",
+        title: "Rencontrez les professionnels d'Aqualis",
+        members: [
+          { name: "Jean Carrère", role: "Plombier responsable", image: "/_templates/plumber-pro/img/team-1.jpg" },
+          { name: "Marina López",  role: "Plombière responsable", image: "/_templates/plumber-pro/img/team-2.jpg" },
+          { name: "Damien Kessler", role: "Installation de canalisations", image: "/_templates/plumber-pro/img/team-3.jpg" }
+        ]
+      },
+      faq: {
+        label: "FAQ",
+        title: "Tout ce que vous devez savoir",
+        subtitle: "Réserver votre intervention est très simple : choisissez votre service, une date et un créneau, et c'est réglé.",
+        items: [
+          { question: "Comment prendre rendez-vous ?", answer: "La réservation en ligne ne prend que quelques minutes. Choisissez votre service, sélectionnez une date et un créneau pratiques, et confirmez instantanément en quelques clics." },
+          { question: "Intervenez-vous vraiment 24/7 en urgence ?", answer: "Oui — notre service d'urgence est disponible jour et nuit, week-ends compris, pour les fuites, ruptures de canalisation et tout incident nécessitant une intervention rapide." },
+          { question: "Vos plombiers sont-ils certifiés ?", answer: "Tous nos plombiers sont qualifiés, certifiés et assurés. Chacun suit une formation continue avant d'intervenir chez un client." },
+          { question: "Que se passe-t-il si je ne suis pas satisfait ?", answer: "Votre satisfaction est notre priorité. Si le résultat ne vous convient pas, contactez-nous sous 24h et nous renvoyons une équipe sans frais supplémentaires." }
+        ]
+      },
+      blog: {
+        label: "Notre blog",
+        title: "Conseils plomberie & actualités",
+        subtitle: "Notre équipe qualifiée gère tout, des fuites aux installations, avec précision, rapidité et durabilité.",
+        cta: "Voir tous les articles",
+        featured: [
+          { author: "Émilie Carrère", date: "1 sept. 2025", title: "5 problèmes de plomberie courants et comment les régler facilement chez soi.", excerpt: "Des solutions simples pour les soucis courants — fuites, bouchons et basse pression — pour économiser temps et argent.", image: "/_templates/plumber-pro/img/blog-1.jpg" },
+          { author: "Émilie Carrère", date: "1 sept. 2025", title: "Pourquoi ne jamais ignorer un robinet qui fuit, et ce que ça peut vous coûter.", excerpt: "Évitez les soucis de plomberie grâce à des réparations rapides pour les fuites, bouchons et bien plus.", image: "/_templates/plumber-pro/img/blog-2.jpg" }
+        ],
+        list: [
+          { title: "Le guide du propriétaire pour l'entretien de la plomberie.", author: "Nathalie Roy",  date: "1 sept. 2025" },
+          { title: "Faire soi-même ou appeler un pro — quel est le bon choix ?", author: "Théo Sicard",    date: "1 sept. 2025" },
+          { title: "Stopper la fuite : réparer un robinet qui goutte en toute simplicité.", author: "Alex Tournier", date: "1 sept. 2025" }
+        ]
+      },
+      cta: {
+        title: "Besoin d'un plombier ? Démarrons dès aujourd'hui",
+        subtitle: "Ne laissez plus une fuite gâcher votre journée. Notre équipe intervient vite, proprement et avec le sourire.",
+        button: "Prendre rendez-vous",
+        phone: "(01) 23 45 67 89"
+      },
+      footer: {
+        tagline: "Une plomberie professionnelle, soignée et fiable, pour que votre logement reste sain au quotidien.",
+        columns: [
+          { heading: "Entreprise", links: ["Accueil", "À propos", "Blog"] },
+          { heading: "Services",   links: ["Urgence 24/7", "Débouchage", "Installation"] },
+          { heading: "Légal",      links: ["Politique de confidentialité", "Conditions générales"] }
+        ],
+        copyright: "© 2026 Aqualis. Tous droits réservés."
+      },
+      portfolioPage: {
+        title: "Nos réalisations",
+        intro: "Chaque chantier est une preuve concrète de notre savoir-faire : rénovations de salle de bains, réseaux refaits à neuf, dépannages d'urgence et installations soignées, livrés propres et durables.",
+        images: [
+          "/_templates/plumber-pro/img/hero.jpg",
+          "/_templates/plumber-pro/img/intro.jpg",
+          "/_templates/plumber-pro/img/blog-1.jpg",
+          "/_templates/plumber-pro/img/blog-2.jpg",
+          "/_templates/plumber-pro/img/team-1.jpg",
+          "/_templates/plumber-pro/img/team-2.jpg",
+          "/_templates/plumber-pro/img/team-3.jpg",
+          "/_templates/plumber-pro/img/hero.jpg",
+          "/_templates/plumber-pro/img/intro.jpg",
+          "/_templates/plumber-pro/img/blog-1.jpg"
+        ],
+        captions: [
+          "Rénovation complète de salle de bains",
+          "Remplacement de chauffe-eau thermodynamique",
+          "Réfection d'un réseau de canalisations",
+          "Débouchage haute pression et inspection caméra",
+          "Installation de robinetterie design",
+          "Création d'un point d'eau cuisine",
+          "Dépannage fuite d'urgence maîtrisé",
+          "Mise aux normes d'une colonne d'immeuble",
+          "Pose d'un adoucisseur d'eau",
+          "Raccordement complet d'une buanderie"
+        ]
+      },
+      contactPage: {
+        title: "Contact & devis",
+        intro: "Une fuite, un projet ou simplement une question ? Décrivez votre besoin : nous vous rappelons et établissons un devis clair, sans engagement.",
+        phone: "(01) 23 45 67 89",
+        email: "contact@aqualis.fr",
+        areasTitle: "Zones d'intervention",
+        areas: "Paris et toute l'Île-de-France — déplacements rapides dans un rayon de 30 km autour de nos ateliers.",
+        responseTitle: "Délai de réponse",
+        response: "Réponse sous 1 heure en journée et intervention d'urgence possible 24h/24, 7j/7, week-ends et jours fériés inclus.",
+        cta: "Demander un devis"
+      }
+    };
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Manrope', sans-serif; background: #fff; color: #010A11; margin: 0; }
+
+    /* Nav underline */
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px; background: #0059A9; transition: width .25s; }
+    .nav-link:hover::after { width: 100%; }
+  </style>
+</head>
+<body class="antialiased">
+
+<!-- ───────── TOPBAR ───────── -->
+<div class="bg-ink text-white text-xs md:text-sm">
+  <div class="max-w-7xl mx-auto px-6 py-2.5 flex items-center justify-center gap-6 flex-wrap">
+    <span class="flex items-center gap-2">
+      <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11 19.79 19.79 0 010 2.18 2 2 0 012 0h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 14.92z"/></svg>
+      <span data-sg-path="topbar.phone">(01) 23 45 67 89</span>
+    </span>
+    <span class="hidden sm:flex items-center gap-2">
+      <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      <span data-sg-path="topbar.hours">08h00 – 19h00</span>
+    </span>
+    <span class="hidden md:flex items-center gap-2">
+      <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span data-sg-path="topbar.area">Trouver une zone d'intervention</span>
+    </span>
+  </div>
+</div>
+
+<!-- ───────── NAV ───────── -->
+<nav class="bg-white sticky top-0 z-50 border-b border-border">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" data-sg-page="/" class="flex items-center gap-2">
+      <div class="w-9 h-9 bg-primary rounded-lg flex items-center justify-center">
+        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c3 4.5 6 8 6 11a6 6 0 11-12 0c0-3 3-6.5 6-11z"/></svg>
+      </div>
+      <span class="text-ink font-extrabold text-xl tracking-tight" data-sg-path="brand">Aqualis</span>
+    </a>
+    <!-- Links -->
+    <div class="hidden lg:flex items-center gap-8">
+      <a href="#" data-sg-page="/" class="nav-link text-ink/80 hover:text-ink text-sm font-semibold transition-colors" data-sg-path="nav.links[0]">Accueil</a>
+      <a href="#" data-sg-page="portfolio" class="nav-link text-ink/80 hover:text-ink text-sm font-semibold transition-colors">Nos réalisations</a>
+      <a href="#" data-sg-page="contact" class="nav-link text-primary text-sm font-semibold transition-colors">Contact &amp; devis</a>
+    </div>
+    <!-- Right: phone + CTA -->
+    <div class="flex items-center gap-5">
+      <a href="#" data-sg-page="/" class="hidden md:flex items-center gap-2 text-ink font-bold text-sm">
+        <span class="w-8 h-8 bg-danger/10 rounded-full flex items-center justify-center">
+          <svg class="w-4 h-4 text-danger" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+        </span>
+        <span data-sg-path="nav.phone">+33 1 80 05 55 76</span>
+      </a>
+      <a href="#" data-sg-page="contact" class="bg-danger text-white font-semibold text-sm px-5 py-2.5 rounded-full hover:brightness-110 transition-all" data-sg-path="nav.cta">Nous contacter</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ───────── PAGE HEADER ───────── -->
+<section class="bg-ink px-6 pt-20 pb-16 md:pt-24 md:pb-20">
+  <div class="max-w-7xl mx-auto" data-sg-reveal>
+    <span class="inline-block border border-white/25 text-white/80 text-[11px] uppercase tracking-wider font-semibold px-4 py-1.5 rounded-full mb-6">Devis gratuit &amp; sans engagement</span>
+    <h1 class="text-white font-extrabold text-4xl md:text-6xl leading-[1.05] mb-5 max-w-3xl" data-sg-path="contactPage.title">Contact &amp; devis</h1>
+    <p class="text-white/70 text-lg max-w-2xl" data-sg-path="contactPage.intro">Une fuite, un projet ou simplement une question ? Décrivez votre besoin : nous vous rappelons et établissons un devis clair, sans engagement.</p>
+  </div>
+</section>
+
+<!-- ───────── PHONE SPOTLIGHT ───────── -->
+<section class="bg-primary px-6 py-12 md:py-14 relative overflow-hidden">
+  <div class="absolute -right-24 -top-24 w-72 h-72 bg-white/10 rounded-full pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6" data-sg-reveal>
+    <div>
+      <p class="text-white/70 text-sm uppercase tracking-wider font-semibold mb-1">Urgence ? Appelez maintenant</p>
+      <a href="#" data-sg-path="contactPage.phone" class="text-white font-extrabold text-4xl md:text-6xl leading-none tracking-tight block hover:brightness-110 transition-all">(01) 23 45 67 89</a>
+    </div>
+    <div class="flex items-center gap-3 text-white/80 text-sm bg-white/10 rounded-full px-5 py-3 self-start md:self-auto">
+      <svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      <span data-sg-path="topbar.hours">08h00 – 19h00</span>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── CONTACT GRID ───────── -->
+<section class="bg-bg px-6 py-20 md:py-24">
+  <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10">
+
+    <!-- Left: info cards -->
+    <div class="space-y-5">
+      <!-- Email -->
+      <div class="bg-white rounded-xl2 p-7 flex items-start gap-5 shadow-sm" data-sg-reveal>
+        <div class="w-12 h-12 bg-bg rounded-full flex items-center justify-center flex-shrink-0">
+          <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg text-ink mb-1">Email</h3>
+          <a href="#" class="text-primary text-sm font-semibold break-all" data-sg-path="contactPage.email">contact@aqualis.fr</a>
+        </div>
+      </div>
+      <!-- Phone -->
+      <div class="bg-white rounded-xl2 p-7 flex items-start gap-5 shadow-sm" data-sg-reveal>
+        <div class="w-12 h-12 bg-bg rounded-full flex items-center justify-center flex-shrink-0">
+          <svg class="w-6 h-6 text-danger" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg text-ink mb-1">Téléphone</h3>
+          <span class="text-ink text-sm font-bold" data-sg-path="contactPage.phone">(01) 23 45 67 89</span>
+        </div>
+      </div>
+      <!-- Areas -->
+      <div class="bg-white rounded-xl2 p-7 flex items-start gap-5 shadow-sm" data-sg-reveal>
+        <div class="w-12 h-12 bg-bg rounded-full flex items-center justify-center flex-shrink-0">
+          <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg text-ink mb-1" data-sg-path="contactPage.areasTitle">Zones d'intervention</h3>
+          <p class="text-muted text-sm leading-relaxed" data-sg-path="contactPage.areas">Paris et toute l'Île-de-France — déplacements rapides dans un rayon de 30 km autour de nos ateliers.</p>
+        </div>
+      </div>
+      <!-- Response promise -->
+      <div class="bg-white rounded-xl2 p-7 flex items-start gap-5 shadow-sm" data-sg-reveal>
+        <div class="w-12 h-12 bg-bg rounded-full flex items-center justify-center flex-shrink-0">
+          <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg text-ink mb-1" data-sg-path="contactPage.responseTitle">Délai de réponse</h3>
+          <p class="text-muted text-sm leading-relaxed" data-sg-path="contactPage.response">Réponse sous 1 heure en journée et intervention d'urgence possible 24h/24, 7j/7, week-ends et jours fériés inclus.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: devis CTA panel -->
+    <div class="bg-ink rounded-xl3 p-8 md:p-10 flex flex-col justify-center relative overflow-hidden" data-sg-reveal>
+      <div class="absolute -right-16 -bottom-16 w-56 h-56 bg-primary/20 rounded-full pointer-events-none"></div>
+      <div class="relative z-10">
+        <h2 class="text-white font-extrabold text-3xl md:text-4xl leading-tight mb-4">Recevez votre devis gratuit</h2>
+        <p class="text-white/70 text-base leading-relaxed mb-8 max-w-md">Expliquez-nous votre besoin par email : nature de l'intervention, adresse et photos si possible. Nous revenons vers vous avec un chiffrage clair et un créneau d'intervention.</p>
+
+        <ul class="space-y-3 mb-9">
+          <li class="flex items-center gap-3 text-white/85 text-sm">
+            <svg class="w-5 h-5 text-primary flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            Devis détaillé sans engagement
+          </li>
+          <li class="flex items-center gap-3 text-white/85 text-sm">
+            <svg class="w-5 h-5 text-primary flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            Tarifs transparents, aucune surprise
+          </li>
+          <li class="flex items-center gap-3 text-white/85 text-sm">
+            <svg class="w-5 h-5 text-primary flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            Plombiers certifiés et assurés
+          </li>
+        </ul>
+
+        <a href="mailto:contact@aqualis.fr?subject=Demande%20de%20devis%20-%20Aqualis" class="inline-flex items-center gap-3 bg-danger text-white font-semibold px-8 py-4 rounded-full hover:brightness-110 transition-all text-sm" data-sg-path="contactPage.cta">Demander un devis</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── FOOTER ───────── -->
+<footer class="bg-ink text-white pt-16 pb-8 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-4 gap-12 mb-12">
+      <div class="md:col-span-1">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-9 h-9 bg-primary rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c3 4.5 6 8 6 11a6 6 0 11-12 0c0-3 3-6.5 6-11z"/></svg>
+          </div>
+          <span class="font-extrabold text-xl" data-sg-path="brand">Aqualis</span>
+        </div>
+        <p class="text-white/50 text-sm leading-relaxed" data-sg-path="footer.tagline">Une plomberie professionnelle, soignée et fiable, pour que votre logement reste sain au quotidien.</p>
+      </div>
+
+      <!-- Column 0 -->
+      <div>
+        <h4 class="font-bold text-sm mb-4 text-white/80" data-sg-path="footer.columns[0].heading">Entreprise</h4>
+        <ul class="space-y-2">
+          <li><a href="#" data-sg-page="/" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[0]">Accueil</a></li>
+          <li><a href="#" data-sg-page="portfolio" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[1]">À propos</a></li>
+          <li><a href="#" data-sg-page="contact" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[0].links[2]">Blog</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 1 -->
+      <div>
+        <h4 class="font-bold text-sm mb-4 text-white/80" data-sg-path="footer.columns[1].heading">Services</h4>
+        <ul class="space-y-2">
+          <li><a href="#" data-sg-page="portfolio" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[1].links[0]">Urgence 24/7</a></li>
+          <li><a href="#" data-sg-page="portfolio" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[1].links[1]">Débouchage</a></li>
+          <li><a href="#" data-sg-page="portfolio" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[1].links[2]">Installation</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 2 -->
+      <div>
+        <h4 class="font-bold text-sm mb-4 text-white/80" data-sg-path="footer.columns[2].heading">Légal</h4>
+        <ul class="space-y-2">
+          <li><a href="#" data-sg-page="contact" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[2].links[0]">Politique de confidentialité</a></li>
+          <li><a href="#" data-sg-page="contact" class="text-white/50 text-sm hover:text-white transition-colors" data-sg-path="footer.columns[2].links[1]">Conditions générales</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 pt-8 text-center">
+      <p class="text-white/30 text-xs" data-sg-path="footer.copyright">© 2026 Aqualis. Tous droits réservés.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ───────── STANDARD HYDRATION + GSAP BLOCK ───────── -->
+<script>
+  (function () {
+    var C = window.__SITE_CONTENT__ || {};
+    function get(p) {
+      return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+        .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+    }
+    // Hydrate texts
+    document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-path'));
+      if (v != null && typeof v !== 'object') el.textContent = v;
+    });
+    // Hydrate star ratings
+    document.querySelectorAll('[data-sg-path-stars]').forEach(function (el) {
+      var n = get(el.getAttribute('data-sg-path-stars'));
+      if (n == null) return;
+      n = Math.max(0, Math.min(5, parseInt(n, 10) || 0));
+      el.textContent = '★★★★★'.slice(0, n) + '☆☆☆☆☆'.slice(0, 5 - n);
+    });
+    // Hydrate images
+    document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+      var v = get(el.getAttribute('data-sg-img'));
+      if (v == null) return;
+      if (el.tagName === 'IMG') el.src = v;
+      else el.style.backgroundImage = "url('" + v + "')";
+    });
+    // Animations
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+        gsap.from(el, {
+          opacity: 0, y: 40, duration: 0.9, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+        });
+      });
+      gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+        gsap.to(el, {
+          yPercent: -15, ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+      });
+      window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+      setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+      setTimeout(function () {
+        document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+          if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+        });
+      }, 2200);
+    }
+  })();
+</script>
+</body>
+</html>

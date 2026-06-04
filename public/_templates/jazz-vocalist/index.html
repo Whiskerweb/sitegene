@@ -188,6 +188,44 @@
     "copyright": "© Marina Cole",
     "credit": "Chanteuse · jazz & soul",
     "image": "/_templates/jazz-vocalist/img/crowd.jpg"
+  },
+  "portfolioPage": {
+    "title": "Galerie",
+    "intro": "Scènes, clubs, sessions et visuels de releases : l'univers de Marina Cole en images, du grain des photos live aux portraits de presse en noir et blanc.",
+    "images": [
+      "/_templates/jazz-vocalist/img/hero.jpg",
+      "/_templates/jazz-vocalist/img/perf.jpg",
+      "/_templates/jazz-vocalist/img/crowd.jpg",
+      "/_templates/jazz-vocalist/img/about.jpg",
+      "/_templates/jazz-vocalist/img/mic1.jpg",
+      "/_templates/jazz-vocalist/img/mic2.jpg",
+      "/_templates/jazz-vocalist/img/perf.jpg",
+      "/_templates/jazz-vocalist/img/hero.jpg",
+      "/_templates/jazz-vocalist/img/crowd.jpg",
+      "/_templates/jazz-vocalist/img/about.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Booking & contact",
+    "intro": "Pour réserver une date, demander une fiche technique ou parler de votre soirée : un seul interlocuteur, une réponse rapide, une prestation taillée pour votre lieu.",
+    "bookingLabel": "Booking & demandes",
+    "email": "hello@marinacole.com",
+    "phoneLabel": "Téléphone",
+    "phone": "+44 20 7946 0123",
+    "availLabel": "Disponibilités & tournée",
+    "availText": "Saison 2026 : créneaux ouverts à Londres et en France de février à juin, puis en résidence l'automne. Les dîners privés et événements d'entreprise se réservent idéalement trois à six mois à l'avance.",
+    "format1Title": "Formats",
+    "format1Text": "Solo voix-piano, duo voix-guitare ou quartet complet. Set acoustique intimiste ou formule amplifiée selon la salle et le nombre d'invités.",
+    "format2Title": "Délai de réponse",
+    "format2Text": "Chaque demande reçoit une réponse sous 48 heures ouvrées, avec disponibilités, formules et devis personnalisé pour votre date.",
+    "format3Title": "Zones",
+    "format3Text": "Basée à Londres, en tournée régulière au Royaume-Uni et en France. Déplacements internationaux possibles pour les dates en destination.",
+    "format4Title": "Repertoire",
+    "format4Text": "Standards jazz, soul, blues, bossa et swing. Une playlist sur mesure se construit ensemble avant chaque soirée.",
+    "techLabel": "Fiche technique",
+    "techRider": "Scène minimale de 3 × 2 m, plateau stable et dégagé. Sonorisation : façade adaptée à la jauge, 2 retours de scène, 1 micro voix dynamique sur pied (type SM58) plus 2 entrées DI pour piano/clavier et guitare. Console 8 voies minimum avec ingénieur du son si la jauge dépasse 150 personnes. Alimentation 220 V à proximité du plateau. Éclairage chaud et tamisé, un face propre sur la chanteuse, projecteurs colorés proscrits. Loge fermée avec eau plate, tabouret de bar et miroir. Balances 90 minutes avant l'ouverture des portes.",
+    "copyright": "© Marina Cole",
+    "credit": "Booking · jazz & soul"
   }
 };
   </script>
@@ -198,15 +236,16 @@
   <!-- ============ NAV ============ -->
   <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-sm bg-ink/40">
     <nav class="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
-      <a href="#top" class="font-serif text-xl tracking-wide text-paper" data-sg-path="brand">Marina Cole</a>
+      <a href="#" data-sg-page="/" class="font-serif text-xl tracking-wide text-paper" data-sg-path="brand">Marina Cole</a>
       <ul class="hidden md:flex items-center gap-8 font-mono text-[12px] tracking-label uppercase text-muted">
+        <li><a href="#" data-sg-page="/" class="hover:text-paper transition-colors">Accueil</a></li>
         <li><a href="#about" class="hover:text-paper transition-colors" data-sg-path="nav[0]">About</a></li>
         <li><a href="#releases" class="hover:text-paper transition-colors" data-sg-path="nav[1]">Releases</a></li>
-        <li><a href="#testimonials" class="hover:text-paper transition-colors" data-sg-path="nav[2]">Testimonials</a></li>
+        <li><a href="#" data-sg-page="portfolio" class="hover:text-paper transition-colors" data-sg-path="portfolioPage.title">Galerie</a></li>
         <li><a href="#dates" class="hover:text-paper transition-colors" data-sg-path="nav[3]">Dates</a></li>
-        <li><a href="#contact" class="hover:text-paper transition-colors" data-sg-path="nav[4]">Contact</a></li>
+        <li><a href="#" data-sg-page="contact" class="hover:text-paper transition-colors" data-sg-path="contactPage.title">Booking &amp; contact</a></li>
       </ul>
-      <a href="#contact" class="font-mono text-[12px] tracking-label uppercase border border-line rounded-full px-4 py-1.5 text-paper hover:bg-paper hover:text-ink transition-colors" data-sg-path="cta">Get in Touch</a>
+      <a href="#" data-sg-page="contact" class="font-mono text-[12px] tracking-label uppercase border border-line rounded-full px-4 py-1.5 text-paper hover:bg-paper hover:text-ink transition-colors" data-sg-path="cta">Get in Touch</a>
     </nav>
   </header>
 

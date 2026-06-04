@@ -5,6 +5,18 @@
   "pageTypes": [
     "home"
   ],
+  "pages": [
+    {
+      "slug": "/portfolio",
+      "file": "portfolio.html",
+      "title": "Galerie"
+    },
+    {
+      "slug": "/contact",
+      "file": "contact.html",
+      "title": "Booking & contact"
+    }
+  ],
   "sections": {
     "home": [
       "brand",
@@ -59,6 +71,13 @@
       "role": "image",
       "required": true,
       "note": "contact · image"
+    },
+    {
+      "slot": "pf1",
+      "path": "portfolioPage.images[]",
+      "role": "gallery",
+      "required": false,
+      "note": "portfolioPage · images"
     }
   ],
   "fields": {
@@ -270,6 +289,138 @@
       {
         "path": "contact.credit",
         "label": "contact · credit",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.title",
+        "label": "portfolioPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.intro",
+        "label": "portfolioPage · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.title",
+        "label": "contactPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.intro",
+        "label": "contactPage · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.bookingLabel",
+        "label": "contactPage · bookingLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.email",
+        "label": "contactPage · email",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.phoneLabel",
+        "label": "contactPage · phoneLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.phone",
+        "label": "contactPage · phone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.availLabel",
+        "label": "contactPage · availLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.availText",
+        "label": "contactPage · availText",
+        "type": "textarea",
+        "maxLen": 300
+      },
+      {
+        "path": "contactPage.format1Title",
+        "label": "contactPage · format1Title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.format1Text",
+        "label": "contactPage · format1Text",
+        "type": "textarea",
+        "maxLen": 200
+      },
+      {
+        "path": "contactPage.format2Title",
+        "label": "contactPage · format2Title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.format2Text",
+        "label": "contactPage · format2Text",
+        "type": "textarea",
+        "maxLen": 200
+      },
+      {
+        "path": "contactPage.format3Title",
+        "label": "contactPage · format3Title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.format3Text",
+        "label": "contactPage · format3Text",
+        "type": "textarea",
+        "maxLen": 200
+      },
+      {
+        "path": "contactPage.format4Title",
+        "label": "contactPage · format4Title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.format4Text",
+        "label": "contactPage · format4Text",
+        "type": "textarea",
+        "maxLen": 200
+      },
+      {
+        "path": "contactPage.techLabel",
+        "label": "contactPage · techLabel",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.techRider",
+        "label": "contactPage · techRider",
+        "type": "textarea",
+        "maxLen": 600
+      },
+      {
+        "path": "contactPage.copyright",
+        "label": "contactPage · copyright",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.credit",
+        "label": "contactPage · credit",
         "type": "text",
         "maxLen": 40
       }

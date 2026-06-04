@@ -5,6 +5,10 @@
   "pageTypes": [
     "home"
   ],
+  "pages": [
+    { "slug": "/portfolio", "file": "portfolio.html", "title": "Galerie" },
+    { "slug": "/contact", "file": "contact.html", "title": "Booking & contact" }
+  ],
   "sections": {
     "home": [
       "brand",
@@ -83,6 +87,13 @@
       "role": "image",
       "required": true,
       "note": "contact · img"
+    },
+    {
+      "slot": "pf1",
+      "path": "portfolioPage.images[]",
+      "role": "gallery",
+      "required": false,
+      "note": "galerie · images"
     }
   ],
   "fields": {
@@ -248,6 +259,72 @@
         "label": "footer · credit",
         "type": "text",
         "maxLen": 54
+      },
+      {
+        "path": "portfolioPage.title",
+        "label": "galerie · titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.intro",
+        "label": "galerie · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.title",
+        "label": "booking · titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.intro",
+        "label": "booking · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.email",
+        "label": "booking · email",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.phone",
+        "label": "booking · téléphone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.availabilityLabel",
+        "label": "booking · libellé disponibilités",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.availabilityText",
+        "label": "booking · disponibilités",
+        "type": "textarea",
+        "maxLen": 300
+      },
+      {
+        "path": "contactPage.zonesLabel",
+        "label": "booking · libellé zones",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.zonesText",
+        "label": "booking · zones",
+        "type": "textarea",
+        "maxLen": 300
+      },
+      {
+        "path": "contactPage.techRider",
+        "label": "booking · fiche technique",
+        "type": "textarea",
+        "maxLen": 600
       }
     ]
   }

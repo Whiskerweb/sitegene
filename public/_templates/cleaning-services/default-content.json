@@ -213,5 +213,68 @@
       }
     ],
     "copyright": "Copyright © 2026 Neatly"
+  },
+  "portfolioPage": {
+    "title": "Nos réalisations",
+    "intro": "Chaque intervention raconte une transformation. Découvrez en images nos chantiers de nettoyage : avant encombrés, après impeccables. La preuve que le soin du détail fait toute la différence.",
+    "images": [
+      "/_templates/cleaning-services/img/hero.jpg",
+      "/_templates/cleaning-services/img/service-spray.jpg",
+      "/_templates/cleaning-services/img/service-vacuuming.jpg",
+      "/_templates/cleaning-services/img/service-floor.jpg",
+      "/_templates/cleaning-services/img/service-detail.jpg",
+      "/_templates/cleaning-services/img/why-us.jpg",
+      "/_templates/cleaning-services/img/service-vacuuming.jpg",
+      "/_templates/cleaning-services/img/service-floor.jpg",
+      "/_templates/cleaning-services/img/service-spray.jpg",
+      "/_templates/cleaning-services/img/service-detail.jpg"
+    ],
+    "captions": [
+      "Cuisine entièrement dégraissée et désinfectée",
+      "Surfaces traitées avec des produits écologiques",
+      "Sols aspirés et soignés en profondeur",
+      "Carrelages ravivés, joints comme neufs",
+      "Sanitaires détartrés et assainis",
+      "Séjour remis à neuf après travaux",
+      "Entretien régulier de bureaux professionnels",
+      "Vitres et surfaces vitrées sans traces",
+      "Nettoyage de printemps complet",
+      "Remise en état après déménagement"
+    ],
+    "ctaTitle": "Votre intérieur mérite le même soin",
+    "ctaText": "Confiez-nous votre prochain chantier et constatez la différence par vous-même.",
+    "ctaButton": "Demander un devis gratuit"
+  },
+  "contactPage": {
+    "title": "Contact & devis",
+    "intro": "Un appartement, une maison, des bureaux ou une remise en état après travaux ? Dites-nous tout : nous vous établissons un devis clair et gratuit, sans engagement.",
+    "phoneLabel": "Appelez-nous directement",
+    "phone": "+403-394-9940",
+    "phoneNote": "Disponibles du lundi au samedi, de 8h à 19h.",
+    "emailLabel": "Écrivez-nous",
+    "email": "hello@neatly.com",
+    "zonesLabel": "Zones d’intervention",
+    "zones": "Nous intervenons dans toute la ville et sa périphérie, jusqu’à 30 km autour de notre agence. Déplacement offert pour toute première intervention.",
+    "delayLabel": "Délai de réponse",
+    "delay": "Nous répondons à chaque demande de devis sous 24 heures ouvrées, avec une estimation détaillée et un créneau d’intervention.",
+    "cta": "Demander un devis",
+    "reassurance": [
+      {
+        "title": "Devis gratuit & sans engagement",
+        "desc": "Une estimation transparente, détaillée poste par poste, sans aucun frais caché ni obligation de votre part."
+      },
+      {
+        "title": "Équipe assurée & vérifiée",
+        "desc": "Chaque intervenant est formé, assuré et soigneusement sélectionné pour entrer chez vous en toute confiance."
+      },
+      {
+        "title": "Produits écologiques",
+        "desc": "Nous utilisons des produits non toxiques, sûrs pour vos enfants, vos animaux et l’environnement."
+      },
+      {
+        "title": "Satisfaction garantie",
+        "desc": "Un détail vous échappe ? Nous repassons gratuitement sous 24h pour un résultat irréprochable."
+      }
+    ]
   }
 }

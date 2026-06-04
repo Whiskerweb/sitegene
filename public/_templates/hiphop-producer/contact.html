@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KAIRO — Booking & contact</title>
+  <meta name="description" content="KAIRO — booking & contact. Dates, festivals, featurings, prods. Email de booking, disponibilités et fiche technique." />
+
+  <!-- Polices exactes extraites des tokens : Big Shoulders Display (display condensé extra-bold) + Inter (labels/corps) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;600;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    // Config Tailwind : palette + typo issues de la capture (tokens.json)
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#000000', paper: '#cccccc', white2: '#ffffff',
+            accent: '#0000ee', panel: '#0a0a0a', line: 'rgba(204,204,204,0.2)',
+          },
+          fontFamily: {
+            display: ['"Big Shoulders Display"', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+          },
+          letterSpacing: { label: '0.2em' },
+        },
+      },
+    };
+  </script>
+  <style>
+    body { background: #000; color: #ccc; }
+  </style>
+
+  <!-- Source unique de vérité (le serveur Akyra injecte le vrai contenu ; fallback de preview) -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+  "brand": "KAIRO",
+  "nav": [
+    "Sorties",
+    "Tournée",
+    "À propos",
+    "Réservations"
+  ],
+  "cta": "Réserver",
+  "hero": {
+    "badge": "Nouvelle sortie",
+    "titleLine1": "« Silent Ops »",
+    "titleLine2": "disponible maintenant",
+    "listen": [
+      { "label": "Écouter sur Apple Music", "href": "#" },
+      { "label": "Écouter sur Spotify", "href": "#" },
+      { "label": "Écouter sur YouTube Music", "href": "#" }
+    ],
+    "image": "/_templates/hiphop-producer/img/hero.jpg"
+  },
+  "releasesLabel": "Sorties",
+  "releases": [
+    { "title": "Silent Ops", "type": "Single · 2026", "cover": "/_templates/hiphop-producer/img/rel1.jpg" },
+    { "title": "Jet Black Skies", "type": "Album · 2025", "cover": "/_templates/hiphop-producer/img/rel2.jpg" },
+    { "title": "Burning Soul", "type": "Single · 2025", "cover": "/_templates/hiphop-producer/img/rel3.jpg" },
+    { "title": "Concrete Lullabies", "type": "EP · 2024", "cover": "/_templates/hiphop-producer/img/rel4.jpg" }
+  ],
+  "tourLabel": "#KAIROTour",
+  "tour": [
+    { "date": "12 SEP", "city": "Berlin, DE", "venue": "Astra Kulturhaus", "link": "Billets" },
+    { "date": "21 SEP", "city": "Paris, FR", "venue": "La Cigale", "link": "Billets" },
+    { "date": "04 OCT", "city": "London, UK", "venue": "Village Underground", "link": "Billets" },
+    { "date": "18 OCT", "city": "Amsterdam, NL", "venue": "Melkweg – Max", "link": "Billets" },
+    { "date": "02 NOV", "city": "Brussels, BE", "venue": "Ancienne Belgique", "link": "Billets" },
+    { "date": "15 NOV", "city": "Lyon, FR", "venue": "Le Transbordeur", "link": "Billets" },
+    { "date": "29 NOV", "city": "Madrid, ES", "venue": "Sala La Riviera", "link": "Billets" }
+  ],
+  "bio": {
+    "quote": "« Je suis KAIRO – artiste hip-hop et producteur. Des beats sombres, des histoires vraies et une énergie brute. Pas de faux-semblants – juste la vérité dans chaque texte. »",
+    "readMore": "Lire l’histoire complète",
+    "image": "/_templates/hiphop-producer/img/portrait.jpg"
+  },
+  "listenLabel": "Écoutez-moi sur",
+  "socials": [
+    { "label": "Spotify", "href": "#" },
+    { "label": "Apple Music", "href": "#" },
+    { "label": "YouTube", "href": "#" },
+    { "label": "SoundCloud", "href": "#" },
+    { "label": "Instagram", "href": "#" }
+  ],
+  "footer": {
+    "copyright": "© KAIRO",
+    "credit": "Artiste hip-hop · producteur"
+  },
+  "portfolioPage": {
+    "title": "Galerie",
+    "intro": "Scène, backstage, presse et visuels de releases — l’univers de KAIRO, là où le son devient image. Des lumières crues, des regards francs et l’énergie brute des concerts.",
+    "images": [
+      "/_templates/hiphop-producer/img/hero.jpg",
+      "/_templates/hiphop-producer/img/portrait.jpg",
+      "/_templates/hiphop-producer/img/rel1.jpg",
+      "/_templates/hiphop-producer/img/rel2.jpg",
+      "/_templates/hiphop-producer/img/rel3.jpg",
+      "/_templates/hiphop-producer/img/rel4.jpg",
+      "/_templates/hiphop-producer/img/hero.jpg",
+      "/_templates/hiphop-producer/img/portrait.jpg",
+      "/_templates/hiphop-producer/img/rel2.jpg",
+      "/_templates/hiphop-producer/img/rel4.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Booking & contact",
+    "intro": "Pour les dates, les festivals, les featurings et les prods : un seul interlocuteur, une réponse rapide. Parlons de votre événement.",
+    "email": "booking@kairo-music.com",
+    "phone": "+33 6 12 34 56 78",
+    "availabilityLabel": "Disponibilités & tournée",
+    "availability": "Bookings ouverts pour la tournée d’automne 2026 (Europe) et la saison festivals 2027. Set DJ ou live band, 45 à 90 min, selon configuration.",
+    "manager": "Management — Studio Nightshift",
+    "techRiderLabel": "Fiche technique",
+    "techRider": "Set live de 45 à 90 min, formule MPC + DJ ou groupe complet (batterie, basse, claviers). Côté son : console numérique min. 24 voies, 2 wedges + side-fills, retour in-ear pour l’artiste, micro filaire dynamique (SM58 ou équivalent) + DI pour samplers. Côté lumière : plan blanc/bleu froid, 2 poursuites, machine à brouillard, blackout possible en intro. Loge fermée, eau, balance 60 min avant ouverture des portes."
+  }
+};
+  </script>
+</head>
+
+<body class="font-sans antialiased bg-ink text-paper selection:bg-accent selection:text-white2">
+
+  <!-- ============ NAV ============ -->
+  <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-sm bg-ink/50">
+    <nav class="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
+      <ul class="hidden md:flex items-center gap-7 font-sans text-[11px] font-medium tracking-label uppercase text-paper/70">
+        <li><a href="#" data-sg-page="/" class="hover:text-white2 transition-colors">Accueil</a></li>
+        <li><a href="#" data-sg-page="portfolio" class="hover:text-white2 transition-colors">Galerie</a></li>
+      </ul>
+      <a href="#" data-sg-page="/" class="font-display font-extrabold text-2xl tracking-wider uppercase text-white2 absolute left-1/2 -translate-x-1/2" data-sg-path="brand">KAIRO</a>
+      <ul class="hidden md:flex items-center gap-7 font-sans text-[11px] font-medium tracking-label uppercase text-paper/70">
+        <li><a href="#" data-sg-page="contact" class="text-white2 transition-colors">Booking & contact</a></li>
+      </ul>
+      <a href="#" data-sg-page="contact" class="md:hidden font-sans text-[11px] font-medium tracking-label uppercase text-white2" data-sg-path="cta">Réserver</a>
+    </nav>
+  </header>
+
+  <!-- ============ PAGE HEADER ============ -->
+  <section class="relative pt-40 pb-16 md:pt-48 md:pb-20 border-b border-line overflow-hidden" data-sg-reveal>
+    <div class="mx-auto max-w-7xl px-6">
+      <span class="inline-block font-sans text-[10px] font-semibold tracking-label uppercase text-paper/50 mb-6" data-sg-path="brand">KAIRO</span>
+      <h1 class="font-display font-black uppercase leading-[0.9] text-white2 text-6xl sm:text-7xl md:text-8xl lg:text-[104px]" data-sg-path="contactPage.title">Booking & contact</h1>
+      <p class="mt-8 max-w-2xl font-sans text-base md:text-lg leading-relaxed text-paper/70" data-sg-path="contactPage.intro">
+        Pour les dates, les festivals, les featurings et les prods.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ BOOKING DETAILS ============ -->
+  <section class="mx-auto max-w-7xl px-6 py-20 md:py-28">
+    <div class="grid lg:grid-cols-5 gap-12 lg:gap-20 items-start">
+
+      <!-- Left : booking email en évidence -->
+      <div class="lg:col-span-2" data-sg-reveal>
+        <span class="block font-sans text-[10px] font-semibold tracking-label uppercase text-paper/50 mb-4">Booking</span>
+        <a href="#" class="block font-display font-extrabold uppercase leading-none text-white2 text-3xl md:text-4xl break-all hover:text-accent transition-colors" data-sg-path="contactPage.email">booking@kairo-music.com</a>
+
+        <div class="mt-10 space-y-8">
+          <div>
+            <span class="block font-sans text-[10px] font-semibold tracking-label uppercase text-paper/50 mb-2">Téléphone</span>
+            <span class="font-sans text-lg text-white2" data-sg-path="contactPage.phone">+33 6 12 34 56 78</span>
+          </div>
+          <div>
+            <span class="block font-sans text-[10px] font-semibold tracking-label uppercase text-paper/50 mb-2">Management</span>
+            <span class="font-sans text-base text-paper" data-sg-path="contactPage.manager">Management — Studio Nightshift</span>
+          </div>
+        </div>
+
+        <a href="#" data-sg-page="portfolio" class="inline-block mt-12 font-sans text-[11px] font-semibold tracking-label uppercase border border-line px-8 py-3.5 text-paper hover:border-accent hover:text-white2 transition-colors">Voir la galerie</a>
+      </div>
+
+      <!-- Right : disponibilités + réassurance -->
+      <div class="lg:col-span-3" data-sg-reveal>
+        <span class="block font-sans text-[10px] font-semibold tracking-label uppercase text-accent mb-5" data-sg-path="contactPage.availabilityLabel">Disponibilités & tournée</span>
+        <p class="font-display font-extrabold uppercase leading-tight text-white2 text-2xl md:text-3xl" data-sg-path="contactPage.availability">
+          Bookings ouverts pour la tournée d’automne 2026.
+        </p>
+
+        <div class="mt-12 grid sm:grid-cols-2 gap-px bg-line border border-line">
+          <div class="bg-ink p-8">
+            <h3 class="font-sans text-[11px] font-semibold tracking-label uppercase text-white2 mb-3">Délai de réponse</h3>
+            <p class="font-sans text-sm leading-relaxed text-paper/70">Toute demande sérieuse reçoit une réponse sous 48 h, avec disponibilités et conditions de cachet.</p>
+          </div>
+          <div class="bg-ink p-8">
+            <h3 class="font-sans text-[11px] font-semibold tracking-label uppercase text-white2 mb-3">Zones</h3>
+            <p class="font-sans text-sm leading-relaxed text-paper/70">Basé à Paris, en tournée partout en France, en Europe et à l’international pour les festivals.</p>
+          </div>
+          <div class="bg-ink p-8">
+            <h3 class="font-sans text-[11px] font-semibold tracking-label uppercase text-white2 mb-3">Formats</h3>
+            <p class="font-sans text-sm leading-relaxed text-paper/70">Live band, set DJ, showcase ou featuring studio. On adapte la formule à votre salle et à votre budget.</p>
+          </div>
+          <div class="bg-ink p-8">
+            <h3 class="font-sans text-[11px] font-semibold tracking-label uppercase text-white2 mb-3">Prods</h3>
+            <p class="font-sans text-sm leading-relaxed text-paper/70">Beats exclusifs, topline et mix/master sur demande. Envoyez le brief, on revient avec une proposition.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ FICHE TECHNIQUE (obligatoire) ============ -->
+  <section class="bg-accent" data-sg-reveal>
+    <div class="mx-auto max-w-7xl px-6 py-20 md:py-24 grid md:grid-cols-3 gap-10">
+      <div>
+        <h2 class="font-display font-black uppercase leading-none text-white2 text-4xl md:text-5xl" data-sg-path="contactPage.techRiderLabel">Fiche technique</h2>
+      </div>
+      <p class="md:col-span-2 font-sans text-base md:text-lg leading-relaxed text-white2/90" data-sg-path="contactPage.techRider">
+        Set live de 45 à 90 min, formule MPC + DJ ou groupe complet. Console numérique min. 24 voies, retours in-ear, plan lumière blanc/bleu froid et balance 60 min avant ouverture des portes.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ FORMULAIRE ============ -->
+  <section class="mx-auto max-w-3xl px-6 py-24 md:py-28" data-sg-reveal>
+    <h2 class="text-center font-display font-extrabold uppercase tracking-wide text-white2 text-3xl md:text-4xl mb-12">Faire une demande</h2>
+    <form class="space-y-10" onsubmit="return false;">
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <label class="block font-sans text-[10px] font-semibold tracking-label uppercase text-paper/50 mb-3">Nom / structure</label>
+          <input type="text" class="w-full bg-transparent border-b border-line py-3 text-lg text-white2 font-sans focus:border-accent focus:outline-none transition-colors" required>
+        </div>
+        <div>
+          <label class="block font-sans text-[10px] font-semibold tracking-label uppercase text-paper/50 mb-3">Email</label>
+          <input type="email" class="w-full bg-transparent border-b border-line py-3 text-lg text-white2 font-sans focus:border-accent focus:outline-none transition-colors" required>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <label class="block font-sans text-[10px] font-semibold tracking-label uppercase text-paper/50 mb-3">Date de l’événement</label>
+          <input type="text" class="w-full bg-transparent border-b border-line py-3 text-lg text-white2 font-sans focus:border-accent focus:outline-none transition-colors" placeholder="JJ/MM/AAAA">
+        </div>
+        <div>
+          <label class="block font-sans text-[10px] font-semibold tracking-label uppercase text-paper/50 mb-3">Type de demande</label>
+          <select class="w-full bg-transparent border-b border-line py-3 text-lg text-white2 font-sans focus:border-accent focus:outline-none transition-colors cursor-pointer">
+            <option value="live" class="bg-ink text-white2">Concert / live</option>
+            <option value="festival" class="bg-ink text-white2">Festival</option>
+            <option value="dj" class="bg-ink text-white2">Set DJ</option>
+            <option value="feat" class="bg-ink text-white2">Featuring</option>
+            <option value="prod" class="bg-ink text-white2">Production / beat</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label class="block font-sans text-[10px] font-semibold tracking-label uppercase text-paper/50 mb-3">Votre message</label>
+        <textarea rows="4" class="w-full bg-transparent border-b border-line py-3 text-lg text-white2 font-sans focus:border-accent focus:outline-none transition-colors resize-none"></textarea>
+      </div>
+      <button type="submit" class="w-full md:w-auto bg-accent text-white2 px-12 py-4 font-sans text-[11px] font-semibold tracking-label uppercase hover:bg-white2 hover:text-ink transition-colors">Envoyer la demande</button>
+    </form>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="mx-auto max-w-7xl px-6 py-16 border-t border-line">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <a href="#" data-sg-page="/" class="font-display font-extrabold text-2xl tracking-wider uppercase text-white2 hover:text-accent transition-colors" data-sg-path="brand">KAIRO</a>
+      <nav class="flex flex-wrap gap-x-7 gap-y-2 font-sans text-[11px] font-medium tracking-label uppercase text-paper/60">
+        <a href="#" data-sg-page="/" class="hover:text-white2 transition-colors">Accueil</a>
+        <a href="#" data-sg-page="portfolio" class="hover:text-white2 transition-colors">Galerie</a>
+        <a href="#" data-sg-page="contact" class="hover:text-white2 transition-colors">Booking & contact</a>
+      </nav>
+      <div class="flex flex-col sm:flex-row gap-x-6 gap-y-1 font-sans text-[11px] tracking-label uppercase text-paper/50">
+        <span data-sg-path="footer.copyright">© KAIRO</span>
+        <span data-sg-path="footer.credit">Artiste hip-hop · producteur</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ HYDRATATION + ANIMATIONS (standard clone-site) ============ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, { opacity: 0, y: 40, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, { yPercent: -15, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } });
+        });
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

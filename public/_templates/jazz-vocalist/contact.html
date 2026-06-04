@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Marina Cole — Booking & contact</title>
+  <meta name="description" content="Booking de Marina Cole : email, disponibilités, tournée et fiche technique." />
+
+  <!-- Polices exactes extraites des tokens : EB Garamond (display), DM Sans (corps), DM Mono (labels) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    // Config Tailwind : palette + typo issues de la capture (tokens.json)
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#000000', paper: '#eeeeee', muted: '#b4b4b4',
+            accent: '#0000ee', panel: '#111111', line: '#222222',
+          },
+          fontFamily: {
+            serif: ['"EB Garamond"', 'serif'],
+            sans: ['"DM Sans"', 'sans-serif'],
+            mono: ['"DM Mono"', 'monospace'],
+          },
+          letterSpacing: { label: '0.18em' },
+        },
+      },
+    };
+  </script>
+  <style>
+    body { background: #000; color: #eee; }
+  </style>
+
+  <!-- Source unique de vérité (le serveur Akyra injecte le vrai contenu ; fallback de preview) -->
+  <script>
+    window.__SITE_CONTENT__ = window.__SITE_CONTENT__ || {
+  "brand": "Marina Cole",
+  "cta": "Contactez-moi",
+  "nav": [
+    "À propos",
+    "Discographie",
+    "Témoignages",
+    "Dates",
+    "Contact"
+  ],
+  "hero": {
+    "eyebrow": "Londres · Royaume-Uni",
+    "title": "Marina Cole",
+    "tagline": "Vocaliste de jazz et soul, en tournée à Londres et à travers le Royaume-Uni.",
+    "leftLabel": "Jazz · Soul · Blues",
+    "rightLabel": "Depuis 2014",
+    "image": "/_templates/jazz-vocalist/img/hero.jpg"
+  },
+  "about": {
+    "label": "À propos",
+    "p1": "Vocaliste londonienne de jazz et soul, Marina Cole se produit depuis plus de dix ans dans les salles les plus prestigieuses de la capitale. Sa voix, à l'aise aussi bien sur les grands classiques américains que sur les standards contemporains ou les tubes soul, s'adapte à tous les espaces avec la même exigence.",
+    "p2": "Elle se produit en solo avec accompagnement piano, en duo avec guitare ou avec son quartet complet, et a su se forger une réputation pour des prestations sur mesure, jamais figées. Chaque réservation commence par un échange sur la soirée, l'espace, les invités et l'ambiance souhaitée. La musique s'y adapte naturellement.",
+    "tags": [
+      "Standards jazz",
+      "Soul",
+      "Blues",
+      "Bossa Nova",
+      "Gospel",
+      "Swing"
+    ],
+    "image": "/_templates/jazz-vocalist/img/about.jpg"
+  },
+  "venues": [
+    "Ronnie Scott's",
+    "606 Club",
+    "Pizza Express Jazz Club",
+    "Vortex Jazz Club",
+    "The Jazz Cafe",
+    "Toulouse Lautrec",
+    "Quaglino's",
+    "Oriole",
+    "The Crazy Coqs",
+    "Nightjar"
+  ],
+  "releasesLabel": "Discographie",
+  "releases": [
+    { "title": "After Midnight", "artist": "Marina Cole", "genre": "Swing", "cover": "/_templates/jazz-vocalist/img/mic1.jpg" },
+    { "title": "Checkered Shoes", "artist": "Marina Cole", "genre": "Blues", "cover": "/_templates/jazz-vocalist/img/mic2.jpg" },
+    { "title": "Raincheck", "artist": "Marina Cole", "genre": "Bossa Nova", "cover": "/_templates/jazz-vocalist/img/about.jpg" },
+    { "title": "Hold Me Till Dawn", "artist": "Marina Cole", "genre": "Soul", "cover": "/_templates/jazz-vocalist/img/hero.jpg" },
+    { "title": "Velvet on My Collar", "artist": "Marina Cole", "genre": "Jazz", "cover": "/_templates/jazz-vocalist/img/crowd.jpg" }
+  ],
+  "perfImage": "/_templates/jazz-vocalist/img/perf.jpg",
+  "testimonialsLabel": "Témoignages",
+  "testimonials": [
+    { "quote": "« Marina apporte une chaleur rare à chaque performance : notre public est captivé dès la première note. Elle est devenue une habituée du club. »", "author": "— Marcus Hale, Manager", "place": "Blue Note Lounge, Londres" },
+    { "quote": "« Avoir Marina en résidence dans notre hôtel apporte une touche d'élégance indéniable. Les clients prolongent souvent leur soirée, elle crée une atmosphère vraiment unique. »", "author": "— Sofia Laurent, Directrice des événemen", "place": "The Langham Hotel, Manchester" },
+    { "quote": "« Marina est d'une professionalisme et d'une adaptabilité remarquables. Elle a sublimé notre événement d'entreprise et marqué tous nos invités. »", "author": "— Daniel Reed, Responsable des événement", "place": "Apex Group, Londres" },
+    { "quote": "« Il y a une intimité dans la voix de Marina qui captive instantanément. Chaque performance semble personnelle, comme si elle chantait juste pour vous. »", "author": "— Elena Rossi, Curatrice", "place": "Velvet Evenings, Milan" }
+  ],
+  "datesLabel": "Dates",
+  "dates": [
+    { "date": "21 avr. 2026", "time": "21:00", "title": "Paris After Dark : une soirée jazz", "venue": "Le Duc des Lombards, Paris, France" },
+    { "date": "1 avr. 2026", "time": "19:00", "title": "Improvisations nocturnes dans la vieille ville", "venue": "The Jazz Bar, Édimbourg, Royaume-Uni" },
+    { "date": "18 mars 2026", "time": "20:00", "title": "Rythmes du Nord, pulsations intemporelles", "venue": "Band on the Wall, Manchester, Royaume-Uni" },
+    { "date": "5 mars 2026", "time": "19:30", "title": "Échos intimistes dans l'Est londonien", "venue": "Servant Jazz Quarters, Londres, Royaume-Uni" },
+    { "date": "24 févr. 2026", "time": "20:00", "title": "Nuits parisiennes, âme londonienne", "venue": "Toulouse Lautrec Jazz Club, Londres, Royaume-Uni" }
+  ],
+  "datesMore": "Anciennes dates →",
+  "contact": {
+    "title": "Contactez-moi",
+    "text": "Disponible pour dîners privés, résidences en hôtel, événements d'entreprise et occasions spéciales à Londres et dans toute la France.",
+    "contactLabel": "Contactez-moi par",
+    "email": "hello@marinacole.com",
+    "findLabel": "Retrouvez-moi sur",
+    "socials": [ "Instagram", "YouTube", "Spotify" ],
+    "copyright": "© Marina Cole",
+    "credit": "Chanteuse · jazz & soul",
+    "image": "/_templates/jazz-vocalist/img/crowd.jpg"
+  },
+  "portfolioPage": {
+    "title": "Galerie",
+    "intro": "Scènes, clubs, sessions et visuels de releases : l'univers de Marina Cole en images, du grain des photos live aux portraits de presse en noir et blanc.",
+    "images": [
+      "/_templates/jazz-vocalist/img/hero.jpg",
+      "/_templates/jazz-vocalist/img/perf.jpg",
+      "/_templates/jazz-vocalist/img/crowd.jpg",
+      "/_templates/jazz-vocalist/img/about.jpg",
+      "/_templates/jazz-vocalist/img/mic1.jpg",
+      "/_templates/jazz-vocalist/img/mic2.jpg",
+      "/_templates/jazz-vocalist/img/perf.jpg",
+      "/_templates/jazz-vocalist/img/hero.jpg",
+      "/_templates/jazz-vocalist/img/crowd.jpg",
+      "/_templates/jazz-vocalist/img/about.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Booking & contact",
+    "intro": "Pour réserver une date, demander une fiche technique ou parler de votre soirée : un seul interlocuteur, une réponse rapide, une prestation taillée pour votre lieu.",
+    "bookingLabel": "Booking & demandes",
+    "email": "hello@marinacole.com",
+    "phoneLabel": "Téléphone",
+    "phone": "+44 20 7946 0123",
+    "availLabel": "Disponibilités & tournée",
+    "availText": "Saison 2026 : créneaux ouverts à Londres et en France de février à juin, puis en résidence l'automne. Les dîners privés et événements d'entreprise se réservent idéalement trois à six mois à l'avance.",
+    "format1Title": "Formats",
+    "format1Text": "Solo voix-piano, duo voix-guitare ou quartet complet. Set acoustique intimiste ou formule amplifiée selon la salle et le nombre d'invités.",
+    "format2Title": "Délai de réponse",
+    "format2Text": "Chaque demande reçoit une réponse sous 48 heures ouvrées, avec disponibilités, formules et devis personnalisé pour votre date.",
+    "format3Title": "Zones",
+    "format3Text": "Basée à Londres, en tournée régulière au Royaume-Uni et en France. Déplacements internationaux possibles pour les dates en destination.",
+    "format4Title": "Repertoire",
+    "format4Text": "Standards jazz, soul, blues, bossa et swing. Une playlist sur mesure se construit ensemble avant chaque soirée.",
+    "techLabel": "Fiche technique",
+    "techRider": "Scène minimale de 3 × 2 m, plateau stable et dégagé. Sonorisation : façade adaptée à la jauge, 2 retours de scène, 1 micro voix dynamique sur pied (type SM58) plus 2 entrées DI pour piano/clavier et guitare. Console 8 voies minimum avec ingénieur du son si la jauge dépasse 150 personnes. Alimentation 220 V à proximité du plateau. Éclairage chaud et tamisé, un face propre sur la chanteuse, projecteurs colorés proscrits. Loge fermée avec eau plate, tabouret de bar et miroir. Balances 90 minutes avant l'ouverture des portes.",
+    "copyright": "© Marina Cole",
+    "credit": "Booking · jazz & soul"
+  }
+};
+  </script>
+</head>
+
+<body class="font-sans antialiased bg-ink text-paper selection:bg-accent selection:text-white">
+
+  <!-- ============ NAV ============ -->
+  <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-sm bg-ink/40">
+    <nav class="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
+      <a href="#" data-sg-page="/" class="font-serif text-xl tracking-wide text-paper" data-sg-path="brand">Marina Cole</a>
+      <ul class="hidden md:flex items-center gap-8 font-mono text-[12px] tracking-label uppercase text-muted">
+        <li><a href="#" data-sg-page="/" class="hover:text-paper transition-colors">Accueil</a></li>
+        <li><a href="#" data-sg-page="portfolio" class="hover:text-paper transition-colors" data-sg-path="portfolioPage.title">Galerie</a></li>
+        <li><a href="#" data-sg-page="contact" class="text-paper transition-colors" data-sg-path="contactPage.title">Booking &amp; contact</a></li>
+      </ul>
+      <a href="#" data-sg-page="contact" class="font-mono text-[12px] tracking-label uppercase border border-line rounded-full px-4 py-1.5 text-paper hover:bg-paper hover:text-ink transition-colors" data-sg-path="cta">Contactez-moi</a>
+    </nav>
+  </header>
+
+  <!-- ============ EN-TÊTE BOOKING ============ -->
+  <section class="mx-auto max-w-7xl px-6 pt-40 pb-16 md:pt-48 md:pb-20 border-b border-line" data-sg-reveal>
+    <p class="font-mono text-[12px] tracking-label uppercase text-muted mb-8" data-sg-path="brand">Marina Cole</p>
+    <h1 class="font-serif font-medium leading-none text-paper text-6xl sm:text-7xl md:text-8xl" data-sg-path="contactPage.title">Booking &amp; contact</h1>
+    <p class="mt-8 font-sans text-base md:text-lg text-muted max-w-2xl" data-sg-path="contactPage.intro">
+      Pour réserver une date, demander une fiche technique ou parler de votre soirée.
+    </p>
+  </section>
+
+  <!-- ============ EMAIL DE BOOKING EN ÉVIDENCE ============ -->
+  <section class="mx-auto max-w-7xl px-6 py-20 md:py-28 border-b border-line" data-sg-reveal>
+    <p class="font-mono text-[12px] tracking-label uppercase text-muted mb-6" data-sg-path="contactPage.bookingLabel">Booking &amp; demandes</p>
+    <a href="mailto:hello@marinacole.com" class="block font-serif text-4xl sm:text-5xl md:text-6xl text-paper hover:text-accent transition-colors break-all" data-sg-path="contactPage.email">hello@marinacole.com</a>
+    <p class="mt-8 font-mono text-[12px] tracking-label uppercase text-muted" data-sg-path="contactPage.phoneLabel">Téléphone</p>
+    <p class="mt-2 font-serif text-2xl text-paper" data-sg-path="contactPage.phone">+44 20 7946 0123</p>
+  </section>
+
+  <!-- ============ DISPONIBILITÉS & TOURNÉE ============ -->
+  <section class="mx-auto max-w-7xl px-6 py-20 md:py-28 border-b border-line" data-sg-reveal>
+    <div class="grid md:grid-cols-[200px_1fr] gap-10">
+      <p class="font-mono text-[12px] tracking-label uppercase text-muted" data-sg-path="contactPage.availLabel">Disponibilités &amp; tournée</p>
+      <p class="font-serif text-2xl md:text-3xl leading-snug text-paper max-w-3xl" data-sg-path="contactPage.availText">
+        Saison 2026 : créneaux ouverts à Londres et en France de février à juin, puis en résidence l'automne.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ RÉASSURANCE / FORMATS ============ -->
+  <section class="mx-auto max-w-7xl px-6 py-20 md:py-28 border-b border-line" data-sg-reveal>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 divide-line border border-line">
+      <div class="p-8 sm:border-r border-line">
+        <h3 class="font-mono text-[12px] tracking-label uppercase text-muted mb-4" data-sg-path="contactPage.format1Title">Formats</h3>
+        <p class="font-sans text-sm leading-relaxed text-paper/80" data-sg-path="contactPage.format1Text">Solo voix-piano, duo voix-guitare ou quartet complet.</p>
+      </div>
+      <div class="p-8 lg:border-r border-line">
+        <h3 class="font-mono text-[12px] tracking-label uppercase text-muted mb-4" data-sg-path="contactPage.format2Title">Délai de réponse</h3>
+        <p class="font-sans text-sm leading-relaxed text-paper/80" data-sg-path="contactPage.format2Text">Réponse sous 48 heures ouvrées avec devis personnalisé.</p>
+      </div>
+      <div class="p-8 sm:border-r border-line">
+        <h3 class="font-mono text-[12px] tracking-label uppercase text-muted mb-4" data-sg-path="contactPage.format3Title">Zones</h3>
+        <p class="font-sans text-sm leading-relaxed text-paper/80" data-sg-path="contactPage.format3Text">Londres, Royaume-Uni et France ; international possible.</p>
+      </div>
+      <div class="p-8">
+        <h3 class="font-mono text-[12px] tracking-label uppercase text-muted mb-4" data-sg-path="contactPage.format4Title">Repertoire</h3>
+        <p class="font-sans text-sm leading-relaxed text-paper/80" data-sg-path="contactPage.format4Text">Standards jazz, soul, blues, bossa et swing sur mesure.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FICHE TECHNIQUE (OBLIGATOIRE) ============ -->
+  <section class="mx-auto max-w-7xl px-6 py-20 md:py-28 border-b border-line" data-sg-reveal>
+    <div class="grid md:grid-cols-[200px_1fr] gap-10">
+      <p class="font-mono text-[12px] tracking-label uppercase text-muted" data-sg-path="contactPage.techLabel">Fiche technique</p>
+      <p class="font-sans text-base md:text-lg leading-relaxed text-paper/85 max-w-3xl" data-sg-path="contactPage.techRider">
+        Scène minimale de 3 × 2 m, plateau stable et dégagé. Sonorisation adaptée à la jauge, retours de scène, micro voix sur pied et entrées DI pour piano et guitare.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="relative overflow-hidden">
+    <img src="img/crowd.jpg" alt="" data-sg-img="contact.image" class="absolute inset-0 w-full h-full object-cover grayscale opacity-20" />
+    <div class="absolute inset-0 bg-ink/85"></div>
+
+    <div class="relative z-10 mx-auto max-w-7xl px-6 py-24 text-center" data-sg-reveal>
+      <h2 class="font-serif text-4xl md:text-6xl text-paper" data-sg-path="contactPage.title">Booking &amp; contact</h2>
+
+      <div class="mt-10 flex flex-col sm:flex-row justify-center gap-12 font-mono text-[12px] tracking-label uppercase">
+        <div>
+          <p class="text-muted mb-2" data-sg-path="contactPage.bookingLabel">Booking &amp; demandes</p>
+          <a href="mailto:hello@marinacole.com" class="text-accent hover:text-paper transition-colors" data-sg-path="contactPage.email">hello@marinacole.com</a>
+        </div>
+        <div>
+          <p class="text-muted mb-2" data-sg-path="contact.findLabel">Retrouvez-moi sur</p>
+          <div class="flex justify-center gap-4 text-paper">
+            <a href="#" class="hover:text-accent transition-colors" data-sg-path="contact.socials[0]">Instagram</a>
+            <a href="#" class="hover:text-accent transition-colors" data-sg-path="contact.socials[1]">YouTube</a>
+            <a href="#" class="hover:text-accent transition-colors" data-sg-path="contact.socials[2]">Spotify</a>
+          </div>
+        </div>
+      </div>
+
+      <nav class="mt-12 flex flex-wrap justify-center gap-8 font-mono text-[12px] tracking-label uppercase text-muted">
+        <a href="#" data-sg-page="/" class="hover:text-paper transition-colors">Accueil</a>
+        <a href="#" data-sg-page="portfolio" class="hover:text-paper transition-colors" data-sg-path="portfolioPage.title">Galerie</a>
+        <a href="#" data-sg-page="contact" class="hover:text-paper transition-colors" data-sg-path="contactPage.title">Booking &amp; contact</a>
+      </nav>
+
+      <div class="mt-12 pt-8 border-t border-line/60 flex flex-col sm:flex-row justify-between items-center gap-3 font-mono text-[11px] tracking-wide uppercase text-muted/70">
+        <span data-sg-path="contactPage.copyright">© Marina Cole</span>
+        <span data-sg-path="contactPage.credit">Booking · jazz & soul</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ HYDRATATION + ANIMATIONS (standard clone-site) ============ -->
+  <script>
+    (function () {
+      var C = window.__SITE_CONTENT__ || {};
+      function get(p) {
+        return p.replace(/\[(\d+)\]/g, '.$1').split('.')
+          .reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
+      }
+      document.querySelectorAll('[data-sg-path]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-path'));
+        if (v != null && typeof v !== 'object') el.textContent = v;
+      });
+      document.querySelectorAll('[data-sg-img]').forEach(function (el) {
+        var v = get(el.getAttribute('data-sg-img'));
+        if (v == null) return;
+        if (el.tagName === 'IMG') el.src = v;
+        else el.style.backgroundImage = "url('" + v + "')";
+      });
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-sg-reveal]').forEach(function (el) {
+          gsap.from(el, { opacity: 0, y: 40, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+        });
+        gsap.utils.toArray('[data-sg-parallax]').forEach(function (el) {
+          gsap.to(el, { yPercent: -15, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } });
+        });
+        window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+        setTimeout(function () { ScrollTrigger.refresh(); }, 700);
+        setTimeout(function () {
+          document.querySelectorAll('[data-sg-reveal]').forEach(function (el) {
+            if (getComputedStyle(el).opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
+          });
+        }, 2200);
+      }
+    })();
+  </script>
+
+</body>
+</html>

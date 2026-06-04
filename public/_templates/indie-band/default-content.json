@@ -148,5 +148,33 @@
     ],
     "copyright": "© HALCYON",
     "credit": "Groupe indie · projet audio"
+  },
+  "portfolioPage": {
+    "title": "Galerie",
+    "intro": "Live, presse et visuels de releases — l’univers de HALCYON saisi dans le grain de la pellicule et la fumée des salles.",
+    "images": [
+      "/_templates/indie-band/img/hero.jpg",
+      "/_templates/indie-band/img/band1.jpg",
+      "/_templates/indie-band/img/band2.jpg",
+      "/_templates/indie-band/img/single1.jpg",
+      "/_templates/indie-band/img/single2.jpg",
+      "/_templates/indie-band/img/single3.jpg",
+      "/_templates/indie-band/img/video1.jpg",
+      "/_templates/indie-band/img/video2.jpg",
+      "/_templates/indie-band/img/video3.jpg",
+      "/_templates/indie-band/img/footer.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Booking & contact",
+    "intro": "Une date, un festival, une collaboration ? Écrivez-nous — on lit tout, on répond vite.",
+    "email": "booking@halcyon.band",
+    "phone": "+33 6 12 34 56 78",
+    "bookingLabel": "Réservations & tournée",
+    "availabilityLabel": "Disponibilités",
+    "availability": "Disponibles pour dates club, festivals et premières parties · Europe et Amérique du Sud · printemps–automne 2026.",
+    "techLabel": "Fiche technique",
+    "techRider": "Formation : trio (chant/guitare, basse/synthés, batterie). Plateau minimum 5 × 4 m. Façade : système 3 voies calibré, console 24 voies minimum, 4 retours bain de pied + 1 side-fill pour la batterie. Patch complet et plan de scène fournis sur demande. Lumière : 4 faces chaudes, contres froids et 2 machines à fumée — ambiance sombre et cinématique. Backline souhaité : ampli basse, deux combos guitare, kit batterie standard. Prévoir loge fermée, eau et restauration pour 3 personnes + 1 régie. Balances : 90 minutes.",
+    "reassurance": "Réponse sous 48 h · Contrat et fiche technique fournis · Plan de scène détaillé sur demande."
   }
 }

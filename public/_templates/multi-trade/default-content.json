@@ -14,6 +14,9 @@
       "À propos",
       "FAQ"
     ],
+    "home": "Accueil",
+    "portfolio": "Nos réalisations",
+    "contact": "Contact & devis",
     "cta": "Nous contacter"
   },
   "hero": {
@@ -232,5 +235,61 @@
       }
     ],
     "copyright": "© 2026 Voltéo. Modèle de démonstration."
+  },
+  "portfolioPage": {
+    "label": "Notre savoir-faire",
+    "title": "Nos réalisations",
+    "intro": "Tableaux électriques, salles de bain, chaudières, rénovations complètes : découvrez une sélection de chantiers menés par nos équipes chez des particuliers et des professionnels.",
+    "statValue": "+1 200",
+    "statLabel": "interventions réalisées",
+    "ctaTitle": "Votre projet ressemble à l'un de ces chantiers ?",
+    "ctaText": "Parlons-en. Nous vous établissons un devis clair et gratuit, sans engagement.",
+    "cta": "Demander un devis",
+    "images": [
+      "/_templates/multi-trade/img/service-electrical.jpg",
+      "/_templates/multi-trade/img/service-plumbing.jpg",
+      "/_templates/multi-trade/img/service-heating.jpg",
+      "/_templates/multi-trade/img/process.jpg",
+      "/_templates/multi-trade/img/about.jpg",
+      "/_templates/multi-trade/img/trust.jpg",
+      "/_templates/multi-trade/img/hero.jpg",
+      "/_templates/multi-trade/img/cta.jpg",
+      "/_templates/multi-trade/img/service-plumbing.jpg",
+      "/_templates/multi-trade/img/service-heating.jpg"
+    ],
+    "captions": [
+      "Remplacement de tableau électrique aux normes — maison individuelle",
+      "Réfection complète de plomberie — appartement rénové",
+      "Installation de chaudière à condensation — pavillon",
+      "Mise en sécurité électrique — local commercial",
+      "Rénovation salle de bain clé en main — particulier",
+      "Diagnostic et entretien chauffage — copropriété",
+      "Création de point lumineux et câblage — extension",
+      "Dépannage d'urgence après dégât des eaux — logement"
+    ]
+  },
+  "contactPage": {
+    "label": "Contact & devis",
+    "title": "Contact & devis",
+    "intro": "Une panne, un projet, une simple question ? Appelez-nous ou écrivez-nous : nous vous répondons rapidement et établissons votre devis gratuitement.",
+    "phoneLabel": "Appelez-nous directement",
+    "phone": "(555) 120-4480",
+    "phoneNote": "Du lundi au samedi, 8h – 19h · Urgences 24h/24 et 7j/7",
+    "emailLabel": "Écrivez-nous",
+    "email": "contact@volteo.com",
+    "zonesLabel": "Zones d'intervention",
+    "zones": "Nous intervenons dans toute la ville et les communes avoisinantes, dans un rayon de 30 km autour de notre atelier.",
+    "promiseLabel": "Notre engagement",
+    "promiseTitle": "Une réponse sous 2 heures ouvrées",
+    "promiseText": "Chaque demande est traitée par un technicien, jamais par un standard automatisé. Devis clair, tarif fixe, aucune surprise.",
+    "reassurance": [
+      "Devis gratuit et sans engagement",
+      "Techniciens certifiés et assurés",
+      "Délai d'intervention garanti",
+      "Tarifs transparents communiqués avant travaux"
+    ],
+    "cta": "Demander un devis",
+    "ctaNote": "Réponse garantie sous 2 heures ouvrées",
+    "image": "/_templates/multi-trade/img/cta.jpg"
   }
 }

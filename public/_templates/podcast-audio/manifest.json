@@ -5,6 +5,10 @@
   "pageTypes": [
     "home"
   ],
+  "pages": [
+    {"slug":"/portfolio","file":"portfolio.html","title":"Galerie"},
+    {"slug":"/contact","file":"contact.html","title":"Booking & contact"}
+  ],
   "sections": {
     "home": [
       "brand",
@@ -46,6 +50,12 @@
       "role": "image",
       "required": true,
       "note": "community · image"
+    },
+    {
+      "slot": "pf1",
+      "path": "portfolioPage.images[]",
+      "role": "gallery",
+      "required": false
     }
   ],
   "fields": {
@@ -193,6 +203,126 @@
         "label": "footer · links",
         "type": "text",
         "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.title",
+        "label": "galerie · titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.intro",
+        "label": "galerie · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "portfolioPage.live",
+        "label": "galerie · libellé live",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.press",
+        "label": "galerie · libellé presse",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.release",
+        "label": "galerie · libellé releases",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.ctaTitle",
+        "label": "galerie · titre CTA",
+        "type": "text",
+        "maxLen": 60
+      },
+      {
+        "path": "portfolioPage.ctaButton",
+        "label": "galerie · bouton CTA",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.title",
+        "label": "contact · titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.intro",
+        "label": "contact · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.email",
+        "label": "contact · email",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.phone",
+        "label": "contact · téléphone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.bookingLabel",
+        "label": "contact · libellé booking",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.availLabel",
+        "label": "contact · libellé disponibilités",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.availText",
+        "label": "contact · disponibilités & tournée",
+        "type": "textarea",
+        "maxLen": 240
+      },
+      {
+        "path": "contactPage.zonesLabel",
+        "label": "contact · libellé zones",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.zonesText",
+        "label": "contact · zones & déplacements",
+        "type": "textarea",
+        "maxLen": 220
+      },
+      {
+        "path": "contactPage.responseLabel",
+        "label": "contact · libellé délai",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.responseText",
+        "label": "contact · délai de réponse",
+        "type": "textarea",
+        "maxLen": 200
+      },
+      {
+        "path": "contactPage.techLabel",
+        "label": "contact · libellé fiche technique",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.techRider",
+        "label": "contact · fiche technique",
+        "type": "textarea",
+        "maxLen": 600
       }
     ]
   }

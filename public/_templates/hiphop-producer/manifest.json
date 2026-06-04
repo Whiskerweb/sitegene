@@ -5,6 +5,10 @@
   "pageTypes": [
     "home"
   ],
+  "pages": [
+    { "slug": "/portfolio", "file": "portfolio.html", "title": "Galerie" },
+    { "slug": "/contact", "file": "contact.html", "title": "Booking & contact" }
+  ],
   "sections": {
     "home": [
       "brand",
@@ -42,6 +46,12 @@
       "role": "image",
       "required": true,
       "note": "bio · image"
+    },
+    {
+      "slot": "pf1",
+      "path": "portfolioPage.images[]",
+      "role": "gallery",
+      "required": false
     }
   ],
   "fields": {
@@ -171,6 +181,72 @@
         "label": "footer · credit",
         "type": "text",
         "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.title",
+        "label": "Galerie · titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.intro",
+        "label": "Galerie · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.title",
+        "label": "Booking · titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.intro",
+        "label": "Booking · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.email",
+        "label": "Booking · email",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.phone",
+        "label": "Booking · téléphone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.availabilityLabel",
+        "label": "Booking · libellé disponibilités",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.availability",
+        "label": "Booking · disponibilités",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.manager",
+        "label": "Booking · management",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.techRiderLabel",
+        "label": "Fiche technique · libellé",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.techRider",
+        "label": "Fiche technique",
+        "type": "textarea",
+        "maxLen": 600
       }
     ]
   }

@@ -277,5 +277,44 @@
       }
     ],
     "copyright": "© 2026 Aqualis. Tous droits réservés."
+  },
+  "portfolioPage": {
+    "title": "Nos réalisations",
+    "intro": "Chaque chantier est une preuve concrète de notre savoir-faire : rénovations de salle de bains, réseaux refaits à neuf, dépannages d'urgence et installations soignées, livrés propres et durables.",
+    "images": [
+      "/_templates/plumber-pro/img/hero.jpg",
+      "/_templates/plumber-pro/img/intro.jpg",
+      "/_templates/plumber-pro/img/blog-1.jpg",
+      "/_templates/plumber-pro/img/blog-2.jpg",
+      "/_templates/plumber-pro/img/team-1.jpg",
+      "/_templates/plumber-pro/img/team-2.jpg",
+      "/_templates/plumber-pro/img/team-3.jpg",
+      "/_templates/plumber-pro/img/hero.jpg",
+      "/_templates/plumber-pro/img/intro.jpg",
+      "/_templates/plumber-pro/img/blog-1.jpg"
+    ],
+    "captions": [
+      "Rénovation complète de salle de bains",
+      "Remplacement de chauffe-eau thermodynamique",
+      "Réfection d'un réseau de canalisations",
+      "Débouchage haute pression et inspection caméra",
+      "Installation de robinetterie design",
+      "Création d'un point d'eau cuisine",
+      "Dépannage fuite d'urgence maîtrisé",
+      "Mise aux normes d'une colonne d'immeuble",
+      "Pose d'un adoucisseur d'eau",
+      "Raccordement complet d'une buanderie"
+    ]
+  },
+  "contactPage": {
+    "title": "Contact & devis",
+    "intro": "Une fuite, un projet ou simplement une question ? Décrivez votre besoin : nous vous rappelons et établissons un devis clair, sans engagement.",
+    "phone": "(01) 23 45 67 89",
+    "email": "contact@aqualis.fr",
+    "areasTitle": "Zones d'intervention",
+    "areas": "Paris et toute l'Île-de-France — déplacements rapides dans un rayon de 30 km autour de nos ateliers.",
+    "responseTitle": "Délai de réponse",
+    "response": "Réponse sous 1 heure en journée et intervention d'urgence possible 24h/24, 7j/7, week-ends et jours fériés inclus.",
+    "cta": "Demander un devis"
   }
 }

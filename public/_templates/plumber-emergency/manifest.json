@@ -5,6 +5,10 @@
   "pageTypes": [
     "home"
   ],
+  "pages": [
+    { "slug": "/portfolio", "file": "portfolio.html", "title": "Nos réalisations" },
+    { "slug": "/contact", "file": "contact.html", "title": "Contact & devis" }
+  ],
   "sections": {
     "home": [
       "meta",
@@ -85,6 +89,12 @@
       "role": "image",
       "required": true,
       "note": "booking · image"
+    },
+    {
+      "slot": "pf1",
+      "path": "portfolioPage.images[]",
+      "role": "gallery",
+      "required": false
     }
   ],
   "fields": {
@@ -430,6 +440,150 @@
         "label": "footer · copyright",
         "type": "text",
         "maxLen": 43
+      },
+      {
+        "path": "navPages.home",
+        "label": "navPages · home",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "navPages.portfolio",
+        "label": "navPages · portfolio",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "navPages.contact",
+        "label": "navPages · contact",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.title",
+        "label": "portfolioPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.intro",
+        "label": "portfolioPage · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "portfolioPage.kicker",
+        "label": "portfolioPage · kicker",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "portfolioPage.captions[]",
+        "label": "portfolioPage · captions",
+        "type": "text",
+        "maxLen": 60
+      },
+      {
+        "path": "portfolioPage.ctaTitle",
+        "label": "portfolioPage · ctaTitle",
+        "type": "text",
+        "maxLen": 60
+      },
+      {
+        "path": "portfolioPage.ctaText",
+        "label": "portfolioPage · ctaText",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "portfolioPage.cta",
+        "label": "portfolioPage · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.title",
+        "label": "contactPage · title",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.intro",
+        "label": "contactPage · intro",
+        "type": "text",
+        "maxLen": 180
+      },
+      {
+        "path": "contactPage.phone",
+        "label": "contactPage · phone",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.phoneLabel",
+        "label": "contactPage · phoneLabel",
+        "type": "text",
+        "maxLen": 50
+      },
+      {
+        "path": "contactPage.email",
+        "label": "contactPage · email",
+        "type": "text",
+        "maxLen": 80
+      },
+      {
+        "path": "contactPage.emailLabel",
+        "label": "contactPage · emailLabel",
+        "type": "text",
+        "maxLen": 50
+      },
+      {
+        "path": "contactPage.zonesTitle",
+        "label": "contactPage · zonesTitle",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.zones[]",
+        "label": "contactPage · zones",
+        "type": "text",
+        "maxLen": 50
+      },
+      {
+        "path": "contactPage.responseTitle",
+        "label": "contactPage · responseTitle",
+        "type": "text",
+        "maxLen": 50
+      },
+      {
+        "path": "contactPage.responseText",
+        "label": "contactPage · responseText",
+        "type": "text",
+        "maxLen": 200
+      },
+      {
+        "path": "contactPage.cta",
+        "label": "contactPage · cta",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.availability",
+        "label": "contactPage · availability",
+        "type": "text",
+        "maxLen": 61
+      },
+      {
+        "path": "contactPage.hoursTitle",
+        "label": "contactPage · hoursTitle",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "contactPage.hours",
+        "label": "contactPage · hours",
+        "type": "text",
+        "maxLen": 80
       }
     ]
   }

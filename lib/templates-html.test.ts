@@ -4,21 +4,38 @@ import { join } from "node:path";
 
 const ROOT = join(process.cwd(), "public", "_templates");
 // Templates HTML (clone-site) packagés. jazz-vocalist ajouté après son retrofit.
+// TOUS les templates de la lignée HTML (= catalogue moins les 4 SPA).
 const HTML_TEMPLATES = [
-  "cleaning-services",
-  "eco-garden-care",
-  "creative-portfolio",
-  "health-saas",
+  // photographes
   "luxury-wedding",
   "wedding-fine-art",
-  "jazz-vocalist",
-  // Photographes multi-pages (portfolio.html + contact.html)
   "wedding-warm",
   "portrait-fineart",
   "portrait-lifestyle",
   "photographer-freelance",
   "photo-vintage",
   "landscape-prints",
+  // musiciens
+  "jazz-vocalist",
+  "dj-electro",
+  "hiphop-producer",
+  "indie-band",
+  "electronic-collective",
+  "music-festival",
+  "podcast-audio",
+  // artisans / services
+  "cleaning-services",
+  "eco-garden-care",
+  "plumber-pro",
+  "plumber-modern",
+  "plumber-emergency",
+  "electrician-pro",
+  "multi-trade",
+  // créatifs & saas
+  "creative-portfolio",
+  "studio-portfolio",
+  "health-saas",
+  "analytics-saas",
 ];
 
 function getPath(obj: unknown, path: string): unknown {

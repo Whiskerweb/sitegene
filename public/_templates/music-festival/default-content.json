@@ -181,5 +181,35 @@
       "TikTok",
       "Spotify"
     ]
+  },
+  "portfolioPage": {
+    "title": "Galerie",
+    "intro": "Live, presse et visuels de release — l’univers visuel de l’artiste, scène après scène, lumière après lumière.",
+    "images": [
+      "/_templates/music-festival/img/hero.jpg",
+      "/_templates/music-festival/img/singer.jpg",
+      "/_templates/music-festival/img/guitarist.jpg",
+      "/_templates/music-festival/img/dj.jpg",
+      "/_templates/music-festival/img/crowd1.jpg",
+      "/_templates/music-festival/img/artist1.jpg",
+      "/_templates/music-festival/img/artist2.jpg",
+      "/_templates/music-festival/img/crowd2.jpg",
+      "/_templates/music-festival/img/party.jpg",
+      "/_templates/music-festival/img/artist3.jpg",
+      "/_templates/music-festival/img/art.jpg",
+      "/_templates/music-festival/img/artist4.jpg"
+    ]
+  },
+  "contactPage": {
+    "title": "Booking & contact",
+    "intro": "Festivals, salles, soirées privées : on parle dates, line-up et conditions. Réponse sous 48 h ouvrées.",
+    "bookingLabel": "Demande de booking",
+    "email": "booking@solstice-music.com",
+    "phone": "+33 6 12 34 56 78",
+    "availLabel": "Disponibilités & tournée",
+    "availText": "Tournée ouverte de mars à octobre 2026. Créneaux festivals d’été déjà partiellement réservés — anticipez vos demandes pour les week-ends de juillet et août.",
+    "techTitle": "Fiche technique",
+    "techRider": "Format scène : live 4 musiciens + régie. Plateau minimum 6 × 4 m. Système de diffusion façade calibré (line array type d&b / L-Acoustics), 2 retours wedge + 1 ear-monitor stéréo. Console FOH 32 voies (Midas / DiGiCo). Backline : batterie complète, ampli basse, 2 combos guitare, clavier 88 touches. Lumière : 8 PAR LED, 4 lyres, contrôle DMX, machine à brouillard. Balances 60 min avant ouverture des portes. Fiche technique détaillée et plan de patch fournis sur demande.",
+    "reassure": "Devis clair, contrat et fiche technique transmis avant signature. Aucune avance demandée tant que la date n’est pas confirmée."
   }
 }
