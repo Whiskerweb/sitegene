@@ -28,3 +28,8 @@ alter table public.payments add constraint payments_kind_check
 create index if not exists idx_sites_trial_due
   on public.sites (trial_ends_at)
   where billing_status = 'trialing';
+
+-- Étend la contrainte events.type (définie dans 0003) pour autoriser 'trial_started'.
+alter table public.events drop constraint if exists events_type_check;
+alter table public.events add constraint events_type_check
+  check (type in ('reveal_opened', 'button_click', 'go_live_clicked', 'purchased', 'trial_started'));

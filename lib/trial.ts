@@ -100,11 +100,11 @@ export async function fulfillTrialStart(session: Stripe.Checkout.Session): Promi
     }
   }
 
-  // Trace analytics — best-effort. La contrainte events.type ne connaît pas
-  // encore 'trial_started' (migration 0003) : on retombe sur 'purchased' et on
-  // ne laisse JAMAIS une erreur d'event casser le fulfillment.
+  // Trace analytics — best-effort. La contrainte events.type est étendue par la
+  // migration 0017 pour inclure 'trial_started'. On ne laisse JAMAIS une erreur
+  // d'event casser le fulfillment.
   try {
-    await admin.from("events").insert({ token: null, site_id: siteId, type: "purchased" });
+    await admin.from("events").insert({ token: null, site_id: siteId, type: "trial_started" });
   } catch (e) {
     console.error("[trial] event insert failed:", e instanceof Error ? e.message : e);
   }
