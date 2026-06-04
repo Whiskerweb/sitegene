@@ -24,6 +24,13 @@ alter table public.payments drop constraint if exists payments_kind_check;
 alter table public.payments add constraint payments_kind_check
   check (kind in ('initial_50','topup','subscription','trial_50'));
 
+-- Attribution d'une ligne de paiement au site concerné. Sans cette colonne, un
+-- user avec deux essais simultanés verrait les deux lignes `trial_50/pending`
+-- mises à jour par le même débit (le worker ne filtrait que sur user_id+kind+status).
+-- On désactive le lien (set null) plutôt que de supprimer la trace si le site disparaît.
+alter table public.payments add column if not exists site_id uuid references public.sites(id) on delete set null;
+create index if not exists idx_payments_site on public.payments (site_id);
+
 -- Le worker de débit scanne les essais arrivés à échéance.
 create index if not exists idx_sites_trial_due
   on public.sites (trial_ends_at)

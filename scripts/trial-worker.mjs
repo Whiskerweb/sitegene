@@ -75,6 +75,7 @@ async function chargeSite(site) {
       .from("payments")
       .update({ status: "failed" })
       .eq("user_id", site.owner_user_id)
+      .eq("site_id", site.id)
       .eq("kind", "trial_50")
       .eq("status", "pending");
     await notifyFailure(site.id, site.owner_user_id);
@@ -103,6 +104,7 @@ async function chargeSite(site) {
       .from("payments")
       .update({ status: "paid", stripe_payment_intent: pi.id })
       .eq("user_id", site.owner_user_id)
+      .eq("site_id", site.id)
       .eq("kind", "trial_50")
       .eq("status", "pending");
     await admin.from("sites").update({ billing_status: "paid" }).eq("id", site.id);
@@ -123,6 +125,7 @@ async function chargeSite(site) {
         .from("payments")
         .update({ status: "failed" })
         .eq("user_id", site.owner_user_id)
+        .eq("site_id", site.id)
         .eq("kind", "trial_50")
         .eq("status", "pending");
     } else {
