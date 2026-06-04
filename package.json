@@ -13,6 +13,8 @@
     "outreach:enroll:excel": "node --import tsx --env-file=.env.local scripts/outreach-enroll-excel.mjs",
     "outreach:worker": "node --import tsx --env-file=.env.local scripts/outreach-worker.mjs",
     "outreach:worker:once": "node --import tsx --env-file=.env.local scripts/outreach-worker.mjs --once",
+    "trial:worker": "node --import tsx --env-file=.env.local scripts/trial-worker.mjs",
+    "trial:worker:once": "node --import tsx --env-file=.env.local scripts/trial-worker.mjs --once",
     "templates:dump": "node --import tsx --env-file=.env.local scripts/dump-default-content.mjs",
     "templates:build": "node scripts/build-templates.mjs",
     "test": "vitest run",

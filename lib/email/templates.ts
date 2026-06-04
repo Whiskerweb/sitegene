@@ -67,6 +67,43 @@ export function receiptEmail(opts: {
   });
 }
 
+/** Relance après échec du débit de fin d'essai (carte refusée off-session). */
+export function trialChargeFailedEmail(opts: {
+  firstName?: string | null;
+  dashboardUrl: string;
+}): EmailParts {
+  const hi = opts.firstName ? `Bonjour ${esc(opts.firstName)},` : "Bonjour,";
+  const bodyHtml = [
+    p(`<strong>${hi}</strong>`),
+    p("Nous n'avons pas pu débiter les 50 € de fin d'essai sur votre carte."),
+    p("Pas d'inquiétude : votre site reste en ligne pendant que nous réessayons (jusqu'à 3 tentatives)."),
+    p("Pour éviter toute interruption, mettez à jour votre moyen de paiement depuis votre espace."),
+    button("Mettre à jour ma carte", opts.dashboardUrl),
+    p(`<span style="font-size:13px;color:#6b6878;">Une question ? Répondez simplement à cet email.</span>`),
+  ].join("\n");
+
+  const text = [
+    opts.firstName ? `Bonjour ${opts.firstName},` : "Bonjour,",
+    "",
+    "Nous n'avons pas pu débiter les 50 € de fin d'essai sur votre carte.",
+    "Votre site reste en ligne pendant que nous réessayons (jusqu'à 3 tentatives).",
+    "",
+    "Mettez à jour votre moyen de paiement depuis votre espace :",
+    opts.dashboardUrl,
+    "",
+    "Une question ? Répondez simplement à cet email.",
+    "Akyra · akyra.io",
+  ].join("\n");
+
+  return wrap({
+    subject: "Votre site Akyra — un souci avec votre carte",
+    preheader: "Le débit de fin d'essai a échoué. Votre site reste en ligne, mettez à jour votre carte.",
+    bodyHtml,
+    text,
+    footerKind: "transactional",
+  });
+}
+
 /**
  * Email de prospection à froid. `step` : 0 = initial, 1 = relance J+3,
  * 2 = relance finale J+7. Chaque variante pointe vers le reveal /r/{token}.

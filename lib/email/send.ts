@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { sendRaw } from "./client";
-import { receiptEmail, outreachEmail, customOutreachEmail } from "./templates";
+import { receiptEmail, outreachEmail, customOutreachEmail, trialChargeFailedEmail } from "./templates";
 
 /**
  * URL publique pour les liens des emails. Priorité à EMAIL_PUBLIC_BASE_URL.
@@ -70,6 +70,31 @@ export async function sendReceipt(
   await logEvent(admin, {
     to_email: opts.to,
     kind: "receipt",
+    provider_id: res.id,
+    event: "sent",
+  });
+  return res.id;
+}
+
+/** Relance après échec du débit de fin d'essai. Renvoie l'id Resend (ou null). */
+export async function sendTrialChargeFailed(
+  admin: SupabaseClient,
+  opts: { to: string; firstName?: string | null },
+): Promise<string | null> {
+  const mail = trialChargeFailedEmail({
+    firstName: opts.firstName,
+    dashboardUrl: `${appUrl()}/dashboard`,
+  });
+  const res = await sendRaw({
+    from: fromTransactional(),
+    to: opts.to,
+    subject: mail.subject,
+    html: mail.html,
+    text: mail.text,
+  });
+  await logEvent(admin, {
+    to_email: opts.to,
+    kind: "trial_charge_failed",
     provider_id: res.id,
     event: "sent",
   });
