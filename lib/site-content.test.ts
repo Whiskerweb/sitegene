@@ -1,5 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { normalizeContent, findPage, pageMeta } from "./site-content";
+import {
+  contentForTemplate,
+  findPage,
+  metaForTemplate,
+  normalizeContent,
+  pageMeta,
+} from "./site-content";
 
 describe("normalizeContent", () => {
   it("wrappe un contenu v1 (plat, sans version) en une page home", () => {
@@ -52,5 +58,36 @@ describe("findPage", () => {
   it("pageMeta renvoie titre/description de la page", () => {
     const m = pageMeta(c, "/portfolio");
     expect(m.title).toBe("Portfolio");
+  });
+});
+
+describe("contentForTemplate (multi-lignée)", () => {
+  const flat = {
+    brand: "Neatly",
+    meta: { title: "Neatly – Services", description: "Pro cleaning" },
+    hero: { title: "Local Cleaning" },
+    services: { items: [{ title: "Eco" }] },
+  };
+
+  it("lignée SPA → v2 normalisé", () => {
+    const out = contentForTemplate(flat, "alice-r") as { version?: number };
+    expect(out.version).toBe(2);
+  });
+
+  it("lignée HTML → contenu PLAT intact (jamais enveloppé)", () => {
+    const out = contentForTemplate(flat, "cleaning-services");
+    expect(out).toEqual(flat);
+    expect((out as { version?: number }).version).toBeUndefined();
+  });
+
+  it("lignée HTML → déballe un v2 mono-page enveloppé par erreur", () => {
+    const wrapped = normalizeContent(flat); // {version:2, pages:[{content: flat}]}
+    const out = contentForTemplate(wrapped, "cleaning-services");
+    expect(out).toMatchObject(flat);
+  });
+
+  it("metaForTemplate plat : meta.title puis repli brand", () => {
+    expect(metaForTemplate(flat, "cleaning-services", "/").title).toBe("Neatly – Services");
+    expect(metaForTemplate({ brand: "X" }, "cleaning-services", "/").title).toBe("X");
   });
 });

@@ -3,7 +3,7 @@
  * (public/_templates/<id>/index.html) + injection runtime du contenu (v2) et
  * des meta de la page courante AVANT l'exécution du bundle. Aucun rebuild.
  */
-import type { SiteContentV2 } from "./site-content";
+import type { AnyContent } from "./site-content";
 
 /** JSON sûr inline (`<` échappé → pas de break-out </script>). */
 function safeJson(obj: unknown): string {
@@ -23,11 +23,11 @@ export interface HeadMeta {
   ogImage?: string;
 }
 
-/** Bloc à injecter en fin de <head> : contenu + meta + CSS perso éventuel. */
-export function buildHeadInjection(content: SiteContentV2, meta: HeadMeta): string {
+/** Bloc à injecter en fin de <head> : contenu (v2 ou plat) + meta + CSS perso éventuel. */
+export function buildHeadInjection(content: AnyContent, meta: HeadMeta): string {
   const css =
-    content && typeof content === "object" && typeof content.__css === "string"
-      ? content.__css
+    content && typeof content === "object" && typeof (content as { __css?: unknown }).__css === "string"
+      ? ((content as { __css: string }).__css)
       : "";
   const cssTag = css ? `<style id="sg-custom">${css}</style>` : "";
   const titleTag = `<title>${escapeHtml(meta.title)}</title>`;
@@ -105,7 +105,7 @@ export function absolutizeContentAssets<T>(node: T, templateId: string): T {
 export async function buildSiteHtml(
   origin: string,
   templateId: string,
-  content: SiteContentV2,
+  content: AnyContent,
   meta: HeadMeta,
 ): Promise<string | null> {
   const res = await fetch(`${origin}/_templates/${templateId}/index.html`, {

@@ -5,7 +5,7 @@ import {
   fetchDefaultContent,
   fetchTemplateManifest,
 } from "@/lib/site-server";
-import { normalizeContent, pageMeta } from "@/lib/site-content";
+import { contentForTemplate, metaForTemplate } from "@/lib/site-content";
 import { injectEditChrome, type EditableFieldSpec } from "@/lib/edit-runtime";
 
 /**
@@ -44,12 +44,13 @@ export async function GET(request: Request) {
   const raw = sc?.content_json ?? (await fetchDefaultContent(origin, site.template_id));
   // ?path= permet à l'éditeur de prévisualiser une page précise (multi-pages).
   const pagePath = url.searchParams.get("path") || "/";
-  const content = normalizeContent(raw);
+  // Contenu par lignée : v2 (SPA) ou PLAT (HTML clone-site).
+  const content = contentForTemplate(raw, site.template_id);
   let html = await buildSiteHtml(
     origin,
     site.template_id,
     content,
-    pageMeta(content, pagePath),
+    metaForTemplate(content, site.template_id, pagePath),
   );
   if (!html) return new Response("Template indisponible.", { status: 500 });
 

@@ -1,6 +1,6 @@
 import { createPublicClient } from "@/lib/supabase/public";
 import { buildSiteHtml, fetchDefaultContent } from "@/lib/site-server";
-import { normalizeContent, pageMeta } from "@/lib/site-content";
+import { contentForTemplate, metaForTemplate } from "@/lib/site-content";
 import { isTemplateId } from "@/lib/templates";
 
 /**
@@ -53,8 +53,9 @@ export async function GET(
     });
   }
 
-  const content = normalizeContent(rawContent);
-  const meta = pageMeta(content, pagePath);
+  // Contenu par lignée : v2 (SPA) ou PLAT (HTML clone-site).
+  const content = contentForTemplate(rawContent, templateId);
+  const meta = metaForTemplate(content, templateId, pagePath);
   const html = await buildSiteHtml(origin, templateId, content, meta);
   if (!html) return new Response("Template indisponible.", { status: 500 });
 

@@ -6,7 +6,7 @@
 import { getUser } from "@/lib/auth";
 import { regenerateForSite, userOwnsSite } from "@/lib/onboarding";
 import { buildSiteHtml } from "@/lib/site-server";
-import { pageMeta } from "@/lib/site-content";
+import { metaForTemplate } from "@/lib/site-content";
 import { isTemplateId, type TemplateId } from "@/lib/templates";
 
 export const maxDuration = 30;
@@ -32,7 +32,7 @@ export async function GET(request: Request) {
     origin,
     built.templateId,
     built.content,
-    pageMeta(built.content, "/"),
+    metaForTemplate(built.content, built.templateId, "/"),
   );
   if (!html) return new Response("Template indisponible.", { status: 500 });
 

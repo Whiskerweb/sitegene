@@ -12,7 +12,7 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { generateSite } from "@/lib/generate";
 import { buildContent, collectImageSlots, getPath } from "@/lib/content-overlay";
-import { normalizeContent, type SiteContentV2 } from "@/lib/site-content";
+import { contentForTemplate, type AnyContent } from "@/lib/site-content";
 import { fetchDefaultContent } from "@/lib/site-server";
 import { getCategory, DEFAULT_CATEGORY } from "@/lib/categories";
 import { isTemplateId, type TemplateId } from "@/lib/templates";
@@ -294,11 +294,11 @@ export function intakeToOverrides(
   return out;
 }
 
-/** Construit le contenu v2 final d'un intake, adapté au métier (sections retirées). */
+/** Construit le contenu final d'un intake (v2 SPA ou plat HTML), adapté au métier. */
 export async function buildDraftContent(
   origin: string,
   state: { intake: Intake; categoryId: string; templateId: TemplateId },
-): Promise<SiteContentV2 | null> {
+): Promise<AnyContent | null> {
   const baseContent = (await fetchDefaultContent(origin, state.templateId)) as
     | Record<string, unknown>
     | null;
@@ -322,7 +322,8 @@ export async function buildDraftContent(
   const { drop } = dropSectionsForIntake(state.categoryId, state.templateId, state.intake);
   if (drop.length > 0) pruneSections(content, drop);
 
-  return normalizeContent(content);
+  // Lignée SPA → v2 ; lignée HTML → PLAT (sinon l'hydratation ne trouve rien).
+  return contentForTemplate(content, state.templateId);
 }
 
 /** Supprime des sections (clés) de chaque page d'un contenu v2. */
@@ -342,7 +343,7 @@ export async function regenerateForSite(
   origin: string,
   siteId: string,
   templateOverride?: TemplateId,
-): Promise<{ content: SiteContentV2; templateId: TemplateId } | null> {
+): Promise<{ content: AnyContent; templateId: TemplateId } | null> {
   const admin = createAdminClient();
   const { data: ob } = await admin
     .from("site_onboarding")

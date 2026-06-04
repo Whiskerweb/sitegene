@@ -1,6 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { buildSiteHtml } from "@/lib/site-server";
-import { normalizeContent, pageMeta } from "@/lib/site-content";
+import { contentForTemplate, metaForTemplate } from "@/lib/site-content";
 
 /**
  * Reveal pré-paiement : /r/<token>. Token-gated (secret). Rend le site (draft)
@@ -98,13 +98,13 @@ export async function GET(
 
   // Le reveal sert la page demandée (catch-all) ; la navigation interne reste
   // gérée par le routeur client du template (SPA), agnostique au préfixe
-  // /r/<token>. Contenu normalisé v2 + meta de la page ciblée par l'URL.
-  const content = normalizeContent(sc?.content_json);
+  // /r/<token>. Contenu par lignée : v2 (SPA) ou PLAT (HTML clone-site).
+  const content = contentForTemplate(sc?.content_json, site.template_id);
   const html = await buildSiteHtml(
     origin,
     site.template_id,
     content,
-    pageMeta(content, pagePath),
+    metaForTemplate(content, site.template_id, pagePath),
   );
   if (!html) return new Response("Template indisponible.", { status: 500 });
 

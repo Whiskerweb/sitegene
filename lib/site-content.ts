@@ -3,6 +3,8 @@
  * Les anciens contenus (v1, objet plat mono-page) sont normalisés en v2 au
  * rendu : ils deviennent une unique page `home` portant l'objet v1 intact.
  */
+import { isSpaTemplate } from "./templates";
+
 export type PageType =
   | "home"
   | "portfolio"
@@ -97,5 +99,50 @@ export function pageMeta(
     title: page?.title ?? brand,
     description: page?.meta?.description,
     ogImage: page?.meta?.ogImage,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Multi-lignée : SPA (contenu v2) vs HTML clone-site (contenu PLAT)
+// ---------------------------------------------------------------------------
+
+/** Contenu injectable : v2 (lignée SPA) ou objet plat (lignée HTML). */
+export type AnyContent = SiteContentV2 | Record<string, unknown>;
+
+/**
+ * Contenu prêt à injecter dans window.__SITE_CONTENT__ pour un template donné.
+ * Lignée SPA → v2 normalisé (comportement historique). Lignée HTML → PLAT :
+ * son hydratation lit `get("hero.title")` directement sur l'objet ; un wrap v2
+ * rendrait toutes les valeurs introuvables (page démo anglaise figée). Déballe
+ * aussi un v2 mono-page si un contenu plat a été enveloppé par erreur en base.
+ */
+export function contentForTemplate(raw: unknown, templateId: string): AnyContent {
+  if (isSpaTemplate(templateId)) return normalizeContent(raw);
+  const obj = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;
+  if (obj.version === 2 && Array.isArray(obj.pages)) {
+    const pages = obj.pages as { slug?: string; content?: Record<string, unknown> }[];
+    const home = pages.find((p) => normPath(p?.slug ?? "") === "/") ?? pages[0];
+    return (home?.content ?? {}) as Record<string, unknown>;
+  }
+  return obj;
+}
+
+/** Meta SEO multi-lignée (v2 : meta de la page ; plat : meta.title / brand). */
+export function metaForTemplate(
+  content: AnyContent,
+  templateId: string,
+  path: string,
+): { title: string; description?: string; ogImage?: string } {
+  if (isSpaTemplate(templateId)) return pageMeta(content as SiteContentV2, path);
+  const c = content as Record<string, unknown>;
+  const meta = (c.meta && typeof c.meta === "object" ? c.meta : {}) as Record<string, unknown>;
+  const title =
+    (typeof meta.title === "string" && meta.title) ||
+    (typeof c.brand === "string" && c.brand) ||
+    "Votre site";
+  return {
+    title,
+    ...(typeof meta.description === "string" ? { description: meta.description } : {}),
+    ...(typeof meta.ogImage === "string" ? { ogImage: meta.ogImage } : {}),
   };
 }
