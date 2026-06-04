@@ -55,6 +55,13 @@ export type Intake = {
   websiteUrl?: string;
   /** URLs publiques (Storage) des photos déposées, dans l'ordre. */
   photoUrls?: string[];
+  /** Réponses du chatbot d'affinage (étape 2 du tunnel outreach). */
+  wantsPricingPage?: boolean;
+  priceRange?: string;
+  instagram?: string;
+  city?: string;
+  availability?: string;
+  tone?: "chaleureux" | "premium" | "naturel";
 };
 
 // ---------------------------------------------------------------------------
