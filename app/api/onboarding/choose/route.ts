@@ -13,7 +13,8 @@ import {
 } from "@/lib/onboarding";
 import { isTemplateId, type TemplateId } from "@/lib/templates";
 
-export const maxDuration = 30;
+/** Laisse le temps à l'enrichissement IA du contenu final (briefToOverrides). */
+export const maxDuration = 60;
 
 export async function POST(request: Request) {
   const user = await getUser();
