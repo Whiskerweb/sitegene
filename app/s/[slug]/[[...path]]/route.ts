@@ -56,7 +56,10 @@ export async function GET(
   // Contenu par lignée : v2 (SPA) ou PLAT (HTML clone-site).
   const content = contentForTemplate(rawContent, templateId);
   const meta = metaForTemplate(content, templateId, pagePath);
-  const html = await buildSiteHtml(origin, templateId, content, meta);
+  const html = await buildSiteHtml(origin, templateId, content, meta, {
+    pagePath,
+    basePath: `/s/${slug}`,
+  });
   if (!html) return new Response("Template indisponible.", { status: 500 });
 
   return new Response(html, {

@@ -51,6 +51,7 @@ export async function GET(request: Request) {
     site.template_id,
     content,
     metaForTemplate(content, site.template_id, pagePath),
+    { pagePath }, // pas de basePath : liens inter-pages inertes dans l'éditeur
   );
   if (!html) return new Response("Template indisponible.", { status: 500 });
 

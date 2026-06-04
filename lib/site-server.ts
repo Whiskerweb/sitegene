@@ -4,6 +4,7 @@
  * des meta de la page courante AVANT l'exécution du bundle. Aucun rebuild.
  */
 import type { AnyContent } from "./site-content";
+import { isSpaTemplate } from "./templates";
 
 /** JSON sûr inline (`<` échappé → pas de break-out </script>). */
 function safeJson(obj: unknown): string {
@@ -102,13 +103,69 @@ export function absolutizeContentAssets<T>(node: T, templateId: string): T {
   return node;
 }
 
+export type TemplatePage = { slug?: string; file?: string; title?: string };
+
+const normSlug = (p: string) => {
+  const s = (p || "/").trim();
+  const withSlash = s.startsWith("/") ? s : `/${s}`;
+  return withSlash.length > 1 && withSlash.endsWith("/") ? withSlash.slice(0, -1) : withSlash;
+};
+
+/**
+ * Fichier de shell à servir pour un chemin de page (lignée HTML multi-pages).
+ * `index.html` pour la home ; sinon le fichier déclaré dans `manifest.pages`
+ * ({slug:"/portfolio", file:"portfolio.html"}). Chemin inconnu → home (le
+ * comportement SPA historique : repli silencieux).
+ */
+async function pageFileFor(
+  origin: string,
+  templateId: string,
+  pagePath: string,
+): Promise<string> {
+  const want = normSlug(pagePath);
+  if (want === "/") return "index.html";
+  const manifest = (await fetchTemplateManifest(origin, templateId)) as {
+    pages?: TemplatePage[];
+  } | null;
+  const page = manifest?.pages?.find((p) => normSlug(p?.slug ?? "") === want);
+  const file = page?.file ?? "";
+  // Sanitisation stricte : un nom de fichier plat, pas de traversée.
+  return /^[a-z0-9][a-z0-9._-]*\.html$/i.test(file) ? file : "index.html";
+}
+
+export interface BuildSiteOpts {
+  /** Chemin de page demandé ("/", "/portfolio"…). Défaut : home. */
+  pagePath?: string;
+  /** Préfixe public du site ("/s/<slug>", "/r/<token>") pour la nav inter-pages
+   *  de la lignée HTML. Absent → les liens data-sg-page restent inertes (aperçus). */
+  basePath?: string;
+}
+
+/** Script léger : câble les <a data-sg-page="…"> sur le préfixe public du site. */
+function navRewriteScript(basePath: string): string {
+  return (
+    `<script>(function(){var B=${safeJson(basePath)};` +
+    `function wire(){document.querySelectorAll('a[data-sg-page]').forEach(function(a){` +
+    `var p=(a.getAttribute('data-sg-page')||'/').replace(/^\\//,'');` +
+    `a.setAttribute('href',(B+(p?'/'+p:''))||'/');});}` +
+    `if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',wire);else wire();` +
+    `})();</script>`
+  );
+}
+
 export async function buildSiteHtml(
   origin: string,
   templateId: string,
   content: AnyContent,
   meta: HeadMeta,
+  opts?: BuildSiteOpts,
 ): Promise<string | null> {
-  const res = await fetch(`${origin}/_templates/${templateId}/index.html`, {
+  const pagePath = opts?.pagePath ?? "/";
+  const file = isSpaTemplate(templateId)
+    ? "index.html" // SPA : routeur client, toujours le même shell
+    : await pageFileFor(origin, templateId, pagePath);
+
+  const res = await fetch(`${origin}/_templates/${templateId}/${file}`, {
     cache: "no-store",
   });
   if (!res.ok) return null;
@@ -120,6 +177,11 @@ export async function buildSiteHtml(
     html = html.replace("</head>", () => `${inject}</head>`);
   } else {
     html = inject + html;
+  }
+  // Nav inter-pages (lignée HTML) : ne s'active que si la route fournit le préfixe.
+  if (!isSpaTemplate(templateId) && typeof opts?.basePath === "string") {
+    const nav = navRewriteScript(opts.basePath);
+    html = html.includes("</body>") ? html.replace("</body>", () => `${nav}</body>`) : html + nav;
   }
   return html;
 }

@@ -105,6 +105,7 @@ export async function GET(
     site.template_id,
     content,
     metaForTemplate(content, site.template_id, pagePath),
+    { pagePath, basePath: `/r/${token}` },
   );
   if (!html) return new Response("Template indisponible.", { status: 500 });
 
