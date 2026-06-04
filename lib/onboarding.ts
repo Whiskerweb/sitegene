@@ -29,6 +29,7 @@ export type OnboardingState = {
   candidateTemplateIds: TemplateId[];
   step: number;
   intake: Intake & { categoryId?: string };
+  skippedQuestions: string[];
 };
 
 type Admin = ReturnType<typeof createAdminClient>;
@@ -69,6 +70,7 @@ function toState(
     step: number | null;
     candidate_template_ids: string[] | null;
     chosen_template_id: string | null;
+    skipped_questions?: string[] | null;
   },
   token: string | null,
 ): OnboardingState {
@@ -87,6 +89,7 @@ function toState(
     candidateTemplateIds: candidateTemplates(categoryId),
     step: row.step ?? 0,
     intake,
+    skippedQuestions: row.skipped_questions ?? [],
   };
 }
 
@@ -118,7 +121,7 @@ export async function loadOnboarding(userId: string): Promise<OnboardingState | 
 
   const { data: ob } = await admin
     .from("site_onboarding")
-    .select("site_id, intake, step, candidate_template_ids, chosen_template_id")
+    .select("site_id, intake, step, candidate_template_ids, chosen_template_id, skipped_questions")
     .eq("site_id", site.id)
     .maybeSingle();
   if (!ob) return null;
@@ -188,33 +191,39 @@ export async function ensureOnboardingSite(input: {
     candidateTemplateIds: candidateTemplates(category.id),
     step: 0,
     intake,
+    skippedQuestions: [],
   };
 }
 
-/** Fusionne un patch dans l'intake et renvoie l'état mis à jour. */
+/** Fusionne un patch dans l'intake (et les questions passées) ; renvoie l'état. */
 export async function saveIntake(
   siteId: string,
   patch: Partial<Intake>,
   step?: number,
+  skipped?: string[],
 ): Promise<OnboardingState | null> {
   const admin = createAdminClient();
   const { data: ob } = await admin
     .from("site_onboarding")
-    .select("site_id, intake, step, candidate_template_ids, chosen_template_id")
+    .select("site_id, intake, step, candidate_template_ids, chosen_template_id, skipped_questions")
     .eq("site_id", siteId)
     .maybeSingle();
   if (!ob) return null;
 
   const merged = { ...(ob.intake as Record<string, unknown>), ...patch };
+  const mergedSkipped = Array.from(
+    new Set([...((ob.skipped_questions as string[]) ?? []), ...(skipped ?? [])]),
+  );
   const { data: updated } = await admin
     .from("site_onboarding")
     .update({
       intake: merged,
       step: step ?? ob.step ?? 0,
+      skipped_questions: mergedSkipped,
       updated_at: new Date().toISOString(),
     })
     .eq("site_id", siteId)
-    .select("site_id, intake, step, candidate_template_ids, chosen_template_id")
+    .select("site_id, intake, step, candidate_template_ids, chosen_template_id, skipped_questions")
     .single();
 
   return updated ? toState(updated, await tokenForSite(admin, siteId)) : null;

@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Non connecté." }, { status: 401 });
   }
 
-  let body: { siteId?: string; patch?: Partial<Intake>; step?: number } = {};
+  let body: { siteId?: string; patch?: Partial<Intake>; step?: number; skipped?: string[] } = {};
   try {
     body = await request.json();
   } catch {
@@ -22,7 +22,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Accès refusé." }, { status: 403 });
   }
 
-  const state = await saveIntake(siteId, body.patch ?? {}, body.step);
+  const skipped = Array.isArray(body.skipped)
+    ? body.skipped.filter((k): k is string => typeof k === "string").slice(0, 50)
+    : undefined;
+  const state = await saveIntake(siteId, body.patch ?? {}, body.step, skipped);
   if (!state) {
     return NextResponse.json({ error: "Onboarding introuvable." }, { status: 404 });
   }
