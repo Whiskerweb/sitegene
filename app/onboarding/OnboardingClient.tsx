@@ -332,6 +332,17 @@ function isAnswered(q: OnboardingQuestion, intake: Intake): boolean {
   return typeof v === "string" && v.trim().length > 0;
 }
 
+/** Un message du fil de conversation (persistant — rien ne s'efface). */
+type FeedMsg = {
+  id: string;
+  role: "bot" | "user";
+  text: string;
+  lead?: string | null;
+  help?: string;
+  /** Accusé de réception : bulle plus discrète. */
+  muted?: boolean;
+};
+
 function Conversation({
   state,
   intake,
@@ -345,24 +356,64 @@ function Conversation({
 }) {
   const questions = useMemo(() => questionsFor(state.categoryId), [state.categoryId]);
   // Reprise : on retombe sur la première question sans réponse.
-  const [idx, setIdx] = useState(() => {
+  const firstIdx = useMemo(() => {
     const i = questions.findIndex((q) => !isAnswered(q, intake));
     return i < 0 ? questions.length - 1 : i;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questions]);
+  const [idx, setIdx] = useState(firstIdx);
+  // « Question précédente » repose la même question plus bas dans le fil.
+  const [askSeq, setAskSeq] = useState(0);
+  const [typing, setTyping] = useState(true);
+  const [inputOpen, setInputOpen] = useState(false);
+  // Le FIL : l'historique reconstruit (reprise) + tout ce qui se dit ensuite.
+  const [messages, setMessages] = useState<FeedMsg[]>(() => {
+    const out: FeedMsg[] = [];
+    for (let i = 0; i < firstIdx; i++) {
+      const q = questions[i];
+      out.push({ id: `hist-q-${i}`, role: "bot", text: q.label, help: q.help });
+      const a = answeredLabel(q, intake);
+      out.push({ id: `hist-a-${i}`, role: "user", text: a || "Je passe pour l'instant" });
+    }
+    return out;
   });
-  const [stage, setStage] = useState<"intro" | "asking" | "thinking">("intro");
-  const [thinkText, setThinkText] = useState("");
-  const [lastAnswer, setLastAnswer] = useState<string | null>(null);
   const intakeRef = useRef(intake);
   useEffect(() => {
     intakeRef.current = intake;
   }, [intake]);
 
-  // Intro : Akyra « écrit » un instant avant de saluer.
+  // Défilement auto vers le bas à chaque nouveau message.
+  const feedRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
-    if (stage !== "intro") return;
-    const t = window.setTimeout(() => setStage("asking"), 1100);
+    const el = feedRef.current;
+    if (el) el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+  }, [messages, typing, inputOpen]);
+
+  // Akyra pose la question courante : « écrit… » puis la bulle, puis la saisie.
+  // Idempotent par identifiant (StrictMode rejoue les effets en dev).
+  useEffect(() => {
+    const q = questions[idx];
+    const lead = leadInFor(idx, questions.length);
+    const t = window.setTimeout(
+      () => {
+        setMessages((cur) => {
+          const qid = `q-${idx}-${askSeq}`;
+          if (cur.some((m) => m.id === qid)) return cur;
+          const next = [...cur];
+          if (idx === 0 && !cur.some((m) => m.id === "intro")) {
+            next.push({ id: "intro", role: "bot", text: INTRO_LINE });
+          }
+          next.push({ id: qid, role: "bot", text: q.label, help: q.help, lead });
+          return next;
+        });
+        setTyping(false);
+        setInputOpen(true);
+      },
+      messages.length === 0 ? 1100 : 850,
+    );
     return () => window.clearTimeout(t);
-  }, [stage]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idx, askSeq]);
 
   const q = questions[idx];
   const total = questions.length;
@@ -380,25 +431,32 @@ function Conversation({
   const advance = useCallback(
     (skipped: boolean) => {
       persist();
-      const label = skipped ? "Je passe pour l'instant" : answeredLabel(q, intakeRef.current);
-      setLastAnswer(label || "C'est fait");
-      setThinkText(ackFor(idx, skipped));
-      setStage("thinking");
+      const label =
+        (skipped ? "Je passe pour l'instant" : answeredLabel(q, intakeRef.current)) ||
+        "C'est fait";
       const last = idx >= total - 1;
+      setInputOpen(false);
+      setTyping(true);
+      setMessages((cur) => [
+        ...cur,
+        { id: `a-${idx}-${askSeq}`, role: "user", text: label },
+      ]);
+      // L'accusé de réception arrive après un court « il écrit… », et RESTE.
+      window.setTimeout(() => {
+        setMessages((cur) => [
+          ...cur,
+          { id: `ack-${idx}-${askSeq}`, role: "bot", muted: true, text: ackFor(idx, skipped) },
+        ]);
+      }, 550);
       window.setTimeout(
         () => {
-          if (last) {
-            onDone();
-          } else {
-            setIdx((i) => Math.min(i + 1, total - 1));
-            setLastAnswer(null);
-            setStage("asking");
-          }
+          if (last) onDone();
+          else setIdx((i) => Math.min(i + 1, total - 1));
         },
-        last ? 1400 : 1150 + (idx % 2) * 250,
+        last ? 1700 : 1200,
       );
     },
-    [idx, total, q, persist, onDone],
+    [idx, askSeq, total, q, persist, onDone],
   );
 
   const setField = useCallback(
@@ -436,11 +494,9 @@ function Conversation({
     [state.siteId, setIntake],
   );
 
-  const lead = leadInFor(idx, total);
-
   return (
-    <div className="akyra flex min-h-screen flex-col bg-[rgb(var(--m-page))] text-[rgb(var(--m-ink))]">
-      <header className="flex items-center justify-between px-5 py-4 md:px-10">
+    <div className="akyra flex h-dvh flex-col bg-[rgb(var(--m-page))] text-[rgb(var(--m-ink))]">
+      <header className="flex shrink-0 items-center justify-between px-5 py-4 md:px-10">
         <Link href="/" className="flex items-center gap-2 text-[17px] font-semibold tracking-[-0.02em]">
           <AkyraMark size={22} /> Akyra
         </Link>
@@ -450,93 +506,84 @@ function Conversation({
       </header>
 
       {/* Fine barre de progression */}
-      <div className="mx-5 h-[3px] overflow-hidden rounded-full bg-[rgb(var(--m-overlay)/0.06)] md:mx-10">
+      <div className="mx-5 h-[3px] shrink-0 overflow-hidden rounded-full bg-[rgb(var(--m-overlay)/0.06)] md:mx-10">
         <motion.div
           className="h-full rounded-full bg-[rgb(var(--m-accent))]"
-          animate={{ width: `${Math.round(((idx + (stage === "thinking" ? 1 : 0)) / total) * 100)}%` }}
+          animate={{ width: `${Math.round((idx / total) * 100)}%` }}
           transition={{ duration: 0.5, ease: EASE }}
         />
       </div>
 
-      <main className="mx-auto flex w-full max-w-[680px] flex-1 flex-col justify-center px-5 py-10">
-        {/* Scène fixe : UNE bulle qui change — jamais d'empilement. */}
-        <div className="flex min-h-[300px] flex-col justify-end gap-4">
-          <AnimatePresence mode="wait">
-            {stage === "intro" && (
+      {/* LE FIL : tout reste affiché — questions, réponses, réactions d'Akyra. */}
+      <div ref={feedRef} className="flex-1 overflow-y-auto">
+        <div className="mx-auto flex w-full max-w-[680px] flex-col gap-4 px-5 py-8">
+          {messages.map((m) =>
+            m.role === "user" ? (
               <motion.div
-                key="intro"
+                key={m.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.3, ease: EASE }}
+              >
+                <UserBubble text={m.text} />
+              </motion.div>
+            ) : (
+              <motion.div
+                key={m.id}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35, ease: EASE }}
               >
                 <BotBubble>
-                  <TypingDots />
-                </BotBubble>
-              </motion.div>
-            )}
-
-            {stage === "asking" && (
-              <motion.div
-                key={`q-${idx}`}
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.4, ease: EASE }}
-                className="flex flex-col gap-4"
-              >
-                <BotBubble>
-                  {idx === 0 && (
-                    <p className="mb-2 text-[14px] leading-relaxed text-[rgb(var(--m-muted))]">
-                      {INTRO_LINE}
-                    </p>
-                  )}
-                  {lead && (
+                  {m.lead && (
                     <p className="mb-2 text-[13.5px] font-medium text-[rgb(var(--m-accent))]">
-                      {lead}
+                      {m.lead}
                     </p>
                   )}
-                  <p className="text-[17px] font-semibold leading-snug">{q.label}</p>
-                  {q.help && (
+                  <p
+                    className={
+                      m.muted
+                        ? "text-[14px] italic text-[rgb(var(--m-muted))]"
+                        : "text-[16px] font-semibold leading-snug"
+                    }
+                  >
+                    {m.text}
+                  </p>
+                  {m.help && (
                     <p className="mt-1.5 text-[13.5px] leading-relaxed text-[rgb(var(--m-muted))]">
-                      {q.help}
+                      {m.help}
                     </p>
                   )}
                 </BotBubble>
               </motion.div>
-            )}
+            ),
+          )}
 
-            {stage === "thinking" && (
-              <motion.div
-                key={`think-${idx}`}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.3, ease: EASE }}
-                className="flex flex-col gap-3"
-              >
-                {lastAnswer && <UserBubble text={lastAnswer} />}
-                <BotBubble>
-                  <span className="flex items-center gap-2.5 text-[14.5px] text-[rgb(var(--m-muted))]">
-                    {thinkText}
-                    <TypingDots />
-                  </span>
-                </BotBubble>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {typing && (
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25 }}
+            >
+              <BotBubble>
+                <TypingDots />
+              </BotBubble>
+            </motion.div>
+          )}
         </div>
+      </div>
 
-        {/* Zone de réponse (statique, le contenu change avec la question) */}
-        <div className="mt-6 min-h-[150px]">
+      {/* Zone de réponse, ancrée en bas — le contenu change avec la question. */}
+      <div className="shrink-0 border-t border-[rgb(var(--m-line))] bg-[rgb(var(--m-page))]">
+        <div className="mx-auto w-full max-w-[680px] px-5 py-4">
           <AnimatePresence mode="wait">
-            {stage === "asking" && (
+            {inputOpen ? (
               <motion.div
-                key={`a-${idx}`}
-                initial={{ opacity: 0, y: 10 }}
+                key={`input-${idx}-${askSeq}`}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.35, ease: EASE, delay: 0.08 }}
+                transition={{ duration: 0.3, ease: EASE }}
               >
                 <AnswerControl
                   q={q}
@@ -555,12 +602,17 @@ function Conversation({
                   onEnter={() => canValidate && advance(false)}
                 />
 
-                <div className="mt-4 flex items-center justify-between">
+                <div className="mt-3.5 flex items-center justify-between">
                   <div>
                     {idx > 0 && (
                       <button
                         type="button"
-                        onClick={() => setIdx((i) => Math.max(0, i - 1))}
+                        onClick={() => {
+                          setInputOpen(false);
+                          setTyping(true);
+                          setIdx((i) => Math.max(0, i - 1));
+                          setAskSeq((s) => s + 1);
+                        }}
                         className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[rgb(var(--m-faint))] transition-colors hover:text-[rgb(var(--m-ink))]"
                       >
                         <ArrowLeft size={13} /> Question précédente
@@ -589,14 +641,23 @@ function Conversation({
                   </div>
                 </div>
               </motion.div>
+            ) : (
+              <motion.p
+                key="waiting"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="py-3 text-center text-[12.5px] text-[rgb(var(--m-faint))]"
+              >
+                Akyra écrit…
+              </motion.p>
             )}
           </AnimatePresence>
+          <p className="mt-3 text-center text-[11.5px] text-[rgb(var(--m-faint))]">
+            Vos réponses sont enregistrées au fur et à mesure · vous ne payez qu&apos;à la fin.
+          </p>
         </div>
-
-        <p className="mt-8 text-center text-[12px] text-[rgb(var(--m-faint))]">
-          Vos réponses sont enregistrées au fur et à mesure · vous ne payez qu&apos;à la fin.
-        </p>
-      </main>
+      </div>
     </div>
   );
 }
@@ -1054,10 +1115,12 @@ function Building({
   }, [stepIdx]);
 
   useEffect(() => {
-    const key = `${templateId}:${attempt}`;
-    if (ranFor.current === key) return; // garde anti double-run (StrictMode dev)
+    // Garde anti double-démarrage (StrictMode dev rejoue les effets). Surtout
+    // PAS de drapeau « alive » coupé au cleanup : le premier montage est la
+    // seule exécution réelle — l'annuler bloquait l'écran pour toujours.
+    const key = `${siteId}:${templateId}:${attempt}`;
+    if (ranFor.current === key) return;
     ranFor.current = key;
-    let alive = true;
     const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
     (async () => {
@@ -1071,34 +1134,29 @@ function Building({
         });
         const data = await res.json().catch(() => ({}));
         if (!res.ok) throw new Error(data?.error || "La préparation a échoué.");
-        if (!alive) return;
         setStepIdx(2); // ① et ② cochées : style réservé, photos/infos en place
 
-        // ③ Réécriture IA (best-effort : un échec n'empêche rien).
-        await fetch("/api/onboarding/enrich", {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ siteId }),
-        }).catch(() => {});
-        if (!alive) return;
+        // ③ Réécriture IA, bornée côté client (best-effort : un échec ou un
+        // dépassement n'empêche rien — le contenu déterministe est déjà prêt).
+        await Promise.race([
+          fetch("/api/onboarding/enrich", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ siteId }),
+          }),
+          sleep(50_000),
+        ]).catch(() => {});
         setStepIdx(3);
 
         // ④ Le temps de respirer : jamais moins de ~7 s à l'écran.
         await sleep(Math.max(900, 7000 - (Date.now() - t0)));
-        if (!alive) return;
         setStepIdx(4);
         await sleep(600);
-        if (!alive) return;
         onDone(typeof data.token === "string" ? data.token : null);
       } catch (e) {
-        if (!alive) return;
         setError(e instanceof Error ? e.message : "La préparation a échoué.");
       }
     })();
-
-    return () => {
-      alive = false;
-    };
   }, [siteId, templateId, attempt, onDone]);
 
   const meta = templateMeta(templateId);
