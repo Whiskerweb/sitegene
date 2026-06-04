@@ -129,6 +129,7 @@ export default function StartClient({
           setBusy(false);
         }}
         brief=""
+        redirectTo={`/start/${token}`}
         onAuthed={() => {
           setGateOpen(false);
           if (pending) void claim(pending);

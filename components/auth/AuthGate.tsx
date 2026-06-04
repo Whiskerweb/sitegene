@@ -19,11 +19,14 @@ export default function AuthGate({
   onClose,
   brief,
   onAuthed,
+  redirectTo = "/onboarding",
 }: {
   open: boolean;
   onClose: () => void;
   brief: string;
   onAuthed: () => void;
+  /** Chemin (relatif à l'origin) de retour après l'OAuth Google. Défaut : tunnel self-serve. */
+  redirectTo?: string;
 }) {
   const [phase, setPhase] = useState<"email" | "code">("email");
   const [email, setEmail] = useState("");
@@ -86,7 +89,7 @@ export default function AuthGate({
       const supabase = createClient();
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
-        options: { redirectTo: `${window.location.origin}/onboarding` },
+        options: { redirectTo: `${window.location.origin}${redirectTo}` },
       });
       if (error) throw new Error(error.message);
     } catch {
