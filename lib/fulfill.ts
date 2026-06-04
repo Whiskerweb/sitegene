@@ -36,7 +36,7 @@ async function deriveUniqueSlug(admin: Admin, base: string, siteId: string): Pro
 }
 
 /** Met le site en ligne (publie la dernière version + slug + statut live). */
-async function goLive(admin: Admin, siteId: string, slugBase: string): Promise<string> {
+export async function goLive(admin: Admin, siteId: string, slugBase: string): Promise<string> {
   const slug = await deriveUniqueSlug(admin, slugBase, siteId);
   const { data: sc } = await admin
     .from("site_content")
@@ -186,7 +186,7 @@ async function currentSlug(admin: Admin, siteId: string | null): Promise<string 
 }
 
 /** Base de slug self-serve : marque de l'onboarding, sinon prénom du prospect. */
-async function slugBaseForSite(
+export async function slugBaseForSite(
   admin: Admin,
   siteId: string,
   prospectId: string | null,

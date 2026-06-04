@@ -1,5 +1,6 @@
 import { stripe } from "@/lib/stripe";
 import { fulfillPayment, fulfillTopup } from "@/lib/fulfill";
+import { fulfillTrialStart } from "@/lib/trial";
 import { syncSubscription, setSubscriptionStatus } from "@/lib/subscription";
 import { createAdminClient } from "@/lib/supabase/admin";
 import type Stripe from "stripe";
@@ -40,6 +41,10 @@ export async function POST(request: Request) {
           // Abonnement : on récupère l'objet complet (period_end au niveau item).
           const sub = await stripe.subscriptions.retrieve(s.subscription as string);
           await syncSubscription(sub);
+        } else if (s.mode === "setup" && s.metadata?.flow === "trial_50") {
+          // Essai 3 jours : carte enregistrée → publication immédiate (filet du
+          // fulfillment fait à /welcome/trial ; idempotent par stripe_session_id).
+          await fulfillTrialStart(s);
         } else if (s.metadata?.kind === "topup") {
           await fulfillTopup(s);
         } else {
