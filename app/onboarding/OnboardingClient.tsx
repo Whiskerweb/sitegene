@@ -19,7 +19,7 @@ import {
   type OnboardingQuestion,
   type Intake,
 } from "@/lib/onboarding-config";
-import { isSpaTemplate, templateMeta } from "@/lib/templates";
+import { isSpaTemplate, templateMeta, TEMPLATE_IDS } from "@/lib/templates";
 import {
   intakeToOverrides,
   photoSlotUrls,
@@ -675,6 +675,10 @@ function Reveal({
   const [choosing, setChoosing] = useState<string | null>(null);
   // Beaucoup de candidats désormais (11 en photographe) : 6 d'abord, lazy-load.
   const [visibleCount, setVisibleCount] = useState(6);
+  // Tout le catalogue est prévisualisable avec SON contenu — pas seulement la
+  // catégorie : section « Explorer tous les styles » repliée par défaut.
+  const others = TEMPLATE_IDS.filter((t) => !state.candidateTemplateIds.includes(t));
+  const [othersCount, setOthersCount] = useState(0);
 
   async function choose(templateId: string) {
     setChoosing(templateId);
@@ -727,42 +731,17 @@ function Reveal({
         </div>
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {state.candidateTemplateIds.slice(0, visibleCount).map((tid, i) => {
-            const meta = templateMeta(tid);
-            const busy = choosing === tid;
-            return (
-              <motion.div
-                key={tid}
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: EASE, delay: Math.min(i, 5) * 0.1 }}
-                className="overflow-hidden rounded-[24px] border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] shadow-[0_24px_70px_-40px_rgba(0,0,0,0.4)]"
-              >
-                <div className="relative h-[420px] overflow-hidden bg-[rgb(var(--m-elevated))]">
-                  <iframe
-                    src={`/api/onboarding/preview?siteId=${state.siteId}&template=${tid}`}
-                    title={meta.name}
-                    loading="lazy"
-                    className="pointer-events-none h-[840px] w-[200%] origin-top-left scale-50 border-0"
-                  />
-                </div>
-                <div className="flex items-center justify-between gap-3 p-5">
-                  <div>
-                    <p className="text-[15px] font-semibold">{meta.name}</p>
-                    <p className="text-[12.5px] text-[rgb(var(--m-faint))]">{meta.style}</p>
-                  </div>
-                  <button
-                    disabled={busy || choosing !== null}
-                    onClick={() => choose(tid)}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-[rgb(var(--m-ink))] px-4 py-2.5 text-[13.5px] font-bold text-[rgb(var(--m-page))] transition-opacity hover:opacity-90 disabled:opacity-50"
-                  >
-                    {busy ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />}
-                    {busy ? "On finalise votre site…" : "Choisir"}
-                  </button>
-                </div>
-              </motion.div>
-            );
-          })}
+          {state.candidateTemplateIds.slice(0, visibleCount).map((tid, i) => (
+            <TemplateCard
+              key={tid}
+              tid={tid}
+              index={i}
+              siteId={state.siteId}
+              busy={choosing === tid}
+              locked={choosing !== null}
+              onChoose={choose}
+            />
+          ))}
         </div>
 
         {state.candidateTemplateIds.length > visibleCount && (
@@ -775,8 +754,108 @@ function Reveal({
             </button>
           </div>
         )}
+
+        {/* Tout le catalogue, avec SON contenu injecté */}
+        {others.length > 0 && (
+          <div className="mt-16">
+            <div className="flex items-center gap-4">
+              <span className="h-px flex-1 bg-[rgb(var(--m-line))]" />
+              <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[rgb(var(--m-faint))]">
+                Envie d&apos;un autre univers ?
+              </p>
+              <span className="h-px flex-1 bg-[rgb(var(--m-line))]" />
+            </div>
+
+            {othersCount === 0 ? (
+              <div className="mt-6 text-center">
+                <button
+                  onClick={() => setOthersCount(6)}
+                  className="rounded-full border border-[rgb(var(--m-line))] px-6 py-3 text-[14px] font-semibold text-[rgb(var(--m-ink))] transition-colors hover:bg-[rgb(var(--m-overlay)/0.04)]"
+                >
+                  Explorer tous les styles ({others.length})
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className="mt-8 grid gap-6 md:grid-cols-3">
+                  {others.slice(0, othersCount).map((tid, i) => (
+                    <TemplateCard
+                      key={tid}
+                      tid={tid}
+                      index={i}
+                      siteId={state.siteId}
+                      busy={choosing === tid}
+                      locked={choosing !== null}
+                      onChoose={choose}
+                    />
+                  ))}
+                </div>
+                {others.length > othersCount && (
+                  <div className="mt-8 text-center">
+                    <button
+                      onClick={() => setOthersCount((n) => n + 6)}
+                      className="rounded-full border border-[rgb(var(--m-line))] px-6 py-3 text-[14px] font-semibold text-[rgb(var(--m-ink))] transition-colors hover:bg-[rgb(var(--m-overlay)/0.04)]"
+                    >
+                      Voir plus ({others.length - othersCount})
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        )}
       </div>
     </div>
+  );
+}
+
+/** Carte d'aperçu d'un template avec le contenu du client injecté. */
+function TemplateCard({
+  tid,
+  index,
+  siteId,
+  busy,
+  locked,
+  onChoose,
+}: {
+  tid: string;
+  index: number;
+  siteId: string;
+  busy: boolean;
+  locked: boolean;
+  onChoose: (tid: string) => void;
+}) {
+  const meta = templateMeta(tid);
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: EASE, delay: Math.min(index, 5) * 0.1 }}
+      className="overflow-hidden rounded-[24px] border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] shadow-[0_24px_70px_-40px_rgba(0,0,0,0.4)]"
+    >
+      <div className="relative h-[420px] overflow-hidden bg-[rgb(var(--m-elevated))]">
+        <iframe
+          src={`/api/onboarding/preview?siteId=${siteId}&template=${tid}`}
+          title={meta.name}
+          loading="lazy"
+          className="pointer-events-none h-[840px] w-[200%] origin-top-left scale-50 border-0"
+        />
+      </div>
+      <div className="flex items-center justify-between gap-3 p-5">
+        <div>
+          <p className="text-[15px] font-semibold">{meta.name}</p>
+          <p className="text-[12.5px] text-[rgb(var(--m-faint))]">{meta.style}</p>
+        </div>
+        <button
+          disabled={busy || locked}
+          onClick={() => onChoose(tid)}
+          className="inline-flex items-center gap-1.5 rounded-full bg-[rgb(var(--m-ink))] px-4 py-2.5 text-[13.5px] font-bold text-[rgb(var(--m-page))] transition-opacity hover:opacity-90 disabled:opacity-50"
+        >
+          {busy ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />}
+          {busy ? "On finalise votre site…" : "Choisir"}
+        </button>
+      </div>
+    </motion.div>
   );
 }
 

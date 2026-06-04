@@ -121,6 +121,12 @@ export function intakeToOverrides(
     (p) => p === "phone" || p.endsWith(".phone"),
     STATIC_CANDIDATES.contactPhone,
   );
+  // Musicien : fiche technique → bloc dédié (page contact/booking).
+  applyField(
+    intake.techRider,
+    (p) => p === "techRider" || p.endsWith(".techRider"),
+    { paths: ["contactPage.techRider", "booking.techRider"], max: 600 },
+  );
 
   // Services = prestations du client (photographe : types d'événements).
   const names = (intake.services?.length

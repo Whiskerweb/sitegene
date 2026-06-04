@@ -5,12 +5,7 @@
  */
 import { NextResponse } from "next/server";
 import { getUser } from "@/lib/auth";
-import {
-  candidateTemplates,
-  finalizeChoice,
-  loadOnboarding,
-  userOwnsSite,
-} from "@/lib/onboarding";
+import { finalizeChoice, loadOnboarding, userOwnsSite } from "@/lib/onboarding";
 import { isTemplateId, type TemplateId } from "@/lib/templates";
 
 /** Laisse le temps à l'enrichissement IA du contenu final (briefToOverrides). */
@@ -36,9 +31,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Accès refusé." }, { status: 403 });
   }
 
+  // Le client peut choisir N'IMPORTE QUEL template du catalogue (pas seulement
+  // ceux de sa catégorie) : le mapping intake est piloté par le manifest de
+  // chaque template, l'aperçu et le choix fonctionnent donc partout.
   const state = await loadOnboarding(user.id);
-  const candidates = candidateTemplates(state?.categoryId ?? "photographe");
-  if (!isTemplateId(templateId) || !candidates.includes(templateId as TemplateId)) {
+  if (!isTemplateId(templateId)) {
     return NextResponse.json({ error: "Modèle invalide." }, { status: 400 });
   }
 
