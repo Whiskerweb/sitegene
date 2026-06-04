@@ -1,15 +1,16 @@
 /**
- * Le client choisit sa direction artistique (template) au reveal multi-DA :
- * fige le contenu final sur ce template et passe au paywall. Renvoie le token
- * (réutilisé par /api/checkout). Garde-fou d'ownership + template candidat.
+ * Le client choisit sa direction artistique (template) : fige IMMÉDIATEMENT le
+ * contenu déterministe sur ce template (photos cyclées, faits client) — aucune
+ * IA ici, la réponse doit être rapide et la persistance garantie. L'écran de
+ * construction enchaîne ensuite sur /api/onboarding/enrich (réécriture IA,
+ * best-effort). Renvoie le token (réutilisé par /api/checkout).
  */
 import { NextResponse } from "next/server";
 import { getUser } from "@/lib/auth";
 import { finalizeChoice, loadOnboarding, userOwnsSite } from "@/lib/onboarding";
 import { isTemplateId, type TemplateId } from "@/lib/templates";
 
-/** Laisse le temps à l'enrichissement IA du contenu final (briefToOverrides). */
-export const maxDuration = 60;
+export const maxDuration = 30;
 
 export async function POST(request: Request) {
   const user = await getUser();
@@ -39,7 +40,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Modèle invalide." }, { status: 400 });
   }
 
-  const ok = await finalizeChoice(origin, siteId, templateId as TemplateId);
+  // Self-serve : pas d'IA inline (l'écran de construction appelle /enrich) et
+  // jamais de photo de démo restante (placeholders neutres si 0 photo).
+  const ok = await finalizeChoice(origin, siteId, templateId as TemplateId, {
+    enrich: false,
+    emptyPhotos: "placeholder",
+  });
   if (!ok) {
     return NextResponse.json({ error: "Finalisation impossible." }, { status: 500 });
   }
