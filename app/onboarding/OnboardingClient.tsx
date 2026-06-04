@@ -19,7 +19,12 @@ import {
   type OnboardingQuestion,
   type Intake,
 } from "@/lib/onboarding-config";
-import { templateMeta } from "@/lib/templates";
+import { isSpaTemplate, templateMeta } from "@/lib/templates";
+import {
+  intakeToOverrides,
+  photoSlotUrls,
+  type TemplateManifest,
+} from "@/lib/intake-map";
 
 /** État renvoyé par les routes /api/onboarding/*. */
 type ClientState = {
@@ -189,46 +194,83 @@ function Composer({
   const [saving, setSaving] = useState(false);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Nombre de photos conseillé = slots du template recommandé.
+  // Lignée du template : SPA → reload debouncé de l'iframe ; HTML → mises à
+  // jour À CHAUD par postMessage (runtime d'aperçu injecté côté serveur).
+  const isSpa = isSpaTemplate(state.templateId);
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const manifestRef = useRef<TemplateManifest | null>(null);
+  const defaultContentRef = useRef<Record<string, unknown> | null>(null);
+
+  // Manifest (nb de photos conseillé + mapping) et contenu par défaut (mapping live).
   useEffect(() => {
     fetch(`/_templates/${state.templateId}/manifest.json`)
       .then((r) => (r.ok ? r.json() : null))
-      .then((m) => m && typeof m.photoSlots === "number" && setPhotoSlots(m.photoSlots))
+      .then((m) => {
+        manifestRef.current = m;
+        if (m && typeof m.photoSlots === "number") setPhotoSlots(m.photoSlots);
+        else if (Array.isArray(m?.photos)) setPhotoSlots(m.photos.length);
+      })
+      .catch(() => {});
+    fetch(`/_templates/${state.templateId}/default-content.json`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((c) => {
+        defaultContentRef.current = c;
+      })
       .catch(() => {});
   }, [state.templateId]);
 
   const refreshPreview = useCallback(() => setPreviewNonce((n) => n + 1), []);
 
-  // Sauvegarde debouncée des champs texte → puis rafraîchit l'aperçu live.
+  /** Envoie un message au runtime d'aperçu de l'iframe (lignée HTML). */
+  const postLive = useCallback((msg: Record<string, unknown>) => {
+    try {
+      iframeRef.current?.contentWindow?.postMessage(msg, window.location.origin);
+    } catch {
+      /* iframe pas prête : le prochain reload reprendra l'état serveur */
+    }
+  }, []);
+
+  // Sauvegarde debouncée → rafraîchit l'aperçu seulement pour la lignée SPA
+  // (la lignée HTML est déjà à jour via postMessage, zéro reload).
   const scheduleSave = useCallback(() => {
     if (saveTimer.current) clearTimeout(saveTimer.current);
     setSaving(true);
-    saveTimer.current = setTimeout(async () => {
-      const patch = stripPhotos(intakeRef.current);
-      try {
-        await fetch("/api/onboarding/save", {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ siteId: state.siteId, patch }),
-        });
-      } catch {
-        /* best-effort */
-      } finally {
-        setSaving(false);
-        refreshPreview();
-      }
-    }, 650);
-  }, [state.siteId, refreshPreview]);
+    saveTimer.current = setTimeout(
+      async () => {
+        const patch = stripPhotos(intakeRef.current);
+        try {
+          await fetch("/api/onboarding/save", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ siteId: state.siteId, patch }),
+          });
+        } catch {
+          /* best-effort */
+        } finally {
+          setSaving(false);
+          if (isSpa) refreshPreview();
+        }
+      },
+      isSpa ? 450 : 800,
+    );
+  }, [state.siteId, refreshPreview, isSpa]);
 
   const setField = useCallback(
     <K extends keyof Intake>(key: K, value: Intake[K]) => {
-      setIntake((prev) => ({ ...prev, [key]: value }));
+      const next = { ...intakeRef.current, [key]: value };
+      intakeRef.current = next;
+      setIntake(next);
+      // Lignée HTML : reflet immédiat dans l'iframe (mêmes chemins que le serveur).
+      if (!isSpa && defaultContentRef.current) {
+        const values = intakeToOverrides(next, defaultContentRef.current, manifestRef.current);
+        if (Object.keys(values).length > 0) postLive({ type: "sg:apply", values });
+      }
       scheduleSave();
     },
-    [scheduleSave],
+    [scheduleSave, isSpa, postLive],
   );
 
-  // Upload photos (compression client → route photos → refresh).
+  // Upload photos (compression client → route photos → swap à chaud ou refresh).
   const [uploading, setUploading] = useState(false);
   const onPhotos = useCallback(
     async (files: File[]) => {
@@ -247,14 +289,27 @@ function Composer({
         const res = await fetch("/api/onboarding/photos", { method: "POST", body: fd });
         const data = await res.json();
         if (res.ok && Array.isArray(data.photoUrls)) {
-          setIntake((prev) => ({ ...prev, photoUrls: data.photoUrls }));
-          refreshPreview();
+          const photoUrls = data.photoUrls as string[];
+          setIntake((prev) => ({ ...prev, photoUrls }));
+          if (!isSpa && defaultContentRef.current) {
+            // Swap immédiat dans l'iframe : photo i → slot i (hero → services → galerie).
+            const slots = photoSlotUrls(
+              defaultContentRef.current,
+              state.templateId,
+              manifestRef.current,
+            );
+            for (let i = 0; i < photoUrls.length && i < slots.length; i++) {
+              postLive({ type: "sg:swapImage", from: slots[i], to: photoUrls[i] });
+            }
+          } else {
+            refreshPreview();
+          }
         }
       } finally {
         setUploading(false);
       }
     },
-    [state.siteId, refreshPreview],
+    [state.siteId, state.templateId, refreshPreview, isSpa, postLive],
   );
 
   const visible = questions.slice(0, revealed);
@@ -385,6 +440,7 @@ function Composer({
           <LivePreview
             src={`/api/onboarding/preview?siteId=${state.siteId}&v=${previewNonce}`}
             label="Aperçu en direct"
+            iframeRef={iframeRef}
           />
         </div>
       </div>
@@ -557,7 +613,15 @@ function QuestionCard({
 
 /* ------------------------------------------------------------ LivePreview */
 
-function LivePreview({ src, label }: { src: string; label: string }) {
+function LivePreview({
+  src,
+  label,
+  iframeRef,
+}: {
+  src: string;
+  label: string;
+  iframeRef?: React.RefObject<HTMLIFrameElement | null>;
+}) {
   // « chargé » = la source courante a fini de charger (pas d'effet, pas de cascade).
   const [loadedSrc, setLoadedSrc] = useState<string | null>(null);
   const loaded = loadedSrc === src;
@@ -586,6 +650,7 @@ function LivePreview({ src, label }: { src: string; label: string }) {
         </AnimatePresence>
         <iframe
           key={src}
+          ref={iframeRef}
           src={src}
           title={label}
           onLoad={() => setLoadedSrc(src)}
@@ -608,6 +673,8 @@ function Reveal({
   onChosen: (s: ClientState) => void;
 }) {
   const [choosing, setChoosing] = useState<string | null>(null);
+  // Beaucoup de candidats désormais (11 en photographe) : 6 d'abord, lazy-load.
+  const [visibleCount, setVisibleCount] = useState(6);
 
   async function choose(templateId: string) {
     setChoosing(templateId);
@@ -660,7 +727,7 @@ function Reveal({
         </div>
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {state.candidateTemplateIds.map((tid, i) => {
+          {state.candidateTemplateIds.slice(0, visibleCount).map((tid, i) => {
             const meta = templateMeta(tid);
             const busy = choosing === tid;
             return (
@@ -668,13 +735,14 @@ function Reveal({
                 key={tid}
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: EASE, delay: i * 0.1 }}
+                transition={{ duration: 0.5, ease: EASE, delay: Math.min(i, 5) * 0.1 }}
                 className="overflow-hidden rounded-[24px] border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] shadow-[0_24px_70px_-40px_rgba(0,0,0,0.4)]"
               >
                 <div className="relative h-[420px] overflow-hidden bg-[rgb(var(--m-elevated))]">
                   <iframe
                     src={`/api/onboarding/preview?siteId=${state.siteId}&template=${tid}`}
                     title={meta.name}
+                    loading="lazy"
                     className="pointer-events-none h-[840px] w-[200%] origin-top-left scale-50 border-0"
                   />
                 </div>
@@ -684,18 +752,29 @@ function Reveal({
                     <p className="text-[12.5px] text-[rgb(var(--m-faint))]">{meta.style}</p>
                   </div>
                   <button
-                    disabled={busy}
+                    disabled={busy || choosing !== null}
                     onClick={() => choose(tid)}
                     className="inline-flex items-center gap-1.5 rounded-full bg-[rgb(var(--m-ink))] px-4 py-2.5 text-[13.5px] font-bold text-[rgb(var(--m-page))] transition-opacity hover:opacity-90 disabled:opacity-50"
                   >
                     {busy ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />}
-                    Choisir
+                    {busy ? "On finalise votre site…" : "Choisir"}
                   </button>
                 </div>
               </motion.div>
             );
           })}
         </div>
+
+        {state.candidateTemplateIds.length > visibleCount && (
+          <div className="mt-8 text-center">
+            <button
+              onClick={() => setVisibleCount((n) => n + 6)}
+              className="rounded-full border border-[rgb(var(--m-line))] px-6 py-3 text-[14px] font-semibold text-[rgb(var(--m-ink))] transition-colors hover:bg-[rgb(var(--m-overlay)/0.04)]"
+            >
+              Voir plus de styles ({state.candidateTemplateIds.length - visibleCount})
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

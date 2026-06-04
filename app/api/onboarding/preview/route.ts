@@ -7,7 +7,8 @@ import { getUser } from "@/lib/auth";
 import { regenerateForSite, userOwnsSite } from "@/lib/onboarding";
 import { buildSiteHtml } from "@/lib/site-server";
 import { metaForTemplate } from "@/lib/site-content";
-import { isTemplateId, type TemplateId } from "@/lib/templates";
+import { isSpaTemplate, isTemplateId, type TemplateId } from "@/lib/templates";
+import { injectPreviewRuntime } from "@/lib/edit-runtime";
 
 export const maxDuration = 30;
 
@@ -28,13 +29,19 @@ export async function GET(request: Request) {
   const built = await regenerateForSite(origin, siteId, templateOverride);
   if (!built) return new Response("Aperçu indisponible.", { status: 404 });
 
-  const html = await buildSiteHtml(
+  let html = await buildSiteHtml(
     origin,
     built.templateId,
     built.content,
     metaForTemplate(built.content, built.templateId, "/"),
   );
   if (!html) return new Response("Template indisponible.", { status: 500 });
+
+  // Lignée HTML : runtime d'aperçu silencieux → mises à jour à chaud
+  // (postMessage) sans recharger l'iframe pendant que le client répond.
+  if (!isSpaTemplate(built.templateId)) {
+    html = injectPreviewRuntime(html);
+  }
 
   return new Response(html, {
     headers: {

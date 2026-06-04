@@ -163,3 +163,50 @@ export function injectEditChrome(
   if (html.includes("</body>")) return html.replace("</body>", () => `${inject}</body>`);
   return html + inject;
 }
+
+/**
+ * Runtime d'APERÇU silencieux (onboarding) — lignée HTML uniquement.
+ * Aucun chrome (pas d'outlines/badges/notes) : il ne fait qu'appliquer à chaud
+ * les mises à jour envoyées par la page parente, sans recharger l'iframe :
+ *   parent → iframe : {type:'sg:apply', values:{<data-sg-path>: texte}}
+ *                     {type:'sg:swapImage', from:<url démo>, to:<url client>}
+ *   iframe → parent : {type:'sg:preview-ready'}
+ */
+const PREVIEW_RUNTIME = String.raw`
+(function(){
+  var ORIGIN = window.location.origin;
+  function cssEsc(s){ return String(s).replace(/["\\]/g,'\\$&'); }
+  function setText(path, value){
+    document.querySelectorAll('[data-sg-path="'+cssEsc(path)+'"]').forEach(function(el){
+      el.textContent = value;
+    });
+  }
+  function swapImage(from, to){
+    document.querySelectorAll('img').forEach(function(im){
+      var src = im.getAttribute('src') || '';
+      if (src === from || im.src.indexOf(from) > -1) im.src = to;
+    });
+    document.querySelectorAll('[style]').forEach(function(el){
+      var bi = el.style.backgroundImage;
+      if (bi && bi.indexOf(from) > -1) el.style.backgroundImage = "url('"+to+"')";
+    });
+  }
+  window.addEventListener('message', function(ev){
+    if (ev.origin !== ORIGIN) return;
+    var d = ev.data || {};
+    if (d.type === 'sg:apply' && d.values && typeof d.values === 'object'){
+      for (var p in d.values){ if (typeof d.values[p] === 'string') setText(p, d.values[p]); }
+    } else if (d.type === 'sg:swapImage' && d.from && d.to){
+      swapImage(String(d.from), String(d.to));
+    }
+  });
+  try{ parent.postMessage({type:'sg:preview-ready'}, ORIGIN); }catch(e){}
+})();
+`;
+
+/** Injecte le runtime d'aperçu silencieux (mises à jour à chaud, zéro chrome). */
+export function injectPreviewRuntime(html: string): string {
+  const inject = `<script>${PREVIEW_RUNTIME}</script>`;
+  if (html.includes("</body>")) return html.replace("</body>", () => `${inject}</body>`);
+  return html + inject;
+}
