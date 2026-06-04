@@ -23,8 +23,12 @@ import {
   Check,
   ImagePlus,
   Loader2,
+  Maximize2,
+  Monitor,
   Pencil,
+  Smartphone,
   Sparkles,
+  Tablet,
   Wand2,
 } from "lucide-react";
 import { EASE } from "@/lib/motion";
@@ -1269,6 +1273,7 @@ function ResultView({
 }) {
   const [nonce, setNonce] = useState(0);
   const [adjustOpen, setAdjustOpen] = useState(false);
+  const [fullPreview, setFullPreview] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState<{ ok: boolean; text: string } | null>(null);
@@ -1336,6 +1341,13 @@ function ResultView({
             <span className="ml-1 text-[12px] font-medium text-[rgb(var(--m-faint))]">
               Votre site — avec vos photos et vos textes
             </span>
+            <button
+              onClick={() => setFullPreview(true)}
+              className="ml-auto inline-flex items-center gap-1.5 rounded-full border border-[rgb(var(--m-line))] px-3 py-1.5 text-[12px] font-semibold text-[rgb(var(--m-ink))] transition-colors hover:bg-[rgb(var(--m-overlay)/0.04)]"
+            >
+              <Maximize2 size={12} />
+              Plein écran & responsive
+            </button>
           </div>
           <div className="relative h-[72vh] min-h-[480px]">
             {busy && (
@@ -1464,7 +1476,100 @@ function ResultView({
           </ul>
         </div>
       </div>
+
+      <AnimatePresence>
+        {fullPreview && (
+          <FullPreview
+            src={`/api/preview?siteId=${state.siteId}&v=${nonce}`}
+            title={`Votre site — « ${meta.name} »`}
+            onClose={() => setFullPreview(false)}
+          />
+        )}
+      </AnimatePresence>
     </div>
+  );
+}
+
+/* ------------------------------------------------- Aperçu plein écran */
+
+const PREVIEW_DEVICES = [
+  { id: "desktop", label: "Desktop", width: "100%", Icon: Monitor },
+  { id: "tablet", label: "Tablette", width: "820px", Icon: Tablet },
+  { id: "mobile", label: "Mobile", width: "390px", Icon: Smartphone },
+] as const;
+
+/**
+ * Prévisualisation complète du site fini : navigation libre dans l'iframe,
+ * test responsive (desktop/tablette/mobile), retour d'un clic vers le verdict.
+ */
+function FullPreview({
+  src,
+  title,
+  onClose,
+}: {
+  src: string;
+  title: string;
+  onClose: () => void;
+}) {
+  const [device, setDevice] =
+    useState<(typeof PREVIEW_DEVICES)[number]["id"]>("desktop");
+  const width = PREVIEW_DEVICES.find((d) => d.id === device)!.width;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+      className="fixed inset-0 z-50 flex flex-col bg-[rgb(var(--m-page))]"
+    >
+      <header className="flex shrink-0 items-center justify-between gap-3 border-b border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] px-4 py-2.5">
+        <button
+          onClick={onClose}
+          className="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--m-line))] px-3.5 py-1.5 text-[13px] font-semibold text-[rgb(var(--m-ink))] transition-colors hover:bg-[rgb(var(--m-overlay)/0.04)]"
+        >
+          <ArrowLeft size={14} /> Retour
+        </button>
+
+        <div className="flex items-center gap-1 rounded-full border border-[rgb(var(--m-line))] bg-[rgb(var(--m-page))] p-1">
+          {PREVIEW_DEVICES.map((d) => {
+            const active = d.id === device;
+            return (
+              <button
+                key={d.id}
+                type="button"
+                onClick={() => setDevice(d.id)}
+                aria-pressed={active}
+                title={d.label}
+                className={
+                  "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-medium transition-colors " +
+                  (active
+                    ? "bg-[rgb(var(--m-ink))] text-[rgb(var(--m-page))]"
+                    : "text-[rgb(var(--m-faint))] hover:text-[rgb(var(--m-ink))]")
+                }
+              >
+                <d.Icon size={14} />
+                <span className="hidden sm:inline">{d.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        <span className="hidden max-w-[32ch] truncate text-[13px] font-medium text-[rgb(var(--m-muted))] md:inline">
+          {title}
+        </span>
+      </header>
+
+      <div className="flex flex-1 justify-center overflow-auto bg-[rgb(var(--m-elevated))] p-4 md:p-6">
+        <iframe
+          key={device}
+          src={src}
+          title={title}
+          className="h-full rounded-lg border-0 bg-white shadow-2xl"
+          style={{ width, maxWidth: "100%" }}
+        />
+      </div>
+    </motion.div>
   );
 }
 

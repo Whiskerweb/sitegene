@@ -10,7 +10,7 @@
  * dropSectionsForIntake (adaptation au métier).
  */
 import { createAdminClient } from "@/lib/supabase/admin";
-import { generateSite } from "@/lib/generate";
+import { ensureTemplateRow, generateSite } from "@/lib/generate";
 import { buildContent, getPath } from "@/lib/content-overlay";
 import { contentForTemplate, type AnyContent } from "@/lib/site-content";
 import { fetchDefaultContent, fetchTemplateManifest } from "@/lib/site-server";
@@ -382,7 +382,18 @@ export async function finalizeChoice(
   const built = await regenerateForSite(origin, siteId, templateId, opts);
   if (!built) return false;
 
-  await admin.from("sites").update({ template_id: templateId }).eq("id", siteId);
+  // FK sites.template_id → templates(id) : enregistre le template à la volée
+  // (le catalogue vit dans le code), puis VÉRIFIE l'écriture — un échec
+  // silencieux ici laissait le site publié sur le template par défaut.
+  await ensureTemplateRow(admin, templateId);
+  const { error: tplErr } = await admin
+    .from("sites")
+    .update({ template_id: templateId })
+    .eq("id", siteId);
+  if (tplErr) {
+    console.error("[onboarding/finalize] template:", tplErr.message);
+    return false;
+  }
 
   const { data: sc } = await admin
     .from("site_content")
@@ -391,19 +402,21 @@ export async function finalizeChoice(
     .order("version", { ascending: false })
     .limit(1)
     .maybeSingle();
-  if (sc) {
-    await admin
-      .from("site_content")
-      .update({ content_json: built.content })
-      .eq("id", sc.id);
-  } else {
-    await admin.from("site_content").insert({
-      site_id: siteId,
-      version: 1,
-      content_json: built.content,
-      is_published: false,
-      created_by: "client",
-    });
+  const { error: scErr } = sc
+    ? await admin
+        .from("site_content")
+        .update({ content_json: built.content })
+        .eq("id", sc.id)
+    : await admin.from("site_content").insert({
+        site_id: siteId,
+        version: 1,
+        content_json: built.content,
+        is_published: false,
+        created_by: "client",
+      });
+  if (scErr) {
+    console.error("[onboarding/finalize] contenu:", scErr.message);
+    return false;
   }
 
   await admin
