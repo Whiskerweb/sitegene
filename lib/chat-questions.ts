@@ -26,6 +26,8 @@ export type ChatQuestion = {
   options?: QuestionOption[];
   /** La question n'est posée que si cette condition est vraie. */
   askIf?: (intake: Intake) => boolean;
+  /** Question dont la réponse conditionne celle-ci (askIf). Tant qu'elle n'est ni répondue ni passée, on transmet la question au client, qui décide dynamiquement. */
+  dependsOn?: keyof Intake & string;
 };
 
 const PHOTOGRAPHE_CHAT: ChatQuestion[] = [
@@ -47,6 +49,7 @@ const PHOTOGRAPHE_CHAT: ChatQuestion[] = [
     label: "Quelle fourchette de prix afficher ?",
     placeholder: "Ex. À partir de 250 €",
     askIf: (intake) => intake.wantsPricingPage === true,
+    dependsOn: "wantsPricingPage",
   },
   {
     key: "contactPhone",
@@ -135,10 +138,15 @@ export function chatQuestionsFor(
   skipped: string[],
 ): ChatQuestion[] {
   const list = CHAT_QUESTIONS[categoryId] ?? CHAT_QUESTIONS.photographe;
-  return list.filter(
-    (q) =>
-      !isAnswered(intake, q.key) &&
-      !skipped.includes(q.key) &&
-      (q.askIf ? q.askIf(intake) : true),
-  );
+  return list.filter((q) => {
+    if (isAnswered(intake, q.key) || skipped.includes(q.key)) return false;
+    // Dépendance encore ouverte (ni répondue ni passée) : on transmet la
+    // question — le client la posera ou non selon la réponse en session.
+    const dependencyPending =
+      q.dependsOn !== undefined &&
+      !isAnswered(intake, q.dependsOn) &&
+      !skipped.includes(q.dependsOn);
+    if (dependencyPending) return true;
+    return q.askIf ? q.askIf(intake) : true;
+  });
 }

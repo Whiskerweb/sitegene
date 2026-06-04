@@ -24,6 +24,16 @@ describe("chatQuestionsFor", () => {
     expect(withPricing.map((q) => q.key)).toContain("priceRange");
   });
 
+  it("transmet une question conditionnelle quand sa dépendance est encore ouverte", () => {
+    const qs = chatQuestionsFor("photographe", {}, []);
+    expect(qs.map((q) => q.key)).toContain("priceRange");
+  });
+
+  it("n'envoie pas la question conditionnelle si la dépendance a été passée", () => {
+    const qs = chatQuestionsFor("photographe", {}, ["wantsPricingPage"]);
+    expect(qs.map((q) => q.key)).not.toContain("priceRange");
+  });
+
   it("considère un tableau vide comme « pas de réponse »", () => {
     const qs = chatQuestionsFor("photographe", { eventTypes: [] }, []);
     expect(qs.map((q) => q.key)).toContain("eventTypes");

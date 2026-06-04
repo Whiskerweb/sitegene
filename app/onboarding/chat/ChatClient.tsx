@@ -41,13 +41,20 @@ export default function ChatClient({
   const previewTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const threadEndRef = useRef<HTMLDivElement | null>(null);
 
-  // Questions restantes : on rejoue la dépendance askIf côté client
-  // (priceRange n'apparaît que si wantsPricingPage === true).
+  // Questions restantes : on rejoue les dépendances côté client via le champ
+  // `dependsOn` (générique), qui survit à la sérialisation serveur→client.
   const remaining = useMemo(
     () =>
       questions.filter((q) => {
         if (q.key in answers || skipped.includes(q.key)) return false;
-        if (q.key === "priceRange") return answers.wantsPricingPage === true;
+        if (q.dependsOn) {
+          const depInList = questions.some((x) => x.key === q.dependsOn);
+          // Dépendance posée dans cette session : on attend sa réponse (true).
+          // Dépendance absente de la liste : déjà tranchée côté serveur (askIf
+          // validé) → on pose. Dépendance passée en session → on ne pose pas.
+          if (depInList) return answers[q.dependsOn as keyof Intake] === true;
+          return true;
+        }
         return true;
       }),
     [questions, answers, skipped],
