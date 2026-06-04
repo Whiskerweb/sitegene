@@ -23,7 +23,8 @@ type Reason =
   | "refund"
   | "adjustment"
   | "edit_publish"
-  | "ai_edit";
+  | "ai_edit"
+  | "item_purchase";
 
 /** Écrit une ligne de ledger (append-only) avec le nouveau solde. SERVEUR/admin. */
 export async function grantCredits(

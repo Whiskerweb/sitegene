@@ -7,10 +7,20 @@ import {
 } from "@/lib/site-server";
 import { contentForTemplate, metaForTemplate } from "@/lib/site-content";
 import { injectEditChrome, type EditableFieldSpec } from "@/lib/edit-runtime";
+import { getEffect } from "@/lib/effects";
+import {
+  appliedComponents,
+  sanitizeEffectConfig,
+  type AppliedComponent,
+} from "@/lib/effects/render";
+import { ownsItem } from "@/lib/marketplace-server";
 
 /**
  * Aperçu authentifié du site du propriétaire (brouillon inclus). Avec ?edit=1,
  * injecte le runtime d'édition WYSIWYG. Servi en iframe same-origin depuis /editor.
+ * ?previewComponent=<json> : aperçu ÉPHÉMÈRE d'un effet acheté (componentDraft
+ * de /api/site/ai), mergé au rendu sans rien écrire en base — « Annuler » dans
+ * l'éditeur se résume à recharger sans le paramètre.
  */
 export async function GET(request: Request) {
   const user = await getUser();
@@ -45,7 +55,48 @@ export async function GET(request: Request) {
   // ?path= permet à l'éditeur de prévisualiser une page précise (multi-pages).
   const pagePath = url.searchParams.get("path") || "/";
   // Contenu par lignée : v2 (SPA) ou PLAT (HTML clone-site).
-  const content = contentForTemplate(raw, site.template_id);
+  let content = contentForTemplate(raw, site.template_id);
+
+  // Aperçu éphémère d'un composant (effet) avant commit : re-validation
+  // complète (effet connu + possédé + config sanitizée), merge non persisté.
+  const previewComponentRaw = url.searchParams.get("previewComponent");
+  if (previewComponentRaw && content && typeof content === "object") {
+    try {
+      const draft = JSON.parse(previewComponentRaw) as Partial<AppliedComponent>;
+      const effect = typeof draft?.effectId === "string" ? getEffect(draft.effectId) : undefined;
+      if (effect && (await ownsItem(admin, user.id, "effect", effect.id))) {
+        const clone = structuredClone(content) as Record<string, unknown>;
+        const sane: AppliedComponent = {
+          effectId: effect.id,
+          selector: typeof draft.selector === "string" ? draft.selector : "",
+          position: (["replace", "before", "after", "inside"] as const).includes(
+            draft.position as never,
+          )
+            ? (draft.position as AppliedComponent["position"])
+            : (effect.defaultPosition ?? "replace"),
+          config: sanitizeEffectConfig(effect, draft.config),
+        };
+        if (effect.kind === "global") {
+          const effects = Array.isArray(clone.__effects) ? [...(clone.__effects as unknown[])] : [];
+          clone.__effects = [
+            ...effects.filter((e) =>
+              typeof e === "string" ? e !== effect.id : (e as { id?: string })?.id !== effect.id,
+            ),
+            { id: effect.id, config: sane.config },
+          ];
+        } else if (sane.selector) {
+          const rest = appliedComponents(clone).filter(
+            (c) => !(c.effectId === sane.effectId && c.selector === sane.selector),
+          );
+          clone.__components = [...rest, sane];
+        }
+        content = clone as typeof content;
+      }
+    } catch {
+      // paramètre illisible → aperçu sans composant (dégradation silencieuse)
+    }
+  }
+
   let html = await buildSiteHtml(
     origin,
     site.template_id,

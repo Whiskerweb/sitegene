@@ -112,6 +112,10 @@ export default async function MonSite() {
         <div className="mt-5 overflow-hidden rounded-[18px] border border-sky-300 bg-white">
           {isLive ? (
             <SitePreview slug={site.slug!} />
+          ) : lastContent ? (
+            // Brouillon : le site n'est pas public mais son contenu existe →
+            // aperçu via /api/preview (authentifié owner), pas de placeholder.
+            <SitePreview src={`/api/preview?siteId=${site.id}`} />
           ) : (
             <div className="flex aspect-[16/10] items-center justify-center bg-surface-2 text-center text-sm text-mist">
               {site.status === "revealed"
@@ -123,6 +127,9 @@ export default async function MonSite() {
 
         {!isLive && (
           <div className="mt-5 flex flex-wrap gap-3">
+            {lastContent && (
+              <Button href="/editor">Modifier mon site</Button>
+            )}
             <Button href="/dashboard/modifications" variant="subtle">
               Voir mes options
             </Button>

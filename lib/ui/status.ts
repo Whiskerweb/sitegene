@@ -34,4 +34,5 @@ export const creditReasonLabel: Record<string, string> = {
   adjustment: "Ajustement",
   edit_publish: "Modification publiée",
   ai_edit: "Modification IA",
+  item_purchase: "Achat boutique",
 };

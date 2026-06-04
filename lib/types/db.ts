@@ -41,6 +41,7 @@ export type CreditReason =
   | 'adjustment'
   | 'edit_publish'
   | 'ai_edit'
+  | 'item_purchase'
 export type PaymentKind = 'initial_50' | 'topup'
 
 // CRM — état dérivé du pipeline (cf. migrations 0011/0012).

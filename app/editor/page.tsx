@@ -3,12 +3,18 @@ import { requireUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getBalance } from "@/lib/credits-server";
 import { fetchTemplateManifest } from "@/lib/site-server";
-import EditorClient, { type EditableField } from "./EditorClient";
+import { ownedEffectModules } from "@/lib/marketplace-server";
+import { isSpaTemplate } from "@/lib/templates";
+import EditorClient, { type EditableField, type OwnedEffect } from "./EditorClient";
 
 export const dynamic = "force-dynamic";
 
 /** Charge le site du propriétaire + le brouillon courant + le manifest, puis monte l'éditeur WYSIWYG. */
-export default async function EditorPage() {
+export default async function EditorPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const user = await requireUser();
   const admin = createAdminClient();
 
@@ -42,6 +48,23 @@ export default async function EditorPage() {
     maxLen: f.maxLen ?? null,
   }));
 
+  // Effets POSSÉDÉS (boutique Formules) → popover « composants » du chat IA.
+  const spaSite = isSpaTemplate(site.template_id);
+  const ownedEffects: OwnedEffect[] = (await ownedEffectModules(admin, user.id)).map((e) => ({
+    id: e.id,
+    name: e.name,
+    accentFrom: e.accent.from,
+    accentTo: e.accent.to,
+    compatible: !spaSite || e.spaCompatible,
+  }));
+
+  // /editor?integrate=<effectId> (depuis la page Formules) : démarre en mode
+  // Sélectionner avec le bandeau d'intégration. Validé : effet possédé + compatible.
+  const sp = await searchParams;
+  const integrateRaw = typeof sp.integrate === "string" ? sp.integrate : "";
+  const integrateEffectId =
+    ownedEffects.find((e) => e.id === integrateRaw && e.compatible)?.id ?? null;
+
   return (
     <EditorClient
       siteId={site.id}
@@ -50,6 +73,8 @@ export default async function EditorPage() {
       hasUnpublished={top ? !top.is_published : false}
       editableFields={editableFields}
       content={(top?.content_json as Record<string, unknown>) ?? {}}
+      ownedEffects={ownedEffects}
+      integrateEffectId={integrateEffectId}
     />
   );
 }

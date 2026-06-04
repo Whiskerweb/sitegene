@@ -91,6 +91,105 @@ Renvoie le JSON.`;
   };
 }
 
+export type ComponentProposal =
+  | {
+      action: "component";
+      position: "replace" | "before" | "after" | "inside";
+      config: Record<string, unknown>;
+      explanation: string;
+    }
+  | { action: "unsupported"; reason: string };
+
+/**
+ * Intégration d'un COMPOSANT premium (effet acheté) dans une section du site.
+ * Le « guide d'intégration » (aiGuide) écrit avec l'effet est la solution
+ * complète côté IA : où ancrer, quelle position, comment remplir la config —
+ * il est injecté dans le prompt et n'est JAMAIS exposé au client. L'IA ne
+ * produit aucun code : uniquement position + config typée (validée ensuite
+ * par sanitizeEffectConfig côté serveur).
+ */
+export async function proposeComponentIntegration(input: {
+  request: string;
+  target: DesignTarget;
+  effect: {
+    id: string;
+    name: string;
+    description: string;
+    aiGuide: string;
+    defaultPosition?: string;
+    configSchema?: unknown[];
+  };
+  currentCss: string;
+  sitePhotoUrls: string[];
+  siteTextSnippets: string[];
+}): Promise<ComponentProposal> {
+  const { request, target, effect, currentCss, sitePhotoUrls, siteTextSnippets } = input;
+
+  const system = `Tu intègres un COMPOSANT premium dans un site vitrine existant (photographe/artisan). Tu ne produis JAMAIS de code : uniquement une position d'insertion et une configuration typée. Le rendu et le responsive sont déjà gérés par le composant.
+
+COMPOSANT : ${effect.name} — ${effect.description}
+
+GUIDE D'INTÉGRATION (solution à respecter scrupuleusement) :
+${effect.aiGuide}
+
+RÈGLES :
+- "position" ∈ {"replace","before","after","inside"} : replace = à la place du CONTENU de la section ciblée ; before/after = juste avant/après la section ; inside = au début de la section. Position recommandée par défaut : ${effect.defaultPosition ?? "replace"}.
+- "config" : remplis STRICTEMENT les clés du SCHÉMA ci-dessous (respecte les types ; textes en FRANÇAIS naturels et spécifiques au site — jamais de lorem ipsum ni d'anglais ; couleurs en hexadécimal accordées à la DA du site ; clés de type url choisies parmi les photos fournies). AUCUNE autre clé.
+SCHÉMA : ${JSON.stringify(effect.configSchema ?? [])}
+- Si la demande du client est incompatible avec ce composant → {"action":"unsupported","reason":"<1 phrase FR>"}.
+- Réponse en JSON STRICT, rien d'autre : {"action":"component","position":"...","config":{...},"explanation":"<1 phrase FR>"} OU {"action":"unsupported","reason":"<1 phrase FR>"}.`;
+
+  const user = `Section ciblée par le client : ${target?.label || "(non précisée)"}${
+    target?.cssSelector ? ` — sélecteur : ${target.cssSelector}` : ""
+  }.
+
+Demande du client : "${request}"
+
+CSS personnalisé actuel du site (indices de couleurs/DA, peut être vide) :
+${(currentCss || "/* (vide) */").slice(0, 1500)}
+
+Photos du site utilisables (clés de type url) :
+${sitePhotoUrls.length ? sitePhotoUrls.slice(0, 12).map((u) => `- ${u}`).join("\n") : "(aucune — laisser les clés url vides)"}
+
+Textes réels du site (à réutiliser/adapter pour les clés texte) :
+${siteTextSnippets.length ? siteTextSnippets.slice(0, 36).map((t) => `- ${t}`).join("\n") : "(aucun extrait)"}
+
+Renvoie le JSON.`;
+
+  const raw = await chat(
+    [
+      { role: "system", content: system },
+      { role: "user", content: user },
+    ],
+    { json: true, maxTokens: 1200 },
+  );
+
+  let obj: Record<string, unknown>;
+  try {
+    obj = JSON.parse(raw);
+  } catch {
+    return { action: "unsupported", reason: "Réponse de l'IA illisible — réessayez." };
+  }
+  const POSITIONS = ["replace", "before", "after", "inside"] as const;
+  const position = POSITIONS.includes(obj.position as (typeof POSITIONS)[number])
+    ? (obj.position as (typeof POSITIONS)[number])
+    : ((effect.defaultPosition as (typeof POSITIONS)[number] | undefined) ?? "replace");
+  if (obj.action === "component" && obj.config && typeof obj.config === "object") {
+    return {
+      action: "component",
+      position,
+      config: obj.config as Record<string, unknown>,
+      explanation:
+        typeof obj.explanation === "string" ? obj.explanation : "Composant intégré.",
+    };
+  }
+  return {
+    action: "unsupported",
+    reason:
+      typeof obj.reason === "string" ? obj.reason : "Demande non réalisable automatiquement.",
+  };
+}
+
 type EditableField = { path?: string; type?: string; maxLen?: number };
 
 /**

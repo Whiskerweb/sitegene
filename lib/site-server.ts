@@ -5,6 +5,7 @@
  */
 import type { AnyContent } from "./site-content";
 import { isSpaTemplate } from "./templates";
+import { buildEffectsInjection } from "./effects/render";
 
 /** JSON sûr inline (`<` échappé → pas de break-out </script>). */
 function safeJson(obj: unknown): string {
@@ -170,7 +171,14 @@ export async function buildSiteHtml(
   });
   if (!res.ok) return null;
   let html = absolutizeTemplateAssets(await res.text(), templateId);
-  const inject = buildHeadInjection(absolutizeContentAssets(content, templateId), meta);
+  const absContent = absolutizeContentAssets(content, templateId);
+  // Effets achetés appliqués (clés __effects/__components) : CSS+configs en
+  // tête, JS+injecteur en fin de body. Injection vide si aucun effet.
+  const fx = buildEffectsInjection(absContent, templateId);
+  const inject =
+    buildHeadInjection(absContent, meta) +
+    (fx.headCss ? `<style id="sg-fx">${fx.headCss}</style>` : "") +
+    fx.headScript;
   // retire un <title> existant du shell (sera remplacé par celui de la page)
   html = html.replace(/<title>.*?<\/title>/i, "");
   if (html.includes("</head>")) {
@@ -179,9 +187,13 @@ export async function buildSiteHtml(
     html = inject + html;
   }
   // Nav inter-pages (lignée HTML) : ne s'active que si la route fournit le préfixe.
+  let tail = "";
   if (!isSpaTemplate(templateId) && typeof opts?.basePath === "string") {
-    const nav = navRewriteScript(opts.basePath);
-    html = html.includes("</body>") ? html.replace("</body>", () => `${nav}</body>`) : html + nav;
+    tail += navRewriteScript(opts.basePath);
+  }
+  tail += fx.bodyJs;
+  if (tail) {
+    html = html.includes("</body>") ? html.replace("</body>", () => `${tail}</body>`) : html + tail;
   }
   return html;
 }

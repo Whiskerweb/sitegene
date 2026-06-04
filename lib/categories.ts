@@ -148,3 +148,11 @@ export const DEFAULT_CATEGORY = CATEGORIES[0];
 export function getCategory(id: string): Category | undefined {
   return CATEGORIES.find((c) => c.id === id);
 }
+
+/** Catégorie métier d'un template (première qui le référence), pour les
+ *  recommandations de la page Formules. */
+export function categoryForTemplate(templateId: string): Category | undefined {
+  return CATEGORIES.find((c) =>
+    (c.templateIds as readonly string[]).includes(templateId),
+  );
+}

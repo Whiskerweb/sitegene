@@ -39,7 +39,6 @@ export default async function DashboardLayout({
       href: "/dashboard/marketplace",
       label: "Formules",
       icon: <IconStar4 size={18} />,
-      badge: "Bientôt",
     },
     {
       href: "/dashboard/credits",

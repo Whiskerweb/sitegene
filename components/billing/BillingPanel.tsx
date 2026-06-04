@@ -13,7 +13,7 @@ import { CREDIT_PACKS, formatEuros, SUBSCRIPTION_PRICE_CENTS } from "@/lib/prici
 const PERKS = [
   "Modifications illimitées (éditeur + IA)",
   "Publication illimitée de votre site",
-  "Toutes les formules à venir incluses",
+  "Vos crédits restent pour la boutique (templates & effets)",
 ];
 
 export function BillingPanel({

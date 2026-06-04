@@ -12,8 +12,10 @@ const DESIGN_HEIGHT = 900;
  * On rend le site à sa largeur desktop (1440px) puis on applique un
  * `scale` calculé à partir de la largeur réelle du conteneur, de sorte
  * que l'aperçu occupe 100 % du cadre quelle que soit sa taille.
+ * `slug` → site publié (/s/<slug>) ; `src` → toute autre surface de rendu
+ * (brouillon /api/preview, démo de template…).
  */
-export function SitePreview({ slug }: { slug: string }) {
+export function SitePreview({ slug, src }: { slug?: string; src?: string }) {
   const frameRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0);
 
@@ -34,7 +36,7 @@ export function SitePreview({ slug }: { slug: string }) {
       className="relative aspect-[16/10] w-full overflow-hidden bg-white"
     >
       <iframe
-        src={`/s/${slug}`}
+        src={src ?? `/s/${slug}`}
         title="Aperçu de votre site"
         loading="lazy"
         tabIndex={-1}
