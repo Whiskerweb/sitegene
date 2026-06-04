@@ -1,17 +1,17 @@
 {
   "brand": "CLARA WHITFIELD",
   "meta": {
-    "title": "Clara Whitfield | Portrait & Lifestyle Photography",
-    "description": "Portrait & lifestyle photographer in London — telling stories through the lens with timeless elegance and authenticity."
+    "title": "Clara Whitfield | Photographe Portrait & Lifestyle à Paris",
+    "description": "Photographe portrait et lifestyle à Paris — raconter des histoires à travers l'objectif avec élégance intemporelle et authenticité."
   },
   "nav": [
-    "Work",
-    "About",
+    "Réalisations",
+    "À propos",
     "Contact"
   ],
   "hero": {
-    "title": "Telling Stories Through the Lens",
-    "tagline": "Capturing the moments that matter most—portraits and lifestyles.",
+    "title": "Raconter des histoires à travers l'objectif",
+    "tagline": "Capturer les moments qui comptent — portraits et instants de vie.",
     "portrait": "/_templates/portrait-lifestyle/img/hero-portrait.jpg",
     "lifestyle": [
       "/_templates/portrait-lifestyle/img/life1.jpg",
@@ -20,43 +20,43 @@
     ]
   },
   "services": {
-    "label": "What I offer",
-    "intro": "I specialise in creating timeless photography for Portrait and Lifestyle photography. My work is tailored to your story, blending artistry with authenticity.",
+    "label": "Ce que je propose",
+    "intro": "Je crée des photographies intemporelles en portrait et lifestyle, adaptées à votre histoire. Mon approche allie art et authenticité pour des images qui vous ressemblent.",
     "items": [
       {
         "num": "01",
         "name": "Portrait",
-        "text": "Timeless portraits that celebrate individuality and elegance, capturing the essence of who you are in every frame."
+        "text": "Des portraits intemporels qui célèbrent votre singularité et votre élégance, capturant l'essence de qui vous êtes dans chaque image."
       },
       {
         "num": "02",
         "name": "Lifestyle",
-        "text": "Authentic storytelling through natural, everyday moments, showcasing the beauty of life's simple pleasures."
+        "text": "Des récits authentiques à travers des moments naturels du quotidien, mettant en lumière la beauté des petits bonheurs de la vie."
       }
     ]
   },
   "work": {
-    "label": "A Glimpse Into Our Work",
-    "intro": "Explore a curated selection of my finest work, showcasing the artistry and emotion behind every portrait and lifestyle moment.",
-    "cta": "View my work",
+    "label": "Un aperçu de mes réalisations",
+    "intro": "Découvrez une sélection de mes plus belles créations, où chaque portrait et instant de vie révèle l'émotion et l'art derrière l'objectif.",
+    "cta": "Voir mes réalisations",
     "items": [
       {
-        "title": "Timeless Elegance",
+        "title": "Élégance intemporelle",
         "category": "Portrait",
         "image": "/_templates/portrait-lifestyle/img/work1.jpg"
       },
       {
-        "title": "Morning Rituals",
+        "title": "Rituels du matin",
         "category": "Lifestyle",
         "image": "/_templates/portrait-lifestyle/img/work2.jpg"
       },
       {
-        "title": "Golden Hour Glow",
+        "title": "Lueur dorée",
         "category": "Portrait",
         "image": "/_templates/portrait-lifestyle/img/work3.jpg"
       },
       {
-        "title": "Artisan at Work",
+        "title": "L'artisan au travail",
         "category": "Lifestyle",
         "image": "/_templates/portrait-lifestyle/img/work4.jpg"
       },
@@ -66,23 +66,23 @@
         "image": "/_templates/portrait-lifestyle/img/work5.jpg"
       },
       {
-        "title": "Urban Muse",
+        "title": "Muse urbaine",
         "category": "Portrait",
         "image": "/_templates/portrait-lifestyle/img/work6.jpg"
       }
     ]
   },
   "testimonial": {
-    "quote": "Clara has an incredible talent for capturing the emotion and essence of every moment. Her photos speak for themselves.",
-    "author": "Rachel Karina, portrait client",
+    "quote": "Clara a un talent incroyable pour capturer l'émotion et l'essence de chaque instant. Ses photos parlent d'elles-mêmes.",
+    "author": "Rachel Karina, cliente portrait",
     "image": "/_templates/portrait-lifestyle/img/testimonial.jpg"
   },
   "cta": {
-    "title": "Let's work together",
-    "text": "Ready to capture your story? Reach out to book your session or inquire about services.",
-    "button": "Contact me",
-    "instagram": "Instagram: @clara.whitfield",
-    "email": "Email: hello@clarawhitfield.com",
+    "title": "Collaborons ensemble",
+    "text": "Prêt à immortaliser votre histoire ? Contactez-moi pour réserver votre séance ou en savoir plus sur mes services.",
+    "button": "Me contacter",
+    "instagram": "Instagram : @clara.whitfield",
+    "email": "Email : hello@clarawhitfield.com",
     "background": "/_templates/portrait-lifestyle/img/studio.jpg"
   }
 }

@@ -1,27 +1,27 @@
 {
   "meta": {
-    "title": "Mörk Studio — Art Direction & Digital Design",
-    "description": "Mörk Studio is an independent design practice blending art direction, brand identity and code into bold digital experiences with structure, flow and intent."
+    "title": "Mörk Studio — Direction artistique & Design digital",
+    "description": "Mörk Studio est une agence indépendante qui fusionne direction artistique, identité de marque et développement pour créer des expériences digitales audacieuses, structurées et intentionnelles."
   },
   "brand": "MÖRK STUDIO",
   "wordmark": "Mörk",
   "nav": [
-    "Work",
+    "Réalisations",
     "Studio",
     "Contact"
   ],
   "hero": {
-    "headline": "Pattern, dimension and moments that connect and leave a bold impression.",
+    "headline": "Motifs, dimensions et instants qui captivent et laissent une empreinte marquante.",
     "tags": [
-      "Art Direction",
-      "Branding",
-      "Strategy"
+      "Direction artistique",
+      "Identité de marque",
+      "Stratégie"
     ]
   },
   "clients": {
     "label": "Featured Projects プロジェクト",
     "index": "INDEX — 00",
-    "meta": "CREATIVE DEVELOPMENT",
+    "meta": "CRÉATION NUMÉRIQUE",
     "logos": [
       "Cairo",
       "Orbit",
@@ -31,8 +31,8 @@
     ]
   },
   "projects": {
-    "intro": "Every project is a chance to blend design and development, shaping bold interactive ideas into sleek digital realities — built with intent, speed, and visual clarity that attracts lot of peoples.",
-    "cta": "See Works",
+    "intro": "Chaque projet est une opportunité de fusionner design et développement, transformant des idées interactives audacieuses en réalités digitales élégantes — conçues avec intention, rapidité et une clarté visuelle qui attire les foules.",
+    "cta": "Voir les réalisations",
     "items": [
       {
         "title": "Halo Wear",
@@ -65,54 +65,54 @@
     "label": "Personal Profile プロフィール",
     "index": "DROP — 05",
     "meta": "VISUAL THINKER",
-    "text": "Blending design and code with functional clarity and creative precision. Delivering thoughtful digital systems with structure, flow, and expressive interaction.",
+    "text": "Allier design et code avec une clarté fonctionnelle et une précision créative. Créer des systèmes digitaux réfléchis, structurés et aux interactions expressives.",
     "portrait1": "/_templates/studio-portfolio/img/portrait1.jpg",
     "portrait2": "/_templates/studio-portfolio/img/portrait2.jpg",
-    "body": "We bridge creative direction with real-world execution, combining design and development into one seamless workflow to deliver digital experiences that are thoughtful, fast, and built to perform.",
+    "body": "Nous faisons le lien entre direction créative et exécution concrète, intégrant design et développement dans un flux de travail unifié pour concevoir des expériences digitales réfléchies, rapides et performantes.",
     "profile": "/_templates/studio-portfolio/img/profile.jpg"
   },
   "capabilities": {
     "label": "Capabilities サービス内容",
     "index": "(WDX® — 04)",
-    "meta": "DIGITAL EXECUTION",
+    "meta": "EXÉCUTION DIGITALE",
     "cols": [
-      "Precise",
-      "Structured",
-      "Focused",
-      "Visual Language"
+      "Précis",
+      "Structuré",
+      "Ciblé",
+      "Langage visuel"
     ],
     "items": [
       {
         "no": "01",
-        "name": "Art Direction",
-        "desc": "We guide every visual decision from start to finish, ensuring clarity, emotion, and impact across every touchpoint."
+        "name": "Direction artistique",
+        "desc": "Nous guidons chaque décision visuelle de bout en bout, garantissant clarté, émotion et impact à chaque point de contact."
       },
       {
         "no": "02",
-        "name": "Brand Identity",
-        "desc": "From strategy to execution, we shape consistent brand systems that speak clearly and feel uniquely ownable."
+        "name": "Identité de marque",
+        "desc": "De la stratégie à l'exécution, nous créons des systèmes de marque cohérents, distinctifs et porteurs de sens."
       },
       {
         "no": "03",
-        "name": "Motion Direction",
-        "desc": "We use motion as a design tool — adding clarity, rhythm, and energy to digital experiences with intention."
+        "name": "Direction motion",
+        "desc": "Nous utilisons le motion design comme outil créatif, apportant clarté, rythme et dynamisme aux expériences digitales avec intention."
       },
       {
         "no": "04",
-        "name": "Framer Sites",
-        "desc": "Design meets execution with real-time, scalable websites that are fast, flexible, and effortless to manage."
+        "name": "Sites Framer",
+        "desc": "Design et exécution se rencontrent pour des sites web évolutifs, rapides et faciles à gérer, conçus en temps réel."
       }
     ]
   },
   "experience": {
     "label": "Experience エクスペリエンス",
     "index": "(WDX® — 05)",
-    "meta": "DIGITAL CRAFT",
+    "meta": "SAVOIR-FAIRE DIGITAL",
     "cols": [
-      "Global",
-      "Creative Collabs",
+      "International",
+      "Collaborations créatives",
       "Studio",
-      "Creative Partnerships"
+      "Partenariats créatifs"
     ],
     "rows": [
       {
@@ -150,39 +150,39 @@
   "testimonials": {
     "label": "Testimonials レビュー",
     "index": "(WDX® — 06)",
-    "meta": "REAL FEEDBACK",
-    "cta": "Get in Touch",
+    "meta": "AVIS CLIENTS",
+    "cta": "Nous contacter",
     "items": [
       {
-        "quote": "Mörk elevated every layer of our brand’s online presence. From motion details to structural layout, every piece felt crafted and intentional. The site not only looked beautiful but performed well too — and the entire collaboration process was smooth.",
+        "quote": "Mörk a sublimé chaque aspect de notre présence en ligne. Des détails animés à la structure globale, chaque élément semblait pensé et maîtrisé. Le site était non seulement magnifique, mais aussi performant — et toute la collaboration s'est déroulée sans accroc.",
         "name": "Lisa Kuroda",
         "role": "Founder, Studio Analog",
         "avatar": "/_templates/studio-portfolio/img/avatar1.jpg",
         "logo": "Cairo"
       },
       {
-        "quote": "Mörk approaches every project with a deep sense of purpose. The work is never just about the surface — it’s about how each element functions, connects, and flows. They bring logic, sharpness, and confidence to every decision.",
+        "quote": "Mörk aborde chaque projet avec une profonde exigence. Leur travail ne se limite pas à l'apparence : il s'agit de la façon dont chaque élément fonctionne, s'articule et s'enchaîne. Ils apportent logique, rigueur et assurance à chaque décision.",
         "name": "Daniel Reyes",
         "role": "Director, Framehaus",
         "avatar": "/_templates/studio-portfolio/img/avatar2.jpg",
         "logo": "Cairo"
       },
       {
-        "quote": "Their ability to merge storytelling with clean interaction design is unmatched. Mörk understands not just how things should look, but why they should look that way — and that insight came through in every part of the work.",
+        "quote": "Leur capacité à fusionner narration et design d'interaction épuré est inégalée. Mörk ne comprend pas seulement comment les choses doivent être conçues, mais pourquoi elles doivent l'être ainsi — et cette vision transparaît dans chaque détail.",
         "name": "Mei Tanaka",
         "role": "UX Designer, Nuro",
         "avatar": "/_templates/studio-portfolio/img/avatar3.jpg",
         "logo": "Cairo"
       },
       {
-        "quote": "Working with Mörk was more than just hiring a designer — it felt like bringing on a creative partner who truly understood our goals. They took our raw ideas, added clarity, and transformed them into something that not only looked stunning.",
+        "quote": "Travailler avec Mörk, c'était bien plus que faire appel à un designer : c'était comme s'associer à un partenaire créatif qui comprenait vraiment nos objectifs. Ils ont pris nos idées brutes, leur ont donné du sens et les ont transformées en quelque chose de visuellement époustouflant.",
         "name": "Julian Pierce",
         "role": "Director, Vektor Inc.",
         "avatar": "/_templates/studio-portfolio/img/avatar4.jpg",
         "logo": "Cairo"
       },
       {
-        "quote": "Mörk brings a rare balance of creativity and discipline. Incredibly fast without ever sacrificing attention to detail. From early ideation to the final product, the process is intentional, the communication is clear.",
+        "quote": "Mörk allie avec rare maîtrise créativité et rigueur. Une rapidité impressionnante, sans jamais sacrifier le souci du détail. Du brainstorming initial au produit final, chaque étape est réfléchie et la communication, limpide.",
         "name": "Hana Samoto",
         "role": "CEO, Willow Studio",
         "avatar": "/_templates/studio-portfolio/img/avatar5.jpg",
@@ -191,9 +191,9 @@
     ]
   },
   "awards": {
-    "label": "Awards アワード",
+    "label": "Récompenses",
     "index": "(WDX® — 07)",
-    "meta": "SELECTED HONORS",
+    "meta": "DISTINCTIONS SÉLECTIONNÉES",
     "cols": [
       "Awwwards",
       "CSSD",
@@ -204,33 +204,33 @@
       {
         "count": "27x",
         "name": "Awwwards",
-        "desc": "Recognized for bold interaction, structured visual rhythm, and design consistency across creative categories.",
+        "desc": "Récompensé pour des interactions audacieuses, un rythme visuel structuré et une cohérence design remarquable dans les catégories créatives.",
         "thumb": "/_templates/studio-portfolio/img/award1.jpg"
       },
       {
         "count": "14x",
         "name": "FWA",
-        "desc": "Awarded for outstanding execution, seamless animation, and originality in modern digital experiences.",
+        "desc": "Primé pour une exécution exceptionnelle, des animations fluides et une originalité marquante dans les expériences digitales modernes.",
         "thumb": "/_templates/studio-portfolio/img/award2.jpg"
       },
       {
         "count": "09x",
         "name": "CSSDA",
-        "desc": "Celebrated for front-end excellence, design innovation, and development precision across multiple showcases.",
+        "desc": "Célébré pour l'excellence front-end, l'innovation design et la précision technique dans plusieurs projets phares.",
         "thumb": "/_templates/studio-portfolio/img/award3.jpg"
       },
       {
         "count": "08x",
         "name": "Dribbble",
-        "desc": "Highlighted for strong typographic systems, visual hierarchy, and thoughtful layout built with intent.",
+        "desc": "Mis en avant pour des systèmes typographiques solides, une hiérarchie visuelle travaillée et des mises en page intentionnelles.",
         "thumb": "/_templates/studio-portfolio/img/award4.jpg"
       }
     ]
   },
   "partners": {
-    "label": "Brand Partners パートナー",
+    "label": "Partenaires",
     "index": "(WDX® — 08)",
-    "meta": "CREATIVE TEAMS",
+    "meta": "ÉQUIPES CRÉATIVES",
     "wordmark": "Cairo",
     "cards": [
       {
@@ -248,65 +248,65 @@
     ]
   },
   "pricing": {
-    "label": "Project Pricing プラン",
+    "label": "Tarifs",
     "index": "(WDX® — 09)",
-    "meta": "CUSTOM QUOTES",
+    "meta": "DEVIS SUR MESURE",
     "cols": [
-      "Custom Options",
-      "Transparent",
-      "Design Packages",
-      "Pricing Tiers"
+      "Options personnalisées",
+      "Transparence",
+      "Forfaits design",
+      "Grilles tarifaires"
     ],
     "plans": [
       {
         "price": "$99",
         "unit": "/Month",
-        "name": "Starter Plan",
-        "desc": "Perfect for small launches and personal sites that need a fast online presence.",
+        "name": "Forfait Découverte",
+        "desc": "Idéal pour les lancements modestes et les sites personnels nécessitant une présence en ligne rapide et efficace.",
         "features": [
-          "One-page Framer site",
-          "Custom layout & visuals",
-          "Mobile responsive",
-          "Basic SEO setup"
+          "Site Framer monopage",
+          "Mise en page et visuels sur mesure",
+          "Adapté mobile",
+          "Configuration SEO de base"
         ]
       },
       {
         "price": "$299",
         "unit": "/Month",
-        "name": "Growth Plan",
-        "desc": "Designed for growing brands that need flexibility and CMS support.",
+        "name": "Forfait Croissance",
+        "desc": "Conçu pour les marques en expansion recherchant flexibilité et intégration CMS.",
         "features": [
-          "Up to 5 pages",
-          "Framer CMS-powered sections",
-          "Motion & interactions",
-          "Advanced SEO setup"
+          "Jusqu'à 5 pages",
+          "Sections alimentées par Framer CMS",
+          "Animations et interactions",
+          "Configuration SEO avancée"
         ]
       },
       {
         "price": "$899",
         "unit": "/Month",
-        "name": "Full Scope Plan",
-        "desc": "Best for studios or teams needing structure and enterprise-level execution.",
+        "name": "Forfait Expertise",
+        "desc": "Parfait pour les studios ou équipes exigeant une structure solide et une exécution professionnelle haut de gamme.",
         "features": [
-          "10+ pages with CMS",
-          "Advanced layout strategy",
-          "Custom motion systems",
-          "Priority support"
+          "10+ pages avec CMS",
+          "Stratégie de mise en page avancée",
+          "Systèmes d'animation sur mesure",
+          "Support prioritaire"
         ]
       }
     ]
   },
   "footer": {
     "brand": "MÖRK STUDIO",
-    "tagline": "Independent design practice. Available worldwide.",
-    "nav_label": "Navigate",
+    "tagline": "Agence de design indépendante. Disponible dans le monde entier.",
+    "nav_label": "Navigation",
     "nav": [
-      "Work",
+      "Réalisations",
       "Studio",
-      "Awards",
+      "Récompenses",
       "Contact"
     ],
-    "social_label": "Social",
+    "social_label": "Réseaux",
     "social": [
       "Instagram",
       "Behance",
@@ -314,7 +314,7 @@
       "LinkedIn"
     ],
     "email": "hello@morkstudio.com",
-    "copyright": "© 2024 Mörk Studio — All rights reserved.",
-    "back_to_top": "Back to Top"
+    "copyright": "© 2024 Mörk Studio — Tous droits réservés.",
+    "back_to_top": "Retour en haut"
   }
 }

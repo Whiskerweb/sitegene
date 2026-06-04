@@ -142,9 +142,10 @@ async function translateChunk(items) {
 
 /* ------------------------------------------------- patch index.html */
 
-/** Localise l'objet du guard (accolades équilibrées, hors chaînes). */
+/** Localise l'objet du guard (accolades équilibrées, hors chaînes).
+ *  Tolère les guards doublés `= window.__SITE_CONTENT__ || window.__SITE_CONTENT__ || {…}`. */
 function findGuardObject(html) {
-  const m = html.match(/window\.__SITE_CONTENT__\s*=\s*window\.__SITE_CONTENT__\s*\|\|\s*/);
+  const m = html.match(/window\.__SITE_CONTENT__\s*=\s*(?:window\.__SITE_CONTENT__\s*\|\|\s*)+/);
   if (!m) return null;
   const start = m.index + m[0].length;
   if (html[start] !== "{") return null;
@@ -200,6 +201,17 @@ function englishResidue(html) {
 }
 
 /* --------------------------------------------------------------- run */
+
+/** Resynchronise uniquement le guard inline + lang="fr" depuis default-content.json. */
+function patchOnly(id) {
+  const dir = join(TPL_DIR, id);
+  const contentPath = join(dir, "default-content.json");
+  const htmlPath = join(dir, "index.html");
+  if (!existsSync(contentPath) || !existsSync(htmlPath)) return;
+  const content = JSON.parse(readFileSync(contentPath, "utf8"));
+  writeFileSync(htmlPath, patchHtml(readFileSync(htmlPath, "utf8"), content));
+  console.log(`✓ ${id} guard resynchronisé`);
+}
 
 async function translateTemplate(id) {
   const dir = join(TPL_DIR, id);
@@ -263,9 +275,15 @@ if (!ids) {
   process.exit(1);
 }
 
+const patchOnlyMode = args.includes("--patch-only");
+
 const failed = [];
 for (const id of ids) {
   try {
+    if (patchOnlyMode) {
+      patchOnly(id);
+      continue;
+    }
     await translateTemplate(id);
   } catch (e) {
     failed.push(id);

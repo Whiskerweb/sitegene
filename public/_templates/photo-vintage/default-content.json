@@ -1,103 +1,103 @@
 {
   "meta": {
-    "title": "Halcyon Films | Vintage Photography Studio",
-    "description": "Vintage-toned photography studio — weddings, engagements, maternity & brand shoots told with timeless, emotional storytelling."
+    "title": "Halcyon Films | Studio Photo Vintage & Émotion",
+    "description": "Studio photo aux tons vintage — mariages, fiançailles, grossesse et shooting de marque, sublimés par une narration intemporelle et pleine d’émotion."
   },
   "brand": "HALCYON FILMS",
   "nav": [
-    "Home",
-    "About",
-    "Services",
-    "Portfolio",
+    "Accueil",
+    "À propos",
+    "Prestations",
+    "Réalisations",
     "Contact"
   ],
   "hero": {
     "line1pre": "VINTAGE",
     "line1em": "experiences",
-    "line2": "THROUGH LENS",
-    "badge": "Our passionate photographers deliver stunning visuals.",
+    "line2": "À TRAVERS L'OBJECTIF",
+    "badge": "Des photographes passionnés pour des images d’exception, chargées d’émotion.",
     "photo1": "/_templates/photo-vintage/img/hero-1.jpg",
     "photo2": "/_templates/photo-vintage/img/hero-2.jpg",
     "photo3": "/_templates/photo-vintage/img/hero-3.jpg"
   },
   "mission": {
-    "text": "At Halcyon Films, we are passionate storytellers & capturing timeless moments with a touch of vintage elegance."
+    "text": "Chez Halcyon Films, nous captons des instants intemporels avec passion, en y apportant une touche d’élégance vintage."
   },
   "strip": [
     {
       "image": "/_templates/photo-vintage/img/strip-1.jpg",
-      "alt": "Vintage portrait"
+      "alt": "Portrait vintage"
     },
     {
       "image": "/_templates/photo-vintage/img/strip-2.jpg",
-      "alt": "Editorial close-up"
+      "alt": "Gros plan éditorial"
     },
     {
       "image": "/_templates/photo-vintage/img/strip-3.jpg",
-      "alt": "Sunlit portrait"
+      "alt": "Portrait baigné de lumière"
     },
     {
       "image": "/_templates/photo-vintage/img/strip-4.jpg",
-      "alt": "Couple golden hour"
+      "alt": "Couple à l’heure dorée"
     }
   ],
   "featured": {
-    "label1": "OUR",
+    "label1": "NOS",
     "labelEm": "work",
-    "label2": "FEATURED",
-    "intro": "Our work showcases the breadth of our talent and the care we bring to every endeavor.",
+    "label2": "RÉALISATIONS",
+    "intro": "Découvrez notre univers à travers des projets variés, où chaque détail reflète notre exigence et notre sensibilité.",
     "tags": [
-      "Wedding",
-      "Engagements",
+      "Mariage",
+      "Fiançailles",
       "Commercial",
-      "The Bump Shoot"
+      "Shooting Grossesse"
     ],
     "projects": [
       {
-        "title": "Lily & Jack's Brand Shoot",
-        "location": "Santorini, Greece",
+        "title": "Shooting de marque Lily & Jack",
+        "location": "Santorin, Grèce",
         "image": "/_templates/photo-vintage/img/project-1.jpg"
       },
       {
-        "title": "Ava & Leo's Wedding Day",
+        "title": "Mariage d’Ava & Leo",
         "location": "Paris, France",
         "image": "/_templates/photo-vintage/img/project-2.jpg"
       }
     ],
-    "seeMore": "See More"
+    "seeMore": "Voir plus"
   },
   "marquee": {
-    "words": "PHOTOGRAPHY",
-    "words2": "AGENCY",
+    "words": "PHOTOGRAPHIE",
+    "words2": "STUDIO",
     "image": "/_templates/photo-vintage/img/marquee-1.jpg"
   },
   "testimonial": {
-    "quote": "“Capture fleeting moments. Frame memories with stunning clarity. Photography freezes time and turns life’s beauty into forever art.”",
+    "quote": "« Saisir l’éphémère. Immortaliser des souvenirs avec une netteté saisissante. La photographie fige le temps et transforme la beauté de la vie en art éternel. »",
     "name": "Vivian Guillen",
     "role": "Founder & CEO, Amberlight Co.",
     "avatar": "/_templates/photo-vintage/img/testimonial.jpg"
   },
   "contact": {
-    "getIn": "get in",
-    "touch": "TOUCH",
+    "getIn": "contactez",
+    "touch": "NOUS",
     "website": "www.halcyonfilms.com",
     "phone": "+1 (415) 802-7740"
   },
   "footer": {
-    "line1em": "we're a photo",
-    "line2pre": "SHOOTING",
-    "line3": "AND VINTAGE STUDIO",
+    "line1em": "nous sommes un studio",
+    "line2pre": "PHOTO",
+    "line3": "VINTAGE & CRÉATIF",
     "links": [
-      "Home",
-      "About",
-      "Services",
-      "Portfolio",
-      "Pricing",
+      "Accueil",
+      "À propos",
+      "Prestations",
+      "Réalisations",
+      "Tarifs",
       "Contact",
       "Journal",
-      "Stories"
+      "Histoires"
     ],
-    "copyright": "© All rights reserved Halcyon Films.",
+    "copyright": "© Tous droits réservés Halcyon Films.",
     "social": [
       "Instagram",
       "LinkedIn",

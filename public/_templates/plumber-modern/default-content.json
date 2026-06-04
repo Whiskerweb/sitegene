@@ -1,90 +1,90 @@
 {
   "meta": {
-    "title": "BlueDrop – Modern Plumbing Care You Can Trust 24/7",
-    "description": "Licensed plumbing experts for leak detection, drain cleaning, sewer lines and fixture repair. Available 24/7. Book a free consultation today."
+    "title": "BlueDrop – Plomberie Moderne et Fiable 24/7",
+    "description": "Experts agréés en détection de fuites, débouchage, canalisations et réparation d'équipements. Disponibles 24/7. Réservez une consultation gratuite dès aujourd'hui."
   },
   "brand": "BlueDrop",
   "topbar": {
-    "rating": "4.9 Rated",
-    "ratingNote": "by Satisfied Customers",
+    "rating": "4,9 Noté",
+    "ratingNote": "par nos clients satisfaits",
     "phone": "+1 406 555 0190"
   },
   "nav": {
     "links": [
       "Pages",
-      "About",
+      "À propos",
       "Services",
       "Contact"
     ],
-    "cta": "Call us: +1 406 555 0190"
+    "cta": "Appelez-nous : +1 406 555 0190"
   },
   "hero": {
-    "badge": "4.9 Rated by Satisfied Customers",
-    "titleA": "All type of",
-    "titleB": "Plumbing Care",
-    "titleC": "for your home",
-    "tagline": "We provide all types of plumbing care to keep your home safe, comfortable and worry free.",
-    "cta": "Book a Free Consultation",
-    "proof": "10,000+ individuals who trust BlueDrop",
+    "badge": "4,9 Noté par nos clients satisfaits",
+    "titleA": "Tous types de",
+    "titleB": "services de plomberie",
+    "titleC": "pour votre domicile",
+    "tagline": "Nous assurons tous vos besoins en plomberie pour un foyer sûr, confortable et sans souci.",
+    "cta": "Consultation gratuite",
+    "proof": "10 000+ clients font confiance à BlueDrop",
     "image": "/_templates/plumber-modern/img/hero.jpg"
   },
   "why": {
-    "label": "Why Choose Us",
-    "title": "Why Choose Our Plumbing Team",
-    "text": "We're not just plumbers — we're a dependable team of professionals committed to solving your problems quickly and efficiently.",
+    "label": "Pourquoi nous choisir",
+    "title": "Pourquoi choisir notre équipe de plomberie",
+    "text": "Nous ne sommes pas de simples plombiers : une équipe fiable et professionnelle, engagée à résoudre vos problèmes rapidement et efficacement.",
     "image1": "/_templates/plumber-modern/img/why-1.jpg",
     "image2": "/_templates/plumber-modern/img/why-2.jpg",
     "points": [
       {
-        "title": "Licensed Technicians",
-        "desc": "Expert care from fully licensed technicians."
+        "title": "Techniciens agréés",
+        "desc": "Des experts qualifiés et entièrement agréés à votre service."
       },
       {
-        "title": "24/7 Emergency Support",
-        "desc": "Always here to help whenever you need us."
+        "title": "Assistance 24/7",
+        "desc": "Toujours disponibles pour vous aider, quand vous en avez besoin."
       }
     ]
   },
   "services": {
-    "label": "Our Services",
-    "title": "Plumbing Services That Keep Life Flowing",
+    "label": "Nos services",
+    "title": "Des services de plomberie pour un quotidien sans interruption",
     "items": [
       {
-        "title": "Leak Detection & Repair",
-        "desc": "We locate hidden leaks fast and fix them at the source, before they damage your home.",
+        "title": "Détection et réparation de fuites",
+        "desc": "Nous localisons rapidement les fuites cachées et les réparons à la source, avant qu'elles n'endommagent votre logement.",
         "image": "/_templates/plumber-modern/img/service-leak.jpg"
       },
       {
-        "title": "Drain Cleaning",
-        "desc": "Clogged or slow drains cleared with safe, high-pressure methods that keep water moving.",
+        "title": "Débouchage de canalisations",
+        "desc": "Des méthodes sûres et haute pression pour éliminer les bouchons et rétablir l'écoulement de l'eau.",
         "image": "/_templates/plumber-modern/img/service-drain.jpg"
       },
       {
-        "title": "Sewer Line Services",
-        "desc": "Camera inspections, repairs and replacements for sewer lines you can count on.",
+        "title": "Services de canalisations",
+        "desc": "Inspections par caméra, réparations et remplacements pour des canalisations fiables et durables.",
         "image": "/_templates/plumber-modern/img/service-sewer.jpg"
       },
       {
-        "title": "Faucet & Fixture Repair",
-        "desc": "Dripping taps and worn fixtures repaired or upgraded with precision and care.",
+        "title": "Réparation de robinets et équipements",
+        "desc": "Robinetterie qui fuit ou équipements usés réparés ou remplacés avec précision et soin.",
         "image": "/_templates/plumber-modern/img/service-faucet.jpg"
       }
     ]
   },
   "about": {
-    "label": "About Us",
-    "title": "Your Trusted Plumbing Experts in Town",
-    "text": "From quick fixes to major repairs, our skilled professionals are committed to delivering reliable service with a personal touch.",
-    "cta": "More About Us",
+    "label": "À propos",
+    "title": "Vos experts en plomberie de confiance",
+    "text": "Des petites réparations aux interventions majeures, nos professionnels qualifiés s'engagent à vous offrir un service fiable et personnalisé.",
+    "cta": "En savoir plus",
     "image": "/_templates/plumber-modern/img/about.jpg"
   },
   "stat": {
     "value": "24/7",
-    "caption": "Support You Can Count On"
+    "caption": "Un soutien sur lequel compter"
   },
   "team": {
-    "label": "Team Members",
-    "title": "Our Hard working Members",
+    "label": "Notre équipe",
+    "title": "Nos membres dévoués",
     "members": [
       {
         "name": "Marcus Reed",
@@ -104,50 +104,50 @@
     ]
   },
   "testimonials": {
-    "label": "Testimonials",
-    "title": "Trusted by 10,000+ Customers",
+    "label": "Témoignages",
+    "title": "Forts de la confiance de 10 000+ clients",
     "items": [
       {
-        "quote": "They found a leak two other plumbers missed and fixed it the same morning. Honest, fast and tidy.",
+        "quote": "Ils ont détecté une fuite que deux autres plombiers avaient manquée et l'ont réparée le matin même. Honnêtes, rapides et soignés.",
         "author": "Hannah Brooks",
         "role": "Homeowner"
       },
       {
-        "quote": "Our main drain was completely blocked on a Sunday night. BlueDrop arrived within the hour. Lifesavers.",
+        "quote": "Notre canalisation principale était complètement bouchée un dimanche soir. BlueDrop est arrivé en moins d'une heure. Des sauveurs !",
         "author": "Tom Whitfield",
         "role": "Café Owner"
       },
       {
-        "quote": "Clear pricing, friendly technician, and zero mess left behind. Exactly what you want from a plumber.",
+        "quote": "Prix transparent, technicien sympathique et aucun désordre laissé derrière. Exactement ce qu'on attend d'un plombier.",
         "author": "Priya Nair",
         "role": "Property Manager"
       }
     ]
   },
   "process": {
-    "label": "How It Works",
-    "title": "Fixing Your Plumbing the Simple Way",
+    "label": "Notre méthode",
+    "title": "Votre plomberie réparée simplement",
     "steps": [
       {
         "number": "01",
-        "title": "Schedule Your Service",
-        "desc": "Call us or book online in just a few clicks. Tell us what's wrong, we'll confirm your appointment."
+        "title": "Planifiez votre intervention",
+        "desc": "Appelez-nous ou réservez en ligne en quelques clics. Décrivez-nous le problème, nous confirmons votre rendez-vous."
       },
       {
         "number": "02",
-        "title": "We Inspect & Fix",
-        "desc": "Our technician arrives on time, diagnoses the issue and explains the solution clearly."
+        "title": "Nous inspectons et réparons",
+        "desc": "Notre technicien arrive à l'heure, diagnostique le problème et vous explique clairement la solution."
       },
       {
         "number": "03",
-        "title": "Enjoy Peace of Mind",
-        "desc": "Once the job's done, we double-check everything, clean up, and ensure you're 100% satisfied."
+        "title": "Profitez de la tranquillité",
+        "desc": "Une fois le travail terminé, nous vérifions tout, nettoyons et nous assurons que vous êtes entièrement satisfait."
       }
     ]
   },
   "gallery": {
-    "label": "Project Gallery",
-    "title": "Gallery of Trusted Repairs & Installations",
+    "label": "Galerie de projets",
+    "title": "Nos réalisations : réparations et installations de confiance",
     "images": [
       "/_templates/plumber-modern/img/gallery-1.jpg",
       "/_templates/plumber-modern/img/gallery-2.jpg",
@@ -157,65 +157,65 @@
   },
   "faq": {
     "label": "FAQ",
-    "title": "Frequently Asked Questions",
+    "title": "Questions fréquentes",
     "items": [
       {
-        "question": "Do you offer 24/7 emergency plumbing?",
-        "answer": "Yes. Our emergency line is open around the clock, every day of the year. A licensed technician is always on call for urgent leaks, blockages and burst pipes."
+        "question": "Proposez-vous un service de plomberie d'urgence 24/7 ?",
+        "answer": "Oui. Notre ligne d'urgence est ouverte 24h/24, tous les jours de l'année. Un technicien agréé est toujours disponible pour les fuites urgentes, bouchons ou canalisations éclatées."
       },
       {
-        "question": "Are your plumbers licensed and insured?",
-        "answer": "Every BlueDrop technician is fully licensed, background-checked and insured, so you can feel completely confident letting us into your home."
+        "question": "Vos plombiers sont-ils agréés et assurés ?",
+        "answer": "Tous nos techniciens BlueDrop sont entièrement agréés, vérifiés et assurés. Vous pouvez nous accueillir chez vous en toute sérénité."
       },
       {
-        "question": "How much does a call-out cost?",
-        "answer": "We give clear, upfront pricing before any work begins. You'll always approve the quote first, with no surprise charges added afterward."
+        "question": "Quel est le coût d'une intervention ?",
+        "answer": "Nous vous fournissons un devis clair et transparent avant toute intervention. Vous validez toujours le prix avant le début des travaux, sans frais cachés."
       },
       {
-        "question": "How quickly can you come out?",
-        "answer": "For emergencies we aim to be on-site within the hour. For scheduled work we'll book the earliest slot that suits you, often same-day."
+        "question": "À quelle vitesse pouvez-vous intervenir ?",
+        "answer": "Pour les urgences, nous visons une intervention sur place en moins d'une heure. Pour les rendez-vous planifiés, nous trouvons le créneau le plus tôt possible, souvent le jour même."
       }
     ]
   },
   "cta": {
-    "label": "Let's discuss",
-    "title": "Book Your Service",
-    "text": "Tell us what's wrong and pick a time that works. We'll confirm your appointment and get your home flowing again.",
+    "label": "Échangeons",
+    "title": "Réservez votre intervention",
+    "text": "Décrivez-nous votre problème et choisissez un créneau qui vous convient. Nous confirmons votre rendez-vous et rétablissons le bon fonctionnement de votre domicile.",
     "fields": {
-      "name": "Your name",
-      "email": "Email address",
-      "message": "Describe your plumbing issue"
+      "name": "Votre nom",
+      "email": "Adresse email",
+      "message": "Décrivez votre problème de plomberie"
     },
-    "button": "Book Now",
+    "button": "Réserver maintenant",
     "image": "/_templates/plumber-modern/img/cta.jpg"
   },
   "footer": {
-    "tagline": "Modern plumbing care for your home — licensed, on time, and available 24/7.",
+    "tagline": "Des services de plomberie modernes pour votre domicile – agréés, ponctuels et disponibles 24/7.",
     "columns": [
       {
-        "heading": "Company",
+        "heading": "L'Entreprise",
         "links": [
-          "Home",
-          "About Us",
-          "Services"
+          "Accueil",
+          "Qui sommes-nous ?",
+          "Nos prestations"
         ]
       },
       {
-        "heading": "Services",
+        "heading": "Nos Services",
         "links": [
-          "Leak Detection",
-          "Drain Cleaning",
-          "Sewer Lines"
+          "Détection de fuites",
+          "Débouchage de canalisations",
+          "Réseaux d'assainissement"
         ]
       },
       {
-        "heading": "Legal & Policy",
+        "heading": "Mentions légales",
         "links": [
-          "Privacy Policy",
-          "Terms and Conditions"
+          "Politique de confidentialité",
+          "Conditions générales"
         ]
       }
     ],
-    "copyright": "Copyright & design © 2026 BlueDrop, Inc. All rights reserved"
+    "copyright": "Copyright & design © 2026 BlueDrop, Inc. Tous droits réservés"
   }
 }

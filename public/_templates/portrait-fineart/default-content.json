@@ -1,44 +1,44 @@
 {
   "meta": {
-    "title": "Adrien Roy | Fine-Art Portrait & Wedding Photography",
-    "description": "Fine-art portrait and wedding photographer based in London — natural light, quiet emotion, timeless elegance."
+    "title": "Adrien Roy | Photographie de Portrait & Mariage d'Art",
+    "description": "Photographe de portrait et mariage d'art basé à Londres — lumière naturelle, émotion discrète, élégance intemporelle."
   },
   "brand": "ADRIEN ROY",
   "nav": {
-    "about": "About me",
-    "gallery": "Gallery",
+    "about": "À propos",
+    "gallery": "Galerie",
     "galleryCount": "[09]",
     "archive": "Archive",
     "archiveCount": "[30]",
     "contact": "Contact"
   },
   "hero": {
-    "location": "[LONDON, UNITED KINGDOM]",
-    "title": "Signature photography that blends art, emotion, and timeless natural elegance.",
+    "location": "[LONDRES, ROYAUME-UNI]",
+    "title": "Une photographie signature alliant art, émotion et élégance naturelle intemporelle.",
     "image": "/_templates/portrait-fineart/img/hero.jpg"
   },
   "intro": {
-    "text": "I craft each frame with care, blending natural light and emotion to capture honest, timeless portraits that tell your story.",
+    "text": "Je crée chaque image avec soin, en mariant lumière naturelle et émotion pour capturer des portraits sincères et intemporels qui racontent votre histoire.",
     "thumbs": [
       {
         "image": "/_templates/portrait-fineart/img/thumb-1.jpg",
-        "alt": "Portrait in soft light"
+        "alt": "Portrait en lumière douce"
       },
       {
         "image": "/_templates/portrait-fineart/img/thumb-2.jpg",
-        "alt": "Quiet studio portrait"
+        "alt": "Portrait studio discret"
       },
       {
         "image": "/_templates/portrait-fineart/img/thumb-3.jpg",
-        "alt": "Candid moment outdoors"
+        "alt": "Instantané en extérieur"
       },
       {
         "image": "/_templates/portrait-fineart/img/thumb-4.jpg",
-        "alt": "Detail in golden hour"
+        "alt": "Détail à l'heure dorée"
       },
       {
         "image": "/_templates/portrait-fineart/img/thumb-5.jpg",
-        "alt": "Profile against light"
+        "alt": "Profil contre la lumière"
       }
     ]
   },
@@ -47,42 +47,42 @@
       {
         "name": "Portraits",
         "number": "/01",
-        "desc": "Quiet, intimate portraiture built around natural light and the unguarded in-between moments.",
+        "desc": "Des portraits intimes et discrets, construits autour de la lumière naturelle et des moments spontanés.",
         "image": "/_templates/portrait-fineart/img/cat-1.jpg"
       },
       {
-        "name": "Weddings",
+        "name": "Mariages",
         "number": "/02",
-        "desc": "Documentary-led wedding stories — emotion first, posing last, kept timeless in tone.",
+        "desc": "Des récits de mariage documentaires — l'émotion avant tout, la pose en dernier, le tout dans un style intemporel.",
         "image": "/_templates/portrait-fineart/img/cat-2.jpg"
       },
       {
-        "name": "Editorial",
+        "name": "Éditorial",
         "number": "/03",
-        "desc": "Considered editorial and brand imagery with a calm, refined and contemporary eye.",
+        "desc": "Des images éditoriales et de marque réfléchies, avec un regard calme, raffiné et contemporain.",
         "image": "/_templates/portrait-fineart/img/cat-3.jpg"
       },
       {
-        "name": "Still Life",
+        "name": "Nature morte",
         "number": "/04",
-        "desc": "Texture, light and stillness — objects and details photographed with patience.",
+        "desc": "Texture, lumière et sérénité — des objets et détails photographiés avec patience.",
         "image": "/_templates/portrait-fineart/img/cat-4.jpg"
       }
     ]
   },
   "work": {
-    "label": "[ SELECTED WORK ]",
-    "heading1": "Selected",
-    "heading2": "Work",
+    "label": "[ SÉLECTION DE TRAVAUX ]",
+    "heading1": "Sélection",
+    "heading2": "de travaux",
     "projects": [
       {
-        "title": "Lior, in Clair-Obscur",
+        "title": "Lior, en Clair-Obscur",
         "meta": "Portrait — 2024",
         "image": "/_templates/portrait-fineart/img/work-1.jpg"
       },
       {
         "title": "Fleur de Silence",
-        "meta": "Editorial — 2024",
+        "meta": "Éditorial — 2024",
         "image": "/_templates/portrait-fineart/img/work-2.jpg"
       },
       {
@@ -92,7 +92,7 @@
       },
       {
         "title": "The Whitmore Stillness",
-        "meta": "Wedding — 2024",
+        "meta": "Mariage — 2024",
         "image": "/_templates/portrait-fineart/img/work-4.jpg"
       },
       {
@@ -102,12 +102,12 @@
       },
       {
         "title": "Before the Sea",
-        "meta": "Editorial — 2024",
+        "meta": "Éditorial — 2024",
         "image": "/_templates/portrait-fineart/img/work-6.jpg"
       },
       {
         "title": "Salt in the Smoke",
-        "meta": "Still Life — 2023",
+        "meta": "Nature morte — 2023",
         "image": "/_templates/portrait-fineart/img/work-7.jpg"
       },
       {
@@ -117,19 +117,19 @@
       },
       {
         "title": "Beneath the Blue",
-        "meta": "Editorial — 2023",
+        "meta": "Éditorial — 2023",
         "image": "/_templates/portrait-fineart/img/work-9.jpg"
       }
     ]
   },
   "statement": {
-    "text": "I craft each frame with care, blending natural light and emotion to capture honest, timeless portraits that tell your story."
+    "text": "Je crée chaque image avec soin, en mariant lumière naturelle et émotion pour capturer des portraits sincères et intemporels qui racontent votre histoire."
   },
   "archive": {
-    "label": "[ THE ARCHIVE ]",
-    "heading1": "The Gaze",
-    "heading2": "That Lingers",
-    "intro": "A wider, unfiltered look — thirty frames that didn't fit a single story, collected here for the patient eye.",
+    "label": "[ L'ARCHIVE ]",
+    "heading1": "Le Regard",
+    "heading2": "qui Persiste",
+    "intro": "Un aperçu plus large et sans filtre — trente images qui ne rentraient pas dans une seule histoire, rassemblées ici pour l'œil attentif.",
     "images": [
       {
         "image": "/_templates/portrait-fineart/img/arc-1.jpg"
@@ -170,45 +170,45 @@
     ]
   },
   "contact": {
-    "label": "[ GET IN TOUCH ]",
-    "heading1": "I'd love to hear",
-    "heading2": "from you",
+    "label": "[ PRENONS CONTACT ]",
+    "heading1": "J'aimerais",
+    "heading2": "vous entendre",
     "fields": {
-      "name": "Let's start with your name",
-      "reach": "Where can I reach you?",
-      "shoot": "What kind of shoot are you booking?",
+      "name": "Commençons par votre nom",
+      "reach": "Où puis-je vous joindre ?",
+      "shoot": "Quel type de séance souhaitez-vous réserver ?",
       "message": "Message",
-      "messageHint": "Tell me a bit about what you're looking for"
+      "messageHint": "Parlez-moi un peu de ce que vous recherchez"
     },
     "shootOptions": [
-      "Select a type",
-      "Portrait session",
-      "Wedding",
-      "Editorial / brand",
-      "Other"
+      "Sélectionnez un type",
+      "Séance portrait",
+      "Mariage",
+      "Éditorial / marque",
+      "Autre"
     ],
-    "button": "Send your message",
+    "button": "Envoyer votre message",
     "image": "/_templates/portrait-fineart/img/contact.jpg"
   },
   "footer": {
-    "locationLabel": "[MY LOCATION]",
-    "location1": "Based in London,",
-    "location2": "United Kingdom",
+    "locationLabel": "[MA LOCALISATION]",
+    "location1": "Basé à Londres,",
+    "location2": "Royaume-Uni",
     "menuLabel": "[MENU]",
     "menu": [
-      "About me",
-      "Gallery",
+      "À propos",
+      "Galerie",
       "Archive",
       "Contact"
     ],
-    "exploreLabel": "[EXPLORE MORE]",
+    "exploreLabel": "[DÉCOUVRIR PLUS]",
     "explore": [
       "Instagram",
       "Pexels",
       "Unsplash",
       "Lummi"
     ],
-    "reachLabel": "[FEEL FREE TO REACH OUT]",
+    "reachLabel": "[N'HÉSITEZ PAS À ME CONTACTER]",
     "email": "hello@adrienroy.com",
     "phone": "+44 7911 123456"
   }

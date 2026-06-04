@@ -19,58 +19,58 @@
   },
   "bio": {
     "heading": "NYXIS",
-    "text": "NYXIS is the brainchild of electronic music collective, born in the neon underground. This cutting-edge group pushes the boundaries of electronic sound with festival-ready sets and avant-garde soundscapes. Blending diverse musical influences with a passion for technology, NYXIS' immersive performances transport audiences to a realm where music and machine converge in harmonious vision.",
+    "text": "NYXIS est le fruit d’un collectif de musique électronique né dans l’underground néon. Ce groupe avant-gardiste repousse les limites du son électronique avec des sets taillés pour les festivals et des paysages sonores audacieux. Alliant influences musicales variées et passion pour la technologie, les performances immersives de NYXIS transportent le public dans un univers où musique et machine s’unissent en une harmonie visionnaire.",
     "img1": "/_templates/electronic-collective/img/bio1.jpg",
     "img2": "/_templates/electronic-collective/img/bio2.jpg"
   },
   "tour": {
-    "label": "Summer",
-    "label2": "Tour",
+    "label": "Tournée",
+    "label2": "d'été",
     "dates": [
       {
         "venue": "The Redwood Room",
         "city": "Berlin, DE",
-        "date": "12 Jul 2026"
+        "date": "12 juil. 2026"
       },
       {
         "venue": "The Blue Moon Theatre",
         "city": "Amsterdam, NL",
-        "date": "19 Jul 2026"
+        "date": "19 juil. 2026"
       },
       {
         "venue": "The Electric Garden",
-        "city": "Barcelona, ES",
-        "date": "02 Aug 2026"
+        "city": "Barcelone, ES",
+        "date": "2 août 2026"
       },
       {
         "venue": "The Silver Cathedral",
-        "city": "London, UK",
-        "date": "16 Aug 2026"
+        "city": "Londres, UK",
+        "date": "16 août 2026"
       },
       {
         "venue": "The Emerald Palace",
         "city": "Paris, FR",
-        "date": "30 Aug 2026"
+        "date": "30 août 2026"
       }
     ],
     "img": "/_templates/electronic-collective/img/tour.jpg"
   },
   "release": {
-    "label": "New",
-    "label2": "Release",
+    "label": "Nouveau",
+    "label2": "Single",
     "title": "Binary Beats",
     "year": "2025",
     "cover": "/_templates/electronic-collective/img/album-new.jpg",
-    "listenLabel": "Listen on",
+    "listenLabel": "Écouter sur",
     "platforms": [
       "Spotify",
       "Youtube",
-      "Apple"
+      "Apple Music"
     ]
   },
   "previous": {
-    "label": "Previous",
-    "label2": "Releases",
+    "label": "Anciens",
+    "label2": "Titres",
     "items": [
       {
         "title": "Electric Odyssey",
@@ -95,14 +95,14 @@
     ]
   },
   "contact": {
-    "managementLabel": "Management:",
+    "managementLabel": "Gestion :",
     "managementEmail": "m@nyxis.live",
-    "bookingLabel": "Booking:",
+    "bookingLabel": "Réservations :",
     "bookingEmail": "tv@nyxis.live",
     "img": "/_templates/electronic-collective/img/contact.jpg"
   },
   "footer": {
     "copyright": "© 2025 NYXIS",
-    "credit": "Electronic collective · since 2014"
+    "credit": "Collectif électronique · depuis 2014"
   }
 }

@@ -1,26 +1,26 @@
 {
   "meta": {
-    "title": "Ocean West Studio | Luxury Wedding Photography",
-    "description": "Luxury wedding photography & cinematography — capturing authentic stories worldwide."
+    "title": "Ocean West Studio | Photographie de Mariage de Luxe",
+    "description": "Photographie et cinématographie de mariage haut de gamme — capturer des histoires authentiques à travers le monde."
   },
   "brand": "Ocean West Studio",
-  "spinningBadge": "WEDDINGS • FILMS • PHOTOGRAPHY • OCEAN WEST STUDIO • ",
+  "spinningBadge": "MARIAGES • FILMS • PHOTOGRAPHIE • OCEAN WEST STUDIO •",
   "nav": [
-    "Home",
-    "Mini Sessions",
-    "Services",
+    "Accueil",
+    "Mini-séances",
+    "Prestations",
     "Portfolio",
-    "About",
-    "Inquire"
+    "À propos",
+    "Contact"
   ],
   "hero": {
-    "title1": "Wedding",
-    "title2": "Photography",
-    "tagline": "If you are looking for an authentic wedding photographer, capable of capturing the essence of your story and your emotions, you are in the right place. As a high-end wedding photographer, I go far beyond traditional photos, creating unique and unforgettable memories.",
+    "title1": "Mariage",
+    "title2": "Photographie",
+    "tagline": "Si vous cherchez un photographe de mariage authentique, capable de saisir l’essence de votre histoire et de vos émotions, vous êtes au bon endroit. En tant que photographe haut de gamme, je vais bien au-delà des images traditionnelles pour créer des souvenirs uniques et inoubliables.",
     "image": "/_templates/luxury-wedding/img/hero.jpg"
   },
   "logos": {
-    "label": "Featured Elegance",
+    "label": "Élégance mise en avant",
     "items": [
       "VOGUE",
       "Brides",
@@ -29,138 +29,138 @@
     ]
   },
   "philosophy": {
-    "text": "Don't be afraid! I understand your concerns and want to make it easier for you. My team and I will help you to feel <em>comfortable, natural</em> and have <em>fun</em>. Reflecting who you really are in the most <em>authentic</em> way possible, capture all excitement, tears, joy and create photos and videos which would last <em>forever</em>.",
+    "text": "Pas de panique ! Je comprends vos inquiétudes et je suis là pour vous simplifier les choses. Mon équipe et moi vous aiderons à vous sentir <em>à l’aise, naturels</em> et à <em>profiter</em> de chaque instant. Notre objectif ? Restituer qui vous êtes vraiment, de la manière la plus <em>authentique</em> possible, capturer toute l’excitation, les larmes, la joie, et créer des photos et vidéos qui dureront <em>pour toujours</em>.",
     "imageRight": "/_templates/luxury-wedding/img/philosophy-portrait.jpg",
     "imageLeft": "/_templates/luxury-wedding/img/philosophy-portrait-left.jpg"
   },
   "team": {
-    "label": "The Founders",
-    "heading1": "Vision & Craft",
-    "heading2": "Behind the Lens",
-    "intro": "With over a decade of documenting love stories across the globe, our foundation is built on blending editorial precision with raw, documentary intuition. We don't just take photographs; we craft heirlooms.",
+    "label": "Les Fondateurs",
+    "heading1": "Vision & Savoir-faire",
+    "heading2": "Derrière l’objectif",
+    "intro": "Depuis plus de dix ans, nous documentons des histoires d’amour aux quatre coins du monde. Notre approche allie la précision éditoriale à l’intuition brute du reportage. Nous ne prenons pas simplement des photos : nous créons des héritages.",
     "members": [
       {
         "name": "Heena Malhotra",
         "role": "Lead Photographer",
-        "bio": "Elena brings an editorial eye and an unobtrusive approach, ensuring every frame is intentionally composed to immortalize the fleeting atmosphere and unseen glances of your day.",
+        "bio": "Elena apporte un regard éditorial et une approche discrète, garantissant que chaque image soit composée avec intention pour immortaliser l’atmosphère éphémère et les regards furtifs de votre journée.",
         "image": "/_templates/luxury-wedding/img/team-photographer.jpg"
       },
       {
         "name": "Eddie Licea",
         "role": "Lead Cinematographer",
-        "bio": "Julian's cinematic approach translates raw emotion into moving heirlooms. He focuses on narrative storytelling, preserving the grand architecture and dynamic energy of your celebration.",
+        "bio": "Julian transforme l’émotion brute en héritages cinématographiques. Son approche narrative met en valeur l’architecture grandiose et l’énergie dynamique de votre célébration.",
         "image": "/_templates/luxury-wedding/img/team-cinematographer.jpg"
       }
     ]
   },
   "services": {
-    "label": "Service",
-    "intro": "Our solutions are tailored to meet the unique vision of your celebration, providing artistry, reliability, and elegance at every stage of your journey.",
+    "label": "Prestations",
+    "intro": "Nos solutions sont conçues sur mesure pour s’adapter à la vision unique de votre célébration, alliant art, fiabilité et élégance à chaque étape de votre parcours.",
     "items": [
       {
-        "title": "Editorial & Timeless Stills",
-        "desc": "Curated, timeless imagery that captures both the grand moments and the quiet, unseen details. We focus on natural light, sophisticated composition, and raw emotion to build a visual legacy that feels authentically you.",
-        "category": "Photography",
+        "title": "Images Éditoriales & Intemporelles",
+        "desc": "Des photographies soigneusement sélectionnées, capturant aussi bien les grands moments que les détails discrets. Nous privilégions la lumière naturelle, des compositions raffinées et l’émotion brute pour créer un héritage visuel qui vous ressemble.",
+        "category": "Photographie",
         "image": "/_templates/luxury-wedding/img/service-photography.jpg"
       },
       {
-        "title": "Cinematic & Emotional Films",
-        "desc": "Moving portraiture that tells the narrative of your day. We create elegant, emotion-driven films scored to perfectly tailored music, preserving the atmosphere, the spoken vows, and the dynamic energy of your celebration.",
-        "category": "Videography",
+        "title": "Films Cinématographiques & Émotionnels",
+        "desc": "Des portraits animés qui racontent le récit de votre journée. Nous réalisons des films élégants et chargés d’émotion, accompagnés d’une bande-son sur mesure, pour préserver l’atmosphère, les vœux échangés et l’énergie dynamique de votre célébration.",
+        "category": "Vidéographie",
         "image": "/_templates/luxury-wedding/img/service-videography.jpg"
       },
       {
-        "title": "Wedding Live Broadcasting",
-        "desc": "Share your most cherished moments in real-time with loved ones across the globe. We provide high-fidelity audio and multi-camera streaming to ensure no one misses your celebration.",
-        "category": "Broadcasting",
+        "title": "Retransmission en Direct de Mariage",
+        "desc": "Partagez vos moments les plus précieux en temps réel avec vos proches, où qu’ils soient dans le monde. Nous assurons une diffusion multi-caméras avec une qualité audio optimale pour que personne ne manque votre célébration.",
+        "category": "Retransmission",
         "image": "/_templates/luxury-wedding/img/service-broadcasting.jpg"
       }
     ]
   },
   "portfolio": {
-    "heading1": "Selected work",
-    "subheading": "Moments that are returned to",
-    "intro": "These photographs are chosen again and again, finding in them a familiar feeling of beauty and the exact mood. Look, get inspired and feel — perhaps they will respond to you today and become part of your legacy.",
+    "heading1": "Sélection d’œuvres",
+    "subheading": "Moments que l’on revisite",
+    "intro": "Ces images sont choisies encore et encore, pour la beauté et l’émotion qu’elles dégagent. Observez, laissez-vous inspirer et ressentez — peut-être résonneront-elles en vous aujourd’hui et feront-elles partie de votre héritage.",
     "caption1": {
-      "title": "Quiet beauty",
-      "body": "Moments in which natural elegance unfolds quietly, confidently, and without unnecessary emphasis."
+      "title": "Beauté discrète",
+      "body": "Des instants où l’élégance naturelle se révèle avec simplicité, assurance et sans artifice."
     },
     "caption2": {
-      "title": "Natural harmony",
-      "body": "Connections whose shape, energy, and rhythm create a profound sense of harmony at first glance."
+      "title": "Harmonie naturelle",
+      "body": "Des liens dont la forme, l’énergie et le rythme créent une profonde sensation d’harmonie au premier regard."
     },
     "gallery": [
       {
         "image": "/_templates/luxury-wedding/img/gallery-rings.jpg",
-        "alt": "Wedding Rings Detail"
+        "alt": "Détail des alliances"
       },
       {
         "image": "/_templates/luxury-wedding/img/gallery-bouquet.jpg",
-        "alt": "Bridal Bouquet Detail"
+        "alt": "Détail du bouquet de la mariée"
       },
       {
         "imageBlur": "/_templates/luxury-wedding/img/gallery-bride-blur.jpg",
         "imageSharp": "/_templates/luxury-wedding/img/gallery-bride-sharp.jpg",
-        "alt": "Bride Portrait"
+        "alt": "Portrait de la mariée"
       },
       {
         "image": "/_templates/luxury-wedding/img/gallery-table.jpg",
-        "alt": "Wedding Table Setting"
+        "alt": "Décoration de table de mariage"
       },
       {
         "imageBlur": "/_templates/luxury-wedding/img/gallery-couple-blur.jpg",
         "imageSharp": "/_templates/luxury-wedding/img/gallery-couple-sharp.jpg",
-        "alt": "Couple Walking"
+        "alt": "Couple en marche"
       },
       {
         "image": "/_templates/luxury-wedding/img/gallery-dancing.jpg",
-        "alt": "Celebration Dancing"
+        "alt": "Danse de célébration"
       },
       {
         "image": "/_templates/luxury-wedding/img/gallery-champagne.jpg",
-        "alt": "Champagne Toast"
+        "alt": "Toast au champagne"
       },
       {
         "image": "/_templates/luxury-wedding/img/gallery-dress.jpg",
-        "alt": "Wedding Dress Detail"
+        "alt": "Détail de la robe de mariée"
       }
     ]
   },
   "testimonial": {
-    "quote": "Working with Ocean West was the best investment we made. Their presence was calming, and the resulting work belongs in a magazine. They captured our love exactly as it felt.",
+    "quote": "Faire appel à Ocean West a été le meilleur investissement que nous ayons fait. Leur présence était apaisante, et le résultat final mériterait les pages d’un magazine. Ils ont capturé notre amour exactement tel que nous l’avons vécu.",
     "name": "Eleanor & James",
     "venue": "Château de Villette, France"
   },
   "faq": {
-    "label": "Information",
-    "heading": "Investment & FAQ",
+    "label": "Informations",
+    "heading": "Investissement & FAQ",
     "items": [
       {
-        "q": "Do you offer custom packages?",
-        "a": "Yes! We customize packages based on how many hours you would need."
+        "q": "Proposez-vous des forfaits sur mesure ?",
+        "a": "Oui ! Nous adaptons nos forfaits en fonction du nombre d’heures dont vous avez besoin."
       },
       {
-        "q": "Is there a deposit?",
-        "a": "Yes, we require a signed contract and a 30% non-refundable retainer to secure your date and our exclusive availability."
+        "q": "Y a-t-il un acompte à verser ?",
+        "a": "Oui, nous demandons un contrat signé et un acompte non remboursable de 30 % pour réserver votre date et ga"
       },
       {
-        "q": "How long do we have to wait for our photos and video?",
-        "a": "For a full day celebration, you can expect your complete, meticulously curated gallery and cinematic film delivered within 8 to 10 weeks."
+        "q": "Combien de temps faut-il attendre pour recevoi",
+        "a": "Pour une célébration d’une journée complète, vous recevrez votre galerie soigneusement sélectionnée et vot"
       },
       {
-        "q": "Do you give out raw images?",
-        "a": "We do not provide raw files. Our dedicated color grading and editorial editing process is a fundamental part of the final artistic vision you invest in."
+        "q": "Fournissez-vous les fichiers bruts ?",
+        "a": "Non, nous ne fournissons pas les fichiers bruts. Notre processus de retouche et d’étalonnage des couleurs "
       },
       {
-        "q": "Can we request specific shots?",
-        "a": "Absolutely. Prior to your celebration, we will share a comprehensive questionnaire where you can detail specific family groupings and meaningful details."
+        "q": "Pouvons-nous demander des prises de vue spécif",
+        "a": "Absolument. Avant votre célébration, nous vous enverrons un questionnaire détaillé pour recueillir vos dem"
       }
     ]
   },
   "contact": {
-    "heading": "Begin Your Journey",
-    "intro": "We accept a limited number of commissions each year to ensure every couple receives our utmost attention and artistry. Please share the details of your celebration below.",
+    "heading": "Commencez votre aventure",
+    "intro": "Nous acceptons un nombre limité de projets chaque année pour garantir à chaque couple une attention et un savoir-faire exceptionnels. Veuillez partager les détails de votre célébration ci-dessous.",
     "email": "hello@oceanweststudio.com",
-    "location": "Seattle / Worldwide"
+    "location": "Seattle / Monde entier"
   }
 }

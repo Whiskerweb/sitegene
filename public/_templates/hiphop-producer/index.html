@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="fr" class="scroll-smooth">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -39,55 +39,135 @@
   <!-- Source unique de vérité (le serveur Akyra injecte le vrai contenu ; fallback de preview) -->
   <script>
     window.__SITE_CONTENT__ = window.__SITE_CONTENT__ ||  window.__SITE_CONTENT__ || {
-      brand: "KAIRO",
-      nav: ["Releases", "Tour", "About", "Booking"],
-      cta: "Booking",
-      hero: {
-        badge: "New Drop",
-        titleLine1: "“Silent Ops”",
-        titleLine2: "is out now",
-        listen: [
-          { label: "Listen on Apple Music", href: "#" },
-          { label: "Listen on Spotify", href: "#" },
-          { label: "Listen on YouTube Music", href: "#" }
-        ],
-        image: "img/hero.jpg"
+  "brand": "KAIRO",
+  "nav": [
+    "Sorties",
+    "Tournée",
+    "À propos",
+    "Réservations"
+  ],
+  "cta": "Réserver",
+  "hero": {
+    "badge": "Nouvelle sortie",
+    "titleLine1": "« Silent Ops »",
+    "titleLine2": "disponible maintenant",
+    "listen": [
+      {
+        "label": "Écouter sur Apple Music",
+        "href": "#"
       },
-      releasesLabel: "Releases",
-      releases: [
-        { title: "Silent Ops", type: "Single · 2026", cover: "img/rel1.jpg" },
-        { title: "Jet Black Skies", type: "Album · 2025", cover: "img/rel2.jpg" },
-        { title: "Burning Soul", type: "Single · 2025", cover: "img/rel3.jpg" },
-        { title: "Concrete Lullabies", type: "EP · 2024", cover: "img/rel4.jpg" }
-      ],
-      tourLabel: "#KAIROTour",
-      tour: [
-        { date: "12 SEP", city: "Berlin, DE", venue: "Astra Kulturhaus", link: "Get Tickets" },
-        { date: "21 SEP", city: "Paris, FR", venue: "La Cigale", link: "Get Tickets" },
-        { date: "04 OCT", city: "London, UK", venue: "Village Underground", link: "Get Tickets" },
-        { date: "18 OCT", city: "Amsterdam, NL", venue: "Melkweg – Max", link: "Get Tickets" },
-        { date: "02 NOV", city: "Brussels, BE", venue: "Ancienne Belgique", link: "Get Tickets" },
-        { date: "15 NOV", city: "Lyon, FR", venue: "Le Transbordeur", link: "Get Tickets" },
-        { date: "29 NOV", city: "Madrid, ES", venue: "Sala La Riviera", link: "Get Tickets" }
-      ],
-      bio: {
-        quote: "“I’m KAIRO – hip-hop artist and producer. Dark beats, real stories, and raw energy. No gimmicks — just truth in every bar.”",
-        readMore: "Read the full story",
-        image: "img/portrait.jpg"
+      {
+        "label": "Écouter sur Spotify",
+        "href": "#"
       },
-      listenLabel: "Listen to Me On",
-      socials: [
-        { label: "Spotify", href: "#" },
-        { label: "Apple Music", href: "#" },
-        { label: "YouTube", href: "#" },
-        { label: "SoundCloud", href: "#" },
-        { label: "Instagram", href: "#" }
-      ],
-      footer: {
-        copyright: "© KAIRO",
-        credit: "Hip-hop artist · producer"
+      {
+        "label": "Écouter sur YouTube Music",
+        "href": "#"
       }
-    };
+    ],
+    "image": "/_templates/hiphop-producer/img/hero.jpg"
+  },
+  "releasesLabel": "Sorties",
+  "releases": [
+    {
+      "title": "Silent Ops",
+      "type": "Single · 2026",
+      "cover": "/_templates/hiphop-producer/img/rel1.jpg"
+    },
+    {
+      "title": "Jet Black Skies",
+      "type": "Album · 2025",
+      "cover": "/_templates/hiphop-producer/img/rel2.jpg"
+    },
+    {
+      "title": "Burning Soul",
+      "type": "Single · 2025",
+      "cover": "/_templates/hiphop-producer/img/rel3.jpg"
+    },
+    {
+      "title": "Concrete Lullabies",
+      "type": "EP · 2024",
+      "cover": "/_templates/hiphop-producer/img/rel4.jpg"
+    }
+  ],
+  "tourLabel": "#KAIROTour",
+  "tour": [
+    {
+      "date": "12 SEP",
+      "city": "Berlin, DE",
+      "venue": "Astra Kulturhaus",
+      "link": "Billets"
+    },
+    {
+      "date": "21 SEP",
+      "city": "Paris, FR",
+      "venue": "La Cigale",
+      "link": "Billets"
+    },
+    {
+      "date": "04 OCT",
+      "city": "London, UK",
+      "venue": "Village Underground",
+      "link": "Billets"
+    },
+    {
+      "date": "18 OCT",
+      "city": "Amsterdam, NL",
+      "venue": "Melkweg – Max",
+      "link": "Billets"
+    },
+    {
+      "date": "02 NOV",
+      "city": "Brussels, BE",
+      "venue": "Ancienne Belgique",
+      "link": "Billets"
+    },
+    {
+      "date": "15 NOV",
+      "city": "Lyon, FR",
+      "venue": "Le Transbordeur",
+      "link": "Billets"
+    },
+    {
+      "date": "29 NOV",
+      "city": "Madrid, ES",
+      "venue": "Sala La Riviera",
+      "link": "Billets"
+    }
+  ],
+  "bio": {
+    "quote": "« Je suis KAIRO – artiste hip-hop et producteur. Des beats sombres, des histoires vraies et une énergie brute. Pas de faux-semblants – juste la vérité dans chaque texte. »",
+    "readMore": "Lire l’histoire complète",
+    "image": "/_templates/hiphop-producer/img/portrait.jpg"
+  },
+  "listenLabel": "Écoutez-moi sur",
+  "socials": [
+    {
+      "label": "Spotify",
+      "href": "#"
+    },
+    {
+      "label": "Apple Music",
+      "href": "#"
+    },
+    {
+      "label": "YouTube",
+      "href": "#"
+    },
+    {
+      "label": "SoundCloud",
+      "href": "#"
+    },
+    {
+      "label": "Instagram",
+      "href": "#"
+    }
+  ],
+  "footer": {
+    "copyright": "© KAIRO",
+    "credit": "Artiste hip-hop · producteur"
+  }
+};
   </script>
 </head>
 

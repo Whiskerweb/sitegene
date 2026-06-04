@@ -1,43 +1,43 @@
 {
   "meta": {
-    "title": "Léon Marchal | Freelance Photographer",
-    "description": "Léon Marchal — freelance photographer capturing life's best moments across portrait, travel, commercial, event, aerial and wildlife photography."
+    "title": "Léon Marchal | Photographe Freelance",
+    "description": "Léon Marchal — photographe freelance immortalisant les plus beaux instants à travers le portrait, le voyage, la photo commerciale, événementielle, aérienne et animalière."
   },
   "brand": "Léon Marchal",
   "nav": [
-    "Home",
-    "About",
-    "Works",
-    "Reviews",
-    "Blogs",
+    "Accueil",
+    "À propos",
+    "Réalisations",
+    "Avis",
+    "Blog",
     "Contact"
   ],
   "footerNav": [
-    "Home",
-    "About",
-    "Works",
-    "Reviews",
-    "Blogs",
+    "Accueil",
+    "À propos",
+    "Réalisations",
+    "Avis",
+    "Blog",
     "Contact",
-    "More Templates"
+    "Plus de modèles"
   ],
   "hero": {
-    "titleLine1": "Capturing Life's Best",
-    "titleLine2": "Moments",
-    "intro": "Hi, Léon Marchal here. I'm a freelance photographer and the shutterbug capturing life's magical moments one click at a time.",
-    "tag": "Léon Marchal — Freelance Photographer",
-    "scroll": "↓ Scroll to explore",
-    "ctaPrimary": "Get in Touch",
-    "ctaSecondary": "Work With Me",
+    "titleLine1": "Immortaliser les plus",
+    "titleLine2": "beaux instants",
+    "intro": "Bonjour, je suis Léon Marchal. Photographe freelance, je capture les moments magiques de la vie, clic après clic.",
+    "tag": "Léon Marchal — Photographe Freelance",
+    "scroll": "↓ Découvrir",
+    "ctaPrimary": "Me contacter",
+    "ctaSecondary": "Collaborer",
     "image": "/_templates/photographer-freelance/img/hero.jpg"
   },
   "about": {
-    "heading": "I am …",
-    "paragraph": "a passionate photographer dedicated to capturing life's most precious moments. With a keen eye for detail and a love for storytelling, I strive to create images that are not just beautiful, but that also evoke emotion and tell a compelling story.",
-    "cta": "More About Me →"
+    "heading": "Je suis…",
+    "paragraph": "un photographe passionné, dédié à saisir les moments les plus précieux de la vie. Doté d’un sens aigu du détail et d’un amour pour la narration, je m’efforce de créer des images qui ne sont pas seulement belles, mais qui suscitent aussi l’émotion et racontent une histoire captivante.",
+    "cta": "En savoir plus →"
   },
   "brands": {
-    "heading": "Brands I have worked with",
+    "heading": "Marques avec lesquelles j’ai collaboré",
     "items": [
       "aperture",
       "northlight",
@@ -55,104 +55,104 @@
     "heading": "Albums",
     "items": [
       {
-        "title": "Colorful India",
+        "title": "L’Inde en couleurs",
         "tags": [
-          "Travel",
+          "Voyage",
           "Collaboration"
         ],
         "image": "/_templates/photographer-freelance/img/album-travel.jpg"
       },
       {
-        "title": "Echoes of Dreams",
+        "title": "Échos de rêves",
         "tags": [
-          "Conceptual",
+          "Conceptuel",
           "Commercial"
         ],
         "image": "/_templates/photographer-freelance/img/album-concept.jpg"
       },
       {
-        "title": "Wings of Freedom",
+        "title": "Ailes de liberté",
         "tags": [
-          "Aerial & Drone",
-          "Passion Project"
+          "Aérien & Drone",
+          "Projet personnel"
         ],
         "image": "/_templates/photographer-freelance/img/album-aerial.jpg"
       },
       {
-        "title": "Crafted Perfection",
+        "title": "Perfection artisanale",
         "tags": [
-          "Product",
+          "Produit",
           "Commercial"
         ],
         "image": "/_templates/photographer-freelance/img/album-product.jpg"
       },
       {
-        "title": "Wild Wonders",
+        "title": "Merveilles sauvages",
         "tags": [
-          "Wildlife & Nature",
-          "Passion Project"
+          "Faune & Nature",
+          "Projet personnel"
         ],
         "image": "/_templates/photographer-freelance/img/album-wildlife.jpg"
       }
     ]
   },
   "expertise": {
-    "heading": "My Expertise",
-    "moreLine1": "Wait…",
-    "moreLine2": "There's more!",
+    "heading": "Mes domaines d’expertise",
+    "moreLine1": "Attendez…",
+    "moreLine2": "Il y a plus !",
     "items": [
       {
-        "name": "Documentary Photography",
-        "text": "Documentary photography serves to inform, educate, and inspire by providing a truthful and insightful representation of the world. It is used to raise awareness about important issues, document significant events, and preserve historical moments.",
+        "name": "Photographie documentaire",
+        "text": "La photographie documentaire informe, éduque et inspire en offrant une représentation fidèle et perspicace du monde. Elle permet de sensibiliser à des enjeux importants, de documenter des événements marquants et de préserver des moments historiques.",
         "image": "/_templates/photographer-freelance/img/exp-documentary.jpg"
       },
       {
-        "name": "Event Photography",
-        "text": "Tell powerful stories through your event photography, capturing real-life events and moments. From intimate gatherings to grand celebrations, every frame preserves the energy and emotion of the day.",
+        "name": "Photographie événementielle",
+        "text": "Racontez des histoires puissantes à travers vos événements, en capturant des moments réels et authentiques. Des petites réunions aux grandes célébrations, chaque image conserve l’énergie et l’émotion de l’instant.",
         "image": "/_templates/photographer-freelance/img/exp-event.jpg"
       },
       {
-        "name": "Aerial Photography",
-        "text": "Get a bird's-eye view with stunning aerial photography captured via drone, perfect for real estate, events, and sweeping landscapes that reveal a fresh perspective.",
+        "name": "Photographie aérienne",
+        "text": "Découvrez une vue imprenable grâce à la photographie aérienne par drone, idéale pour l’immobilier, les événements ou les paysages grandioses, révélant une perspective inédite.",
         "image": "/_templates/photographer-freelance/img/exp-aerial.jpg"
       },
       {
-        "name": "Corporate Photography",
-        "text": "Enhance your brand image with professional corporate photography for headshots, team photos, and company events that communicate trust and personality.",
+        "name": "Photographie corporate",
+        "text": "Renforcez l’image de votre marque avec une photographie corporate professionnelle : portraits, photos d’équipe ou événements d’entreprise qui transmettent confiance et personnalité.",
         "image": "/_templates/photographer-freelance/img/exp-corporate.jpg"
       },
       {
-        "name": "Editorial Photography",
-        "text": "Bring your stories to life with compelling editorial photography for magazines, blogs, and publications.",
+        "name": "Photographie éditoriale",
+        "text": "Donnez vie à vos récits avec une photographie éditoriale percutante, conçue pour les magazines, blogs et publications.",
         "image": "/_templates/photographer-freelance/img/exp-editorial.jpg"
       }
     ]
   },
   "reviews": {
-    "kicker": "Smiles and Stories from",
-    "heading": "My Clients",
-    "cta": "View All Reviews →",
+    "kicker": "Sourire et histoires de",
+    "heading": "mes clients",
+    "cta": "Voir tous les avis →",
     "items": [
       {
-        "quote": "\"We are thrilled with the product photography provided by Léon. They captured our products beautifully, highlighting their unique features and enhancing their appeal.\"",
+        "quote": "\"Nous sommes ravis des photos de produits réalisées par Léon. Elles mettent en valeur nos articles avec beauté, soulignant leurs caractéristiques uniques et renforçant leur attractivité.\"",
         "name": "Michael T.",
         "role": "Marketing Manager, Stellar Designs",
         "avatar": "/_templates/photographer-freelance/img/avatar1.jpg"
       },
       {
-        "quote": "\"Thank you, our product images have never looked better! They have a keen eye for detail and a talent for capturing our products in the best possible light. We couldn't be happier with the results!\"",
+        "quote": "\"Merci ! Nos images de produits n’ont jamais été aussi réussies. Son sens du détail et son talent pour sublimer nos produits sous leur meilleur jour nous enchantent. Nous sommes comblés par le résultat !\"",
         "name": "Aurora Jensen",
         "role": "Marketing Director",
         "avatar": "/_templates/photographer-freelance/img/avatar2.jpg"
       },
       {
-        "quote": "\"He provided exceptional product photography services for our latest collection. Their attention to detail and creative approach resulted in images that perfectly showcased our products. Highly recommended!\"",
+        "quote": "\"Il a fourni un service exceptionnel de photographie produit pour notre dernière collection. Son souci du détail et son approche créative ont donné des images qui mettent parfaitement en valeur nos articles. Je le recommande vivement !\"",
         "name": "G. Monroe",
         "role": "Marketing Manager, Stellar Designs",
         "avatar": "/_templates/photographer-freelance/img/avatar3.jpg"
       },
       {
-        "quote": "\"It was a fantastic experience! They brought a level of professionalism and creativity to our product photography that truly set our brand apart. We look forward to working with them again in the future!\"",
+        "quote": "\"Une expérience fantastique ! Il a apporté un niveau de professionnalisme et de créativité à notre shooting produit qui a vraiment distingué notre marque. Nous avons hâte de collaborer à nouveau !\"",
         "name": "Camille Roux",
         "role": "MD, Stellar Designs",
         "avatar": "/_templates/photographer-freelance/img/avatar4.jpg"
@@ -160,74 +160,74 @@
     ]
   },
   "blog": {
-    "kicker": "Stay inspired with my",
-    "heading": "Insightful Articles",
-    "cta": "All Blogs →",
+    "kicker": "Restez inspiré avec",
+    "heading": "mes articles",
+    "cta": "Tous les articles →",
     "posts": [
       {
-        "title": "Elevate your photos with my signature color grading presets",
-        "tag": "Resources",
-        "date": "March 8, 2024",
+        "title": "Sublimez vos photos avec mes préréglages de colorimétrie signature",
+        "tag": "Ressources",
+        "date": "8 mars 2024",
         "image": "/_templates/photographer-freelance/img/blog-grading.jpg"
       },
       {
-        "title": "The art of candid photography: capturing moments naturally",
-        "tag": "Tips",
+        "title": "L'art de la photo spontanée : saisir l'instant avec naturel",
+        "tag": "Conseils",
         "date": "April 14, 2024",
         "image": "/_templates/photographer-freelance/img/blog-candid.jpg"
       },
       {
-        "title": "Capturing the magic of golden hour: a photographer's guide",
-        "tag": "Tips",
+        "title": "L'heure dorée en photo : guide pour sublimer la lumière",
+        "tag": "Conseils",
         "date": "May 2, 2024",
         "image": "/_templates/photographer-freelance/img/blog-golden.jpg"
       }
     ]
   },
   "faq": {
-    "headingLine1": "FAQ Frenzy:",
-    "headingLine2": "All your answers here",
+    "headingLine1": "Questions fréquentes :",
+    "headingLine2": "Toutes les réponses ici",
     "items": [
       {
-        "q": "How do I book a photography session with you?",
-        "a": "You can book a session by filling out the contact form on my website or by emailing me directly at your email address. I'll get back to you within 24 hours to discuss the details and schedule your shoot."
+        "q": "Comment réserver une séance photo avec vous ?",
+        "a": "Vous pouvez réserver en remplissant le formulaire de contact sur mon site ou en m'envoyant un email directement. Je vous répondrai sous 24 heures pour discuter des détails et planifier votre séance."
       },
       {
-        "q": "What are your rates for photography sessions?",
-        "a": "Rates vary depending on the type of session, location, and deliverables. Get in touch for a custom quote tailored to your project — I'm happy to work within a range of budgets."
+        "q": "Quels sont vos tarifs pour une séance photo ?",
+        "a": "Les tarifs varient selon le type de séance, le lieu et les livrables. Contactez-moi pour un devis personnalisé adapté à votre projet — je m'adapte à différents budgets."
       },
       {
-        "q": "What does your pricing include?",
-        "a": "Pricing includes the shoot itself, professional editing of selected images, and delivery via a private online gallery. Print and licensing options are available on request."
+        "q": "Que comprend votre tarif ?",
+        "a": "Le tarif inclut la séance, la retouche professionnelle des images sélectionnées et leur livraison via une galerie en ligne privée. Les options d'impression et de licence sont disponibles sur demande."
       },
       {
-        "q": "What types of photography do you specialize in?",
-        "a": "I specialize in portrait, travel, commercial, event, aerial, and wildlife photography — bringing a documentary eye and a love for storytelling to each genre."
+        "q": "Quels types de photographie proposez-vous ?",
+        "a": "Je me spécialise dans les portraits, les voyages, la photo commerciale, les événements, les prises de vue aériennes et la faune — avec un regard documentaire et une passion pour le récit visuel."
       },
       {
-        "q": "What is included in your photography packages?",
-        "a": "Each package includes pre-shoot planning, the session, a curated set of edited high-resolution images, and an online gallery. Add-ons like extra hours or prints can be arranged."
+        "q": "Que comprennent vos forfaits photo ?",
+        "a": "Chaque forfait inclut la préparation en amont, la séance, une sélection d'images retouchées en haute résolution et une galerie en ligne. Des options comme des heures supplémentaires ou des tirages peuvent être ajoutées."
       },
       {
-        "q": "How long does a typical photo session last?",
-        "a": "Most sessions run between one and three hours depending on the scope. Larger events or commercial shoots can be scheduled for a full or half day."
+        "q": "Combien de temps dure une séance photo ?",
+        "a": "La plupart des séances durent entre une et trois heures selon le projet. Pour les événements ou les shoots commerciaux, une journée complète ou une demi-journée peut être prévue."
       },
       {
-        "q": "Do you travel for shoots?",
-        "a": "Absolutely — I love travel assignments. I'm available for shoots worldwide; travel and accommodation are simply added to the quote."
+        "q": "Vous déplacez-vous pour les séances ?",
+        "a": "Bien sûr ! J'adore les missions à l'étranger. Je suis disponible pour des shoots partout dans le monde — les frais de déplacement et d'hébergement sont simplement ajoutés au devis."
       },
       {
-        "q": "What should I wear to my photo session?",
-        "a": "Wear something you feel confident in. Solid colors and simple textures photograph well; I'll send a short style guide once we've booked your session."
+        "q": "Que porter lors de ma séance photo ?",
+        "a": "Optez pour une tenue dans laquelle vous vous sentez à l'aise. Les couleurs unies et les textures simples donnent de beaux résultats. Je vous enverrai un petit guide stylistique une fois votre séance réservée."
       },
       {
-        "q": "How long will it take to receive my photos?",
-        "a": "Edited galleries are typically delivered within two to three weeks. For events or larger projects, a small set of previews is shared within a few days."
+        "q": "Sous quel délai recevrai-je mes photos ?",
+        "a": "Les galeries retouchées sont généralement livrées sous deux à trois semaines. Pour les événements ou les projets plus importants, une première sélection de visuels est partagée sous quelques jours."
       }
     ]
   },
   "contact": {
-    "badge": "Let's Talk",
+    "badge": "Échangeons",
     "email": "leon@email.com",
     "social": [
       "Instagram",

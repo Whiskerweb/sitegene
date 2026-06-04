@@ -1,27 +1,27 @@
 {
   "brand": "HALCYON",
   "ticker": [
-    "Booking",
-    "Menu"
+    "Réservations",
+    "Setlist"
   ],
   "heroCtas": [
-    "The Band",
-    "Tour",
-    "Listen"
+    "Le Groupe",
+    "Tournée",
+    "Écouter"
   ],
   "hero": {
-    "tagline": "A bold and immersive indie band and audio project.",
+    "tagline": "Un projet musical indie audacieux et immersif.",
     "image": "/_templates/indie-band/img/hero.jpg"
   },
   "band": {
-    "label": "The Band",
-    "sub": "Listen to the latest tracks",
-    "body": "HALCYON is a three-piece formed between late-night studio sessions and empty warehouse stages. We build dense, cinematic soundscapes — analog tape, broken synths and a voice that refuses to sit still. Loud where it counts, quiet where it matters.",
+    "label": "Le Groupe",
+    "sub": "Découvrez nos derniers titres",
+    "body": "HALCYON est un trio né entre les sessions studio tardives et les scènes d’entrepôts déserts. Nous créons des paysages sonores denses et cinématiques — bandes analogiques, synthés usés et une voix qui ne tient pas en place. Puissants là où il le faut, subtils là où ça compte.",
     "image1": "/_templates/indie-band/img/band1.jpg",
     "image2": "/_templates/indie-band/img/band2.jpg"
   },
-  "releasesLabel": "Latest Releases",
-  "releasesCta": "Listen the complete tracks",
+  "releasesLabel": "Dernières Sorties",
+  "releasesCta": "Écoutez les morceaux complets",
   "releases": [
     {
       "title": "Static Bloom",
@@ -37,108 +37,108 @@
     }
   ],
   "tour": {
-    "label": "Tour",
+    "label": "Tournée",
     "regions": [
       {
-        "name": "Europa",
+        "name": "Europe",
         "dates": [
           {
-            "city": "Barcelona, ES",
+            "city": "Barcelone, ES",
             "venue": "Razzmatazz 3",
-            "date": "March 5, 2026",
-            "time": "8:00 PM",
-            "status": "Tickets"
+            "date": "5 mars 2026",
+            "time": "20h00",
+            "status": "Billets"
           },
           {
             "city": "Madrid, ES",
             "venue": "Sala Clamores",
-            "date": "May 7, 2026",
-            "time": "8:00 PM",
-            "status": "Tickets"
+            "date": "7 mai 2026",
+            "time": "20h00",
+            "status": "Billets"
           },
           {
             "city": "Lyon, FR",
             "venue": "Le Sonic",
-            "date": "March 9, 2026",
-            "time": "8:30 PM",
-            "status": "Tickets"
+            "date": "9 mars 2026",
+            "time": "20h30",
+            "status": "Billets"
           },
           {
             "city": "Milan, IT",
             "venue": "Circolo Magnolia",
-            "date": "March 11, 2026",
-            "time": "9:00 PM",
-            "status": "Tickets"
+            "date": "11 mars 2026",
+            "time": "21h00",
+            "status": "Billets"
           },
           {
             "city": "Zurich, CH",
             "venue": "Moods",
-            "date": "March 13, 2026",
-            "time": "8:00 PM",
-            "status": "Sold Out"
+            "date": "13 mars 2026",
+            "time": "20h00",
+            "status": "Complet"
           }
         ]
       },
       {
-        "name": "South America",
+        "name": "Amérique du Sud",
         "dates": [
           {
             "city": "Quito, EC",
             "venue": "El Pobre Diablo",
-            "date": "April 12, 2026",
-            "time": "8:00 PM",
-            "status": "Tickets"
+            "date": "12 avril 2026",
+            "time": "20h00",
+            "status": "Billets"
           },
           {
             "city": "Bogotá, CO",
             "venue": "Casa Babylon",
-            "date": "April 10, 2026",
-            "time": "9:00 PM",
-            "status": "Sold Out"
+            "date": "10 avril 2026",
+            "time": "21h00",
+            "status": "Complet"
           },
           {
             "city": "Lima, PE",
             "venue": "La Noche de Barranco",
-            "date": "April 7, 2026",
-            "time": "8:00 PM",
-            "status": "Tickets"
+            "date": "7 avril 2026",
+            "time": "20h00",
+            "status": "Billets"
           },
           {
             "city": "Santiago, CL",
             "venue": "Club Chocolate",
-            "date": "April 5, 2026",
-            "time": "8:30 PM",
-            "status": "Tickets"
+            "date": "5 avril 2026",
+            "time": "20h30",
+            "status": "Billets"
           },
           {
             "city": "Buenos Aires, AR",
             "venue": "La Trastienda",
-            "date": "March 9, 2026",
-            "time": "9:00 PM",
-            "status": "Sold Out"
+            "date": "9 mars 2026",
+            "time": "21h00",
+            "status": "Complet"
           }
         ]
       }
     ]
   },
-  "videosLabel": "Videos",
+  "videosLabel": "Vidéos",
   "videos": [
     {
-      "title": "Static Bloom — Live at Razzmatazz",
+      "title": "Static Bloom — Live au Razzmatazz",
       "cover": "/_templates/indie-band/img/video1.jpg"
     },
     {
-      "title": "Studio Sessions — Tape & Noise",
+      "title": "Sessions Studio — Bande & Bruit",
       "cover": "/_templates/indie-band/img/video2.jpg"
     },
     {
-      "title": "Paper Cathedral — Official Video",
+      "title": "Paper Cathedral — Clip Officiel",
       "cover": "/_templates/indie-band/img/video3.jpg"
     }
   ],
   "footer": {
-    "label": "Updates on",
-    "text": "No drama, just music. Subscribe for tour announcements and unreleased tracks.",
+    "label": "Actualités",
+    "text": "Sans chichi, juste de la musique. Abonnez-vous pour les annonces de tournée et les titres inédits.",
     "image": "/_templates/indie-band/img/footer.jpg",
     "socials": [
       "Instagram",
@@ -147,6 +147,6 @@
       "Bandcamp"
     ],
     "copyright": "© HALCYON",
-    "credit": "Indie band · audio project"
+    "credit": "Groupe indie · projet audio"
   }
 }

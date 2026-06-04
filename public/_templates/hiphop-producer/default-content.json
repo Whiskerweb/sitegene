@@ -1,33 +1,33 @@
 {
   "brand": "KAIRO",
   "nav": [
-    "Releases",
-    "Tour",
-    "About",
-    "Booking"
+    "Sorties",
+    "Tournée",
+    "À propos",
+    "Réservations"
   ],
-  "cta": "Booking",
+  "cta": "Réserver",
   "hero": {
-    "badge": "New Drop",
-    "titleLine1": "“Silent Ops”",
-    "titleLine2": "is out now",
+    "badge": "Nouvelle sortie",
+    "titleLine1": "« Silent Ops »",
+    "titleLine2": "disponible maintenant",
     "listen": [
       {
-        "label": "Listen on Apple Music",
+        "label": "Écouter sur Apple Music",
         "href": "#"
       },
       {
-        "label": "Listen on Spotify",
+        "label": "Écouter sur Spotify",
         "href": "#"
       },
       {
-        "label": "Listen on YouTube Music",
+        "label": "Écouter sur YouTube Music",
         "href": "#"
       }
     ],
     "image": "/_templates/hiphop-producer/img/hero.jpg"
   },
-  "releasesLabel": "Releases",
+  "releasesLabel": "Sorties",
   "releases": [
     {
       "title": "Silent Ops",
@@ -56,51 +56,51 @@
       "date": "12 SEP",
       "city": "Berlin, DE",
       "venue": "Astra Kulturhaus",
-      "link": "Get Tickets"
+      "link": "Billets"
     },
     {
       "date": "21 SEP",
       "city": "Paris, FR",
       "venue": "La Cigale",
-      "link": "Get Tickets"
+      "link": "Billets"
     },
     {
       "date": "04 OCT",
       "city": "London, UK",
       "venue": "Village Underground",
-      "link": "Get Tickets"
+      "link": "Billets"
     },
     {
       "date": "18 OCT",
       "city": "Amsterdam, NL",
       "venue": "Melkweg – Max",
-      "link": "Get Tickets"
+      "link": "Billets"
     },
     {
       "date": "02 NOV",
       "city": "Brussels, BE",
       "venue": "Ancienne Belgique",
-      "link": "Get Tickets"
+      "link": "Billets"
     },
     {
       "date": "15 NOV",
       "city": "Lyon, FR",
       "venue": "Le Transbordeur",
-      "link": "Get Tickets"
+      "link": "Billets"
     },
     {
       "date": "29 NOV",
       "city": "Madrid, ES",
       "venue": "Sala La Riviera",
-      "link": "Get Tickets"
+      "link": "Billets"
     }
   ],
   "bio": {
-    "quote": "“I’m KAIRO – hip-hop artist and producer. Dark beats, real stories, and raw energy. No gimmicks — just truth in every bar.”",
-    "readMore": "Read the full story",
+    "quote": "« Je suis KAIRO – artiste hip-hop et producteur. Des beats sombres, des histoires vraies et une énergie brute. Pas de faux-semblants – juste la vérité dans chaque texte. »",
+    "readMore": "Lire l’histoire complète",
     "image": "/_templates/hiphop-producer/img/portrait.jpg"
   },
-  "listenLabel": "Listen to Me On",
+  "listenLabel": "Écoutez-moi sur",
   "socials": [
     {
       "label": "Spotify",
@@ -125,6 +125,6 @@
   ],
   "footer": {
     "copyright": "© KAIRO",
-    "credit": "Hip-hop artist · producer"
+    "credit": "Artiste hip-hop · producteur"
   }
 }

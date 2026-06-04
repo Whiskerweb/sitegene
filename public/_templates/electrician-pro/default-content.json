@@ -1,107 +1,107 @@
 {
   "meta": {
-    "title": "Ohmly – Licensed Electricians You Can Rely On",
-    "description": "Licensed and certified electricians delivering fast, safe and affordable solutions for homes and businesses."
+    "title": "Ohmly – Électriciens agréés sur qui compter",
+    "description": "Électriciens agréés et certifiés proposant des solutions rapides, sûres et abordables pour les particuliers et les professionnels."
   },
   "brand": "Ohmly",
   "nav": {
-    "rating": "4.8+ Ratings",
+    "rating": "4,8+ Avis",
     "links": [
-      "About",
-      "Services",
-      "Why us",
-      "Pricing",
+      "À propos",
+      "Prestations",
+      "Pourquoi nous",
+      "Tarifs",
       "Contact"
     ],
-    "cta": "Get a quote"
+    "cta": "Demander un devis"
   },
   "hero": {
-    "title": "Safe & Reliable electrical solutions",
-    "tagline": "Licensed & certified electricians delivering fast, safe, and affordable solutions for homes and businesses.",
-    "cta": "Book your service",
+    "title": "Solutions électriques sûres et fiables",
+    "tagline": "Électriciens agréés et certifiés pour des interventions rapides, sécurisées et économiques chez vous ou en entreprise.",
+    "cta": "Réserver une intervention",
     "badge": "Made in Demo",
     "image": "/_templates/electrician-pro/img/hero.jpg"
   },
   "services": {
-    "label": "Services",
-    "title": "Trusted solutions for all your electrical needs",
+    "label": "Prestations",
+    "title": "Des solutions fiables pour tous vos besoins électriques",
     "items": [
       {
-        "title": "Residential Wiring",
+        "title": "Électricité résidentielle",
         "image": "/_templates/electrician-pro/img/s-wiring.jpg"
       },
       {
-        "title": "Lighting Installation",
+        "title": "Installation d'éclairage",
         "image": "/_templates/electrician-pro/img/s-lighting.jpg"
       },
       {
-        "title": "Panel Upgrades",
+        "title": "Mise à niveau de tableau",
         "image": "/_templates/electrician-pro/img/s-panel.jpg"
       },
       {
-        "title": "Commercial Electrical",
+        "title": "Électricité commerciale",
         "image": "/_templates/electrician-pro/img/s-commercial.jpg"
       },
       {
-        "title": "Electrical Repairs",
+        "title": "Dépannage électrique",
         "image": "/_templates/electrician-pro/img/s-repairs.jpg"
       },
       {
-        "title": "Safety Inspections",
+        "title": "Contrôles de sécurité",
         "image": "/_templates/electrician-pro/img/s-inspection.jpg"
       }
     ]
   },
   "why": {
-    "label": "Why us",
-    "title": "Why homeowners and businesses choose us",
+    "label": "Pourquoi nous",
+    "title": "Pourquoi les particuliers et professionnels nous choisissent",
     "statValue": "1,000",
-    "statLabel": "Jobs Completed",
+    "statLabel": "Interventions réalisées",
     "cards": {
       "response": {
-        "title": "At your door within hours"
+        "title": "À votre porte en quelques heures"
       },
       "experience": {
-        "title": "Over 15+ years experience",
+        "title": "Plus de 15 ans d'expérience",
         "image": "/_templates/electrician-pro/img/why-bulb.jpg"
       },
       "safety": {
-        "title": "Safety comes first always"
+        "title": "La sécurité avant tout"
       },
       "care": {
-        "title": "We care about you",
+        "title": "Nous prenons soin de vous",
         "image": "/_templates/electrician-pro/img/why-care.jpg"
       },
       "quality": {
-        "title": "Quality work done right",
+        "title": "Travail soigné et durable",
         "image": "/_templates/electrician-pro/img/why-quality.jpg"
       }
     }
   },
   "testimonials": {
-    "label": "Testimonials",
-    "title": "What clients say about our electrical services",
+    "label": "Témoignages",
+    "title": "Ce que nos clients disent de nos services électriques",
     "items": [
       {
-        "quote": "They fixed a sudden outage and responded fast. The electrician fully ensured everything was safe and clean.",
+        "quote": "Ils ont résolu une panne soudaine en un temps record. L'électricien a tout vérifié pour garantir sécurité et propreté.",
         "author": "James Anderson",
         "role": "Homeowner",
         "rating": 5
       },
       {
-        "quote": "Installed our new lighting perfectly and tidied everything as they went. Friendly, on time, and very professional.",
+        "quote": "Installation parfaite de notre nouvel éclairage, avec un rangement impeccable. Ponctuels, aimables et très professionnels.",
         "author": "Jenifer Martinez",
         "role": "Property Manager",
         "rating": 5
       },
       {
-        "quote": "They upgraded our electrical panel safely and explained everything clearly. Very neat and professional work.",
+        "quote": "Ils ont modernisé notre tableau électrique en toute sécurité et nous ont tout expliqué clairement. Travail soigné et professionnel.",
         "author": "Daniel Brooks",
         "role": "Homeowner",
         "rating": 5
       },
       {
-        "quote": "Installed smart switches throughout our home. Everything works perfectly and looks clean. Communication was excellent.",
+        "quote": "Installation d'interrupteurs connectés dans toute la maison. Tout fonctionne parfaitement et l'ensemble est très propre. Communication excellente.",
         "author": "Sophie Laurent",
         "role": "Business Owner",
         "rating": 5
@@ -109,74 +109,74 @@
     ]
   },
   "pricing": {
-    "label": "Pricing",
-    "title": "Pricing designed around your needs",
+    "label": "Tarifs",
+    "title": "Des tarifs adaptés à vos besoins",
     "image": "/_templates/electrician-pro/img/pricing.jpg",
     "standard": {
-      "name": "Standard Service Rate",
+      "name": "Tarif standard d'intervention",
       "rate": "$85",
       "unit": "/ Hour",
       "included": [
-        "On-site diagnostics",
-        "Repairs & installations",
-        "Safety inspection included",
-        "Transparent hourly billing"
+        "Diagnostic sur site",
+        "Réparations et installations",
+        "Contrôle de sécurité inclus",
+        "Facturation horaire transparente"
       ]
     },
     "custom": {
-      "tag": "Custom Electrical Solutions",
-      "name": "Custom",
-      "cta": "Request Quote",
+      "tag": "Solutions électriques sur mesure",
+      "name": "Sur devis",
+      "cta": "Demander un devis",
       "included": [
-        "Full home wiring",
-        "Renovation & upgrades",
-        "Commercial installations",
-        "Tailored project planning"
+        "Électricité complète du logement",
+        "Rénovation et mises à niveau",
+        "Installations commerciales",
+        "Planification sur mesure"
       ]
     }
   },
   "faq": {
     "label": "FAQ",
-    "title": "Everything you need to know",
+    "title": "Tout ce que vous devez savoir",
     "items": [
       {
-        "question": "How quickly can you arrive for service?",
-        "answer": "For urgent calls we aim to be at your door within a couple of hours. For scheduled work we book a slot that fits your day, and you always get a confirmed arrival window."
+        "question": "Combien de temps mettez-vous pour intervenir ?",
+        "answer": "Pour les urgences, nous visons une intervention sous quelques heures. Pour les rendez-vous planifiés, nous choisissons un créneau adapté à votre emploi du temps et vous confirmons une plage horaire précise."
       },
       {
-        "question": "Are you licensed and insured?",
-        "answer": "Yes. Every electrician on our team is fully licensed, certified, and insured, so your home or business is protected on every job."
+        "question": "Êtes-vous agréés et assurés ?",
+        "answer": "Oui. Tous nos électriciens sont pleinement agréés, certifiés et assurés, garantissant ainsi la protection de votre domicile ou de votre entreprise à chaque intervention."
       },
       {
-        "question": "How does your hourly pricing work?",
-        "answer": "Our standard service rate is billed transparently by the hour, with no hidden fees. You approve any parts or extra work before we start."
+        "question": "Comment fonctionne votre tarification horaire ?",
+        "answer": "Notre tarif standard est facturé à l'heure, de manière transparente et sans frais cachés. Vous validez toute pièce ou travail supplémentaire avant que nous ne commencions."
       },
       {
-        "question": "Do you provide quotes for large projects?",
-        "answer": "Absolutely. For renovations, rewiring, or commercial installations we provide a detailed custom quote with a clear scope and timeline."
+        "question": "Proposez-vous des devis pour les gros projets ?",
+        "answer": "Absolument. Pour les rénovations, les réfections électriques ou les installations commerciales, nous fournissons un devis détaillé avec un cahier des charges clair et un calendrier précis."
       },
       {
-        "question": "Do you offer emergency electrical services?",
-        "answer": "Yes, we offer fast-response emergency support for outages, sparking outlets, and other urgent electrical issues, day or night."
+        "question": "Proposez-vous des interventions d'urgence ?",
+        "answer": "Oui, nous assurons un service d'urgence à réponse rapide pour les coupures, les prises qui grésillent ou tout autre problème électrique urgent, de jour comme de nuit."
       }
     ]
   },
   "cta": {
-    "title": "Need urgent electrical help?",
-    "subtitle": "We respond quickly to urgent electrical issues, delivering safe and reliable solutions when you need them most.",
+    "title": "Besoin d'une intervention électrique urgente ",
+    "subtitle": "Nous intervenons rapidement en cas de problème électrique, en proposant des solutions sûres et fiables au moment où vous en avez le plus besoin.",
     "phone": "+1(969) 234 4242",
     "image": "/_templates/electrician-pro/img/cta.jpg"
   },
   "footer": {
-    "tagline": "Ohmly is a professional electrician service built for fast response, clear pricing, and trust-building work that turns visitors into customers.",
+    "tagline": "Ohmly est un service d'électriciens professionnels conçu pour des interventions rapides, une tarification claire et un travail de confiance qui transforme les visiteurs en clients.",
     "links": [
-      "About",
-      "Services",
-      "Why us",
-      "Testimonials",
-      "Pricing",
+      "À propos",
+      "Prestations",
+      "Pourquoi nous",
+      "Témoignages",
+      "Tarifs",
       "Contact"
     ],
-    "copyright": "© 2026 Ohmly. All rights reserved."
+    "copyright": "© 2026 Ohmly. Tous droits réservés."
   }
 }

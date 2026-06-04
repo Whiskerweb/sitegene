@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Voltéo – Electrical, Plumbing & Heating Experts",
-    "description": "Smart solutions for power, water and heat. Certified electricians, plumbers and heating engineers for homes and businesses — available 24/7."
+    "title": "Voltéo – Experts en électricité, plomberie et chauffage",
+    "description": "Solutions intelligentes pour l'électricité, l'eau et le chauffage. Électriciens, plombiers et chauffagistes certifiés pour les particuliers et professionnels — disponibles 24h/24 et 7j/7."
   },
   "brand": "Voltéo",
   "topbar": {
@@ -10,140 +10,140 @@
   "nav": {
     "links": [
       "Services",
-      "How it works",
-      "About",
-      "FAQs"
+      "Fonctionnement",
+      "À propos",
+      "FAQ"
     ],
-    "cta": "Contact us"
+    "cta": "Nous contacter"
   },
   "hero": {
-    "title": "Smart solutions for power, water & heat",
-    "tagline": "Fast, professional service for homes and businesses. Available 24/7 with certified experts you can trust.",
-    "cta": "Request a quote",
+    "title": "Solutions intelligentes pour l'électricité, l'eau et le chauff",
+    "tagline": "Service rapide et professionnel pour les particuliers et les entreprises. Disponible 24h/24 et 7j/7 avec des experts certifiés en qui vous pouvez avoir confiance.",
+    "cta": "Demander un devis",
     "image": "/_templates/multi-trade/img/hero.jpg",
     "pills": [
-      "24/7 emergency service",
-      "Certified & insured technicians",
-      "Transparent pricing",
-      "Fixed response time"
+      "Service d'urgence 24/7",
+      "Techniciens certifiés et assurés",
+      "Tarifs transparents",
+      "Délai d'intervention garanti"
     ]
   },
   "marquee": [
-    "Electrical repairs",
-    "Plumbing solutions",
-    "Heating systems"
+    "Dépannage électrique",
+    "Solutions de plomberie",
+    "Systèmes de chauffage"
   ],
   "services": {
-    "label": "Our services",
-    "title": "Expert solutions for every home system",
-    "subtitle": "Voltéo provides professional electrical, heating and plumbing services designed to keep your home safe, efficient and comfortable all year round.",
+    "label": "Nos services",
+    "title": "Solutions expertes pour tous vos systèmes domestiques",
+    "subtitle": "Voltéo propose des services professionnels en électricité, chauffage et plomberie pour garantir la sécurité, l'efficacité et le confort de votre logement toute l'année.",
     "items": [
       {
-        "title": "Electrical repairs",
-        "desc": "Reliable solutions for wiring faults, panel upgrades, lighting installations and electrical issues.",
+        "title": "Dépannage électrique",
+        "desc": "Solutions fiables pour les défauts de câblage, la mise à niveau des tableaux, l'installation d'éclairage et tout problème électrique.",
         "image": "/_templates/multi-trade/img/service-electrical.jpg"
       },
       {
-        "title": "Plumbing solutions",
-        "desc": "Leak detection, pipe repairs, fixture installs and full bathroom systems done right the first time.",
+        "title": "Solutions de plomberie",
+        "desc": "Détection de fuites, réparations de canalisations, installation d'équipements et mise en place complète de salles de bain, du premier coup.",
         "image": "/_templates/multi-trade/img/service-plumbing.jpg"
       },
       {
-        "title": "Heating systems",
-        "desc": "Boiler servicing, radiator installs and heating diagnostics to keep your home warm and efficient.",
+        "title": "Systèmes de chauffage",
+        "desc": "Entretien de chaudières, installation de radiateurs et diagnostic de chauffage pour maintenir votre logement au chaud et performant.",
         "image": "/_templates/multi-trade/img/service-heating.jpg"
       }
     ]
   },
   "trust": {
-    "label": "Why us",
-    "title": "Company you can trust",
-    "subtitle": "At Voltéo, we combine experience, professionalism and attention to detail to deliver dependable solutions for every project.",
+    "label": "Pourquoi nous choisir",
+    "title": "Une entreprise de confiance",
+    "subtitle": "Chez Voltéo, nous allions expérience, professionnalisme et souci du détail pour offrir des solutions fiables à chaque projet.",
     "image": "/_templates/multi-trade/img/about.jpg",
     "statValue": "10+",
-    "statLabel": "years of experience",
+    "statLabel": "années d'expérience",
     "features": [
       {
-        "title": "Experienced technicians",
-        "desc": "Our team consists of trained and experienced professionals who handle every project with skill and precision. We rely on industry standards to deliver dependable results."
+        "title": "Techniciens expérimentés",
+        "desc": "Notre équipe est composée de professionnels formés et expérimentés, qui traitent chaque projet avec compétence et précision. Nous respectons les normes du secteur pour des résultats durables."
       },
       {
-        "title": "Reliable & on-time service",
+        "title": "Service fiable et ponctuel",
         "desc": ""
       },
       {
-        "title": "Transparent pricing",
+        "title": "Tarifs transparents",
         "desc": ""
       },
       {
-        "title": "Customer-focused approach",
+        "title": "Approche centrée client",
         "desc": ""
       },
       {
-        "title": "Emergency support",
+        "title": "Assistance d'urgence",
         "desc": ""
       }
     ],
-    "urgentTitle": "Have an urgent problem?",
-    "urgentText": "We provide fast and reliable emergency services whenever you need help.",
-    "urgentCta": "Contact our experts"
+    "urgentTitle": "Un problème urgent ?",
+    "urgentText": "Nous intervenons rapidement et efficacement en cas d'urgence, dès que vous avez besoin d'aide.",
+    "urgentCta": "Contacter nos experts"
   },
   "howItWorks": {
-    "label": "How it works",
-    "title": "Simple steps to fast, reliable service",
-    "subtitle": "Our streamlined process ensures fast response, clear communication and high-quality results from start to finish.",
+    "label": "Comment ça marche",
+    "title": "Des étapes simples pour un service rapide et fiable",
+    "subtitle": "Notre processus optimisé garantit une intervention rapide, une communication claire et des résultats de qualité, du début à la fin.",
     "steps": [
       {
         "number": "01",
-        "tab": "Request a service",
-        "title": "Tell us what you need and we're ready to help.",
-        "desc": "Reach out through our online form or give us a call. Describe your issue, choose a convenient time and we'll confirm your booking within minutes.",
-        "cta": "Request a service",
+        "tab": "Demander un service",
+        "title": "Dites-nous ce dont vous avez besoin, nous sommes prêts à vous aider.",
+        "desc": "Contactez-nous via notre formulaire en ligne ou par téléphone. Décrivez votre problème, choisissez un créneau horaire et nous confirmons votre réservation en quelques minutes.",
+        "cta": "Demander un service",
         "image": "/_templates/multi-trade/img/process.jpg"
       },
       {
         "number": "02",
-        "tab": "Inspection & quote",
-        "title": "We inspect and give you a clear quote.",
-        "desc": "A certified technician assesses the work on site, explains the options and provides transparent, fixed pricing before anything starts.",
-        "cta": "Request a service",
+        "tab": "Inspection et devis",
+        "title": "Nous évaluons et vous proposons un devis clair.",
+        "desc": "Un technicien certifié examine les travaux sur place, vous explique les options et vous fournit un tarif fixe et transparent avant toute intervention.",
+        "cta": "Demander un service",
         "image": "/_templates/multi-trade/img/process.jpg"
       },
       {
         "number": "03",
-        "tab": "Fast repair",
-        "title": "We fix it fast and clean up after.",
-        "desc": "Our experts complete the job efficiently, test everything thoroughly and leave your space tidy and fully working.",
-        "cta": "Request a service",
+        "tab": "Réparation rapide",
+        "title": "Nous réparons rapidement et laissons les lieux propres.",
+        "desc": "Nos experts réalisent les travaux avec efficacité, testent minutieusement chaque installation et quittent les lieux en parfait état de fonctionnement.",
+        "cta": "Demander un service",
         "image": "/_templates/multi-trade/img/process.jpg"
       }
     ]
   },
   "testimonials": {
-    "label": "Testimonials",
-    "title": "What our clients say",
-    "subtitle": "Trusted by homeowners and businesses",
+    "label": "Témoignages",
+    "title": "Ce que disent nos clients",
+    "subtitle": "Recommandés par les particuliers et les entreprises",
     "items": [
       {
-        "quote": "Quick and professional service! Voltéo fixed our electrical issue within an hour. The technician was friendly, explained everything clearly, and made sure everything was safe before they leaving.",
+        "quote": "Service rapide et professionnel ! Voltéo a résolu notre problème électrique en moins d'une heure. Le technicien était aimable, a tout expliqué clairement et a vérifié la sécurité avant de partir.",
         "author": "Martin K.",
         "role": "Homeowner",
         "avatar": "/_templates/multi-trade/img/avatar1.jpg"
       },
       {
-        "quote": "Highly recommend for plumbing work. We had a major leak in our kitchen, and Voltéo responded immediately. The repair was fast, clean, and affordable. Great experience overall with them.",
+        "quote": "Je recommande vivement pour les travaux de plomberie. Nous avions une fuite importante dans la cuisine, et Voltéo est intervenu immédiatement. La réparation a été rapide, propre et abordable. Une excellente expérience globale.",
         "author": "Petra L.",
         "role": "Apartment owner",
         "avatar": "/_templates/multi-trade/img/avatar2.jpg"
       },
       {
-        "quote": "Reliable heating service. Our heating system broke down in the middle of winter, and Voltéo saved the day. They arrived quickly and got everything running perfectly again. Thanks so much.",
+        "quote": "Un service de chauffage fiable. Notre système de chauffage est tombé en panne en plein hiver, et Voltéo nous a sauvés. Ils sont arrivés rapidement et ont tout remis en marche parfaitement. Merci beaucoup !",
         "author": "Jan S.",
         "role": "Property manager",
         "avatar": "/_templates/multi-trade/img/avatar3.jpg"
       },
       {
-        "quote": "Arrived faster than expected in the morning, and the technician was at my door within an hour. He quickly completed the lighting repair. Very professional and respectful of my home.",
+        "quote": "Ils sont arrivés plus tôt que prévu le matin, et le technicien était à ma porte en moins d'une heure. Il a rapidement réparé l'éclairage. Très professionnel et respectueux de mon domicile.",
         "author": "David K.",
         "role": "Homeowner",
         "avatar": "/_templates/multi-trade/img/avatar4.jpg"
@@ -151,86 +151,86 @@
     ]
   },
   "about": {
-    "label": "About us",
-    "title": "Trust and reliable service since 2012",
+    "label": "À propos",
+    "title": "Confiance et service fiable depuis 2012",
     "paragraphs": [
-      "Voltéo was founded with a simple goal — to provide dependable electrical, heating and plumbing services that homeowners and businesses can trust.",
-      "Our team of experienced technicians is committed to delivering safe, efficient and long-lasting solutions for every project. We believe great service starts with professionalism, clear communication and attention to detail."
+      "Voltéo a été fondé avec un objectif simple : offrir des services fiables en électricité, chauffage et plomberie, sur lesquels les particuliers et les entreprises peuvent compter.",
+      "Notre équipe de techniciens expérimentés s'engage à fournir des solutions sûres, efficaces et durables pour chaque projet. Nous croyons qu'un excellent service repose sur le professionnalisme, une communication claire et le souci du"
     ],
-    "cta": "Contact our experts",
+    "cta": "Contacter nos experts",
     "image": "/_templates/multi-trade/img/trust.jpg"
   },
   "faq": {
     "label": "FAQ",
-    "title": "Frequently asked questions",
-    "subtitle": "Explore our most common inquiries about electricity repair, plumbing, and heating services.",
+    "title": "Questions fréquentes",
+    "subtitle": "Découvrez les questions les plus courantes sur nos services d'électricité, de plomberie et de chauffage.",
     "items": [
       {
-        "question": "What services does Voltéo offer?",
-        "answer": "We cover electrical repairs and installations, plumbing and leak repair, and full heating system servicing — for both residential and commercial clients."
+        "question": "Quels services propose Voltéo ?",
+        "answer": "Nous intervenons en dépannage et installation électrique, plomberie et réparation de fuites, ainsi qu'en entretien complet des systèmes de chauffage — pour les particuliers et les professionnels."
       },
       {
-        "question": "Are your technicians certified?",
-        "answer": "Yes. Every technician on our team is fully certified, insured and background-checked before working on any job."
+        "question": "Vos techniciens sont-ils certifiés ?",
+        "answer": "Oui. Chaque technicien de notre équipe est pleinement certifié, assuré et a passé un contrôle de sécurité avant d'intervenir sur un chantier."
       },
       {
-        "question": "Do you provide emergency services?",
-        "answer": "Absolutely. We offer 24/7 emergency support with a fixed response time so help is always one call away."
+        "question": "Proposez-vous des services d'urgence ?",
+        "answer": "Absolument. Nous assurons une assistance d'urgence 24h/24 et 7j/7 avec un délai d'intervention garanti, pour que l'aide soit toujours à portée d'appel."
       },
       {
-        "question": "Can I schedule an appointment online?",
-        "answer": "Yes — use our online form to pick a service and a convenient time, and we'll confirm your booking within minutes."
+        "question": "Puis-je prendre rendez-vous en ligne ?",
+        "answer": "Oui — utilisez notre formulaire en ligne pour choisir un service et un créneau horaire qui vous convient. Nous confirmons votre réservation en quelques minutes."
       },
       {
-        "question": "How do I get a quote?",
-        "answer": "Request a quote online or by phone. A technician inspects the work on site and gives you transparent, fixed pricing before anything starts."
+        "question": "Comment obtenir un devis ?",
+        "answer": "Demandez un devis en ligne ou par téléphone. Un technicien évalue le travail sur place et vous propose un tarif fixe et transparent avant toute intervention."
       },
       {
-        "question": "Do you offer service warranties?",
-        "answer": "All of our work is backed by a workmanship guarantee. If anything isn't right, we'll come back and put it right at no extra charge."
+        "question": "Proposez-vous des garanties sur vos services ?",
+        "answer": "Tous nos travaux sont couverts par une garantie de qualité. Si quelque chose ne convient pas, nous revenons corriger sans frais supplémentaires."
       }
     ],
-    "cta": "Ask a question"
+    "cta": "Poser une question"
   },
   "finalCta": {
-    "label": "Get in touch",
-    "title": "Let's fix the problem today",
-    "subtitle": "Our experienced technicians are ready to handle your electrical, heating, cooling, or plumbing needs.",
-    "cta": "Request quote",
+    "label": "Contactez-nous",
+    "title": "Résolvons le problème dès aujourd'hui",
+    "subtitle": "Nos techniciens expérimentés sont prêts à répondre à vos besoins en électricité, chauffage, climatisation ou plomberie.",
+    "cta": "Demander un devis",
     "image": "/_templates/multi-trade/img/cta.jpg"
   },
   "footer": {
-    "tagline": "We proudly serve the local area and surrounding communities with fast and reliable home services.",
+    "tagline": "Nous servons avec fierté la région et les communes avoisinantes, en proposant des services à domicile rapides et fiables.",
     "phone": "(555) 120-4480",
     "email": "contact@volteo.com",
     "columns": [
       {
-        "heading": "Company",
+        "heading": "Entreprise",
         "links": [
-          "Home",
+          "Accueil",
           "Services",
-          "About us",
-          "FAQs",
-          "Contact us"
+          "À propos",
+          "FAQ",
+          "Nous contacter"
         ]
       },
       {
         "heading": "Services",
         "links": [
-          "Electrical repairs",
-          "Plumbing solutions",
-          "Heating systems"
+          "Dépannage électrique",
+          "Solutions de plomberie",
+          "Systèmes de chauffage"
         ]
       },
       {
-        "heading": "Legal",
+        "heading": "Mentions légales",
         "links": [
-          "Privacy policy",
-          "Terms of use",
-          "Quick links"
+          "Politique de confidentialité",
+          "Conditions d'utilisation",
+          "Liens utiles"
         ]
       }
     ],
-    "copyright": "© 2026 Voltéo. Demo template."
+    "copyright": "© 2026 Voltéo. Modèle de démonstration."
   }
 }
