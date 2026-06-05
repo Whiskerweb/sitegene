@@ -4,26 +4,32 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { GlassFilter } from "@/components/ui/liquid-radio";
 import { Button } from "@/components/ui/Button";
-import { Field, Input, Textarea } from "@/components/ui/Field";
 import { Spinner } from "@/components/ui/Spinner";
 import {
   IconAlert,
-  IconArrowUp,
   IconCheck,
   IconChevron,
   IconClose,
   IconDesktop,
-  IconEdit,
-  IconMic,
   IconPhone,
-  IconPin,
   IconStar4,
   IconTablet,
 } from "@/components/ui/icons";
-import { getAtPath, setAtPath, pageIndexForPath } from "@/lib/content-path";
+import { getAtPath, setAtPath } from "@/lib/content-path";
 import { normalizeContent, type SiteContentV2 } from "@/lib/site-content";
 import { useDictation } from "@/lib/use-dictation";
 import type { PinSelector } from "@/lib/notes-selector";
+import {
+  appendMessage,
+  rowsToThread,
+  settleProposal,
+  type AiMessageRow,
+  type ChatMessage,
+} from "@/lib/chat-thread";
+import ChatPanel, { type Composer } from "./components/ChatPanel";
+import PreviewFrame, { type Device } from "./components/PreviewFrame";
+import TextPanel, { type Panel } from "./components/TextPanel";
+import PhotoPicker, { type LibPhoto } from "./components/PhotoPicker";
 
 export type EditableField = {
   path: string;
@@ -32,7 +38,7 @@ export type EditableField = {
   maxLen: number | null;
 };
 
-/** Effet acheté (boutique Formules), affiché dans le popover composants. */
+/** Effet acheté (boutique Formules), affiché dans la galerie composants. */
 export type OwnedEffect = {
   id: string;
   name: string;
@@ -58,20 +64,13 @@ type Props = {
   content: Record<string, unknown>;
   ownedEffects: OwnedEffect[];
   integrateEffectId: string | null;
+  initialMessages: AiMessageRow[];
 };
 
 type SaveState = "idle" | "saving" | "saved" | "error";
-type Panel = { path: string; label: string; type: string; maxLen: number | null; value: string };
-type Device = "desktop" | "tablet" | "mobile";
 type NoticeKind = "info" | "success" | "error";
 type Notice = { msg: string; kind: NoticeKind; id: number } | null;
 const NOTICE_MS = 4500;
-
-const DEVICE_WIDTH: Record<Device, string> = {
-  desktop: "100%",
-  tablet: "834px",
-  mobile: "390px",
-};
 
 function escapeRe(s: string) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -85,24 +84,26 @@ export default function EditorClient({
   content,
   ownedEffects,
   integrateEffectId,
+  initialMessages,
 }: Props) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  // On stocke le contenu sous sa forme NORMALISÉE v2 (idempotent sur un contenu
-  // déjà v2 ; promeut un ancien contenu v1 plat en page unique « / », index 0).
-  // L'éditeur lit/écrit donc toujours via les helpers page-aware getAtPath/setAtPath.
-  const contentRef = useRef<SiteContentV2>(normalizeContent(structuredClone(content)));
+  // Normalize once at mount — content structure (pages) never changes during an editing session.
+  const [initialContent] = useState<SiteContentV2>(() => normalizeContent(structuredClone(content)));
+  const contentRef = useRef<SiteContentV2>(initialContent);
   const changesRef = useRef<Record<string, unknown>>({});
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const noticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const noticeSeq = useRef(0);
   const fileRef = useRef<HTMLInputElement>(null);
   const pendingPhoto = useRef<string | null>(null);
-  const aiInputRef = useRef<HTMLTextAreaElement | null>(null);
+  const composerRef = useRef<HTMLTextAreaElement | null>(null);
+  const lastRequest = useRef<{
+    text: string;
+    target: PinSelector | null;
+    effect: OwnedEffect | null;
+  } | null>(null);
 
-  // Pages du site (forme v2). Le sélecteur de page pilote currentPageIndex et
-  // l'URL ?path= de l'iframe d'aperçu. Mémoïsé à partir du contenu initial : la
-  // structure des pages (slug/title) ne change pas pendant une session d'édition.
-  const pages = contentRef.current.pages;
+  const pages = initialContent.pages;
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
 
   const [balance, setBalance] = useState(initialBalance);
@@ -115,36 +116,50 @@ export default function EditorClient({
   const [notice, setNotice] = useState<Notice>(null);
   const [device, setDevice] = useState<Device>("desktop");
 
-  // Mode « intégration d'un effet » : arrivé via /editor?integrate=<id> (page
-  // Formules) ou via le popover composants — la sélection vise alors la SECTION.
+  // Mode « intégration d'un effet » : la sélection vise alors la SECTION.
   const [integrating, setIntegrating] = useState<OwnedEffect | null>(
     () => ownedEffects.find((e) => e.id === integrateEffectId) ?? null,
   );
   const integratingRef = useRef<OwnedEffect | null>(integrating);
-  integratingRef.current = integrating;
-  const [fxPopover, setFxPopover] = useState(false);
 
   const [tool, setTool] = useState<"edit" | "note">(integrateEffectId ? "note" : "edit");
-  const [aiDraft, setAiDraft] = useState<{
-    target: PinSelector;
-    message: string;
-    effect?: OwnedEffect | null;
-  } | null>(null);
+
+  // --- Fil de chat (façon Lovable) ---------------------------------------
+  const [messages, setMessages] = useState<ChatMessage[]>(() => rowsToThread(initialMessages));
+  const [composer, setComposer] = useState<Composer>(() => {
+    const fx = ownedEffects.find((e) => e.id === integrateEffectId) ?? null;
+    return {
+      text: fx ? "Intègre ce composant à la place de la section désignée." : "",
+      target: null,
+      effect: fx,
+    };
+  });
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [sheetOpen, setSheetOpen] = useState(false); // bottom sheet mobile
+  const [isDesktop, setIsDesktop] = useState(true);
+
   const [aiLoading, setAiLoading] = useState(false);
+  // Proposition ACTIVE (la seule actionnable) — miroir du dernier message proposal "active".
   const [aiProposal, setAiProposal] = useState<
-    | { kind: "css"; css: string; explanation: string }
-    | { kind: "component"; component: ComponentDraft; explanation: string }
+    | { id: string; kind: "css"; css: string; explanation: string }
+    | { id: string; kind: "component"; component: ComponentDraft; explanation: string }
     | null
   >(null);
-  // Picker photo : clic sur un emplacement → choix « téléverser » ou « bibliothèque ».
+
   const [photoPicker, setPhotoPicker] = useState<{ path: string } | null>(null);
-  const [libPhotos, setLibPhotos] = useState<
-    { path: string; url: string; name: string }[] | null
-  >(null);
+  const [libPhotos, setLibPhotos] = useState<LibPhoto[] | null>(null);
   const reduce = useReducedMotion();
 
-  // Notifications : message typé (info / succès / erreur). Succès & erreurs disparaissent
-  // seules après NOTICE_MS ; les infos (« Téléversement… ») persistent jusqu'au remplacement.
+  // Desktop vs mobile : un SEUL ChatPanel monté (sinon le ref du composer entre en conflit).
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const apply = () => setIsDesktop(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
+  // Notifications : message typé (info / succès / erreur).
   const notify = useCallback((msg: string, kind: NoticeKind = "info") => {
     if (noticeTimer.current) {
       clearTimeout(noticeTimer.current);
@@ -166,32 +181,11 @@ export default function EditorClient({
     };
   }, []);
 
-  // Autosize de la zone de texte IA : la fenêtre grandit avec le contenu (façon ChatGPT).
-  const resizeAi = useCallback(() => {
-    const ta = aiInputRef.current;
-    if (!ta) return;
-    ta.style.height = "auto";
-    ta.style.height = Math.min(ta.scrollHeight, 260) + "px";
-  }, []);
-  // Callback ref : recalcule la hauteur au moment où le textarea (re)monte — y compris
-  // après une erreur IA où l'effet ci-dessous tournerait avant que le nœud n'existe.
-  const setAiInput = useCallback(
-    (node: HTMLTextAreaElement | null) => {
-      aiInputRef.current = node;
-      if (node) resizeAi();
-    },
-    [resizeAi],
-  );
-  useEffect(() => {
-    resizeAi();
-  }, [aiDraft?.message, aiLoading, resizeAi]);
-
-  // Dictée vocale : on ajoute le texte reconnu à la fin de la demande en cours.
+  // Dictée vocale : le texte reconnu s'ajoute à la fin du composer.
   const dictation = useDictation((chunk) =>
-    setAiDraft((d) => (d ? { ...d, message: d.message ? `${d.message} ${chunk}` : chunk } : d)),
+    setComposer((c) => ({ ...c, text: c.text ? `${c.text} ${chunk}` : chunk })),
   );
 
-  // Remonte à l'utilisateur les erreurs de dictée (micro refusé, réseau indisponible).
   useEffect(() => {
     if (!dictation.error) return;
     if (dictation.error === "not-allowed" || dictation.error === "service-not-allowed") {
@@ -203,21 +197,15 @@ export default function EditorClient({
     }
   }, [dictation.error, notify]);
 
-  // Échap ferme la modale IA quel que soit l'élément focalisé (textarea, micro, envoi).
+  // Échap ferme la galerie composants.
   useEffect(() => {
-    if (!aiDraft || aiProposal) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeAi();
+      if (e.key === "Escape") setGalleryOpen(false);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [aiDraft, aiProposal]);
+  }, []);
 
-  // Champs éditables : UNION PLATE de tous les champs connus du manifest (E3).
-  // Pour cette v1 multi-pages on ne segmente PAS les champs par type de page : un
-  // chemin matche s'il figure dans `editableFields`, sinon l'éditeur retombe sur
-  // un champ générique (textarea). Tolérant par construction — suffisant ici.
   const specFor = useCallback(
     (path: string): EditableField | null => {
       for (const f of editableFields) {
@@ -233,8 +221,6 @@ export default function EditorClient({
     if (Object.keys(changesRef.current).length === 0) return;
     setSaveState("saving");
     const snapshot = changesRef.current;
-    // Vide le buffer AVANT l'envoi : tout changement enregistré pendant le fetch
-    // appartient à la prochaine itération et ne doit pas être re-soumis.
     changesRef.current = {};
     try {
       const res = await fetch("/api/site/draft", {
@@ -243,8 +229,6 @@ export default function EditorClient({
         body: JSON.stringify({ siteId, changes: snapshot, pageIndex: currentPageIndex }),
       });
       if (!res.ok) {
-        // Échec : on remet les changements non sauvegardés dans le buffer
-        // (merge : les changements survenus pendant le fetch ont priorité).
         changesRef.current = { ...snapshot, ...changesRef.current };
         throw new Error();
       }
@@ -265,8 +249,6 @@ export default function EditorClient({
   const recordChange = useCallback(
     (path: string, value: string) => {
       changesRef.current[path] = value;
-      // Écriture page-aware : on pose la valeur dans pages[currentPageIndex].content.
-      // setAtPath renvoie une COPIE immuable → on réaffecte le ref.
       contentRef.current = setAtPath(contentRef.current, currentPageIndex, path, value);
       scheduleSave();
     },
@@ -277,11 +259,6 @@ export default function EditorClient({
     iframeRef.current?.contentWindow?.postMessage(msg, window.location.origin);
   }, []);
 
-  // Construction UNIQUE de l'URL d'aperçu. ?path=<slug de la page> cible la page
-  // courante (multi-pages) ; la home ("/") n'a pas besoin du paramètre. `bust`
-  // ajoute un cache-buster (rechargement forcé après commit IA / publication).
-  // `component` (JSON d'un ComponentDraft) : aperçu ÉPHÉMÈRE d'un effet acheté —
-  // rien n'est écrit en base, « Annuler » = recharger sans le paramètre.
   const previewUrl = useCallback(
     (pageIndex: number, bust = false, component?: ComponentDraft | null) => {
       const slug = pages[pageIndex]?.slug ?? "/";
@@ -294,24 +271,6 @@ export default function EditorClient({
     [pages, siteId],
   );
 
-  // Changement de page depuis le sélecteur : flush les changements en attente
-  // AVANT de changer de page (un lot autosave doit appartenir à une seule page),
-  // puis MAJ de l'index + rechargement de l'iframe vers la nouvelle page.
-  // sg:ready (re)poussera ensuite le mode courant.
-  const changePage = useCallback(
-    async (idx: number) => {
-      if (idx === currentPageIndex || !pages[idx]) return;
-      if (Object.keys(changesRef.current).length > 0) {
-        await flushSave();
-      }
-      setCurrentPageIndex(idx);
-      if (iframeRef.current) iframeRef.current.src = previewUrl(idx);
-    },
-    [currentPageIndex, pages, previewUrl, flushSave],
-  );
-
-  // Le scope « section » (intégration d'un composant) fait surligner/cibler la
-  // SECTION parente dans le runtime, au lieu de l'élément feuille.
   const postMode = useCallback(
     (t: "edit" | "note") => {
       post({
@@ -326,10 +285,35 @@ export default function EditorClient({
   const switchTool = useCallback(
     (t: "edit" | "note") => {
       setTool(t);
-      if (t === "edit") setIntegrating(null); // quitter le mode intégration
+      if (t === "edit") {
+        setIntegrating(null); // quitter le mode intégration
+        setComposer((c) => (c.effect ? { ...c, effect: null } : c));
+      }
       postMode(t);
     },
     [postMode],
+  );
+
+  // Synchronise le ref + re-pousse le scope (élément vs section) à chaque
+  // changement du mode intégration — postMessage est idempotent côté runtime.
+  useEffect(() => {
+    integratingRef.current = integrating;
+    postMode(tool);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [integrating]);
+
+  const changePage = useCallback(
+    async (idx: number) => {
+      if (idx === currentPageIndex || !pages[idx]) return;
+      if (Object.keys(changesRef.current).length > 0) {
+        await flushSave();
+      }
+      setCurrentPageIndex(idx);
+      // La cible appartenait à l'ancienne page : on purge la chip.
+      setComposer((c) => (c.target ? { ...c, target: null } : c));
+      if (iframeRef.current) iframeRef.current.src = previewUrl(idx);
+    },
+    [currentPageIndex, pages, previewUrl, flushSave],
   );
 
   // Messages venant de l'iframe (runtime d'édition).
@@ -346,7 +330,6 @@ export default function EditorClient({
           recordChange(d.path, String(d.value ?? ""));
         } else {
           const spec = specFor(d.path);
-          // Lecture page-aware dans pages[currentPageIndex].content.
           const cur = getAtPath(contentRef.current, currentPageIndex, d.path);
           setPanel({
             path: d.path,
@@ -357,18 +340,14 @@ export default function EditorClient({
           });
         }
       } else if (d.type === "sg:editPhoto") {
-        // Ouvre le choix : nouvelle photo OU une photo de la bibliothèque.
         setLibPhotos(null);
         setPhotoPicker({ path: d.path });
       } else if (d.type === "sg:note") {
-        // Mode « Sélectionner » : un clic ouvre directement la demande à l'IA.
-        // En mode intégration, l'effet est pré-attaché (chip) avec le message
-        // type « Intègre ce composant à la place de la section désignée. »
+        // Mode « Cibler » : le clic attache une chip cible au composer.
         const t = d.target;
         if (t && typeof t.cssSelector === "string") {
-          const fx = integratingRef.current;
-          setAiProposal(null);
-          setAiDraft({
+          setComposer((c) => ({
+            ...c,
             target: {
               path: t.path,
               cssSelector: t.cssSelector,
@@ -376,9 +355,9 @@ export default function EditorClient({
               xPct: t.xPct,
               yPct: t.yPct,
             },
-            message: fx ? "Intègre ce composant à la place de la section désignée." : "",
-            effect: fx ?? null,
-          });
+          }));
+          setSheetOpen(true); // mobile : rouvre le chat avec la chip
+          setTimeout(() => composerRef.current?.focus(), 50);
         }
       }
     }
@@ -436,7 +415,6 @@ export default function EditorClient({
     };
   }, [photoPicker, siteId]);
 
-  // Applique une photo de la bibliothèque à l'emplacement ciblé.
   function pickFromLibrary(url: string) {
     if (!photoPicker) return;
     post({ type: "sg:setPhoto", path: photoPicker.path, url });
@@ -445,7 +423,6 @@ export default function EditorClient({
     setPhotoPicker(null);
   }
 
-  // Bascule vers le téléversement classique (flux onFile existant).
   function pickUpload() {
     if (!photoPicker) return;
     pendingPhoto.current = photoPicker.path;
@@ -465,69 +442,138 @@ export default function EditorClient({
     [post, previewUrl, currentPageIndex],
   );
 
-  function closeAi() {
-    dictation.stop();
-    clearPreview(aiProposal);
-    setAiProposal(null);
-    setAiDraft(null);
-    setFxPopover(false);
-  }
+  // --- Actions du chat ----------------------------------------------------
 
-  async function askAi() {
-    if (!aiDraft || !aiDraft.message.trim()) return;
-    dictation.stop(); // coupe le micro dès l'envoi (Entrée ou clic)
-    setFxPopover(false);
-    setAiLoading(true);
-    try {
-      const res = await fetch("/api/site/ai", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          siteId,
-          message: aiDraft.message.trim(),
-          target: aiDraft.target,
-          ...(aiDraft.effect ? { effectId: aiDraft.effect.id } : {}),
-        }),
-      });
-      const json = await res.json();
-      if (json.ok && json.action === "css") {
-        post({ type: "sg:css", css: json.css });
-        setAiProposal({
-          kind: "css",
-          css: json.css,
-          explanation: json.explanation ?? "Modification appliquée.",
+  const sendRequest = useCallback(
+    async (text: string, target: PinSelector | null, effect: OwnedEffect | null) => {
+      setAiLoading(true);
+      try {
+        const res = await fetch("/api/site/ai", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            siteId,
+            message: text,
+            target,
+            ...(effect ? { effectId: effect.id } : {}),
+          }),
         });
-      } else if (json.ok && json.action === "component" && json.componentDraft) {
-        // Aperçu éphémère : on recharge l'iframe avec le composant en paramètre
-        // (matérialisé par le serveur exactement comme en prod, rien en base).
-        if (iframeRef.current) {
-          iframeRef.current.src = previewUrl(currentPageIndex, true, json.componentDraft);
+        const json = await res.json();
+        if (json.ok && json.action === "css") {
+          post({ type: "sg:css", css: json.css });
+          const id = crypto.randomUUID();
+          const explanation = json.explanation ?? "Modification appliquée.";
+          setAiProposal({ id, kind: "css", css: json.css, explanation });
+          setMessages((m) =>
+            appendMessage(m, {
+              id,
+              role: "assistant",
+              kind: "proposal",
+              action: "css",
+              explanation,
+              status: "active",
+            }),
+          );
+        } else if (json.ok && json.action === "component" && json.componentDraft) {
+          if (iframeRef.current) {
+            iframeRef.current.src = previewUrl(currentPageIndex, true, json.componentDraft);
+          }
+          const id = crypto.randomUUID();
+          const explanation = json.explanation ?? "Composant intégré.";
+          setAiProposal({ id, kind: "component", component: json.componentDraft, explanation });
+          setMessages((m) =>
+            appendMessage(m, {
+              id,
+              role: "assistant",
+              kind: "proposal",
+              action: "component",
+              explanation,
+              status: "active",
+            }),
+          );
+        } else if (json.action === "unsupported") {
+          setMessages((m) =>
+            appendMessage(m, {
+              id: crypto.randomUUID(),
+              role: "assistant",
+              kind: "text",
+              text: `L'IA ne peut pas le faire : ${json.reason ?? "demande trop large"}.`,
+              isError: true,
+            }),
+          );
+        } else {
+          setMessages((m) =>
+            appendMessage(m, {
+              id: crypto.randomUUID(),
+              role: "assistant",
+              kind: "text",
+              text: json.error ?? "Erreur de l'IA.",
+              isError: true,
+            }),
+          );
         }
-        setAiProposal({
-          kind: "component",
-          component: json.componentDraft,
-          explanation: json.explanation ?? "Composant intégré.",
-        });
-      } else if (json.action === "unsupported") {
-        notify(`L'IA ne peut pas le faire : ${json.reason ?? "demande trop large"}.`, "error");
-      } else {
-        notify(json.error ?? "Erreur de l'IA.", "error");
+      } catch {
+        setMessages((m) =>
+          appendMessage(m, {
+            id: crypto.randomUUID(),
+            role: "assistant",
+            kind: "text",
+            text: "Erreur de l'IA.",
+            isError: true,
+          }),
+        );
       }
-    } catch {
-      notify("Erreur de l'IA.", "error");
+      setAiLoading(false);
+    },
+    [siteId, post, previewUrl, currentPageIndex],
+  );
+
+  function askAi() {
+    const text = composer.text.trim();
+    if (!text || aiLoading) return;
+    dictation.stop();
+    setGalleryOpen(false);
+    // Une nouvelle demande invalide la proposition en cours (aperçu compris).
+    if (aiProposal) {
+      clearPreview(aiProposal);
+      setMessages((m) => settleProposal(m, aiProposal.id, "expired"));
+      setAiProposal(null);
     }
-    setAiLoading(false);
+    lastRequest.current = { text, target: composer.target, effect: composer.effect };
+    setMessages((m) =>
+      appendMessage(m, {
+        id: crypto.randomUUID(),
+        role: "user",
+        text,
+        ...(composer.target?.label ? { targetLabel: composer.target.label } : {}),
+        ...(composer.effect ? { effectName: composer.effect.name } : {}),
+      }),
+    );
+    setComposer((c) => ({ ...c, text: "" }));
+    void sendRequest(text, composer.target, composer.effect);
   }
 
-  function aiRefine() {
-    clearPreview(aiProposal);
-    setAiProposal(null);
+  function retryLast() {
+    const r = lastRequest.current;
+    if (!r || aiLoading) return;
+    void sendRequest(r.text, r.target, r.effect);
   }
 
-  function aiRetry() {
+  function refineProposal() {
+    if (!aiProposal) return;
     clearPreview(aiProposal);
+    setMessages((m) => settleProposal(m, aiProposal.id, "expired"));
     setAiProposal(null);
-    void askAi();
+    composerRef.current?.focus();
+  }
+
+  function cancelProposal() {
+    if (!aiProposal) return;
+    clearPreview(aiProposal);
+    setMessages((m) => settleProposal(m, aiProposal.id, "expired"));
+    setAiProposal(null);
+    setComposer((c) => ({ ...c, target: null, effect: null }));
+    setIntegrating(null);
   }
 
   async function aiCommit() {
@@ -553,9 +599,11 @@ export default function EditorClient({
         if (typeof json.balance === "number") setBalance(json.balance);
         if (json.published === false) setHasUnpub(true);
         const wasComponent = aiProposal.kind === "component";
+        setMessages((m) => settleProposal(m, aiProposal.id, "accepted"));
         setAiProposal(null);
-        setAiDraft(null);
-        if (wasComponent) setIntegrating(null);
+        setComposer((c) => ({ ...c, target: null, effect: null }));
+        setIntegrating(null);
+        if (tool === "note") switchTool("edit");
         notify(wasComponent ? "Composant intégré à votre site" : "Modification appliquée", "success");
         if (iframeRef.current) {
           iframeRef.current.src = previewUrl(currentPageIndex, true);
@@ -565,6 +613,29 @@ export default function EditorClient({
       notify("Échec de la validation.", "error");
     }
     setAiLoading(false);
+  }
+
+  function toggleSelect() {
+    const next = tool === "note" ? "edit" : "note";
+    switchTool(next);
+    if (next === "note") setSheetOpen(false); // mobile : laisser voir l'aperçu pour cibler
+  }
+
+  function pickEffect(fx: OwnedEffect) {
+    setGalleryOpen(false);
+    setComposer((c) => ({
+      ...c,
+      effect: fx,
+      text: c.text.trim() ? c.text : "Intègre ce composant à la place de la section désignée.",
+    }));
+    setIntegrating(fx);
+    if (tool !== "note") switchTool("note");
+    setSheetOpen(false); // mobile : place à l'aperçu pour choisir la section
+  }
+
+  function removeEffect() {
+    setComposer((c) => ({ ...c, effect: null }));
+    setIntegrating(null);
   }
 
   async function doPublish() {
@@ -599,6 +670,31 @@ export default function EditorClient({
     setPublishing(false);
   }
 
+  const chatPanel = (
+    <ChatPanel
+      messages={messages}
+      composer={composer}
+      selecting={tool === "note"}
+      aiLoading={aiLoading}
+      balance={balance}
+      galleryOpen={galleryOpen}
+      ownedEffects={ownedEffects}
+      dictation={dictation}
+      inputRef={composerRef}
+      onText={(t) => setComposer((c) => ({ ...c, text: t }))}
+      onSend={askAi}
+      onToggleSelect={toggleSelect}
+      onRemoveTarget={() => setComposer((c) => ({ ...c, target: null }))}
+      onRemoveEffect={removeEffect}
+      onToggleGallery={() => setGalleryOpen((v) => !v)}
+      onPickEffect={pickEffect}
+      onAccept={() => void aiCommit()}
+      onRefine={refineProposal}
+      onCancelProposal={cancelProposal}
+      onRetry={retryLast}
+    />
+  );
+
   return (
     <div className="cloud-bg relative flex h-[100dvh] flex-col">
       {/* Barre du haut — minimale */}
@@ -611,8 +707,6 @@ export default function EditorClient({
             <span className="hidden sm:inline">Quitter</span>
           </Button>
 
-          {/* Sélecteur de page — visible seulement pour un site multi-pages (v2).
-              Change la page éditée et recharge l'aperçu sur ?path=<slug>. */}
           {pages.length > 1 && (
             <label className="flex min-w-0 items-center">
               <span className="sr-only">Page à modifier</span>
@@ -670,61 +764,55 @@ export default function EditorClient({
         </div>
       </header>
 
-      {/* Aperçu — cadre « appareil » */}
-      <main className="relative flex min-h-0 flex-1 items-stretch justify-center overflow-hidden px-2 pb-24 md:px-6">
-        <div
-          className="relative h-full overflow-hidden rounded-[20px] border border-white/60 bg-white shadow-cloud transition-[width,max-width] duration-300 ease-out"
-          style={{ width: DEVICE_WIDTH[device], maxWidth: "100%" }}
-        >
-          <iframe
-            ref={iframeRef}
-            src={previewUrl(0)}
-            title="Éditeur de votre site"
-            className="h-full w-full border-0"
+      {/* Corps : chat à gauche (desktop) + aperçu à droite */}
+      <div className="flex min-h-0 flex-1">
+        {isDesktop && (
+          <aside className="flex min-h-0 w-[400px] flex-none flex-col">{chatPanel}</aside>
+        )}
+        <main className="relative flex min-h-0 flex-1 items-stretch justify-center overflow-hidden px-2 pb-3 md:px-4">
+          <PreviewFrame
+            iframeRef={iframeRef}
+            initialSrc={previewUrl(0)}
+            device={device}
+            tool={tool}
+            integratingName={integrating?.name ?? null}
+            showEditHint={!touched && !panel}
+            onSwitchTool={switchTool}
           />
-          {tool === "note" && (
-            <div className="pointer-events-none absolute left-1/2 top-3 z-20 inline-flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-night/85 px-4 py-2 text-sm text-white shadow-cloud">
-              {integrating ? (
-                <>
-                  <IconStar4 size={14} className="text-[#d8b4fe]" /> Choisissez la section où
-                  intégrer «&nbsp;{integrating.name}&nbsp;»
-                </>
-              ) : (
-                <>
-                  <IconPin size={14} /> Touchez l&apos;endroit à retoucher
-                </>
-              )}
-            </div>
-          )}
-          {tool === "edit" && !touched && !panel && (
-            <div className="pointer-events-none absolute left-1/2 top-3 z-20 -translate-x-1/2 rounded-full bg-night/85 px-4 py-2 text-sm text-white shadow-cloud">
-              Touchez un texte ou une photo pour le modifier
-            </div>
-          )}
-        </div>
-      </main>
+        </main>
+      </div>
 
-      {/* Dock du bas — Modifier / Sélectionner (liquid glass) */}
-      {!aiProposal && (
-        <div className="pointer-events-none absolute inset-x-0 bottom-4 z-30 flex justify-center px-4">
-          <div className="gem-dock pointer-events-auto" style={{ width: "min(420px, 100%)" }}>
-            <div className="gem-distort" style={{ filter: 'url("#radio-glass")' }} aria-hidden />
-            <span
-              className="gem-thumb"
-              aria-hidden
-              style={{ left: tool === "note" ? "50%" : "4px", width: "calc(50% - 4px)" }}
+      {/* Mobile : bulle d'ouverture + bottom sheet */}
+      {!isDesktop && (
+        <>
+          {!sheetOpen && (
+            <button
+              type="button"
+              className="fixed bottom-4 right-4 z-30 grid h-12 w-12 place-items-center rounded-full bg-night text-white shadow-cloud-lg"
+              onClick={() => setSheetOpen(true)}
+              aria-label="Ouvrir l'assistant"
+            >
+              <IconStar4 size={20} />
+            </button>
+          )}
+          <div
+            className={`fixed inset-x-0 bottom-0 z-40 flex h-[62dvh] flex-col rounded-t-[24px] border-t border-white/70 bg-white/95 shadow-cloud-lg backdrop-blur transition-transform duration-300 ${
+              sheetOpen ? "translate-y-0" : "translate-y-full"
+            }`}
+            role="dialog"
+            aria-label="Assistant IA"
+          >
+            <button
+              type="button"
+              className="mx-auto mt-2 h-1.5 w-12 flex-none rounded-full bg-night/15"
+              onClick={() => setSheetOpen(false)}
+              aria-label="Fermer l'assistant"
             />
-            <button type="button" data-on={tool === "edit"} onClick={() => switchTool("edit")}>
-              <IconEdit size={16} style={{ color: tool === "edit" ? "#2563eb" : undefined }} />
-              Modifier
-            </button>
-            <button type="button" data-on={tool === "note"} onClick={() => switchTool("note")}>
-              <IconPin size={16} style={{ color: tool === "note" ? "#9b72cb" : undefined }} />
-              <span className={tool === "note" ? "gem-text" : undefined}>Sélectionner</span>
-            </button>
+            <div className="min-h-0 flex-1">{chatPanel}</div>
           </div>
-        </div>
+        </>
       )}
+
       <GlassFilter />
 
       <input
@@ -735,7 +823,7 @@ export default function EditorClient({
         onChange={onFile}
       />
 
-      {/* Notifications — au-dessus de TOUT (z-100), donc visibles par-dessus le flou de la modale IA */}
+      {/* Notifications — au-dessus de tout */}
       <AnimatePresence>
         {notice && (
           <motion.div
@@ -782,365 +870,25 @@ export default function EditorClient({
         )}
       </AnimatePresence>
 
-      {/* Édition de texte « composé » (popover) */}
+      {/* Édition de texte « composé » */}
       {panel && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-night/30 p-4"
-          onClick={() => setPanel(null)}
-        >
-          <div
-            className="w-full max-w-lg rounded-[20px] bg-white p-6 shadow-cloud-lg"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 className="mb-3 font-archivo text-lg font-semibold text-night">Modifier le texte</h3>
-            <Field
-              label={panel.label}
-              hint={panel.maxLen ? `${panel.value.length} / ${panel.maxLen}` : undefined}
-            >
-              {panel.type === "text" ? (
-                <Input
-                  autoFocus
-                  value={panel.value}
-                  maxLength={panel.maxLen ?? undefined}
-                  onChange={(e) => setPanel((p) => (p ? { ...p, value: e.target.value } : p))}
-                />
-              ) : (
-                <Textarea
-                  autoFocus
-                  rows={4}
-                  value={panel.value}
-                  maxLength={panel.maxLen ?? undefined}
-                  onChange={(e) => setPanel((p) => (p ? { ...p, value: e.target.value } : p))}
-                />
-              )}
-            </Field>
-            <div className="mt-4 flex justify-end gap-2">
-              <Button variant="ghost" size="sm" onClick={() => setPanel(null)}>
-                Annuler
-              </Button>
-              <Button size="sm" onClick={savePanel}>
-                Appliquer
-              </Button>
-            </div>
-          </div>
-        </div>
+        <TextPanel
+          panel={panel}
+          onChange={(value) => setPanel((p) => (p ? { ...p, value } : p))}
+          onCancel={() => setPanel(null)}
+          onSave={savePanel}
+        />
       )}
 
-      {/* Choix d'une photo : téléverser ou piocher dans la bibliothèque */}
+      {/* Choix d'une photo */}
       {photoPicker && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-night/30 p-4"
-          onClick={() => setPhotoPicker(null)}
-        >
-          <div
-            className="flex max-h-[80vh] w-full max-w-2xl flex-col rounded-[20px] bg-white p-6 shadow-cloud-lg"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="mb-4 flex items-center justify-between gap-3">
-              <h3 className="font-archivo text-lg font-semibold text-night">Changer la photo</h3>
-              <Button size="sm" onClick={pickUpload}>
-                Téléverser une photo
-              </Button>
-            </div>
-            <p className="mb-3 text-sm text-slate">Ou choisissez dans votre bibliothèque :</p>
-            <div className="min-h-0 flex-1 overflow-y-auto">
-              {libPhotos === null ? (
-                <div className="grid place-items-center py-10 text-mist">
-                  <Spinner size={22} />
-                </div>
-              ) : libPhotos.length === 0 ? (
-                <p className="py-10 text-center text-sm text-mist">
-                  Votre bibliothèque est vide. Téléversez une première photo.
-                </p>
-              ) : (
-                <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
-                  {libPhotos.map((ph) => (
-                    <button
-                      key={ph.path}
-                      type="button"
-                      onClick={() => pickFromLibrary(ph.url)}
-                      className="overflow-hidden rounded-xl border border-sky-300 transition hover:ring-2 hover:ring-brand"
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={ph.url}
-                        alt={ph.name}
-                        loading="lazy"
-                        className="aspect-square w-full object-cover"
-                      />
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-            <div className="mt-4 flex justify-end">
-              <Button variant="ghost" size="sm" onClick={() => setPhotoPicker(null)}>
-                Annuler
-              </Button>
-            </div>
-          </div>
-        </div>
+        <PhotoPicker
+          photos={libPhotos}
+          onUpload={pickUpload}
+          onPick={pickFromLibrary}
+          onClose={() => setPhotoPicker(null)}
+        />
       )}
-
-      {/* Demande à l'IA — saisie / génération (modal animé) */}
-      <AnimatePresence>
-        {aiDraft && !aiProposal && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-end justify-center bg-night/40 p-3 backdrop-blur-sm sm:items-center sm:p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.18 }}
-            onClick={closeAi}
-          >
-            <motion.div
-              className="w-full max-w-[460px]"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Demander une modification à l'IA"
-              initial={reduce ? { opacity: 0 } : { opacity: 0, y: 26, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={reduce ? { opacity: 0 } : { opacity: 0, y: 18, scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 380, damping: 30 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <AnimatePresence mode="wait" initial={false}>
-                {aiLoading ? (
-                  <motion.div
-                    key="loading"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="sgai-card flex flex-col items-center gap-2 py-3 text-center"
-                  >
-                    <div className="sgai-orb-wrap">
-                      <div className="sgai-orb-glow" />
-                      <div className="sgai-orb" />
-                    </div>
-                    <h3 className="sgai-ink font-archivo text-[17px] font-extrabold">Génération en cours…</h3>
-                    <p className="sgai-soft max-w-[300px] text-sm">Quelques secondes.</p>
-                    <div className="sgai-prog mt-3">
-                      <i />
-                    </div>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="input"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <div className="sgai-shell">
-                      <div className="sgai-promptbox">
-                        {/* Chip de l'effet attaché : « (Nom du composant en couleur)
-                            intègre ce composant… » — retirable d'une croix. */}
-                        {aiDraft.effect && (
-                          <div className="sgai-chiprow">
-                            <span
-                              className="sgai-chip"
-                              style={{
-                                background: `linear-gradient(120deg, ${aiDraft.effect.accentFrom}, ${aiDraft.effect.accentTo})`,
-                              }}
-                            >
-                              <IconStar4 size={12} />
-                              {aiDraft.effect.name}
-                              <button
-                                type="button"
-                                aria-label="Retirer le composant"
-                                title="Retirer le composant"
-                                onClick={() =>
-                                  setAiDraft((d) => (d ? { ...d, effect: null } : d))
-                                }
-                              >
-                                <IconClose size={11} />
-                              </button>
-                            </span>
-                          </div>
-                        )}
-                        <textarea
-                          ref={setAiInput}
-                          autoFocus
-                          rows={1}
-                          className="sgai-input"
-                          value={aiDraft.message}
-                          placeholder={
-                            dictation.listening
-                              ? "À l'écoute…"
-                              : aiDraft.effect
-                                ? "Précisez l'intégration (optionnel)…"
-                                : "Décrivez le changement…"
-                          }
-                          onChange={(e) => setAiDraft((d) => (d ? { ...d, message: e.target.value } : d))}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter" && !e.shiftKey && aiDraft.message.trim()) {
-                              e.preventDefault();
-                              void askAi();
-                            }
-                          }}
-                        />
-                        <div className="sgai-promptbar">
-                          {dictation.supported && (
-                            <button
-                              type="button"
-                              className={`sgai-mic${dictation.listening ? " is-on" : ""}`}
-                              onClick={dictation.toggle}
-                              aria-pressed={dictation.listening}
-                              aria-label={dictation.listening ? "Arrêter la dictée" : "Dicter"}
-                              title={dictation.listening ? "Arrêter la dictée" : "Dicter"}
-                            >
-                              <IconMic size={18} />
-                            </button>
-                          )}
-                          {/* Composants achetés (boutique Formules) */}
-                          <div className="relative">
-                            <button
-                              type="button"
-                              className={`sgai-fxbtn${aiDraft.effect ? " is-on" : ""}`}
-                              onClick={() => setFxPopover((v) => !v)}
-                              aria-expanded={fxPopover}
-                              aria-label="Mes composants"
-                              title="Mes composants (animations achetées)"
-                            >
-                              <IconStar4 size={17} />
-                            </button>
-                            {fxPopover && (
-                              <div className="sgai-fxpop" role="menu">
-                                <p className="sgai-fxpop-title">Mes composants</p>
-                                {ownedEffects.length === 0 ? (
-                                  <a className="sgai-fxpop-empty" href="/dashboard/marketplace">
-                                    Débloquez des effets dans <b>Formules</b> →
-                                  </a>
-                                ) : (
-                                  ownedEffects.map((fx) => (
-                                    <button
-                                      key={fx.id}
-                                      type="button"
-                                      role="menuitem"
-                                      className="sgai-fxpop-item"
-                                      disabled={!fx.compatible}
-                                      title={
-                                        fx.compatible
-                                          ? `Intégrer « ${fx.name} »`
-                                          : "Indisponible sur votre template actuel"
-                                      }
-                                      onClick={() => {
-                                        setFxPopover(false);
-                                        setAiDraft((d) =>
-                                          d
-                                            ? {
-                                                ...d,
-                                                effect: fx,
-                                                message:
-                                                  d.message.trim() ||
-                                                  "Intègre ce composant à la place de la section désignée.",
-                                              }
-                                            : d,
-                                        );
-                                      }}
-                                    >
-                                      <span
-                                        className="sgai-fxpop-dot"
-                                        style={{
-                                          background: `linear-gradient(120deg, ${fx.accentFrom}, ${fx.accentTo})`,
-                                        }}
-                                      />
-                                      {fx.name}
-                                      {!fx.compatible && <em>bientôt</em>}
-                                    </button>
-                                  ))
-                                )}
-                              </div>
-                            )}
-                          </div>
-                          <AnimatePresence>
-                            {aiDraft.message.trim() && (
-                              <motion.button
-                                key="send"
-                                type="button"
-                                className="sgai-send ml-auto"
-                                onClick={askAi}
-                                aria-label="Envoyer"
-                                title="Envoyer"
-                                initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.6 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.6 }}
-                                transition={{ type: "spring", stiffness: 500, damping: 28 }}
-                              >
-                                <IconArrowUp size={18} />
-                              </motion.button>
-                            )}
-                          </AnimatePresence>
-                        </div>
-                      </div>
-                    </div>
-                    <span className="sr-only" aria-live="polite">
-                      {dictation.listening ? "Dictée en cours, parlez maintenant." : ""}
-                    </span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Proposition de l'IA — barre flottante (pas de voile → le site reste visible pour prévisualiser) */}
-      <AnimatePresence>
-        {aiProposal && (
-          <motion.div
-            className="pointer-events-none fixed inset-x-0 bottom-4 z-40 flex justify-center px-3"
-            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 34 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, y: 24 }}
-            transition={{ type: "spring", stiffness: 340, damping: 30 }}
-          >
-            <div
-              className="sgai-card pointer-events-auto w-full max-w-[600px]"
-              style={{ padding: "12px 14px" }}
-            >
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                <span className="sgai-badge flex-none">✦ Aperçu</span>
-                <p className="line-clamp-2 min-w-[160px] flex-1 text-[13px] leading-snug sgai-soft">
-                  {aiProposal.explanation}
-                </p>
-                <div className="flex flex-none items-center gap-1.5">
-                  <button className="sgai-cancel text-sm" onClick={closeAi}>
-                    Annuler
-                  </button>
-                  <button className="sgai-ghost text-sm" onClick={aiRetry} aria-label="Réessayer" title="Réessayer">
-                    ↻
-                  </button>
-                  <button className="sgai-ghost text-sm" onClick={aiRefine}>
-                    Affiner
-                  </button>
-                  <button
-                    className="sgai-primary flex items-center gap-1.5 text-sm"
-                    disabled={(aiProposal.kind === "css" && balance < 1) || aiLoading}
-                    onClick={aiCommit}
-                  >
-                    {aiLoading && <Spinner size={14} />}
-                    Accepter{" "}
-                    <span className="rounded-lg bg-white/25 px-1.5 py-0.5 text-[11px] font-extrabold">
-                      {aiProposal.kind === "component" ? "Inclus" : "1 ✦"}
-                    </span>
-                  </button>
-                </div>
-              </div>
-              {aiProposal.kind === "css" && balance < 1 && (
-                <p className="mt-1.5 text-[12px] text-[#c0392b]">
-                  Solde insuffisant —{" "}
-                  <a className="underline" href="/dashboard/credits">
-                    achetez des étoiles
-                  </a>
-                  .
-                </p>
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Confirmation de publication */}
       {confirmPublish && (
@@ -1152,7 +900,9 @@ export default function EditorClient({
             className="w-full max-w-md rounded-[20px] bg-white p-6 text-center shadow-cloud-lg"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="font-archivo text-lg font-semibold text-night">Publier vos modifications ?</h3>
+            <h3 className="font-archivo text-lg font-semibold text-night">
+              Publier vos modifications ?
+            </h3>
             <p className="mt-2 text-sm text-slate">
               Cela utilise <b>1 ✦</b>. Solde après : <b>{Math.max(0, balance - 1)} ✦</b>.
             </p>

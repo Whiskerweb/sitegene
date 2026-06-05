@@ -8,6 +8,7 @@ import { sanitizeEffectConfig, type AppliedComponent } from "@/lib/effects/rende
 import { ownsItem } from "@/lib/marketplace-server";
 import { absolutizeContentAssets } from "@/lib/site-server";
 import { isSpaTemplate } from "@/lib/templates";
+import { logAiMessage } from "@/lib/ai-history";
 
 /**
  * Propose une modification via Mistral. Deux modes — AUCUNE persistance,
@@ -86,6 +87,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Site non autorisé." }, { status: 403 });
   }
 
+  // Journalise la demande dans le fil persistant de l'éditeur.
+  await logAiMessage(admin, siteId, user.id, "user", "text", {
+    message,
+    ...(typeof target?.label === "string" && target.label ? { targetLabel: target.label } : {}),
+    ...(effectId ? { effectId, effectName: getEffect(effectId)?.name ?? "Composant" } : {}),
+  });
+
   const { data: top } = await admin
     .from("site_content")
     .select("content_json")
@@ -142,13 +150,15 @@ export async function POST(request: Request) {
         siteTextSnippets: collectTextSnippets(absContent),
       });
     } catch (e) {
-      return NextResponse.json(
-        { error: e instanceof Error ? e.message : "Erreur IA." },
-        { status: 502 },
-      );
+      const msg = e instanceof Error ? e.message : "Erreur IA.";
+      await logAiMessage(admin, siteId, user.id, "assistant", "text", { error: msg });
+      return NextResponse.json({ error: msg }, { status: 502 });
     }
 
     if (proposal.action !== "component") {
+      await logAiMessage(admin, siteId, user.id, "assistant", "text", {
+        error: proposal.reason ?? "Demande non prise en charge.",
+      });
       return NextResponse.json({ ok: false, action: "unsupported", reason: proposal.reason });
     }
 
@@ -158,6 +168,11 @@ export async function POST(request: Request) {
       position: proposal.position,
       config: sanitizeEffectConfig(effect, proposal.config),
     };
+    await logAiMessage(admin, siteId, user.id, "assistant", "proposal", {
+      action: "component",
+      explanation: proposal.explanation,
+      component: componentDraft,
+    });
     return NextResponse.json({
       ok: true,
       action: "component",
@@ -171,23 +186,33 @@ export async function POST(request: Request) {
   try {
     proposal = await proposeDesignEdit({ request: message, target, currentCss });
   } catch (e) {
-    return NextResponse.json(
-      { error: e instanceof Error ? e.message : "Erreur IA." },
-      { status: 502 },
-    );
+    const msg = e instanceof Error ? e.message : "Erreur IA.";
+    await logAiMessage(admin, siteId, user.id, "assistant", "text", { error: msg });
+    return NextResponse.json({ error: msg }, { status: 502 });
   }
 
   if (proposal.action !== "css") {
+    await logAiMessage(admin, siteId, user.id, "assistant", "text", {
+      error: proposal.reason ?? "Demande non prise en charge.",
+    });
     return NextResponse.json({ ok: false, action: "unsupported", reason: proposal.reason });
   }
   const clean = sanitizeCss(proposal.css);
   if (!clean.ok) {
+    await logAiMessage(admin, siteId, user.id, "assistant", "text", {
+      error: "L'IA a produit un CSS non valide — réessayez.",
+    });
     return NextResponse.json({
       ok: false,
       action: "unsupported",
       reason: "L'IA a produit un CSS non valide — réessayez.",
     });
   }
+  await logAiMessage(admin, siteId, user.id, "assistant", "proposal", {
+    action: "css",
+    explanation: proposal.explanation,
+    css: clean.css,
+  });
   return NextResponse.json({
     ok: true,
     action: "css",

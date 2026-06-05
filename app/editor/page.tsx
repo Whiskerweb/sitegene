@@ -5,6 +5,7 @@ import { primarySiteForUser } from "@/lib/primary-site";
 import { getBalance } from "@/lib/credits-server";
 import { fetchTemplateManifest } from "@/lib/site-server";
 import { ownedEffectModules } from "@/lib/marketplace-server";
+import { listAiMessages } from "@/lib/ai-history";
 import { isSpaTemplate } from "@/lib/templates";
 import EditorClient, { type EditableField, type OwnedEffect } from "./EditorClient";
 
@@ -40,6 +41,9 @@ export default async function EditorPage({
   }
 
   const balance = await getBalance(admin, user.id);
+
+  // Fil de chat persistant de l'éditeur (50 derniers messages).
+  const history = await listAiMessages(admin, site.id, 50);
 
   const { data: top } = await admin
     .from("site_content")
@@ -87,6 +91,7 @@ export default async function EditorPage({
       content={(top?.content_json as Record<string, unknown>) ?? {}}
       ownedEffects={ownedEffects}
       integrateEffectId={integrateEffectId}
+      initialMessages={history}
     />
   );
 }
