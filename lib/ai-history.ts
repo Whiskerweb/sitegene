@@ -25,11 +25,17 @@ export async function listAiMessages(
   siteId: string,
   limit = 50,
 ): Promise<AiMessageRow[]> {
-  const { data } = await admin
+  const { data, error } = await admin
     .from("ai_messages")
     .select("id, role, kind, payload, created_at")
     .eq("site_id", siteId)
     .order("created_at", { ascending: false })
     .limit(limit);
-  return ((data ?? []) as AiMessageRow[]).reverse();
+  // Dégradation gracieuse : l'historique est un confort, pas une donnée critique.
+  // En cas d'erreur de lecture, on logue et on renvoie un fil vide plutôt que
+  // de faire crasher l'éditeur.
+  if (error) {
+    console.error("[ai-history] listAiMessages:", error.message);
+  }
+  return ((data ?? []) as AiMessageRow[]).toReversed();
 }
