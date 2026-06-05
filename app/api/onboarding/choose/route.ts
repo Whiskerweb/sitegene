@@ -40,11 +40,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Modèle invalide." }, { status: 400 });
   }
 
-  // Self-serve : pas d'IA inline (l'écran de construction appelle /enrich) et
-  // jamais de photo de démo restante (placeholders neutres si 0 photo).
+  // Self-serve : pas d'IA inline (l'écran de construction appelle /enrich),
+  // jamais de photo de démo restante (placeholders neutres si 0 photo) et
+  // [5.2] masquage strict des blocs sans données client.
   const ok = await finalizeChoice(origin, siteId, templateId as TemplateId, {
     enrich: false,
     emptyPhotos: "placeholder",
+    mask: "strict",
   });
   if (!ok) {
     return NextResponse.json({ error: "Finalisation impossible." }, { status: 500 });

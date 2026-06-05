@@ -17,8 +17,14 @@ import { fetchDefaultContent, fetchTemplateManifest } from "@/lib/site-server";
 import { getCategory, DEFAULT_CATEGORY } from "@/lib/categories";
 import { detectCategory } from "@/lib/category-detect";
 import { mineIntake, mergeMined } from "@/lib/intake-mine";
-import { isTemplateId, type TemplateId } from "@/lib/templates";
+import { isSpaTemplate, isTemplateId, type TemplateId } from "@/lib/templates";
 import { dropSectionsForIntake, eventLabel, type Intake } from "@/lib/onboarding-config";
+import {
+  flagsForIntake,
+  dropSectionsForFlags,
+  dropItemPathsForContent,
+  truncateSpaServices,
+} from "@/lib/section-flags";
 import {
   buildPhotoMap,
   intakeToOverrides,
@@ -308,7 +314,16 @@ export async function appendPhotoUrls(
  */
 export type EmptyPhotoMode = "demo" | "placeholder";
 
-export type BuildOpts = { emptyPhotos?: EmptyPhotoMode };
+export type BuildOpts = {
+  emptyPhotos?: EmptyPhotoMode;
+  /**
+   * [5.2/5.3] Masquage des blocs sans données client (témoignages, logos,
+   * stats, blog, équipe ; galerie sans photo ; items de prestations en trop).
+   * "strict" en self-serve (site « production-ready ») ; défaut : off
+   * (outreach — le site de démo assume ses visuels).
+   */
+  mask?: "strict" | "off";
+};
 
 /** Construit le contenu final d'un intake (v2 SPA ou plat HTML), adapté au métier. */
 export async function buildDraftContent(
@@ -345,8 +360,42 @@ export async function buildDraftContent(
   const { drop } = dropSectionsForIntake(state.categoryId, state.templateId, state.intake);
   if (drop.length > 0) pruneSections(content, drop);
 
+  // [5.2/5.3] Masquage strict (self-serve) : aucun bloc aux données non
+  // fournies ne survit — ni en preview, ni sur le site publié.
+  if (opts?.mask === "strict") {
+    const flags = flagsForIntake(state.intake);
+    if (isSpaTemplate(state.templateId)) {
+      // Lignée SPA : sections retirées du contenu v2 + prestations tronquées.
+      const spaDrop = dropSectionsForFlags(
+        Object.keys(
+          ((content as { pages?: { content?: Record<string, unknown> }[] }).pages ?? [])
+            .flatMap((p) => Object.keys(p?.content ?? {}))
+            .reduce<Record<string, true>>((acc, k) => ((acc[k] = true), acc), {}),
+        ),
+        flags,
+      );
+      if (spaDrop.length > 0) pruneSections(content, spaDrop);
+      truncateSpaServices(content, flags.specialtyCount);
+    }
+  }
+
   // Lignée SPA → v2 ; lignée HTML → PLAT (sinon l'hydratation ne trouve rien).
-  return contentForTemplate(content, state.templateId);
+  const final = contentForTemplate(content, state.templateId);
+
+  // Lignée HTML (contenu PLAT) : directives lues par le runtime de masquage.
+  if (opts?.mask === "strict" && !isSpaTemplate(state.templateId)) {
+    const flags = flagsForIntake(state.intake);
+    const flat = final as Record<string, unknown>;
+    const dropSections = dropSectionsForFlags(
+      Object.keys(flat).filter((k) => !k.startsWith("__")),
+      flags,
+    );
+    const dropItems = dropItemPathsForContent(flat, flags.specialtyCount);
+    if (dropSections.length > 0) flat.__dropSections = dropSections;
+    if (dropItems.length > 0) flat.__dropItems = dropItems;
+  }
+
+  return final;
 }
 
 /** Supprime des sections (clés) de chaque page d'un contenu v2. */

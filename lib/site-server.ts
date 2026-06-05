@@ -154,6 +154,59 @@ function navRewriteScript(basePath: string): string {
   );
 }
 
+/**
+ * [5.1/5.3] Runtime de masquage (lignée HTML) — lit `__dropSections` /
+ * `__dropItems` dans window.__SITE_CONTENT__ :
+ *  - masque les sections dont les données n'ont pas été fournies (containers
+ *    homogènes uniquement — conservateur) ;
+ *  - masque les items de prestations en trop (au-delà des spécialités cochées) ;
+ *  - désactive les liens d'ancre pointant vers une section absente ou masquée
+ *    (.nav-link--disabled, cursor not-allowed, tooltip « Section non
+ *    disponible ») — preview ET site publié.
+ */
+export function sectionMaskScript(): string {
+  return (
+    `<style id="sg-mask">.nav-link--disabled{cursor:not-allowed!important;opacity:.45}</style>` +
+    `<script id="sg-mask-js">(function(){` +
+    `var C=window.__SITE_CONTENT__||{};var drop=C.__dropSections||[];var items=C.__dropItems||[];` +
+    `function pathOf(e){return e.getAttribute('data-sg-path')||e.getAttribute('data-sg-img')||'';}` +
+    `function rootOf(p){return String(p||'').split('.')[0].split('[')[0];}` +
+    `function annots(e){return e.querySelectorAll('[data-sg-path],[data-sg-img]');}` +
+    `function run(){` +
+    `if(drop.length){var cs=[];document.querySelectorAll('[data-sg-path],[data-sg-img]').forEach(function(n){` +
+    `if(drop.indexOf(rootOf(pathOf(n)))===-1)return;` +
+    `var c=n.closest('section,footer,aside')||n.parentElement;` +
+    `if(c&&cs.indexOf(c)===-1)cs.push(c);});` +
+    `cs.forEach(function(c){var ok=true;annots(c).forEach(function(e){if(drop.indexOf(rootOf(pathOf(e)))===-1)ok=false;});` +
+    `if(ok&&c.tagName!=='BODY')c.style.display='none';});}` +
+    `items.forEach(function(p){var pre=p.replace(/\\[\\d+\\]$/,'');` +
+    `var sel='[data-sg-path^="'+p+'."],[data-sg-path="'+p+'"],[data-sg-img^="'+p+'."],[data-sg-img="'+p+'"]';` +
+    `document.querySelectorAll(sel).forEach(function(n){var cur=n;` +
+    `while(cur&&cur.parentElement&&cur.parentElement!==document.body){var par=cur.parentElement,other=false;` +
+    `annots(par).forEach(function(e){var q=pathOf(e);` +
+    `if(q.indexOf(pre+'[')===0&&q.indexOf(p+'.')!==0&&q!==p&&!cur.contains(e))other=true;});` +
+    `if(other){cur.style.display='none';return;}cur=par;}` +
+    `n.style.display='none';});});` +
+    `function hiddenTarget(id){var t=id?document.getElementById(id):null;if(!t)return true;` +
+    `var e=t;while(e&&e!==document.body){if(e.style&&e.style.display==='none')return true;e=e.parentElement;}return false;}` +
+    `document.querySelectorAll('a[href^="#"]').forEach(function(a){` +
+    `if(a.hasAttribute('data-sg-page'))return;var h=a.getAttribute('href');` +
+    `var p=a.getAttribute('data-sg-path')||'';` +
+    `var dead=h==='#'?!!p:hiddenTarget(h.slice(1));` +
+    `if(!dead)return;var t=(a.textContent||'').trim();` +
+    // email/téléphone affichés en lien mort → recâblés sur leur vraie cible
+    `if(/email$/i.test(p)&&/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(t)){a.setAttribute('href','mailto:'+t);return;}` +
+    `if(/phone$/i.test(p)&&/^[+\\d][\\d\\s().-]{6,}$/.test(t)){a.setAttribute('href','tel:'+t.replace(/[^+\\d]/g,''));return;}` +
+    // icônes sociales / liens légaux de démo sans cible : masqués (aucune valeur)
+    `if(h==='#'&&/social|instagram|legal/i.test(p)){a.style.display='none';return;}` +
+    // lien de nav sans section : désactivé, jamais une ancre arbitraire
+    `a.classList.add('nav-link--disabled');a.setAttribute('title','Section non disponible');` +
+    `a.setAttribute('aria-disabled','true');a.addEventListener('click',function(e){e.preventDefault();});});}` +
+    `if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();` +
+    `})();</script>`
+  );
+}
+
 export async function buildSiteHtml(
   origin: string,
   templateId: string,
@@ -190,6 +243,11 @@ export async function buildSiteHtml(
   let tail = "";
   if (!isSpaTemplate(templateId) && typeof opts?.basePath === "string") {
     tail += navRewriteScript(opts.basePath);
+  }
+  // [5.1/5.3] Masquage des blocs sans données + neutralisation des ancres
+  // mortes — lignée HTML, preview ET site publié (no-op sans directives).
+  if (!isSpaTemplate(templateId)) {
+    tail += sectionMaskScript();
   }
   tail += fx.bodyJs;
   if (tail) {
