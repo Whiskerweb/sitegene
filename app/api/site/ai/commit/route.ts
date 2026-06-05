@@ -11,6 +11,7 @@ import {
   type AppliedComponent,
 } from "@/lib/effects/render";
 import { ownsItem } from "@/lib/marketplace-server";
+import { logAiMessage } from "@/lib/ai-history";
 
 const COST = 1;
 
@@ -101,6 +102,7 @@ export async function POST(request: Request) {
     if (error) return NextResponse.json({ error: error.message }, { status: 400 });
 
     const balance = await getBalance(admin, user.id);
+    await logAiMessage(admin, siteId, user.id, "assistant", "commit", { action: "component" });
     return NextResponse.json({
       ok: true,
       version,
@@ -150,6 +152,7 @@ export async function POST(request: Request) {
   const newBalance = unlimited
     ? await getBalance(admin, user.id)
     : await grantCredits(admin, user.id, -COST, "ai_edit", {});
+  await logAiMessage(admin, siteId, user.id, "assistant", "commit", { action: "css" });
   return NextResponse.json({
     ok: true,
     version,
