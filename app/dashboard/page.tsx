@@ -173,11 +173,6 @@ export default async function MonSite({
                 trigger={<Button variant="subtle">Modifier mon site</Button>}
               />
             )}
-            {!locked && (
-              <Button href="/dashboard/modifications" variant="subtle">
-                Voir mes options
-              </Button>
-            )}
           </div>
         )}
       </GlassCard>
@@ -197,11 +192,6 @@ export default async function MonSite({
       <div className="mt-8">
         <div className="mb-3 flex items-center justify-between">
           <h2 className="font-archivo text-lg font-semibold text-night">Activité récente</h2>
-          {allNotes.length > 0 && (
-            <a href="/dashboard/modifications" className="text-sm font-semibold text-brand hover:text-brand-700">
-              Tout voir →
-            </a>
-          )}
         </div>
         {allNotes.length === 0 ? (
           <Card className="p-6 text-sm text-slate">

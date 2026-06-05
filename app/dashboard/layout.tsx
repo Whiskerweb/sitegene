@@ -17,7 +17,6 @@ export const dynamic = "force-dynamic";
 const titleMap = {
   "/dashboard": "Mon site",
   "/dashboard/bibliotheque": "Bibliothèque",
-  "/dashboard/modifications": "Modifications",
   "/dashboard/marketplace": "Formules",
   "/dashboard/credits": "Crédits & facturation",
   "/dashboard/settings": "Paramètres",

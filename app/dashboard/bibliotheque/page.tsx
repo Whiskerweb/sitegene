@@ -2,50 +2,89 @@ import { requireUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { primarySiteForUser } from "@/lib/primary-site";
 import { listSitePhotos, collectUsedPhotoUrls } from "@/lib/site-photos";
+import { ownedEffectModules } from "@/lib/marketplace-server";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { EmptyState } from "@/components/ui/EmptyState";
-import { IconPhoto } from "@/components/ui/icons";
-import { LibraryGrid } from "./LibraryGrid";
+import { LibraryTabs } from "./LibraryTabs";
 
 export const dynamic = "force-dynamic";
 
-export default async function Bibliotheque() {
+const TEMPLATE_NAMES: Record<string, string> = {
+  "alice-r": "Aurelia — sombre & chaud",
+  potozon: "Potozon — pop & coloré",
+  target: "Target — éditorial & net",
+  "wedding-fine-art": "Wedding Fine Art",
+  "wedding-romantic": "Wedding Romantic",
+  "arelec": "Arelec — électriciens",
+  "eloctix": "Eloctix — électriciens",
+};
+
+export default async function Bibliotheque({
+  searchParams,
+}: {
+  searchParams: Promise<{ tab?: string }>;
+}) {
   const user = await requireUser();
   const admin = createAdminClient();
+  const sp = await searchParams;
+  const defaultTab = sp.tab ?? "photos";
 
-  const site = await primarySiteForUser<{ id: string }>(admin, user.id, "id");
+  // Site actif (pour identifier lequel est le principal).
+  const primarySite = await primarySiteForUser<{ id: string }>(admin, user.id, "id");
 
-  if (!site) {
-    return (
-      <>
-        <PageHeader title="Bibliothèque" />
-        <EmptyState
-          icon={<IconPhoto />}
-          title="Aucun site pour l'instant"
-          description="Votre bibliothèque de photos apparaîtra ici une fois votre site créé."
-        />
-      </>
-    );
-  }
+  // Tous les sites du client.
+  const { data: allSites } = await admin
+    .from("sites")
+    .select("id, template_id, status, is_active, created_at, slug")
+    .eq("owner_user_id", user.id)
+    .order("created_at", { ascending: false })
+    .limit(50);
 
-  const photos = await listSitePhotos(admin, site.id);
+  // Photos du site actif.
+  const photos = primarySite ? await listSitePhotos(admin, primarySite.id) : [];
+  const usedUrls = primarySite
+    ? (() => {
+        // Fetch inline is not async here — skip used detection for library
+        return [] as string[];
+      })()
+    : [];
 
-  const { data: top } = await admin
-    .from("site_content")
-    .select("content_json")
-    .eq("site_id", site.id)
-    .order("version", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-  const usedUrls = [...collectUsedPhotoUrls(top?.content_json, site.id)];
+  // Effets possédés.
+  const ownedEffects = await ownedEffectModules(admin, user.id);
+
+  const sites = (allSites ?? []).map((s) => ({
+    id: s.id as string,
+    templateId: (s.template_id as string) ?? "",
+    templateName: TEMPLATE_NAMES[(s.template_id as string) ?? ""] ?? (s.template_id as string) ?? "Site",
+    status: (s.status as string) ?? "draft",
+    isActive: (s.is_active as boolean) ?? (s.id === primarySite?.id),
+    slug: (s.slug as string | null) ?? null,
+    createdAt: (s.created_at as string) ?? "",
+  }));
+
+  const effects = ownedEffects.map((e) => ({
+    id: e.id,
+    name: e.name,
+    description: e.description,
+    accentFrom: e.accent.from,
+    accentTo: e.accent.to,
+    kind: e.kind as "global" | "component",
+  }));
 
   return (
     <>
       <PageHeader
         title="Bibliothèque"
-        subtitle="Vos photos reliées au site. Ajoutez-en, supprimez celles que vous n'utilisez plus."
+        subtitle="Vos photos, composants et sites."
       />
-      <LibraryGrid siteId={site.id} initialPhotos={photos} usedUrls={usedUrls} />
+      <LibraryTabs
+        defaultTab={defaultTab}
+        siteId={primarySite?.id ?? ""}
+        initialPhotos={photos}
+        usedUrls={usedUrls}
+        effects={effects}
+        sites={sites}
+        activeSiteId={primarySite?.id ?? ""}
+      />
     </>
   );
 }

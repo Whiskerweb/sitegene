@@ -49,11 +49,7 @@ export default async function Settings() {
             </code>
           </div>
           <p className="mt-3 text-[13px] text-mist">
-            Pour changer le nom de votre site,{" "}
-            <a href="/dashboard/modifications" className="font-medium text-brand underline">
-              faites-en la demande
-            </a>{" "}
-            — on s'en occupe.
+            Pour changer le nom de votre site, contactez-nous depuis les paramètres.
           </p>
         </Card>
 
@@ -81,8 +77,8 @@ export default async function Settings() {
             <span className="rounded-xl border border-sky-300 bg-surface-2 px-4 py-2.5 text-sm text-night">
               {templateNames[site.template_id ?? ""] ?? site.template_id ?? "—"}
             </span>
-            <Button href="/dashboard/modifications" variant="ghost" size="sm">
-              Changer de design
+            <Button href="/dashboard/bibliotheque?tab=sites" variant="ghost" size="sm">
+              Changer de site
             </Button>
           </div>
         </Card>
