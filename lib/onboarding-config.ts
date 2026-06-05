@@ -42,6 +42,10 @@ export type OnboardingQuestion = {
 /** Réponses accumulées pendant le parcours (schéma libre, JSON en base). */
 export type Intake = {
   brief?: string;
+  /** [2.1] Métier détecté/confirmé — pilote les questions et les templates. */
+  categoryId?: string;
+  /** [2.2] Vrai quand le client a confirmé son métier (ou détection sûre). */
+  categoryConfirmed?: boolean;
   brand?: string;
   /** Photographe : types d'événements couverts. */
   eventTypes?: string[];

@@ -15,6 +15,7 @@ import { buildContent, getPath } from "@/lib/content-overlay";
 import { contentForTemplate, type AnyContent } from "@/lib/site-content";
 import { fetchDefaultContent, fetchTemplateManifest } from "@/lib/site-server";
 import { getCategory, DEFAULT_CATEGORY } from "@/lib/categories";
+import { detectCategory } from "@/lib/category-detect";
 import { isTemplateId, type TemplateId } from "@/lib/templates";
 import { dropSectionsForIntake, eventLabel, type Intake } from "@/lib/onboarding-config";
 import {
@@ -145,13 +146,23 @@ export async function ensureOnboardingSite(input: {
   userId: string;
   email: string | null;
   brief: string;
-  categoryId: string;
+  /** Catégorie explicite (choix utilisateur). Sinon, détectée depuis le brief. */
+  categoryId?: string;
 }): Promise<OnboardingState> {
   const existing = await loadOnboarding(input.userId);
   if (existing) return existing;
 
   const admin = createAdminClient();
-  const category = getCategory(input.categoryId) ?? DEFAULT_CATEGORY;
+  // [2.1] Le métier est DÉTECTÉ depuis le texte libre, jamais supposé. Une
+  // détection sûre route directement ; ambiguë ou absente → la conversation
+  // ouvrira sur la confirmation du métier ([2.2], categoryConfirmed=false).
+  const explicit = getCategory(input.categoryId ?? "");
+  const detected = detectCategory(input.brief);
+  const category =
+    explicit ??
+    (detected.categoryId ? getCategory(detected.categoryId) : undefined) ??
+    DEFAULT_CATEGORY;
+  const categoryConfirmed = Boolean(explicit) || detected.confidence === "high";
   const templateId = category.defaultTemplateId;
   const brand = brandFromBrief(input.brief);
 
@@ -174,10 +185,11 @@ export async function ensureOnboardingSite(input: {
   // Le site appartient au client immédiatement (différence clé vs outreach).
   await admin.from("sites").update({ owner_user_id: input.userId }).eq("id", siteId);
 
-  const intake: Intake & { categoryId?: string } = {
+  const intake: Intake = {
     brief: input.brief,
     brand,
     categoryId: category.id,
+    categoryConfirmed,
     contactEmail: input.email ?? undefined,
   };
 

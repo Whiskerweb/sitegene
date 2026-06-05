@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import { getUser } from "@/lib/auth";
 import { saveIntake, userOwnsSite } from "@/lib/onboarding";
+import { getCategory } from "@/lib/categories";
 import type { Intake } from "@/lib/onboarding-config";
 
 export async function POST(request: Request) {
@@ -25,7 +26,13 @@ export async function POST(request: Request) {
   const skipped = Array.isArray(body.skipped)
     ? body.skipped.filter((k): k is string => typeof k === "string").slice(0, 50)
     : undefined;
-  const state = await saveIntake(siteId, body.patch ?? {}, body.step, skipped);
+  // [2.2] Changement de métier (confirmation client) : uniquement une
+  // catégorie connue — un id inconnu casserait questions et templates.
+  const patch = { ...(body.patch ?? {}) };
+  if (patch.categoryId !== undefined && !getCategory(String(patch.categoryId))) {
+    delete patch.categoryId;
+  }
+  const state = await saveIntake(siteId, patch, body.step, skipped);
   if (!state) {
     return NextResponse.json({ error: "Onboarding introuvable." }, { status: 404 });
   }

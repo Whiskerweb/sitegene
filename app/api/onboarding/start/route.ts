@@ -5,7 +5,7 @@
 import { NextResponse } from "next/server";
 import { getUser } from "@/lib/auth";
 import { ensureOnboardingSite } from "@/lib/onboarding";
-import { getCategory, DEFAULT_CATEGORY } from "@/lib/categories";
+import { getCategory } from "@/lib/categories";
 
 export const maxDuration = 30;
 
@@ -24,7 +24,9 @@ export async function POST(request: Request) {
   }
 
   const brief = String(body.brief ?? "").trim();
-  const categoryId = (getCategory(String(body.categoryId ?? "")) ?? DEFAULT_CATEGORY).id;
+  // [2.1] categoryId explicite uniquement si valide — sinon le serveur détecte
+  // le métier depuis le brief (ensureOnboardingSite).
+  const categoryId = getCategory(String(body.categoryId ?? ""))?.id;
 
   try {
     const state = await ensureOnboardingSite({

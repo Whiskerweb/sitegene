@@ -12,6 +12,27 @@
 export const INTRO_LINE =
   "Bonjour, moi c'est Akyra. Trois ou quatre questions, et je construis votre site sous vos yeux. On commence ?";
 
+/* ----------------------------------------------------- [2.2] Métier ------ */
+
+/** Détection ambiguë : on confirme avant de router (jamais silencieusement). */
+export function metierConfirmLine(label: string): string {
+  return `Vous semblez être ${label.toLowerCase()} — c'est bien ça ?`;
+}
+
+/** Aucun signal : on demande le métier directement. */
+export const METIER_ASK_LINE =
+  "Pour commencer : quel est votre métier ? C'est lui qui guide tout le reste.";
+
+/** [2.3] Signal contradictoire détecté en cours de conversation. */
+export function metierSwitchLine(label: string): string {
+  return `Un instant — à vous lire, je vous verrais plutôt ${label.toLowerCase()}. C'est bien ça ?`;
+}
+
+/** Accusé après confirmation du métier. */
+export function metierAckLine(label: string): string {
+  return `Parfait — je vous prépare un site de ${label.toLowerCase()}.`;
+}
+
 /** Accusés de réception après une réponse (rotation déterministe par index). */
 const ACKS = [
   "Parfait, je note ça…",

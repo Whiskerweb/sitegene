@@ -39,12 +39,18 @@ import {
   type OnboardingQuestion,
   type Intake,
 } from "@/lib/onboarding-config";
+import { detectCategory } from "@/lib/category-detect";
+import { ACTIVE_CATEGORIES, getCategory } from "@/lib/categories";
 import { isSpaTemplate, templateMeta, TEMPLATE_IDS } from "@/lib/templates";
 import { AkyraMark } from "@/components/ui/Logo";
 import {
   INTRO_LINE,
   ackFor,
   leadInFor,
+  metierConfirmLine,
+  metierSwitchLine,
+  metierAckLine,
+  METIER_ASK_LINE,
   FINDING_STYLE_LINES,
   RECOMMEND_LINE,
   BUILD_STEPS,
@@ -104,10 +110,12 @@ export default function OnboardingClient({ email }: { email: string }) {
         /* sessionStorage indispo */
       }
       try {
+        // [2.1] Pas de catégorie imposée : le serveur détecte le métier
+        // depuis le brief (et la conversation confirme si c'est ambigu).
         const res = await fetch("/api/onboarding/start", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ brief, categoryId: "photographe" }),
+          body: JSON.stringify({ brief }),
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data?.error || "Démarrage impossible.");
@@ -120,6 +128,9 @@ export default function OnboardingClient({ email }: { email: string }) {
         const s = data as ClientState;
         setState(s);
         setIntake({
+          brief: s.intake.brief ?? "",
+          categoryId: s.intake.categoryId ?? s.categoryId,
+          categoryConfirmed: s.intake.categoryConfirmed,
           brand: s.intake.brand ?? "",
           eventTypes: s.intake.eventTypes ?? [],
           about: s.intake.about ?? "",
@@ -141,6 +152,24 @@ export default function OnboardingClient({ email }: { email: string }) {
       cancelled = true;
     };
   }, [email]);
+
+  // [2.2/2.3] Changement de métier (confirmation ou re-détection en cours de
+  // conversation) : questions, recommandation et candidats suivent aussitôt.
+  const changeCategory = useCallback((categoryId: string) => {
+    const cat = getCategory(categoryId);
+    if (!cat) return;
+    setState((s) =>
+      s
+        ? {
+            ...s,
+            categoryId: cat.id,
+            templateId: cat.defaultTemplateId,
+            candidateTemplateIds: cat.templateIds,
+          }
+        : s,
+    );
+    setIntake((prev) => ({ ...prev, categoryId: cat.id, categoryConfirmed: true }));
+  }, []);
 
   if (phase === "loading") {
     return (
@@ -180,6 +209,7 @@ export default function OnboardingClient({ email }: { email: string }) {
         state={state}
         intake={intake}
         setIntake={setIntake}
+        onCategory={changeCategory}
         onDone={() => setPhase("recommend")}
       />
     );
@@ -351,13 +381,30 @@ function Conversation({
   state,
   intake,
   setIntake,
+  onCategory,
   onDone,
 }: {
   state: ClientState;
   intake: Intake;
   setIntake: React.Dispatch<React.SetStateAction<Intake>>;
+  onCategory: (categoryId: string) => void;
   onDone: () => void;
 }) {
+  // [2.2] Métier pas encore confirmé (détection ambiguë ou absente au start) :
+  // la conversation OUVRE sur la confirmation — jamais de routage silencieux.
+  const [stage, setStage] = useState<"metier" | "questions">(
+    intake.categoryConfirmed === false ? "metier" : "questions",
+  );
+  // Meilleure hypothèse au démarrage (depuis le brief), pour formuler la question.
+  const metierGuess = useMemo(
+    () => (intake.brief ? detectCategory(intake.brief).categoryId : null),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+  // [2.3] Re-détection en cours de conversation : catégorie en attente de
+  // confirmation (« vous semblez plutôt être musicien, c'est bien ça ? »).
+  const [pendingCat, setPendingCat] = useState<string | null>(null);
+
   const questions = useMemo(() => questionsFor(state.categoryId), [state.categoryId]);
   // Reprise : on retombe sur la première question sans réponse.
   const firstIdx = useMemo(() => {
@@ -373,11 +420,13 @@ function Conversation({
   // Le FIL : l'historique reconstruit (reprise) + tout ce qui se dit ensuite.
   const [messages, setMessages] = useState<FeedMsg[]>(() => {
     const out: FeedMsg[] = [];
-    for (let i = 0; i < firstIdx; i++) {
-      const q = questions[i];
-      out.push({ id: `hist-q-${i}`, role: "bot", text: q.label, help: q.help });
-      const a = answeredLabel(q, intake);
-      out.push({ id: `hist-a-${i}`, role: "user", text: a || "Je passe pour l'instant" });
+    if (intake.categoryConfirmed !== false) {
+      for (let i = 0; i < firstIdx; i++) {
+        const q = questions[i];
+        out.push({ id: `hist-q-${i}`, role: "bot", text: q.label, help: q.help });
+        const a = answeredLabel(q, intake);
+        out.push({ id: `hist-a-${i}`, role: "user", text: a || "Je passe pour l'instant" });
+      }
     }
     return out;
   });
@@ -393,9 +442,38 @@ function Conversation({
     if (el) el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
   }, [messages, typing, inputOpen]);
 
+  // [2.2] Étape métier : Akyra confirme (détection ambiguë) ou demande le métier.
+  useEffect(() => {
+    if (stage !== "metier") return;
+    const guessLabel = metierGuess ? getCategory(metierGuess)?.label : null;
+    const t = window.setTimeout(() => {
+      setMessages((cur) => {
+        if (cur.some((m) => m.id === "metier-q")) return cur;
+        const next = [...cur];
+        if (!cur.some((m) => m.id === "intro")) {
+          next.push({ id: "intro", role: "bot", text: INTRO_LINE });
+        }
+        next.push({
+          id: "metier-q",
+          role: "bot",
+          text: guessLabel ? metierConfirmLine(guessLabel) : METIER_ASK_LINE,
+          help: guessLabel
+            ? "Un clic suffit — ou corrigez-moi, c'est votre métier qui guide le site."
+            : undefined,
+        });
+        return next;
+      });
+      setTyping(false);
+      setInputOpen(true);
+    }, 1100);
+    return () => window.clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stage]);
+
   // Akyra pose la question courante : « écrit… » puis la bulle, puis la saisie.
   // Idempotent par identifiant (StrictMode rejoue les effets en dev).
   useEffect(() => {
+    if (stage !== "questions") return;
     const q = questions[idx];
     const lead = leadInFor(idx, questions.length);
     const t = window.setTimeout(
@@ -417,20 +495,121 @@ function Conversation({
     );
     return () => window.clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idx, askSeq]);
+  }, [idx, askSeq, stage]);
 
   const q = questions[idx];
   const total = questions.length;
   const required = q.key === "brand";
   const canValidate = !required || isAnswered(q, intake);
 
-  const persist = useCallback(() => {
-    void fetch("/api/onboarding/save", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ siteId: state.siteId, patch: stripPhotos(intakeRef.current) }),
-    }).catch(() => {});
-  }, [state.siteId]);
+  // [2.4] La sauvegarde n'est JAMAIS partielle : on n'écrit qu'à la validation
+  // d'une question (« Continuer »/« Passer »), pas à la frappe.
+  const persist = useCallback(
+    (extra?: Partial<Intake>) => {
+      void fetch("/api/onboarding/save", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          siteId: state.siteId,
+          patch: { ...stripPhotos(intakeRef.current), ...extra },
+        }),
+      }).catch((e) => console.error("[onboarding/save]", e));
+    },
+    [state.siteId],
+  );
+
+  // [2.2] Le client confirme (ou corrige) son métier — on route, on enregistre,
+  // puis la conversation enchaîne sur les questions de SA catégorie.
+  const pickMetier = useCallback(
+    (categoryId: string, userText?: string, extra?: Partial<Intake>) => {
+      const cat = getCategory(categoryId);
+      if (!cat) return;
+      setInputOpen(false);
+      setTyping(true);
+      setMessages((cur) => [
+        ...cur,
+        { id: "metier-a", role: "user", text: userText ?? cat.label },
+      ]);
+      onCategory(cat.id);
+      persist({ categoryId: cat.id, categoryConfirmed: true, ...extra });
+      window.setTimeout(() => {
+        setMessages((cur) =>
+          cur.some((m) => m.id === "metier-ack")
+            ? cur
+            : [
+                ...cur,
+                { id: "metier-ack", role: "bot", muted: true, text: metierAckLine(cat.label) },
+              ],
+        );
+      }, 550);
+      window.setTimeout(() => {
+        // Les questions de la nouvelle catégorie partent de la 1re sans réponse.
+        const qs = questionsFor(cat.id);
+        const i = qs.findIndex((qq) => !isAnswered(qq, intakeRef.current));
+        setIdx(i < 0 ? qs.length - 1 : i);
+        setAskSeq((s) => s + 1);
+        setStage("questions");
+      }, 1300);
+    },
+    [onCategory, persist],
+  );
+
+  // [2.2] « Autre » : le client précise son métier en texte libre — on tente la
+  // détection sur sa précision ; sinon, parcours portfolio (le plus générique)
+  // en gardant la précision dans le brief pour l'IA.
+  const pickOther = useCallback(
+    (text: string) => {
+      const det = detectCategory(text);
+      const cid = det.categoryId ?? "portfolio";
+      const newBrief = [intakeRef.current.brief, `Métier : ${text}`]
+        .filter(Boolean)
+        .join("\n");
+      setIntake((prev) => ({ ...prev, brief: newBrief }));
+      pickMetier(cid, text, { brief: newBrief });
+    },
+    [pickMetier, setIntake],
+  );
+
+  // [2.3] Bascule confirmée en cours de conversation (signal contradictoire).
+  const resolvePending = useCallback(
+    (accept: boolean) => {
+      const cat = pendingCat ? getCategory(pendingCat) : null;
+      setPendingCat(null);
+      setInputOpen(false);
+      setTyping(true);
+      if (accept && cat) {
+        setMessages((cur) => [
+          ...cur,
+          { id: `switch-a-${cat.id}`, role: "user", text: `Oui, je suis ${cat.label.toLowerCase()}` },
+        ]);
+        onCategory(cat.id);
+        persist({ categoryId: cat.id, categoryConfirmed: true });
+        window.setTimeout(() => {
+          setMessages((cur) => [
+            ...cur,
+            { id: `switch-ack-${cat.id}`, role: "bot", muted: true, text: metierAckLine(cat.label) },
+          ]);
+        }, 550);
+        window.setTimeout(() => {
+          const qs = questionsFor(cat.id);
+          const i = qs.findIndex((qq) => !isAnswered(qq, intakeRef.current));
+          setIdx(i < 0 ? qs.length - 1 : i);
+          setAskSeq((s) => s + 1);
+        }, 1300);
+      } else {
+        setMessages((cur) => [
+          ...cur,
+          { id: `switch-no-${idx}-${askSeq}`, role: "user", text: "Non, on continue comme ça" },
+        ]);
+        window.setTimeout(() => {
+          const last = idx >= total - 1;
+          if (last) onDone();
+          else setIdx((i) => Math.min(i + 1, total - 1));
+        }, 900);
+      }
+    },
+    [pendingCat, idx, askSeq, total, onCategory, persist, onDone],
+  );
 
   const advance = useCallback(
     (skipped: boolean) => {
@@ -445,6 +624,34 @@ function Conversation({
         ...cur,
         { id: `a-${idx}-${askSeq}`, role: "user", text: label },
       ]);
+
+      // [2.3] Le signal de catégorie déclenche le routing, où qu'il apparaisse :
+      // chaque réponse texte est analysée ; un signal FORT contradictoire ouvre
+      // une confirmation (jamais de bascule silencieuse).
+      if (!skipped && (q.kind === "text" || q.kind === "textarea")) {
+        const FREE_TEXT_KEYS = ["brand", "about", "techRider", "brief"];
+        if (FREE_TEXT_KEYS.includes(q.key)) {
+          const det = detectCategory(label);
+          if (det.confidence === "high" && det.categoryId && det.categoryId !== state.categoryId) {
+            const detLabel = getCategory(det.categoryId)?.label ?? det.categoryId;
+            setPendingCat(det.categoryId);
+            window.setTimeout(() => {
+              setMessages((cur) => [
+                ...cur,
+                {
+                  id: `switch-q-${idx}-${askSeq}`,
+                  role: "bot",
+                  text: metierSwitchLine(detLabel),
+                },
+              ]);
+              setTyping(false);
+              setInputOpen(true);
+            }, 800);
+            return;
+          }
+        }
+      }
+
       // L'accusé de réception arrive après un court « il écrit… », et RESTE.
       window.setTimeout(() => {
         setMessages((cur) => [
@@ -460,7 +667,7 @@ function Conversation({
         last ? 1700 : 1200,
       );
     },
-    [idx, askSeq, total, q, persist, onDone],
+    [idx, askSeq, total, q, persist, onDone, state.categoryId],
   );
 
   const setField = useCallback(
@@ -470,28 +677,74 @@ function Conversation({
     [setIntake],
   );
 
-  // Upload photos (compression client → route photos).
+  // [2.4] Upload photos : compression client puis envoi par lots ≤ 4 Mo,
+  // SÉQUENTIELS (l'append serveur n'est pas transactionnel). On attend la
+  // résolution de TOUS les envois avant de rendre la main, on logge chaque
+  // échec et on le signale — plus aucune photo perdue en silence.
   const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
   const onPhotos = useCallback(
     async (files: File[]) => {
       if (files.length === 0) return;
       setUploading(true);
+      setUploadError("");
+      const failed: string[] = [];
       try {
-        const compressed = await compressImages(files).catch(() => files);
-        const fd = new FormData();
-        fd.set("siteId", state.siteId);
-        let totalSize = 0;
+        const compressed = await compressImages(files).catch((e) => {
+          console.error("[onboarding/photos] compression:", e);
+          return files;
+        });
+
+        // Lots ≤ 4 Mo (limite corps de requête) — une photo trop lourde même
+        // compressée est signalée, jamais ignorée en silence.
+        const batches: File[][] = [];
+        let batch: File[] = [];
+        let size = 0;
         for (const f of compressed) {
-          if (totalSize + f.size > 4_000_000) break;
-          totalSize += f.size;
-          fd.append("photo", f);
+          if (f.size > 4_000_000) {
+            failed.push(f.name);
+            console.error(`[onboarding/photos] ${f.name} trop lourde (${f.size} octets)`);
+            continue;
+          }
+          if (size + f.size > 4_000_000 && batch.length > 0) {
+            batches.push(batch);
+            batch = [];
+            size = 0;
+          }
+          batch.push(f);
+          size += f.size;
         }
-        const res = await fetch("/api/onboarding/photos", { method: "POST", body: fd });
-        const data = await res.json();
-        if (res.ok && Array.isArray(data.photoUrls)) {
-          setIntake((prev) => ({ ...prev, photoUrls: data.photoUrls as string[] }));
+        if (batch.length > 0) batches.push(batch);
+
+        for (const b of batches) {
+          const fd = new FormData();
+          fd.set("siteId", state.siteId);
+          for (const f of b) fd.append("photo", f);
+          try {
+            const res = await fetch("/api/onboarding/photos", { method: "POST", body: fd });
+            const data = await res.json().catch(() => ({}));
+            if (res.ok && Array.isArray(data.photoUrls)) {
+              setIntake((prev) => ({ ...prev, photoUrls: data.photoUrls as string[] }));
+              if ((data.added ?? b.length) < b.length) {
+                failed.push(...b.slice(data.added ?? 0).map((f) => f.name));
+              }
+            } else {
+              failed.push(...b.map((f) => f.name));
+              console.error("[onboarding/photos] lot refusé:", data?.error ?? res.status);
+            }
+          } catch (e) {
+            failed.push(...b.map((f) => f.name));
+            console.error("[onboarding/photos] envoi:", e);
+          }
         }
       } finally {
+        if (failed.length > 0) {
+          setUploadError(
+            failed.length === 1
+              ? `1 photo n'a pas pu être envoyée (${failed[0]}) — réessayez.`
+              : `${failed.length} photos n'ont pas pu être envoyées — réessayez.`,
+          );
+        }
         setUploading(false);
       }
     },
@@ -505,7 +758,7 @@ function Conversation({
           <AkyraMark size={22} /> Akyra
         </Link>
         <span className="text-[12.5px] font-medium tabular-nums text-[rgb(var(--m-faint))]">
-          {Math.min(idx + 1, total)} / {total}
+          {stage === "metier" ? "Votre métier" : `${Math.min(idx + 1, total)} / ${total}`}
         </span>
       </header>
 
@@ -513,7 +766,7 @@ function Conversation({
       <div className="mx-5 h-[3px] shrink-0 overflow-hidden rounded-full bg-[rgb(var(--m-overlay)/0.06)] md:mx-10">
         <motion.div
           className="h-full rounded-full bg-[rgb(var(--m-accent))]"
-          animate={{ width: `${Math.round((idx / total) * 100)}%` }}
+          animate={{ width: stage === "metier" ? "2%" : `${Math.round((idx / total) * 100)}%` }}
           transition={{ duration: 0.5, ease: EASE }}
         />
       </div>
@@ -581,7 +834,54 @@ function Conversation({
       <div className="shrink-0 border-t border-[rgb(var(--m-line))] bg-[rgb(var(--m-page))]">
         <div className="mx-auto w-full max-w-[680px] px-5 py-4">
           <AnimatePresence mode="wait">
-            {inputOpen ? (
+            {!inputOpen ? (
+              <motion.p
+                key="waiting"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="py-3 text-center text-[12.5px] text-[rgb(var(--m-faint))]"
+              >
+                Akyra écrit…
+              </motion.p>
+            ) : stage === "metier" ? (
+              /* [2.2] Confirmation/choix du métier — jamais de routage muet. */
+              <motion.div
+                key="input-metier"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3, ease: EASE }}
+              >
+                <MetierPicker guess={metierGuess} onPick={pickMetier} onOther={pickOther} />
+              </motion.div>
+            ) : pendingCat ? (
+              /* [2.3] Signal contradictoire : on confirme la bascule. */
+              <motion.div
+                key={`input-switch-${idx}-${askSeq}`}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3, ease: EASE }}
+                className="flex flex-wrap gap-2"
+              >
+                <button
+                  type="button"
+                  onClick={() => resolvePending(true)}
+                  className="inline-flex items-center gap-2 rounded-full bg-[rgb(var(--m-ink))] px-5 py-3 text-[14px] font-bold text-[rgb(var(--m-page))] transition-opacity hover:opacity-90"
+                >
+                  <Check size={14} />
+                  Oui, je suis {(getCategory(pendingCat)?.label ?? "").toLowerCase()}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => resolvePending(false)}
+                  className="rounded-full border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] px-5 py-3 text-[14px] font-medium text-[rgb(var(--m-ink))] transition-colors hover:bg-[rgb(var(--m-overlay)/0.04)]"
+                >
+                  Non, on continue comme ça
+                </button>
+              </motion.div>
+            ) : (
               <motion.div
                 key={`input-${idx}-${askSeq}`}
                 initial={{ opacity: 0, y: 8 }}
@@ -593,6 +893,7 @@ function Conversation({
                   q={q}
                   intake={intake}
                   uploading={uploading}
+                  uploadError={uploadError}
                   onText={(v) => setField(q.key as keyof Intake, v as never)}
                   onToggleEvent={(val) => {
                     const cur = intake.eventTypes ?? [];
@@ -603,7 +904,7 @@ function Conversation({
                   }}
                   onPhotos={onPhotos}
                   onHasWebsite={(b) => setField("hasWebsite", b)}
-                  onEnter={() => canValidate && advance(false)}
+                  onEnter={() => canValidate && !uploading && advance(false)}
                 />
 
                 <div className="mt-3.5 flex items-center justify-between">
@@ -624,7 +925,7 @@ function Conversation({
                     )}
                   </div>
                   <div className="flex items-center gap-3">
-                    {!required && !isAnswered(q, intake) && (
+                    {!required && !isAnswered(q, intake) && !uploading && (
                       <button
                         type="button"
                         onClick={() => advance(true)}
@@ -633,28 +934,28 @@ function Conversation({
                         Passer
                       </button>
                     )}
+                    {/* [2.4] On ne valide jamais pendant un upload en cours. */}
                     <button
                       type="button"
-                      disabled={!canValidate}
+                      disabled={!canValidate || uploading}
                       onClick={() => advance(false)}
                       className="group inline-flex items-center gap-2 rounded-full bg-[rgb(var(--m-ink))] px-6 py-3 text-[14.5px] font-bold text-[rgb(var(--m-page))] transition-opacity hover:opacity-90 disabled:opacity-40"
                     >
-                      {idx >= total - 1 ? "Préparer mon site" : "Continuer"}
-                      <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
+                      {uploading ? (
+                        <>
+                          <Loader2 size={15} className="animate-spin" />
+                          Envoi en cours…
+                        </>
+                      ) : (
+                        <>
+                          {idx >= total - 1 ? "Préparer mon site" : "Continuer"}
+                          <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
+                        </>
+                      )}
                     </button>
                   </div>
                 </div>
               </motion.div>
-            ) : (
-              <motion.p
-                key="waiting"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="py-3 text-center text-[12.5px] text-[rgb(var(--m-faint))]"
-              >
-                Akyra écrit…
-              </motion.p>
             )}
           </AnimatePresence>
           <p className="mt-3 text-center text-[11.5px] text-[rgb(var(--m-faint))]">
@@ -666,12 +967,93 @@ function Conversation({
   );
 }
 
+/* ------------------------------------------------------ [2.2] MetierPicker */
+
+/**
+ * Choix/confirmation du métier : la meilleure hypothèse en premier (« Oui,
+ * c'est ça »), les autres catégories en chips, et « Autre » en texte libre
+ * (re-détecté ; repli portfolio avec la précision conservée pour l'IA).
+ */
+function MetierPicker({
+  guess,
+  onPick,
+  onOther,
+}: {
+  guess: string | null;
+  onPick: (categoryId: string) => void;
+  onOther: (text: string) => void;
+}) {
+  const [otherOpen, setOtherOpen] = useState(false);
+  const [text, setText] = useState("");
+  const guessCat = guess ? getCategory(guess) : undefined;
+  const others = ACTIVE_CATEGORIES.filter((c) => c.id !== guessCat?.id);
+
+  return (
+    <div>
+      <div className="flex flex-wrap gap-2">
+        {guessCat && (
+          <button
+            type="button"
+            onClick={() => onPick(guessCat.id)}
+            className="inline-flex items-center gap-2 rounded-full bg-[rgb(var(--m-ink))] px-5 py-3 text-[14px] font-bold text-[rgb(var(--m-page))] transition-opacity hover:opacity-90"
+          >
+            <Check size={14} />
+            Oui, je suis {guessCat.label.toLowerCase()}
+          </button>
+        )}
+        {others.map((c) => (
+          <button
+            key={c.id}
+            type="button"
+            onClick={() => onPick(c.id)}
+            className="rounded-full border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] px-4 py-3 text-[14px] font-medium text-[rgb(var(--m-ink))] transition-colors hover:bg-[rgb(var(--m-overlay)/0.04)]"
+          >
+            {c.label}
+          </button>
+        ))}
+        <button
+          type="button"
+          onClick={() => setOtherOpen((o) => !o)}
+          className={`rounded-full border px-4 py-3 text-[14px] font-medium transition-colors ${
+            otherOpen
+              ? "border-[rgb(var(--m-accent)/0.5)] text-[rgb(var(--m-accent))]"
+              : "border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] text-[rgb(var(--m-ink))] hover:bg-[rgb(var(--m-overlay)/0.04)]"
+          }`}
+        >
+          Autre…
+        </button>
+      </div>
+      {otherOpen && (
+        <div className="mt-3 flex gap-2">
+          <input
+            autoFocus
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && text.trim().length >= 2 && onOther(text.trim())}
+            placeholder="Dites-moi votre métier en quelques mots…"
+            className="h-12 w-full rounded-2xl border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] px-5 text-[15px] outline-none transition-colors focus:border-[rgb(var(--m-accent)/0.5)] placeholder:text-[rgb(var(--m-faint))]"
+          />
+          <button
+            type="button"
+            disabled={text.trim().length < 2}
+            onClick={() => onOther(text.trim())}
+            className="shrink-0 rounded-2xl bg-[rgb(var(--m-ink))] px-5 text-[14px] font-bold text-[rgb(var(--m-page))] transition-opacity hover:opacity-90 disabled:opacity-40"
+          >
+            Valider
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ----------------------------------------------------------- AnswerControl */
 
 function AnswerControl({
   q,
   intake,
   uploading,
+  uploadError,
   onText,
   onToggleEvent,
   onPhotos,
@@ -681,6 +1063,7 @@ function AnswerControl({
   q: OnboardingQuestion;
   intake: Intake;
   uploading: boolean;
+  uploadError?: string;
   onText: (v: string) => void;
   onToggleEvent: (val: string) => void;
   onPhotos: (files: File[]) => void;
@@ -772,6 +1155,10 @@ function AnswerControl({
             Elles habilleront chaque recoin de votre site. Vous pourrez en ajouter plus tard.
           </span>
         </button>
+        {/* [2.4] Échec d'upload signalé, jamais silencieux. */}
+        {uploadError && (
+          <p className="mt-2 text-[13px] font-medium text-red-600">{uploadError}</p>
+        )}
         {n > 0 && (
           <div className="mt-3 flex gap-2 overflow-x-auto">
             {(intake.photoUrls ?? []).slice(0, 8).map((u) => (
