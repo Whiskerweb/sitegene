@@ -1,5 +1,6 @@
 import { requireUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { primarySiteForUser } from "@/lib/primary-site";
 import { listSitePhotos, collectUsedPhotoUrls } from "@/lib/site-photos";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -12,13 +13,7 @@ export default async function Bibliotheque() {
   const user = await requireUser();
   const admin = createAdminClient();
 
-  const { data: site } = await admin
-    .from("sites")
-    .select("id")
-    .eq("owner_user_id", user.id)
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+  const site = await primarySiteForUser<{ id: string }>(admin, user.id, "id");
 
   if (!site) {
     return (

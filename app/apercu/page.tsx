@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { requireUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { primarySiteForUser } from "@/lib/primary-site";
 import { Button } from "@/components/ui/Button";
 import { IconChevron, IconEdit, IconExternal } from "@/components/ui/icons";
 
@@ -14,13 +15,11 @@ export const dynamic = "force-dynamic";
 export default async function ApercuPage() {
   const user = await requireUser();
   const admin = createAdminClient();
-  const { data: site } = await admin
-    .from("sites")
-    .select("slug, status")
-    .eq("owner_user_id", user.id)
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+  const site = await primarySiteForUser<{ slug: string | null; status: string }>(
+    admin,
+    user.id,
+    "slug",
+  );
 
   const isLive = site?.status === "live" && !!site?.slug;
 

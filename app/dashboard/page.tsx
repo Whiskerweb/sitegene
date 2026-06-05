@@ -15,6 +15,7 @@ import { SiteActions } from "@/components/ui/SiteActions";
 import { IconCloud } from "@/components/ui/icons";
 import PaywallModal from "@/components/dashboard/PaywallModal";
 import TrialBanner from "@/components/dashboard/TrialBanner";
+import { primarySiteForUser } from "@/lib/primary-site";
 
 export const dynamic = "force-dynamic";
 
@@ -30,15 +31,18 @@ export default async function MonSite({
   const admin = createAdminClient();
   const sp = await searchParams;
 
-  const { data: site } = await admin
-    .from("sites")
-    .select(
-      "id, slug, status, template_id, published_at, created_at, billing_status, trial_ends_at",
-    )
-    .eq("owner_user_id", user.id)
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+  // Site PRINCIPAL (live/payé d'abord) : un brouillon plus récent ne doit
+  // jamais masquer le site débloqué (sinon → paywall d'essai à tort).
+  const site = await primarySiteForUser<{
+    id: string;
+    slug: string | null;
+    status: string;
+    template_id: string | null;
+    published_at: string | null;
+    created_at: string;
+    billing_status: string | null;
+    trial_ends_at: string | null;
+  }>(admin, user.id, "id, slug, template_id, published_at, created_at, trial_ends_at");
   const balance = await getBalance(admin, user.id);
 
   const { data: ob } = site

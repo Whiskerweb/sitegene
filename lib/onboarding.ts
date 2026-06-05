@@ -42,6 +42,14 @@ export type OnboardingState = {
 
 type Admin = ReturnType<typeof createAdminClient>;
 
+/** Le client a déjà un site en ligne : l'onboarding n'a plus lieu d'être. */
+export class AlreadyLiveError extends Error {
+  constructor() {
+    super("Votre site est déjà en ligne.");
+    this.name = "AlreadyLiveError";
+  }
+}
+
 /** Déduit un nom de marque du brief (« Camille, photographe… » → « Camille »), ou null. */
 function brandFromBrief(brief: string): string | null {
   const firstLine = brief.split(/[\n.]/)[0]?.trim() ?? "";
@@ -156,6 +164,18 @@ export async function ensureOnboardingSite(input: {
   if (existing) return existing;
 
   const admin = createAdminClient();
+
+  // Client déjà en ligne (payé/essai) : on ne crée PAS un second site — un
+  // brouillon plus récent masquerait son site débloqué dans le dashboard et
+  // l'éditeur (il retombait sur le paywall d'essai après avoir payé).
+  const { data: liveSite } = await admin
+    .from("sites")
+    .select("id")
+    .eq("owner_user_id", input.userId)
+    .eq("status", "live")
+    .limit(1)
+    .maybeSingle();
+  if (liveSite?.id) throw new AlreadyLiveError();
   // [2.1] Le métier est DÉTECTÉ depuis le texte libre, jamais supposé. Une
   // détection sûre route directement ; ambiguë ou absente → la conversation
   // ouvrira sur la confirmation du métier ([2.2], categoryConfirmed=false).

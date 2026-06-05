@@ -4,7 +4,7 @@
  */
 import { NextResponse } from "next/server";
 import { getUser } from "@/lib/auth";
-import { ensureOnboardingSite } from "@/lib/onboarding";
+import { ensureOnboardingSite, AlreadyLiveError } from "@/lib/onboarding";
 import { getCategory } from "@/lib/categories";
 
 export const maxDuration = 30;
@@ -38,6 +38,10 @@ export async function POST(request: Request) {
     });
     return NextResponse.json(state);
   } catch (e) {
+    // Site déjà en ligne → retour au dashboard (pas un nouveau site fantôme).
+    if (e instanceof AlreadyLiveError) {
+      return NextResponse.json({ redirect: "/dashboard" });
+    }
     const message = e instanceof Error ? e.message : "Démarrage impossible.";
     console.error("[onboarding/start]", message);
     return NextResponse.json({ error: message }, { status: 500 });

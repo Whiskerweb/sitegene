@@ -1,5 +1,6 @@
 import { requireUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { primarySiteForUser } from "@/lib/primary-site";
 import { getBalance } from "@/lib/credits-server";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
@@ -18,13 +19,11 @@ export default async function Modifications() {
   const user = await requireUser();
   const admin = createAdminClient();
 
-  const { data: site } = await admin
-    .from("sites")
-    .select("id, slug, status")
-    .eq("owner_user_id", user.id)
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+  const site = await primarySiteForUser<{
+    id: string;
+    slug: string | null;
+    status: string;
+  }>(admin, user.id, "id, slug");
   const balance = await getBalance(admin, user.id);
 
   if (!site) {

@@ -1,5 +1,6 @@
 import { requireUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { primarySiteForUser } from "@/lib/primary-site";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
@@ -18,13 +19,12 @@ const templateNames: Record<string, string> = {
 export default async function Settings() {
   const user = await requireUser();
   const admin = createAdminClient();
-  const { data: site } = await admin
-    .from("sites")
-    .select("slug, custom_domain, template_id, status")
-    .eq("owner_user_id", user.id)
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+  const site = await primarySiteForUser<{
+    slug: string | null;
+    custom_domain: string | null;
+    template_id: string | null;
+    status: string;
+  }>(admin, user.id, "slug, custom_domain, template_id");
 
   if (!site) {
     return (

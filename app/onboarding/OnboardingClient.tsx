@@ -120,6 +120,11 @@ export default function OnboardingClient({ email }: { email: string }) {
         const data = await res.json();
         if (!res.ok) throw new Error(data?.error || "Démarrage impossible.");
         if (cancelled) return;
+        // Site déjà payé/en ligne : retour au dashboard, pas de doublon.
+        if (typeof data.redirect === "string") {
+          router.replace(data.redirect);
+          return;
+        }
         try {
           sessionStorage.removeItem("akyra_brief");
         } catch {

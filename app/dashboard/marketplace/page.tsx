@@ -11,6 +11,7 @@ import {
 } from "@/lib/categories";
 import { TEMPLATE_IDS, isSpaTemplate, templateMeta } from "@/lib/templates";
 import { EFFECT_PRICE_CREDITS, TEMPLATE_PRICE_CREDITS } from "@/lib/marketplace";
+import { primarySiteForUser } from "@/lib/primary-site";
 import { MarketplaceClient } from "./MarketplaceClient";
 
 export const dynamic = "force-dynamic";
@@ -25,14 +26,12 @@ export default async function MarketplacePage() {
   const user = await requireUser();
   const admin = createAdminClient();
 
-  const [{ data: site }, owned, balance] = await Promise.all([
-    admin
-      .from("sites")
-      .select("id, template_id")
-      .eq("owner_user_id", user.id)
-      .order("created_at", { ascending: false })
-      .limit(1)
-      .maybeSingle(),
+  const [site, owned, balance] = await Promise.all([
+    primarySiteForUser<{ id: string; template_id: string | null }>(
+      admin,
+      user.id,
+      "id, template_id",
+    ),
     ownedItems(admin, user.id),
     getBalance(admin, user.id),
   ]);

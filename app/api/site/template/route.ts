@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { primarySiteForUser } from "@/lib/primary-site";
 import { isTemplateId } from "@/lib/templates";
 import { ownsItem } from "@/lib/marketplace-server";
 import { applyTemplateToSite } from "@/lib/template-apply";
@@ -22,13 +23,11 @@ export async function POST(request: Request) {
   }
 
   const admin = createAdminClient();
-  const { data: site } = await admin
-    .from("sites")
-    .select("id, template_id, status")
-    .eq("owner_user_id", user.id)
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+  const site = await primarySiteForUser<{
+    id: string;
+    template_id: string | null;
+    status: string;
+  }>(admin, user.id, "id, template_id");
   if (!site) {
     return NextResponse.json({ error: "Aucun site." }, { status: 404 });
   }

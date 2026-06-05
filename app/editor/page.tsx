@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { requireUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { primarySiteForUser } from "@/lib/primary-site";
 import { getBalance } from "@/lib/credits-server";
 import { fetchTemplateManifest } from "@/lib/site-server";
 import { ownedEffectModules } from "@/lib/marketplace-server";
@@ -18,13 +19,15 @@ export default async function EditorPage({
   const user = await requireUser();
   const admin = createAdminClient();
 
-  const { data: site } = await admin
-    .from("sites")
-    .select("id, slug, status, template_id, billing_status")
-    .eq("owner_user_id", user.id)
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+  // Site PRINCIPAL (live/payé d'abord) — jamais un brouillon plus récent qui
+  // masquerait le site débloqué et renverrait à tort vers le paywall d'essai.
+  const site = await primarySiteForUser<{
+    id: string;
+    slug: string | null;
+    status: string;
+    template_id: string | null;
+    billing_status: string | null;
+  }>(admin, user.id, "id, slug, template_id");
   if (!site || !site.template_id) redirect("/dashboard");
   // Garde-fou : site verrouillé (ni en ligne, ni en essai/payé) → paywall.
   if (

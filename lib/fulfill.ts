@@ -172,6 +172,12 @@ export async function fulfillPayment(
       // Outreach : on attribue le site, le slug est choisi sur /welcome/name.
       await admin.from("sites").update({ owner_user_id: userId }).eq("id", siteId);
     }
+    // Les 50 € sont payés : le site est DÉBLOQUÉ pour de bon. Sans ce statut,
+    // le dashboard/éditeur retombait sur le paywall d'essai après paiement.
+    await admin
+      .from("sites")
+      .update({ billing_status: "active" })
+      .eq("id", siteId);
     await admin.from("events").insert({ token, site_id: siteId, type: "purchased" });
   }
 
