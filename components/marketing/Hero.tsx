@@ -55,13 +55,17 @@ export default function Hero() {
   return (
     <section id="demo" className="relative w-full overflow-hidden pb-12 pt-28">
       <div className="mx-auto flex max-w-6xl flex-col items-center px-4 text-center">
-        {/* Badge animé */}
-        <span className="inline-flex items-center gap-2.5 rounded-full border border-[rgb(var(--m-line))] bg-[rgb(var(--m-overlay)/0.04)] px-3.5 py-1.5 backdrop-blur-sm">
-          <span className="text-[12px] font-semibold text-[rgb(var(--m-ink))]">À partir de 50 €/an</span>
+        {/* Badge animé — [1.1] 100 % français mis en avant */}
+        <span className="inline-flex flex-wrap items-center justify-center gap-2.5 rounded-full border border-[rgb(var(--m-line))] bg-[rgb(var(--m-overlay)/0.04)] px-3.5 py-1.5 backdrop-blur-sm">
+          <span className="text-[12px] font-semibold text-[rgb(var(--m-ink))]">
+            🇫🇷 100 % français
+          </span>
           <span className="h-3 w-px bg-[rgb(var(--m-overlay)/0.15)]" />
+          <span className="text-[12px] font-semibold text-[rgb(var(--m-ink))]">À partir de 50 €/an</span>
+          <span className="hidden h-3 w-px bg-[rgb(var(--m-overlay)/0.15)] sm:block" />
           <RotatingText
             messages={ROTATING}
-            className="text-[12px] font-medium text-[rgb(var(--m-accent))]"
+            className="hidden text-[12px] font-medium text-[rgb(var(--m-accent))] sm:block"
           />
         </span>
 
@@ -145,9 +149,27 @@ export default function Hero() {
         </form>
 
         <p className="mt-5 text-[12.5px] text-[rgb(var(--m-faint))]">
-          Déjà adopté par plus de{" "}
+          Aucune compétence requise · déjà adopté par plus de{" "}
           <span className="font-semibold text-[rgb(var(--m-muted))]">2 400 créateurs</span>.
         </p>
+
+        {/* [1.1] Arguments Made in France */}
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
+          {[
+            "🇫🇷 Conçu et développé en France",
+            "Vos données hébergées en Europe (RGPD)",
+            "Support en français, par des humains",
+            "Aucune compétence technique requise",
+          ].map((t) => (
+            <span
+              key={t}
+              className="flex items-center gap-2 text-[12.5px] font-medium text-[rgb(var(--m-muted))]"
+            >
+              <span className="h-1 w-1 rounded-full bg-[rgb(var(--m-accent))]" aria-hidden />
+              {t}
+            </span>
+          ))}
+        </div>
       </div>
 
       <AuthGate

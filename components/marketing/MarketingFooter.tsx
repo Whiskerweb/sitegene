@@ -59,6 +59,11 @@ export default function MarketingFooter() {
                 Le site pro des indépendants, déjà construit. Quelques photos, une description, et
                 vous êtes en ligne en 30 secondes — tout compris, 50 €/an.
               </p>
+              {/* [1.1] Réassurance Made in France */}
+              <p className="mt-3 max-w-[300px] text-[12.5px] font-medium text-[rgb(var(--m-muted))]">
+                🇫🇷 100 % français — conçu en France, données hébergées en Europe, support en
+                français.
+              </p>
             </div>
 
             <div className="mt-8 flex flex-wrap items-center gap-3 text-[12px] text-[rgb(var(--m-faint))]">
