@@ -66,6 +66,30 @@ export type Intake = {
   city?: string;
   availability?: string;
   tone?: "chaleureux" | "premium" | "naturel";
+  /** [3.3] Champs étendus par catégorie. */
+  experienceYears?: string;
+  /** Musicien : genre musical. */
+  genre?: string;
+  /** Musicien/portfolio : liens réseaux & profils (Instagram, GitHub…). */
+  socialLinks?: string;
+  /** Musicien : liens vers sons/extraits (Spotify, SoundCloud…). */
+  musicLinks?: string;
+  /** Musicien : prochaines dates de représentation. */
+  upcomingDates?: string;
+  /** Artisan : métier principal + sous-spécialités. */
+  trade?: string;
+  /** Artisan : zone d'intervention. */
+  area?: string;
+  /** Artisan : labels et certifications (RGE, Qualibat…). */
+  certifications?: string;
+  /** Artisan : lien vers les avis clients (Google My Business…). */
+  reviewsLink?: string;
+  /** Portfolio : titre professionnel. */
+  jobTitle?: string;
+  /** Portfolio : compétences clés. */
+  skills?: string;
+  /** Portfolio : projets marquants (titre + description + lien). */
+  projects?: string;
 };
 
 // ---------------------------------------------------------------------------
@@ -85,6 +109,19 @@ export const PHOTO_EVENT_OPTIONS: QuestionOption[] = [
   { value: "animalier", label: "Animalier" },
 ];
 
+/**
+ * [3.4] Question « site existant », posée TÔT : si le client a déjà un site,
+ * on en extrait les infos (serveur) pour pré-remplir — et chaque champ couvert
+ * ne sera plus demandé ([3.1]).
+ */
+const WEBSITE_QUESTION: OnboardingQuestion = {
+  key: "websiteUrl",
+  kind: "website",
+  label: "Avez-vous déjà un site ou une page ?",
+  help: "Collez son adresse — je récupère vos infos pour vous éviter de tout retaper.",
+  placeholder: "https://mon-ancien-site.com",
+};
+
 const PHOTOGRAPHE_QUESTIONS: OnboardingQuestion[] = [
   {
     key: "brand",
@@ -94,6 +131,7 @@ const PHOTOGRAPHE_QUESTIONS: OnboardingQuestion[] = [
     placeholder: "Ex. Alice R. Studio",
     prefillFrom: "brief",
   },
+  WEBSITE_QUESTION,
   {
     key: "eventTypes",
     kind: "multiselect",
@@ -104,10 +142,24 @@ const PHOTOGRAPHE_QUESTIONS: OnboardingQuestion[] = [
     prefillFrom: "brief",
   },
   {
+    key: "experienceYears",
+    kind: "text",
+    label: "Depuis combien de temps photographiez-vous ?",
+    help: "Facultatif — un chiffre qui rassure vos clients.",
+    placeholder: "Ex. 8 ans",
+  },
+  {
+    key: "priceRange",
+    kind: "text",
+    label: "Vos tarifs",
+    help: "Facultatif. Un forfait ou une fourchette — affiché tel quel.",
+    placeholder: "Ex. à partir de 350 € la séance",
+  },
+  {
     key: "photoUrls",
     kind: "photos",
     label: "Vos plus belles photos",
-    help: "Glissez vos images : elles remplacent les visuels de démo en direct.",
+    help: "5 photos minimum recommandées — elles habillent tout le site, aucune image de démo ne reste.",
   },
   {
     key: "about",
@@ -125,22 +177,50 @@ const PHOTOGRAPHE_QUESTIONS: OnboardingQuestion[] = [
     placeholder: "vous@studio.com",
     prefillFrom: "accountEmail",
   },
-  {
-    key: "websiteUrl",
-    kind: "website",
-    label: "Avez-vous déjà un site ?",
-    help: "Collez son adresse — on s'en servira pour aller plus vite (bientôt automatique).",
-    placeholder: "https://mon-ancien-site.com",
-  },
 ];
 
 const MUSICIEN_QUESTIONS: OnboardingQuestion[] = [
   {
     key: "brand",
     kind: "text",
-    label: "Votre nom d'artiste",
+    label: "Votre nom d'artiste (ou de groupe)",
     placeholder: "Ex. Léo M.",
     prefillFrom: "brief",
+  },
+  WEBSITE_QUESTION,
+  {
+    key: "genre",
+    kind: "text",
+    label: "Votre genre musical",
+    placeholder: "Ex. électro mélodique, jazz manouche…",
+    pivotal: true,
+  },
+  {
+    key: "about",
+    kind: "textarea",
+    label: "Votre bio, en quelques lignes",
+    help: "Votre univers, votre parcours — ce que les bookers doivent retenir.",
+    placeholder: "Producteur électro chaleureuse, sets live, 10 ans de scène…",
+    prefillFrom: "brief",
+  },
+  {
+    key: "socialLinks",
+    kind: "textarea",
+    label: "Vos réseaux",
+    help: "Instagram, TikTok, YouTube… un lien par ligne.",
+    placeholder: "https://instagram.com/…\nhttps://youtube.com/…",
+  },
+  {
+    key: "musicLinks",
+    kind: "textarea",
+    label: "Vos sons",
+    help: "Spotify, SoundCloud, Bandcamp… les liens vers vos meilleurs extraits.",
+    placeholder: "https://open.spotify.com/…",
+  },
+  {
+    key: "photoUrls",
+    kind: "photos",
+    label: "Vos visuels (live, presse, pochettes)",
   },
   {
     key: "techRider",
@@ -148,12 +228,13 @@ const MUSICIEN_QUESTIONS: OnboardingQuestion[] = [
     label: "Votre fiche technique",
     help: "Matériel, configuration scène, besoins son & lumière. On crée la section dédiée.",
     placeholder: "2 platines + table de mixage, retours, ...",
-    pivotal: true,
   },
   {
-    key: "photoUrls",
-    kind: "photos",
-    label: "Vos visuels (live, presse, pochettes)",
+    key: "upcomingDates",
+    kind: "textarea",
+    label: "Vos prochaines dates",
+    help: "Facultatif — lieu + date, une par ligne.",
+    placeholder: "12 juillet — Festival des Nuits, Arles",
   },
   {
     key: "contactEmail",
@@ -164,9 +245,184 @@ const MUSICIEN_QUESTIONS: OnboardingQuestion[] = [
   },
 ];
 
+const ARTISAN_QUESTIONS: OnboardingQuestion[] = [
+  {
+    key: "brand",
+    kind: "text",
+    label: "Le nom de votre entreprise",
+    placeholder: "Ex. Atelier Beaumont",
+    prefillFrom: "brief",
+  },
+  WEBSITE_QUESTION,
+  {
+    key: "trade",
+    kind: "textarea",
+    label: "Votre métier et vos spécialités",
+    help: "Ex. plombier → sanitaire, chauffage, débouchage. C'est ce qui structure le site.",
+    placeholder: "Plombier chauffagiste : installation, dépannage, salle de bains clé en main",
+    pivotal: true,
+  },
+  {
+    key: "area",
+    kind: "text",
+    label: "Votre zone d'intervention",
+    placeholder: "Ex. Nantes et 30 km alentour",
+  },
+  {
+    key: "certifications",
+    kind: "text",
+    label: "Expérience, labels et certifications",
+    help: "Facultatif. RGE, Qualibat, années de métier — tout ce qui rassure.",
+    placeholder: "Ex. 15 ans de métier, certifié RGE",
+  },
+  {
+    key: "priceRange",
+    kind: "text",
+    label: "Vos tarifs",
+    help: "Facultatif. Taux horaire, forfait dépannage, devis gratuit…",
+    placeholder: "Ex. devis gratuit, dépannage dès 90 €",
+  },
+  {
+    key: "photoUrls",
+    kind: "photos",
+    label: "Photos de vos réalisations",
+    help: "Avant/après, chantiers finis — c'est ce que vos clients regardent en premier.",
+  },
+  {
+    key: "reviewsLink",
+    kind: "text",
+    label: "Un lien vers vos avis clients ?",
+    help: "Facultatif. Votre fiche Google, PagesJaunes…",
+    placeholder: "https://g.page/…",
+  },
+  {
+    key: "contactPhone",
+    kind: "text",
+    label: "Le téléphone pour les demandes",
+    help: "Affiché en évidence — c'est par là qu'arrivent les chantiers.",
+    placeholder: "06 12 34 56 78",
+  },
+  {
+    key: "contactEmail",
+    kind: "text",
+    label: "Votre email",
+    placeholder: "contact@entreprise.fr",
+    prefillFrom: "accountEmail",
+  },
+];
+
+const PORTFOLIO_QUESTIONS: OnboardingQuestion[] = [
+  {
+    key: "brand",
+    kind: "text",
+    label: "Votre nom complet",
+    placeholder: "Ex. Alex Morel",
+    prefillFrom: "brief",
+  },
+  WEBSITE_QUESTION,
+  {
+    key: "jobTitle",
+    kind: "text",
+    label: "Votre titre professionnel",
+    placeholder: "Ex. Développeur front-end, Designer produit…",
+    pivotal: true,
+  },
+  {
+    key: "about",
+    kind: "textarea",
+    label: "Votre parcours, en quelques lignes",
+    help: "Formation, expériences clés, ce qui vous distingue.",
+    placeholder: "10 ans entre agence et startup, spécialisé dans…",
+    prefillFrom: "brief",
+  },
+  {
+    key: "skills",
+    kind: "text",
+    label: "Vos compétences clés",
+    help: "Séparées par des virgules — elles deviennent vos tags.",
+    placeholder: "React, TypeScript, design system, UX…",
+  },
+  {
+    key: "projects",
+    kind: "textarea",
+    label: "Vos projets marquants",
+    help: "Titre + une phrase + lien si vous en avez. Un projet par ligne.",
+    placeholder: "Refonte du site X — design + front (https://…)",
+  },
+  {
+    key: "socialLinks",
+    kind: "textarea",
+    label: "Vos liens pro",
+    help: "GitHub, Behance, LinkedIn… un lien par ligne.",
+    placeholder: "https://github.com/…",
+  },
+  {
+    key: "photoUrls",
+    kind: "photos",
+    label: "Des visuels de vos projets",
+    help: "Captures, photos — facultatif mais ça fait toute la différence.",
+  },
+  {
+    key: "availability",
+    kind: "text",
+    label: "Votre disponibilité",
+    help: "Facultatif. En poste, ouvert aux missions, dispo en mai…",
+    placeholder: "Ex. disponible pour missions freelance",
+  },
+  {
+    key: "contactEmail",
+    kind: "text",
+    label: "Où vous contacter",
+    placeholder: "vous@mail.com",
+    prefillFrom: "accountEmail",
+  },
+];
+
+const SAAS_QUESTIONS: OnboardingQuestion[] = [
+  {
+    key: "brand",
+    kind: "text",
+    label: "Le nom de votre produit",
+    placeholder: "Ex. Healix",
+    prefillFrom: "brief",
+  },
+  WEBSITE_QUESTION,
+  {
+    key: "about",
+    kind: "textarea",
+    label: "Que fait votre produit, et pour qui ?",
+    help: "Deux phrases suffisent — c'est la base de votre page.",
+    placeholder: "App de suivi santé pour les coachs sportifs : tracking, alertes, rapports.",
+    pivotal: true,
+    prefillFrom: "brief",
+  },
+  {
+    key: "priceRange",
+    kind: "text",
+    label: "Votre tarif",
+    help: "Facultatif. Abonnement, essai gratuit…",
+    placeholder: "Ex. 19 €/mois, essai gratuit 14 jours",
+  },
+  {
+    key: "photoUrls",
+    kind: "photos",
+    label: "Captures d'écran de votre produit",
+  },
+  {
+    key: "contactEmail",
+    kind: "text",
+    label: "Votre email de contact",
+    placeholder: "hello@produit.com",
+    prefillFrom: "accountEmail",
+  },
+];
+
 export const QUESTIONS_BY_CATEGORY: Record<string, OnboardingQuestion[]> = {
   photographe: PHOTOGRAPHE_QUESTIONS,
   musicien: MUSICIEN_QUESTIONS,
+  artisan: ARTISAN_QUESTIONS,
+  portfolio: PORTFOLIO_QUESTIONS,
+  saas: SAAS_QUESTIONS,
 };
 
 export function questionsFor(categoryId: string): OnboardingQuestion[] {

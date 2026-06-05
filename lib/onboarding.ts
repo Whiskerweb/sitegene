@@ -16,6 +16,7 @@ import { contentForTemplate, type AnyContent } from "@/lib/site-content";
 import { fetchDefaultContent, fetchTemplateManifest } from "@/lib/site-server";
 import { getCategory, DEFAULT_CATEGORY } from "@/lib/categories";
 import { detectCategory } from "@/lib/category-detect";
+import { mineIntake, mergeMined } from "@/lib/intake-mine";
 import { isTemplateId, type TemplateId } from "@/lib/templates";
 import { dropSectionsForIntake, eventLabel, type Intake } from "@/lib/onboarding-config";
 import {
@@ -41,12 +42,14 @@ export type OnboardingState = {
 
 type Admin = ReturnType<typeof createAdminClient>;
 
-/** Déduit un nom de marque lisible du brief (« Camille, photographe… » → « Camille »). */
-function brandFromBrief(brief: string): string {
+/** Déduit un nom de marque du brief (« Camille, photographe… » → « Camille »), ou null. */
+function brandFromBrief(brief: string): string | null {
   const firstLine = brief.split(/[\n.]/)[0]?.trim() ?? "";
   const head = firstLine.split(/[,–—-]/)[0]?.trim() ?? "";
   const name = head.replace(/^(je m'appelle|moi c'est|c'est)\s+/i, "").trim();
-  return (name || "Votre Studio").slice(0, 40);
+  // Une « marque » de plus de 5 mots est une phrase, pas un nom.
+  if (!name || name.split(/\s+/).length > 5) return null;
+  return name.slice(0, 40);
 }
 
 /** Template recommandé pour une catégorie/intake (défaut catégorie pour l'instant). */
@@ -164,7 +167,7 @@ export async function ensureOnboardingSite(input: {
     DEFAULT_CATEGORY;
   const categoryConfirmed = Boolean(explicit) || detected.confidence === "high";
   const templateId = category.defaultTemplateId;
-  const brand = brandFromBrief(input.brief);
+  const brand = brandFromBrief(input.brief) ?? "Votre Studio";
 
   const baseContent = (await fetchDefaultContent(input.origin, templateId)) as
     | Record<string, unknown>
@@ -185,13 +188,18 @@ export async function ensureOnboardingSite(input: {
   // Le site appartient au client immédiatement (différence clé vs outreach).
   await admin.from("sites").update({ owner_user_id: input.userId }).eq("id", siteId);
 
-  const intake: Intake = {
-    brief: input.brief,
-    brand,
-    categoryId: category.id,
-    categoryConfirmed,
-    contactEmail: input.email ?? undefined,
-  };
+  // [3.1] Le brief est miné dès le départ : chaque champ qu'il couvre (ville,
+  // tarifs, spécialités, contact…) ne sera pas redemandé en conversation.
+  const intake: Intake = mergeMined(
+    {
+      brief: input.brief,
+      brand: brandFromBrief(input.brief) ?? undefined,
+      categoryId: category.id,
+      categoryConfirmed,
+      contactEmail: input.email ?? undefined,
+    },
+    mineIntake(input.brief),
+  );
 
   await admin.from("site_onboarding").insert({
     site_id: siteId,
@@ -370,6 +378,24 @@ function briefFromIntake(intake: Intake & { categoryId?: string }): string {
       `Spécialités : ${intake.eventTypes.map(eventLabel).join(", ")}`,
     intake.about && `À propos : ${intake.about}`,
     intake.techRider && `Fiche technique : ${intake.techRider}`,
+    // [3.3] Champs étendus par catégorie — tout ce que le client a donné nourrit l'IA.
+    intake.experienceYears && `Expérience : ${intake.experienceYears}`,
+    intake.priceRange && `Tarifs : ${intake.priceRange}`,
+    intake.city && `Ville : ${intake.city}`,
+    intake.genre && `Genre musical : ${intake.genre}`,
+    intake.socialLinks && `Réseaux : ${intake.socialLinks}`,
+    intake.musicLinks && `Extraits musicaux : ${intake.musicLinks}`,
+    intake.upcomingDates && `Prochaines dates : ${intake.upcomingDates}`,
+    intake.trade && `Métier et spécialités : ${intake.trade}`,
+    intake.area && `Zone d'intervention : ${intake.area}`,
+    intake.certifications && `Certifications : ${intake.certifications}`,
+    intake.reviewsLink && `Avis clients : ${intake.reviewsLink}`,
+    intake.jobTitle && `Titre professionnel : ${intake.jobTitle}`,
+    intake.skills && `Compétences : ${intake.skills}`,
+    intake.projects && `Projets : ${intake.projects}`,
+    intake.availability && `Disponibilité : ${intake.availability}`,
+    intake.instagram && `Instagram : ${intake.instagram}`,
+    intake.contactPhone && `Téléphone : ${intake.contactPhone}`,
     intake.contactEmail && `Email de contact : ${intake.contactEmail}`,
   ];
   return parts.filter(Boolean).join("\n");
