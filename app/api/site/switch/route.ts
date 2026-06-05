@@ -32,13 +32,15 @@ export async function POST(request: Request) {
   }
 
   // Trouver le site actuellement actif (pour la sync éventuelle).
+  // La colonne is_active n'existe qu'après la migration 0019 ; fallback sur
+  // le site le plus récent qui n'est pas la cible (pré-migration).
   const { data: allSites } = await admin
     .from("sites")
-    .select("id, is_active")
+    .select("id")
     .eq("owner_user_id", user.id)
     .order("created_at", { ascending: false });
 
-  const currentActiveId = (allSites ?? []).find((s) => s.is_active === true && s.id !== targetSiteId)?.id ?? null;
+  const currentActiveId = (allSites ?? []).find((s) => s.id !== targetSiteId)?.id ?? null;
 
   // Sync optionnelle : copier le dernier contenu du site source vers la cible.
   if (sync && currentActiveId) {
@@ -71,16 +73,9 @@ export async function POST(request: Request) {
   }
 
   // Désactiver tous les sites sauf la cible, activer la cible.
-  await admin
-    .from("sites")
-    .update({ is_active: false })
-    .eq("owner_user_id", user.id)
-    .neq("id", targetSiteId);
-
-  await admin
-    .from("sites")
-    .update({ is_active: true })
-    .eq("id", targetSiteId);
+  // Best-effort : la colonne is_active n'existe qu'après la migration 0019.
+  await admin.from("sites").update({ is_active: false }).eq("owner_user_id", user.id).neq("id", targetSiteId);
+  await admin.from("sites").update({ is_active: true }).eq("id", targetSiteId);
 
   return NextResponse.json({ ok: true });
 }

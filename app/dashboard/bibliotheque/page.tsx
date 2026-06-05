@@ -32,9 +32,11 @@ export default async function Bibliotheque({
   const primarySite = await primarySiteForUser<{ id: string }>(admin, user.id, "id");
 
   // Tous les sites du client.
+  // is_active n'existe qu'après la migration 0019 ; on sélectionne sans cette
+  // colonne pour éviter une erreur 400 en prod avant son application.
   const { data: allSites } = await admin
     .from("sites")
-    .select("id, template_id, status, is_active, created_at, slug")
+    .select("id, template_id, status, created_at, slug")
     .eq("owner_user_id", user.id)
     .order("created_at", { ascending: false })
     .limit(50);
@@ -56,7 +58,8 @@ export default async function Bibliotheque({
     templateId: (s.template_id as string) ?? "",
     templateName: TEMPLATE_NAMES[(s.template_id as string) ?? ""] ?? (s.template_id as string) ?? "Site",
     status: (s.status as string) ?? "draft",
-    isActive: (s.is_active as boolean) ?? (s.id === primarySite?.id),
+    // Avant migration 0019 : le site primaire est considéré actif.
+    isActive: ("is_active" in s ? (s.is_active as boolean) : null) ?? (s.id === primarySite?.id),
     slug: (s.slug as string | null) ?? null,
     createdAt: (s.created_at as string) ?? "",
   }));

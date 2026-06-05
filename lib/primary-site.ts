@@ -41,7 +41,10 @@ export async function primarySiteForUser<T extends SiteRow = SiteRow>(
   userId: string,
   columns: string,
 ): Promise<T | null> {
-  const need = ["status", "billing_status", "is_active"];
+  // is_active est optionnel (colonne ajoutée par la migration 0019).
+  // On ne l'ajoute pas d'office : si la colonne n'existe pas en prod,
+  // la requête échouerait. pickPrimarySite tolère is_active=undefined.
+  const need = ["status", "billing_status"];
   const cols = columns
     .split(",")
     .map((c) => c.trim())
