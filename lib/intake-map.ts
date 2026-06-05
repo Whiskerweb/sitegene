@@ -49,8 +49,8 @@ const SERVICE_PATH_RE = /^(?:services|prestations)(?:\.items)?\[\]\.(?:name|titl
 const STATIC_CANDIDATES: Record<string, { paths: string[]; max: number }> = {
   brand: { paths: ["brand", "hero.brand", "site.brand"], max: 40 },
   about: { paths: ["hero.subtitle", "hero.tagline", "scrollText", "about.text"], max: 260 },
-  contactEmail: { paths: ["footer.email", "site.footer.email", "topbar.email", "contact.email"], max: 80 },
-  contactPhone: { paths: ["topbar.phone", "contact.phone", "cta.phone", "footer.phone"], max: 40 },
+  contactEmail: { paths: ["footer.email", "site.footer.email", "topbar.email", "contact.email", "contactPage.email"], max: 80 },
+  contactPhone: { paths: ["topbar.phone", "contact.phone", "cta.phone", "footer.phone", "contactPage.phone"], max: 40 },
 };
 
 /**

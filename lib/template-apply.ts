@@ -26,6 +26,7 @@ import {
   intakeToOverrides,
   type TemplateManifest,
 } from "@/lib/intake-map";
+import { briefFromSourceContent } from "@/lib/source-brief";
 import type { Intake } from "@/lib/onboarding-config";
 import type { TemplateId } from "@/lib/templates";
 
@@ -94,12 +95,14 @@ export function synthesizeIntakeFromContent(
     "site.footer.email",
     "topbar.email",
     "contact.email",
+    "contactPage.email",
   ]);
   intake.contactPhone = firstValue(content, [
     "topbar.phone",
     "contact.phone",
     "cta.phone",
     "footer.phone",
+    "contactPage.phone",
   ]);
 
   // Prestations : chemins service du manifest actuel, valeurs actuelles.
@@ -140,6 +143,7 @@ function briefFrom(intake: Intake & { categoryId?: string }): string {
     .filter(Boolean)
     .join("\n");
 }
+
 
 // --- Remap + rapport (cœur réutilisable, sans accès DB) ----------------------
 
@@ -233,9 +237,13 @@ export async function remapContentForTemplate(
     | TemplateManifest
     | null;
 
-  // 3) Enrichissement IA best-effort (les faits du client écrasent l'IA).
+  // 3) Enrichissement IA : on donne à l'IA TOUT le contenu réel du site source
+  //    (brief riche) pour qu'elle le retranscrive fidèlement sur le template
+  //    cible — pas un brief résumé qui produirait du générique. Repli sur le
+  //    brief court (intake) si le source est vide.
   try {
-    const brief = briefFrom(intake);
+    const richBrief = briefFromSourceContent(sourceContent);
+    const brief = richBrief.trim().length > 20 ? richBrief : briefFrom(intake);
     if (brief.trim().length > 10) {
       const baseContent = (await fetchDefaultContent(origin, targetTemplateId)) as
         | Record<string, unknown>
@@ -247,6 +255,7 @@ export async function remapContentForTemplate(
           manifest: targetManifest,
           defaultContent: baseContent,
           categoryLabel: category.label,
+          briefMaxChars: 5000,
         });
         const facts = intakeToOverrides(intake, baseContent, targetManifest);
         const merged = Object.fromEntries(

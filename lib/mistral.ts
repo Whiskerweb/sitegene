@@ -293,6 +293,8 @@ export async function briefToOverrides(input: {
   defaultContent: Record<string, unknown>;
   categoryLabel: string;
   timeoutMs?: number;
+  /** Plafond de caractères du brief (défaut 1200 ; ~5000 pour un remap complet). */
+  briefMaxChars?: number;
 }): Promise<Record<string, string>> {
   const { brief, manifest, defaultContent, categoryLabel } = input;
   if (!process.env.MISTRAL_API_KEY) return {};
@@ -309,7 +311,7 @@ RÈGLES:
 - Réponds en JSON STRICT { "<path>": "<texte>", ... } avec EXACTEMENT les chemins fournis. Inclus tous les chemins.`;
 
   const user = `Brief client :
-"""${brief.slice(0, 1200)}"""
+"""${brief.slice(0, input.briefMaxChars ?? 1200)}"""
 
 Champs à réécrire (path · maxLen · texte actuel) :
 ${fields.map((f) => `- ${f.path} · ${f.maxLen} · ${JSON.stringify(f.current)}`).join("\n")}

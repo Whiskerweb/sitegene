@@ -67,7 +67,14 @@ export async function POST(request: Request) {
   }
 
   // 1) Publier la peau courante comme UNIQUE snapshot en ligne (dépublie les autres).
-  await publishSnapshot(admin, siteId, site.template_id ?? "");
+  //    Si aucun snapshot n'existe pour la peau, ne JAMAIS débiter ni mentir au client.
+  const publishedVersion = await publishSnapshot(admin, siteId, site.template_id ?? "");
+  if (publishedVersion == null) {
+    return NextResponse.json(
+      { error: "Publication impossible : contenu introuvable pour ce template." },
+      { status: 500 },
+    );
+  }
 
   // 2) Débiter EN DERNIER (jamais débiter sans avoir publié) — sauf abonné illimité.
   const newBalance = unlimited
