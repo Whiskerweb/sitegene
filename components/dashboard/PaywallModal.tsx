@@ -61,10 +61,10 @@ export default function PaywallModal({
               <X className="size-5" />
             </button>
             <AkyraMark size={40} className="mx-auto" />
-            <h2 className="mt-4 font-archivo text-2xl font-semibold text-night">
+            <h2 className="mt-4 font-archivo text-2xl font-semibold text-black">
               {firstName ? `${firstName}, votre site est prêt.` : "Votre site est prêt."}
             </h2>
-            <p className="mt-3 text-[15px] leading-relaxed text-slate">
+            <p className="mt-3 text-[15px] leading-relaxed text-black">
               Essayez Akyra gratuitement pendant 3 jours : publiez votre site
               maintenant et modifiez-le librement. 50 € après l'essai —
               annulable à tout moment, en un clic.
