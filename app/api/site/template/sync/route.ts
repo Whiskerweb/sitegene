@@ -68,7 +68,21 @@ export async function POST(request: Request) {
 
   // Persiste le contenu synchronisé comme instantané de la peau cible + active.
   await saveDraftSnapshot(admin, site.id, templateId, remap.content, "ai");
-  await admin.from("sites").update({ template_id: templateId }).eq("id", site.id);
+
+  // Active la peau cible. On vérifie que l'écriture a bien pris effet : sans ça,
+  // l'éditeur rechargerait l'ancienne peau et l'utilisateur croirait à un échec.
+  const { data: activated, error: actErr } = await admin
+    .from("sites")
+    .update({ template_id: templateId })
+    .eq("id", site.id)
+    .select("template_id")
+    .single();
+  if (actErr || activated?.template_id !== templateId) {
+    return NextResponse.json(
+      { error: `Impossible d'activer le template (${actErr?.message ?? "non appliqué"}).` },
+      { status: 500 },
+    );
+  }
 
   return NextResponse.json({ ok: true, templateId, report: remap.report });
 }

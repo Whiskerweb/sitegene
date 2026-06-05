@@ -49,6 +49,19 @@ export async function POST(request: Request) {
     await ensureSnapshot(admin, site.id, templateId, def ?? {});
   }
 
-  await admin.from("sites").update({ template_id: templateId }).eq("id", site.id);
+  // Active la peau et vérifie que l'écriture a pris effet (sinon l'éditeur
+  // rechargerait l'ancienne peau).
+  const { data: activated, error: actErr } = await admin
+    .from("sites")
+    .update({ template_id: templateId })
+    .eq("id", site.id)
+    .select("template_id")
+    .single();
+  if (actErr || activated?.template_id !== templateId) {
+    return NextResponse.json(
+      { error: `Impossible d'activer le template (${actErr?.message ?? "non appliqué"}).` },
+      { status: 500 },
+    );
+  }
   return NextResponse.json({ ok: true, templateId });
 }
