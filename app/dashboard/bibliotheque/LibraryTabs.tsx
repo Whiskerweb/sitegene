@@ -185,8 +185,10 @@ function SitesGrid({ sites, activeSiteId }: { sites: SiteItem[]; activeSiteId: s
     );
   }
 
-  const activeSites = sites.filter((s) => s.isActive || s.id === activeSiteId);
-  const librarySites = sites.filter((s) => !s.isActive && s.id !== activeSiteId);
+  // Source de vérité unique : le site retourné par primarySiteForUser.
+  // On ignore s.isActive (tous à true après la migration par défaut).
+  const activeSites = sites.filter((s) => s.id === activeSiteId);
+  const librarySites = sites.filter((s) => s.id !== activeSiteId);
 
   return (
     <>
