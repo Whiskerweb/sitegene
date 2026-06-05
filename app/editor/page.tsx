@@ -6,7 +6,7 @@ import { getBalance } from "@/lib/credits-server";
 import { fetchTemplateManifest } from "@/lib/site-server";
 import { ownedEffectModules } from "@/lib/marketplace-server";
 import { listAiMessages } from "@/lib/ai-history";
-import { loadEditableSnapshot } from "@/lib/site-content-store";
+import { loadOrCreateEditableSnapshot } from "@/lib/site-content-store";
 import { isSpaTemplate } from "@/lib/templates";
 import EditorClient, { type EditableField, type OwnedEffect } from "./EditorClient";
 
@@ -43,10 +43,13 @@ export default async function EditorPage({
   // Fil de chat persistant de l'éditeur (50 derniers messages).
   const history = await listAiMessages(admin, site.id, 50);
 
-  // Contenu de la PEAU en cours d'édition (snapshot de site.template_id).
-  const top = await loadEditableSnapshot(admin, site.id, site.template_id ?? "");
-
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
+
+  // Contenu de la PEAU en cours d'édition (snapshot de site.template_id).
+  // loadOrCreate : crée le snapshot s'il manque (état legacy : template_id
+  // basculé sans contenu) → l'éditeur n'affiche jamais du vide et Publier reste actif.
+  const top = await loadOrCreateEditableSnapshot(admin, appUrl, site.id, site.template_id);
+
   const manifest = (await fetchTemplateManifest(appUrl, site.template_id)) as
     | { fields?: { editable?: { path: string; label?: string; type: string; maxLen?: number }[] } }
     | null;

@@ -15,7 +15,9 @@ import { SiteActions } from "@/components/ui/SiteActions";
 import { IconCloud } from "@/components/ui/icons";
 import PaywallModal from "@/components/dashboard/PaywallModal";
 import TrialBanner from "@/components/dashboard/TrialBanner";
+import { PublishButton } from "@/components/dashboard/PublishButton";
 import { primarySiteForUser } from "@/lib/primary-site";
+import { loadOrCreateEditableSnapshot, loadPublishedSnapshot } from "@/lib/site-content-store";
 
 export const dynamic = "force-dynamic";
 
@@ -101,6 +103,17 @@ export default async function MonSite({
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
   const fullUrl = site.slug ? `${appUrl}/s/${site.slug}` : "";
 
+  // Peau EN COURS D'ÉDITION (garantie d'avoir un snapshot) vs peau EN LIGNE.
+  // L'aperçu du dashboard reflète ce que le client prépare ; un badge signale
+  // les modifications non encore publiées.
+  const currentSkin = site.template_id
+    ? await loadOrCreateEditableSnapshot(admin, appUrl, site.id, site.template_id)
+    : null;
+  const publishedSkin = await loadPublishedSnapshot(admin, site.id);
+  const hasUnpublishedSkin =
+    !!currentSkin &&
+    (currentSkin.template_id !== (publishedSkin?.template_id ?? null) || !currentSkin.is_published);
+
   return (
     <>
       <PageHeader
@@ -133,18 +146,27 @@ export default async function MonSite({
                 /s/{site.slug}
               </code>
             )}
+            {/* Statut de la peau en préparation vs en ligne. */}
+            {currentSkin && (
+              hasUnpublishedSkin ? (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-gold-400/14 px-2.5 py-1 text-xs font-semibold text-gold-500">
+                  <span className="h-1.5 w-1.5 rounded-full bg-gold-400" /> Non publié
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-mint-400/12 px-2.5 py-1 text-xs font-semibold text-mint-500">
+                  <span className="h-1.5 w-1.5 rounded-full bg-mint-400" /> En ligne
+                </span>
+              )
+            )}
           </div>
           {isLive && (
             <SiteActions editHref="/editor" viewHref="/apercu" link={fullUrl} />
           )}
         </div>
 
+        {/* Aperçu de la peau EN COURS D'ÉDITION (ce que le client prépare). */}
         <div className="mt-5 overflow-hidden rounded-[18px] border border-sky-300 bg-white">
-          {isLive ? (
-            <SitePreview slug={site.slug!} />
-          ) : lastContent ? (
-            // Brouillon : le site n'est pas public mais son contenu existe →
-            // aperçu via /api/preview (authentifié owner), pas de placeholder.
+          {currentSkin || lastContent ? (
             <SitePreview src={`/api/preview?siteId=${site.id}`} />
           ) : (
             <div className="flex aspect-[16/10] items-center justify-center bg-surface-2 text-center text-sm text-mist">
@@ -154,6 +176,18 @@ export default async function MonSite({
             </div>
           )}
         </div>
+
+        {/* Site en ligne : publier les modifications de peau non encore publiées. */}
+        {isLive && hasUnpublishedSkin && (
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <PublishButton siteId={site.id} balance={balance} />
+            {fullUrl && (
+              <Button href={fullUrl} variant="subtle" target="_blank">
+                Voir la version en ligne →
+              </Button>
+            )}
+          </div>
+        )}
 
         {!isLive && (
           <div className="mt-5 flex flex-wrap gap-3">

@@ -142,6 +142,29 @@ export async function ensureSnapshot(
 }
 
 /**
+ * Charge le snapshot éditable de la peau active, en le CRÉANT depuis le contenu
+ * par défaut du template s'il manque. Garantit l'invariant « la peau active a
+ * toujours un contenu » même si un changement de peau antérieur a basculé
+ * sites.template_id sans créer le snapshot (état legacy / incohérent) — sinon
+ * l'éditeur afficherait un contenu vide et le bouton Publier resterait grisé.
+ */
+export async function loadOrCreateEditableSnapshot(
+  admin: SupabaseClient,
+  origin: string,
+  siteId: string,
+  templateId: string,
+): Promise<ContentRow | null> {
+  const existing = await loadEditableSnapshot(admin, siteId, templateId);
+  if (existing) return existing;
+  // Import dynamique : évite d'attacher une dépendance serveur (fetch) au
+  // chargement statique du module (garde les sélecteurs purs testables).
+  const { fetchDefaultContent } = await import("@/lib/site-server");
+  const def = (await fetchDefaultContent(origin, templateId)) as Record<string, unknown> | null;
+  await ensureSnapshot(admin, siteId, templateId, def ?? {});
+  return loadEditableSnapshot(admin, siteId, templateId);
+}
+
+/**
  * Publie la peau `templateId` : la version max de cette peau devient l'unique
  * snapshot publié du site (toutes les autres lignes is_published=false).
  * Retourne la version publiée, ou null si la peau n'a aucun snapshot.
