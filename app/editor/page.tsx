@@ -32,23 +32,11 @@ export default async function EditorPage({
   }>(admin, user.id, "id, slug, template_id");
   if (!site || !site.template_id) redirect("/dashboard");
 
-  // Garde-fou : bloquer uniquement si AUCUN site du compte n'est déverrouillé.
-  // L'abonnement 50€/an est au niveau compte — switcher de template ne doit
-  // jamais déclencher un nouveau paywall.
+  // Garde-fou paywall (1 site / N peaux) : bloquer si le site n'est ni en ligne
+  // ni débloqué. Changer de peau ne change pas l'état de facturation du site.
   const LOCKED = new Set(["none", "canceled", "payment_failed"]);
   const siteUnlocked = site.status === "live" || !LOCKED.has((site.billing_status as string) ?? "none");
-  if (!siteUnlocked) {
-    const { data: otherSites } = await admin
-      .from("sites")
-      .select("status, billing_status")
-      .eq("owner_user_id", user.id)
-      .neq("id", site.id)
-      .limit(20);
-    const accountUnlocked = (otherSites ?? []).some(
-      (s) => s.status === "live" || !LOCKED.has((s.billing_status as string) ?? "none"),
-    );
-    if (!accountUnlocked) redirect("/dashboard?paywall=1");
-  }
+  if (!siteUnlocked) redirect("/dashboard?paywall=1");
 
   const balance = await getBalance(admin, user.id);
 

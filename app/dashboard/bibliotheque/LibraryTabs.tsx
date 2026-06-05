@@ -7,7 +7,7 @@ import { SitePreview } from "@/components/ui/SitePreview";
 import { Button } from "@/components/ui/Button";
 import { Spinner } from "@/components/ui/Spinner";
 import { Badge } from "@/components/ui/Badge";
-import { IconAlert } from "@/components/ui/icons";
+import { IconAlert, IconCheck } from "@/components/ui/icons";
 
 type Effect = {
   id: string;
@@ -18,14 +18,17 @@ type Effect = {
   kind: "global" | "component";
 };
 
-type SiteItem = {
-  id: string;
+type Skin = {
   templateId: string;
-  templateName: string;
-  status: string;
-  isActive: boolean;
-  slug: string | null;
-  createdAt: string;
+  name: string;
+  isCurrent: boolean;
+  isLive: boolean;
+};
+
+type SyncReport = {
+  transcribed: string[];
+  unmatchedFromSource: string[];
+  emptyInTarget: string[];
 };
 
 type Props = {
@@ -34,43 +37,41 @@ type Props = {
   initialPhotos: SitePhoto[];
   usedUrls: string[];
   effects: Effect[];
-  sites: SiteItem[];
-  activeSiteId: string;
+  skins: Skin[];
 };
 
-type Tab = "photos" | "composants" | "sites";
+type Tab = "photos" | "composants" | "templates";
 
-export function LibraryTabs({
-  defaultTab,
-  siteId,
-  initialPhotos,
-  usedUrls,
-  effects,
-  sites,
-  activeSiteId,
-}: Props) {
-  const tab: Tab = (["photos", "composants", "sites"].includes(defaultTab) ? defaultTab : "photos") as Tab;
-  const [activeTab, setActiveTab] = useState<Tab>(tab);
+export function LibraryTabs({ defaultTab, siteId, initialPhotos, usedUrls, effects, skins }: Props) {
+  const tab: Tab = (["photos", "composants", "templates"].includes(defaultTab)
+    ? defaultTab
+    : "photos") as Tab;
+  // Compat ancien lien ?tab=sites → templates.
+  const initial: Tab = defaultTab === "sites" ? "templates" : tab;
+  const [activeTab, setActiveTab] = useState<Tab>(initial);
+
+  const labels: Record<Tab, string> = {
+    photos: "Photos",
+    composants: "Composants",
+    templates: "Templates",
+  };
 
   return (
     <div>
-      {/* Onglets */}
       <div className="mb-6 flex gap-1 rounded-2xl border border-[rgb(var(--m-line))] bg-[rgb(var(--m-overlay)/0.04)] p-1">
-        {(["photos", "composants", "sites"] as Tab[]).map((t) => (
+        {(["photos", "composants", "templates"] as Tab[]).map((t) => (
           <button
             key={t}
             type="button"
             onClick={() => setActiveTab(t)}
-            className={`flex-1 rounded-xl py-2 text-sm font-semibold capitalize transition-colors ${
-              activeTab === t
-                ? "bg-white text-night shadow-cloud"
-                : "text-[rgb(var(--m-muted))] hover:text-night"
+            className={`flex-1 rounded-xl py-2 text-sm font-semibold transition-colors ${
+              activeTab === t ? "bg-white text-night shadow-cloud" : "text-[rgb(var(--m-muted))] hover:text-night"
             }`}
           >
-            {t === "photos" ? "Photos" : t === "composants" ? "Composants" : "Sites"}
-            {t === "sites" && sites.length > 0 && (
+            {labels[t]}
+            {t === "templates" && skins.length > 0 && (
               <span className="ml-1.5 rounded-full bg-[rgb(var(--m-overlay)/0.12)] px-1.5 py-0.5 text-[11px]">
-                {sites.length}
+                {skins.length}
               </span>
             )}
             {t === "composants" && effects.length > 0 && (
@@ -86,14 +87,12 @@ export function LibraryTabs({
         <LibraryGrid siteId={siteId} initialPhotos={initialPhotos} usedUrls={usedUrls} />
       )}
       {activeTab === "composants" && <EffectsGrid effects={effects} />}
-      {activeTab === "sites" && <SitesGrid sites={sites} activeSiteId={activeSiteId} />}
+      {activeTab === "templates" && <SkinsGrid skins={skins} siteId={siteId} />}
     </div>
   );
 }
 
-// ---------------------------------------------------------------------------
-// Grille des composants (effets) possédés
-// ---------------------------------------------------------------------------
+// --- Composants possédés ----------------------------------------------------
 
 function EffectsGrid({ effects }: { effects: Effect[] }) {
   if (effects.length === 0) {
@@ -111,11 +110,7 @@ function EffectsGrid({ effects }: { effects: Effect[] }) {
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {effects.map((fx) => (
-        <div
-          key={fx.id}
-          className="overflow-hidden rounded-2xl border border-[rgb(var(--m-line))] bg-white"
-        >
-          {/* Prévisualisation réelle de l'effet via /api/fx-demo */}
+        <div key={fx.id} className="overflow-hidden rounded-2xl border border-[rgb(var(--m-line))] bg-white">
           <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#0b0d14]">
             <iframe
               src={`/api/fx-demo?id=${fx.id}`}
@@ -144,51 +139,55 @@ function EffectsGrid({ effects }: { effects: Effect[] }) {
   );
 }
 
-// ---------------------------------------------------------------------------
-// Grille des sites
-// ---------------------------------------------------------------------------
+// --- Galerie de peaux (templates) -------------------------------------------
 
-type SyncModal = { targetId: string; targetName: string } | null;
+type Choice = { templateId: string; name: string } | null;
 
-function SitesGrid({ sites, activeSiteId }: { sites: SiteItem[]; activeSiteId: string }) {
-  const [syncModal, setSyncModal] = useState<SyncModal>(null);
-  const [switching, setSwitching] = useState(false);
+function SkinsGrid({ skins, siteId }: { skins: Skin[]; siteId: string }) {
+  const [choice, setChoice] = useState<Choice>(null);
+  const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [report, setReport] = useState<{ name: string; report: SyncReport } | null>(null);
 
-  async function doSwitch(targetId: string, sync: boolean) {
-    setSwitching(true);
+  async function activate(templateId: string, sync: boolean, name: string) {
+    setBusy(true);
     setError(null);
     try {
-      const res = await fetch("/api/site/switch", {
+      const url = sync ? "/api/site/template/sync" : "/api/site/template/activate";
+      const res = await fetch(url, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ targetSiteId: targetId, sync }),
+        body: JSON.stringify({ templateId }),
       });
-      const json = await res.json().catch(() => null);
-      if (!res.ok) {
-        setError(json?.error ?? "Erreur lors du changement de site.");
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || !json.ok) {
+        setError(json.error ?? "Action impossible pour le moment.");
+        setChoice(null);
         return;
       }
-      window.location.href = "/dashboard";
+      if (sync && json.report) {
+        // Afficher le rapport avant de filer à l'éditeur.
+        setChoice(null);
+        setReport({ name, report: json.report as SyncReport });
+        return;
+      }
+      window.location.href = "/editor";
     } finally {
-      setSwitching(false);
-      setSyncModal(null);
+      setBusy(false);
     }
   }
 
-  if (sites.length === 0) {
+  if (skins.length === 0) {
     return (
       <div className="rounded-2xl border border-dashed border-sky-300 p-10 text-center">
-        <p className="font-archivo text-base font-semibold text-night">Aucun site dans la bibliothèque</p>
-        <p className="mt-1 text-sm text-slate">Votre site actuel apparaîtra ici.</p>
+        <p className="font-archivo text-base font-semibold text-night">Aucun template pour l'instant</p>
+        <p className="mt-1 text-sm text-slate">Votre template actuel et ceux que vous achetez apparaîtront ici.</p>
+        <Button href="/dashboard/marketplace" size="sm" className="mt-4">
+          Explorer les templates →
+        </Button>
       </div>
     );
   }
-
-  // Source de vérité unique : le site retourné par primarySiteForUser.
-  // On ignore s.isActive (tous à true après la migration par défaut).
-  const activeSites = sites.filter((s) => s.id === activeSiteId);
-  const librarySites = sites.filter((s) => s.id !== activeSiteId);
 
   return (
     <>
@@ -198,83 +197,118 @@ function SitesGrid({ sites, activeSiteId }: { sites: SiteItem[]; activeSiteId: s
         </p>
       )}
 
-      {activeSites.length > 0 && (
-        <div className="mb-6">
-          <h2 className="mb-3 font-archivo text-sm font-semibold uppercase tracking-wide text-[rgb(var(--m-muted))]">
-            Site actif
-          </h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {activeSites.map((s) => (
-              <SiteCard key={s.id} site={s} isActive onSwitch={() => {}} />
-            ))}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {skins.map((s) => (
+          <div
+            key={s.templateId}
+            className="overflow-hidden rounded-2xl border border-[rgb(var(--m-line))] bg-white"
+          >
+            <div className="relative overflow-hidden border-b border-[rgb(var(--m-line))]">
+              <SitePreview src={`/api/preview?siteId=${siteId}&templateId=${s.templateId}`} />
+            </div>
+            <div className="p-4">
+              <div className="flex items-start justify-between gap-2">
+                <p className="font-archivo text-sm font-semibold leading-snug text-night">{s.name}</p>
+                <div className="flex shrink-0 flex-col items-end gap-1">
+                  {s.isCurrent && <Badge tone="brand">En édition</Badge>}
+                  {s.isLive && <Badge tone="success">En ligne</Badge>}
+                </div>
+              </div>
+              {s.isCurrent ? (
+                <Button href="/editor" size="sm" variant="ghost" className="mt-3 w-full">
+                  Modifier →
+                </Button>
+              ) : (
+                <Button
+                  size="sm"
+                  className="mt-3 w-full"
+                  onClick={() => setChoice({ templateId: s.templateId, name: s.name })}
+                >
+                  Utiliser ce template →
+                </Button>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        ))}
+      </div>
 
-      {librarySites.length > 0 && (
-        <div>
-          <h2 className="mb-3 font-archivo text-sm font-semibold uppercase tracking-wide text-[rgb(var(--m-muted))]">
-            Bibliothèque
-          </h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {librarySites.map((s) => (
-              <SiteCard
-                key={s.id}
-                site={s}
-                isActive={false}
-                onSwitch={() => setSyncModal({ targetId: s.id, targetName: s.templateName })}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-
-      {syncModal && (
+      {/* Modale : activer / synchroniser */}
+      {choice && (
         <div
           className="fixed inset-0 z-50 grid place-items-center bg-night/40 p-4"
-          onClick={() => !switching && setSyncModal(null)}
+          onClick={() => !busy && setChoice(null)}
         >
           <div
-            className="w-full max-w-[440px] rounded-[22px] border border-sky-300 bg-white p-7 shadow-cloud"
+            className="w-full max-w-[460px] rounded-[22px] border border-sky-300 bg-white p-7 shadow-cloud"
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="font-archivo text-lg font-semibold text-night">
-              Passer à «&nbsp;{syncModal.targetName}&nbsp;» ?
+              Passer à «&nbsp;{choice.name}&nbsp;» ?
             </h3>
             <p className="mt-2 text-sm leading-relaxed text-slate">
-              Votre site actuel sera conservé dans la bibliothèque. Souhaitez-vous
-              copier votre contenu (textes et photos) vers ce nouveau site ?
-            </p>
-            <p className="mt-3 text-[13px] text-mist">
-              Si vous choisissez <b>Non</b>, le nouveau site partira du contenu par défaut du template.
+              Voulez-vous que l'IA reprenne automatiquement vos textes et photos sur ce nouveau
+              template, ou démarrer à partir de son contenu d'origine ?
             </p>
 
-            {switching ? (
+            {busy ? (
               <div className="mt-6 flex justify-center gap-2 text-sm text-slate">
-                <Spinner size={16} /> Changement en cours…
+                <Spinner size={16} /> Application en cours…
               </div>
             ) : (
-              <div className="mt-6 flex flex-col gap-2 sm:flex-row">
-                <Button variant="ghost" size="sm" className="flex-1" onClick={() => setSyncModal(null)}>
+              <div className="mt-6 flex flex-col gap-2">
+                <Button onClick={() => void activate(choice.templateId, true, choice.name)}>
+                  Oui, synchroniser mon contenu
+                </Button>
+                <Button variant="ghost" onClick={() => void activate(choice.templateId, false, choice.name)}>
+                  Non, garder ce template tel quel
+                </Button>
+                <button
+                  type="button"
+                  className="mt-1 text-center text-[13px] text-mist hover:text-slate"
+                  onClick={() => setChoice(null)}
+                >
                   Annuler
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="flex-1"
-                  onClick={() => void doSwitch(syncModal.targetId, false)}
-                >
-                  Non, repartir de zéro
-                </Button>
-                <Button
-                  size="sm"
-                  className="flex-1"
-                  onClick={() => void doSwitch(syncModal.targetId, true)}
-                >
-                  Oui, copier le contenu
-                </Button>
+                </button>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* Rapport de synchronisation */}
+      {report && (
+        <div className="fixed inset-0 z-50 grid place-items-center bg-night/40 p-4">
+          <div className="w-full max-w-[480px] rounded-[22px] border border-sky-300 bg-white p-7 shadow-cloud">
+            <h3 className="font-archivo text-lg font-semibold text-night">
+              Contenu repris sur «&nbsp;{report.name}&nbsp;»
+            </h3>
+
+            {report.report.transcribed.length > 0 && (
+              <ReportBlock
+                tone="ok"
+                title="Repris avec succès"
+                items={report.report.transcribed}
+              />
+            )}
+            {report.report.emptyInTarget.length > 0 && (
+              <ReportBlock
+                tone="warn"
+                title="Sections de ce template sans contenu fourni"
+                items={report.report.emptyInTarget}
+                note="Vous pourrez les remplir ou les masquer dans l'éditeur."
+              />
+            )}
+            {report.report.unmatchedFromSource.length > 0 && (
+              <ReportBlock
+                tone="warn"
+                title="Présent sur l'ancien template mais sans place ici"
+                items={report.report.unmatchedFromSource}
+              />
+            )}
+
+            <div className="mt-6 flex justify-end gap-2">
+              <Button onClick={() => (window.location.href = "/editor")}>Ouvrir l'éditeur →</Button>
+            </div>
           </div>
         </div>
       )}
@@ -282,43 +316,40 @@ function SitesGrid({ sites, activeSiteId }: { sites: SiteItem[]; activeSiteId: s
   );
 }
 
-function SiteCard({
-  site,
-  isActive,
-  onSwitch,
+function ReportBlock({
+  tone,
+  title,
+  items,
+  note,
 }: {
-  site: SiteItem;
-  isActive: boolean;
-  onSwitch: () => void;
+  tone: "ok" | "warn";
+  title: string;
+  items: string[];
+  note?: string;
 }) {
-  const fmtDate = (d: string) =>
-    d ? new Date(d).toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric" }) : "—";
-
   return (
-    <div className="overflow-hidden rounded-2xl border border-[rgb(var(--m-line))] bg-white">
-      {/* Prévisualisation réelle du site via /api/preview */}
-      <div className="relative overflow-hidden rounded-t-2xl border-b border-[rgb(var(--m-line))]">
-        <SitePreview src={`/api/preview?siteId=${site.id}`} />
-      </div>
-      <div className="p-4">
-        <div className="flex items-start justify-between gap-2">
-          <p className="font-archivo text-sm font-semibold text-night leading-snug">{site.templateName}</p>
-          {isActive && <Badge tone="brand">Actif</Badge>}
-        </div>
-        {site.slug && (
-          <p className="mt-0.5 text-[12px] text-slate">/s/{site.slug}</p>
-        )}
-        <p className="mt-1 text-[12px] text-mist">Créé le {fmtDate(site.createdAt)}</p>
-        {isActive ? (
-          <Button href="/editor" size="sm" variant="ghost" className="mt-3 w-full">
-            Modifier →
-          </Button>
+    <div className="mt-4">
+      <p className="flex items-center gap-1.5 text-sm font-semibold text-night">
+        {tone === "ok" ? (
+          <IconCheck size={15} />
         ) : (
-          <Button size="sm" className="mt-3 w-full" onClick={onSwitch}>
-            Activer ce site →
-          </Button>
+          <IconAlert size={15} />
         )}
-      </div>
+        {title}
+      </p>
+      <ul className="mt-1.5 flex flex-wrap gap-1.5">
+        {items.map((it) => (
+          <li
+            key={it}
+            className={`rounded-full px-2.5 py-1 text-xs font-medium ${
+              tone === "ok" ? "bg-mint-400/12 text-mint-500" : "bg-gold-400/14 text-gold-500"
+            }`}
+          >
+            {it}
+          </li>
+        ))}
+      </ul>
+      {note && <p className="mt-1.5 text-[12px] text-mist">{note}</p>}
     </div>
   );
 }

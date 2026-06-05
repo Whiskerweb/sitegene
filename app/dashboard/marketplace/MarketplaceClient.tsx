@@ -57,7 +57,7 @@ type FxSort = "featured" | "name" | "owned" | "compatible";
 
 type Modal =
   | { kind: "confirm"; itemType: "template" | "effect"; id: string; name: string; price: number }
-  | { kind: "unlocked-template"; id: string; name: string; siteId: string | null }
+  | { kind: "unlocked-template"; id: string; name: string }
   | { kind: "licence"; id: string; name: string; licenseCode: string; compatible: boolean }
   | { kind: "insufficient"; needed: number }
   | { kind: "applying"; name: string }
@@ -273,7 +273,7 @@ export function MarketplaceClient({
         setBalance(json.balance);
         if (itemType === "template") {
           setOwnedTpl((s) => new Set(s).add(id));
-          setModal({ kind: "unlocked-template", id, name, siteId: json.newSiteId ?? null });
+          setModal({ kind: "unlocked-template", id, name });
         } else {
           setOwnedFx((s) => new Set(s).add(id));
           const compatible = effects.find((e) => e.id === id)?.compatible ?? true;
@@ -286,29 +286,16 @@ export function MarketplaceClient({
     [effects],
   );
 
-  /** Bascule vers un template possédé : switch rapide vers le site bibliothèque. */
+  /** Active une peau possédée sur le site unique (instantané, sans perte). */
   const applyTemplate = useCallback(
-    async (id: string, name: string, siteIdHint?: string | null) => {
+    async (id: string, name: string) => {
       setModal({ kind: "applying", name });
       setError(null);
       try {
-        // Résoudre le siteId cible (passé en hint depuis l'achat, ou à retrouver).
-        let targetSiteId = siteIdHint ?? null;
-        if (!targetSiteId) {
-          const find = await fetch(`/api/site/find-by-template?templateId=${encodeURIComponent(id)}`);
-          const found = await find.json().catch(() => ({}));
-          targetSiteId = found.siteId ?? null;
-        }
-        if (!targetSiteId) {
-          setModal(null);
-          setError("Site introuvable pour ce template.");
-          return;
-        }
-        // Switcher vers ce site (sans sync : le site a son propre contenu).
-        const res = await fetch("/api/site/switch", {
+        const res = await fetch("/api/site/template/activate", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ targetSiteId, sync: false }),
+          body: JSON.stringify({ templateId: id }),
         });
         const json = await res.json().catch(() => ({}));
         if (!res.ok || !json.ok) {
@@ -375,7 +362,7 @@ export function MarketplaceClient({
                 type="button"
                 className={btnPrimary}
                 disabled={!hasSite || busy}
-                onClick={() => applyTemplate(t.id, t.name, null)}
+                onClick={() => applyTemplate(t.id, t.name)}
               >
                 Appliquer à mon site
               </button>
@@ -785,7 +772,7 @@ export function MarketplaceClient({
                     type="button"
                     className={btnPrimary}
                     disabled={!hasSite}
-                    onClick={() => applyTemplate(modal.id, modal.name, modal.kind === "unlocked-template" ? modal.siteId : null)}
+                    onClick={() => applyTemplate(modal.id, modal.name)}
                   >
                     Appliquer à mon site
                   </button>

@@ -1,22 +1,19 @@
 import { requireUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { primarySiteForUser } from "@/lib/primary-site";
-import { listSitePhotos, collectUsedPhotoUrls } from "@/lib/site-photos";
-import { ownedEffectModules } from "@/lib/marketplace-server";
+import { listSitePhotos } from "@/lib/site-photos";
+import { ownedEffectModules, ownedItems } from "@/lib/marketplace-server";
+import { listSiteTemplates, loadPublishedSnapshot } from "@/lib/site-content-store";
+import { templateMeta } from "@/lib/templates";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { LibraryTabs } from "./LibraryTabs";
 
 export const dynamic = "force-dynamic";
 
-const TEMPLATE_NAMES: Record<string, string> = {
-  "alice-r": "Aurelia — sombre & chaud",
-  potozon: "Potozon — pop & coloré",
-  target: "Target — éditorial & net",
-  "wedding-fine-art": "Wedding Fine Art",
-  "wedding-romantic": "Wedding Romantic",
-  "arelec": "Arelec — électriciens",
-  "eloctix": "Eloctix — électriciens",
-};
+function skinName(templateId: string): string {
+  const m = templateMeta(templateId);
+  return m ? `${m.name} — ${m.style}` : templateId;
+}
 
 export default async function Bibliotheque({
   searchParams,
@@ -28,38 +25,38 @@ export default async function Bibliotheque({
   const sp = await searchParams;
   const defaultTab = sp.tab ?? "photos";
 
-  // Site actif (pour identifier lequel est le principal).
-  const primarySite = await primarySiteForUser<{ id: string }>(admin, user.id, "id");
+  // Site unique du client (1 site / N peaux).
+  const site = await primarySiteForUser<{ id: string; template_id: string | null }>(
+    admin,
+    user.id,
+    "id, template_id",
+  );
+  const siteId = site?.id ?? "";
 
-  // Tous les sites du client.
-  const { data: allSites } = await admin
-    .from("sites")
-    .select("id, template_id, status, is_active, created_at, slug")
-    .eq("owner_user_id", user.id)
-    .order("created_at", { ascending: false })
-    .limit(50);
+  // Peaux = templates ayant un snapshot + templates achetés (marketplace).
+  const [snapshotTpls, owned, published, photos, ownedEffects] = await Promise.all([
+    siteId ? listSiteTemplates(admin, siteId) : Promise.resolve([] as string[]),
+    ownedItems(admin, user.id),
+    siteId ? loadPublishedSnapshot(admin, siteId) : Promise.resolve(null),
+    siteId ? listSitePhotos(admin, siteId) : Promise.resolve([]),
+    ownedEffectModules(admin, user.id),
+  ]);
 
-  // Photos du site actif.
-  const photos = primarySite ? await listSitePhotos(admin, primarySite.id) : [];
-  const usedUrls = primarySite
-    ? (() => {
-        // Fetch inline is not async here — skip used detection for library
-        return [] as string[];
-      })()
-    : [];
+  const currentTpl = site?.template_id ?? "";
+  const liveTpl = published?.template_id ?? null;
 
-  // Effets possédés.
-  const ownedEffects = await ownedEffectModules(admin, user.id);
-
-  const sites = (allSites ?? []).map((s) => ({
-    id: s.id as string,
-    templateId: (s.template_id as string) ?? "",
-    templateName: TEMPLATE_NAMES[(s.template_id as string) ?? ""] ?? (s.template_id as string) ?? "Site",
-    status: (s.status as string) ?? "draft",
-    isActive: (s.is_active as boolean) ?? (s.id === primarySite?.id),
-    slug: (s.slug as string | null) ?? null,
-    createdAt: (s.created_at as string) ?? "",
+  // Union des peaux : snapshots existants + templates possédés + peau courante.
+  const ids = new Set<string>([...snapshotTpls, ...owned.templates, ...(currentTpl ? [currentTpl] : [])]);
+  const skins = [...ids].map((id) => ({
+    templateId: id,
+    name: skinName(id),
+    isCurrent: id === currentTpl,
+    isLive: id === liveTpl,
   }));
+  // Peau courante en tête, puis en ligne, puis le reste.
+  skins.sort(
+    (a, b) => Number(b.isCurrent) - Number(a.isCurrent) || Number(b.isLive) - Number(a.isLive),
+  );
 
   const effects = ownedEffects.map((e) => ({
     id: e.id,
@@ -72,18 +69,14 @@ export default async function Bibliotheque({
 
   return (
     <>
-      <PageHeader
-        title="Bibliothèque"
-        subtitle="Vos photos, composants et sites."
-      />
+      <PageHeader title="Bibliothèque" subtitle="Vos photos, composants et templates." />
       <LibraryTabs
         defaultTab={defaultTab}
-        siteId={primarySite?.id ?? ""}
+        siteId={siteId}
         initialPhotos={photos}
-        usedUrls={usedUrls}
+        usedUrls={[]}
         effects={effects}
-        sites={sites}
-        activeSiteId={primarySite?.id ?? ""}
+        skins={skins}
       />
     </>
   );

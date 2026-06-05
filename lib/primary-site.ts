@@ -1,10 +1,9 @@
 /**
- * Site « principal » d'un client.
- * Règle de sélection (par priorité) :
- *   1. le site is_active=true EN LIGNE (payé/essai) le plus récent ;
- *   2. le site is_active=true débloqué (essai/payé pas encore live) ;
- *   3. le site is_active=true brouillon le plus récent ;
- *   4. fallback : n'importe quel site (cas migration avant la colonne is_active).
+ * Site « principal » d'un client — modèle « 1 site / N peaux » (migration 0020).
+ * Normalement un seul site par compte ; la sélection garde un fallback robuste :
+ *   1. le site EN LIGNE (status=live) ;
+ *   2. sinon le site débloqué (essai/payé) le plus récent ;
+ *   3. sinon le plus récent.
  */
 import type { createAdminClient } from "@/lib/supabase/admin";
 
@@ -15,7 +14,6 @@ const LOCKED_BILLING = new Set(["none", "canceled", "payment_failed"]);
 type SiteRow = Record<string, unknown> & {
   status?: string | null;
   billing_status?: string | null;
-  is_active?: boolean | null;
 };
 
 /**
