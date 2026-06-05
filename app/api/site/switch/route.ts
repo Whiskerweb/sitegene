@@ -32,15 +32,16 @@ export async function POST(request: Request) {
   }
 
   // Trouver le site actuellement actif (pour la sync éventuelle).
-  // La colonne is_active n'existe qu'après la migration 0019 ; fallback sur
-  // le site le plus récent qui n'est pas la cible (pré-migration).
   const { data: allSites } = await admin
     .from("sites")
-    .select("id")
+    .select("id, is_active")
     .eq("owner_user_id", user.id)
     .order("created_at", { ascending: false });
 
-  const currentActiveId = (allSites ?? []).find((s) => s.id !== targetSiteId)?.id ?? null;
+  const currentActiveId =
+    (allSites ?? []).find((s) => s.is_active === true && s.id !== targetSiteId)?.id ??
+    (allSites ?? []).find((s) => s.id !== targetSiteId)?.id ??
+    null;
 
   // Sync optionnelle : copier le dernier contenu du site source vers la cible.
   if (sync && currentActiveId) {
