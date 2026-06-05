@@ -31,17 +31,18 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Site introuvable." }, { status: 404 });
   }
 
-  // Trouver le site actuellement actif (pour la sync éventuelle).
+  // Trouver le site actuellement actif (pour la sync éventuelle + héritage billing).
   const { data: allSites } = await admin
     .from("sites")
-    .select("id, is_active")
+    .select("id, is_active, billing_status, status, slug")
     .eq("owner_user_id", user.id)
     .order("created_at", { ascending: false });
 
-  const currentActiveId =
-    (allSites ?? []).find((s) => s.is_active === true && s.id !== targetSiteId)?.id ??
-    (allSites ?? []).find((s) => s.id !== targetSiteId)?.id ??
+  const currentActive =
+    (allSites ?? []).find((s) => s.is_active === true && s.id !== targetSiteId) ??
+    (allSites ?? []).find((s) => s.id !== targetSiteId) ??
     null;
+  const currentActiveId = currentActive?.id ?? null;
 
   // Sync optionnelle : copier le dernier contenu du site source vers la cible.
   if (sync && currentActiveId) {
@@ -74,9 +75,19 @@ export async function POST(request: Request) {
   }
 
   // Désactiver tous les sites sauf la cible, activer la cible.
-  // Best-effort : la colonne is_active n'existe qu'après la migration 0019.
   await admin.from("sites").update({ is_active: false }).eq("owner_user_id", user.id).neq("id", targetSiteId);
-  await admin.from("sites").update({ is_active: true }).eq("id", targetSiteId);
+
+  // Le site cible hérite du billing_status + status du site source :
+  // l'abonnement est au niveau compte, pas au niveau site.
+  // Sans ça, le garde-fou éditeur bloquerait l'accès au nouveau site.
+  const billingInherit: Record<string, unknown> = { is_active: true };
+  if (currentActive && currentActive.billing_status) {
+    billingInherit.billing_status = currentActive.billing_status;
+  }
+  if (currentActive && currentActive.status && currentActive.status !== "draft") {
+    billingInherit.status = currentActive.status;
+  }
+  await admin.from("sites").update(billingInherit).eq("id", targetSiteId);
 
   return NextResponse.json({ ok: true });
 }
