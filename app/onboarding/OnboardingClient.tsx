@@ -40,6 +40,7 @@ import {
   type Intake,
 } from "@/lib/onboarding-config";
 import { detectCategory } from "@/lib/category-detect";
+import { mineIntake, mergeMined } from "@/lib/intake-mine";
 import { ACTIVE_CATEGORIES, getCategory } from "@/lib/categories";
 import { isSpaTemplate, templateMeta, TEMPLATE_IDS } from "@/lib/templates";
 import { AkyraMark } from "@/components/ui/Logo";
@@ -132,17 +133,13 @@ export default function OnboardingClient({ email }: { email: string }) {
         }
         const s = data as ClientState;
         setState(s);
+        // [3.1] On reprend TOUT l'intake serveur (y compris les champs minés
+        // du brief) : chaque champ déjà couvert ne sera pas redemandé.
         setIntake({
-          brief: s.intake.brief ?? "",
+          ...s.intake,
           categoryId: s.intake.categoryId ?? s.categoryId,
-          categoryConfirmed: s.intake.categoryConfirmed,
           brand: s.intake.brand ?? "",
-          eventTypes: s.intake.eventTypes ?? [],
-          about: s.intake.about ?? "",
-          techRider: s.intake.techRider ?? "",
           contactEmail: s.intake.contactEmail ?? email ?? "",
-          hasWebsite: s.intake.hasWebsite ?? undefined,
-          websiteUrl: s.intake.websiteUrl ?? "",
           photoUrls: s.intake.photoUrls ?? [],
         });
         // Reprise : un choix déjà figé → directement le site fini.
@@ -156,7 +153,7 @@ export default function OnboardingClient({ email }: { email: string }) {
     return () => {
       cancelled = true;
     };
-  }, [email]);
+  }, [email, router]);
 
   // [2.2/2.3] Changement de métier (confirmation ou re-détection en cours de
   // conversation) : questions, recommandation et candidats suivent aussitôt.
@@ -371,6 +368,54 @@ function isAnswered(q: OnboardingQuestion, intake: Intake): boolean {
   return typeof v === "string" && v.trim().length > 0;
 }
 
+/** [3.2] Libellés courts des champs récoltés (checklist de progression). */
+const FIELD_SHORT: Record<string, string> = {
+  brand: "Marque",
+  websiteUrl: "Site existant",
+  eventTypes: "Spécialités",
+  experienceYears: "Expérience",
+  priceRange: "Tarifs",
+  photoUrls: "Photos",
+  about: "Histoire",
+  contactEmail: "Email",
+  contactPhone: "Téléphone",
+  genre: "Genre",
+  socialLinks: "Réseaux",
+  musicLinks: "Sons",
+  techRider: "Fiche technique",
+  upcomingDates: "Dates",
+  trade: "Métier",
+  area: "Zone",
+  certifications: "Labels",
+  reviewsLink: "Avis",
+  jobTitle: "Titre",
+  skills: "Compétences",
+  projects: "Projets",
+  availability: "Disponibilité",
+};
+
+/** [3.4] Données extraites du site existant (résumé validé par le client). */
+type ScrapedData = {
+  title?: string;
+  description?: string;
+  email?: string;
+  phone?: string;
+  instagram?: string;
+  socialLinks: string[];
+  musicLinks: string[];
+};
+
+function scrapeSummary(d: ScrapedData): string {
+  const parts: string[] = [];
+  if (d.title) parts.push(`« ${d.title} »`);
+  if (d.description) parts.push(d.description.slice(0, 140));
+  if (d.email) parts.push(d.email);
+  if (d.phone) parts.push(d.phone);
+  const links = d.socialLinks.length + d.musicLinks.length;
+  if (links > 0) parts.push(`${links} lien${links > 1 ? "s" : ""} (réseaux, écoute…)`);
+  return `Voici ce que j'ai trouvé sur votre site : ${parts.join(" · ")}.`;
+}
+
 /** Un message du fil de conversation (persistant — rien ne s'efface). */
 type FeedMsg = {
   id: string;
@@ -409,6 +454,8 @@ function Conversation({
   // [2.3] Re-détection en cours de conversation : catégorie en attente de
   // confirmation (« vous semblez plutôt être musicien, c'est bien ça ? »).
   const [pendingCat, setPendingCat] = useState<string | null>(null);
+  // [3.4] Extraction du site existant, en attente de validation client.
+  const [pendingScrape, setPendingScrape] = useState<ScrapedData | null>(null);
 
   const questions = useMemo(() => questionsFor(state.categoryId), [state.categoryId]);
   // Reprise : on retombe sur la première question sans réponse.
@@ -506,6 +553,30 @@ function Conversation({
   const total = questions.length;
   const required = q.key === "brand";
   const canValidate = !required || isAnswered(q, intake);
+  // [3.2] Progression réelle = informations récoltées (y compris minées).
+  const answeredCount = questions.filter((qq) => isAnswered(qq, intake)).length;
+  // Dernière question EFFECTIVE : plus rien d'inconnu après celle-ci.
+  const isLast = !questions.slice(idx + 1).some((qq) => !isAnswered(qq, intake));
+
+  // [3.1] Question suivante = la première SANS réponse (jamais redemander un
+  // champ déjà couvert par le brief, une réponse précédente ou l'extraction).
+  const goNext = useCallback(
+    (delayMs: number) => {
+      window.setTimeout(() => {
+        const cur = intakeRef.current;
+        let next = -1;
+        for (let i = idx + 1; i < questions.length; i++) {
+          if (!isAnswered(questions[i], cur)) {
+            next = i;
+            break;
+          }
+        }
+        if (next < 0) onDone();
+        else setIdx(next);
+      }, delayMs);
+    },
+    [idx, questions, onDone],
+  );
 
   // [2.4] La sauvegarde n'est JAMAIS partielle : on n'écrit qu'à la validation
   // d'une question (« Continuer »/« Passer »), pas à la frappe.
@@ -606,23 +677,77 @@ function Conversation({
           ...cur,
           { id: `switch-no-${idx}-${askSeq}`, role: "user", text: "Non, on continue comme ça" },
         ]);
-        window.setTimeout(() => {
-          const last = idx >= total - 1;
-          if (last) onDone();
-          else setIdx((i) => Math.min(i + 1, total - 1));
-        }, 900);
+        goNext(900);
       }
     },
-    [pendingCat, idx, askSeq, total, onCategory, persist, onDone],
+    [pendingCat, idx, askSeq, onCategory, persist, goNext],
+  );
+
+  // [3.4] Le client valide (ou non) l'utilisation des données de son site.
+  const resolveScrape = useCallback(
+    (accept: boolean) => {
+      const data = pendingScrape;
+      setPendingScrape(null);
+      setInputOpen(false);
+      setTyping(true);
+      if (accept && data) {
+        setMessages((cur) => [
+          ...cur,
+          { id: `scrape-yes-${askSeq}`, role: "user", text: "Oui, servez-vous en" },
+        ]);
+        // Pré-remplissage : jamais par-dessus une réponse explicite.
+        const mined: Partial<Intake> = {};
+        if (data.description) mined.about = data.description;
+        if (data.email) mined.contactEmail = data.email;
+        if (data.phone) mined.contactPhone = data.phone;
+        if (data.instagram) mined.instagram = data.instagram;
+        if (data.socialLinks.length > 0) mined.socialLinks = data.socialLinks.join("\n");
+        if (data.musicLinks.length > 0) mined.musicLinks = data.musicLinks.join("\n");
+        const next = mergeMined(intakeRef.current, mined);
+        intakeRef.current = next;
+        setIntake(next);
+        persist();
+        window.setTimeout(() => {
+          setMessages((cur) => [
+            ...cur,
+            {
+              id: `scrape-ack-${askSeq}`,
+              role: "bot",
+              muted: true,
+              text: "Parfait — j'ai prérempli ce que j'ai trouvé, on gagne du temps…",
+            },
+          ]);
+        }, 550);
+        goNext(1300);
+      } else {
+        setMessages((cur) => [
+          ...cur,
+          { id: `scrape-no-${askSeq}`, role: "user", text: "Non merci" },
+        ]);
+        goNext(900);
+      }
+    },
+    [pendingScrape, askSeq, persist, setIntake, goNext],
   );
 
   const advance = useCallback(
     (skipped: boolean) => {
-      persist();
       const label =
         (skipped ? "Je passe pour l'instant" : answeredLabel(q, intakeRef.current)) ||
         "C'est fait";
-      const last = idx >= total - 1;
+
+      // [3.1] Chaque réponse texte est minée : les champs qu'elle couvre
+      // (ville, tarifs, contact…) ne seront pas redemandés.
+      if (!skipped && (q.kind === "text" || q.kind === "textarea")) {
+        const mined = mineIntake(label);
+        if (Object.keys(mined).length > 0) {
+          const merged = mergeMined(intakeRef.current, mined);
+          intakeRef.current = merged;
+          setIntake(merged);
+        }
+      }
+      persist();
+
       setInputOpen(false);
       setTyping(true);
       setMessages((cur) => [
@@ -630,11 +755,72 @@ function Conversation({
         { id: `a-${idx}-${askSeq}`, role: "user", text: label },
       ]);
 
+      // [3.4] Site existant fourni → on l'analyse et on propose le résumé
+      // pour VALIDATION avant tout pré-remplissage.
+      if (
+        !skipped &&
+        q.kind === "website" &&
+        intakeRef.current.hasWebsite &&
+        (intakeRef.current.websiteUrl ?? "").trim().length >= 4
+      ) {
+        const url = (intakeRef.current.websiteUrl ?? "").trim();
+        window.setTimeout(() => {
+          setMessages((cur) => [
+            ...cur,
+            {
+              id: `scrape-wait-${askSeq}`,
+              role: "bot",
+              muted: true,
+              text: "Je vais jeter un œil à votre site — deux secondes…",
+            },
+          ]);
+        }, 550);
+        void fetch("/api/onboarding/scrape", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ siteId: state.siteId, url }),
+        })
+          .then((r) => r.json())
+          .catch(() => ({}))
+          .then((data) => {
+            const d = data?.ok ? (data.data as ScrapedData) : null;
+            const useful =
+              d &&
+              (d.description || d.email || d.phone || d.socialLinks.length > 0 || d.musicLinks.length > 0);
+            if (useful) {
+              setPendingScrape(d);
+              setMessages((cur) => [
+                ...cur,
+                {
+                  id: `scrape-q-${askSeq}`,
+                  role: "bot",
+                  text: scrapeSummary(d),
+                  help: "Je m'en sers pour préremplir la suite ? Rien n'est utilisé sans votre accord.",
+                },
+              ]);
+              setTyping(false);
+              setInputOpen(true);
+            } else {
+              setMessages((cur) => [
+                ...cur,
+                {
+                  id: `scrape-fail-${askSeq}`,
+                  role: "bot",
+                  muted: true,
+                  text: "Je n'ai pas pu en tirer grand-chose — pas grave, on continue.",
+                },
+              ]);
+              goNext(1000);
+            }
+          });
+        return;
+      }
+
       // [2.3] Le signal de catégorie déclenche le routing, où qu'il apparaisse :
       // chaque réponse texte est analysée ; un signal FORT contradictoire ouvre
       // une confirmation (jamais de bascule silencieuse).
       if (!skipped && (q.kind === "text" || q.kind === "textarea")) {
-        const FREE_TEXT_KEYS = ["brand", "about", "techRider", "brief"];
+        const FREE_TEXT_KEYS = ["brand", "about", "techRider", "trade", "jobTitle", "brief"];
         if (FREE_TEXT_KEYS.includes(q.key)) {
           const det = detectCategory(label);
           if (det.confidence === "high" && det.categoryId && det.categoryId !== state.categoryId) {
@@ -664,15 +850,9 @@ function Conversation({
           { id: `ack-${idx}-${askSeq}`, role: "bot", muted: true, text: ackFor(idx, skipped) },
         ]);
       }, 550);
-      window.setTimeout(
-        () => {
-          if (last) onDone();
-          else setIdx((i) => Math.min(i + 1, total - 1));
-        },
-        last ? 1700 : 1200,
-      );
+      goNext(isLast ? 1700 : 1200);
     },
-    [idx, askSeq, total, q, persist, onDone, state.categoryId],
+    [idx, askSeq, q, persist, setIntake, goNext, isLast, state.categoryId, state.siteId],
   );
 
   const setField = useCallback(
@@ -763,18 +943,48 @@ function Conversation({
           <AkyraMark size={22} /> Akyra
         </Link>
         <span className="text-[12.5px] font-medium tabular-nums text-[rgb(var(--m-faint))]">
-          {stage === "metier" ? "Votre métier" : `${Math.min(idx + 1, total)} / ${total}`}
+          {stage === "metier"
+            ? "Votre métier"
+            : `${answeredCount}/${total} informations récoltées`}
         </span>
       </header>
 
-      {/* Fine barre de progression */}
+      {/* [3.2] Fine barre de progression (informations réellement récoltées) */}
       <div className="mx-5 h-[3px] shrink-0 overflow-hidden rounded-full bg-[rgb(var(--m-overlay)/0.06)] md:mx-10">
         <motion.div
           className="h-full rounded-full bg-[rgb(var(--m-accent))]"
-          animate={{ width: stage === "metier" ? "2%" : `${Math.round((idx / total) * 100)}%` }}
+          animate={{
+            width: stage === "metier" ? "2%" : `${Math.round((answeredCount / total) * 100)}%`,
+          }}
           transition={{ duration: 0.5, ease: EASE }}
         />
       </div>
+
+      {/* [3.2] Checklist : les champs se cochent au fur et à mesure qu'ils sont
+          couverts — par une réponse, le brief ou l'extraction du site. */}
+      {stage === "questions" && (
+        <div className="akyra-scroll mx-auto flex w-full max-w-[680px] shrink-0 gap-1.5 overflow-x-auto px-5 pt-3">
+          {questions.map((qq, i) => {
+            const done = isAnswered(qq, intake);
+            const current = i === idx;
+            return (
+              <span
+                key={qq.key}
+                className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-medium transition-colors ${
+                  done
+                    ? "border-transparent bg-[rgb(var(--m-accent)/0.12)] text-[rgb(var(--m-accent))]"
+                    : current
+                      ? "border-[rgb(var(--m-accent)/0.45)] text-[rgb(var(--m-ink))]"
+                      : "border-[rgb(var(--m-line))] text-[rgb(var(--m-faint))]"
+                }`}
+              >
+                {done && <Check size={10} />}
+                {FIELD_SHORT[qq.key] ?? qq.label}
+              </span>
+            );
+          })}
+        </div>
+      )}
 
       {/* LE FIL : tout reste affiché — questions, réponses, réactions d'Akyra. */}
       <div ref={feedRef} className="flex-1 overflow-y-auto">
@@ -859,6 +1069,32 @@ function Conversation({
                 transition={{ duration: 0.3, ease: EASE }}
               >
                 <MetierPicker guess={metierGuess} onPick={pickMetier} onOther={pickOther} />
+              </motion.div>
+            ) : pendingScrape ? (
+              /* [3.4] Validation des données extraites du site existant. */
+              <motion.div
+                key={`input-scrape-${askSeq}`}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3, ease: EASE }}
+                className="flex flex-wrap gap-2"
+              >
+                <button
+                  type="button"
+                  onClick={() => resolveScrape(true)}
+                  className="inline-flex items-center gap-2 rounded-full bg-[rgb(var(--m-ink))] px-5 py-3 text-[14px] font-bold text-[rgb(var(--m-page))] transition-opacity hover:opacity-90"
+                >
+                  <Check size={14} />
+                  Oui, préremplissez avec ça
+                </button>
+                <button
+                  type="button"
+                  onClick={() => resolveScrape(false)}
+                  className="rounded-full border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] px-5 py-3 text-[14px] font-medium text-[rgb(var(--m-ink))] transition-colors hover:bg-[rgb(var(--m-overlay)/0.04)]"
+                >
+                  Non merci
+                </button>
               </motion.div>
             ) : pendingCat ? (
               /* [2.3] Signal contradictoire : on confirme la bascule. */
@@ -953,7 +1189,7 @@ function Conversation({
                         </>
                       ) : (
                         <>
-                          {idx >= total - 1 ? "Préparer mon site" : "Continuer"}
+                          {isLast ? "Préparer mon site" : "Continuer"}
                           <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
                         </>
                       )}

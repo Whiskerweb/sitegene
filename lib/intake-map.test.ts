@@ -182,3 +182,33 @@ describe("recommendTemplateForIntake — le style que « l'IA » propose", () =>
     expect(recommendTemplateForIntake({}, "alice-r")).toBe("alice-r");
   });
 });
+
+/* [3.3] Recommandation étendue aux nouvelles catégories. */
+describe("recommendTemplateForIntake — musicien & artisan", () => {
+  it("musicien : le genre choisit l'univers", () => {
+    expect(
+      recommendTemplateForIntake({ categoryId: "musicien", genre: "techno mélodique" }, "jazz-vocalist"),
+    ).toBe("dj-electro");
+    expect(
+      recommendTemplateForIntake({ categoryId: "musicien", genre: "rap français" }, "jazz-vocalist"),
+    ).toBe("hiphop-producer");
+  });
+
+  it("musicien sans genre : repli catégorie", () => {
+    expect(recommendTemplateForIntake({ categoryId: "musicien" }, "jazz-vocalist")).toBe(
+      "jazz-vocalist",
+    );
+  });
+
+  it("artisan : le corps de métier choisit le template", () => {
+    expect(
+      recommendTemplateForIntake(
+        { categoryId: "artisan", trade: "Électricien : tableaux, dépannage" },
+        "cleaning-services",
+      ),
+    ).toBe("electrician-pro");
+    expect(
+      recommendTemplateForIntake({ categoryId: "artisan", trade: "ébéniste" }, "cleaning-services"),
+    ).toBe("multi-trade");
+  });
+});

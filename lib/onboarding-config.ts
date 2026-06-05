@@ -456,6 +456,31 @@ const PHOTO_EVENT_TEMPLATE: [event: string, templateId: string][] = [
   ["evenementiel", "photographer-freelance"],
 ];
 
+/** Univers musical → template (l'ordre fait priorité). */
+const MUSIC_GENRE_TEMPLATE: [needle: RegExp, templateId: string][] = [
+  [/jazz|soul|swing|chant|vocal/, "jazz-vocalist"],
+  [/\bdj\b|techno|house|club/, "dj-electro"],
+  [/electro|collectif/, "electronic-collective"],
+  [/rap|hip.?hop|beatmaker|trap/, "hiphop-producer"],
+  [/podcast/, "podcast-audio"],
+  [/festival/, "music-festival"],
+  [/rock|indie|folk|pop|groupe|metal/, "indie-band"],
+];
+
+/** Corps de métier artisan → template (l'ordre fait priorité). */
+const TRADE_TEMPLATE: [needle: RegExp, templateId: string][] = [
+  [/plomb|chauffag|sanitair|debouch/, "plumber-pro"],
+  [/electri/, "electrician-pro"],
+  [/nettoyage|menage|entretien/, "cleaning-services"],
+  [/jardin|paysag|espaces? verts/, "eco-garden-care"],
+];
+
+const normalizeReco = (s: string) =>
+  s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "");
+
 /**
  * Template que « l'IA » recommande à la fin de la conversation, déduit des
  * réponses. Pur et partagé client/serveur : le client peut calculer la
@@ -466,6 +491,7 @@ export function recommendTemplateForIntake(
   intake: Intake,
   fallbackTemplateId: string,
 ): string {
+  // Photographe : la spécialité prime (mariage > … > corporate).
   const types = intake.eventTypes ?? [];
   if (types.length > 0) {
     for (const [event, templateId] of PHOTO_EVENT_TEMPLATE) {
@@ -473,6 +499,24 @@ export function recommendTemplateForIntake(
     }
     return "photographer-freelance";
   }
+
+  // Musicien : le genre (ou le brief) choisit l'univers.
+  if (intake.categoryId === "musicien") {
+    const text = normalizeReco(`${intake.genre ?? ""} ${intake.brief ?? ""}`);
+    for (const [needle, templateId] of MUSIC_GENRE_TEMPLATE) {
+      if (needle.test(text)) return templateId;
+    }
+  }
+
+  // Artisan : le corps de métier choisit le template dédié.
+  if (intake.categoryId === "artisan") {
+    const text = normalizeReco(`${intake.trade ?? ""} ${intake.brief ?? ""}`);
+    for (const [needle, templateId] of TRADE_TEMPLATE) {
+      if (needle.test(text)) return templateId;
+    }
+    return "multi-trade";
+  }
+
   return fallbackTemplateId;
 }
 
