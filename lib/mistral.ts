@@ -346,6 +346,72 @@ Renvoie le JSON.`;
 }
 
 /**
+ * Remap d'un site vers une NOUVELLE maquette : TRANSCRIT le contenu réel du
+ * client (ses vraies infos, son métier, ses services, ses lieux, son ton) sur
+ * les champs de la maquette cible. Diffère de briefToOverrides (onboarding) :
+ * ici on ne RÉGÉNÈRE PAS du contenu adapté au métier de la maquette — on REPREND
+ * fidèlement les faits du client, quel que soit le template d'arrivée. Renvoie
+ * { path: valeur } borné par maxLen ; vide si l'IA est indisponible/illisible.
+ */
+export async function remapTextFields(input: {
+  sourceBrief: string;
+  manifest: unknown;
+  targetContent: Record<string, unknown>;
+  timeoutMs?: number;
+}): Promise<Record<string, string>> {
+  const { sourceBrief, manifest, targetContent } = input;
+  if (!process.env.MISTRAL_API_KEY) return {};
+
+  const fields = collectTextFields(manifest, targetContent);
+  if (fields.length === 0) return {};
+
+  const system = `Tu adaptes le site EXISTANT d'un client vers une NOUVELLE maquette. On te donne le CONTENU ACTUEL de son site (ses vraies informations) puis la liste des champs de la nouvelle maquette à remplir.
+
+OBJECTIF : TRANSCRIRE fidèlement les informations du client sur la nouvelle maquette — pas réinventer.
+
+RÈGLES :
+- GARDE le métier réel du client, ses services, ses chiffres, ses lieux, ses noms, son ton, tels qu'ils apparaissent dans son contenu actuel. NE BASCULE JAMAIS vers le métier ou le thème suggéré par la nouvelle maquette.
+- Pour chaque champ cible, écris le texte qui correspond au contenu du client (même section/rôle : un titre de héros reprend son accroche, une carte de service reprend une de SES prestations, une FAQ reprend SES réponses, etc.).
+- Respecte STRICTEMENT maxLen (caractères) et le rôle du champ (titre court, sous-titre une phrase, description 1-2 phrases). Écris dans la langue du client (français si son contenu est en français).
+- N'invente PAS d'email, de téléphone ni de chiffres absents du contenu client. Si la nouvelle maquette a un champ sans équivalent chez le client, écris un texte plausible et cohérent avec SON activité (jamais celle de la maquette).
+- Réponds en JSON STRICT { "<path>": "<texte>", ... } avec EXACTEMENT les chemins fournis. Inclus tous les chemins.`;
+
+  const user = `CONTENU ACTUEL DU SITE DU CLIENT (à transcrire) :
+"""${sourceBrief.slice(0, 6000)}"""
+
+Champs de la NOUVELLE maquette à remplir (path · maxLen · texte générique actuel) :
+${fields.map((f) => `- ${f.path} · ${f.maxLen} · ${JSON.stringify(f.current)}`).join("\n")}
+
+Renvoie le JSON.`;
+
+  let raw: string;
+  try {
+    raw = await Promise.race([
+      chat(
+        [
+          { role: "system", content: system },
+          { role: "user", content: user },
+        ],
+        { json: true, maxTokens: 6000 },
+      ),
+      new Promise<string>((_, reject) =>
+        setTimeout(() => reject(new Error("timeout")), input.timeoutMs ?? 45000),
+      ),
+    ]);
+  } catch {
+    return {};
+  }
+
+  let obj: Record<string, unknown>;
+  try {
+    obj = JSON.parse(raw);
+  } catch {
+    return {};
+  }
+  return clampOverrides(obj, fields);
+}
+
+/**
  * Boucle d'ajustement gratuite de l'onboarding : le client décrit ce qui ne va
  * pas sur SON site fini (« le titre ne me ressemble pas », « le ton est trop
  * pompeux »…) et l'IA corrige UNIQUEMENT les champs concernés. Renvoie un map

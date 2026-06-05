@@ -17,9 +17,9 @@
  */
 import { buildDraftContent } from "@/lib/onboarding";
 import { buildContent, getPath } from "@/lib/content-overlay";
-import { categoryForTemplate, getCategory, DEFAULT_CATEGORY } from "@/lib/categories";
+import { categoryForTemplate, DEFAULT_CATEGORY } from "@/lib/categories";
 import { fetchDefaultContent, fetchTemplateManifest } from "@/lib/site-server";
-import { briefToOverrides } from "@/lib/mistral";
+import { remapTextFields } from "@/lib/mistral";
 import {
   contentBases,
   expandManifestPath,
@@ -237,39 +237,35 @@ export async function remapContentForTemplate(
     | TemplateManifest
     | null;
 
-  // 3) Enrichissement IA : on donne à l'IA TOUT le contenu réel du site source
-  //    (brief riche) pour qu'elle le retranscrive fidèlement sur le template
-  //    cible — pas un brief résumé qui produirait du générique. Repli sur le
-  //    brief court (intake) si le source est vide.
+  // 3) TRANSCRIPTION IA : on donne à l'IA TOUT le contenu réel du site source
+  //    (brief riche) et on lui demande de le reprendre FIDÈLEMENT sur les champs
+  //    de la maquette cible — sans basculer vers le métier du template d'arrivée.
+  //    Repli sur le brief court (intake) si le source est vide.
   try {
     const richBrief = briefFromSourceContent(sourceContent);
-    const brief = richBrief.trim().length > 20 ? richBrief : briefFrom(intake);
-    if (brief.trim().length > 10) {
+    const sourceBrief = richBrief.trim().length > 20 ? richBrief : briefFrom(intake);
+    if (sourceBrief.trim().length > 10) {
       const baseContent = (await fetchDefaultContent(origin, targetTemplateId)) as
         | Record<string, unknown>
         | null;
-      if (baseContent) {
-        const category = getCategory(categoryId) ?? DEFAULT_CATEGORY;
-        const enriched = await briefToOverrides({
-          brief,
-          manifest: targetManifest,
-          defaultContent: baseContent,
-          categoryLabel: category.label,
-          briefMaxChars: 5000,
-        });
-        const facts = intakeToOverrides(intake, baseContent, targetManifest);
-        const merged = Object.fromEntries(
-          Object.entries({ ...enriched, ...facts }).filter(
-            ([p]) => getPath(nextContent, p) !== undefined,
-          ),
-        );
-        if (Object.keys(merged).length > 0) {
-          nextContent = buildContent(nextContent, merged, {}) as Record<string, unknown>;
-        }
+      const transcribed = await remapTextFields({
+        sourceBrief,
+        manifest: targetManifest,
+        targetContent: nextContent,
+      });
+      // Les faits durs (marque, contact) écrasent toujours la transcription IA.
+      const facts = baseContent ? intakeToOverrides(intake, baseContent, targetManifest) : {};
+      const merged = Object.fromEntries(
+        Object.entries({ ...transcribed, ...facts }).filter(
+          ([p]) => getPath(nextContent, p) !== undefined,
+        ),
+      );
+      if (Object.keys(merged).length > 0) {
+        nextContent = buildContent(nextContent, merged, {}) as Record<string, unknown>;
       }
     }
   } catch (e) {
-    console.error("[remap] enrich:", e instanceof Error ? e.message : e);
+    console.error("[remap] transcribe:", e instanceof Error ? e.message : e);
   }
 
   // 4) Clés réservées : __effects suivent, __css/__components repartent à zéro.
