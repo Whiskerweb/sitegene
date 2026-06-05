@@ -6,6 +6,7 @@ import { purchaseItem } from "@/lib/marketplace-server";
 import { primarySiteForUser } from "@/lib/primary-site";
 import { fetchDefaultContent } from "@/lib/site-server";
 import { ensureSnapshot } from "@/lib/site-content-store";
+import { ensureTemplateRow } from "@/lib/generate";
 
 /**
  * Achat d'un item de la page Formules en CRÉDITS (template 15 ✦, effet 5 ✦).
@@ -33,6 +34,8 @@ export async function POST(request: Request) {
   if (result.ok) {
     // Achat d'un template → crée une PEAU (snapshot par défaut) sous le site unique.
     if (itemType === "template" && !result.alreadyOwned) {
+      // Enregistre le template (FK sites.template_id ⟶ templates.id) dès l'achat.
+      await ensureTemplateRow(admin, itemId);
       const site = await primarySiteForUser<{ id: string }>(admin, user.id, "id");
       if (site) {
         const origin = new URL(request.url).origin;

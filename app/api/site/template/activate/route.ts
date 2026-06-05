@@ -6,6 +6,7 @@ import { isTemplateId } from "@/lib/templates";
 import { ownsItem } from "@/lib/marketplace-server";
 import { fetchDefaultContent } from "@/lib/site-server";
 import { ensureSnapshot, loadEditableSnapshot } from "@/lib/site-content-store";
+import { ensureTemplateRow } from "@/lib/generate";
 
 /**
  * Active une peau (template) sur le site unique du propriétaire — SANS perte.
@@ -48,6 +49,10 @@ export async function POST(request: Request) {
     const def = (await fetchDefaultContent(origin, templateId)) as Record<string, unknown> | null;
     await ensureSnapshot(admin, site.id, templateId, def ?? {});
   }
+
+  // sites.template_id a une FK vers templates(id) : garantir la ligne avant
+  // l'activation (les templates achetés au marketplace n'y sont pas d'office).
+  await ensureTemplateRow(admin, templateId);
 
   // Active la peau et vérifie que l'écriture a pris effet (sinon l'éditeur
   // rechargerait l'ancienne peau).

@@ -6,6 +6,7 @@ import { isTemplateId } from "@/lib/templates";
 import { ownsItem } from "@/lib/marketplace-server";
 import { remapContentForTemplate } from "@/lib/template-apply";
 import { loadEditableSnapshot, saveDraftSnapshot } from "@/lib/site-content-store";
+import { ensureTemplateRow } from "@/lib/generate";
 import type { Intake } from "@/lib/onboarding-config";
 
 export const maxDuration = 60;
@@ -68,6 +69,10 @@ export async function POST(request: Request) {
 
   // Persiste le contenu synchronisé comme instantané de la peau cible + active.
   await saveDraftSnapshot(admin, site.id, templateId, remap.content, "ai");
+
+  // sites.template_id a une FK vers templates(id) : garantir la ligne avant
+  // l'activation (les templates achetés au marketplace n'y sont pas d'office).
+  await ensureTemplateRow(admin, templateId);
 
   // Active la peau cible. On vérifie que l'écriture a bien pris effet : sans ça,
   // l'éditeur rechargerait l'ancienne peau et l'utilisateur croirait à un échec.
