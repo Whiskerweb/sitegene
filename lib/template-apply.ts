@@ -386,6 +386,7 @@ export async function applyTemplateToSite(
   if (!top) {
     await admin.from("site_content").insert({
       site_id: siteId,
+      template_id: targetTemplateId,
       version,
       content_json: nextContent,
       is_published: publishNow,
@@ -395,6 +396,7 @@ export async function applyTemplateToSite(
     version = top.version + 1;
     const { error } = await admin.from("site_content").insert({
       site_id: siteId,
+      template_id: targetTemplateId,
       version,
       content_json: nextContent,
       is_published: publishNow,

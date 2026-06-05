@@ -18,30 +18,31 @@ type SiteRow = Record<string, unknown> & {
   is_active?: boolean | null;
 };
 
-/** Choisit le site principal parmi les sites d'un client (déjà triés du plus récent au plus ancien). */
+/**
+ * Choisit le site principal d'un client (déjà triés du plus récent au plus ancien).
+ * Modèle « 1 site / N peaux » (migration 0020) : il n'y a normalement qu'UN site
+ * par compte. Le fallback live > débloqué > récent reste pour robustesse.
+ */
 export function pickPrimarySite<T extends SiteRow>(rows: T[]): T | null {
   if (rows.length === 0) return null;
-  // Priorité aux sites marqués actifs (post-migration 0019).
-  const active = rows.filter((r) => r.is_active !== false);
-  const pool = active.length > 0 ? active : rows; // fallback pré-migration
-  const live = pool.find((r) => r.status === "live");
+  const live = rows.find((r) => r.status === "live");
   if (live) return live;
-  const unlocked = pool.find(
+  const unlocked = rows.find(
     (r) => !LOCKED_BILLING.has((r.billing_status as string) ?? "none"),
   );
-  return unlocked ?? pool[0];
+  return unlocked ?? rows[0];
 }
 
 /**
  * Charge le site principal du client. `columns` = colonnes voulues par
- * l'appelant ; status/billing_status/is_active sont ajoutées d'office.
+ * l'appelant ; status/billing_status sont ajoutées d'office.
  */
 export async function primarySiteForUser<T extends SiteRow = SiteRow>(
   admin: Admin,
   userId: string,
   columns: string,
 ): Promise<T | null> {
-  const need = ["status", "billing_status", "is_active"];
+  const need = ["status", "billing_status"];
   const cols = columns
     .split(",")
     .map((c) => c.trim())

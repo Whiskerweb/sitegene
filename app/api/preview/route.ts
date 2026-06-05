@@ -14,6 +14,8 @@ import {
   type AppliedComponent,
 } from "@/lib/effects/render";
 import { ownsItem } from "@/lib/marketplace-server";
+import { isTemplateId } from "@/lib/templates";
+import { loadEditableSnapshot } from "@/lib/site-content-store";
 
 /**
  * Aperçu authentifié du site du propriétaire (brouillon inclus). Avec ?edit=1,
@@ -42,20 +44,18 @@ export async function GET(request: Request) {
   }
   if (!site.template_id) return new Response("Template inconnu.", { status: 400 });
 
-  // Plus haute version (publiée OU non) → on voit le brouillon en cours.
-  const { data: sc } = await admin
-    .from("site_content")
-    .select("content_json, version")
-    .eq("site_id", site.id)
-    .order("version", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+  // ?templateId= permet de prévisualiser une AUTRE peau (galerie biblio) ;
+  // par défaut, la peau en cours d'édition.
+  const previewTpl = url.searchParams.get("templateId");
+  const renderTpl = previewTpl && isTemplateId(previewTpl) ? previewTpl : site.template_id;
 
-  const raw = sc?.content_json ?? (await fetchDefaultContent(origin, site.template_id));
+  // Snapshot de la peau à rendre (brouillon le plus récent), sinon défaut.
+  const sc = await loadEditableSnapshot(admin, site.id, renderTpl);
+  const raw = sc?.content_json ?? (await fetchDefaultContent(origin, renderTpl));
   // ?path= permet à l'éditeur de prévisualiser une page précise (multi-pages).
   const pagePath = url.searchParams.get("path") || "/";
   // Contenu par lignée : v2 (SPA) ou PLAT (HTML clone-site).
-  let content = contentForTemplate(raw, site.template_id);
+  let content = contentForTemplate(raw, renderTpl);
 
   // Aperçu éphémère d'un composant (effet) avant commit : re-validation
   // complète (effet connu + possédé + config sanitizée), merge non persisté.
@@ -99,15 +99,15 @@ export async function GET(request: Request) {
 
   let html = await buildSiteHtml(
     origin,
-    site.template_id,
+    renderTpl,
     content,
-    metaForTemplate(content, site.template_id, pagePath),
+    metaForTemplate(content, renderTpl, pagePath),
     { pagePath }, // pas de basePath : liens inter-pages inertes dans l'éditeur
   );
   if (!html) return new Response("Template indisponible.", { status: 500 });
 
   if (edit) {
-    const manifest = (await fetchTemplateManifest(origin, site.template_id)) as
+    const manifest = (await fetchTemplateManifest(origin, renderTpl)) as
       | { fields?: { editable?: EditableFieldSpec[] } }
       | null;
     const editableFields = (manifest?.fields?.editable ?? []).map((f) => ({

@@ -34,7 +34,7 @@ export async function POST(request: Request) {
   const admin = createAdminClient();
   const { data: site } = await admin
     .from("sites")
-    .select("id, owner_user_id, status")
+    .select("id, owner_user_id, status, template_id")
     .eq("id", siteId)
     .maybeSingle();
   if (!site || site.owner_user_id !== user.id) {
@@ -70,6 +70,7 @@ export async function POST(request: Request) {
       .from("site_content")
       .select("version, content_json")
       .eq("site_id", siteId)
+      .eq("template_id", site.template_id)
       .order("version", { ascending: false })
       .limit(1)
       .maybeSingle();
@@ -94,6 +95,7 @@ export async function POST(request: Request) {
     const version = (top?.version ?? 0) + 1;
     const { error } = await admin.from("site_content").insert({
       site_id: siteId,
+      template_id: site.template_id,
       version,
       content_json: base,
       is_published: site.status === "live",
@@ -132,6 +134,7 @@ export async function POST(request: Request) {
     .from("site_content")
     .select("version, content_json")
     .eq("site_id", siteId)
+    .eq("template_id", site.template_id)
     .order("version", { ascending: false })
     .limit(1)
     .maybeSingle();
@@ -142,6 +145,7 @@ export async function POST(request: Request) {
 
   const { error } = await admin.from("site_content").insert({
     site_id: siteId,
+    template_id: site.template_id,
     version,
     content_json: base,
     is_published: site.status === "live",

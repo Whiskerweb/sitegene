@@ -43,11 +43,12 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ error: "Manifest indisponible." }, { status: 500 });
   }
 
-  // Plus haute version courante (brouillon si non publiée, sinon dernière publiée).
+  // Plus haute version de la PEAU en cours d'édition (snapshot de template_id).
   const { data: top } = await admin
     .from("site_content")
     .select("id, version, content_json, is_published")
     .eq("site_id", siteId)
+    .eq("template_id", site.template_id)
     .order("version", { ascending: false })
     .limit(1)
     .maybeSingle();
@@ -106,6 +107,7 @@ export async function PATCH(request: Request) {
     version = top.version + 1;
     const { error } = await admin.from("site_content").insert({
       site_id: siteId,
+      template_id: site.template_id,
       version,
       content_json: content,
       is_published: false,

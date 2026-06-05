@@ -98,6 +98,7 @@ export async function POST(request: Request) {
     .from("site_content")
     .select("content_json")
     .eq("site_id", siteId)
+    .eq("template_id", site.template_id)
     .order("version", { ascending: false })
     .limit(1)
     .maybeSingle();

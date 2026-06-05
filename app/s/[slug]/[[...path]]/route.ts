@@ -29,16 +29,20 @@ export async function GET(
     .maybeSingle();
 
   if (site && site.template_id) {
-    templateId = site.template_id;
+    // Le snapshot publié porte SA peau (peut différer de la peau en cours
+    // d'édition si l'utilisateur a changé de template sans republier).
     const { data: sc } = await supabase
       .from("site_content")
-      .select("content_json, version")
+      .select("content_json, version, template_id")
       .eq("site_id", site.id)
       .eq("is_published", true)
       .order("version", { ascending: false })
       .limit(1)
       .maybeSingle();
-    rawContent = sc?.content_json ?? (await fetchDefaultContent(origin, site.template_id));
+    const renderTpl: string =
+      sc?.template_id && isTemplateId(sc.template_id) ? sc.template_id : site.template_id;
+    templateId = renderTpl;
+    rawContent = sc?.content_json ?? (await fetchDefaultContent(origin, renderTpl));
   } else if (isTemplateId(slug)) {
     // Aperçu démo d'un template (sans site client) — disponible aussi en prod.
     // Réponse noindex ; ne sert que des templateId connus, contenu par défaut.

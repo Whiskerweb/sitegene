@@ -512,10 +512,11 @@ export async function finalizeChoice(
   const { error: scErr } = sc
     ? await admin
         .from("site_content")
-        .update({ content_json: built.content })
+        .update({ content_json: built.content, template_id: templateId })
         .eq("id", sc.id)
     : await admin.from("site_content").insert({
         site_id: siteId,
+        template_id: templateId,
         version: 1,
         content_json: built.content,
         is_published: false,

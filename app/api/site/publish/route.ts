@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { getBalance, grantCredits } from "@/lib/credits-server";
 import { hasActiveSubscription } from "@/lib/subscription";
 import { validateContentV2 } from "@/lib/validate-content";
+import { publishSnapshot } from "@/lib/site-content-store";
 
 const PUBLISH_COST = 1;
 
@@ -22,22 +23,25 @@ export async function POST(request: Request) {
   const admin = createAdminClient();
   const { data: site } = await admin
     .from("sites")
-    .select("id, owner_user_id, status")
+    .select("id, owner_user_id, status, template_id")
     .eq("id", siteId)
     .maybeSingle();
   if (!site || site.owner_user_id !== user.id) {
     return NextResponse.json({ error: "Site non autorisé." }, { status: 403 });
   }
 
+  // Plus haute version de la PEAU courante (celle qu'on publie en ligne).
   const { data: top } = await admin
     .from("site_content")
     .select("id, version, is_published, content_json")
     .eq("site_id", siteId)
+    .eq("template_id", site.template_id)
     .order("version", { ascending: false })
     .limit(1)
     .maybeSingle();
   if (!top) return NextResponse.json({ error: "Contenu introuvable." }, { status: 404 });
   if (top.is_published) {
+    // La peau courante est déjà l'unique snapshot en ligne → rien à faire.
     return NextResponse.json({ ok: true, nothingToPublish: true });
   }
 
@@ -62,12 +66,8 @@ export async function POST(request: Request) {
     }
   }
 
-  // 1) Publier le brouillon (les routes /s/ servent la plus haute version publiée).
-  const { error: pubErr } = await admin
-    .from("site_content")
-    .update({ is_published: true })
-    .eq("id", top.id);
-  if (pubErr) return NextResponse.json({ error: pubErr.message }, { status: 400 });
+  // 1) Publier la peau courante comme UNIQUE snapshot en ligne (dépublie les autres).
+  await publishSnapshot(admin, siteId, site.template_id ?? "");
 
   // 2) Débiter EN DERNIER (jamais débiter sans avoir publié) — sauf abonné illimité.
   const newBalance = unlimited

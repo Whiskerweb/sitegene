@@ -6,6 +6,7 @@ import { getBalance } from "@/lib/credits-server";
 import { fetchTemplateManifest } from "@/lib/site-server";
 import { ownedEffectModules } from "@/lib/marketplace-server";
 import { listAiMessages } from "@/lib/ai-history";
+import { loadEditableSnapshot } from "@/lib/site-content-store";
 import { isSpaTemplate } from "@/lib/templates";
 import EditorClient, { type EditableField, type OwnedEffect } from "./EditorClient";
 
@@ -54,13 +55,8 @@ export default async function EditorPage({
   // Fil de chat persistant de l'éditeur (50 derniers messages).
   const history = await listAiMessages(admin, site.id, 50);
 
-  const { data: top } = await admin
-    .from("site_content")
-    .select("version, is_published, content_json")
-    .eq("site_id", site.id)
-    .order("version", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+  // Contenu de la PEAU en cours d'édition (snapshot de site.template_id).
+  const top = await loadEditableSnapshot(admin, site.id, site.template_id ?? "");
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
   const manifest = (await fetchTemplateManifest(appUrl, site.template_id)) as

@@ -104,6 +104,7 @@ export async function generateSite(
   // 5) Contenu v1 (non publié tant que pas en ligne).
   const { error: cErr } = await admin.from("site_content").insert({
     site_id: siteId,
+    template_id: input.templateId,
     version: 1,
     content_json: content,
     is_published: false,
