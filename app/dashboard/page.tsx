@@ -96,7 +96,18 @@ export default async function MonSite({
   const inProgress = allNotes.filter((n) => n.status === "open" || n.status === "in_progress").length;
   const isLive = site.status === "live" && !!site.slug;
   const billing = (site.billing_status as string) ?? "none";
-  const locked = !isLive && ["none", "canceled", "payment_failed"].includes(billing);
+  const LOCKED_BILLING = new Set(["none", "canceled", "payment_failed"]);
+  // Vérifie au niveau compte : si un autre site est déverrouillé, pas de paywall.
+  const { data: otherSites } = await admin
+    .from("sites")
+    .select("status, billing_status")
+    .eq("owner_user_id", user.id)
+    .neq("id", site.id)
+    .limit(20);
+  const accountUnlocked = (otherSites ?? []).some(
+    (s) => s.status === "live" || !LOCKED_BILLING.has((s.billing_status as string) ?? "none"),
+  );
+  const locked = !isLive && LOCKED_BILLING.has(billing) && !accountUnlocked;
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
   const fullUrl = site.slug ? `${appUrl}/s/${site.slug}` : "";
 
