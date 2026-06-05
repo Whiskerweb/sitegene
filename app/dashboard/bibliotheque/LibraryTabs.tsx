@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { LibraryGrid } from "./LibraryGrid";
 import type { SitePhoto } from "@/lib/site-photos";
+import { SitePreview } from "@/components/ui/SitePreview";
 import { Button } from "@/components/ui/Button";
 import { Spinner } from "@/components/ui/Spinner";
 import { Badge } from "@/components/ui/Badge";
@@ -81,21 +82,18 @@ export function LibraryTabs({
         ))}
       </div>
 
-      {/* Contenu de l'onglet actif */}
       {activeTab === "photos" && (
         <LibraryGrid siteId={siteId} initialPhotos={initialPhotos} usedUrls={usedUrls} />
       )}
-      {activeTab === "composants" && (
-        <EffectsGrid effects={effects} />
-      )}
-      {activeTab === "sites" && (
-        <SitesGrid sites={sites} activeSiteId={activeSiteId} />
-      )}
+      {activeTab === "composants" && <EffectsGrid effects={effects} />}
+      {activeTab === "sites" && <SitesGrid sites={sites} activeSiteId={activeSiteId} />}
     </div>
   );
 }
 
-// --- Grille des composants possédés ---
+// ---------------------------------------------------------------------------
+// Grille des composants (effets) possédés
+// ---------------------------------------------------------------------------
 
 function EffectsGrid({ effects }: { effects: Effect[] }) {
   if (effects.length === 0) {
@@ -117,10 +115,17 @@ function EffectsGrid({ effects }: { effects: Effect[] }) {
           key={fx.id}
           className="overflow-hidden rounded-2xl border border-[rgb(var(--m-line))] bg-white"
         >
-          <div
-            className="h-20 w-full"
-            style={{ background: `linear-gradient(120deg, ${fx.accentFrom}, ${fx.accentTo})` }}
-          />
+          {/* Prévisualisation réelle de l'effet via /api/fx-demo */}
+          <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#0b0d14]">
+            <iframe
+              src={`/api/fx-demo?id=${fx.id}`}
+              title={fx.name}
+              loading="lazy"
+              tabIndex={-1}
+              aria-hidden
+              className="pointer-events-none absolute inset-0 h-full w-full border-0"
+            />
+          </div>
           <div className="p-4">
             <div className="flex items-center justify-between gap-2">
               <p className="font-archivo text-sm font-semibold text-night">{fx.name}</p>
@@ -139,7 +144,9 @@ function EffectsGrid({ effects }: { effects: Effect[] }) {
   );
 }
 
-// --- Grille des sites ---
+// ---------------------------------------------------------------------------
+// Grille des sites
+// ---------------------------------------------------------------------------
 
 type SyncModal = { targetId: string; targetName: string } | null;
 
@@ -162,7 +169,6 @@ function SitesGrid({ sites, activeSiteId }: { sites: SiteItem[]; activeSiteId: s
         setError(json?.error ?? "Erreur lors du changement de site.");
         return;
       }
-      // Recharger la page pour refléter le nouveau site actif.
       window.location.href = "/dashboard";
     } finally {
       setSwitching(false);
@@ -179,7 +185,6 @@ function SitesGrid({ sites, activeSiteId }: { sites: SiteItem[]; activeSiteId: s
     );
   }
 
-  // Regrouper par catégorie (actif / bibliothèque).
   const activeSites = sites.filter((s) => s.isActive || s.id === activeSiteId);
   const librarySites = sites.filter((s) => !s.isActive && s.id !== activeSiteId);
 
@@ -198,12 +203,7 @@ function SitesGrid({ sites, activeSiteId }: { sites: SiteItem[]; activeSiteId: s
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {activeSites.map((s) => (
-              <SiteCard
-                key={s.id}
-                site={s}
-                isActive
-                onSwitch={() => {}}
-              />
+              <SiteCard key={s.id} site={s} isActive onSwitch={() => {}} />
             ))}
           </div>
         </div>
@@ -227,7 +227,6 @@ function SitesGrid({ sites, activeSiteId }: { sites: SiteItem[]; activeSiteId: s
         </div>
       )}
 
-      {/* Modale de confirmation de switch */}
       {syncModal && (
         <div
           className="fixed inset-0 z-50 grid place-items-center bg-night/40 p-4"
@@ -254,12 +253,7 @@ function SitesGrid({ sites, activeSiteId }: { sites: SiteItem[]; activeSiteId: s
               </div>
             ) : (
               <div className="mt-6 flex flex-col gap-2 sm:flex-row">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="flex-1"
-                  onClick={() => setSyncModal(null)}
-                >
+                <Button variant="ghost" size="sm" className="flex-1" onClick={() => setSyncModal(null)}>
                   Annuler
                 </Button>
                 <Button
@@ -298,21 +292,12 @@ function SiteCard({
   const fmtDate = (d: string) =>
     d ? new Date(d).toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric" }) : "—";
 
-  // Gradient décoratif basé sur le templateId.
-  const gradients: Record<string, string> = {
-    "alice-r": "from-[#1a1a2e] to-[#e8b468]",
-    potozon: "from-[#ff6b6b] to-[#ffd93d]",
-    target: "from-[#0f0f0f] to-[#6d4aff]",
-    "wedding-fine-art": "from-[#f5f0eb] to-[#c9a96e]",
-    "wedding-romantic": "from-[#ffe4e6] to-[#f43f5e]",
-    arelec: "from-[#1e40af] to-[#60a5fa]",
-    eloctix: "from-[#064e3b] to-[#34d399]",
-  };
-  const grad = gradients[site.templateId] ?? "from-[#6d4aff] to-[#e8b468]";
-
   return (
     <div className="overflow-hidden rounded-2xl border border-[rgb(var(--m-line))] bg-white">
-      <div className={`h-24 w-full bg-gradient-to-br ${grad}`} />
+      {/* Prévisualisation réelle du site via /api/preview */}
+      <div className="relative overflow-hidden rounded-t-2xl border-b border-[rgb(var(--m-line))]">
+        <SitePreview src={`/api/preview?siteId=${site.id}`} />
+      </div>
       <div className="p-4">
         <div className="flex items-start justify-between gap-2">
           <p className="font-archivo text-sm font-semibold text-night leading-snug">{site.templateName}</p>
