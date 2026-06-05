@@ -80,13 +80,14 @@ export default function ChatMessage({
       {msg.status === "active" && (
         <>
           <div className="mt-2 flex items-center justify-end gap-1.5">
-            <button className="sgai-cancel text-sm" onClick={onCancel}>
+            <button type="button" className="sgai-cancel text-sm" onClick={onCancel}>
               Annuler
             </button>
-            <button className="sgai-ghost text-sm" onClick={onRefine}>
+            <button type="button" className="sgai-ghost text-sm" onClick={onRefine}>
               Affiner
             </button>
             <button
+              type="button"
               className="sgai-primary flex items-center gap-1.5 text-sm"
               disabled={(msg.action === "css" && balance < 1) || aiLoading}
               onClick={onAccept}

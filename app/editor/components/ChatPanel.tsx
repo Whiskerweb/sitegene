@@ -170,7 +170,7 @@ export default function ChatPanel({
             }
             onChange={(e) => onText(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey && composer.text.trim()) {
+              if (e.key === "Enter" && !e.shiftKey && composer.text.trim() && !aiLoading) {
                 e.preventDefault();
                 onSend();
               }
