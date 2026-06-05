@@ -21,6 +21,7 @@ import {
   ArrowLeft,
   ArrowRight,
   Check,
+  ExternalLink,
   ImagePlus,
   Loader2,
   Maximize2,
@@ -1534,6 +1535,16 @@ function Recommend({
               <p className="text-[13px] text-[rgb(var(--m-faint))]">{meta.style}</p>
             </div>
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+              {/* [4.1] Démo navigable dans un onglet dédié (contenu de démo). */}
+              <a
+                href={demoSrc(tid)}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center gap-1.5 rounded-full border border-[rgb(var(--m-line))] px-5 py-3 text-[14px] font-semibold text-[rgb(var(--m-ink))] transition-colors hover:bg-[rgb(var(--m-overlay)/0.04)]"
+              >
+                <ExternalLink size={14} />
+                Voir la démo complète
+              </a>
               <button
                 onClick={onCatalog}
                 className="rounded-full border border-[rgb(var(--m-line))] px-5 py-3 text-[14px] font-semibold text-[rgb(var(--m-ink))] transition-colors hover:bg-[rgb(var(--m-overlay)/0.04)]"
@@ -1574,6 +1585,8 @@ function Catalog({
   const [visibleCount, setVisibleCount] = useState(6);
   const others = TEMPLATE_IDS.filter((t) => !state.candidateTemplateIds.includes(t));
   const [othersCount, setOthersCount] = useState(0);
+  // [4.2] Sélection visuelle : on choisit, on peut changer, on valide ENSUITE.
+  const [selected, setSelected] = useState<string | null>(null);
 
   return (
     <div className="akyra min-h-screen bg-[rgb(var(--m-page))] text-[rgb(var(--m-ink))]">
@@ -1605,7 +1618,13 @@ function Catalog({
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {state.candidateTemplateIds.slice(0, visibleCount).map((tid, i) => (
-            <DemoCard key={tid} tid={tid} index={i} onPick={onPick} />
+            <DemoCard
+              key={tid}
+              tid={tid}
+              index={i}
+              selected={selected === tid}
+              onSelect={setSelected}
+            />
           ))}
         </div>
 
@@ -1643,7 +1662,13 @@ function Catalog({
               <>
                 <div className="mt-8 grid gap-6 md:grid-cols-3">
                   {others.slice(0, othersCount).map((tid, i) => (
-                    <DemoCard key={tid} tid={tid} index={i} onPick={onPick} />
+                    <DemoCard
+                      key={tid}
+                      tid={tid}
+                      index={i}
+                      selected={selected === tid}
+                      onSelect={setSelected}
+                    />
                   ))}
                 </div>
                 {others.length > othersCount && (
@@ -1661,6 +1686,53 @@ function Catalog({
           </div>
         )}
       </div>
+
+      {/* [4.2] Barre de validation : la sélection se change librement, on ne
+          part en construction qu'au clic explicite « Choisir ce style ». */}
+      <AnimatePresence>
+        {selected && (
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 24 }}
+            transition={{ duration: 0.3, ease: EASE }}
+            className="fixed inset-x-0 bottom-0 z-40 border-t border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface)/0.92)] backdrop-blur-md"
+          >
+            <div className="mx-auto flex max-w-[1320px] flex-wrap items-center justify-between gap-3 px-5 py-3.5 md:px-10">
+              <div className="flex min-w-0 items-center gap-2.5">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[rgb(var(--m-accent))] text-white">
+                  <Check size={14} />
+                </span>
+                <p className="truncate text-[14px] font-semibold">
+                  « {templateMeta(selected).name} »
+                  <span className="ml-2 hidden text-[12.5px] font-normal text-[rgb(var(--m-faint))] sm:inline">
+                    Vos textes et photos seront appliqués juste après.
+                  </span>
+                </p>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <a
+                  href={demoSrc(selected)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-[rgb(var(--m-line))] px-4 py-2.5 text-[13px] font-semibold text-[rgb(var(--m-ink))] transition-colors hover:bg-[rgb(var(--m-overlay)/0.04)]"
+                >
+                  <ExternalLink size={13} />
+                  Démo complète
+                </a>
+                <button
+                  onClick={() => onPick(selected)}
+                  className="group inline-flex items-center gap-2 rounded-full bg-[rgb(var(--m-ink))] px-6 py-2.5 text-[14px] font-bold text-[rgb(var(--m-page))] transition-opacity hover:opacity-90"
+                >
+                  <Sparkles size={14} />
+                  Choisir ce style
+                  <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -1683,36 +1755,68 @@ function DemoFrame({ tid, height = 420 }: { tid: string; height?: number }) {
   );
 }
 
+/**
+ * [4.1/4.2] Carte de direction artistique : clic = SÉLECTION (bordure accent +
+ * checkmark, changeable à volonté) ; « Démo complète » ouvre le template dans
+ * un nouvel onglet (contenu de démonstration, jamais les données du client) ;
+ * la validation se fait dans la barre « Choisir ce style ».
+ */
 function DemoCard({
   tid,
   index,
-  onPick,
+  selected,
+  onSelect,
 }: {
   tid: string;
   index: number;
-  onPick: (tid: string) => void;
+  selected: boolean;
+  onSelect: (tid: string) => void;
 }) {
   const meta = templateMeta(tid);
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: EASE, delay: Math.min(index, 5) * 0.1 }}
-      className="overflow-hidden rounded-[24px] border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] shadow-[0_24px_70px_-40px_rgba(0,0,0,0.4)]"
+      animate={{
+        opacity: 1,
+        y: 0,
+        scale: selected ? 1.015 : 1,
+      }}
+      transition={{ duration: 0.35, ease: EASE, delay: Math.min(index, 5) * 0.08 }}
+      onClick={() => onSelect(tid)}
+      role="button"
+      aria-pressed={selected}
+      className={`relative cursor-pointer overflow-hidden rounded-[24px] border-2 bg-[rgb(var(--m-surface))] shadow-[0_24px_70px_-40px_rgba(0,0,0,0.4)] transition-colors ${
+        selected
+          ? "border-[rgb(var(--m-accent))]"
+          : "border-[rgb(var(--m-line))] hover:border-[rgb(var(--m-overlay)/0.25)]"
+      }`}
     >
+      {selected && (
+        <motion.span
+          initial={{ scale: 0.5, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.25, ease: EASE }}
+          className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-[rgb(var(--m-accent))] text-white shadow-lg"
+        >
+          <Check size={16} />
+        </motion.span>
+      )}
       <DemoFrame tid={tid} />
       <div className="flex items-center justify-between gap-3 p-5">
         <div>
           <p className="text-[15px] font-semibold">{meta.name}</p>
           <p className="text-[12.5px] text-[rgb(var(--m-faint))]">{meta.style}</p>
         </div>
-        <button
-          onClick={() => onPick(tid)}
-          className="inline-flex items-center gap-1.5 rounded-full bg-[rgb(var(--m-ink))] px-4 py-2.5 text-[13.5px] font-bold text-[rgb(var(--m-page))] transition-opacity hover:opacity-90"
+        <a
+          href={demoSrc(tid)}
+          target="_blank"
+          rel="noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[rgb(var(--m-line))] px-3.5 py-2 text-[12.5px] font-semibold text-[rgb(var(--m-ink))] transition-colors hover:bg-[rgb(var(--m-overlay)/0.04)]"
         >
-          <Check size={14} />
-          Choisir
-        </button>
+          <ExternalLink size={13} />
+          Démo complète
+        </a>
       </div>
     </motion.div>
   );
