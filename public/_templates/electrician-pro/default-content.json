@@ -85,25 +85,25 @@
       {
         "quote": "Ils ont résolu une panne soudaine en un temps record. L'électricien a tout vérifié pour garantir sécurité et propreté.",
         "author": "James Anderson",
-        "role": "Homeowner",
+        "role": "Particulier",
         "rating": 5
       },
       {
         "quote": "Installation parfaite de notre nouvel éclairage, avec un rangement impeccable. Ponctuels, aimables et très professionnels.",
         "author": "Jenifer Martinez",
-        "role": "Property Manager",
+        "role": "Gestionnaire immobilier",
         "rating": 5
       },
       {
         "quote": "Ils ont modernisé notre tableau électrique en toute sécurité et nous ont tout expliqué clairement. Travail soigné et professionnel.",
         "author": "Daniel Brooks",
-        "role": "Homeowner",
+        "role": "Particulier",
         "rating": 5
       },
       {
         "quote": "Installation d'interrupteurs connectés dans toute la maison. Tout fonctionne parfaitement et l'ensemble est très propre. Communication excellente.",
         "author": "Sophie Laurent",
-        "role": "Business Owner",
+        "role": "Chef d'entreprise",
         "rating": 5
       }
     ]
@@ -114,8 +114,8 @@
     "image": "/_templates/electrician-pro/img/pricing.jpg",
     "standard": {
       "name": "Tarif standard d'intervention",
-      "rate": "$85",
-      "unit": "/ Hour",
+      "rate": "85 €",
+      "unit": "/ heure",
       "included": [
         "Diagnostic sur site",
         "Réparations et installations",
@@ -162,7 +162,7 @@
     ]
   },
   "cta": {
-    "title": "Besoin d'une intervention électrique urgente ",
+    "title": "Besoin d'une intervention électrique urgente ?",
     "subtitle": "Nous intervenons rapidement en cas de problème électrique, en proposant des solutions sûres et fiables au moment où vous en avez le plus besoin.",
     "phone": "+1(969) 234 4242",
     "image": "/_templates/electrician-pro/img/cta.jpg"
