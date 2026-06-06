@@ -21,7 +21,7 @@
       }
     ],
     "footer": {
-      "title": "Every Frame Tells a Story. Let’s Talk.",
+      "title": "Chaque image raconte une histoire. Parlons-en.",
       "email": "hello@potozon.studio",
       "socials": [
         "Instagram",
@@ -35,22 +35,22 @@
     {
       "slug": "/",
       "type": "home",
-      "title": "Potozon — Experience Photography",
+      "title": "Potozon — La photographie autrement",
       "meta": {
         "description": "Studio photo pop & coloré : portraits, événements et marques en pleine dimension."
       },
       "content": {
         "hero": {
-          "line1": "Experience",
-          "line2": "Photography",
-          "sticker": "A new dimension",
-          "ribbon": "Beautifull",
-          "subtitle": "Capturing timeless moments in a whole new dimension."
+          "line1": "La photographie",
+          "line2": "autrement",
+          "sticker": "Une nouvelle dimension",
+          "ribbon": "Sublime",
+          "subtitle": "Des instants intemporels saisis dans une toute nouvelle dimension."
         },
-        "textLeft": "Photography is the art, application, and practice of creating durable images.",
+        "textLeft": "La photographie est l’art, la pratique et l’application de la création d’images durables.",
         "textRight": {
-          "body": "The International Center of Photography in New York City is the world's.",
-          "cta": "READ MORE"
+          "body": "L’International Center of Photography de New York est le plus grand au monde.",
+          "cta": "LIRE LA SUITE"
         },
         "cards": [
           {
@@ -79,80 +79,80 @@
           }
         ],
         "featuredQuote": {
-          "text": "Potozon turned our shoot into a whole new dimension. Every frame feels loud, alive and unmistakably ours.",
+          "text": "Potozon a transporté notre séance dans une toute nouvelle dimension. Chaque image est éclatante, vivante et incomparablement nôtre.",
           "name": "Mara K.",
-          "role": "Creative Director",
+          "role": "Directrice artistique",
           "avatar": "/_templates/potozon/img/p7.jpg",
           "images": [
             "/_templates/potozon/img/p4.jpg",
             "/_templates/potozon/img/p12.jpg"
           ]
         },
-        "scrollText": "We are Potozon — a studio that treats photography as a new dimension. Color, motion and bold framing, captured loud and timeless.",
+        "scrollText": "Nous sommes Potozon — un studio qui traite la photographie comme une nouvelle dimension. Couleur, mouvement et cadrage audacieux, capturés avec éclat et sans limite de temps.",
         "scrollAccents": {
           "Potozon": "orange",
           "dimension.": "purple",
-          "loud": "red",
-          "Color": "yellow"
+          "audacieux,": "red",
+          "Couleur,": "yellow"
         },
-        "servicesIntro": "From portraits to brand worlds, every service is shot the Potozon way — bold, colorful, alive.",
+        "servicesIntro": "Du portrait aux univers de marque, chaque prestation est shootée à la manière Potozon — audacieuse, colorée, vivante.",
         "services": [
           {
             "n": "01",
-            "name": "Portrait Sessions",
-            "desc": "Timeless portraits that reveal personality, mood and the quiet story behind every face — pushed into vivid color.",
+            "name": "Séances portrait",
+            "desc": "Des portraits intemporels qui révèlent la personnalité, l’humeur et l’histoire silencieuse de chaque visage — sublimés par une couleur intense.",
             "tags": [
               "Studio",
-              "Editorial",
-              "Headshots"
+              "Éditorial",
+              "Portraits pro"
             ],
             "img": "/_templates/potozon/img/p1.jpg",
             "color": "#E5412A"
           },
           {
             "n": "02",
-            "name": "Events & Outdoor",
-            "desc": "Candid, high-energy coverage of weddings, drops and outdoor moments captured exactly as they happen.",
+            "name": "Événements & extérieur",
+            "desc": "Une couverture sincère et pleine d’énergie de vos mariages, lancements et instants en plein air, saisis tels qu’ils se vivent.",
             "tags": [
-              "Weddings",
+              "Mariages",
               "Concerts",
-              "Travel"
+              "Voyage"
             ],
             "img": "/_templates/potozon/img/p5.jpg",
             "color": "#FFC400"
           },
           {
             "n": "03",
-            "name": "Family Worlds",
-            "desc": "Warm, playful family moments captured in light that feels soft, intimate and honest.",
+            "name": "Univers famille",
+            "desc": "Des moments de famille chaleureux et joueurs, capturés dans une lumière douce, intime et honnête.",
             "tags": [
-              "Newborn",
+              "Naissance",
               "Lifestyle",
-              "Generations"
+              "Générations"
             ],
             "img": "/_templates/potozon/img/p4.jpg",
             "color": "#F15A24"
           },
           {
             "n": "04",
-            "name": "Retouch & Grade",
-            "desc": "Refined post-production and signature color grading that elevates every image while keeping it real.",
+            "name": "Retouche & étalonnage",
+            "desc": "Une post-production raffinée et un étalonnage couleur signature qui subliment chaque image tout en la gardant authentique.",
             "tags": [
-              "Color Grade",
-              "Skin Retouch",
-              "Composites"
+              "Étalonnage",
+              "Retouche peau",
+              "Compositing"
             ],
             "img": "/_templates/potozon/img/p2.jpg",
             "color": "#A99BE8"
           },
           {
             "n": "05",
-            "name": "Brand & Commercial",
-            "desc": "Bring your products and brand stories to life through powerful, scroll-stopping visuals.",
+            "name": "Marque & commercial",
+            "desc": "Donnez vie à vos produits et à votre histoire de marque grâce à des visuels percutants qui arrêtent le défilement.",
             "tags": [
-              "Product",
-              "Campaigns",
-              "Content"
+              "Produit",
+              "Campagnes",
+              "Contenu"
             ],
             "img": "/_templates/potozon/img/p6.jpg",
             "color": "#8B7CF6"
@@ -170,100 +170,100 @@
         ],
         "works": [
           {
-            "date": "January 2026",
-            "category": "Fashion Editorial",
-            "title": "Denim Reimagined",
-            "desc": "A fashion editorial exploring denim beyond its traditional form — texture, color and versatility.",
+            "date": "Janvier 2026",
+            "category": "Éditorial mode",
+            "title": "Le denim réinventé",
+            "desc": "Un éditorial mode qui explore le denim au-delà de sa forme traditionnelle — texture, couleur et polyvalence.",
             "img": "/_templates/potozon/img/p3.jpg",
             "color": "#E5412A"
           },
           {
-            "date": "December 2025",
-            "category": "Family Worlds",
-            "title": "Zoe's Beginnings",
-            "desc": "The earliest moments of life captured in a calm, cozy setting with soft natural light.",
+            "date": "Décembre 2025",
+            "category": "Univers famille",
+            "title": "Les premiers jours de Zoé",
+            "desc": "Les tout premiers instants d’une vie capturés dans un cadre calme et cocooning, baigné de lumière naturelle.",
             "img": "/_templates/potozon/img/p4.jpg",
             "color": "#FFC400"
           },
           {
-            "date": "November 2025",
-            "category": "Outdoor Lifestyle",
-            "title": "Morning in Motion",
-            "desc": "A sunrise lifestyle shoot highlighting natural light and candid expressions.",
+            "date": "Novembre 2025",
+            "category": "Lifestyle extérieur",
+            "title": "Le matin en mouvement",
+            "desc": "Une séance lifestyle au lever du soleil qui met en valeur la lumière naturelle et les expressions spontanées.",
             "img": "/_templates/potozon/img/p5.jpg",
             "color": "#A99BE8"
           },
           {
-            "date": "October 2025",
-            "category": "Brand & Commercial",
-            "title": "Gaia Essence",
-            "desc": "A brand-focused editorial inspired by nature, warmth and organic beauty.",
+            "date": "Octobre 2025",
+            "category": "Marque & commercial",
+            "title": "Essence Gaïa",
+            "desc": "Un éditorial de marque inspiré par la nature, la chaleur et la beauté organique.",
             "img": "/_templates/potozon/img/p6.jpg",
             "color": "#F15A24"
           }
         ],
         "beyond": {
-          "title": "Capture Beyond the Frame",
-          "body": "Photography, for us, is more than an image — it is a feeling preserved. We chase light, color and the unrepeatable in-between moments that make a story worth telling.",
-          "cta": "Start a project",
+          "title": "Capturer au-delà du cadre",
+          "body": "La photographie, pour nous, est plus qu’une image — c’est une émotion préservée. Nous cherchons la lumière, la couleur et ces instants suspendus, uniques, qui font qu’une histoire mérite d’être racontée.",
+          "cta": "Lancer un projet",
           "stats": [
             {
               "v": "12+",
-              "l": "Years shooting",
+              "l": "Années derrière l’objectif",
               "color": "#E5412A"
             },
             {
               "v": "450",
-              "l": "Projects delivered",
+              "l": "Projets livrés",
               "color": "#FFC400"
             },
             {
               "v": "38",
-              "l": "Awards & features",
+              "l": "Prix & publications",
               "color": "#A99BE8"
             }
           ]
         },
         "testimonials": [
           {
-            "text": "Potozon captured our wedding with such artistry. Every frame feels alive and honest.",
+            "text": "Potozon a photographié notre mariage avec un art fou. Chaque image est vivante et sincère.",
             "name": "Amara Okafor",
-            "role": "Wedding Client",
+            "role": "Mariée",
             "avatar": "/_templates/potozon/img/p7.jpg"
           },
           {
-            "text": "The most effortless shoot I have ever done. The results spoke louder than any copy could.",
+            "text": "La séance la plus naturelle que j’aie jamais vécue. Le résultat parle plus fort que tous les mots.",
             "name": "Lukas Meyer",
-            "role": "Creative Director",
+            "role": "Directeur artistique",
             "avatar": "/_templates/potozon/img/p8.jpg"
           },
           {
-            "text": "Genuine, patient and ridiculously talented. Our family session felt like play.",
+            "text": "Sincère, patient et terriblement talentueux. Notre séance famille avait des airs de jeu.",
             "name": "Sofia Bianchi",
-            "role": "Family Session",
+            "role": "Séance famille",
             "avatar": "/_templates/potozon/img/p9.jpg"
           }
         ],
         "faqs": [
           {
-            "q": "How do I book a session?",
-            "a": "Reach out via email, share your vision and preferred dates, and we send a tailored proposal within 48 hours."
+            "q": "Comment réserver une séance ?",
+            "a": "Écrivez-nous par email, partagez votre vision et vos dates — nous vous envoyons une proposition sur mesure sous 48 heures."
           },
           {
-            "q": "What is included in a shoot?",
-            "a": "Pre-shoot planning, the session itself, signature color grading and a private online gallery with high-resolution downloads."
+            "q": "Que comprend une séance ?",
+            "a": "La préparation en amont, la séance elle-même, l’étalonnage couleur signature et une galerie privée en ligne avec téléchargements haute définition."
           },
           {
-            "q": "How long until I get my photos?",
-            "a": "Edited galleries are delivered within 7 to 14 days depending on the scope of the project."
+            "q": "Sous quel délai vais-je recevoir mes photos ?",
+            "a": "Les galeries retouchées sont livrées sous 7 à 14 jours selon l’ampleur du projet."
           },
           {
-            "q": "Do you travel for shoots?",
-            "a": "Absolutely — we work everywhere and are available worldwide for the right project."
+            "q": "Vous déplacez-vous ?",
+            "a": "Absolument — nous travaillons partout et sommes disponibles dans le monde entier pour les beaux projets."
           },
           {
-            "q": "Can I order prints?",
-            "a": "Yes, fine-art prints and albums are available as add-ons in premium quality, hand-checked before shipping."
+            "q": "Puis-je commander des tirages ?",
+            "a": "Oui, tirages fine-art et albums sont disponibles en option, en qualité premium, vérifiés à la main avant expédition."
           }
         ]
       }
@@ -276,46 +276,46 @@
         "description": "Une sélection de projets Potozon : éditoriaux mode, lifestyle outdoor et marques."
       },
       "content": {
-        "title": "Selected works",
-        "intro": "A loud, colorful selection of recent projects — editorials, outdoor lifestyle and brand worlds.",
+        "title": "Réalisations sélectionnées",
+        "intro": "Une sélection éclatante et colorée de projets récents — éditoriaux, lifestyle en extérieur et univers de marque.",
         "works": [
           {
-            "date": "January 2026",
-            "category": "Fashion Editorial",
-            "title": "Denim Reimagined",
-            "desc": "A fashion editorial exploring denim beyond its traditional form — texture, color and versatility.",
+            "date": "Janvier 2026",
+            "category": "Éditorial mode",
+            "title": "Le denim réinventé",
+            "desc": "Un éditorial mode qui explore le denim au-delà de sa forme traditionnelle — texture, couleur et polyvalence.",
             "img": "/_templates/potozon/img/p3.jpg",
             "color": "#E5412A"
           },
           {
-            "date": "December 2025",
-            "category": "Family Worlds",
-            "title": "Zoe's Beginnings",
-            "desc": "The earliest moments of life captured in a calm, cozy setting with soft natural light.",
+            "date": "Décembre 2025",
+            "category": "Univers famille",
+            "title": "Les premiers jours de Zoé",
+            "desc": "Les tout premiers instants d’une vie capturés dans un cadre calme et cocooning, baigné de lumière naturelle.",
             "img": "/_templates/potozon/img/p4.jpg",
             "color": "#FFC400"
           },
           {
-            "date": "November 2025",
-            "category": "Outdoor Lifestyle",
-            "title": "Morning in Motion",
-            "desc": "A sunrise lifestyle shoot highlighting natural light and candid expressions.",
+            "date": "Novembre 2025",
+            "category": "Lifestyle extérieur",
+            "title": "Le matin en mouvement",
+            "desc": "Une séance lifestyle au lever du soleil qui met en valeur la lumière naturelle et les expressions spontanées.",
             "img": "/_templates/potozon/img/p5.jpg",
             "color": "#A99BE8"
           },
           {
-            "date": "October 2025",
-            "category": "Brand & Commercial",
-            "title": "Gaia Essence",
-            "desc": "A brand-focused editorial inspired by nature, warmth and organic beauty.",
+            "date": "Octobre 2025",
+            "category": "Marque & commercial",
+            "title": "Essence Gaïa",
+            "desc": "Un éditorial de marque inspiré par la nature, la chaleur et la beauté organique.",
             "img": "/_templates/potozon/img/p6.jpg",
             "color": "#F15A24"
           }
         ],
-        "textLeft": "Photography is the art, application, and practice of creating durable images.",
+        "textLeft": "La photographie est l’art, la pratique et l’application de la création d’images durables.",
         "textRight": {
-          "body": "The International Center of Photography in New York City is the world's.",
-          "cta": "READ MORE"
+          "body": "L’International Center of Photography de New York est le plus grand au monde.",
+          "cta": "LIRE LA SUITE"
         },
         "cards": [
           {
@@ -353,17 +353,17 @@
         "description": "Potozon, studio photo : approche, démarche colorée et chiffres clés."
       },
       "content": {
-        "scrollText": "We are Potozon — a studio that treats photography as a new dimension. Color, motion and bold framing, captured loud and timeless.",
+        "scrollText": "Nous sommes Potozon — un studio qui traite la photographie comme une nouvelle dimension. Couleur, mouvement et cadrage audacieux, capturés avec éclat et sans limite de temps.",
         "scrollAccents": {
           "Potozon": "orange",
           "dimension.": "purple",
-          "loud": "red",
-          "Color": "yellow"
+          "audacieux,": "red",
+          "Couleur,": "yellow"
         },
         "featuredQuote": {
-          "text": "Potozon turned our shoot into a whole new dimension. Every frame feels loud, alive and unmistakably ours.",
+          "text": "Potozon a transporté notre séance dans une toute nouvelle dimension. Chaque image est éclatante, vivante et incomparablement nôtre.",
           "name": "Mara K.",
-          "role": "Creative Director",
+          "role": "Directrice artistique",
           "avatar": "/_templates/potozon/img/p7.jpg",
           "images": [
             "/_templates/potozon/img/p4.jpg",
@@ -371,44 +371,44 @@
           ]
         },
         "beyond": {
-          "title": "Capture Beyond the Frame",
-          "body": "Photography, for us, is more than an image — it is a feeling preserved. We chase light, color and the unrepeatable in-between moments that make a story worth telling.",
-          "cta": "Start a project",
+          "title": "Capturer au-delà du cadre",
+          "body": "La photographie, pour nous, est plus qu’une image — c’est une émotion préservée. Nous cherchons la lumière, la couleur et ces instants suspendus, uniques, qui font qu’une histoire mérite d’être racontée.",
+          "cta": "Lancer un projet",
           "stats": [
             {
               "v": "12+",
-              "l": "Years shooting",
+              "l": "Années derrière l’objectif",
               "color": "#E5412A"
             },
             {
               "v": "450",
-              "l": "Projects delivered",
+              "l": "Projets livrés",
               "color": "#FFC400"
             },
             {
               "v": "38",
-              "l": "Awards & features",
+              "l": "Prix & publications",
               "color": "#A99BE8"
             }
           ]
         },
         "testimonials": [
           {
-            "text": "Potozon captured our wedding with such artistry. Every frame feels alive and honest.",
+            "text": "Potozon a photographié notre mariage avec un art fou. Chaque image est vivante et sincère.",
             "name": "Amara Okafor",
-            "role": "Wedding Client",
+            "role": "Mariée",
             "avatar": "/_templates/potozon/img/p7.jpg"
           },
           {
-            "text": "The most effortless shoot I have ever done. The results spoke louder than any copy could.",
+            "text": "La séance la plus naturelle que j’aie jamais vécue. Le résultat parle plus fort que tous les mots.",
             "name": "Lukas Meyer",
-            "role": "Creative Director",
+            "role": "Directeur artistique",
             "avatar": "/_templates/potozon/img/p8.jpg"
           },
           {
-            "text": "Genuine, patient and ridiculously talented. Our family session felt like play.",
+            "text": "Sincère, patient et terriblement talentueux. Notre séance famille avait des airs de jeu.",
             "name": "Sofia Bianchi",
-            "role": "Family Session",
+            "role": "Séance famille",
             "avatar": "/_templates/potozon/img/p9.jpg"
           }
         ]
@@ -422,50 +422,50 @@
         "description": "Lancez votre projet photo avec Potozon. Réponse sous 48 heures."
       },
       "content": {
-        "title": "Let’s start a project",
-        "intro": "Tell us about your project and preferred dates — we reply within 48 hours.",
+        "title": "Lançons un projet ensemble",
+        "intro": "Parlez-nous de votre projet et de vos dates — nous répondons sous 48 heures.",
         "email": "hello@potozon.studio",
         "zones": [
           "Studio",
-          "Worldwide on request"
+          "Monde entier sur demande"
         ],
         "pricing": [
           {
-            "name": "Portrait Session",
-            "price": "from €350",
-            "detail": "1h studio or outdoor, 20 graded photos"
+            "name": "Séance portrait",
+            "price": "dès 350 €",
+            "detail": "1 h en studio ou en extérieur, 20 photos étalonnées"
           },
           {
-            "name": "Events & Outdoor",
-            "price": "from €1 500",
-            "detail": "Half/full-day coverage, private gallery"
+            "name": "Événements & extérieur",
+            "price": "dès 1 500 €",
+            "detail": "Couverture demi-journée ou journée, galerie privée"
           },
           {
-            "name": "Brand & Commercial",
-            "price": "on quote",
-            "detail": "Shoot, retouch & color grade, usage rights"
+            "name": "Marque & commercial",
+            "price": "sur devis",
+            "detail": "Séance, retouche & étalonnage couleur, droits d’usage"
           }
         ],
         "faqs": [
           {
-            "q": "How do I book a session?",
-            "a": "Reach out via email, share your vision and preferred dates, and we send a tailored proposal within 48 hours."
+            "q": "Comment réserver une séance ?",
+            "a": "Écrivez-nous par email, partagez votre vision et vos dates — nous vous envoyons une proposition sur mesure sous 48 heures."
           },
           {
-            "q": "What is included in a shoot?",
-            "a": "Pre-shoot planning, the session itself, signature color grading and a private online gallery with high-resolution downloads."
+            "q": "Que comprend une séance ?",
+            "a": "La préparation en amont, la séance elle-même, l’étalonnage couleur signature et une galerie privée en ligne avec téléchargements haute définition."
           },
           {
-            "q": "How long until I get my photos?",
-            "a": "Edited galleries are delivered within 7 to 14 days depending on the scope of the project."
+            "q": "Sous quel délai vais-je recevoir mes photos ?",
+            "a": "Les galeries retouchées sont livrées sous 7 à 14 jours selon l’ampleur du projet."
           },
           {
-            "q": "Do you travel for shoots?",
-            "a": "Absolutely — we work everywhere and are available worldwide for the right project."
+            "q": "Vous déplacez-vous ?",
+            "a": "Absolument — nous travaillons partout et sommes disponibles dans le monde entier pour les beaux projets."
           },
           {
-            "q": "Can I order prints?",
-            "a": "Yes, fine-art prints and albums are available as add-ons in premium quality, hand-checked before shipping."
+            "q": "Puis-je commander des tirages ?",
+            "a": "Oui, tirages fine-art et albums sont disponibles en option, en qualité premium, vérifiés à la main avant expédition."
           }
         ]
       }

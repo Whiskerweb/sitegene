@@ -2,9 +2,9 @@
   "brand": "NYXIS",
   "mono": "N",
   "nav": [
-    "home",
-    "about",
-    "contact"
+    "accueil",
+    "galerie",
+    "réservation"
   ],
   "socials": [
     "facebook",
@@ -124,7 +124,7 @@
     ]
   },
   "contactPage": {
-    "title": "Booking & contact",
+    "title": "Réservation & contact",
     "intro": "Programmateur, festival, salle ou marque : écrivez-nous pour faire monter NYXIS sur votre scène. Réponse sous 48 h ouvrées.",
     "email": "tv@nyxis.live",
     "phone": "+33 1 84 80 00 00",

@@ -158,17 +158,17 @@
       {
         "quote": "« Trois jours qui ont redéfini mon été. Chaque scène avait sa propre atmosphère, son propre univers. »",
         "author": "— Mara Devlin",
-        "role": "Festival-goer, 2025"
+        "role": "Festivalière, 2025"
       },
       {
         "quote": "« Une production irréprochable et une programmation audacieuse. Sans conteste le festival le mieux pensé que j’ai couvert cette année. »",
         "author": "— Theo Marsh",
-        "role": "Music journalist, Pulsewave"
+        "role": "Journaliste musical, Pulsewave"
       },
       {
         "quote": "« Du village gastronomique aux afters, Solstice transforme un concert en une expérience à part entière. »",
         "author": "— Iris Caron",
-        "role": "Returning attendee"
+        "role": "Fidèle du festival"
       }
     ]
   },
@@ -201,9 +201,9 @@
     ]
   },
   "contactPage": {
-    "title": "Booking & contact",
+    "title": "Réservation & contact",
     "intro": "Festivals, salles, soirées privées : on parle dates, line-up et conditions. Réponse sous 48 h ouvrées.",
-    "bookingLabel": "Demande de booking",
+    "bookingLabel": "Demande de réservation",
     "email": "booking@solstice-music.com",
     "phone": "+33 6 12 34 56 78",
     "availLabel": "Disponibilités & tournée",

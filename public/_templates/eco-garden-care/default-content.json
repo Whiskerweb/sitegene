@@ -85,7 +85,7 @@
     },
     {
       "number": "34",
-      "label": "Taux de satisfaction client %"
+      "label": "Satisfaction client"
     },
     {
       "number": "169",
@@ -135,19 +135,19 @@
       {
         "quote": "Un service exceptionnel ! Ma pelouse n’a jamais été aussi verte et saine. L’équipe a été professionnelle, ponctuelle et méticuleuse. Mon jardin est désormais un véritable havre de paix, coloré et vibrant.",
         "name": "Daniel K.",
-        "role": "Commercial Property Manager",
+        "role": "Gestionnaire de copropriété",
         "avatar": "/_templates/eco-garden-care/img/testimonial1.jpg"
       },
       {
         "quote": "Un travail incroyable ! Notre pelouse fait l’admiration du quartier. Ponctuels, courtois et toujours irréprochables, je recommande leurs services à quiconque cherche un entretien de pelouse fiable.",
         "name": "Angela R.",
-        "role": "Asset Management Specialist",
+        "role": "Propriétaire particulier",
         "avatar": "/_templates/eco-garden-care/img/testimonial2.jpg"
       },
       {
         "quote": "Ils ont métamorphosé notre propriété en un paysage époustouflant. Leur équipe est professionnelle, efficace et attentive aux moindres détails. Je les recommande vivement pour un entretien de pelouse d’excellence.",
         "name": "Jessica P.",
-        "role": "Property Investment Advisor",
+        "role": "Propriétaire d’une maison de ville",
         "avatar": "/_templates/eco-garden-care/img/testimonial3.jpg"
       }
     ]

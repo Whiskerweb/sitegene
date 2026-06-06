@@ -85,12 +85,12 @@
     },
     {
       "quote": "« Avoir Marina en résidence dans notre hôtel apporte une touche d'élégance indéniable. Les clients prolongent souvent leur soirée, elle crée une atmosphère vraiment unique. »",
-      "author": "— Sofia Laurent, Directrice des événemen",
+      "author": "— Sofia Laurent, Directrice des événements",
       "place": "The Langham Hotel, Manchester"
     },
     {
-      "quote": "« Marina est d'une professionalisme et d'une adaptabilité remarquables. Elle a sublimé notre événement d'entreprise et marqué tous nos invités. »",
-      "author": "— Daniel Reed, Responsable des événement",
+      "quote": "« Marina est d'un professionnalisme et d'une adaptabilité remarquables. Elle a sublimé notre événement d'entreprise et marqué tous nos invités. »",
+      "author": "— Daniel Reed, Responsable des événements",
       "place": "Apex Group, Londres"
     },
     {
@@ -165,9 +165,9 @@
     ]
   },
   "contactPage": {
-    "title": "Booking & contact",
+    "title": "Réservation & contact",
     "intro": "Pour réserver une date, demander une fiche technique ou parler de votre soirée : un seul interlocuteur, une réponse rapide, une prestation taillée pour votre lieu.",
-    "bookingLabel": "Booking & demandes",
+    "bookingLabel": "Réservation & demandes",
     "email": "hello@marinacole.com",
     "phoneLabel": "Téléphone",
     "phone": "+44 20 7946 0123",
@@ -184,6 +184,6 @@
     "techLabel": "Fiche technique",
     "techRider": "Scène minimale de 3 × 2 m, plateau stable et dégagé. Sonorisation : façade adaptée à la jauge, 2 retours de scène, 1 micro voix dynamique sur pied (type SM58) plus 2 entrées DI pour piano/clavier et guitare. Console 8 voies minimum avec ingénieur du son si la jauge dépasse 150 personnes. Alimentation 220 V à proximité du plateau. Éclairage chaud et tamisé, un face propre sur la chanteuse, projecteurs colorés proscrits. Loge fermée avec eau plate, tabouret de bar et miroir. Balances 90 minutes avant l'ouverture des portes.",
     "copyright": "© Marina Cole",
-    "credit": "Booking · jazz & soul"
+    "credit": "Réservation · jazz & soul"
   }
 }
