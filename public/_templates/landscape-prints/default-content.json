@@ -10,7 +10,7 @@
     "Tirages",
     "Galeries",
     "Formations",
-    "Presets",
+    "Préréglages",
     "Matériel",
     "Journal",
     "À propos"
@@ -173,7 +173,7 @@
   },
   "presets": {
     "label": "Lightroom",
-    "heading": "Presets",
+    "heading": "Préréglages",
     "intro": "Styles prêts à l'emploi, élaborés après des années de travail sur le terrain. Appliquez-les à vos fichiers RAW et ajustez-les. Tarifs indicatifs affichés.",
     "items": [
       {
