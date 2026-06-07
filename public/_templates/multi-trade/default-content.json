@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Voltéo – Experts en électricité, plomberie et chauffage",
-    "description": "Solutions intelligentes pour l'électricité, l'eau et le chauffage. Électriciens, plombiers et chauffagistes certifiés pour les particuliers et professionnels — disponibles 24h/24 et 7j/7."
+    "description": "Solutions intelligentes pour l'électricité, l'eau et le chauffage. Électriciens, plombiers et chauffagistes certifiés pour les particuliers et les professionnels — disponibles 24h/24 et 7j/7."
   },
   "brand": "Voltéo",
   "topbar": {
@@ -20,7 +20,7 @@
     "cta": "Nous contacter"
   },
   "hero": {
-    "title": "Solutions intelligentes pour l'électricité, l'eau et le chauff",
+    "title": "Solutions intelligentes pour l'électricité, l'eau et le chauffage",
     "tagline": "Service rapide et professionnel pour les particuliers et les entreprises. Disponible 24h/24 et 7j/7 avec des experts certifiés en qui vous pouvez avoir confiance.",
     "cta": "Demander un devis",
     "image": "/_templates/multi-trade/img/hero.jpg",
@@ -130,25 +130,25 @@
       {
         "quote": "Service rapide et professionnel ! Voltéo a résolu notre problème électrique en moins d'une heure. Le technicien était aimable, a tout expliqué clairement et a vérifié la sécurité avant de partir.",
         "author": "Martin K.",
-        "role": "Homeowner",
+        "role": "Propriétaire",
         "avatar": "/_templates/multi-trade/img/avatar1.jpg"
       },
       {
         "quote": "Je recommande vivement pour les travaux de plomberie. Nous avions une fuite importante dans la cuisine, et Voltéo est intervenu immédiatement. La réparation a été rapide, propre et abordable. Une excellente expérience globale.",
         "author": "Petra L.",
-        "role": "Apartment owner",
+        "role": "Propriétaire d'appartement",
         "avatar": "/_templates/multi-trade/img/avatar2.jpg"
       },
       {
         "quote": "Un service de chauffage fiable. Notre système de chauffage est tombé en panne en plein hiver, et Voltéo nous a sauvés. Ils sont arrivés rapidement et ont tout remis en marche parfaitement. Merci beaucoup !",
         "author": "Jan S.",
-        "role": "Property manager",
+        "role": "Gestionnaire de biens",
         "avatar": "/_templates/multi-trade/img/avatar3.jpg"
       },
       {
         "quote": "Ils sont arrivés plus tôt que prévu le matin, et le technicien était à ma porte en moins d'une heure. Il a rapidement réparé l'éclairage. Très professionnel et respectueux de mon domicile.",
         "author": "David K.",
-        "role": "Homeowner",
+        "role": "Propriétaire",
         "avatar": "/_templates/multi-trade/img/avatar4.jpg"
       }
     ]
@@ -158,7 +158,7 @@
     "title": "Confiance et service fiable depuis 2012",
     "paragraphs": [
       "Voltéo a été fondé avec un objectif simple : offrir des services fiables en électricité, chauffage et plomberie, sur lesquels les particuliers et les entreprises peuvent compter.",
-      "Notre équipe de techniciens expérimentés s'engage à fournir des solutions sûres, efficaces et durables pour chaque projet. Nous croyons qu'un excellent service repose sur le professionnalisme, une communication claire et le souci du"
+      "Notre équipe de techniciens expérimentés s'engage à fournir des solutions sûres, efficaces et durables pour chaque projet. Nous croyons qu'un excellent service repose sur le professionnalisme, une communication claire et le souci du détail."
     ],
     "cta": "Contacter nos experts",
     "image": "/_templates/multi-trade/img/trust.jpg"
@@ -198,7 +198,7 @@
   "finalCta": {
     "label": "Contactez-nous",
     "title": "Résolvons le problème dès aujourd'hui",
-    "subtitle": "Nos techniciens expérimentés sont prêts à répondre à vos besoins en électricité, chauffage, climatisation ou plomberie.",
+    "subtitle": "Nos techniciens expérimentés sont prêts à répondre à vos besoins en électricité, chauffage ou plomberie.",
     "cta": "Demander un devis",
     "image": "/_templates/multi-trade/img/cta.jpg"
   },

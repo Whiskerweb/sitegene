@@ -90,17 +90,17 @@
     "members": [
       {
         "name": "Marcus Reed",
-        "role": "Lead Plumber",
+        "role": "Plombier responsable",
         "image": "/_templates/plumber-modern/img/team-1.jpg"
       },
       {
         "name": "Diego Alvarez",
-        "role": "Drainage Specialist",
+        "role": "Spécialiste en drainage",
         "image": "/_templates/plumber-modern/img/team-2.jpg"
       },
       {
         "name": "Sofia Lindgren",
-        "role": "Fixture Technician",
+        "role": "Technicienne en équipements",
         "image": "/_templates/plumber-modern/img/team-3.jpg"
       }
     ]
@@ -112,17 +112,17 @@
       {
         "quote": "Ils ont détecté une fuite que deux autres plombiers avaient manquée et l'ont réparée le matin même. Honnêtes, rapides et soignés.",
         "author": "Hannah Brooks",
-        "role": "Homeowner"
+        "role": "Propriétaire"
       },
       {
         "quote": "Notre canalisation principale était complètement bouchée un dimanche soir. BlueDrop est arrivé en moins d'une heure. Des sauveurs !",
         "author": "Tom Whitfield",
-        "role": "Café Owner"
+        "role": "Propriétaire de café"
       },
       {
         "quote": "Prix transparent, technicien sympathique et aucun désordre laissé derrière. Exactement ce qu'on attend d'un plombier.",
         "author": "Priya Nair",
-        "role": "Property Manager"
+        "role": "Gestionnaire de biens"
       }
     ]
   },

@@ -13,7 +13,7 @@
   ],
   "hero": {
     "line1pre": "VINTAGE",
-    "line1em": "experiences",
+    "line1em": "expériences",
     "line2": "À TRAVERS L'OBJECTIF",
     "badge": "Des photographes passionnés pour des images d’exception, chargées d’émotion.",
     "photo1": "/_templates/photo-vintage/img/hero-1.jpg",
@@ -43,7 +43,7 @@
   ],
   "featured": {
     "label1": "NOS",
-    "labelEm": "work",
+    "labelEm": "réalisations",
     "label2": "RÉALISATIONS",
     "intro": "Découvrez notre univers à travers des projets variés, où chaque détail reflète notre exigence et notre sensibilité.",
     "tags": [
@@ -74,7 +74,7 @@
   "testimonial": {
     "quote": "« Saisir l’éphémère. Immortaliser des souvenirs avec une netteté saisissante. La photographie fige le temps et transforme la beauté de la vie en art éternel. »",
     "name": "Vivian Guillen",
-    "role": "Founder & CEO, Amberlight Co.",
+    "role": "Fondatrice & CEO, Amberlight Co.",
     "avatar": "/_templates/photo-vintage/img/testimonial.jpg"
   },
   "contact": {
