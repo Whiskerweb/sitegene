@@ -54,3 +54,7 @@ templates/**/.DS_Store
 # Log du cron de prospection (local)
 outreach-cron.log
 scripts/.outreach-messages.json
+
+# Captures de test design-system (lourdes, régénérables)
+docs/design-systems/tests/**/*.png
+docs/design-systems/tests/**/_*.html

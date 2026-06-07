@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eloctix - Électricien certifié Paris & Île-de-France</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        colors: {
+          'ox-navy':   '#1b1f48',
+          'ox-navy2':  '#16193a',
+          'ox-orange': '#f1542a',
+          'ox-sky':    '#eef1f6',
+          'ox-mut':    '#6c7080',
+          'ox-line':   'rgba(27,31,72,0.10)',
+        },
+        fontFamily: {
+          display: ['"Plus Jakarta Sans"', 'sans-serif'],
+          sans:    ['"Inter"', 'sans-serif'],
+        },
+      }}
+    };
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #1b1f48; margin: 0; }
+    h1,h2,h3 { font-family: '"Plus Jakarta Sans"', sans-serif; }
+
+    .wordmark-light { color: #1b1f480f; }
+    .wordmark-stroke { -webkit-text-stroke: 1.5px rgba(255,255,255,.12); color: transparent; }
+    .wordmark-stroke-navy { -webkit-text-stroke: 1.5px rgba(27,31,72,.45); color: transparent; }
+    .wordmark-striped {
+      background-image: repeating-linear-gradient(180deg,#1b1f48 0px,#1b1f48 4px,transparent 4px,transparent 11px);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      -webkit-mask-image: linear-gradient(90deg,rgba(0,0,0,.12) 0%,#000 65%);
+      mask-image: linear-gradient(90deg,#0000001f,#000 65%);
+    }
+  </style>
+</head>
+<body class="bg-white">
+
+  <!-- HEADER -->
+  <header class="bg-white">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2.5 text-ox-navy">
+        <span class="flex h-8 w-8 items-center justify-center rounded-full bg-ox-orange">
+          <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5L19.5 10H13l0-8z"/></svg>
+        </span>
+        <span class="font-display text-xl font-extrabold tracking-tight">Eloctix</span>
+      </a>
+      <nav class="hidden items-center gap-9 md:flex">
+        <a href="#services" class="flex items-center gap-1 text-[13px] font-semibold uppercase tracking-wide text-ox-navy/80 transition-colors hover:text-ox-orange">Prestations</a>
+        <a href="#realisations" class="flex items-center gap-1 text-[13px] font-semibold uppercase tracking-wide text-ox-navy/80 transition-colors hover:text-ox-orange">Réalisations</a>
+        <a href="#formules" class="flex items-center gap-1 text-[13px] font-semibold uppercase tracking-wide text-ox-navy/80 transition-colors hover:text-ox-orange">Formules</a>
+        <a href="#equipe" class="flex items-center gap-1 text-[13px] font-semibold uppercase tracking-wide text-ox-navy/80 transition-colors hover:text-ox-orange">Équipe</a>
+        <a href="#contact" class="flex items-center gap-1 text-[13px] font-semibold uppercase tracking-wide text-ox-navy/80 transition-colors hover:text-ox-orange">Contact</a>
+      </nav>
+      <a href="#contact" class="mt-1 inline-flex items-center gap-2 rounded-xl bg-ox-navy px-5 py-3 text-[13px] font-semibold uppercase tracking-wide text-white">Demander un devis</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden bg-white pt-24 md:pt-28">
+    <div class="max-w-7xl mx-auto px-6 grid items-start gap-8 md:grid-cols-[1.25fr_0.75fr]">
+      <div>
+        <h1 class="font-display text-6xl font-extrabold uppercase leading-[0.92] tracking-tight text-ox-navy sm:text-7xl lg:text-8xl">
+          ALIMENTER
+          VOTRE
+          <img src="../../../../public/_templates/eloctix/img/hero-inline.jpg" class="inline-block h-12 w-24 rounded-xl object-cover align-middle sm:h-14 sm:w-32 lg:h-16 lg:w-40" alt="" />
+          ÉCLAIRAGE
+        </h1>
+        <p class="mt-6 max-w-md text-[15px] leading-relaxed text-ox-mut">Des solutions électriques fiables, abordables et sûres pour les maisons, les bureaux et les locaux commerciaux — assurées par des professionnels formés et certifiés.</p>
+        <a href="#contact" class="mt-6 inline-block rounded-lg bg-ox-orange px-7 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5">Commencer maintenant</a>
+      </div>
+      <div class="overflow-hidden rounded-2xl">
+        <img src="../../../../public/_templates/eloctix/img/hero.jpg" class="h-[420px] w-full object-cover sm:h-[520px] lg:h-[560px]" alt="Électricien travaillant sur un tableau électrique" />
+      </div>
+    </div>
+
+    <div class="pointer-events-none relative -mt-6 select-none md:-mt-10 overflow-hidden">
+      <span class="block whitespace-nowrap text-center font-display text-[24vw] font-extrabold uppercase leading-[0.78] tracking-tighter wordmark-striped">Eloctix</span>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-2 gap-8 md:grid-cols-4">
+    <div>
+      <div class="font-display text-4xl font-extrabold text-ox-orange">15+</div>
+      <div class="mt-1 text-xs uppercase tracking-wide text-ox-mut">Années d'expérience</div>
+    </div>
+    <div>
+      <div class="font-display text-4xl font-extrabold text-ox-orange">1 200+</div>
+      <div class="mt-1 text-xs uppercase tracking-wide text-ox-mut">Projets réalisés</div>
+    </div>
+    <div>
+      <div class="font-display text-4xl font-extrabold text-ox-orange">48 h</div>
+      <div class="mt-1 text-xs uppercase tracking-wide text-ox-mut">Délai d'intervention</div>
+    </div>
+    <div>
+      <div class="font-display text-4xl font-extrabold text-ox-orange">24/7</div>
+      <div class="mt-1 text-xs uppercase tracking-wide text-ox-mut">Support client</div>
+    </div>
+  </div>
+
+  <main>
+    <!-- SERVICES -->
+    <section id="services" class="py-16 md:py-20 bg-ox-sky">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center">
+          <div class="text-[13px] font-semibold uppercase tracking-wide text-ox-orange">Prestations</div>
+          <h2 class="mt-2 font-display text-3xl md:text-4xl font-extrabold uppercase leading-tight text-ox-navy">DES SOLUTIONS ÉLECTRIQUES</h2>
+        </div>
+        <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div class="group overflow-hidden rounded-2xl border border-ox-line bg-white">
+            <img src="../../../../public/_templates/eloctix/img/svc1.jpg" class="h-40 w-full object-cover" alt="Diagnostic électrique">
+            <div class="p-6">
+              <div class="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase text-ox-navy">Sécurité</div>
+              <h3 class="mt-4 font-display text-xl font-bold text-ox-navy">Diagnostic électrique complet</h3>
+            </div>
+          </div>
+          <div class="group overflow-hidden rounded-2xl border border-ox-line bg-white">
+            <img src="../../../../public/_templates/eloctix/img/svc2.jpg" class="h-40 w-full object-cover" alt="Mise aux normes">
+            <div class="p-6">
+              <div class="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase text-ox-navy">Conformité</div>
+              <h3 class="mt-4 font-display text-xl font-bold text-ox-navy">Mise aux normes NF C 15-100</h3>
+            </div>
+          </div>
+          <div class="group overflow-hidden rounded-2xl border border-ox-line bg-white">
+            <img src="../../../../public/_templates/eloctix/img/svc3.jpg" class="h-40 w-full object-cover" alt="Installation & rénovation">
+            <div class="p-6">
+              <div class="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase text-ox-navy">Sur mesure</div>
+              <h3 class="mt-4 font-display text-xl font-bold text-ox-navy">Installation & rénovation</h3>
+            </div>
+          </div>
+          <div class="group overflow-hidden rounded-2xl border border-ox-line bg-white">
+            <img src="../../../../public/_templates/eloctix/img/svc4.jpg" class="h-40 w-full object-cover" alt="Bornes de recharge VE">
+            <div class="p-6">
+              <div class="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase text-ox-navy">Énergie</div>
+              <h3 class="mt-4 font-display text-xl font-bold text-ox-navy">Bornes de recharge VE</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="py-16 md:py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center">
+          <div class="text-[13px] font-semibold uppercase tracking-wide text-ox-orange">Notre méthode</div>
+          <h2 class="mt-2 font-display text-3xl md:text-4xl font-extrabold uppercase leading-tight text-ox-navy">CONNEXION ET INSTALLATION</h2>
+          <p class="mt-4 max-w-2xl mx-auto text-[15px] leading-relaxed text-ox-mut">Une méthode rigoureuse, du diagnostic à la mise en service, pour un résultat sans surprise.</p>
+        </div>
+        <div class="mt-12 grid gap-8 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          <div class="md:col-span-1"></div>
+          <div class="text-center">
+            <div class="font-display text-5xl font-extrabold text-ox-orange">01</div>
+            <h3 class="mt-2 font-display text-xl font-bold text-ox-navy">Diagnostic</h3>
+            <p class="mt-2 text-sm text-ox-mut">Audit complet de votre installation existante.</p>
+          </div>
+          <div class="text-center">
+            <div class="font-display text-5xl font-extrabold text-ox-orange">02</div>
+            <h3 class="mt-2 font-display text-xl font-bold text-ox-navy">Devis détaillé</h3>
+            <p class="mt-2 text-sm text-ox-mut">Estimation transparente, sans frais cachés.</p>
+          </div>
+          <div class="text-center">
+            <div class="font-display text-5xl font-extrabold text-ox-orange">03</div>
+            <h3 class="mt-2 font-display text-xl font-bold text-ox-navy">Intervention</h3>
+            <p class="mt-2 text-sm text-ox-mut">Pose et raccordement par nos techniciens certifiés.</p>
+          </div>
+          <div class="text-center">
+            <div class="font-display text-5xl font-extrabold text-ox-orange">04</div>
+            <h3 class="mt-2 font-display text-xl font-bold text-ox-navy">Mise en service</h3>
+            <p class="mt-2 text-sm text-ox-mut">Tests, attestation de conformité et accompagnement.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY US -->
+    <section class="py-16 md:py-20 bg-ox-sky">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center">
+          <div class="text-[13px] font-semibold uppercase tracking-wide text-ox-orange">Pourquoi nous</div>
+          <h2 class="mt-2 font-display text-3xl md:text-4xl font-extrabold uppercase leading-tight text-ox-navy">FIABLES POUR TOUS</h2>
+        </div>
+        <div class="mt-12 grid gap-8 md:grid-cols-3">
+          <div class="rounded-2xl border border-ox-line bg-white p-8">
+            <h3 class="font-display text-xl font-bold text-ox-navy">Accompagnement dédié</h3>
+            <p class="mt-4 text-sm leading-relaxed text-ox-mut">Un interlocuteur unique du devis à la livraison.</p>
+          </div>
+          <div class="rounded-2xl border border-ox-line bg-white p-8">
+            <h3 class="font-display text-xl font-bold text-ox-navy">Paiement sécurisé</h3>
+            <p class="mt-4 text-sm leading-relaxed text-ox-mut">Plusieurs moyens de règlement, en toute confiance.</p>
+          </div>
+          <div class="rounded-2xl border border-ox-line bg-white p-8">
+            <h3 class="font-display text-xl font-bold text-ox-navy">Qualité certifiée</h3>
+            <p class="mt-4 text-sm leading-relaxed text-ox-mut">Électriciens agréés, assurés et formés en continu.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="formules" class="py-16 md:py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center">
+          <div class="text-[13px] font-semibold uppercase tracking-wide text-ox-orange">Formules</div>
+          <h2 class="mt-2 font-display text-3xl md:text-4xl font-extrabold uppercase leading-tight text-ox-navy">DES FORMULES SOUPLES</h2>
+        </div>
+        <div class="mt-12 grid gap-8 md:grid-cols-2">
+          <div class="rounded-3xl bg-ox-navy2 p-8 text-white">
+            <h3 class="font-display text-2xl font-bold">Formule Essentielle</h3>
+            <p class="mt-2 text-sm text-white/70">La formule idéale pour les particuliers et les petits projets résidentiels.</p>
+            <ul class="mt-6 space-y-3 text-sm">
+              <li class="flex items-center gap-3"><svg class="w-5 h-5 text-ox-orange" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Diagnostic électrique complet</li>
+              <li class="flex items-center gap-3"><svg class="w-5 h-5 text-ox-orange" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Devis détaillé gratuit</li>
+              <li class="flex items-center gap-3"><svg class="w-5 h-5 text-ox-orange" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Intervention sous 48 h</li>
+            </ul>
+            <a href="#contact" class="mt-8 inline-block rounded-lg bg-ox-orange px-7 py-3 text-sm font-semibold text-white">Demander un devis</a>
+          </div>
+          <div class="rounded-3xl bg-ox-navy2 p-8 text-white">
+            <h3 class="font-display text-2xl font-bold">Formule Standard</h3>
+            <p class="mt-2 text-sm text-white/70">La formule idéale pour les projets de taille moyenne et les locaux commerciaux.</p>
+            <ul class="mt-6 space-y-3 text-sm">
+              <li class="flex items-center gap-3"><svg class="w-5 h-5 text-ox-orange" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Tout l'Essentiel</li>
+              <li class="flex items-center gap-3"><svg class="w-5 h-5 text-ox-orange" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Support client 24/7</li>
+              <li class="flex items-center gap-3"><svg class="w-5 h-5 text-ox-orange" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Garantie étendue</li>
+            </ul>
+            <a href="#contact" class="mt-8 inline-block rounded-lg bg-ox-orange px-7 py-3 text-sm font-semibold text-white">Demander un devis</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="py-16 md:py-20 bg-ox-sky">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center">
+          <div class="text-[13px] font-semibold uppercase tracking-wide text-ox-orange">Témoignages</div>
+          <h2 class="mt-2 font-display text-3xl md:text-4xl font-extrabold uppercase leading-tight text-ox-navy">NOS CLIENTS</h2>
+        </div>
+        <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div class="rounded-2xl border border-ox-line bg-white p-8">
+            <div class="flex items-center gap-4">
+              <img src="../../../../public/_templates/eloctix/img/av1.jpg" class="h-11 w-11 rounded-full object-cover" alt="Michael Thompson">
+              <div>
+                <div class="font-semibold text-ox-navy">Michael Thompson</div>
+                <div class="text-xs uppercase tracking-wide text-ox-mut">Propriétaire</div>
+              </div>
+            </div>
+            <p class="mt-6 text-sm leading-relaxed text-ox-mut">"Travail soigné, équipe ponctuelle et tarifs transparents. Je recommande sans hésiter."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section id="contact" class="py-16 md:py-20 bg-ox-navy text-white">
+      <div class="max-w-7xl mx-auto px-6 grid items-center gap-8 md:grid-cols-2">
+        <div>
+          <h2 class="font-display text-3xl md:text-4xl font-extrabold uppercase leading-tight text-white">PRÊT À FAIRE PASSER VOTRE INSTALLATION AU NIVEAU SUPÉRIEUR ?</h2>
+          <p class="mt-4 text-[15px] leading-relaxed text-white/70">Obtenez un devis gratuit sous 48 h et profitez de l'expertise d'une équipe certifiée.</p>
+          <a href="#contact" class="mt-6 inline-block rounded-lg bg-ox-orange px-7 py-3 text-sm font-semibold text-white">Nous contacter</a>
+        </div>
+        <div class="overflow-hidden rounded-2xl">
+          <img src="../../../../public/_templates/eloctix/img/cta.jpg" class="w-full h-64 object-cover" alt="Électricien avec casque">
+        </div>
+      </div>
+      <div class="pointer-events-none relative -mt-10 select-none overflow-hidden">
+        <span class="block whitespace-nowrap text-center font-display text-[18vw] font-extrabold uppercase leading-[0.78] tracking-tighter wordmark-stroke">Eloctix</span>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-ox-navy pt-16 text-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid gap-8 md:grid-cols-4">
+        <div class="md:col-span-2">
+          <a href="#" class="flex items-center gap-2.5 text-white">
+            <span class="flex h-8 w-8 items-center justify-center rounded-full bg-ox-orange">
+              <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5L19.5 10H13l0-8z"/></svg>
+            </span>
+            <span class="font-display text-xl font-extrabold tracking-tight">Eloctix</span>
+          </a>
+          <p class="mt-4 text-sm text-white/70">Eloctix — solutions électriques certifiées pour les particuliers et les professionnels.</p>
+        </div>
+        <div>
+          <h4 class="text-sm font-semibold uppercase tracking-wide text-white">Navigation</h4>
+          <ul class="mt-4 space-y-3 text-sm">
+            <li><a href="#services" class="text-white/70 hover:text-white">Prestations</a></li>
+            <li><a href="#realisations" class="text-white/70 hover:text-white">Réalisations</a></li>
+            <li><a href="#formules" class="text-white/70 hover:text-white">Formules</a></li>
+            <li><a href="#equipe" class="text-white/70 hover:text-white">Équipe</a></li>
+            <li><a href="#contact" class="text-white/70 hover:text-white">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-16 border-t border-white/10 py-6 text-center text-xs text-white/40">
+        © 2026 Eloctix. Tous droits réservés. Propulsé par Akyra.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
