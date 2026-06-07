@@ -114,7 +114,7 @@
     "credit": "DJ résident · House · EDM · Techno · Electro"
   },
   "navGallery": "Galerie",
-  "navBooking": "Booking & contact",
+  "navBooking": "Réservation & contact",
   "portfolioPage": {
     "title": "Galerie",
     "intro": "Lumières, fumée et bras levés. L’univers visuel d’Alex Stride : photos live, captures presse et visuels de releases, set après set.",
@@ -134,7 +134,7 @@
     ]
   },
   "contactPage": {
-    "title": "Booking & contact",
+    "title": "Réservation & contact",
     "intro": "Une date à caler, un festival, une soirée privée ? Écrivez-moi : chaque set est calibré pour votre salle et votre public.",
     "bookingLabel": "Demande de booking",
     "email": "hello@alexstride.com",
