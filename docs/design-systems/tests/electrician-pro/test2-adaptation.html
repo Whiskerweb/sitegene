@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volt'Éclair - Électricien à Brest</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        colors: {
+          primary: '#FF7417',
+          primaryDark: '#FF7A30',
+          ink:     '#0A0A0A',
+          bg:      '#F2F2F2',
+          muted:   '#696969',
+          border:  '#EDEDED',
+          star:    '#FF7417',
+        },
+        fontFamily: {
+          sans:    ['"Inter"', 'sans-serif'],
+          display: ['"Manrope"', 'sans-serif'],
+        },
+        borderRadius: { 'xl2': '18px', 'xl3': '28px' },
+      }}
+    };
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #0A0A0A; margin: 0; }
+    h1,h2,h3 { font-family: 'Manrope', sans-serif; }
+    .hero-lines { background-image:
+        radial-gradient(120% 100% at 100% 0%, rgba(255,116,23,0.07) 0%, transparent 45%); }
+    .nav-link { position: relative; }
+    .nav-link::after { content:''; position:absolute; left:0; bottom:-3px; width:0; height:2px; background:#FF7417; transition:width .25s; }
+    .nav-link:hover::after { width:100%; }
+  </style>
+</head>
+<body>
+  <!-- Bandeau urgence 24/7 -->
+  <div class="bg-ink text-white text-center py-2 text-xs font-semibold">
+    <div class="flex items-center justify-center gap-2">
+      <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+      <span>URGENCE 24/7 — 02 98 45 12 34</span>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-border">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5L19.5 10H13l0-8z"/></svg>
+        </div>
+        <span class="text-ink font-display font-extrabold text-lg tracking-tight">Volt'Éclair</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#" class="nav-link text-ink text-sm font-semibold transition-colors">Accueil</a>
+        <a href="#services" class="nav-link text-muted hover:text-ink text-sm font-medium transition-colors">Services</a>
+        <a href="#about" class="nav-link text-muted hover:text-ink text-sm font-medium transition-colors">À propos</a>
+        <a href="#why" class="nav-link text-muted hover:text-ink text-sm font-medium transition-colors">Pourquoi nous</a>
+        <a href="#faq" class="nav-link text-muted hover:text-ink text-sm font-medium transition-colors">FAQ</a>
+        <a href="#contact" class="nav-link text-muted hover:text-ink text-sm font-medium transition-colors">Contact</a>
+      </div>
+      <a href="#contact" class="bg-primary text-white font-semibold text-sm px-5 py-2.5 rounded-full hover:brightness-105 transition-all">Devis gratuit</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="relative bg-white hero-lines overflow-hidden">
+    <div class="max-w-5xl mx-auto px-6 pt-16 pb-10 text-center">
+      <div class="inline-flex items-center gap-2 mb-7">
+        <span class="text-star text-sm tracking-tight">★★★★★</span>
+        <span class="text-muted text-sm font-medium">4,9 (87 avis)</span>
+      </div>
+      <h1 class="text-ink font-extrabold text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight max-w-3xl mx-auto mb-6">
+        Électricien fiable à Brest 24h/24
+      </h1>
+      <p class="text-muted text-base md:text-lg max-w-xl mx-auto mb-8">
+        Mise aux normes, dépannage urgent et bornes de recharge — devis gratuit sous 2h, 12 ans d'expérience.
+      </p>
+      <a href="#contact" class="inline-flex items-center gap-2 bg-primary text-white font-semibold px-7 py-3.5 rounded-full hover:brightness-105 transition-all text-sm">
+        <span>Obtenir un devis</span>
+      </a>
+    </div>
+    <div class="max-w-6xl mx-auto px-6 pb-16">
+      <div class="relative rounded-xl3 overflow-hidden shadow-xl">
+        <img src="../../../../public/_templates/electrician-pro/img/hero.jpg" alt="Électricien en intervention sur un tableau électrique" class="w-full h-[420px] md:h-[520px] object-cover" />
+        <div class="absolute bottom-5 right-5 bg-white text-ink text-xs font-semibold px-4 py-2 rounded-full shadow-md flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-primary"></span>
+          <span>Brest et 30 km autour</span>
+        </div>
+        <div class="absolute bottom-5 left-5 bg-white text-ink text-xs font-semibold px-4 py-2 rounded-full shadow-md flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+          <span>Urgence 24/7 — 02 98 45 12 34</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
