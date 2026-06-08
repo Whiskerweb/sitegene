@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adrien Roy | Photographie de Portrait & Mariage d'Art</title>
+  <meta name="description" content="Photographe de portrait et mariage d'art basé à Londres — lumière naturelle, émotion discrète, élégance intemporelle.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Manrope', system-ui, sans-serif; background:#fff; color:#0A0A0A; margin:0; }
+    .display { letter-spacing: -0.04em; }
+    .mono { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:    '#0A0A0A',
+            night:  '#12141D',
+            bg:     '#FFFFFF',
+            bgSoft: '#FBFBFB',
+            line:   '#E7E7E7',
+            muted:  '#999999',
+            accent: '#0000EE',
+          },
+          fontFamily: { sans: ['Manrope', 'system-ui', 'sans-serif'] },
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-bg">
+
+  <!-- HEADER + HERO -->
+  <header class="absolute top-0 inset-x-0 z-30">
+    <div class="max-w-[100rem] mx-auto px-6 lg:px-10 py-6 flex items-center justify-between text-white">
+      <span data-sg-path="brand" class="mono font-semibold">ADRIEN ROY</span>
+      <nav class="hidden md:flex items-center gap-7 lg:gap-9">
+        <a href="#" data-sg-path="nav.home" class="mono hover:opacity-60 transition-opacity">Accueil</a>
+        <a href="#categories" data-sg-path="nav.about" class="mono hover:opacity-60 transition-opacity">À propos</a>
+        <a href="#work" class="mono hover:opacity-60 transition-opacity"><span data-sg-path="nav.gallery">Galerie</span> <span class="opacity-60" data-sg-path="nav.galleryCount">[09]</span></a>
+        <a href="#archive" class="mono hover:opacity-60 transition-opacity"><span data-sg-path="nav.archive">Archive</span> <span class="opacity-60" data-sg-path="nav.archiveCount">[30]</span></a>
+        <a href="#contact" data-sg-path="nav.contact" class="mono hover:opacity-60 transition-opacity">Contact</a>
+      </nav>
+      <button class="md:hidden text-2xl" aria-label="Menu">&#9776;</button>
+    </div>
+  </header>
+
+  <section class="relative h-screen w-full overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
+      <img data-sg-img="hero.image" src="../../../../public/_templates/portrait-fineart/img/hero.jpg" alt="" class="w-full h-full object-cover object-center" />
+      <div class="absolute inset-0" style="background:linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 28%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%);"></div>
+    </div>
+    <div class="absolute bottom-0 inset-x-0 z-20">
+      <div class="max-w-[100rem] mx-auto px-6 lg:px-10 pb-16 lg:pb-20">
+        <p data-sg-path="hero.location" class="mono text-white/80 mb-5">[LONDRES, ROYAUME-UNI]</p>
+        <h1 data-sg-path="hero.title" class="display text-white font-medium leading-[1.04] text-[2.6rem] sm:text-5xl lg:text-6xl max-w-4xl">Une photographie signature alliant art, émotion et élégance naturelle intemporelle.</h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- INTRO SECTION -->
+    <section id="intro" class="py-20 lg:py-28 bg-bg">
+      <div class="max-w-[100rem] mx-auto px-6 lg:px-10">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-16">
+          <div class="lg:col-span-3 mb-8 lg:mb-0">
+            <p data-sg-path="intro.label" class="mono text-muted">[ 01 — INTRO ]</p>
+          </div>
+          <div class="lg:col-span-9">
+            <p data-sg-path="intro.text" class="text-xl lg:text-2xl leading-relaxed max-w-3xl mb-12">
+              Je crée chaque image avec soin, en mariant lumière naturelle et émotion pour capturer des portraits sincères et intemporels qui racontent votre histoire.
+            </p>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              <img data-sg-img="intro.thumbs[0].image" src="../../../../public/_templates/portrait-fineart/img/thumb-1.jpg" alt="Portrait en lumière douce" class="w-full h-auto object-cover aspect-square">
+              <img data-sg-img="intro.thumbs[1].image" src="../../../../public/_templates/portrait-fineart/img/thumb-2.jpg" alt="Portrait studio discret" class="w-full h-auto object-cover aspect-square">
+              <img data-sg-img="intro.thumbs[2].image" src="../../../../public/_templates/portrait-fineart/img/thumb-3.jpg" alt="Instantané en extérieur" class="w-full h-auto object-cover aspect-square">
+              <img data-sg-img="intro.thumbs[3].image" src="../../../../public/_templates/portrait-fineart/img/thumb-4.jpg" alt="Détail à l'heure dorée" class="w-full h-auto object-cover aspect-square">
+              <img data-sg-img="intro.thumbs[4].image" src="../../../../public/_templates/portrait-fineart/img/thumb-5.jpg" alt="Profil contre la lumière" class="w-full h-auto object-cover aspect-square">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATEGORIES SECTION -->
+    <section id="categories" class="py-20 lg:py-28 bg-bgSoft">
+      <div class="max-w-[100rem] mx-auto px-6 lg:px-10">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-16">
+          <div class="lg:col-span-3 mb-8 lg:mb-0">
+            <p data-sg-path="categories.label" class="mono text-muted">[ 02 — CATÉGORIES ]</p>
+          </div>
+          <div class="lg:col-span-9">
+            <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+              <div class="group">
+                <img data-sg-img="categories.items[0].image" src="../../../../public/_templates/portrait-fineart/img/cat-1.jpg" alt="Portraits" class="w-full h-auto object-cover aspect-[4/3] mb-4">
+                <h3 data-sg-path="categories.items[0].name" class="display text-xl font-medium mb-2">Portraits<span class="mono text-muted ml-2">[01]</span></h3>
+                <p data-sg-path="categories.items[0].desc" class="text-muted leading-relaxed">Des portraits intimes et discrets, construits autour de la lumière naturelle et des moments spontanés.</p>
+              </div>
+              <div class="group">
+                <img data-sg-img="categories.items[1].image" src="../../../../public/_templates/portrait-fineart/img/cat-2.jpg" alt="Mariages" class="w-full h-auto object-cover aspect-[4/3] mb-4">
+                <h3 data-sg-path="categories.items[1].name" class="display text-xl font-medium mb-2">Mariages<span class="mono text-muted ml-2">[02]</span></h3>
+                <p data-sg-path="categories.items[1].desc" class="text-muted leading-relaxed">Des récits de mariage documentaires — l'émotion avant tout, la pose en dernier, le tout dans un style intemporel.</p>
+              </div>
+              <div class="group">
+                <img data-sg-img="categories.items[2].image" src="../../../../public/_templates/portrait-fineart/img/cat-3.jpg" alt="Éditorial" class="w-full h-auto object-cover aspect-[4/3] mb-4">
+                <h3 data-sg-path="categories.items[2].name" class="display text-xl font-medium mb-2">Éditorial<span class="mono text-muted ml-2">[03]</span></h3>
+                <p data-sg-path="categories.items[2].desc" class="text-muted leading-relaxed">Des images éditoriales et de marque réfléchies, avec un regard calme, raffiné et contemporain.</p>
+              </div>
+              <div class="group">
+                <img data-sg-img="categories.items[3].image" src="../../../../public/_templates/portrait-fineart/img/cat-4.jpg" alt="Nature morte" class="w-full h-auto object-cover aspect-[4/3] mb-4">
+                <h3 data-sg-path="categories.items[3].name" class="display text-xl font-medium mb-2">Nature morte<span class="mono text-muted ml-2">[04]</span></h3>
+                <p data-sg-path="categories.items[3].desc" class="text-muted leading-relaxed">Texture, lumière et sérénité — des objets et détails photographiés avec patience.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK SECTION -->
+    <section id="work" class="py-20 lg:py-28 bg-bg">
+      <div class="max-w-[100rem] mx-auto px-6 lg:px-10">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-16">
+          <div class="lg:col-span-3 mb-8 lg:mb-0">
+            <p data-sg-path="work.label" class="mono text-muted">[ 03 — SÉLECTION DE TRAVAUX ]</p>
+          </div>
+          <div class="lg:col-span-9">
+            <h2 class="display text-4xl lg:text-5xl font-medium mb-12">
+              <span data-sg-path="work.heading1">Sélection</span><br>
+              <span data-sg-path="work.heading2">de travaux</span>
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div class="group">
+                <img data-sg-img="work.projects[0].image" src="../../../../public/_templates/portrait-fineart/img/work-1.jpg" alt="Lior, en Clair-Obscur" class="w-full h-auto object-cover aspect-[4/3] mb-3">
+                <h3 data-sg-path="work.projects[0].title" class="font-medium">Lior, en Clair-Obscur</h3>
+                <p data-sg-path="work.projects[0].meta" class="mono text-muted text-xs">Portrait — 2024</p>
+              </div>
+              <div class="group">
+                <img data-sg-img="work.projects[1].image" src="../../../../public/_templates/portrait-fineart/img/work-2.jpg" alt="Fleur de Silence" class="w-full h-auto object-cover aspect-[4/3] mb-3">
+                <h3 data-sg-path="work.projects[1].title" class="font-medium">Fleur de Silence</h3>
+                <p data-sg-path="work.projects[1].meta" class="mono text-muted text-xs">Éditorial — 2024</p>
+              </div>
+              <div class="group">
+                <img data-sg-img="work.projects[2].image" src="../../../../public/_templates/portrait-fineart/img/work-3.jpg" alt="The Rinaldi Gaze" class="w-full h-auto object-cover aspect-[4/3] mb-3">
+                <h3 data-sg-path="work.projects[2].title" class="font-medium">The Rinaldi Gaze</h3>
+                <p data-sg-path="work.projects[2].meta" class="mono text-muted text-xs">Portrait — 2023</p>
+              </div>
+              <div class="group">
+                <img data-sg-img="work.projects[3].image" src="../../../../public/_templates/portrait-fineart/img/work-4.jpg" alt="The Whitmore Stillness" class="w-full h-auto object-cover aspect-[4/3] mb-3">
+                <h3 data-sg-path="work.projects[3].title" class="font-medium">The Whitmore Stillness</h3>
+                <p data-sg-path="work.projects[3].meta" class="mono text-muted text-xs">Mariage — 2024</p>
+              </div>
+              <div class="group">
+                <img data-sg-img="work.projects[4].image" src="../../../../public/_templates/portrait-fineart/img/work-5.jpg" alt="Valeria in the Wild Light" class="w-full h-auto object-cover aspect-[4/3] mb-3">
+                <h3 data-sg-path="work.projects[4].title" class="font-medium">Valeria in the Wild Light</h3>
+                <p data-sg-path="work.projects[4].meta" class="mono text-muted text-xs">Portrait — 2023</p>
+              </div>
+              <div class="group">
+                <img data-sg-img="work.projects[5].image" src="../../../../public/_templates/portrait-fineart/img/work-6.jpg" alt="Before the Sea" class="w-full h-auto object-cover aspect-[4/3] mb-3">
+                <h3 data-sg-path="work.projects[5].title" class="font-medium">Before the Sea</h3>
+                <p data-sg-path="work.projects[5].meta" class="mono text-muted text-xs">Éditorial — 2024</p>
+              </div>
+              <div class="group">
+                <img data-sg-img="work.projects[6].image" src="../../../../public/_templates/portrait-fineart/img/work-7.jpg" alt="Salt in the Smoke" class="w-full h-auto object-cover aspect-[4/3] mb-3">
+                <h3 data-sg-path="work.projects[6].title" class="font-medium">Salt in the Smoke</h3>
+                <p data-sg-path="work.projects[6].meta" class="mono text-muted text-xs">Nature morte — 2023</p>
+              </div>
+              <div class="group">
+                <img data-sg-img="work.projects[7].image" src="../../../../public/_templates/portrait-fineart/img/work-8.jpg" alt="Lova, in Bloom" class="w-full h-auto object-cover aspect-[4/3] mb-3">
+                <h3 data-sg-path="work.projects[7].title" class="font-medium">Lova, in Bloom</h3>
+                <p data-sg-path="work.projects[7].meta" class="mono text-muted text-xs">Portrait — 2024</p>
+              </div>
+              <div class="group">
+                <img data-sg-img="work.projects[8].image" src="../../../../public/_templates/portrait-fineart/img/work-9.jpg" alt="Beneath the Blue" class="w-full h-auto object-cover aspect-[4/3] mb-3">
+                <h3 data-sg-path="work.projects[8].title" class="font-medium">Beneath the Blue</h3>
+                <p data-sg-path="work.projects[8].meta" class="mono text-muted text-xs">Éditorial — 2023</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARCHIVE SECTION -->
+    <section id="archive" class="py-20 lg:py-28 bg-night text-white">
+      <div class="max-w-[100rem] mx-auto px-6 lg:px-10">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-16">
+          <div class="lg:col-span-3 mb-8 lg:mb-0">
+            <p data-sg-path="archive.label" class="mono text-white/60">[ 04 — L'ARCHIVE ]</p>
+          </div>
+          <div class="lg:col-span-9">
+            <h2 class="display text-4xl lg:text-5xl font-medium mb-6">
+              <span data-sg-path="archive.heading1">Le Regard</span><br>
+              <span data-sg-path="archive.heading2">qui Persiste</span>
+            </h2>
+            <p data-sg-path="archive.intro" class="text-white/80 leading-relaxed max-w-2xl mb-12">
+              Un aperçu plus large et sans filtre — trente images qui ne rentraient pas dans une seule histoire, rassemblées ici pour l'œil attentif.
+            </p>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <img data-sg-img="archive.images[0].image" src="../../../../public/_templates/portrait-fineart/img/arc-1.jpg" alt="Archive image 1" class="w-full h-auto object-cover aspect-square">
+              <img data-sg-img="archive.images[1].image" src="../../../../public/_templates/portrait-fineart/img/arc-2.jpg" alt="Archive image 2" class="w-full h-auto object-cover aspect-square">
+              <img data-sg-img="archive.images[2].image" src="../../../../public/_templates/portrait-fineart/img/arc-3.jpg" alt="Archive image 3" class="w-full h-auto object-cover aspect-square">
+              <img data-sg-img="archive.images[3].image" src="../../../../public/_templates/portrait-fineart/img/arc-4.jpg" alt="Archive image 4" class="w-full h-auto object-cover aspect-square">
+              <img data-sg-img="archive.images[4].image" src="../../../../public/_templates/portrait-fineart/img/arc-5.jpg" alt="Archive image 5" class="w-full h-auto object-cover aspect-square">
+              <img data-sg-img="archive.images[5].image" src="../../../../public/_templates/portrait-fineart/img/arc-6.jpg" alt="Archive image 6" class="w-full h-auto object-cover aspect-square">
+              <img data-sg-img="archive.images[6].image" src="../../../../public/_templates/portrait-fineart/img/arc-7.jpg" alt="Archive image 7" class="w-full h-auto object-cover aspect-square">
+              <img data-sg-img="archive.images[7].image" src="../../../../public/_templates/portrait-fineart/img/arc-8.jpg" alt="Archive image 8" class="w-full h-auto object-cover aspect-square">
+              <img data-sg-img="archive.images[8].image" src="../../../../public/_templates/portrait-fineart/img/arc-9.jpg" alt="Archive image 9" class="w-full h-auto object-cover aspect-square">
+              <img data-sg-img="archive.images[9].image" src="../../../../public/_templates/portrait-fineart/img/arc-10.jpg" alt="Archive image 10" class="w-full h-auto object-cover aspect-square">
+              <img data-sg-img="archive.images[10].image" src="../../../../public/_templates/portrait-fineart/img/arc-11.jpg" alt="Archive image 11" class="w-full h-auto object-cover aspect-square">
+              <img data-sg-img="archive.images[11].image" src="../../../../public/_templates/portrait-fineart/img/arc-12.jpg" alt="Archive image 12" class="w-full h-auto object-cover aspect-square">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-20 lg:py-28 bg-bg">
+      <div class="max-w-[100rem] mx-auto px-6 lg:px-10">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-16">
+          <div class="lg:col-span-3 mb-8 lg:mb-0">
+            <p data-sg-path="contact.label" class="mono text-muted">[ 05 — PRENONS CONTACT ]</p>
+          </div>
+          <div class="lg:col-span-9">
+            <h2 class="display text-4xl lg:text-5xl font-medium mb-12">
+              <span data-sg-path="contact.heading1">J'aimerais</span><br>
+              <span data-sg-path="contact.heading2">vous entendre</span>
+            </h2>
+            <div class="grid lg:grid-cols-2 gap-12">
+              <form class="space-y-6">
+                <div>
+                  <label for="name" class="mono text-xs text-muted mb-2 block">[NOM]</label>
+                  <input type="text" id="name" name="name" placeholder="Commençons par votre nom" class="w-full border-0 border-b border-line focus:ring-0 focus:border-ink pb-2 bg-transparent">
+                </div>
+                <div>
+                  <label for="reach" class="mono text-xs text-muted mb-2 block">[CONTACT]</label>
+                  <input type="text" id="reach" name="reach" placeholder="Où puis-je vous joindre ?" class="w-full border-0 border-b border-line focus:ring-0 focus:border-ink pb-2 bg-transparent">
+                </div>
+                <div>
+                  <label for="shoot" class="mono text-xs text-muted mb-2 block">[TYPE DE SÉANCE]</label>
+                  <select id="shoot" name="shoot" class="w-full border-0 border-b border-line focus:ring-0 focus:border-ink pb-2 bg-transparent appearance-none">
+                    <option>Sélectionnez un type</option>
+                    <option>Séance portrait</option>
+                    <option>Mariage</option>
+                    <option>Éditorial / marque</option>
+                    <option>Autre</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="message" class="mono text-xs text-muted mb-2 block">[MESSAGE]</label>
+                  <textarea id="message" name="message" rows="4" placeholder="Parlez-moi un peu de ce que vous recherchez" class="w-full border-0 border-b border-line focus:ring-0 focus:border-ink pb-2 bg-transparent resize-none"></textarea>
+                </div>
+                <div>
+                  <button type="submit" class="bg-ink text-white px-8 py-3 mono text-xs hover:bg-opacity-80 transition-colors">Envoyer votre message</button>
+                </div>
+              </form>
+              <div>
+                <img data-sg-img="contact.image" src="../../../../public/_templates/portrait-fineart/img/contact.jpg" alt="Contact" class="w-full h-auto object-cover aspect-[4/3] lg:aspect-auto lg:h-full">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="py-20 bg-bg">
+    <div class="max-w-[100rem] mx-auto px-6 lg:px-10">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div>
+          <p class="mono text-xs text-muted mb-4">[MA LOCALISATION]</p>
+          <p data-sg-path="footer.location1" class="leading-relaxed">Basé à Londres,</p>
+          <p data-sg-path="footer.location2" class="leading-relaxed">Royaume-Uni</p>
+        </div>
+        <div>
+          <p class="mono text-xs text-muted mb-4">[MENU]</p>
+          <ul class="space-y-2">
+            <li><a href="#" data-sg-path="footer.menu[0]" class="hover:text-muted transition-colors">À propos</a></li>
+            <li><a href="#work" data-sg-path="footer.menu[1]" class="hover:text-muted transition-colors">Galerie</a></li>
+            <li><a href="#archive" data-sg-path="footer.menu[2]" class="hover:text-muted transition-colors">Archive</a></li>
+            <li><a href="#contact" data-sg-path="footer.menu[3]" class="hover:text-muted transition-colors">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="mono text-xs text-muted mb-4">[DÉCOUVRIR PLUS]</p>
+          <ul class="space-y-2">
+            <li><a href="#" data-sg-path="footer.explore[0]" class="hover:text-muted transition-colors">Instagram</a></li>
+            <li><a href="#" data-sg-path="footer.explore[1]" class="hover:text-muted transition-colors">Pexels</a></li>
+            <li><a href="#" data-sg-path="footer.explore[2]" class="hover:text-muted transition-colors">Unsplash</a></li>
+            <li><a href="#" data-sg-path="footer.explore[3]" class="hover:text-muted transition-colors">Lummi</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="mono text-xs text-muted mb-4">[N'HÉSITEZ PAS À ME CONTACTER]</p>
+          <p><a href="mailto:hello@adrienroy.com" data-sg-path="footer.email" class="hover:text-muted transition-colors">hello@adrienroy.com</a></p>
+          <p><a href="tel:+447911123456" data-sg-path="footer.phone" class="hover:text-muted transition-colors">+44 7911 123456</a></p>
+        </div>
+      </div>
+      <div class="border-t border-line pt-8">
+        <p class="mono text-xs text-muted">Propulsé par Akyra</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Accordion FAQ (not used in homepage but included for completeness)
+    document.addEventListener('DOMContentLoaded', () => {
+      const accordions = document.querySelectorAll('[data-accordion]');
+      accordions.forEach(accordion => {
+        const trigger = accordion.querySelector('[data-accordion-trigger]');
+        const content = accordion.querySelector('[data-accordion-content]');
+        trigger.addEventListener('click', () => {
+          accordion.classList.toggle('open');
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

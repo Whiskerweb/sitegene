@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marina Cole — Vocaliste de jazz et soul</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400&family=DM+Sans:wght@400;500&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:    '#000000',
+            paper:  '#eeeeee',
+            muted:  '#b4b4b4',
+            accent: '#0000ee',
+            panel:  '#111111',
+            line:   '#222222',
+          },
+          fontFamily: {
+            sans:  ['"DM Sans"', 'sans-serif'],
+            serif: ['"EB Garamond"', 'serif'],
+            mono:  ['"DM Mono"', 'monospace'],
+          },
+          letterSpacing: { label: '0.18em' },
+        }
+      }
+    };
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background:#000; color:#eee; margin:0; }
+  </style>
+</head>
+<body class="bg-ink text-paper">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-sm bg-ink/40">
+    <nav class="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
+      <a href="#" data-sg-path="brand" class="font-serif text-xl tracking-wide text-paper">Marina Cole</a>
+      <ul class="hidden md:flex gap-8 font-mono text-[12px] tracking-label uppercase text-muted">
+        <li><a href="#about" data-sg-path="nav[0]" class="hover:text-paper transition-colors">À propos</a></li>
+        <li><a href="#releases" data-sg-path="nav[1]" class="hover:text-paper transition-colors">Discographie</a></li>
+        <li><a href="#testimonials" data-sg-path="nav[2]" class="hover:text-paper transition-colors">Témoignages</a></li>
+        <li><a href="#dates" data-sg-path="nav[3]" class="hover:text-paper transition-colors">Dates</a></li>
+        <li><a href="#contact" data-sg-path="nav[4]" class="hover:text-paper transition-colors">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="top" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <img data-sg-img="hero.image" src="../../../../public/_templates/jazz-vocalist/img/hero.jpg" alt="" class="absolute inset-0 w-full h-full object-cover grayscale" />
+    <div class="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/30 to-ink"></div>
+    <div class="relative z-10 text-center px-6">
+      <p data-sg-path="hero.eyebrow" class="font-mono text-[12px] tracking-label uppercase text-muted mb-6">Londres · Royaume-Uni</p>
+      <h1 data-sg-path="hero.title" class="font-serif font-medium leading-none text-paper text-6xl sm:text-7xl md:text-8xl lg:text-[120px]">Marina Cole</h1>
+      <p data-sg-path="hero.tagline" class="mt-8 font-sans text-base md:text-lg text-muted max-w-xl mx-auto">Vocaliste de jazz et soul, en tournée à Londres et à travers le Royaume-Uni.</p>
+    </div>
+    <div class="absolute bottom-6 inset-x-0 z-10 flex justify-between px-6 font-mono text-[11px] tracking-label uppercase text-muted/70">
+      <span data-sg-path="hero.leftLabel">Jazz · Soul · Blues</span>
+      <span data-sg-path="hero.rightLabel">Depuis 2014</span>
+    </div>
+  </section>
+
+  <main>
+    <!-- ABOUT -->
+    <section id="about" class="py-28 border-t border-line">
+      <div class="mx-auto max-w-7xl px-6 grid md:grid-cols-[200px_1fr] gap-12 items-start">
+        <p data-sg-path="about.label" class="font-mono text-[12px] tracking-label uppercase text-muted pt-2">À propos</p>
+        <div class="space-y-12">
+          <div class="space-y-6 text-base md:text-lg text-muted leading-relaxed">
+            <p data-sg-path="about.p1">Vocaliste londonienne de jazz et soul, Marina Cole se produit depuis plus de dix ans dans les salles les plus prestigieuses de la capitale. Sa voix, à l'aise aussi bien sur les grands classiques américains que sur les standards contemporains ou les tubes soul, s'adapte à tous les espaces avec la même exigence.</p>
+            <p data-sg-path="about.p2">Elle se produit en solo avec accompagnement piano, en duo avec guitare ou avec son quartet complet, et a su se forger une réputation pour des prestations sur mesure, jamais figées. Chaque réservation commence par un échange sur la soirée, l'espace, les invités et l'ambiance souhaitée. La musique s'y adapte naturellement.</p>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <span data-sg-path="about.tags[0]" class="border border-line rounded-full px-4 py-1.5 font-mono text-[11px] tracking-label uppercase text-muted">Standards jazz</span>
+            <span data-sg-path="about.tags[1]" class="border border-line rounded-full px-4 py-1.5 font-mono text-[11px] tracking-label uppercase text-muted">Soul</span>
+            <span data-sg-path="about.tags[2]" class="border border-line rounded-full px-4 py-1.5 font-mono text-[11px] tracking-label uppercase text-muted">Blues</span>
+            <span data-sg-path="about.tags[3]" class="border border-line rounded-full px-4 py-1.5 font-mono text-[11px] tracking-label uppercase text-muted">Bossa Nova</span>
+            <span data-sg-path="about.tags[4]" class="border border-line rounded-full px-4 py-1.5 font-mono text-[11px] tracking-label uppercase text-muted">Gospel</span>
+            <span data-sg-path="about.tags[5]" class="border border-line rounded-full px-4 py-1.5 font-mono text-[11px] tracking-label uppercase text-muted">Swing</span>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 font-mono text-[11px] tracking-label uppercase text-muted/80">
+            <span data-sg-path="venues[0]">Ronnie Scott's</span>
+            <span data-sg-path="venues[1]">606 Club</span>
+            <span data-sg-path="venues[2]">Pizza Express Jazz Club</span>
+            <span data-sg-path="venues[3]">Vortex Jazz Club</span>
+            <span data-sg-path="venues[4]">The Jazz Cafe</span>
+            <span data-sg-path="venues[5]">Toulouse Lautrec</span>
+            <span data-sg-path="venues[6]">Quaglino's</span>
+            <span data-sg-path="venues[7]">Oriole</span>
+            <span data-sg-path="venues[8]">The Crazy Coqs</span>
+            <span data-sg-path="venues[9]">Nightjar</span>
+          </div>
+          <img data-sg-img="about.image" src="../../../../public/_templates/jazz-vocalist/img/about.jpg" alt="Marina Cole en performance" class="w-full h-auto object-cover grayscale">
+        </div>
+      </div>
+    </section>
+
+    <!-- RELEASES -->
+    <section id="releases" class="py-28 border-t border-line">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid md:grid-cols-[200px_1fr] gap-12">
+          <p data-sg-path="releasesLabel" class="font-mono text-[12px] tracking-label uppercase text-muted pt-2">Discographie</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div data-sg-path="releases.items[0]" class="space-y-3">
+              <img src="../../../../public/_templates/jazz-vocalist/img/mic1.jpg" alt="Album After Midnight" class="w-full aspect-square object-cover grayscale">
+              <h3 class="font-serif text-xl text-paper">After Midnight</h3>
+              <p class="font-mono text-[11px] tracking-label uppercase text-muted">Marina Cole · Swing</p>
+            </div>
+            <div data-sg-path="releases.items[1]" class="space-y-3">
+              <img src="../../../../public/_templates/jazz-vocalist/img/mic2.jpg" alt="Album Checkered Shoes" class="w-full aspect-square object-cover grayscale">
+              <h3 class="font-serif text-xl text-paper">Checkered Shoes</h3>
+              <p class="font-mono text-[11px] tracking-label uppercase text-muted">Marina Cole · Blues</p>
+            </div>
+            <div data-sg-path="releases.items[2]" class="space-y-3">
+              <img src="../../../../public/_templates/jazz-vocalist/img/about.jpg" alt="Album Raincheck" class="w-full aspect-square object-cover grayscale">
+              <h3 class="font-serif text-xl text-paper">Raincheck</h3>
+              <p class="font-mono text-[11px] tracking-label uppercase text-muted">Marina Cole · Bossa Nova</p>
+            </div>
+            <div data-sg-path="releases.items[3]" class="space-y-3">
+              <img src="../../../../public/_templates/jazz-vocalist/img/hero.jpg" alt="Album Hold Me Till Dawn" class="w-full aspect-square object-cover grayscale">
+              <h3 class="font-serif text-xl text-paper">Hold Me Till Dawn</h3>
+              <p class="font-mono text-[11px] tracking-label uppercase text-muted">Marina Cole · Soul</p>
+            </div>
+            <div data-sg-path="releases.items[4]" class="space-y-3">
+              <img src="../../../../public/_templates/jazz-vocalist/img/crowd.jpg" alt="Album Velvet on My Collar" class="w-full aspect-square object-cover grayscale">
+              <h3 class="font-serif text-xl text-paper">Velvet on My Collar</h3>
+              <p class="font-mono text-[11px] tracking-label uppercase text-muted">Marina Cole · Jazz</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="py-28 border-t border-line">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid md:grid-cols-[200px_1fr] gap-12">
+          <p data-sg-path="testimonialsLabel" class="font-mono text-[12px] tracking-label uppercase text-muted pt-2">Témoignages</p>
+          <div class="space-y-12">
+            <div data-sg-path="testimonials[0]" class="space-y-4">
+              <p class="font-serif text-2xl md:text-3xl leading-relaxed text-paper">« Marina apporte une chaleur rare à chaque performance : notre public est captivé dès la première note. Elle est devenue une habituée du club. »</p>
+              <p class="font-mono text-[11px] tracking-label uppercase text-muted">— Marcus Hale, Manager<br>Blue Note Lounge, Londres</p>
+            </div>
+            <div data-sg-path="testimonials[1]" class="space-y-4">
+              <p class="font-serif text-2xl md:text-3xl leading-relaxed text-paper">« Avoir Marina en résidence dans notre hôtel apporte une touche d'élégance indéniable. Les clients prolongent souvent leur soirée, elle crée une atmosphère vraiment unique. »</p>
+              <p class="font-mono text-[11px] tracking-label uppercase text-muted">— Sofia Laurent, Directrice des événements<br>The Langham Hotel, Manchester</p>
+            </div>
+            <div data-sg-path="testimonials[2]" class="space-y-4">
+              <p class="font-serif text-2xl md:text-3xl leading-relaxed text-paper">« Marina est d'un professionnalisme et d'une adaptabilité remarquables. Elle a sublimé notre événement d'entreprise et marqué tous nos invités. »</p>
+              <p class="font-mono text-[11px] tracking-label uppercase text-muted">— Daniel Reed, Responsable des événements<br>Apex Group, Londres</p>
+            </div>
+            <div data-sg-path="testimonials[3]" class="space-y-4">
+              <p class="font-serif text-2xl md:text-3xl leading-relaxed text-paper">« Il y a une intimité dans la voix de Marina qui captive instantanément. Chaque performance semble personnelle, comme si elle chantait juste pour vous. »</p>
+              <p class="font-mono text-[11px] tracking-label uppercase text-muted">— Elena Rossi, Curatrice<br>Velvet Evenings, Milan</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DATES -->
+    <section id="dates" class="py-28 border-t border-line">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid md:grid-cols-[200px_1fr] gap-12">
+          <p data-sg-path="datesLabel" class="font-mono text-[12px] tracking-label uppercase text-muted pt-2">Dates</p>
+          <div class="space-y-8">
+            <div data-sg-path="dates[0]" class="grid grid-cols-3 gap-4 border-b border-line pb-8">
+              <div class="font-mono text-[11px] tracking-label uppercase text-muted">
+                <p>21 avr. 2026</p>
+                <p>21:00</p>
+              </div>
+              <div class="col-span-2">
+                <h3 class="font-serif text-xl text-paper">Paris After Dark : une soirée jazz</h3>
+                <p class="font-mono text-[11px] tracking-label uppercase text-muted mt-1">Le Duc des Lombards, Paris, France</p>
+              </div>
+            </div>
+            <div data-sg-path="dates[1]" class="grid grid-cols-3 gap-4 border-b border-line pb-8">
+              <div class="font-mono text-[11px] tracking-label uppercase text-muted">
+                <p>1 avr. 2026</p>
+                <p>19:00</p>
+              </div>
+              <div class="col-span-2">
+                <h3 class="font-serif text-xl text-paper">Improvisations nocturnes dans la vieille ville</h3>
+                <p class="font-mono text-[11px] tracking-label uppercase text-muted mt-1">The Jazz Bar, Édimbourg, Royaume-Uni</p>
+              </div>
+            </div>
+            <div data-sg-path="dates[2]" class="grid grid-cols-3 gap-4 border-b border-line pb-8">
+              <div class="font-mono text-[11px] tracking-label uppercase text-muted">
+                <p>18 mars 2026</p>
+                <p>20:00</p>
+              </div>
+              <div class="col-span-2">
+                <h3 class="font-serif text-xl text-paper">Rythmes du Nord, pulsations intemporelles</h3>
+                <p class="font-mono text-[11px] tracking-label uppercase text-muted mt-1">Band on the Wall, Manchester, Royaume-Uni</p>
+              </div>
+            </div>
+            <div data-sg-path="dates[3]" class="grid grid-cols-3 gap-4 border-b border-line pb-8">
+              <div class="font-mono text-[11px] tracking-label uppercase text-muted">
+                <p>5 mars 2026</p>
+                <p>19:30</p>
+              </div>
+              <div class="col-span-2">
+                <h3 class="font-serif text-xl text-paper">Échos intimistes dans l'Est londonien</h3>
+                <p class="font-mono text-[11px] tracking-label uppercase text-muted mt-1">Servant Jazz Quarters, Londres, Royaume-Uni</p>
+              </div>
+            </div>
+            <div data-sg-path="dates[4]" class="grid grid-cols-3 gap-4 pb-8">
+              <div class="font-mono text-[11px] tracking-label uppercase text-muted">
+                <p>24 févr. 2026</p>
+                <p>20:00</p>
+              </div>
+              <div class="col-span-2">
+                <h3 class="font-serif text-xl text-paper">Nuits parisiennes, âme londonienne</h3>
+                <p class="font-mono text-[11px] tracking-label uppercase text-muted mt-1">Toulouse Lautrec Jazz Club, Londres, Royaume-Uni</p>
+              </div>
+            </div>
+            <a href="#" data-sg-path="datesMore" class="font-mono text-[11px] tracking-label uppercase text-muted hover:text-paper transition-colors">Anciennes dates →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-28 border-t border-line">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid md:grid-cols-[200px_1fr] gap-12 items-start">
+          <p data-sg-path="contact.title" class="font-mono text-[12px] tracking-label uppercase text-muted pt-2">Contactez-moi</p>
+          <div class="space-y-12">
+            <div class="space-y-6">
+              <p data-sg-path="contact.text" class="text-base md:text-lg text-muted leading-relaxed max-w-2xl">Disponible pour dîners privés, résidences en hôtel, événements d'entreprise et occasions spéciales à Londres et dans toute la France.</p>
+              <a href="mailto:hello@marinacole.com" data-sg-path="cta" class="inline-block border border-line rounded-full px-6 py-3 font-mono text-[11px] tracking-label uppercase text-muted hover:bg-paper hover:text-ink transition-colors">Contactez-moi</a>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12">
+              <div class="space-y-6">
+                <p data-sg-path="contact.contactLabel" class="font-mono text-[11px] tracking-label uppercase text-muted">Contactez-moi par</p>
+                <a href="mailto:hello@marinacole.com" data-sg-path="contact.email" class="font-serif text-2xl text-paper hover:text-accent transition-colors">hello@marinacole.com</a>
+              </div>
+              <div class="space-y-6">
+                <p data-sg-path="contact.findLabel" class="font-mono text-[11px] tracking-label uppercase text-muted">Retrouvez-moi sur</p>
+                <div class="flex gap-6 font-mono text-[11px] tracking-label uppercase text-muted">
+                  <a href="#" data-sg-path="contact.socials[0]" class="hover:text-paper transition-colors">Instagram</a>
+                  <a href="#" data-sg-path="contact.socials[1]" class="hover:text-paper transition-colors">YouTube</a>
+                  <a href="#" data-sg-path="contact.socials[2]" class="hover:text-paper transition-colors">Spotify</a>
+                </div>
+              </div>
+            </div>
+            <img data-sg-img="contact.image" src="../../../../public/_templates/jazz-vocalist/img/crowd.jpg" alt="Public lors d'un concert" class="w-full h-auto object-cover grayscale">
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="py-16 border-t border-line">
+    <div class="mx-auto max-w-7xl px-6 flex justify-between items-center font-mono text-[11px] tracking-label uppercase text-muted">
+      <span data-sg-path="contact.copyright">© Marina Cole</span>
+      <span data-sg-path="contact.credit">Chanteuse · jazz & soul</span>
+      <span>Propulsé par Akyra</span>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const faqItems = document.querySelectorAll('[data-faq-item]');
+      faqItems.forEach(item => {
+        const button = item.querySelector('[data-faq-toggle]');
+        const content = item.querySelector('[data-faq-content]');
+        button.addEventListener('click', () => {
+          item.classList.toggle('open');
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elise Maes - Photographie Authentique</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;500&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Instrument Sans', sans-serif; background:#fbf7ef; color:#141414; margin:0; }
+    .font-serif { font-family: 'Instrument Serif', serif; }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#fbf7ef',
+            sand:  '#eee9df',
+            ink:   '#141414',
+            bark:  '#2a2825',
+          },
+          fontFamily: {
+            serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+            sans:  ['"Instrument Sans"', 'sans-serif'],
+          },
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-cream">
+
+  <!-- HEADER -->
+  <header class="flex text-slate-50 mix-blend-difference w-full z-50 px-6 py-8 absolute top-0 items-center justify-between">
+    <div class="flex items-center gap-6">
+      <a href="#" aria-label="Portfolio" class="hover:opacity-70 transition-opacity">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 3L7.17 5H4C2.9 5 2 5.9 2 7v13c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2h-3.17L15 3H9zm3 15a5 5 0 110-10 5 5 0 010 10zm0-8a3 3 0 100 6 3 3 0 000-6z"/></svg>
+      </a>
+      <nav class="hidden md:flex gap-6 text-sm uppercase tracking-widest font-light">
+        <a href="#" data-sg-path="menu.home" class="hover:opacity-70 transition-opacity">Accueil</a>
+        <a href="#" data-sg-path="menu.portfolio" class="hover:opacity-70 transition-opacity">Portfolio</a>
+        <a href="#" data-sg-path="menu.contact" class="hover:opacity-70 transition-opacity">Contact</a>
+      </nav>
+    </div>
+    <a href="#" class="flex items-center gap-3 uppercase tracking-widest text-slate-50">
+      <span data-sg-path="brandInitials" class="text-2xl italic font-serif tracking-tighter">EM</span>
+      <span data-sg-path="brand" class="text-sm md:text-base font-light tracking-widest pt-1">Elise Maes</span>
+    </a>
+    <button class="flex flex-col gap-y-1.5 p-2" aria-label="Menu"><span class="w-6 bg-current block" style="height:1px"></span><span class="w-6 bg-current block" style="height:1px"></span></button>
+  </header>
+
+  <!-- HERO -->
+  <section class="relative h-screen w-full overflow-hidden flex flex-col justify-center items-center text-center bg-ink">
+    <img data-sg-img="hero.image" src="../../../../public/_templates/wedding-fine-art/img/hero.jpg" alt="" class="object-cover object-center opacity-60 w-full h-full absolute inset-0" />
+    <div class="relative z-10 flex flex-col items-center px-4 max-w-5xl mx-auto mt-16">
+      <span data-sg-path="hero.region" class="text-xs md:text-sm uppercase tracking-[0.2em] text-white/80 mb-6 md:mb-8 font-light">Belgique</span>
+      <h1 class="text-6xl md:text-8xl lg:text-[7rem] leading-[0.9] font-serif tracking-tight text-white mb-6">
+        <span data-sg-path="hero.title1">AUTHENTIQUE</span><br>
+        <span data-sg-path="hero.title2">PHOTOGRAPHIE</span>
+      </h1>
+      <p data-sg-path="hero.subtitle" class="font-serif italic text-xl md:text-3xl text-white/90 mt-4 tracking-tight">pour les amoureux au cœur sauvage</p>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="bg-cream py-24 md:py-32">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      <div class="text-center mb-16">
+        <span data-sg-path="intro.eyebrow" class="text-xs uppercase tracking-[0.2em] text-ink/60">Couples | Mariages | Évasions | Éditorial</span>
+        <h2 class="font-serif text-4xl md:text-6xl mt-4">
+          <span data-sg-path="intro.heading1">RÉCITS CINÉMATOGRAPHIQUES SPONTANÉS</span><br>
+          <span data-sg-path="intro.heading2">QUI VOUS RESSEMBLENT</span>
+        </h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 lg:gap-16 items-center">
+        <img data-sg-img="intro.imageLeft" src="../../../../public/_templates/wedding-fine-art/img/intro-left.jpg" alt="Couple marchant dans une rue pavée" class="w-full h-auto object-cover">
+        <div class="flex flex-col gap-6">
+          <p data-sg-path="intro.body" class="font-light text-base md:text-lg leading-relaxed">
+            Basée à Bruxelles et toujours prête à voyager là où votre histoire vous mène, je capture avec sensibilité les moments vrais et spontanés qui font de votre amour une histoire unique. Qu’il s’agisse d’une évasion en montagne balayée par le vent, d’une cérémonie dans un château historique ou d’une séance photo intimiste dans une ville pavée, j’aborde chaque shooting avec intention, curiosité et un profond respect.
+          </p>
+          <a href="#" data-sg-path="intro.cta" class="font-serif text-lg italic hover:opacity-70 transition-opacity self-start">En savoir plus</a>
+        </div>
+      </div>
+      <img data-sg-img="intro.imageRight" src="../../../../public/_templates/wedding-fine-art/img/intro-right.jpg" alt="Couple s'embrassant sous une arche" class="w-full h-auto object-cover mt-8 md:mt-16">
+    </div>
+  </section>
+
+  <!-- SELECTION (PINNED SCROLL) -->
+  <section class="sel-pin relative bg-bark text-cream" style="height:500vh">
+    <div class="sticky top-0 h-screen flex items-center overflow-hidden">
+      <div class="max-w-[100rem] mx-auto px-6 lg:px-12 w-full grid lg:grid-cols-2 gap-16 items-center">
+        <div class="relative w-full max-w-[520px] aspect-[3/4] mx-auto">
+          <img data-sg-img="selection.items[0].image" data-sel-img="0" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-100" src="../../../../public/_templates/wedding-fine-art/img/intro-left.jpg" alt="Couples">
+          <img data-sg-img="selection.items[1].image" data-sel-img="1" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0" src="../../../../public/_templates/wedding-fine-art/img/intro-right.jpg" alt="Évasions">
+          <img data-sg-img="selection.items[2].image" data-sel-img="2" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0" src="../../../../public/_templates/wedding-fine-art/img/services-main.jpg" alt="Mariages intimistes">
+          <img data-sg-img="selection.items[3].image" data-sel-img="3" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0" src="../../../../public/_templates/wedding-fine-art/img/about-main.jpg" alt="Éditorial">
+        </div>
+        <div>
+          <span data-sg-path="selection.label" class="text-xs uppercase tracking-[0.2em] text-cream/60">Sélection</span>
+          <ul class="mt-8 flex flex-col gap-6">
+            <li data-sel-item="0" class="flex items-baseline gap-5 transition-all duration-500 opacity-100"><span class="text-sm text-cream/50">01</span><span data-sg-path="selection.items[0].title" class="font-serif text-4xl lg:text-6xl">Couples</span></li>
+            <li data-sel-item="1" class="flex items-baseline gap-5 transition-all duration-500 opacity-30"><span class="text-sm text-cream/50">02</span><span data-sg-path="selection.items[1].title" class="font-serif text-4xl lg:text-6xl">Évasions</span></li>
+            <li data-sel-item="2" class="flex items-baseline gap-5 transition-all duration-500 opacity-30"><span class="text-sm text-cream/50">03</span><span data-sg-path="selection.items[2].title" class="font-serif text-4xl lg:text-6xl">Mariages intimistes</span></li>
+            <li data-sel-item="3" class="flex items-baseline gap-5 transition-all duration-500 opacity-30"><span class="text-sm text-cream/50">04</span><span data-sg-path="selection.items[3].title" class="font-serif text-4xl lg:text-6xl">Éditorial</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="bg-cream py-24 md:py-32">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      <div class="text-center mb-16">
+        <span data-sg-path="services.heading" class="text-xs uppercase tracking-[0.2em] text-ink/60">Prestations</span>
+        <div class="grid md:grid-cols-2 gap-8 lg:gap-16 mt-8">
+          <div>
+            <p data-sg-path="services.body1" class="font-light text-base md:text-lg leading-relaxed mb-6">
+              Je propose une gamme de services photographiques conçus pour les couples qui écrivent leur histoire à leur manière. Que vous rêviez d’une cérémonie pieds nus dans les Highlands écossais, d’un échange de vœux au sommet enneigé des Alpes ou de photos de fiançailles dans une ville européenne chargée d’histoire, je suis là pour immortaliser chaque instant, sauvage et précieux, avec authenticité et émotion.
+            </p>
+            <p data-sg-path="services.body2" class="font-light text-base md:text-lg leading-relaxed mb-8">
+              Mon approche est journalistique, sensible et toujours ancrée dans le réel. Car les plus beaux moments sont souvent ceux qu’on n’a pas prévus.
+            </p>
+            <a href="#" data-sg-path="services.cta" class="font-serif text-lg italic hover:opacity-70 transition-opacity">Voir les forfaits</a>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <img data-sg-img="services.imageMain" src="../../../../public/_templates/wedding-fine-art/img/services-main.jpg" alt="Mariage en montagne" class="w-full h-auto object-cover">
+            <img data-sg-img="services.imageDetail" src="../../../../public/_templates/wedding-fine-art/img/services-detail.jpg" alt="Détail de robe de mariée" class="w-full h-auto object-cover">
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-4 md:gap-8 text-xs uppercase tracking-widest font-light">
+        <span data-sg-path="services.tabs.0">01 Couples</span>
+        <span data-sg-path="services.tabs.1">02 Évasions</span>
+        <span data-sg-path="services.tabs.2">03 Mariages intimistes</span>
+        <span data-sg-path="services.tabs.3">04 Éditorial</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="bg-bark text-cream py-24 md:py-32">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      <div class="grid lg:grid-cols-2 gap-16 items-start">
+        <div>
+          <h2 class="font-serif text-4xl md:text-6xl mb-8">
+            <span data-sg-path="about.heading1">RENCONTREZ VOTRE</span><br>
+            <span data-sg-path="about.heading2">PHOTOGRAPHE</span>
+          </h2>
+          <div class="flex flex-col gap-6">
+            <p data-sg-path="about.paragraph1" class="font-light text-base md:text-lg leading-relaxed">
+              Salut, moi c’est Elise — amoureuse d’architecture, chasseuse de lumière et grande adepte des détours improvisés dans des ruelles inconnues. Je crois profondément à la magie des connexions humaines, et c’est cette énergie que j’apporte à chaque histoire d’amour que je photographie.
+            </p>
+            <p data-sg-path="about.paragraph2" class="font-light text-base md:text-lg leading-relaxed">
+              Je suis là pour les couples qui s’émerveillent dans les vieilles villes, qui préfèrent les ruines historiques aux salles bondées, et qui choisiraient une balade sur les pavés plutôt qu’une allée traditionnelle. Mon style mêle documentaire et éditorial, avec une attention particulière aux moments vrais et spontanés.
+            </p>
+            <ul class="mt-8 flex flex-col gap-4">
+              <li class="flex items-baseline gap-4"><span class="text-sm text-cream/50">01</span><a href="#" class="font-serif text-xl hover:opacity-70 transition-opacity">Faire ma connaissance</a></li>
+              <li class="flex items-baseline gap-4"><span class="text-sm text-cream/50">02</span><a href="#" class="font-serif text-xl hover:opacity-70 transition-opacity">Voir mon expérience + forfaits</a></li>
+              <li class="flex items-baseline gap-4"><span class="text-sm text-cream/50">03</span><a href="#" class="font-serif text-xl hover:opacity-70 transition-opacity">Parcourir mon portfolio</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <img data-sg-img="about.imageMain" src="../../../../public/_templates/wedding-fine-art/img/about-main.jpg" alt="Portrait d'Elise Maes" class="w-full h-auto object-cover">
+          <img data-sg-img="about.imageDetail" src="../../../../public/_templates/wedding-fine-art/img/about-detail.jpg" alt="Détail de mains" class="w-full h-auto object-cover">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="bg-cream py-24 md:py-32">
+    <div class="max-w-4xl mx-auto px-6 lg:px-12 text-center">
+      <span class="text-xs uppercase tracking-[0.2em] text-ink/60">Témoignages</span>
+      <blockquote class="font-serif text-2xl md:text-4xl italic mt-8 leading-relaxed">
+        <p data-sg-path="testimonials.0.quote">« Elise a su capturer l’essence même de notre journée. En regardant les photos, c’est comme revivre chaque émotion, chaque instant. La lumière, l’ambiance, les moments discrets… Tout a été immortalisé avec une telle justesse. Nous n’aurions pas pu rêver d’une meilleure conteuse pour notre histoire. »</p>
+        <footer class="mt-8 font-light text-base not-italic" data-sg-path="testimonials.0.couple">— Sophie + Marc</footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-ink py-24 md:py-32">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div class="text-cream">
+          <h2 class="font-serif text-4xl md:text-6xl">
+            <span data-sg-path="cta.heading1">PARTONS À L’AVENTURE</span><br>
+            <span data-sg-path="cta.heading2">DE VOTRE AMOUR</span>
+          </h2>
+          <a href="#" data-sg-path="cta.button" class="inline-block bg-cream text-ink px-8 py-3 mt-8 uppercase tracking-widest text-sm font-light hover:bg-opacity-80 transition-colors">Contactez-moi</a>
+        </div>
+        <img data-sg-img="cta.image" src="../../../../public/_templates/wedding-fine-art/img/cta.jpg" alt="Couple dans un champ au coucher de soleil" class="w-full h-auto object-cover">
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="bg-cream py-24 md:py-32">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <img data-sg-img="gallery.0.image" src="../../../../public/_templates/wedding-fine-art/img/ig1.jpg" alt="Galerie Instagram 1" class="w-full h-auto object-cover aspect-square">
+        <img data-sg-img="gallery.1.image" src="../../../../public/_templates/wedding-fine-art/img/ig2.jpg" alt="Galerie Instagram 2" class="w-full h-auto object-cover aspect-square">
+        <img data-sg-img="gallery.2.image" src="../../../../public/_templates/wedding-fine-art/img/ig3.jpg" alt="Galerie Instagram 3" class="w-full h-auto object-cover aspect-square">
+        <img data-sg-img="gallery.3.image" src="../../../../public/_templates/wedding-fine-art/img/ig4.jpg" alt="Galerie Instagram 4" class="w-full h-auto object-cover aspect-square">
+        <img data-sg-img="gallery.4.image" src="../../../../public/_templates/wedding-fine-art/img/ig5.jpg" alt="Galerie Instagram 5" class="w-full h-auto object-cover aspect-square">
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="bg-cream py-24 md:py-32">
+    <div class="max-w-4xl mx-auto px-6 lg:px-12">
+      <div class="text-center mb-16">
+        <span class="text-xs uppercase tracking-[0.2em] text-ink/60">Questions fréquentes</span>
+        <h2 class="font-serif text-4xl md:text-6xl mt-4">VOUS VOUS DEMANDEZ ?</h2>
+      </div>
+      <div class="space-y-4" id="faq-accordion">
+        <div class="faq-item border-b border-ink/10 pb-4">
+          <button class="faq-question w-full flex justify-between items-center text-left font-serif text-xl py-4">
+            <span>Comment se déroule une séance photo ?</span>
+            <span class="faq-icon text-2xl">+</span>
+          </button>
+          <div class="faq-answer hidden font-light leading-relaxed pb-4">
+            Chaque séance est unique et s’adapte à votre histoire. Nous commençons par un échange pour comprendre vos envies, puis je vous guide naturellement pour capturer des moments authentiques. Que ce soit en ville, en nature ou dans un lieu chargé d’histoire, l’objectif est de créer des images qui vous ressemblent.
+          </div>
+        </div>
+        <div class="faq-item border-b border-ink/10 pb-4">
+          <button class="faq-question w-full flex justify-between items-center text-left font-serif text-xl py-4">
+            <span>Quelle est votre zone d’intervention ?</span>
+            <span class="faq-icon text-2xl">+</span>
+          </button>
+          <div class="faq-answer hidden font-light leading-relaxed pb-4">
+            Basée à Bruxelles, je me déplace partout en Belgique et à l’international. Les voyages font partie de l’aventure — n’hésitez pas à me contacter pour discuter de votre projet, où qu’il se trouve.
+          </div>
+        </div>
+        <div class="faq-item border-b border-ink/10 pb-4">
+          <button class="faq-question w-full flex justify-between items-center text-left font-serif text-xl py-4">
+            <span>Combien de temps faut-il pour recevoir les photos ?</span>
+            <span class="faq-icon text-2xl">+</span>
+          </button>
+          <div class="faq-answer hidden font-light leading-relaxed pb-4">
+            Le délai de livraison varie selon le type de prestation, mais je m’engage à vous envoyer une première sélection sous 4 à 6 semaines. Chaque image est retouchée avec soin pour sublimer votre histoire.
+          </div>
+        </div>
+        <div class="faq-item border-b border-ink/10 pb-4">
+          <button class="faq-question w-full flex justify-between items-center text-left font-serif text-xl py-4">
+            <span>Proposez-vous des forfaits sur mesure ?</span>
+            <span class="faq-icon text-2xl">+</span>
+          </button>
+          <div class="faq-answer hidden font-light leading-relaxed pb-4">
+            Absolument. Je crée des forfaits personnalisés pour chaque couple, en fonction de vos besoins et de votre budget. Que vous souhaitiez une couverture complète de votre mariage ou une séance photo intimiste, parlons-en pour concevoir une offre qui vous correspond.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-sand py-16">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      <div class="grid md:grid-cols-2 gap-8 mb-12">
+        <div>
+          <p data-sg-path="tagline" class="font-light text-base leading-relaxed">
+            Évasions romantiques et mariages intimistes. Basée à Bruxelles, Belgique. Disponible où que vous soyez.
+          </p>
+          <p class="font-light text-base mt-4">
+            <span data-sg-path="location">50.8503° N, 4.3517° E</span> — <span data-sg-path="locationLabel">Bruxelles, BE</span>
+          </p>
+        </div>
+        <div class="flex flex-col items-start md:items-end gap-4">
+          <div class="flex gap-6 text-sm uppercase tracking-widest font-light">
+            <a href="#" data-sg-path="nav.0" class="hover:opacity-70 transition-opacity">Instagram</a>
+            <a href="#" data-sg-path="nav.1" class="hover:opacity-70 transition-opacity">Pinterest</a>
+            <a href="#" data-sg-path="nav.2" class="hover:opacity-70 transition-opacity">Tiktok</a>
+            <a href="#" data-sg-path="nav.3" class="hover:opacity-70 transition-opacity">Journal</a>
+          </div>
+          <a href="#" class="text-sm uppercase tracking-widest font-light hover:opacity-70 transition-opacity" data-sg-path="instagram">@ELISEMAESPHOTO</a>
+        </div>
+      </div>
+      <div class="border-t border-ink/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs uppercase tracking-widest font-light text-ink/60">
+        <span data-sg-path="copyright">© ELISE MAES 2026 | MENTIONS LÉGALES</span>
+        <span class="mt-4 md:mt-0">Propulsé par Akyra</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT FOR FAQ ACCORDION -->
+  <script>
+    (function() {
+      const accordion = document.getElementById('faq-accordion');
+      if (!accordion) return;
+
+      accordion.addEventListener('click', function(e) {
+        const question = e.target.closest('.faq-question');
+        if (!question) return;
+
+        const item = question.parentElement;
+        const answer = item.querySelector('.faq-answer');
+        const icon = question.querySelector('.faq-icon');
+
+        if (answer.classList.contains('hidden')) {
+          answer.classList.remove('hidden');
+          item.classList.add('open');
+          icon.textContent = '−';
+        } else {
+          answer.classList.add('hidden');
+          item.classList.remove('open');
+          icon.textContent = '+';
+        }
+      });
+    })();
+
+    // Pinned Scroll Script
+    (function(){
+      var sec=document.querySelector('.sel-pin'); if(!sec) return;
+      var imgs=sec.querySelectorAll('[data-sel-img]'), items=sec.querySelectorAll('[data-sel-item]'), n=items.length, cur=-1;
+      function update(){
+        var top=sec.getBoundingClientRect().top, total=sec.offsetHeight-window.innerHeight;
+        if(total<=0) return;
+        var prog=Math.min(Math.max(-top/total,0),0.9999), idx=Math.floor(prog*n);
+        if(idx===cur) return; cur=idx;
+        imgs.forEach(function(im,i){ im.style.opacity=(i===idx)?'1':'0'; });
+        items.forEach(function(it,i){ it.style.opacity=(i===idx)?'1':'0.3'; });
+      }
+      window.addEventListener('scroll',update,{passive:true});
+      window.addEventListener('resize',update); update();
+    })();
+  </script>
+
+</body>
+</html>
