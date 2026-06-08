@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumière Studio | Photographe Mariage & Portrait éditorial</title>
+    <meta name="description" content="Photographe de mariage et portrait haut de gamme — lumière naturelle, émotion et narration intemporelle.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+    <style>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#050505',
+                        black: '#000000',
+                        cream: '#F5F1EC',
+                        blue: '#0000EE',
+                        gold: '#C1A55F',
+                        muted: '#5C5C5C'
+                    },
+                    fontFamily: {
+                        serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+                        sans: ['"Archivo"', 'Inter', 'Arial', 'sans-serif']
+                    },
+                    letterSpacing: {
+                        wide2: '0.2em',
+                    },
+                }
+            }
+        };
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Archivo', Inter, Arial, sans-serif;
+            background: #F5F1EC;
+            color: #050505;
+            margin: 0;
+        }
+        .font-serif {
+            font-family: '"Instrument Serif"', Georgia, serif;
+        }
+        .btn-line {
+            transition: background-color .4s ease, color .4s ease, border-color .4s ease;
+        }
+    </style>
+</head>
+<body class="bg-cream">
+
+    <!-- HEADER -->
+    <nav class="fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-6 flex items-center justify-between mix-blend-difference text-white" data-anim="fade">
+        <div class="flex items-center gap-8 text-[11px] tracking-wide2 uppercase font-medium">
+            <a href="#home" data-sg-path="nav[0]" class="hover:opacity-70 transition-opacity">Accueil</a>
+            <a href="#about" data-sg-path="nav[1]" class="hover:opacity-70 transition-opacity">À propos</a>
+        </div>
+        <a href="#" data-sg-path="brand" class="font-serif text-2xl md:text-3xl tracking-wide">Lumière</a>
+        <div class="flex items-center gap-8 text-[11px] tracking-wide2 uppercase font-medium">
+            <a href="#services" data-sg-path="nav[2]" class="hover:opacity-70 transition-opacity">Services</a>
+            <a href="#portfolio" data-sg-path="nav[3]" class="hover:opacity-70 transition-opacity">Portfolio</a>
+            <a href="#journal" data-sg-path="nav[4]" class="hover:opacity-70 transition-opacity">Journal</a>
+            <a href="#contact" data-sg-path="nav[5]" class="hover:opacity-70 transition-opacity">Contact</a>
+        </div>
+    </nav>
+
+    <header id="home" class="relative h-screen min-h-[640px] w-full overflow-hidden bg-ink">
+        <img data-sg-img="hero.image" src="../../../../public/_templates/wedding-warm/img/hero.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-black/25"></div>
+        <div class="relative z-10 h-full flex flex-col justify-end px-6 md:px-12 pb-16 md:pb-24 max-w-3xl">
+            <h1 class="font-serif text-white leading-[0.95] text-5xl sm:text-7xl md:text-8xl" data-anim="fade">
+                <span class="block" data-sg-path="hero.title1">Capturer Vos</span>
+                <span class="block" data-sg-path="hero.title2">Instants Précieux</span>
+            </h1>
+            <p data-sg-path="hero.tagline" class="text-white/90 text-sm max-w-xs leading-relaxed mt-6" data-anim="fade" data-anim-delay="200">Des moments saisis avec intention, lumière et une narration intemporelle.</p>
+            <a href="#services" data-sg-path="hero.cta" class="btn-line self-start mt-6 border border-white/60 text-white text-[11px] tracking-wide2 uppercase px-7 py-4 hover:bg-white hover:text-ink" data-anim="fade" data-anim-delay="400">Voir les services</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- ABOUT SECTION -->
+        <section id="about" class="px-6 md:px-12 py-24">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex justify-between items-center mb-12">
+                    <span class="text-sm tracking-wide2 uppercase" data-sg-path="about.label" data-anim="fade">À propos</span>
+                    <a href="#" class="btn-line border border-ink text-ink text-[11px] tracking-wide2 uppercase px-6 py-3 hover:bg-ink hover:text-cream" data-sg-path="about.cta" data-anim="fade">En savoir plus</a>
+                </div>
+                <div class="grid md:grid-cols-2 gap-12 md:gap-24 items-start">
+                    <div data-anim="fade" data-anim-delay="200">
+                        <h2 class="font-serif text-4xl md:text-5xl leading-tight mb-8" data-sg-path="about.heading">Bonjour, ici Camille !</h2>
+                        <div class="space-y-6 text-base leading-relaxed">
+                            <p data-sg-path="about.paragraphs[0]">Chasseuse de lumière et gardienne de souvenirs, attirée par l'entre-deux. Mon travail prend racine dans l'émotion, dans la magie tranquille du quotidien — la peau baignée de soleil, le lin qui ondule sous la brise, une main tenue une seconde de trop.</p>
+                            <p data-sg-path="about.paragraphs[1]">Une approche douce, naturelle et sincère pour révéler qui vous êtes vraiment.</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="../../../../public/_templates/wedding-warm/img/about-portrait.jpg" alt="Portrait de Camille" class="w-full h-auto object-cover" data-sg-img="about.portrait" data-anim="fade" data-anim-delay="400">
+                        <img src="../../../../public/_templates/wedding-warm/img/about-detail.jpg" alt="Détail d'une photo" class="w-full h-auto object-cover mt-8" data-sg-img="about.detail" data-anim="fade" data-anim-delay="600">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES SECTION -->
+        <section id="services" class="px-6 md:px-12 py-24">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex justify-between items-center mb-12">
+                    <span class="text-sm tracking-wide2 uppercase" data-sg-path="services.label" data-anim="fade">Services</span>
+                    <a href="#" class="btn-line border border-ink text-ink text-[11px] tracking-wide2 uppercase px-6 py-3 hover:bg-ink hover:text-cream" data-sg-path="services.cta" data-anim="fade">Voir les services</a>
+                </div>
+                <p class="text-lg max-w-2xl mb-20" data-sg-path="services.intro" data-anim="fade">Je propose une gamme de prestations photographiques, capturant les moments qui comptent le plus pour vous.</p>
+
+                <div class="space-y-24">
+                    <!-- Service 1 -->
+                    <div class="grid md:grid-cols-2 gap-12 md:gap-24 items-center">
+                        <div data-anim="fade" data-anim-delay="200">
+                            <h3 class="font-serif text-3xl md:text-4xl mb-4" data-sg-path="services.items[0].title">Couverture Mariage</h3>
+                            <p class="text-base leading-relaxed mb-6" data-sg-path="services.items[0].desc">Le jour du mariage n'est pas une suite de moments à capturer — c'est un sentiment à ressentir. Je documente la journée comme un fil rouge intime, de la lumière du matin jusqu'à la dernière danse.</p>
+                            <a href="#" class="btn-line border border-ink text-ink text-[11px] tracking-wide2 uppercase px-6 py-3 hover:bg-ink hover:text-cream" data-sg-path="services.items[0].cta">En savoir plus</a>
+                        </div>
+                        <div class="flex gap-2 overflow-hidden" data-anim="fade" data-anim-delay="400">
+                            <img src="../../../../public/_templates/wedding-warm/img/wed1.jpg" alt="Mariage 1" class="w-1/5 object-cover">
+                            <img src="../../../../public/_templates/wedding-warm/img/wed2.jpg" alt="Mariage 2" class="w-1/5 object-cover">
+                            <img src="../../../../public/_templates/wedding-warm/img/wed3.jpg" alt="Mariage 3" class="w-1/5 object-cover">
+                            <img src="../../../../public/_templates/wedding-warm/img/wed4.jpg" alt="Mariage 4" class="w-1/5 object-cover">
+                            <img src="../../../../public/_templates/wedding-warm/img/wed5.jpg" alt="Mariage 5" class="w-1/5 object-cover">
+                        </div>
+                    </div>
+                    <!-- Service 2 -->
+                    <div class="grid md:grid-cols-2 gap-12 md:gap-24 items-center">
+                        <div class="flex gap-2 overflow-hidden order-2 md:order-1" data-anim="fade" data-anim-delay="200">
+                            <img src="../../../../public/_templates/wedding-warm/img/por1.jpg" alt="Portrait 1" class="w-1/5 object-cover">
+                            <img src="../../../../public/_templates/wedding-warm/img/por2.jpg" alt="Portrait 2" class="w-1/5 object-cover">
+                            <img src="../../../../public/_templates/wedding-warm/img/por3.jpg" alt="Portrait 3" class="w-1/5 object-cover">
+                            <img src="../../../../public/_templates/wedding-warm/img/por4.jpg" alt="Portrait 4" class="w-1/5 object-cover">
+                            <img src="../../../../public/_templates/wedding-warm/img/por5.jpg" alt="Portrait 5" class="w-1/5 object-cover">
+                        </div>
+                        <div class="order-1 md:order-2" data-anim="fade" data-anim-delay="400">
+                            <h3 class="font-serif text-3xl md:text-4xl mb-4" data-sg-path="services.items[1].title">Portrait & Mariée</h3>
+                            <p class="text-base leading-relaxed mb-6" data-sg-path="services.items[1].desc">Certaines saisons de la vie méritent d'être documentées. Que vous marquiez une étape ou souhaitiez simplement des images sincères — une séance baignée d'une lumière naturelle, douce et sans pose.</p>
+                            <a href="#" class="btn-line border border-ink text-ink text-[11px] tracking-wide2 uppercase px-6 py-3 hover:bg-ink hover:text-cream" data-sg-path="services.items[1].cta">En savoir plus</a>
+                        </div>
+                    </div>
+                    <!-- Service 3 -->
+                    <div class="grid md:grid-cols-2 gap-12 md:gap-24 items-center">
+                        <div data-anim="fade" data-anim-delay="200">
+                            <h3 class="font-serif text-3xl md:text-4xl mb-4" data-sg-path="services.items[2].title">Éditorial & Marque</h3>
+                            <p class="text-base leading-relaxed mb-6" data-sg-path="services.items[2].desc">Une étude de lumière, de silhouette et de calme. Ces séances mêlent émotion et précision éditoriale — élégantes, intemporelles, pensées pour respirer.</p>
+                            <a href="#" class="btn-line border border-ink text-ink text-[11px] tracking-wide2 uppercase px-6 py-3 hover:bg-ink hover:text-cream" data-sg-path="services.items[2].cta">En savoir plus</a>
+                        </div>
+                        <div class="flex gap-2 overflow-hidden" data-anim="fade" data-anim-delay="400">
+                            <img src="../../../../public/_templates/wedding-warm/img/edi1.jpg" alt="Éditorial 1" class="w-1/5 object-cover">
+                            <img src="../../../../public/_templates/wedding-warm/img/edi2.jpg" alt="Éditorial 2" class="w-1/5 object-cover">
+                            <img src="../../../../public/_templates/wedding-warm/img/edi3.jpg" alt="Éditorial 3" class="w-1/5 object-cover">
+                            <img src="../../../../public/_templates/wedding-warm/img/edi4.jpg" alt="Éditorial 4" class="w-1/5 object-cover">
+                            <img src="../../../../public/_templates/wedding-warm/img/edi5.jpg" alt="Éditorial 5" class="w-1/5 object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PORTFOLIO SECTION -->
+        <section id="portfolio" class="px-6 md:px-12 py-24">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex justify-between items-center mb-12">
+                    <div data-anim="fade">
+                        <h2 class="font-serif text-4xl md:text-5xl" data-sg-path="portfolio.heading">Travaux Choisis</h2>
+                        <p class="text-lg mt-2" data-sg-path="portfolio.intro">Parcourez une collection curée de moments qui ont trouvé leur place dans le cœur de mes clients.</p>
+                    </div>
+                    <a href="#" class="btn-line border border-ink text-ink text-[11px] tracking-wide2 uppercase px-6 py-3 hover:bg-ink hover:text-cream" data-sg-path="portfolio.cta" data-anim="fade">Voir le portfolio</a>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="relative group" data-anim="fade" data-anim-delay="200">
+                        <img src="../../../../public/_templates/wedding-warm/img/work1.jpg" alt="Séance Mariée" class="w-full h-auto object-cover" data-sg-img="portfolio.works[0].image">
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <span class="text-xs tracking-wide2 uppercase" data-sg-path="portfolio.works[0].index">01</span>
+                            <h3 class="font-serif text-2xl" data-sg-path="portfolio.works[0].title">Séance Mariée</h3>
+                            <p class="text-xs tracking-wide2 uppercase" data-sg-path="portfolio.works[0].category">Mariage</p>
+                        </div>
+                    </div>
+                    <div class="relative group" data-anim="fade" data-anim-delay="400">
+                        <img src="../../../../public/_templates/wedding-warm/img/work2.jpg" alt="Élopement" class="w-full h-auto object-cover" data-sg-img="portfolio.works[1].image">
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <span class="text-xs tracking-wide2 uppercase" data-sg-path="portfolio.works[1].index">02</span>
+                            <h3 class="font-serif text-2xl" data-sg-path="portfolio.works[1].title">Élopement</h3>
+                            <p class="text-xs tracking-wide2 uppercase" data-sg-path="portfolio.works[1].category">Mariage</p>
+                        </div>
+                    </div>
+                    <div class="relative group" data-anim="fade" data-anim-delay="600">
+                        <img src="../../../../public/_templates/wedding-warm/img/work3.jpg" alt="Éditorial" class="w-full h-auto object-cover" data-sg-img="portfolio.works[2].image">
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <span class="text-xs tracking-wide2 uppercase" data-sg-path="portfolio.works[2].index">03</span>
+                            <h3 class="font-serif text-2xl" data-sg-path="portfolio.works[2].title">Éditorial</h3>
+                            <p class="text-xs tracking-wide2 uppercase" data-sg-path="portfolio.works[2].category">Événements de prestige</p>
+                        </div>
+                    </div>
+                    <div class="relative group" data-anim="fade" data-anim-delay="800">
+                        <img src="../../../../public/_templates/wedding-warm/img/work4.jpg" alt="Sienna & Matteo" class="w-full h-auto object-cover" data-sg-img="portfolio.works[3].image">
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <span class="text-xs tracking-wide2 uppercase" data-sg-path="portfolio.works[3].index">04</span>
+                            <h3 class="font-serif text-2xl" data-sg-path="portfolio.works[3].title">Sienna & Matteo</h3>
+                            <p class="text-xs tracking-wide2 uppercase" data-sg-path="portfolio.works[3].category">Mariage</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS SECTION -->
+        <section class="px-6 md:px-12 py-24">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex justify-between items-center mb-12">
+                    <span class="text-sm tracking-wide2 uppercase" data-sg-path="testimonials.label" data-anim="fade">Avis clients</span>
+                </div>
+                <div class="grid md:grid-cols-2 gap-12 md:gap-24 items-center">
+                    <div data-anim="fade" data-anim-delay="200">
+                        <h2 class="font-serif text-4xl md:text-5xl mb-4" data-sg-path="testimonials.heading">Mots de Clients</h2>
+                        <p class="text-lg mb-8" data-sg-path="testimonials.intro">Voici ce que les couples disent de notre collaboration. Des moments réels, des expériences réelles, des retours sincères.</p>
+                        <blockquote class="text-xl italic leading-relaxed" data-sg-path="testimonials.items[0].quote" data-anim="fade" data-anim-delay="400">
+                            « Camille était présente exactement quand il le fallait, et discrète quand cela comptait le plus. Notre galerie nous a fait pleurer plus d'une fois avant même d'avoir fini de la regarder. »
+                        </blockquote>
+                        <p class="mt-6 text-sm tracking-wide2 uppercase" data-sg-path="testimonials.items[0].name" data-anim="fade" data-anim-delay="600">Claire & Antoine</p>
+                    </div>
+                    <div data-anim="fade" data-anim-delay="800">
+                        <img src="../../../../public/_templates/wedding-warm/img/testimonial.jpg" alt="Photo de témoignage" class="w-full h-auto object-cover" data-sg-img="testimonials.image">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ SECTION -->
+        <section class="px-6 md:px-12 py-24">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex justify-between items-start mb-12">
+                    <div data-anim="fade">
+                        <h2 class="font-serif text-4xl md:text-5xl" data-sg-path="faq.heading">Questions</h2>
+                        <p class="text-lg mt-2" data-sg-path="faq.intro">Vous avez besoin de réponses utiles pour comprendre comment se déroule la collaboration ? C'est simple.</p>
+                    </div>
+                    <a href="#contact" class="btn-line border border-ink text-ink text-[11px] tracking-wide2 uppercase px-6 py-3 hover:bg-ink hover:text-cream" data-sg-path="faq.cta" data-anim="fade">Poser une question</a>
+                </div>
+                <div class="space-y-4" id="faq-accordion">
+                    <div class="faq-item border-b border-ink/20 py-6" data-anim="fade" data-anim-delay="200">
+                        <button class="faq-question w-full flex justify-between items-center text-left">
+                            <span class="font-serif text-xl" data-sg-path="faq.items[0].q">Combien de temps à l'avance faut-il réserver ?</span>
+                            <span class="faq-icon text-2xl font-light">+</span>
+                        </button>
+                        <div class="faq-answer hidden mt-4 text-base leading-relaxed">
+                            <p data-sg-path="faq.items[0].a">Je réserve généralement 6 à 9 mois à l'avance pour les portraits, et 8 à 12 mois pour les mariages. Cela dit, je garde toujours quelques créneaux de dernière minute quand mon agenda le permet.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item border-b border-ink/20 py-6" data-anim="fade" data-anim-delay="400">
+                        <button class="faq-question w-full flex justify-between items-center text-left">
+                            <span class="font-serif text-xl" data-sg-path="faq.items[1].q">Vous déplacez-vous ?</span>
+                            <span class="faq-icon text-2xl font-light">+</span>
+                        </button>
+                        <div class="faq-answer hidden mt-4 text-base leading-relaxed">
+                            <p data-sg-path="faq.items[1].a">Oui, avec plaisir. Je photographie partout en France et à l'étranger. Les frais de déplacement sont précisés dès le devis.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item border-b border-ink/20 py-6" data-anim="fade" data-anim-delay="600">
+                        <button class="faq-question w-full flex justify-between items-center text-left">
+                            <span class="font-serif text-xl" data-sg-path="faq.items[2].q">Pouvez-vous nous aider à planifier le déroulé ?</span>
+                            <span class="faq-icon text-2xl font-light">+</span>
+                        </button>
+                        <div class="faq-answer hidden mt-4 text-base leading-relaxed">
+                            <p data-sg-path="faq.items[2].a">Absolument. Avant le grand jour, je partage un questionnaire complet et un planning indicatif pour que la lumière soit toujours de votre côté.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item border-b border-ink/20 py-6" data-anim="fade" data-anim-delay="800">
+                        <button class="faq-question w-full flex justify-between items-center text-left">
+                            <span class="font-serif text-xl" data-sg-path="faq.items[3].q">Que faut-il porter pour une séance ?</span>
+                            <span class="faq-icon text-2xl font-light">+</span>
+                        </button>
+                        <div class="faq-answer hidden mt-4 text-base leading-relaxed">
+                            <p data-sg-path="faq.items[3].a">Privilégiez des matières naturelles et des tons neutres. Je vous envoie un guide de style personnalisé après réservation.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item border-b border-ink/20 py-6" data-anim="fade" data-anim-delay="1000">
+                        <button class="faq-question w-full flex justify-between items-center text-left">
+                            <span class="font-serif text-xl" data-sg-path="faq.items[4].q">Quand recevons-nous nos images ?</span>
+                            <span class="faq-icon text-2xl font-light">+</span>
+                        </button>
+                        <div class="faq-answer hidden mt-4 text-base leading-relaxed">
+                            <p data-sg-path="faq.items[4].a">Comptez 2 à 3 semaines pour une séance portrait, et 8 à <span data-count="10" data-count-suffix=" semaines" data-count-decimals="0">0</span> pour une galerie de mariage complète et soigneusement éditée.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item border-b border-ink/20 py-6" data-anim="fade" data-anim-delay="1200">
+                        <button class="faq-question w-full flex justify-between items-center text-left">
+                            <span class="font-serif text-xl" data-sg-path="faq.items[5].q">Et si la météo ne coopère pas ?</span>
+                            <span class="faq-icon text-2xl font-light">+</span>
+                        </button>
+                        <div class="faq-answer hidden mt-4 text-base leading-relaxed">
+                            <p data-sg-path="faq.items[5].a">La lumière douce d'un ciel couvert est souvent la plus flatteuse. En cas de pluie, nous prévoyons une alternative en intérieur ou reprogrammons sans frais.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOURNAL SECTION -->
+        <section id="journal" class="px-6 md:px-12 py-24">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex justify-between items-center mb-12">
+                    <div data-anim="fade">
+                        <h2 class="font-serif text-4xl md:text-5xl" data-sg-path="journal.heading">Journal</h2>
+                        <p class="text-lg mt-2" data-sg-path="journal.intro">Curieux de ce qui se cache derrière une séance réussie ? Découvrez mes derniers conseils et coulisses.</p>
+                    </div>
+                    <a href="#" class="btn-line border border-ink text-ink text-[11px] tracking-wide2 uppercase px-6 py-3 hover:bg-ink hover:text-cream" data-sg-path="journal.cta" data-anim="fade">Voir les articles</a>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="group" data-anim="fade" data-anim-delay="200">
+                        <img src="../../../../public/_templates/wedding-warm/img/journal1.jpg" alt="Article 1" class="w-full h-auto object-cover mb-4" data-sg-img="journal.posts[0].image">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-serif text-2xl" data-sg-path="journal.posts[0].title">Comment choisir le photographe de mariage idéal</h3>
+                            <span class="text-xs tracking-wide2 uppercase" data-sg-path="journal.posts[0].tag">Mariage</span>
+                        </div>
+                        <p class="text-xs tracking-wide2 uppercase mt-2" data-sg-path="journal.posts[0].date">2 MARS 2026</p>
+                    </div>
+                    <div class="group" data-anim="fade" data-anim-delay="400">
+                        <img src="../../../../public/_templates/wedding-warm/img/journal2.jpg" alt="Article 2" class="w-full h-auto object-cover mb-4" data-sg-img="journal.posts[1].image">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-serif text-2xl" data-sg-path="journal.posts[1].title">Diana & Wayne — un mariage au bord du lac à Marseille</h3>
+                            <span class="text-xs tracking-wide2 uppercase" data-sg-path="journal.posts[1].tag">Mariage</span>
+                        </div>
+                        <p class="text-xs tracking-wide2 uppercase mt-2" data-sg-path="journal.posts[1].date">11 FÉV. 2026</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA SECTION -->
+        <section id="contact" class="px-6 md:px-12 py-24">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-12 md:gap-24 items-center">
+                    <div data-anim="fade" data-anim-delay="200">
+                        <h2 class="font-serif text-4xl md:text-5xl mb-4" data-sg-path="cta.heading">On Commence ?</h2>
+                        <p class="text-lg mb-8" data-sg-path="cta.intro">J'adorerais travailler avec vous. Pour préserver une source d'inspiration constante, j'accepte un nombre limité de collaborations chaque année. Écrivez-moi pour réserver votre date.</p>
+                        <a href="#" class="btn-line border border-gold text-gold text-[11px] tracking-wide2 uppercase px-7 py-4 hover:bg-gold hover:text-cream" data-sg-path="cta.button">Prendre contact</a>
+                    </div>
+                    <div data-anim="fade" data-anim-delay="400">
+                        <img src="../../../../public/_templates/wedding-warm/img/cta.jpg" alt="Contact" class="w-full h-auto object-cover" data-sg-img="cta.image">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-ink text-white px-6 md:px-12 py-24">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 mb-16">
+                <div>
+                    <h2 class="font-serif text-4xl md:text-5xl mb-4" data-sg-path="brand">Lumière</h2>
+                    <p class="text-sm text-muted mb-8" data-sg-path="brandTag">(PHOTOGRAPHE)</p>
+                    <div class="flex gap-8 text-sm">
+                        <a href="mailto:bonjour@lumiere-studio.fr" class="hover:opacity-70 transition-opacity" data-sg-path="footer.email">bonjour@lumiere-studio.fr</a>
+                        <a href="tel:+33612345678" class="hover:opacity-70 transition-opacity" data-sg-path="footer.phone">+33 6 12 34 56 78</a>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-8">
+                    <div>
+                        <ul class="space-y-3 text-sm">
+                            <li><a href="#" class="hover:opacity-70 transition-opacity" data-sg-path="footer.nav[0]">Accueil</a></li>
+                            <li><a href="#about" class="hover:opacity-70 transition-opacity" data-sg-path="footer.nav[1]">À propos</a></li>
+                            <li><a href="#services" class="hover:opacity-70 transition-opacity" data-sg-path="footer.nav[2]">Services</a></li>
+                            <li><a href="#portfolio" class="hover:opacity-70 transition-opacity" data-sg-path="footer.nav[3]">Portfolio</a></li>
+                            <li><a href="#journal" class="hover:opacity-70 transition-opacity" data-sg-path="footer.nav[4]">Journal</a></li>
+                            <li><a href="#contact" class="hover:opacity-70 transition-opacity" data-sg-path="footer.nav[5]">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul class="space-y-3 text-sm">
+                            <li><a href="#" class="hover:opacity-70 transition-opacity" data-sg-path="footer.socials[0]">Instagram</a></li>
+                            <li><a href="#" class="hover:opacity-70 transition-opacity" data-sg-path="footer.socials[1]">Pinterest</a></li>
+                            <li><a href="#" class="hover:opacity-70 transition-opacity" data-sg-path="footer.socials[2]">Facebook</a></li>
+                            <li><a href="#" class="hover:opacity-70 transition-opacity" data-sg-path="footer.socials[3]">LinkedIn</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-muted">
+                <div class="flex gap-6 mb-4 md:mb-0">
+                    <a href="#" class="hover:opacity-70 transition-opacity" data-sg-path="footer.legal[0]">Confidentialité</a>
+                    <a href="#" class="hover:opacity-70 transition-opacity" data-sg-path="footer.legal[1]">Conditions générales</a>
+                    <a href="#" class="hover:opacity-70 transition-opacity" data-sg-path="footer.legal[2]">Cookies</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span data-sg-path="footer.copyright">© 2026 Lumière Studio</span>
+                    <span>Propulsé par <a href="#" class="hover:opacity-70 transition-opacity">Akyra</a></span>
+                </div>
+            </div>
+            <div class="mt-12">
+                <img src="../../../../public/_templates/wedding-warm/img/footer.jpg" alt="Signature visuelle" class="w-full h-24 object-cover opacity-20" data-sg-img="footer.image">
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Accordion
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+                const icon = item.querySelector('.faq-icon');
+
+                question.addEventListener('click', () => {
+                    const isOpen = !answer.classList.contains('hidden');
+
+                    if (isOpen) {
+                        answer.classList.add('hidden');
+                        icon.textContent = '+';
+                    } else {
+                        answer.classList.remove('hidden');
+                        icon.textContent = '−';
+                    }
+                });
+            });
+        });
+    </script>
+
+<!-- ═══ AKYRA MOTION KIT — animations partagées (vanilla, sans dépendance, respecte prefers-reduced-motion) ═══ -->
+<style>
+  [data-anim]{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+  [data-anim="fade"]{transform:none}
+  [data-anim="left"]{transform:translateX(-26px)}
+  [data-anim="right"]{transform:translateX(26px)}
+  [data-anim="scale"]{transform:scale(.96)}
+  [data-anim].in{opacity:1!important;transform:none!important}
+  /* Apparition du texte mot à mot */
+  .anim-words .w{display:inline-block;opacity:0;transform:translateY(0.5em);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .anim-words.in .w{opacity:1;transform:none}
+  /* Galerie accordéon : au survol, la vignette s'élargit, les autres se rétractent (CSS pur) */
+  .gallery-expand{display:flex}
+  .gallery-expand>.gx{flex:1 1 0;min-width:0;overflow:hidden;transition:flex-grow .7s cubic-bezier(.16,1,.3,1)}
+  .gallery-expand>.gx img{width:100%;height:100%;object-fit:cover}
+  @media (hover:hover){
+    .gallery-expand:hover>.gx{flex-grow:.6}
+    .gallery-expand>.gx:hover{flex-grow:3}
+  }
+  @media (prefers-reduced-motion:reduce){[data-anim],.anim-words .w{opacity:1!important;transform:none!important;transition:none!important}.gallery-expand>.gx{transition:none}}
+</style>
+<script>
+(function(){
+  var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var IO = 'IntersectionObserver' in window;
+
+  // 1) Révélation au scroll des éléments [data-anim] (stagger via data-anim-delay en ms)
+  var reveals = document.querySelectorAll('[data-anim]');
+  function showReveal(el){
+    var d = parseInt(el.getAttribute('data-anim-delay')||'0',10);
+    if(d) setTimeout(function(){el.classList.add('in')}, d); else el.classList.add('in');
+  }
+  if(RM || !IO){ reveals.forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioR = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ showReveal(en.target); ioR.unobserve(en.target);} });
+    },{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(function(e){ ioR.observe(e); });
+  }
+
+  // 2) Texte mot à mot : <h1 class="anim-words">…</h1>.
+  //    Découpe DOM-SAFE : on n'enveloppe QUE les nœuds texte (les balises internes
+  //    — dégradés, pilules — sont préservées intactes, jamais transformées en texte).
+  document.querySelectorAll('.anim-words').forEach(function(el){
+    if(el.dataset.split) return; el.dataset.split='1';
+    // Garde-fou : si le titre contient des balises internes (dégradé, pilule…),
+    // on NE découpe PAS (sinon dégradé cassé / mots invisibles) — il reste intact.
+    if(el.children.length > 0){ el.classList.remove('anim-words'); return; }
+    var wi = 0, textNodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    while(walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(function(tn){
+      if(!tn.nodeValue || !tn.nodeValue.trim()) return;
+      var frag = document.createDocumentFragment();
+      tn.nodeValue.split(/(\s+)/).forEach(function(part){
+        if(part === '') return;
+        if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+        var s = document.createElement('span'); s.className='w'; s.textContent=part;
+        s.style.transitionDelay=((wi++)*45)+'ms'; frag.appendChild(s);
+      });
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  });
+  if(RM || !IO){ document.querySelectorAll('.anim-words').forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioW = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ioW.unobserve(en.target);} });
+    },{threshold:0.25});
+    document.querySelectorAll('.anim-words').forEach(function(e){ ioW.observe(e); });
+  }
+
+  // 3) Compteurs : <span data-count="1200" data-count-suffix="+" data-count-decimals="0">0</span>
+  function fmt(v,dec){ return v.toLocaleString('fr-FR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+  function countUp(el){
+    var target=parseFloat(el.getAttribute('data-count'))||0,
+        suf=el.getAttribute('data-count-suffix')||'', pre=el.getAttribute('data-count-prefix')||'',
+        dec=parseInt(el.getAttribute('data-count-decimals')||'0',10), dur=1500, start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=pre+fmt(target*e,dec)+suf; if(p<1)requestAnimationFrame(step); else el.textContent=pre+fmt(target,dec)+suf; }
+    requestAnimationFrame(step);
+  }
+  var nums = document.querySelectorAll('[data-count]');
+  if(RM || !IO){ nums.forEach(function(el){ el.textContent=(el.getAttribute('data-count-prefix')||'')+fmt(parseFloat(el.getAttribute('data-count'))||0,parseInt(el.getAttribute('data-count-decimals')||'0',10))+(el.getAttribute('data-count-suffix')||''); }); }
+  else {
+    var ioN = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ countUp(en.target); ioN.unobserve(en.target);} });
+    },{threshold:0.6});
+    nums.forEach(function(el){ ioN.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HALCYON</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee+Hairline&family=Inter:wght@400;500&family=Karla:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family:'Inter',sans-serif; background:#000; color:#fafafa; margin:0; }
+    .font-display { font-family:'"Bungee Hairline"',sans-serif; }
+    .display-title { letter-spacing:0.14em; }
+    @keyframes marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+    .marquee-track { display:inline-flex; white-space:nowrap; animation:marquee 22s linear infinite; }
+    @media (prefers-reduced-motion:reduce){ .marquee-track{animation:none} }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:'#000000',
+            paper:'#fafafa',
+            soft:'#f1f1f1',
+            accent:'#0000ee',
+            panel:'#0f0f0f',
+            line:'#1a1a1a',
+            muted:'#a1a1a1',
+            dim:'#6f6e6e'
+          },
+          fontFamily: {
+            display:['"Bungee Hairline"','sans-serif'],
+            sans:['Inter','sans-serif'],
+            mono:['Karla','monospace']
+          },
+          letterSpacing: {
+            label:'0.18em'
+          },
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-ink">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 inset-x-0 z-50 border-b border-line bg-ink/70 backdrop-blur-sm overflow-hidden">
+    <div class="overflow-hidden border-b border-line py-1.5">
+      <div class="marquee-track font-mono text-[11px] tracking-label uppercase text-muted">
+        <span class="px-4" data-sg-path="ticker[0]">Réservations</span><span class="text-accent">·</span>
+        <span class="px-4" data-sg-path="ticker[1]">Setlist</span><span class="text-accent">·</span>
+        <span class="px-4" data-sg-path="ticker[0]">Réservations</span><span class="text-accent">·</span>
+        <span class="px-4" data-sg-path="ticker[1]">Setlist</span><span class="text-accent">·</span>
+      </div>
+    </div>
+    <nav class="h-11 flex items-center justify-center gap-6 sm:gap-10 font-mono text-[11px] tracking-label uppercase">
+      <a href="#top" data-sg-path="nav[0]" class="text-paper hover:text-accent transition-colors">Accueil</a>
+      <a href="#tour" data-sg-path="nav[1]" class="text-muted hover:text-accent transition-colors">Tournée</a>
+      <a href="#releases" data-sg-path="nav[2]" class="text-muted hover:text-accent transition-colors">Écouter</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="top" class="relative min-h-screen flex flex-col justify-between overflow-hidden" data-anim="fade">
+    <div class="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/10 to-ink"></div>
+    <img src="../../../../public/_templates/indie-band/img/hero.jpg" alt="Groupe jouant sur scène" class="absolute inset-0 w-full h-full object-cover opacity-60" data-sg-img="hero">
+    <div class="relative z-10 pt-24 px-6 md:px-10">
+      <h1 data-sg-path="brand" class="font-display display-title uppercase text-paper text-5xl sm:text-7xl md:text-8xl lg:text-[120px] leading-none anim-words">HALCYON</h1>
+      <p data-sg-path="hero.tagline" class="mt-4 font-mono text-xs md:text-sm tracking-wide uppercase text-paper/80 max-w-md" data-anim="fade" data-anim-delay="400">Un projet musical indie audacieux et immersif.</p>
+    </div>
+    <div class="relative z-10 pb-12 px-6 md:px-10 flex justify-end">
+      <div class="flex flex-wrap gap-3">
+        <a href="#band" data-sg-path="heroCtas[0]" class="bg-paper text-ink font-mono text-[11px] tracking-label uppercase px-6 py-3 hover:bg-accent hover:text-white transition-colors" data-anim="fade" data-anim-delay="800">Le Groupe</a>
+        <a href="#tour" data-sg-path="heroCtas[1]" class="bg-paper text-ink font-mono text-[11px] tracking-label uppercase px-6 py-3 hover:bg-accent hover:text-white transition-colors" data-anim="fade" data-anim-delay="900">Tournée</a>
+        <a href="#releases" data-sg-path="heroCtas[2]" class="bg-paper text-ink font-mono text-[11px] tracking-label uppercase px-6 py-3 hover:bg-accent hover:text-white transition-colors" data-anim="fade" data-anim-delay="1000">Écouter</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BAND SECTION -->
+  <section id="band" class="py-28 md:py-40 px-6 md:px-10" data-anim="fade">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row items-start gap-12 md:gap-20">
+        <div class="w-full md:w-1/3">
+          <h2 data-sg-path="band.label" class="font-display display-title uppercase text-paper text-4xl md:text-5xl" data-anim="left">Le Groupe</h2>
+          <p data-sg-path="band.sub" class="mt-4 font-mono text-xs tracking-wide uppercase text-muted" data-anim="left" data-anim-delay="80">Découvrez nos derniers titres</p>
+        </div>
+        <div class="w-full md:w-2/3">
+          <p data-sg-path="band.body" class="text-paper/90 leading-relaxed" data-anim="fade" data-anim-delay="160">HALCYON est un trio né entre les sessions studio tardives et les scènes d’entrepôts désaffectés. Nous créons des paysages sonores denses et cinématiques — bandes analogiques, synthétiseurs usés et une voix qui ne tient pas en place. Puissants là où il le faut, subtils là où ça compte.</p>
+          <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <img src="../../../../public/_templates/indie-band/img/band1.jpg" alt="Groupe en studio" class="w-full h-64 object-cover" data-sg-img="band1" data-anim="fade" data-anim-delay="240">
+            <img src="../../../../public/_templates/indie-band/img/band2.jpg" alt="Groupe sur scène" class="w-full h-64 object-cover" data-sg-img="band2" data-anim="fade" data-anim-delay="320">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOUR SECTION -->
+  <section id="tour" class="py-28 md:py-40 px-6 md:px-10" data-anim="fade">
+    <div class="max-w-7xl mx-auto">
+      <h2 data-sg-path="tour.label" class="font-display display-title uppercase text-paper text-4xl md:text-5xl mb-16" data-anim="left">Tournée</h2>
+
+      <div class="space-y-16">
+        <!-- Europe -->
+        <div data-anim="fade">
+          <h3 class="font-mono text-sm tracking-label uppercase text-muted mb-8" data-anim="fade">Europe</h3>
+          <div class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-4 border-b border-line" data-anim="fade" data-anim-delay="80">
+              <div class="font-mono text-xs tracking-wide uppercase text-paper">Barcelone, ES</div>
+              <div class="font-mono text-xs text-muted">Razzmatazz 3</div>
+              <div class="font-mono text-xs text-muted">5 mars 2026 · 20h00</div>
+              <div class="font-mono text-xs tracking-label uppercase text-accent">Billets</div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-4 border-b border-line" data-anim="fade" data-anim-delay="160">
+              <div class="font-mono text-xs tracking-wide uppercase text-paper">Madrid, ES</div>
+              <div class="font-mono text-xs text-muted">Sala Clamores</div>
+              <div class="font-mono text-xs text-muted">7 mai 2026 · 20h00</div>
+              <div class="font-mono text-xs tracking-label uppercase text-accent">Billets</div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-4 border-b border-line" data-anim="fade" data-anim-delay="240">
+              <div class="font-mono text-xs tracking-wide uppercase text-paper">Lyon, FR</div>
+              <div class="font-mono text-xs text-muted">Le Sonic</div>
+              <div class="font-mono text-xs text-muted">9 mars 2026 · 20h30</div>
+              <div class="font-mono text-xs tracking-label uppercase text-accent">Billets</div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-4 border-b border-line" data-anim="fade" data-anim-delay="320">
+              <div class="font-mono text-xs tracking-wide uppercase text-paper">Milan, IT</div>
+              <div class="font-mono text-xs text-muted">Circolo Magnolia</div>
+              <div class="font-mono text-xs text-muted">11 mars 2026 · 21h00</div>
+              <div class="font-mono text-xs tracking-label uppercase text-accent">Billets</div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-4 border-b border-line" data-anim="fade" data-anim-delay="400">
+              <div class="font-mono text-xs tracking-wide uppercase text-paper">Zurich, CH</div>
+              <div class="font-mono text-xs text-muted">Moods</div>
+              <div class="font-mono text-xs text-muted">13 mars 2026 · 20h00</div>
+              <div class="font-mono text-xs tracking-label uppercase text-muted">Complet</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Amérique du Sud -->
+        <div data-anim="fade">
+          <h3 class="font-mono text-sm tracking-label uppercase text-muted mb-8" data-anim="fade">Amérique du Sud</h3>
+          <div class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-4 border-b border-line" data-anim="fade" data-anim-delay="80">
+              <div class="font-mono text-xs tracking-wide uppercase text-paper">Quito, EC</div>
+              <div class="font-mono text-xs text-muted">El Pobre Diablo</div>
+              <div class="font-mono text-xs text-muted">12 avril 2026 · 20h00</div>
+              <div class="font-mono text-xs tracking-label uppercase text-accent">Billets</div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-4 border-b border-line" data-anim="fade" data-anim-delay="160">
+              <div class="font-mono text-xs tracking-wide uppercase text-paper">Bogotá, CO</div>
+              <div class="font-mono text-xs text-muted">Casa Babylon</div>
+              <div class="font-mono text-xs text-muted">10 avril 2026 · 21h00</div>
+              <div class="font-mono text-xs tracking-label uppercase text-muted">Complet</div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-4 border-b border-line" data-anim="fade" data-anim-delay="240">
+              <div class="font-mono text-xs tracking-wide uppercase text-paper">Lima, PE</div>
+              <div class="font-mono text-xs text-muted">La Noche de Barranco</div>
+              <div class="font-mono text-xs text-muted">7 avril 2026 · 20h00</div>
+              <div class="font-mono text-xs tracking-label uppercase text-accent">Billets</div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-4 border-b border-line" data-anim="fade" data-anim-delay="320">
+              <div class="font-mono text-xs tracking-wide uppercase text-paper">Santiago, CL</div>
+              <div class="font-mono text-xs text-muted">Club Chocolate</div>
+              <div class="font-mono text-xs text-muted">5 avril 2026 · 20h30</div>
+              <div class="font-mono text-xs tracking-label uppercase text-accent">Billets</div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-4 border-b border-line" data-anim="fade" data-anim-delay="400">
+              <div class="font-mono text-xs tracking-wide uppercase text-paper">Buenos Aires, AR</div>
+              <div class="font-mono text-xs text-muted">La Trastienda</div>
+              <div class="font-mono text-xs text-muted">9 mars 2026 · 21h00</div>
+              <div class="font-mono text-xs tracking-label uppercase text-muted">Complet</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELEASES SECTION -->
+  <section id="releases" class="py-28 md:py-40 px-6 md:px-10" data-anim="fade">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex justify-between items-center mb-16">
+        <h2 data-sg-path="releasesLabel" class="font-display display-title uppercase text-paper text-4xl md:text-5xl" data-anim="left">Dernières Sorties</h2>
+        <a href="#" data-sg-path="releasesCta" class="bg-paper text-ink font-mono text-[11px] tracking-label uppercase px-6 py-3 hover:bg-accent hover:text-white transition-colors" data-anim="fade" data-anim-delay="80">Écoutez les morceaux complets</a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="group" data-anim="fade" data-anim-delay="160">
+          <img src="../../../../public/_templates/indie-band/img/single1.jpg" alt="Pochette Static Bloom" class="w-full h-80 object-cover mb-4" data-sg-img="single1">
+          <h3 data-sg-path="releases[0].title" class="font-display display-title uppercase text-paper text-2xl">Static Bloom</h3>
+        </div>
+        <div class="group" data-anim="fade" data-anim-delay="240">
+          <img src="../../../../public/_templates/indie-band/img/single2.jpg" alt="Pochette Paper Cathedral" class="w-full h-80 object-cover mb-4" data-sg-img="single2">
+          <h3 data-sg-path="releases[1].title" class="font-display display-title uppercase text-paper text-2xl">Paper Cathedral</h3>
+        </div>
+        <div class="group" data-anim="fade" data-anim-delay="320">
+          <img src="../../../../public/_templates/indie-band/img/single3.jpg" alt="Pochette Low Country Lights" class="w-full h-80 object-cover mb-4" data-sg-img="single3">
+          <h3 data-sg-path="releases[2].title" class="font-display display-title uppercase text-paper text-2xl">Low Country Lights</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEOS SECTION -->
+  <section class="py-28 md:py-40 px-6 md:px-10" data-anim="fade">
+    <div class="max-w-7xl mx-auto">
+      <h2 data-sg-path="videosLabel" class="font-display display-title uppercase text-paper text-4xl md:text-5xl mb-16" data-anim="left">Vidéos</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="group" data-anim="fade" data-anim-delay="80">
+          <img src="../../../../public/_templates/indie-band/img/video1.jpg" alt="Static Bloom live" class="w-full h-64 object-cover mb-4" data-sg-img="video1">
+          <h3 data-sg-path="videos[0].title" class="font-mono text-xs tracking-wide uppercase text-paper">Static Bloom — Live au Razzmatazz</h3>
+        </div>
+        <div class="group" data-anim="fade" data-anim-delay="160">
+          <img src="../../../../public/_templates/indie-band/img/video2.jpg" alt="Sessions studio" class="w-full h-64 object-cover mb-4" data-sg-img="video2">
+          <h3 data-sg-path="videos[1].title" class="font-mono text-xs tracking-wide uppercase text-paper">Sessions Studio — Bande & Bruit</h3>
+        </div>
+        <div class="group" data-anim="fade" data-anim-delay="240">
+          <img src="../../../../public/_templates/indie-band/img/video3.jpg" alt="Paper Cathedral clip" class="w-full h-64 object-cover mb-4" data-sg-img="video3">
+          <h3 data-sg-path="videos[2].title" class="font-mono text-xs tracking-wide uppercase text-paper">Paper Cathedral — Clip Officiel</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-28 md:py-40 px-6 md:px-10 border-t border-line" data-anim="fade">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 data-sg-path="footer.label" class="font-display display-title uppercase text-paper text-4xl md:text-5xl mb-8" data-anim="left">Actualités</h2>
+          <p data-sg-path="footer.text" class="text-paper/90 leading-relaxed mb-8" data-anim="fade" data-anim-delay="80">Sans fioritures, juste de la musique. Abonnez-vous pour recevoir les annonces de tournée et les titres inédits.</p>
+          <div class="flex gap-6 font-mono text-xs tracking-label uppercase text-muted" data-anim="fade" data-anim-delay="160">
+            <a href="#" data-sg-path="footer.socials[0]" class="hover:text-accent transition-colors">Instagram</a>
+            <a href="#" data-sg-path="footer.socials[1]" class="hover:text-accent transition-colors">Spotify</a>
+            <a href="#" data-sg-path="footer.socials[2]" class="hover:text-accent transition-colors">YouTube</a>
+            <a href="#" data-sg-path="footer.socials[3]" class="hover:text-accent transition-colors">Bandcamp</a>
+          </div>
+        </div>
+        <div class="flex justify-center md:justify-end">
+          <img src="../../../../public/_templates/indie-band/img/footer.jpg" alt="Groupe en concert" class="w-full max-w-md h-64 object-cover" data-sg-img="footer" data-anim="fade" data-anim-delay="240">
+        </div>
+      </div>
+      <div class="mt-20 pt-8 border-t border-line flex flex-col md:flex-row justify-between items-center font-mono text-xs text-muted">
+        <div data-sg-path="footer.copyright" data-anim="fade">© HALCYON</div>
+        <div data-sg-path="footer.credit" data-anim="fade" data-anim-delay="80">Groupe indie · projet audio</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Accordion FAQ (none here, but keeping the pattern for future)
+    document.addEventListener('DOMContentLoaded', () => {
+      // Simple script structure for potential accordion
+      const accordions = document.querySelectorAll('[data-accordion]');
+      accordions.forEach(accordion => {
+        const trigger = accordion.querySelector('[data-accordion-trigger]');
+        const content = accordion.querySelector('[data-accordion-content]');
+        trigger.addEventListener('click', () => {
+          accordion.classList.toggle('open');
+        });
+      });
+    });
+  </script>
+
+<!-- ═══ AKYRA MOTION KIT — animations partagées (vanilla, sans dépendance, respecte prefers-reduced-motion) ═══ -->
+<style>
+  [data-anim]{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+  [data-anim="fade"]{transform:none}
+  [data-anim="left"]{transform:translateX(-26px)}
+  [data-anim="right"]{transform:translateX(26px)}
+  [data-anim="scale"]{transform:scale(.96)}
+  [data-anim].in{opacity:1!important;transform:none!important}
+  /* Apparition du texte mot à mot */
+  .anim-words .w{display:inline-block;opacity:0;transform:translateY(0.5em);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .anim-words.in .w{opacity:1;transform:none}
+  /* Galerie accordéon : au survol, la vignette s'élargit, les autres se rétractent (CSS pur) */
+  .gallery-expand{display:flex}
+  .gallery-expand>.gx{flex:1 1 0;min-width:0;overflow:hidden;transition:flex-grow .7s cubic-bezier(.16,1,.3,1)}
+  .gallery-expand>.gx img{width:100%;height:100%;object-fit:cover}
+  @media (hover:hover){
+    .gallery-expand:hover>.gx{flex-grow:.6}
+    .gallery-expand>.gx:hover{flex-grow:3}
+  }
+  @media (prefers-reduced-motion:reduce){[data-anim],.anim-words .w{opacity:1!important;transform:none!important;transition:none!important}.gallery-expand>.gx{transition:none}}
+</style>
+<script>
+(function(){
+  var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var IO = 'IntersectionObserver' in window;
+
+  // 1) Révélation au scroll des éléments [data-anim] (stagger via data-anim-delay en ms)
+  var reveals = document.querySelectorAll('[data-anim]');
+  function showReveal(el){
+    var d = parseInt(el.getAttribute('data-anim-delay')||'0',10);
+    if(d) setTimeout(function(){el.classList.add('in')}, d); else el.classList.add('in');
+  }
+  if(RM || !IO){ reveals.forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioR = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ showReveal(en.target); ioR.unobserve(en.target);} });
+    },{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(function(e){ ioR.observe(e); });
+  }
+
+  // 2) Texte mot à mot : <h1 class="anim-words">…</h1>.
+  //    Découpe DOM-SAFE : on n'enveloppe QUE les nœuds texte (les balises internes
+  //    — dégradés, pilules — sont préservées intactes, jamais transformées en texte).
+  document.querySelectorAll('.anim-words').forEach(function(el){
+    if(el.dataset.split) return; el.dataset.split='1';
+    // Garde-fou : si le titre contient des balises internes (dégradé, pilule…),
+    // on NE découpe PAS (sinon dégradé cassé / mots invisibles) — il reste intact.
+    if(el.children.length > 0){ el.classList.remove('anim-words'); return; }
+    var wi = 0, textNodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    while(walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(function(tn){
+      if(!tn.nodeValue || !tn.nodeValue.trim()) return;
+      var frag = document.createDocumentFragment();
+      tn.nodeValue.split(/(\s+)/).forEach(function(part){
+        if(part === '') return;
+        if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+        var s = document.createElement('span'); s.className='w'; s.textContent=part;
+        s.style.transitionDelay=((wi++)*45)+'ms'; frag.appendChild(s);
+      });
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  });
+  if(RM || !IO){ document.querySelectorAll('.anim-words').forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioW = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ioW.unobserve(en.target);} });
+    },{threshold:0.25});
+    document.querySelectorAll('.anim-words').forEach(function(e){ ioW.observe(e); });
+  }
+
+  // 3) Compteurs : <span data-count="1200" data-count-suffix="+" data-count-decimals="0">0</span>
+  function fmt(v,dec){ return v.toLocaleString('fr-FR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+  function countUp(el){
+    var target=parseFloat(el.getAttribute('data-count'))||0,
+        suf=el.getAttribute('data-count-suffix')||'', pre=el.getAttribute('data-count-prefix')||'',
+        dec=parseInt(el.getAttribute('data-count-decimals')||'0',10), dur=1500, start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=pre+fmt(target*e,dec)+suf; if(p<1)requestAnimationFrame(step); else el.textContent=pre+fmt(target,dec)+suf; }
+    requestAnimationFrame(step);
+  }
+  var nums = document.querySelectorAll('[data-count]');
+  if(RM || !IO){ nums.forEach(function(el){ el.textContent=(el.getAttribute('data-count-prefix')||'')+fmt(parseFloat(el.getAttribute('data-count'))||0,parseInt(el.getAttribute('data-count-decimals')||'0',10))+(el.getAttribute('data-count-suffix')||''); }); }
+  else {
+    var ioN = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ countUp(en.target); ioN.unobserve(en.target);} });
+    },{threshold:0.6});
+    nums.forEach(function(el){ ioN.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>

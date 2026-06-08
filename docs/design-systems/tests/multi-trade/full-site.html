@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voltéo – Experts en électricité, plomberie et chauffage</title>
+  <meta name="description" content="Solutions intelligentes pour l'électricité, l'eau et le chauffage. Électriciens, plombiers et chauffagistes certifiés pour les particuliers et les professionnels — disponibles 24h/24 et 7j/7.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family:'Manrope',sans-serif; background:#fff; color:#0B212D; margin:0; }
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary:'#EF7615',
+            ink:'#0B212D',
+            ink2:'#0F2A38',
+            bg:'#F0F5F9',
+            muted:'#5A6B74',
+            border:'#E2E9EE',
+            white:'#FFFFFF'
+          },
+          fontFamily: {
+            sans:['"Manrope"','sans-serif'],
+          },
+        }
+      }
+    };
+  </style>
+</head>
+<body class="bg-white">
+
+  <!-- HEADER -->
+  <header>
+    <!-- NAV -->
+    <nav class="absolute top-0 inset-x-0 z-50">
+      <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <a href="#" class="flex items-center gap-2"><span class="text-white font-extrabold text-xl tracking-tight" data-sg-path="brand">Voltéo</span></a>
+        <div class="hidden md:flex items-center gap-8 text-sm text-white/80">
+          <a href="#services" data-sg-path="nav[0]" class="hover:text-white transition-colors">Services</a>
+          <a href="#howItWorks" data-sg-path="nav[1]" class="hover:text-white transition-colors">Fonctionnement</a>
+          <a href="#about" data-sg-path="nav[2]" class="hover:text-white transition-colors">À propos</a>
+          <a href="#faq" data-sg-path="nav[3]" class="hover:text-white transition-colors">FAQ</a>
+        </div>
+        <a href="#contact" data-sg-path="nav.cta" class="bg-primary text-white font-semibold text-sm px-5 py-2.5 rounded-full hover:brightness-105 transition-all">Nous contacter</a>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="relative bg-ink overflow-hidden min-h-[640px] flex items-end" data-anim="fade">
+      <img data-sg-img="hero.image" src="../../../../public/_templates/multi-trade/img/hero.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-70" />
+      <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/60 to-transparent"></div>
+      <div class="relative w-full max-w-7xl mx-auto px-6 pb-16 pt-40 grid lg:grid-cols-2 gap-10 items-end">
+        <div>
+          <h1 data-sg-path="hero.title" class="text-white font-extrabold text-4xl md:text-5xl lg:text-6xl leading-[1.05] mb-6 max-w-xl anim-words">Solutions intelligentes pour l'électricité, l'eau et le chauffage</h1>
+          <p data-sg-path="hero.tagline" class="text-white/70 text-lg mb-8 max-w-md" data-anim="fade" data-anim-delay="200">Service rapide et professionnel pour les particuliers et les professionnels. Disponible 24h/24 et 7j/7 avec des experts certifiés en qui vous pouvez avoir confiance.</p>
+          <a href="#contact" data-sg-path="hero.cta" class="inline-block bg-primary text-white font-semibold px-7 py-3.5 rounded-full hover:brightness-105 transition-all" data-anim="fade" data-anim-delay="400">Demander un devis</a>
+        </div>
+        <div class="flex flex-col gap-3 lg:items-end" data-anim="fade" data-anim-delay="600">
+          <span class="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-4 py-2" data-anim="fade" data-anim-delay="600">
+            <span class="w-2 h-2 rounded-full bg-primary"></span>
+            <span data-sg-path="hero.pills[0]" class="text-white text-sm font-medium">Service d'urgence 24h/24 et 7j/7</span>
+          </span>
+          <span class="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-4 py-2" data-anim="fade" data-anim-delay="680">
+            <span class="w-2 h-2 rounded-full bg-primary"></span>
+            <span data-sg-path="hero.pills[1]" class="text-white text-sm font-medium">Techniciens certifiés et assurés</span>
+          </span>
+          <span class="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-4 py-2" data-anim="fade" data-anim-delay="760">
+            <span class="w-2 h-2 rounded-full bg-primary"></span>
+            <span data-sg-path="hero.pills[2]" class="text-white text-sm font-medium">Tarifs transparents</span>
+          </span>
+          <span class="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-4 py-2" data-anim="fade" data-anim-delay="840">
+            <span class="w-2 h-2 rounded-full bg-primary"></span>
+            <span data-sg-path="hero.pills[3]" class="text-white text-sm font-medium">Délai d'intervention garanti</span>
+          </span>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <main>
+    <!-- MARQUEE (implied from content, not in design system but fits the flow) -->
+    <section class="bg-bg py-4 overflow-hidden">
+      <div class="flex animate-marquee whitespace-nowrap">
+        <div class="flex items-center gap-4 text-muted text-sm font-medium px-4" data-anim="fade">
+          <span data-sg-path="marquee[0]">Réparations électriques</span>
+          <span class="w-1 h-1 rounded-full bg-muted"></span>
+          <span data-sg-path="marquee[1]">Solutions de plomberie</span>
+          <span class="w-1 h-1 rounded-full bg-muted"></span>
+          <span data-sg-path="marquee[2]">Systèmes de chauffage</span>
+          <span class="w-1 h-1 rounded-full bg-muted"></span>
+        </div>
+        <div class="flex items-center gap-4 text-muted text-sm font-medium px-4" aria-hidden="true">
+          <span data-sg-path="marquee[0]">Réparations électriques</span>
+          <span class="w-1 h-1 rounded-full bg-muted"></span>
+          <span data-sg-path="marquee[1]">Solutions de plomberie</span>
+          <span class="w-1 h-1 rounded-full bg-muted"></span>
+          <span data-sg-path="marquee[2]">Systèmes de chauffage</span>
+          <span class="w-1 h-1 rounded-full bg-muted"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="bg-bg py-20" data-anim="fade">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <span class="text-primary font-semibold text-sm" data-sg-path="services.label">Nos services</span>
+          <h2 class="text-ink font-extrabold text-3xl md:text-4xl mt-2 mb-4" data-sg-path="services.title" data-anim="fade">Solutions expertes pour chaque système de votre logement</h2>
+          <p class="text-muted" data-sg-path="services.subtitle" data-anim="fade" data-anim-delay="200">Voltéo propose des services professionnels en électricité, chauffage et plomberie conçus pour maintenir votre logement sûr, efficace et confortable toute l'année.</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="bg-white p-8 rounded-2xl border border-border" data-anim="fade" data-anim-delay="0">
+            <img data-sg-img="services.items[0].image" src="../../../../public/_templates/multi-trade/img/service-electrical.jpg" alt="Réparations électriques" class="w-full h-48 object-cover rounded-xl mb-6" />
+            <h3 class="font-bold text-xl mb-2" data-sg-path="services.items[0].title">Réparations électriques</h3>
+            <p class="text-muted" data-sg-path="services.items[0].desc">Solutions fiables pour les défauts de câblage, les mises à niveau de tableau électrique, les installations d'éclairage et les problèmes électriques.</p>
+          </div>
+          <div class="bg-white p-8 rounded-2xl border border-border" data-anim="fade" data-anim-delay="80">
+            <img data-sg-img="services.items[1].image" src="../../../../public/_templates/multi-trade/img/service-plumbing.jpg" alt="Solutions de plomberie" class="w-full h-48 object-cover rounded-xl mb-6" />
+            <h3 class="font-bold text-xl mb-2" data-sg-path="services.items[1].title">Solutions de plomberie</h3>
+            <p class="text-muted" data-sg-path="services.items[1].desc">Détection de fuites, réparations de tuyaux, installations de robinetterie et systèmes complets de salle de bain réalisés correctement dès la première fois.</p>
+          </div>
+          <div class="bg-white p-8 rounded-2xl border border-border" data-anim="fade" data-anim-delay="160">
+            <img data-sg-img="services.items[2].image" src="../../../../public/_templates/multi-trade/img/service-heating.jpg" alt="Systèmes de chauffage" class="w-full h-48 object-cover rounded-xl mb-6" />
+            <h3 class="font-bold text-xl mb-2" data-sg-path="services.items[2].title">Systèmes de chauffage</h3>
+            <p class="text-muted" data-sg-path="services.items[2].desc">Entretien de chaudière, installations de radiateurs et diagnostics de chauffage pour maintenir votre logement chaud et efficace.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST -->
+    <section class="bg-white py-20" data-anim="fade">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <span class="text-primary font-semibold text-sm" data-sg-path="trust.label">Pourquoi nous choisir</span>
+          <h2 class="text-ink font-extrabold text-3xl md:text-4xl mt-2 mb-4" data-sg-path="trust.title" data-anim="fade">Une entreprise de confiance</h2>
+          <p class="text-muted" data-sg-path="trust.subtitle" data-anim="fade" data-anim-delay="200">Chez Voltéo, nous combinons expérience, professionnalisme et souci du détail pour offrir des solutions fiables pour chaque projet.</p>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
+          <div>
+            <img data-sg-img="trust.image" src="../../../../public/_templates/multi-trade/img/about.jpg" alt="Technicien Voltéo" class="rounded-2xl w-full" data-anim="fade" />
+          </div>
+          <div class="grid sm:grid-cols-2 gap-8">
+            <div class="flex flex-col gap-4" data-anim="fade" data-anim-delay="0">
+              <span class="text-4xl font-extrabold text-ink" data-count="10" data-count-suffix="+">0</span>
+              <span class="font-semibold" data-sg-path="trust.statLabel">années d'expérience</span>
+            </div>
+            <div class="space-y-6">
+              <div data-anim="fade" data-anim-delay="80">
+                <h4 class="font-bold text-lg" data-sg-path="trust.features[0].title">Techniciens expérimentés</h4>
+                <p class="text-muted mt-1" data-sg-path="trust.features[0].desc">Notre équipe est composée de professionnels formés et expérimentés qui traitent chaque projet avec compétence et précision. Nous nous appuyons sur les normes du secteur pour fournir des résultats fiables.</p>
+              </div>
+              <div data-anim="fade" data-anim-delay="160">
+                <h4 class="font-bold text-lg" data-sg-path="trust.features[1].title">Service fiable et ponctuel</h4>
+              </div>
+              <div data-anim="fade" data-anim-delay="240">
+                <h4 class="font-bold text-lg" data-sg-path="trust.features[2].title">Tarifs transparents</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-bg p-8 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6" data-anim="fade">
+          <div class="flex items-center gap-4">
+            <div class="bg-primary/10 p-3 rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            </div>
+            <div>
+              <h4 class="font-bold" data-sg-path="trust.urgentTitle">Vous avez un problème urgent ?</h4>
+              <p class="text-muted text-sm" data-sg-path="trust.urgentText">Nous fournissons des services d'urgence rapides et fiables dès que vous avez besoin d'aide.</p>
+            </div>
+          </div>
+          <a href="#contact" class="bg-primary text-white font-semibold px-6 py-3 rounded-full hover:brightness-105 transition-all whitespace-nowrap" data-sg-path="trust.urgentCta">Contacter nos experts</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="howItWorks" class="bg-bg py-20" data-anim="fade">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <span class="text-primary font-semibold text-sm" data-sg-path="howItWorks.label">Fonctionnement</span>
+          <h2 class="text-ink font-extrabold text-3xl md:text-4xl mt-2 mb-4" data-sg-path="howItWorks.title" data-anim="fade">Des étapes simples pour un service rapide et fiable</h2>
+          <p class="text-muted" data-sg-path="howItWorks.subtitle" data-anim="fade" data-anim-delay="200">Notre processus optimisé garantit une réponse rapide, une communication claire et des résultats de haute qualité du début à la fin.</p>
+        </div>
+        <div class="space-y-8">
+          <div class="bg-white p-8 rounded-2xl border border-border grid lg:grid-cols-2 gap-8 items-center" data-anim="fade" data-anim-delay="0">
+            <div>
+              <span class="text-muted font-semibold" data-sg-path="howItWorks.steps[0].number">01</span>
+              <div class="mt-2 mb-4">
+                <span class="text-muted text-sm" data-sg-path="howItWorks.steps[0].tab">Demander un service</span>
+                <h3 class="font-bold text-2xl mt-1" data-sg-path="howItWorks.steps[0].title">Dites-nous ce dont vous avez besoin et nous sommes prêts à vous aider.</h3>
+              </div>
+              <p class="text-muted mb-6" data-sg-path="howItWorks.steps[0].desc">Contactez-nous via notre formulaire en ligne ou appelez-nous. Décrivez votre problème, choisissez un horaire pratique et nous confirmerons votre réservation en quelques minutes.</p>
+              <a href="#contact" class="bg-primary text-white font-semibold px-6 py-3 rounded-full hover:brightness-105 transition-all" data-sg-path="howItWorks.steps[0].cta">Demander un service</a>
+            </div>
+            <img data-sg-img="howItWorks.steps[0].image" src="../../../../public/_templates/multi-trade/img/process.jpg" alt="Demander un service" class="rounded-xl w-full h-64 object-cover" />
+          </div>
+          <div class="bg-white p-8 rounded-2xl border border-border grid lg:grid-cols-2 gap-8 items-center" data-anim="fade" data-anim-delay="80">
+            <div>
+              <span class="text-muted font-semibold" data-sg-path="howItWorks.steps[1].number">02</span>
+              <div class="mt-2 mb-4">
+                <span class="text-muted text-sm" data-sg-path="howItWorks.steps[1].tab">Inspection et devis</span>
+                <h3 class="font-bold text-2xl mt-1" data-sg-path="howItWorks.steps[1].title">Nous inspectons et vous fournissons un devis clair.</h3>
+              </div>
+              <p class="text-muted mb-6" data-sg-path="howItWorks.steps[1].desc">Un technicien certifié évalue le travail sur place, explique les options et fournit un prix fixe et transparent avant de commencer quoi que ce soit.</p>
+              <a href="#contact" class="bg-primary text-white font-semibold px-6 py-3 rounded-full hover:brightness-105 transition-all" data-sg-path="howItWorks.steps[1].cta">Demander un service</a>
+            </div>
+            <img data-sg-img="howItWorks.steps[1].image" src="../../../../public/_templates/multi-trade/img/process.jpg" alt="Inspection et devis" class="rounded-xl w-full h-64 object-cover" />
+          </div>
+          <div class="bg-white p-8 rounded-2xl border border-border grid lg:grid-cols-2 gap-8 items-center" data-anim="fade" data-anim-delay="160">
+            <div>
+              <span class="text-muted font-semibold" data-sg-path="howItWorks.steps[2].number">03</span>
+              <div class="mt-2 mb-4">
+                <span class="text-muted text-sm" data-sg-path="howItWorks.steps[2].tab">Réparation rapide</span>
+                <h3 class="font-bold text-2xl mt-1" data-sg-path="howItWorks.steps[2].title">Nous réparons rapidement et nettoyons après notre passage.</h3>
+              </div>
+              <p class="text-muted mb-6" data-sg-path="howItWorks.steps[2].desc">Nos experts réalisent le travail efficacement, testent minutieusement tout et laissent votre espace propre et parfaitement fonctionnel.</p>
+              <a href="#contact" class="bg-primary text-white font-semibold px-6 py-3 rounded-full hover:brightness-105 transition-all" data-sg-path="howItWorks.steps[2].cta">Demander un service</a>
+            </div>
+            <img data-sg-img="howItWorks.steps[2].image" src="../../../../public/_templates/multi-trade/img/process.jpg" alt="Réparation rapide" class="rounded-xl w-full h-64 object-cover" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="bg-white py-20" data-anim="fade">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <span class="text-primary font-semibold text-sm" data-sg-path="testimonials.label">Témoignages</span>
+          <h2 class="text-ink font-extrabold text-3xl md:text-4xl mt-2 mb-4" data-sg-path="testimonials.title" data-anim="fade">Ce que disent nos clients</h2>
+          <p class="text-muted" data-sg-path="testimonials.subtitle" data-anim="fade" data-anim-delay="200">Faites confiance à des propriétaires et des professionnels</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="bg-bg p-6 rounded-2xl" data-anim="fade" data-anim-delay="0">
+            <p class="text-muted mb-6" data-sg-path="testimonials.items[0].quote">« Service rapide et professionnel ! Voltéo a résolu notre problème électrique en moins d'une heure. Le technicien était sympathique, a tout expliqué clairement et s'est assuré que tout était sécurisé avant de partir. »</p>
+            <div class="flex items-center gap-3">
+              <img data-sg-img="testimonials.items[0].avatar" src="../../../../public/_templates/multi-trade/img/avatar1.jpg" alt="Martin K." class="w-10 h-10 rounded-full object-cover" />
+              <div>
+                <span class="font-semibold text-sm" data-sg-path="testimonials.items[0].author">Martin K.</span>
+                <span class="text-muted text-xs block" data-sg-path="testimonials.items[0].role">Propriétaire</span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-bg p-6 rounded-2xl" data-anim="fade" data-anim-delay="80">
+            <p class="text-muted mb-6" data-sg-path="testimonials.items[1].quote">« Je recommande vivement pour les travaux de plomberie. Nous avions une fuite majeure dans notre cuisine, et Voltéo a réagi immédiatement. La réparation a été rapide, propre et abordable. Très bonne expérience globale avec eux. »</p>
+            <div class="flex items-center gap-3">
+              <img data-sg-img="testimonials.items[1].avatar" src="../../../../public/_templates/multi-trade/img/avatar2.jpg" alt="Petra L." class="w-10 h-10 rounded-full object-cover" />
+              <div>
+                <span class="font-semibold text-sm" data-sg-path="testimonials.items[1].author">Petra L.</span>
+                <span class="text-muted text-xs block" data-sg-path="testimonials.items[1].role">Propriétaire d'appartement</span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-bg p-6 rounded-2xl" data-anim="fade" data-anim-delay="160">
+            <p class="text-muted mb-6" data-sg-path="testimonials.items[2].quote">« Service de chauffage fiable. Notre système de chauffage est tombé en panne en plein hiver, et Voltéo nous a sauvés. Ils sont arrivés rapidement et ont tout remis en marche parfaitement. Merci beaucoup. »</p>
+            <div class="flex items-center gap-3">
+              <img data-sg-img="testimonials.items[2].avatar" src="../../../../public/_templates/multi-trade/img/avatar3.jpg" alt="Jan S." class="w-10 h-10 rounded-full object-cover" />
+              <div>
+                <span class="font-semibold text-sm" data-sg-path="testimonials.items[2].author">Jan S.</span>
+                <span class="text-muted text-xs block" data-sg-path="testimonials.items[2].role">Gestionnaire de propriété</span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-bg p-6 rounded-2xl" data-anim="fade" data-anim-delay="240">
+            <p class="text-muted mb-6" data-sg-path="testimonials.items[3].quote">« Ils sont arrivés plus tôt que prévu le matin, et le technicien était à ma porte en moins d'une heure. Il a rapidement terminé la réparation de l'éclairage. Très professionnel et respectueux de mon domicile. »</p>
+            <div class="flex items-center gap-3">
+              <img data-sg-img="testimonials.items[3].avatar" src="../../../../public/_templates/multi-trade/img/avatar4.jpg" alt="David K." class="w-10 h-10 rounded-full object-cover" />
+              <div>
+                <span class="font-semibold text-sm" data-sg-path="testimonials.items[3].author">David K.</span>
+                <span class="text-muted text-xs block" data-sg-path="testimonials.items[3].role">Propriétaire</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="bg-bg py-20" data-anim="fade">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <span class="text-primary font-semibold text-sm" data-sg-path="about.label">À propos</span>
+          <h2 class="text-ink font-extrabold text-3xl md:text-4xl mt-2 mb-4" data-sg-path="about.title" data-anim="fade">Confiance et service fiable depuis 2012</h2>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <img data-sg-img="about.image" src="../../../../public/_templates/multi-trade/img/trust.jpg" alt="Équipe Voltéo" class="rounded-2xl w-full" data-anim="fade" />
+          <div data-anim="fade" data-anim-delay="80">
+            <p class="text-muted mb-4" data-sg-path="about.paragraphs[0]">Voltéo a été fondé avec un objectif simple — offrir des services fiables en électricité, chauffage et plomberie sur lesquels les particuliers et les professionnels peuvent compter.</p>
+            <p class="text-muted mb-6" data-sg-path="about.paragraphs[1]">Notre équipe de techniciens expérimentés s'engage à fournir des solutions sûres, efficaces et durables pour chaque projet. Nous croyons que le bon service commence par le professionnalisme, une communication claire et le souci du détail.</p>
+            <a href="#contact" class="bg-primary text-white font-semibold px-6 py-3 rounded-full hover:brightness-105 transition-all" data-sg-path="about.cta">Contacter nos experts</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="bg-white py-20" data-anim="fade">
+      <div class="max-w-3xl mx-auto px-6">
+        <div class="text-center mb-12">
+          <span class="text-primary font-semibold text-sm" data-sg-path="faq.label">FAQ</span>
+          <h2 class="text-ink font-extrabold text-3xl md:text-4xl mt-2 mb-4" data-sg-path="faq.title" data-anim="fade">Questions fréquemment posées</h2>
+          <p class="text-muted" data-sg-path="faq.subtitle" data-anim="fade" data-anim-delay="200">Découvrez nos réponses aux questions les plus courantes sur les réparations électriques, la plomberie et les services de chauffage.</p>
+        </div>
+        <div class="space-y-4" id="faq-accordion">
+          <div class="faq-item border-b border-border py-4" data-anim="fade" data-anim-delay="0">
+            <button class="faq-question w-full flex justify-between items-center text-left">
+              <span class="font-semibold" data-sg-path="faq.items[0].question">Quels services propose Voltéo ?</span>
+              <svg class="w-5 h-5 text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div class="faq-answer hidden mt-2 text-muted">
+              <p data-sg-path="faq.items[0].answer">Nous couvrons les réparations et installations électriques, la plomberie et la réparation de fuites, ainsi que l'entretien complet des systèmes de chauffage — pour les clients résidentiels et commerciaux.</p>
+            </div>
+          </div>
+          <div class="faq-item border-b border-border py-4" data-anim="fade" data-anim-delay="80">
+            <button class="faq-question w-full flex justify-between items-center text-left">
+              <span class="font-semibold" data-sg-path="faq.items[1].question">Vos techniciens sont-ils certifiés ?</span>
+              <svg class="w-5 h-5 text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div class="faq-answer hidden mt-2 text-muted">
+              <p data-sg-path="faq.items[1].answer">Oui. Chaque technicien de notre équipe est entièrement certifié, assuré et vérifié avant de travailler sur un chantier.</p>
+            </div>
+          </div>
+          <div class="faq-item border-b border-border py-4" data-anim="fade" data-anim-delay="160">
+            <button class="faq-question w-full flex justify-between items-center text-left">
+              <span class="font-semibold" data-sg-path="faq.items[2].question">Proposez-vous des services d'urgence ?</span>
+              <svg class="w-5 h-5 text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div class="faq-answer hidden mt-2 text-muted">
+              <p data-sg-path="faq.items[2].answer">Absolument. Nous offrons une assistance d'urgence 24h/24 et 7j/7 avec un délai d'intervention garanti pour que l'aide soit toujours à un appel de distance.</p>
+            </div>
+          </div>
+          <div class="faq-item border-b border-border py-4" data-anim="fade" data-anim-delay="240">
+            <button class="faq-question w-full flex justify-between items-center text-left">
+              <span class="font-semibold" data-sg-path="faq.items[3].question">Puis-je prendre rendez-vous en ligne ?</span>
+              <svg class="w-5 h-5 text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div class="faq-answer hidden mt-2 text-muted">
+              <p data-sg-path="faq.items[3].answer">Oui — utilisez notre formulaire en ligne pour choisir un service et un horaire pratique, et nous confirmerons votre réservation en quelques minutes.</p>
+            </div>
+          </div>
+          <div class="faq-item border-b border-border py-4" data-anim="fade" data-anim-delay="320">
+            <button class="faq-question w-full flex justify-between items-center text-left">
+              <span class="font-semibold" data-sg-path="faq.items[4].question">Comment obtenir un devis ?</span>
+              <svg class="w-5 h-5 text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div class="faq-answer hidden mt-2 text-muted">
+              <p data-sg-path="faq.items[4].answer">Demandez un devis en ligne ou par téléphone. Un technicien inspecte le travail sur place et vous fournit un prix fixe et transparent avant de commencer quoi que ce soit.</p>
+            </div>
+          </div>
+          <div class="faq-item border-b border-border py-4" data-anim="fade" data-anim-delay="400">
+            <button class="faq-question w-full flex justify-between items-center text-left">
+              <span class="font-semibold" data-sg-path="faq.items[5].question">Proposez-vous des garanties sur vos services ?</span>
+              <svg class="w-5 h-5 text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div class="faq-answer hidden mt-2 text-muted">
+              <p data-sg-path="faq.items[5].answer">Tous nos travaux sont couverts par une garantie de qualité. Si quelque chose ne va pas, nous revenons et corrigeons le problème sans frais supplémentaires.</p>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-8" data-anim="fade" data-anim-delay="480">
+          <a href="#contact" class="bg-primary text-white font-semibold px-6 py-3 rounded-full hover:brightness-105 transition-all" data-sg-path="faq.cta">Poser une question</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section id="contact" class="bg-bg py-20" data-anim="fade">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <div data-anim="fade">
+            <span class="text-primary font-semibold text-sm" data-sg-path="finalCta.label">Contactez-nous</span>
+            <h2 class="text-ink font-extrabold text-3xl md:text-4xl mt-2 mb-4" data-sg-path="finalCta.title">Résolvons le problème dès aujourd'hui</h2>
+            <p class="text-muted mb-8" data-sg-path="finalCta.subtitle">Nos techniciens expérimentés sont prêts à répondre à vos besoins en électricité, chauffage, climatisation ou plomberie.</p>
+            <a href="#contact" class="bg-primary text-white font-semibold px-7 py-3.5 rounded-full hover:brightness-105 transition-all" data-sg-path="finalCta.cta">Demander un devis</a>
+          </div>
+          <img data-sg-img="finalCta.image" src="../../../../public/_templates/multi-trade/img/cta.jpg" alt="Technicien Voltéo au travail" class="rounded-2xl w-full" data-anim="fade" data-anim-delay="80" />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-ink text-white/70 py-16" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div>
+          <h3 class="text-white font-bold text-lg mb-4" data-sg-path="brand">Voltéo</h3>
+          <p class="text-sm mb-6" data-sg-path="footer.tagline">Nous servons fièrement la région locale et les communautés environnantes avec des services domiciliaires rapides et fiables.</p>
+          <div class="flex gap-4">
+            <a href="tel:5551204480" class="text-sm hover:text-white transition-colors" data-sg-path="footer.phone">(555) 120-4480</a>
+            <a href="mailto:contact@volteo.com" class="text-sm hover:text-white transition-colors" data-sg-path="footer.email">contact@volteo.com</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-4" data-sg-path="footer.columns[0].heading">Entreprise</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:text-white transition-colors" data-sg-path="footer.columns[0].links[0]">Accueil</a></li>
+            <li><a href="#services" class="hover:text-white transition-colors" data-sg-path="footer.columns[0].links[1]">Services</a></li>
+            <li><a href="#about" class="hover:text-white transition-colors" data-sg-path="footer.columns[0].links[2]">À propos</a></li>
+            <li><a href="#faq" class="hover:text-white transition-colors" data-sg-path="footer.columns[0].links[3]">FAQ</a></li>
+            <li><a href="#contact" class="hover:text-white transition-colors" data-sg-path="footer.columns[0].links[4]">Nous contacter</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-4" data-sg-path="footer.columns[1].heading">Services</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:text-white transition-colors" data-sg-path="footer.columns[1].links[0]">Réparations électriques</a></li>
+            <li><a href="#" class="hover:text-white transition-colors" data-sg-path="footer.columns[1].links[1]">Solutions de plomberie</a></li>
+            <li><a href="#" class="hover:text-white transition-colors" data-sg-path="footer.columns[1].links[2]">Systèmes de chauffage</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-4" data-sg-path="footer.columns[2].heading">Légal</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:text-white transition-colors" data-sg-path="footer.columns[2].links[0]">Politique de confidentialité</a></li>
+            <li><a href="#" class="hover:text-white transition-colors" data-sg-path="footer.columns[2].links[1]">Conditions d'utilisation</a></li>
+            <li><a href="#" class="hover:text-white transition-colors" data-sg-path="footer.columns[2].links[2]">Liens rapides</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/10 pt-8 text-center text-sm">
+        <p data-sg-path="footer.copyright">© 2026 Voltéo. Modèle de démonstration.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // FAQ Accordion
+    document.addEventListener('DOMContentLoaded', () => {
+      const accordion = document.getElementById('faq-accordion');
+      if (accordion) {
+        accordion.addEventListener('click', (e) => {
+          const questionButton = e.target.closest('.faq-question');
+          if (!questionButton) return;
+
+          const item = questionButton.parentElement;
+          const answer = item.querySelector('.faq-answer');
+          const icon = questionButton.querySelector('svg');
+
+          item.classList.toggle('open');
+          answer.classList.toggle('hidden');
+          icon.classList.toggle('rotate-180');
+        });
+      }
+    });
+  </script>
+<!-- ═══ AKYRA MOTION KIT — animations partagées (vanilla, sans dépendance, respecte prefers-reduced-motion) ═══ -->
+<style>
+  [data-anim]{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+  [data-anim="fade"]{transform:none}
+  [data-anim="left"]{transform:translateX(-26px)}
+  [data-anim="right"]{transform:translateX(26px)}
+  [data-anim="scale"]{transform:scale(.96)}
+  [data-anim].in{opacity:1!important;transform:none!important}
+  /* Apparition du texte mot à mot */
+  .anim-words .w{display:inline-block;opacity:0;transform:translateY(0.5em);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .anim-words.in .w{opacity:1;transform:none}
+  /* Galerie accordéon : au survol, la vignette s'élargit, les autres se rétractent (CSS pur) */
+  .gallery-expand{display:flex}
+  .gallery-expand>.gx{flex:1 1 0;min-width:0;overflow:hidden;transition:flex-grow .7s cubic-bezier(.16,1,.3,1)}
+  .gallery-expand>.gx img{width:100%;height:100%;object-fit:cover}
+  @media (hover:hover){
+    .gallery-expand:hover>.gx{flex-grow:.6}
+    .gallery-expand>.gx:hover{flex-grow:3}
+  }
+  @media (prefers-reduced-motion:reduce){[data-anim],.anim-words .w{opacity:1!important;transform:none!important;transition:none!important}.gallery-expand>.gx{transition:none}}
+</style>
+<script>
+(function(){
+  var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var IO = 'IntersectionObserver' in window;
+
+  // 1) Révélation au scroll des éléments [data-anim] (stagger via data-anim-delay en ms)
+  var reveals = document.querySelectorAll('[data-anim]');
+  function showReveal(el){
+    var d = parseInt(el.getAttribute('data-anim-delay')||'0',10);
+    if(d) setTimeout(function(){el.classList.add('in')}, d); else el.classList.add('in');
+  }
+  if(RM || !IO){ reveals.forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioR = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ showReveal(en.target); ioR.unobserve(en.target);} });
+    },{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(function(e){ ioR.observe(e); });
+  }
+
+  // 2) Texte mot à mot : <h1 class="anim-words">…</h1>.
+  //    Découpe DOM-SAFE : on n'enveloppe QUE les nœuds texte (les balises internes
+  //    — dégradés, pilules — sont préservées intactes, jamais transformées en texte).
+  document.querySelectorAll('.anim-words').forEach(function(el){
+    if(el.dataset.split) return; el.dataset.split='1';
+    // Garde-fou : si le titre contient des balises internes (dégradé, pilule…),
+    // on NE découpe PAS (sinon dégradé cassé / mots invisibles) — il reste intact.
+    if(el.children.length > 0){ el.classList.remove('anim-words'); return; }
+    var wi = 0, textNodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    while(walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(function(tn){
+      if(!tn.nodeValue || !tn.nodeValue.trim()) return;
+      var frag = document.createDocumentFragment();
+      tn.nodeValue.split(/(\s+)/).forEach(function(part){
+        if(part === '') return;
+        if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+        var s = document.createElement('span'); s.className='w'; s.textContent=part;
+        s.style.transitionDelay=((wi++)*45)+'ms'; frag.appendChild(s);
+      });
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  });
+  if(RM || !IO){ document.querySelectorAll('.anim-words').forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioW = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ioW.unobserve(en.target);} });
+    },{threshold:0.25});
+    document.querySelectorAll('.anim-words').forEach(function(e){ ioW.observe(e); });
+  }
+
+  // 3) Compteurs : <span data-count="1200" data-count-suffix="+" data-count-decimals="0">0</span>
+  function fmt(v,dec){ return v.toLocaleString('fr-FR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+  function countUp(el){
+    var target=parseFloat(el.getAttribute('data-count'))||0,
+        suf=el.getAttribute('data-count-suffix')||'', pre=el.getAttribute('data-count-prefix')||'',
+        dec=parseInt(el.getAttribute('data-count-decimals')||'0',10), dur=1500, start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=pre+fmt(target*e,dec)+suf; if(p<1)requestAnimationFrame(step); else el.textContent=pre+fmt(target,dec)+suf; }
+    requestAnimationFrame(step);
+  }
+  var nums = document.querySelectorAll('[data-count]');
+  if(RM || !IO){ nums.forEach(function(el){ el.textContent=(el.getAttribute('data-count-prefix')||'')+fmt(parseFloat(el.getAttribute('data-count'))||0,parseInt(el.getAttribute('data-count-decimals')||'0',10))+(el.getAttribute('data-count-suffix')||''); }); }
+  else {
+    var ioN = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ countUp(en.target); ioN.unobserve(en.target);} });
+    },{threshold:0.6});
+    nums.forEach(function(el){ ioN.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -27,7 +27,12 @@ const a = idx.indexOf("__SITE_CONTENT__ ||");
 const b = idx.indexOf("{", a);
 let d = 0, i = b, q = null;
 for (; i < idx.length; i++) { const c = idx[i]; if (q) { if (c === "\\") i++; else if (c === q) q = null; continue; } if (c === '"' || c === "'" || c === "`") q = c; else if (c === "{") d++; else if (c === "}") { d--; if (d === 0) { i++; break; } } }
-const content = JSON.parse(idx.slice(b, i));
+// Le bloc __SITE_CONTENT__ peut être du JSON strict OU un objet JS (clés non
+// quotées) : on tente JSON.parse, sinon on évalue comme littéral JS.
+const rawContentBlock = idx.slice(b, i);
+let content;
+try { content = JSON.parse(rawContentBlock); }
+catch { content = new Function("return (" + rawContentBlock + ")")(); }
 // Réécrit les chemins d'images vers un chemin servable depuis outDir.
 const imgBase = `../../../../public/_templates/${tpl}`;
 const fixImgs = (o) => {
