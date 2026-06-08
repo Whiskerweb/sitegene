@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ocean West Studio | Photographie de mariage de luxe</title>
+  <meta name="description" content="Photographie et cinématographie de mariage haut de gamme — capturer des histoires authentiques à travers le monde.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Google Sans Flex', Arial, sans-serif; background: #FAF8F5; color: #0A0A0A; margin: 0; }
+    .font-narrow { font-family: 'Arial Narrow', Arial, sans-serif; }
+    .hero-gradient { background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0) 100%); }
+    @keyframes spin-slow { to { transform: rotate(360deg); } }
+    .spin-slow { animation: spin-slow 20s linear infinite; transform-origin: 50px 50px; }
+    .faq-item .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+    .faq-item.open .faq-answer { max-height: 200px; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+  </style>
+</head>
+<body class="bg-bg">
+
+  <!-- HEADER -->
+  <header>
+    <!-- NAV -->
+    <nav class="z-50 text-white w-full absolute top-0">
+      <div class="flex h-28 max-w-[100rem] mx-auto px-6 lg:px-12 items-center justify-between">
+        <div class="hidden lg:flex items-center justify-end space-x-6 xl:space-x-10 w-2/5">
+          <a href="#" data-sg-path="nav[0]" class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap">Accueil</a>
+          <a href="#" data-sg-path="nav[1]" class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap">Mini-séances</a>
+          <a href="#services" data-sg-path="nav[2]" class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap">Prestations</a>
+        </div>
+        <div class="flex w-1/5 justify-center">
+          <a href="#" class="inline-block hover:opacity-80 transition-opacity">
+            <svg width="44" height="44" viewBox="0 0 48 48" fill="none"><circle cx="21" cy="24" r="14" stroke="white" stroke-width="1.5"/><circle cx="27" cy="24" r="14" stroke="white" stroke-width="1.5"/></svg>
+          </a>
+        </div>
+        <div class="hidden lg:flex w-2/5 space-x-6 xl:space-x-10 items-center justify-start">
+          <a href="#portfolio" data-sg-path="nav[3]" class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap">Portfolio</a>
+          <a href="#about" data-sg-path="nav[4]" class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap">À propos</a>
+          <a href="#contact" data-sg-path="nav[5]" class="uppercase text-xs font-thin tracking-[0.2em] hover:text-gray-300 transition-colors whitespace-nowrap">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Badge rotatif -->
+    <div class="pointer-events-none absolute top-[85vh] right-4 lg:right-12 w-36 h-36 lg:w-40 lg:h-40 opacity-90 mix-blend-difference z-40">
+      <svg viewBox="0 0 100 100" class="overflow-visible w-full h-full">
+        <g class="spin-slow">
+          <path id="circlePath" d="M 50,50 m -35,0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none"/>
+          <text class="uppercase font-thin fill-white tracking-widest" style="font-size:8.5px;">
+            <textPath href="#circlePath" startOffset="0%" data-sg-path="spinningBadge">MARIAGES • FILMS • PHOTOGRAPHIE • OCEAN WEST STUDIO •</textPath>
+          </text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- HERO -->
+    <section class="flex flex-col bg-ink w-full h-screen pb-16 md:pb-24 relative justify-end">
+      <div class="overflow-hidden bg-ink absolute inset-0">
+        <img data-sg-img="hero.image" src="../../../../public/_templates/luxury-wedding/img/hero.jpg" alt="" class="w-full h-full object-cover object-center opacity-80 grayscale" />
+        <div class="hero-gradient absolute inset-0"></div>
+      </div>
+      <div class="z-10 w-full max-w-[100rem] mx-auto px-6 lg:px-12 relative">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-24 items-end">
+          <h1 class="leading-[0.9] text-6xl sm:text-7xl lg:text-8xl text-white tracking-tighter font-thin drop-shadow-lg">
+            <span data-sg-path="hero.title1">Mariage</span><br>
+            <span data-sg-path="hero.title2">Photographie</span>
+          </h1>
+          <p data-sg-path="hero.tagline" class="text-2xl md:text-3xl leading-relaxed text-gray-200 font-thin max-w-xl drop-shadow-md">Si vous cherchez un photographe de mariage authentique, capable de saisir l’essence de votre histoire et de vos émotions, vous êtes au bon endroit. En tant que photographe haut de gamme, je vais bien au-delà des images traditionnelles pour créer des souvenirs uniques et inoubliables.</p>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <main>
+    <!-- BANDEAU LOGOS -->
+    <section data-sg-path="logos" class="bg-ink border-b border-white/5 py-12">
+      <div class="max-w-[100rem] mx-auto px-6 lg:px-12">
+        <p class="text-center text-white/60 font-thin tracking-widest text-xs uppercase mb-8" data-sg-path="logos.label">Élégance mise en avant</p>
+        <div class="flex flex-wrap justify-center items-center gap-8 lg:gap-16 text-white/80 font-thin text-lg">
+          <span data-sg-path="logos.items[0]">VOGUE</span>
+          <span data-sg-path="logos.items[1]">Brides</span>
+          <span data-sg-path="logos.items[2]">Style Me Pretty</span>
+          <span data-sg-path="logos.items[3]">The Knot</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- À PROPOS / PHILOSOPHIE -->
+    <section id="about" data-sg-path="philosophy" class="bg-bg py-24 md:py-32">
+      <div class="max-w-[100rem] mx-auto px-6 lg:px-12 relative">
+        <div class="max-w-4xl">
+          <p data-sg-path="philosophy.text" class="text-2xl md:text-3xl lg:text-4xl leading-relaxed font-extralight text-ink/80">
+            Pas de panique ! Je comprends vos inquiétudes et je suis là pour vous simplifier les choses. Mon équipe et moi vous aiderons à vous sentir <em class="italic">à l’aise, naturels</em> et à <em class="italic">profiter</em> de chaque instant. Notre objectif ? Restituer qui vous êtes vraiment, de la manière la plus <em class="italic">authentique</em> possible, capturer toute l’excitation, les larmes, la joie, et créer des photos et vidéos qui dureront <em class="italic">pour toujours</em>.
+          </p>
+        </div>
+        <img data-sg-img="philosophy.imageRight" src="../../../../public/_templates/luxury-wedding/img/philosophy-portrait.jpg" alt="Portrait en noir et blanc" class="hidden lg:block absolute top-0 right-0 w-1/3 h-auto aspect-[3/4] object-cover object-center" style="margin-top: -8rem; margin-right: 4rem;">
+        <img data-sg-img="philosophy.imageLeft" src="../../../../public/_templates/luxury-wedding/img/philosophy-portrait-left.jpg" alt="Portrait en noir et blanc" class="hidden lg:block absolute bottom-0 left-0 w-1/4 h-auto aspect-[3/4] object-cover object-center" style="margin-bottom: -6rem; margin-left: 2rem;">
+      </div>
+    </section>
+
+    <!-- ÉQUIPE -->
+    <section data-sg-path="team" class="bg-inkDeep py-24 md:py-32 text-white">
+      <div class="max-w-[100rem] mx-auto px-6 lg:px-12">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16">
+          <h2 class="text-5xl md:text-6xl font-thin tracking-tighter mb-4 md:mb-0" data-sg-path="team.heading1">Vision & Savoir-faire</h2>
+          <p class="font-extralight text-white/60 text-lg lg:text-xl max-w-md" data-sg-path="team.intro">Depuis plus de dix ans, nous documentons des histoires d’amour aux quatre coins du monde. Notre approche allie la précision éditoriale à l’intuition brute du reportage. Nous ne prenons pas simplement des photos : nous créons des héritages.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-12 lg:gap-24">
+          <div data-sg-path="team.members[0]">
+            <img src="../../../../public/_templates/luxury-wedding/img/team-photographer.jpg" alt="Heena Malhotra, Lead Photographer" class="w-full h-auto aspect-[4/5] object-cover object-center mb-6">
+            <h3 class="text-2xl font-thin tracking-tight" data-sg-path="team.members[0].name">Heena Malhotra</h3>
+            <p class="text-sm uppercase tracking-widest text-white/60 mb-4" data-sg-path="team.members[0].role">Lead Photographer</p>
+            <p class="font-extralight text-white/80 leading-relaxed" data-sg-path="team.members[0].bio">Elena apporte un regard éditorial et une approche discrète, garantissant que chaque image soit composée avec intention pour immortaliser l’atmosphère éphémère et les regards furtifs de votre journée.</p>
+          </div>
+          <div data-sg-path="team.members[1]">
+            <img src="../../../../public/_templates/luxury-wedding/img/team-cinematographer.jpg" alt="Eddie Licea, Lead Cinematographer" class="w-full h-auto aspect-[4/5] object-cover object-center mb-6">
+            <h3 class="text-2xl font-thin tracking-tight" data-sg-path="team.members[1].name">Eddie Licea</h3>
+            <p class="text-sm uppercase tracking-widest text-white/60 mb-4" data-sg-path="team.members[1].role">Lead Cinematographer</p>
+            <p class="font-extralight text-white/80 leading-relaxed" data-sg-path="team.members[1].bio">Julian transforme l’émotion brute en héritages cinématographiques. Son approche narrative met en valeur l’architecture grandiose et l’énergie dynamique de votre célébration.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRESTATIONS -->
+    <section id="services" data-sg-path="services" class="bg-bgLight py-24 md:py-32">
+      <div class="max-w-[100rem] mx-auto px-6 lg:px-12">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16">
+          <h2 class="text-5xl md:text-6xl font-thin tracking-tighter mb-4 md:mb-0" data-sg-path="services.label">Prestations</h2>
+          <p class="font-extralight text-ink/60 text-lg lg:text-xl max-w-md" data-sg-path="services.intro">Nos solutions sont conçues sur mesure pour s’adapter à la vision unique de votre célébration, alliant art, fiabilité et élégance à chaque étape de votre parcours.</p>
+        </div>
+        <div class="space-y-16">
+          <div data-sg-path="services.items[0]" class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h3 class="text-3xl md:text-4xl font-thin tracking-tight mb-4" data-sg-path="services.items[0].title">Images Éditoriales & Intemporelles</h3>
+              <p class="text-sm uppercase tracking-widest text-ink/60 mb-4" data-sg-path="services.items[0].category">Photographie</p>
+              <p class="font-extralight text-ink/80 leading-relaxed" data-sg-path="services.items[0].desc">Des photographies soigneusement sélectionnées, capturant aussi bien les grands moments que les détails discrets. Nous privilégions la lumière naturelle, des compositions raffinées et l’émotion brute pour créer un héritage visuel qui vous ressemble.</p>
+            </div>
+            <img src="../../../../public/_templates/luxury-wedding/img/service-photography.jpg" alt="Service de photographie" class="w-full h-auto aspect-[4/3] object-cover object-center">
+          </div>
+          <div data-sg-path="services.items[1]" class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h3 class="text-3xl md:text-4xl font-thin tracking-tight mb-4" data-sg-path="services.items[1].title">Films Cinématographiques & Émotionnels</h3>
+              <p class="text-sm uppercase tracking-widest text-ink/60 mb-4" data-sg-path="services.items[1].category">Vidéographie</p>
+              <p class="font-extralight text-ink/80 leading-relaxed" data-sg-path="services.items[1].desc">Des portraits animés qui racontent le récit de votre journée. Nous réalisons des films élégants et chargés d’émotion, accompagnés d’une bande-son sur mesure, pour préserver l’atmosphère, les vœux échangés et l’énergie dynamique de votre célébration.</p>
+            </div>
+            <img src="../../../../public/_templates/luxury-wedding/img/service-videography.jpg" alt="Service de vidéographie" class="w-full h-auto aspect-[4/3] object-cover object-center">
+          </div>
+          <div data-sg-path="services.items[2]" class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h3 class="text-3xl md:text-4xl font-thin tracking-tight mb-4" data-sg-path="services.items[2].title">Retransmission en Direct de Mariage</h3>
+              <p class="text-sm uppercase tracking-widest text-ink/60 mb-4" data-sg-path="services.items[2].category">Retransmission</p>
+              <p class="font-extralight text-ink/80 leading-relaxed" data-sg-path="services.items[2].desc">Partagez vos moments les plus précieux en temps réel avec vos proches, où qu’ils soient dans le monde. Nous assurons une diffusion multi-caméras avec une qualité audio optimale pour que personne ne manque votre célébration.</p>
+            </div>
+            <img src="../../../../public/_templates/luxury-wedding/img/service-broadcasting.jpg" alt="Service de retransmission en direct" class="w-full h-auto aspect-[4/3] object-cover object-center">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio" data-sg-path="portfolio" class="bg-ink py-24 md:py-32 text-white">
+      <div class="max-w-[100rem] mx-auto px-6 lg:px-12">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16">
+          <div>
+            <h2 class="text-5xl md:text-6xl font-thin tracking-tighter" data-sg-path="portfolio.heading1">Sélection d’œuvres</h2>
+            <p class="text-2xl md:text-3xl font-thin tracking-tight mt-2" data-sg-path="portfolio.subheading">Moments que l’on revisite</p>
+          </div>
+          <p class="font-extralight text-white/60 text-lg lg:text-xl max-w-md mt-8 md:mt-0" data-sg-path="portfolio.intro">Ces images sont choisies encore et encore, pour la beauté et l’émotion qu’elles dégagent. Observez, laissez-vous inspirer et ressentez — peut-être résonneront-elles en vous aujourd’hui et feront-elles partie de votre héritage.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="relative group">
+            <img src="../../../../public/_templates/luxury-wedding/img/gallery-rings.jpg" alt="Détail des alliances" class="w-full h-auto aspect-[4/3] object-cover object-center">
+          </div>
+          <div class="relative group">
+            <img src="../../../../public/_templates/luxury-wedding/img/gallery-bouquet.jpg" alt="Détail du bouquet de la mariée" class="w-full h-auto aspect-[4/3] object-cover object-center">
+          </div>
+          <div class="relative group">
+            <img src="../../../../public/_templates/luxury-wedding/img/gallery-bride-blur.jpg" alt="Portrait de la mariée" class="w-full h-auto aspect-[4/3] object-cover object-center">
+            <img src="../../../../public/_templates/luxury-wedding/img/gallery-bride-sharp.jpg" alt="Portrait de la mariée" class="absolute inset-0 w-full h-full object-cover object-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          </div>
+          <div class="relative group">
+            <img src="../../../../public/_templates/luxury-wedding/img/gallery-table.jpg" alt="Décoration de table de mariage" class="w-full h-auto aspect-[4/3] object-cover object-center">
+          </div>
+          <div class="relative group">
+            <img src="../../../../public/_templates/luxury-wedding/img/gallery-couple-blur.jpg" alt="Couple en marche" class="w-full h-auto aspect-[4/3] object-cover object-center">
+            <img src="../../../../public/_templates/luxury-wedding/img/gallery-couple-sharp.jpg" alt="Couple en marche" class="absolute inset-0 w-full h-full object-cover object-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          </div>
+          <div class="relative group">
+            <img src="../../../../public/_templates/luxury-wedding/img/gallery-dancing.jpg" alt="Danse de célébration" class="w-full h-auto aspect-[4/3] object-cover object-center">
+          </div>
+          <div class="relative group lg:col-start-2">
+            <img src="../../../../public/_templates/luxury-wedding/img/gallery-champagne.jpg" alt="Toast au champagne" class="w-full h-auto aspect-[4/3] object-cover object-center">
+          </div>
+          <div class="relative group">
+            <img src="../../../../public/_templates/luxury-wedding/img/gallery-dress.jpg" alt="Détail de la robe de mariée" class="w-full h-auto aspect-[4/3] object-cover object-center">
+          </div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8 mt-16 max-w-4xl mx-auto text-center">
+          <div data-sg-path="portfolio.caption1">
+            <h4 class="text-xl font-thin tracking-tight mb-2" data-sg-path="portfolio.caption1.title">Beauté discrète</h4>
+            <p class="font-extralight text-white/80" data-sg-path="portfolio.caption1.body">Des instants où l’élégance naturelle se révèle avec simplicité, assurance et sans artifice.</p>
+          </div>
+          <div data-sg-path="portfolio.caption2">
+            <h4 class="text-xl font-thin tracking-tight mb-2" data-sg-path="portfolio.caption2.title">Harmonie naturelle</h4>
+            <p class="font-extralight text-white/80" data-sg-path="portfolio.caption2.body">Des liens dont la forme, l’énergie et le rythme créent une profonde sensation d’harmonie au premier regard.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÉMOIGNAGE -->
+    <section data-sg-path="testimonial" class="bg-inkDeep py-24 md:py-32 text-white">
+      <div class="max-w-4xl mx-auto px-6 lg:px-12 text-center">
+        <p class="text-3xl md:text-4xl font-thin leading-relaxed mb-8" data-sg-path="testimonial.quote">« Faire appel à Ocean West a été le meilleur investissement que nous ayons fait. Leur présence était apaisante, et le résultat final mériterait les pages d’un magazine. Ils ont capturé notre amour exactement tel que nous l’avons vécu. »</p>
+        <p class="text-sm uppercase tracking-widest text-white/60" data-sg-path="testimonial.name">Eleanor & James</p>
+        <p class="font-extralight text-white/80" data-sg-path="testimonial.venue">Château de Villette, France</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section data-sg-path="faq" class="bg-white py-24 md:py-32">
+      <div class="max-w-4xl mx-auto px-6 lg:px-12">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16">
+          <h2 class="text-5xl md:text-6xl font-thin tracking-tighter mb-4 md:mb-0" data-sg-path="faq.heading">Investissement & FAQ</h2>
+          <p class="font-extralight text-ink/60 text-lg lg:text-xl max-w-md" data-sg-path="faq.label">Informations</p>
+        </div>
+        <div class="space-y-6" id="faq-accordion">
+          <div class="faq-item border-b border-ink/10 pb-6">
+            <button class="faq-question w-full flex justify-between items-center text-left">
+              <span class="text-xl font-thin tracking-tight" data-sg-path="faq.items[0].q">Proposez-vous des forfaits sur mesure ?</span>
+              <span class="faq-icon text-2xl font-light transition-transform">+</span>
+            </button>
+            <div class="faq-answer mt-4">
+              <p class="font-extralight text-ink/80" data-sg-path="faq.items[0].a">Oui ! Nous adaptons nos forfaits en fonction du nombre d’heures dont vous avez besoin.</p>
+            </div>
+          </div>
+          <div class="faq-item border-b border-ink/10 pb-6">
+            <button class="faq-question w-full flex justify-between items-center text-left">
+              <span class="text-xl font-thin tracking-tight" data-sg-path="faq.items[1].q">Y a-t-il un acompte à verser ?</span>
+              <span class="faq-icon text-2xl font-light transition-transform">+</span>
+            </button>
+            <div class="faq-answer mt-4">
+              <p class="font-extralight text-ink/80" data-sg-path="faq.items[1].a">Oui, nous demandons un contrat signé et un acompte non remboursable de 30 % pour réserver votre date et ga</p>
+            </div>
+          </div>
+          <div class="faq-item border-b border-ink/10 pb-6">
+            <button class="faq-question w-full flex justify-between items-center text-left">
+              <span class="text-xl font-thin tracking-tight" data-sg-path="faq.items[2].q">Combien de temps faut-il attendre pour recevoi</span>
+              <span class="faq-icon text-2xl font-light transition-transform">+</span>
+            </button>
+            <div class="faq-answer mt-4">
+              <p class="font-extralight text-ink/80" data-sg-path="faq.items[2].a">Pour une célébration d’une journée complète, vous recevrez votre galerie soigneusement sélectionnée et vot</p>
+            </div>
+          </div>
+          <div class="faq-item border-b border-ink/10 pb-6">
+            <button class="faq-question w-full flex justify-between items-center text-left">
+              <span class="text-xl font-thin tracking-tight" data-sg-path="faq.items[3].q">Fournissez-vous les fichiers bruts ?</span>
+              <span class="faq-icon text-2xl font-light transition-transform">+</span>
+            </button>
+            <div class="faq-answer mt-4">
+              <p class="font-extralight text-ink/80" data-sg-path="faq.items[3].a">Non, nous ne fournissons pas les fichiers bruts. Notre processus de retouche et d’étalonnage des couleurs </p>
+            </div>
+          </div>
+          <div class="faq-item border-b border-ink/10 pb-6">
+            <button class="faq-question w-full flex justify-between items-center text-left">
+              <span class="text-xl font-thin tracking-tight" data-sg-path="faq.items[4].q">Pouvons-nous demander des prises de vue spécif</span>
+              <span class="faq-icon text-2xl font-light transition-transform">+</span>
+            </button>
+            <div class="faq-answer mt-4">
+              <p class="font-extralight text-ink/80" data-sg-path="faq.items[4].a">Absolument. Avant votre célébration, nous vous enverrons un questionnaire détaillé pour recueillir vos dem</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" data-sg-path="contact" class="bg-ink py-24 md:py-32 text-white">
+      <div class="max-w-4xl mx-auto px-6 lg:px-12 text-center">
+        <h2 class="text-5xl md:text-6xl font-thin tracking-tighter mb-8" data-sg-path="contact.heading">Commencez votre aventure</h2>
+        <p class="text-2xl md:text-3xl font-thin leading-relaxed mb-12" data-sg-path="contact.intro">Nous acceptons un nombre limité de projets chaque année pour garantir à chaque couple une attention et un savoir-faire exceptionnels. Veuillez partager les détails de votre célébration ci-dessous.</p>
+        <a href="mailto:hello@oceanweststudio.com" class="text-2xl md:text-3xl font-thin tracking-tight hover:text-gray-300 transition-colors" data-sg-path="contact.email">hello@oceanweststudio.com</a>
+        <p class="mt-4 font-extralight text-white/80" data-sg-path="contact.location">Seattle / Monde entier</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-inkDeep text-white py-16">
+    <div class="max-w-[100rem] mx-auto px-6 lg:px-12 flex flex-col items-center">
+      <a href="#" class="inline-block mb-8 hover:opacity-80 transition-opacity">
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none"><circle cx="21" cy="24" r="14" stroke="white" stroke-width="1.5"/><circle cx="27" cy="24" r="14" stroke="white" stroke-width="1.5"/></svg>
+      </a>
+      <p class="text-xs uppercase tracking-widest text-white/60">Propulsé par Akyra</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const accordion = document.getElementById('faq-accordion');
+      if (accordion) {
+        accordion.addEventListener('click', (e) => {
+          const question = e.target.closest('.faq-question');
+          if (question) {
+            const item = question.parentElement;
+            item.classList.toggle('open');
+          }
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

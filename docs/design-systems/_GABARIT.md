@@ -5,6 +5,19 @@
 > millimètre, ET assez de règles pour qu'elle l'ADAPTE à un client sans dériver
 > vers du générique. Il vit dans `public/_templates/<id>/design-system.md`.
 
+## Décisions produit (cadre cible)
+
+- **Génération** : le site est généré par l'IA **une seule fois, à l'activation
+  du thème** par le client, puis stocké et servi statiquement (pas de
+  régénération à chaque édition).
+- **Édition** : le HTML généré doit rester éditable par l'éditeur WYSIWYG actuel.
+  Donc chaque texte/image modifiable porte les attributs **`data-sg-path="…"`**
+  (texte) et **`data-sg-img="…"`** (image), exactement comme les templates
+  figés. Les chemins suivent la structure de contenu du métier
+  (ex. `hero.title`, `services.items[0].title`, `services.items[0].image`).
+  → cette exigence est rappelée dans la section « Règles d'adaptation » de chaque
+  design system et dans le prompt système de génération.
+
 ## Règles d'écriture
 
 - **Écrire pour Mistral** : impératif, concret, zéro ambiguïté. Chaque classe
