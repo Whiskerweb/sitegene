@@ -15,6 +15,8 @@ export type ContentRow = {
   version: number;
   content_json: Record<string, unknown> | null;
   is_published: boolean;
+  /** Shell HTML bespoke généré par l'IA (sinon null → index.html statique). */
+  generated_html?: string | null;
 };
 
 // --- Sélecteurs purs (testables sans DB) ------------------------------------
@@ -42,7 +44,8 @@ export function distinctTemplates(rows: ContentRow[]): string[] {
 
 // --- Accès DB ----------------------------------------------------------------
 
-const COLS = "id, site_id, template_id, version, content_json, is_published";
+const COLS =
+  "id, site_id, template_id, version, content_json, is_published, generated_html";
 
 /** Snapshot éditable (version max) de la peau `templateId` pour ce site. */
 export async function loadEditableSnapshot(
@@ -100,10 +103,15 @@ export async function saveDraftSnapshot(
   templateId: string,
   contentJson: Record<string, unknown>,
   createdBy: "operator" | "client" | "ai" = "client",
+  // Shell HTML bespoke (génération IA). `undefined` = ne pas toucher la colonne
+  // (édition de contenu seule) ; `null`/string = écrire la valeur.
+  generatedHtml?: string | null,
 ): Promise<number> {
   const top = await loadEditableSnapshot(admin, siteId, templateId);
   if (top && !top.is_published) {
-    await admin.from("site_content").update({ content_json: contentJson }).eq("id", top.id);
+    const patch: Record<string, unknown> = { content_json: contentJson };
+    if (generatedHtml !== undefined) patch.generated_html = generatedHtml;
+    await admin.from("site_content").update(patch).eq("id", top.id);
     return top.version;
   }
   const version = (top?.version ?? 0) + 1;
@@ -114,6 +122,7 @@ export async function saveDraftSnapshot(
     content_json: contentJson,
     is_published: false,
     created_by: createdBy,
+    ...(generatedHtml !== undefined ? { generated_html: generatedHtml } : {}),
   });
   return version;
 }

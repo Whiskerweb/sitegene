@@ -140,6 +140,10 @@ export interface BuildSiteOpts {
   /** Préfixe public du site ("/s/<slug>", "/r/<token>") pour la nav inter-pages
    *  de la lignée HTML. Absent → les liens data-sg-page restent inertes (aperçus). */
   basePath?: string;
+  /** Shell HTML bespoke (site sur-mesure généré par l'IA). Fourni → utilisé tel
+   *  quel à la place du index.html statique du template ; l'injection runtime
+   *  (__SITE_CONTENT__, masques) et l'hydratation data-sg-* restent identiques. */
+  shellHtml?: string | null;
 }
 
 /** Script léger : câble les <a data-sg-page="…"> sur le préfixe public du site. */
@@ -207,6 +211,29 @@ export function sectionMaskScript(): string {
   );
 }
 
+/**
+ * Hydrateur générique pour les shells bespoke (générés par l'IA) : applique
+ * `window.__SITE_CONTENT__` aux `[data-sg-path]` (texte) et `[data-sg-img]`
+ * (image). Ne touche jamais un élément qui a des enfants (on n'écrase pas une
+ * structure interne). S'exécute avant les scripts du body (kit d'animation).
+ */
+function sgHydrateScript(): string {
+  return (
+    `<script>(function(){var C=window.__SITE_CONTENT__||{};` +
+    `function g(o,p){var a=String(p).replace(/\\[(\\d+)\\]/g,'.$1').split('.').filter(Boolean),c=o;` +
+    `for(var i=0;i<a.length;i++){if(c==null||typeof c!=='object')return undefined;c=c[a[i]];}return c;}` +
+    `function run(){` +
+    `document.querySelectorAll('[data-sg-path]').forEach(function(el){` +
+    `if(el.children&&el.children.length)return;var v=g(C,el.getAttribute('data-sg-path'));` +
+    `if(typeof v==='string'&&v.length)el.textContent=v;});` +
+    `document.querySelectorAll('[data-sg-img]').forEach(function(el){` +
+    `var v=g(C,el.getAttribute('data-sg-img'));if(typeof v!=='string'||!v.length)return;` +
+    `if(el.tagName==='IMG')el.setAttribute('src',v);else el.style.backgroundImage='url('+v+')';});}` +
+    `if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();` +
+    `})();</script>`
+  );
+}
+
 export async function buildSiteHtml(
   origin: string,
   templateId: string,
@@ -215,21 +242,33 @@ export async function buildSiteHtml(
   opts?: BuildSiteOpts,
 ): Promise<string | null> {
   const pagePath = opts?.pagePath ?? "/";
-  const file = isSpaTemplate(templateId)
-    ? "index.html" // SPA : routeur client, toujours le même shell
-    : await pageFileFor(origin, templateId, pagePath);
-
-  const res = await fetch(`${origin}/_templates/${templateId}/${file}`, {
-    cache: "no-store",
-  });
-  if (!res.ok) return null;
-  let html = absolutizeTemplateAssets(await res.text(), templateId);
+  // Shell bespoke fourni (site sur-mesure) → on l'utilise tel quel. Sinon, on
+  // récupère le index.html / fichier de page statique du template.
+  let rawShell: string;
+  if (typeof opts?.shellHtml === "string" && opts.shellHtml.length > 0) {
+    rawShell = opts.shellHtml;
+  } else {
+    const file = isSpaTemplate(templateId)
+      ? "index.html" // SPA : routeur client, toujours le même shell
+      : await pageFileFor(origin, templateId, pagePath);
+    const res = await fetch(`${origin}/_templates/${templateId}/${file}`, {
+      cache: "no-store",
+    });
+    if (!res.ok) return null;
+    rawShell = await res.text();
+  }
+  let html = absolutizeTemplateAssets(rawShell, templateId);
   const absContent = absolutizeContentAssets(content, templateId);
   // Effets achetés appliqués (clés __effects/__components) : CSS+configs en
   // tête, JS+injecteur en fin de body. Injection vide si aucun effet.
   const fx = buildEffectsInjection(absContent, templateId);
   const inject =
     buildHeadInjection(absContent, meta) +
+    // Shell bespoke (généré IA) : il ne porte pas le runtime d'hydratation des
+    // templates statiques → on injecte un hydrateur générique data-sg-* en tête
+    // (avant les scripts du body, donc avant le kit d'animation) pour que les
+    // éditions de content_json s'appliquent au rechargement.
+    (typeof opts?.shellHtml === "string" && opts.shellHtml.length > 0 ? sgHydrateScript() : "") +
     (fx.headCss ? `<style id="sg-fx">${fx.headCss}</style>` : "") +
     fx.headScript;
   // retire un <title> existant du shell (sera remplacé par celui de la page)
