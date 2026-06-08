@@ -40,6 +40,9 @@ const contentFixed = fixImgs(content);
 
 const SYSTEM = `Tu es un développeur front senior. On te donne le DESIGN SYSTEM complet d'un template de site vitrine + le CONTENU à afficher. Produis la PAGE D'ACCUEIL COMPLÈTE en HTML5 autonome : header (nav + hero) PUIS toutes les sections du corps décrites dans le design system, dans l'ordre, PUIS le footer.
 
+ANTI-SLOP (ne jamais retomber dans les défauts LLM) :
+- La SEULE source de vérité esthétique est le DESIGN SYSTEM. N'injecte JAMAIS les clichés génériques : pas de dégradé violet/indigo « IA » s'il n'est pas dans le design system, pas de glassmorphism générique partout, pas de « trois cartes égales » par réflexe, pas de hero centré sur mesh sombre par défaut, pas d'Inter+slate-900 si le design system dit autre chose, pas de micro-animations en boucle infinie. Respecte les polices, couleurs et structures du design system, point.
+
 EXIGENCES :
 - Le HEADER doit être reproduit AU MILLIMÈTRE (classes Tailwind exactes du design system).
 - Les sections du corps suivent les patterns décrits (en-tête de section, grilles, cartes, hover, accordéon FAQ…). Réutilise les classes citées.

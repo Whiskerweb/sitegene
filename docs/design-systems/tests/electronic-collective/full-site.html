@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NYXIS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=MuseoModerno:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family:'Inter',sans-serif; background:#f0f0f0; color:#000; margin:0; }
+    .font-display { font-family:'"MuseoModerno"',sans-serif; }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:'#000000',
+            paper:'#f0f0f0',
+            panel:'#212121',
+            accent:'#0000ee',
+            white:'#ffffff',
+            muted:'#858585'
+          },
+          fontFamily: {
+            display:['"MuseoModerno"','sans-serif'],
+            sans:['"Inter"','sans-serif']
+          },
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-paper">
+
+  <!-- HEADER / HERO -->
+  <section class="relative" data-anim="fade">
+    <div class="grid grid-cols-1 md:grid-cols-3 h-screen">
+      <div class="relative overflow-hidden bg-panel">
+        <img data-sg-img="hero.img1" src="../../../../public/_templates/electronic-collective/img/hero1.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" data-anim="fade" data-anim-delay="0"/>
+      </div>
+      <div class="relative overflow-hidden bg-panel">
+        <img data-sg-img="hero.img2" src="../../../../public/_templates/electronic-collective/img/hero2.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" data-anim="fade" data-anim-delay="80"/>
+        <div class="absolute inset-0 z-20 flex items-center justify-center">
+          <h1 data-sg-path="hero.title" class="font-display text-white text-3xl md:text-2xl lg:text-4xl tracking-tight px-4 text-center drop-shadow-lg" data-anim="fade" data-anim-delay="160">NYXIS</h1>
+        </div>
+      </div>
+      <div class="relative overflow-hidden bg-panel">
+        <img data-sg-img="hero.img3" src="../../../../public/_templates/electronic-collective/img/hero3.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" data-anim="fade" data-anim-delay="240"/>
+      </div>
+    </div>
+    <nav class="absolute bottom-6 left-6 z-30 flex flex-wrap gap-6 font-sans text-sm text-ink mix-blend-difference text-white">
+      <a href="#about" data-sg-path="nav[0]" class="hover:text-accent transition-colors">accueil</a>
+      <a href="#galerie" data-sg-path="nav[1]" class="hover:text-accent transition-colors">galerie</a>
+      <a href="#contact" data-sg-path="nav[2]" class="hover:text-accent transition-colors">réservation</a>
+    </nav>
+    <div class="absolute bottom-6 right-6 z-30 flex gap-6 font-sans text-sm mix-blend-difference text-white">
+      <a href="#" data-sg-path="socials[0]" class="hover:text-accent transition-colors">facebook</a>
+      <a href="#" data-sg-path="socials[1]" class="hover:text-accent transition-colors">twitter</a>
+      <a href="#" data-sg-path="socials[2]" class="hover:text-accent transition-colors">youtube</a>
+    </div>
+  </section>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- BIO SECTION -->
+    <section id="about" class="py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start" data-anim="fade">
+        <div class="lg:col-span-1">
+          <h2 data-sg-path="bio.heading" class="font-display text-5xl md:text-7xl lg:text-8xl leading-none" data-anim="left">NYXIS</h2>
+        </div>
+        <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="space-y-6" data-anim="fade" data-anim-delay="80">
+            <p data-sg-path="bio.text" class="text-lg leading-relaxed">
+              NYXIS est le fruit d’un collectif de musique électronique né dans l’underground néon. Ce groupe avant-gardiste repousse les limites du son électronique avec des sets taillés pour les festivals et des paysages sonores audacieux. Alliant influences musicales variées et passion pour la technologie, les performances immersives de NYXIS transportent le public dans un univers où musique et machine s’unissent en une harmonie visionnaire.
+            </p>
+          </div>
+          <div class="grid grid-cols-1 gap-4">
+            <img data-sg-img="bio.img1" src="../../../../public/_templates/electronic-collective/img/bio1.jpg" alt="Performance live" class="w-full h-auto object-cover" data-anim="fade" data-anim-delay="160"/>
+            <img data-sg-img="bio.img2" src="../../../../public/_templates/electronic-collective/img/bio2.jpg" alt="Backstage" class="w-full h-auto object-cover" data-anim="fade" data-anim-delay="240"/>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOUR SECTION -->
+    <section id="tour" class="py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        <div class="lg:col-span-1">
+          <h2 data-sg-path="tour.label" class="font-display text-5xl md:text-7xl lg:text-8xl leading-none" data-anim="left">Tournée</h2>
+          <h3 data-sg-path="tour.label2" class="font-display text-5xl md:text-7xl lg:text-8xl leading-none text-muted" data-anim="left" data-anim-delay="80">d'été</h3>
+        </div>
+        <div class="lg:col-span-2 space-y-4">
+          <div class="grid grid-cols-[260px_1fr] gap-4 border-b border-muted pb-4" data-anim="fade" data-anim-delay="160">
+            <div class="text-muted text-sm" data-sg-path="tour.dates[0].date">12 juil. 2026</div>
+            <div>
+              <div data-sg-path="tour.dates[0].venue" class="font-medium">The Redwood Room</div>
+              <div data-sg-path="tour.dates[0].city" class="text-muted text-sm">Berlin, DE</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-[260px_1fr] gap-4 border-b border-muted pb-4" data-anim="fade" data-anim-delay="240">
+            <div class="text-muted text-sm" data-sg-path="tour.dates[1].date">19 juil. 2026</div>
+            <div>
+              <div data-sg-path="tour.dates[1].venue" class="font-medium">The Blue Moon Theatre</div>
+              <div data-sg-path="tour.dates[1].city" class="text-muted text-sm">Amsterdam, NL</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-[260px_1fr] gap-4 border-b border-muted pb-4" data-anim="fade" data-anim-delay="320">
+            <div class="text-muted text-sm" data-sg-path="tour.dates[2].date">2 août 2026</div>
+            <div>
+              <div data-sg-path="tour.dates[2].venue" class="font-medium">The Electric Garden</div>
+              <div data-sg-path="tour.dates[2].city" class="text-muted text-sm">Barcelone, ES</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-[260px_1fr] gap-4 border-b border-muted pb-4" data-anim="fade" data-anim-delay="400">
+            <div class="text-muted text-sm" data-sg-path="tour.dates[3].date">16 août 2026</div>
+            <div>
+              <div data-sg-path="tour.dates[3].venue" class="font-medium">The Silver Cathedral</div>
+              <div data-sg-path="tour.dates[3].city" class="text-muted text-sm">Londres, UK</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-[260px_1fr] gap-4 pb-4" data-anim="fade" data-anim-delay="480">
+            <div class="text-muted text-sm" data-sg-path="tour.dates[4].date">30 août 2026</div>
+            <div>
+              <div data-sg-path="tour.dates[4].venue" class="font-medium">The Emerald Palace</div>
+              <div data-sg-path="tour.dates[4].city" class="text-muted text-sm">Paris, FR</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-12">
+        <img data-sg-img="tour.img" src="../../../../public/_templates/electronic-collective/img/tour.jpg" alt="Scène de concert" class="w-full h-auto object-cover" data-anim="fade"/>
+      </div>
+    </section>
+
+    <!-- RELEASE SECTION -->
+    <section class="py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div data-anim="left">
+          <div class="flex items-baseline gap-4">
+            <h2 data-sg-path="release.label" class="font-display text-5xl md:text-7xl lg:text-8xl leading-none">Nouveau</h2>
+            <h3 data-sg-path="release.label2" class="font-display text-3xl md:text-5xl lg:text-6xl leading-none text-muted">Single</h3>
+          </div>
+          <h4 data-sg-path="release.title" class="font-display text-4xl md:text-6xl lg:text-7xl mt-4">Binary Beats</h4>
+          <div class="mt-8 space-y-4">
+            <p data-sg-path="release.listenLabel" class="text-muted">Écouter sur</p>
+            <div class="flex gap-4">
+              <a href="#" data-sg-path="release.platforms[0]" class="px-4 py-2 border border-ink hover:bg-ink hover:text-white transition-colors" data-anim="fade" data-anim-delay="80">Spotify</a>
+              <a href="#" data-sg-path="release.platforms[1]" class="px-4 py-2 border border-ink hover:bg-ink hover:text-white transition-colors" data-anim="fade" data-anim-delay="160">Youtube</a>
+              <a href="#" data-sg-path="release.platforms[2]" class="px-4 py-2 border border-ink hover:bg-ink hover:text-white transition-colors" data-anim="fade" data-anim-delay="240">Apple Music</a>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col items-center" data-anim="right">
+          <img data-sg-img="release.cover" src="../../../../public/_templates/electronic-collective/img/album-new.jpg" alt="Cover de Binary Beats" class="w-full max-w-sm h-auto object-cover shadow-2xl" data-anim="scale" data-anim-delay="80"/>
+          <div data-sg-path="release.year" class="font-display text-8xl md:text-9xl lg:text-[12rem] leading-none mt-4" data-anim="fade" data-anim-delay="160">2025</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PREVIOUS RELEASES SECTION -->
+    <section class="py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        <div class="lg:col-span-1">
+          <h2 data-sg-path="previous.label" class="font-display text-5xl md:text-7xl lg:text-8xl leading-none" data-anim="left">Anciens</h2>
+          <h3 data-sg-path="previous.label2" class="font-display text-5xl md:text-7xl lg:text-8xl leading-none text-muted" data-anim="left" data-anim-delay="80">Titres</h3>
+        </div>
+        <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="space-y-2" data-anim="fade" data-anim-delay="160">
+            <img data-sg-img="previous.items[0].cover" src="../../../../public/_templates/electronic-collective/img/album1.jpg" alt="Cover de Electric Odyssey" class="w-full h-auto object-cover"/>
+            <h4 data-sg-path="previous.items[0].title" class="font-medium">Electric Odyssey</h4>
+            <p data-sg-path="previous.items[0].year" class="text-muted text-sm">2022</p>
+          </div>
+          <div class="space-y-2" data-anim="fade" data-anim-delay="240">
+            <img data-sg-img="previous.items[1].cover" src="../../../../public/_templates/electronic-collective/img/album2.jpg" alt="Cover de Circuit Groove" class="w-full h-auto object-cover"/>
+            <h4 data-sg-path="previous.items[1].title" class="font-medium">Circuit Groove</h4>
+            <p data-sg-path="previous.items[1].year" class="text-muted text-sm">2022</p>
+          </div>
+          <div class="space-y-2" data-anim="fade" data-anim-delay="320">
+            <img data-sg-img="previous.items[2].cover" src="../../../../public/_templates/electronic-collective/img/album3.jpg" alt="Cover de Synthwave Serenade" class="w-full h-auto object-cover"/>
+            <h4 data-sg-path="previous.items[2].title" class="font-medium">Synthwave Serenade</h4>
+            <p data-sg-path="previous.items[2].year" class="text-muted text-sm">2020</p>
+          </div>
+          <div class="space-y-2" data-anim="fade" data-anim-delay="400">
+            <img data-sg-img="previous.items[3].cover" src="../../../../public/_templates/electronic-collective/img/album4.jpg" alt="Cover de Neon Pulse" class="w-full h-auto object-cover"/>
+            <h4 data-sg-path="previous.items[3].title" class="font-medium">Neon Pulse</h4>
+            <p data-sg-path="previous.items[3].year" class="text-muted text-sm">2021</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div data-anim="left">
+          <img data-sg-img="contact.img" src="../../../../public/_templates/electronic-collective/img/contact.jpg" alt="DJ en performance" class="w-full h-auto object-cover"/>
+        </div>
+        <div class="space-y-8" data-anim="right">
+          <div>
+            <p data-sg-path="contact.managementLabel" class="text-muted text-sm">Gestion :</p>
+            <a href="mailto:m@nyxis.live" data-sg-path="contact.managementEmail" class="text-lg hover:text-accent transition-colors">m@nyxis.live</a>
+          </div>
+          <div>
+            <p data-sg-path="contact.bookingLabel" class="text-muted text-sm">Réservations :</p>
+            <a href="mailto:tv@nyxis.live" data-sg-path="contact.bookingEmail" class="text-lg hover:text-accent transition-colors">tv@nyxis.live</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-panel text-white py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="text-center md:text-left">
+          <p data-sg-path="footer.copyright" class="text-sm">© 2025 NYXIS</p>
+          <p data-sg-path="footer.credit" class="text-sm text-muted">Collectif électronique · depuis 2014</p>
+        </div>
+        <div class="text-sm text-muted">
+          Propulsé par Akyra
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FAQ Accordion Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const accordions = document.querySelectorAll('[data-accordion]');
+      accordions.forEach(accordion => {
+        const items = accordion.querySelectorAll('[data-accordion-item]');
+        items.forEach(item => {
+          const header = item.querySelector('[data-accordion-header]');
+          const content = item.querySelector('[data-accordion-content]');
+          header.addEventListener('click', () => {
+            const isOpen = item.classList.contains('open');
+            items.forEach(i => i.classList.remove('open'));
+            if (!isOpen) {
+              item.classList.add('open');
+            }
+          });
+        });
+      });
+    });
+  </script>
+
+<!-- ═══ AKYRA MOTION KIT — animations partagées (vanilla, sans dépendance, respecte prefers-reduced-motion) ═══ -->
+<style>
+  [data-anim]{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+  [data-anim="fade"]{transform:none}
+  [data-anim="left"]{transform:translateX(-26px)}
+  [data-anim="right"]{transform:translateX(26px)}
+  [data-anim="scale"]{transform:scale(.96)}
+  [data-anim].in{opacity:1!important;transform:none!important}
+  /* Apparition du texte mot à mot */
+  .anim-words .w{display:inline-block;opacity:0;transform:translateY(0.5em);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .anim-words.in .w{opacity:1;transform:none}
+  /* Galerie accordéon : au survol, la vignette s'élargit, les autres se rétractent (CSS pur) */
+  .gallery-expand{display:flex}
+  .gallery-expand>.gx{flex:1 1 0;min-width:0;overflow:hidden;transition:flex-grow .7s cubic-bezier(.16,1,.3,1)}
+  .gallery-expand>.gx img{width:100%;height:100%;object-fit:cover}
+  @media (hover:hover){
+    .gallery-expand:hover>.gx{flex-grow:.6}
+    .gallery-expand>.gx:hover{flex-grow:3}
+  }
+  @media (prefers-reduced-motion:reduce){[data-anim],.anim-words .w{opacity:1!important;transform:none!important;transition:none!important}.gallery-expand>.gx{transition:none}}
+</style>
+<script>
+(function(){
+  var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var IO = 'IntersectionObserver' in window;
+
+  // 1) Révélation au scroll des éléments [data-anim] (stagger via data-anim-delay en ms)
+  var reveals = document.querySelectorAll('[data-anim]');
+  function showReveal(el){
+    var d = parseInt(el.getAttribute('data-anim-delay')||'0',10);
+    if(d) setTimeout(function(){el.classList.add('in')}, d); else el.classList.add('in');
+  }
+  if(RM || !IO){ reveals.forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioR = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ showReveal(en.target); ioR.unobserve(en.target);} });
+    },{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(function(e){ ioR.observe(e); });
+  }
+
+  // 2) Texte mot à mot : <h1 class="anim-words">…</h1>.
+  //    Découpe DOM-SAFE : on n'enveloppe QUE les nœuds texte (les balises internes
+  //    — dégradés, pilules — sont préservées intactes, jamais transformées en texte).
+  document.querySelectorAll('.anim-words').forEach(function(el){
+    if(el.dataset.split) return; el.dataset.split='1';
+    // Garde-fou : si le titre contient des balises internes (dégradé, pilule…),
+    // on NE découpe PAS (sinon dégradé cassé / mots invisibles) — il reste intact.
+    if(el.children.length > 0){ el.classList.remove('anim-words'); return; }
+    var wi = 0, textNodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    while(walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(function(tn){
+      if(!tn.nodeValue || !tn.nodeValue.trim()) return;
+      var frag = document.createDocumentFragment();
+      tn.nodeValue.split(/(\s+)/).forEach(function(part){
+        if(part === '') return;
+        if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+        var s = document.createElement('span'); s.className='w'; s.textContent=part;
+        s.style.transitionDelay=((wi++)*45)+'ms'; frag.appendChild(s);
+      });
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  });
+  if(RM || !IO){ document.querySelectorAll('.anim-words').forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioW = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ioW.unobserve(en.target);} });
+    },{threshold:0.25});
+    document.querySelectorAll('.anim-words').forEach(function(e){ ioW.observe(e); });
+  }
+
+  // 3) Compteurs : <span data-count="1200" data-count-suffix="+" data-count-decimals="0">0</span>
+  function fmt(v,dec){ return v.toLocaleString('fr-FR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+  function countUp(el){
+    var target=parseFloat(el.getAttribute('data-count'))||0,
+        suf=el.getAttribute('data-count-suffix')||'', pre=el.getAttribute('data-count-prefix')||'',
+        dec=parseInt(el.getAttribute('data-count-decimals')||'0',10), dur=1500, start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=pre+fmt(target*e,dec)+suf; if(p<1)requestAnimationFrame(step); else el.textContent=pre+fmt(target,dec)+suf; }
+    requestAnimationFrame(step);
+  }
+  var nums = document.querySelectorAll('[data-count]');
+  if(RM || !IO){ nums.forEach(function(el){ el.textContent=(el.getAttribute('data-count-prefix')||'')+fmt(parseFloat(el.getAttribute('data-count'))||0,parseInt(el.getAttribute('data-count-decimals')||'0',10))+(el.getAttribute('data-count-suffix')||''); }); }
+  else {
+    var ioN = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ countUp(en.target); ioN.unobserve(en.target);} });
+    },{threshold:0.6});
+    nums.forEach(function(el){ ioN.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>

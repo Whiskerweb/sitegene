@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halcyon Films | Studio Photo Vintage & Émotion</title>
+  <meta name="description" content="Studio photo aux tons vintage — mariages, fiançailles, grossesse et shooting de marque, sublimés par une narration intemporelle et pleine d’émotion.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;900&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            maroon: '#701E1F',
+            coral: '#EC7672',
+            peach: '#F9DCC5',
+            cocoa: '#401714',
+            ink: '#1A0E0C',
+            lime: '#DFFF2C',
+            cream: '#FBEFE3'
+          },
+          fontFamily: {
+            sans: ['Archivo', 'Arial', 'sans-serif'],
+            serif: ['"Libre Caslon Text"', 'Georgia', 'serif']
+          },
+          letterSpacing: {
+            wide2: '0.2em',
+          },
+        }
+      }
+    };
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Archivo', Arial, sans-serif; background: #701E1F; color: #FBEFE3; margin: 0; }
+    .font-serif { font-family: '"Libre Caslon Text"', Georgia, serif; }
+    .float-photo { box-shadow: 0 20px 50px rgba(0,0,0,0.35); }
+    @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+    .floaty   { animation: floaty 6s   ease-in-out infinite; }
+    .floaty-2 { animation: floaty 7.5s ease-in-out infinite; }
+    .floaty-3 { animation: floaty 8.5s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) { .floaty, .floaty-2, .floaty-3 { animation: none } }
+    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+    .accordion-item.open .accordion-content { max-height: 500px; }
+    .accordion-item.open .plus-icon { transform: rotate(45deg); }
+  </style>
+</head>
+<body class="bg-maroon">
+
+  <!-- HEADER -->
+  <header>
+    <!-- NAV -->
+    <nav class="absolute top-0 left-0 w-full z-50">
+      <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+        <a href="#" data-sg-path="brand" class="text-sm font-bold tracking-wide2 uppercase text-peach">HALCYON FILMS</a>
+        <div class="hidden md:flex items-center gap-7 text-xs uppercase tracking-wide2 text-peach/80">
+          <a href="#realisations" data-sg-path="nav[0]" class="hover:text-peach transition-colors">Réalisations</a>
+          <a href="#about" data-sg-path="nav[1]" class="hover:text-peach transition-colors">À propos</a>
+          <a href="#prestations" data-sg-path="nav[2]" class="hover:text-peach transition-colors">Prestations</a>
+          <a href="#contact" data-sg-path="nav[4]" class="hover:text-peach transition-colors">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="relative min-h-screen bg-maroon overflow-hidden flex flex-col justify-center pt-28 pb-16">
+      <img data-sg-img="hero.photo1" src="../../../../public/_templates/photo-vintage/img/hero-1.jpg" alt="" class="float-photo floaty absolute left-0 top-16 w-40 md:w-56 aspect-[3/4] object-cover rounded-sm rotate-[-6deg] opacity-95" data-anim="fade" data-anim-delay="0"/>
+      <img data-sg-img="hero.photo2" src="../../../../public/_templates/photo-vintage/img/hero-2.jpg" alt="" class="float-photo floaty-2 absolute right-6 md:right-24 top-28 w-36 md:w-52 aspect-[3/4] object-cover rounded-sm rotate-[5deg] opacity-95" data-anim="fade" data-anim-delay="200"/>
+      <img data-sg-img="hero.photo3" src="../../../../public/_templates/photo-vintage/img/hero-3.jpg" alt="" class="float-photo floaty-3 hidden md:block absolute left-[34%] bottom-12 w-40 lg:w-48 aspect-[3/4] object-cover rounded-sm rotate-[-3deg] opacity-95" data-anim="fade" data-anim-delay="400"/>
+      <div class="relative z-10 max-w-[100rem] mx-auto px-6 lg:px-12 w-full">
+        <p data-sg-path="hero.badge" class="text-peach/80 text-sm font-medium max-w-md mb-8 uppercase tracking-wide2" data-anim="fade">Des photographes passionnés pour des images d’exception, chargées d’émotion.</p>
+        <h1 class="font-sans font-black uppercase leading-[0.86] tracking-tighter text-peach text-6xl sm:text-7xl md:text-8xl lg:text-[9rem]">
+          <span class="inline-flex items-baseline flex-wrap gap-x-4" data-anim="fade" data-anim-delay="600">
+            <span data-sg-path="hero.line1pre">VINTAGE</span>
+            <em class="font-serif italic font-normal lowercase tracking-normal text-5xl sm:text-6xl md:text-7xl lg:text-8xl" data-sg-path="hero.line1em">expériences</em>
+          </span>
+          <span class="block" data-sg-path="hero.line2" data-anim="fade" data-anim-delay="800">À TRAVERS L'OBJECTIF</span>
+        </h1>
+      </div>
+    </section>
+  </header>
+
+  <main>
+    <!-- SECTION MISSION -->
+    <section class="py-24 px-6" data-anim="fade">
+      <div class="max-w-4xl mx-auto text-center">
+        <p data-sg-path="mission.text" class="font-serif text-2xl md:text-3xl leading-relaxed text-peach/90" data-anim="fade">
+          Chez Halcyon Films, nous captons des instants intemporels avec passion, en y apportant une touche d’élégance vintage.
+        </p>
+      </div>
+    </section>
+
+    <!-- SECTION STRIP PHOTOS -->
+    <section class="py-12 px-6 overflow-hidden">
+      <div class="flex gap-4 md:gap-6 overflow-x-auto pb-4 -mx-6 px-6">
+        <div class="flex-shrink-0 w-64 md:w-80" data-anim="fade" data-anim-delay="0">
+          <img data-sg-img="strip[0].image" src="../../../../public/_templates/photo-vintage/img/strip-1.jpg" alt="Portrait vintage" class="w-full h-full object-cover rounded-sm float-photo"/>
+        </div>
+        <div class="flex-shrink-0 w-64 md:w-80" data-anim="fade" data-anim-delay="80">
+          <img data-sg-img="strip[1].image" src="../../../../public/_templates/photo-vintage/img/strip-2.jpg" alt="Gros plan éditorial" class="w-full h-full object-cover rounded-sm float-photo"/>
+        </div>
+        <div class="flex-shrink-0 w-64 md:w-80" data-anim="fade" data-anim-delay="160">
+          <img data-sg-img="strip[2].image" src="../../../../public/_templates/photo-vintage/img/strip-3.jpg" alt="Portrait baigné de lumière" class="w-full h-full object-cover rounded-sm float-photo"/>
+        </div>
+        <div class="flex-shrink-0 w-64 md:w-80" data-anim="fade" data-anim-delay="240">
+          <img data-sg-img="strip[3].image" src="../../../../public/_templates/photo-vintage/img/strip-4.jpg" alt="Couple à l’heure dorée" class="w-full h-full object-cover rounded-sm float-photo"/>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION FEATURED PROJECTS -->
+    <section id="realisations" class="py-24 px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <p class="text-sm uppercase tracking-wide2 text-peach/80 mb-4" data-anim="fade">Découvrez notre univers</p>
+          <h2 class="font-sans font-black uppercase leading-[0.86] tracking-tighter text-peach text-5xl md:text-7xl">
+            <span class="inline-flex items-baseline gap-x-4" data-anim="fade">
+              <span data-sg-path="featured.label1">NOS</span>
+              <em class="font-serif italic font-normal lowercase tracking-normal text-4xl md:text-6xl" data-sg-path="featured.labelEm">réalisations</em>
+            </span>
+            <span class="block" data-sg-path="featured.label2" data-anim="fade" data-anim-delay="200">RÉALISATIONS</span>
+          </h2>
+        </div>
+
+        <p data-sg-path="featured.intro" class="text-center max-w-2xl mx-auto text-peach/90 mb-12" data-anim="fade">
+          Découvrez notre univers à travers des projets variés, où chaque détail reflète notre exigence et notre sensibilité.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-3 mb-12">
+          <span class="px-4 py-2 bg-peach/10 text-peach text-sm rounded-full" data-anim="fade" data-anim-delay="0">Mariage</span>
+          <span class="px-4 py-2 bg-peach/10 text-peach text-sm rounded-full" data-anim="fade" data-anim-delay="80">Fiançailles</span>
+          <span class="px-4 py-2 bg-peach/10 text-peach text-sm rounded-full" data-anim="fade" data-anim-delay="160">Commercial</span>
+          <span class="px-4 py-2 bg-peach/10 text-peach text-sm rounded-full" data-anim="fade" data-anim-delay="240">Shooting Grossesse</span>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="group" data-anim="left" data-anim-delay="0">
+            <div class="overflow-hidden rounded-sm mb-4">
+              <img data-sg-img="featured.projects[0].image" src="../../../../public/_templates/photo-vintage/img/project-1.jpg" alt="Shooting de marque Lily & Jack" class="w-full h-96 object-cover group-hover:scale-105 transition-transform duration-500 float-photo"/>
+            </div>
+            <h3 class="font-sans font-bold text-lg text-peach" data-sg-path="featured.projects[0].title">Shooting de marque Lily & Jack</h3>
+            <p class="text-peach/70 text-sm" data-sg-path="featured.projects[0].location">Santorin, Grèce</p>
+          </div>
+          <div class="group" data-anim="right" data-anim-delay="200">
+            <div class="overflow-hidden rounded-sm mb-4">
+              <img data-sg-img="featured.projects[1].image" src="../../../../public/_templates/photo-vintage/img/project-2.jpg" alt="Mariage d’Ava & Leo" class="w-full h-96 object-cover group-hover:scale-105 transition-transform duration-500 float-photo"/>
+            </div>
+            <h3 class="font-sans font-bold text-lg text-peach" data-sg-path="featured.projects[1].title">Mariage d’Ava & Leo</h3>
+            <p class="text-peach/70 text-sm" data-sg-path="featured.projects[1].location">Paris, France</p>
+          </div>
+        </div>
+
+        <div class="text-center mt-12">
+          <a href="#" class="inline-block px-8 py-3 border border-peach/30 text-peach hover:bg-peach/10 transition-colors" data-anim="fade" data-sg-path="featured.seeMore">Voir plus</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION MARQUEE -->
+    <section class="py-24 bg-coral overflow-hidden">
+      <div class="relative h-48 flex items-center justify-center">
+        <div class="absolute inset-0 flex items-center justify-center">
+          <img data-sg-img="marquee.image" src="../../../../public/_templates/photo-vintage/img/marquee-1.jpg" alt="" class="w-48 h-48 md:w-64 md:h-64 object-cover rounded-full float-photo opacity-80" data-anim="scale"/>
+        </div>
+        <h2 class="font-sans font-black uppercase text-cream text-6xl md:text-8xl tracking-widest opacity-20 whitespace-nowrap" data-anim="fade">
+          <span data-sg-path="marquee.words">PHOTOGRAPHIE</span> &nbsp; <span data-sg-path="marquee.words2">STUDIO</span>
+        </h2>
+      </div>
+    </section>
+
+    <!-- SECTION SERVICES -->
+    <section id="prestations" class="py-24 px-6 bg-cream text-ink">
+      <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        <div data-anim="left">
+          <p class="text-sm uppercase tracking-wide2 text-ink/60 mb-4">Nos prestations</p>
+          <h2 class="font-sans font-black uppercase leading-[0.86] tracking-tighter text-5xl md:text-6xl text-ink mb-8">
+            <span class="inline-flex items-baseline gap-x-4">
+              <span>CAPTURER</span>
+              <em class="font-serif italic font-normal lowercase tracking-normal text-4xl md:text-5xl">l'émotion</em>
+            </span>
+            <span class="block">À CHAQUE INSTANT</span>
+          </h2>
+          <p class="text-ink/80 leading-relaxed mb-8">
+            Nous proposons des séances photo sur mesure pour immortaliser vos moments les plus précieux : mariages, fiançailles, portraits, grossesse et shooting de marque. Chaque séance est pensée pour refléter votre personnalité et votre histoire.
+          </p>
+          <div class="space-y-4 accordion-container">
+            <div class="accordion-item border-b border-ink/10 pb-4">
+              <button class="accordion-header w-full flex justify-between items-center text-left">
+                <span class="font-sans font-bold text-lg">Mariages & Fiançailles</span>
+                <span class="plus-icon text-2xl transition-transform">+</span>
+              </button>
+              <div class="accordion-content pt-2 text-ink/70">
+                <p>Nous capturons l’essence de votre amour avec délicatesse et authenticité. Chaque détail, des préparatifs à la cérémonie, est immortalisé pour raconter votre histoire.</p>
+              </div>
+            </div>
+            <div class="accordion-item border-b border-ink/10 pb-4">
+              <button class="accordion-header w-full flex justify-between items-center text-left">
+                <span class="font-sans font-bold text-lg">Shooting Grossesse</span>
+                <span class="plus-icon text-2xl transition-transform">+</span>
+              </button>
+              <div class="accordion-content pt-2 text-ink/70">
+                <p>Célébrez cette étape unique de votre vie avec un shooting qui met en valeur la beauté et la tendresse de la maternité.</p>
+              </div>
+            </div>
+            <div class="accordion-item border-b border-ink/10 pb-4">
+              <button class="accordion-header w-full flex justify-between items-center text-left">
+                <span class="font-sans font-bold text-lg">Portraits & Famille</span>
+                <span class="plus-icon text-2xl transition-transform">+</span>
+              </button>
+              <div class="accordion-content pt-2 text-ink/70">
+                <p>Des portraits naturels et intemporels pour capturer les liens qui vous unissent, dans un cadre chaleureux et authentique.</p>
+              </div>
+            </div>
+            <div class="accordion-item border-b border-ink/10 pb-4">
+              <button class="accordion-header w-full flex justify-between items-center text-left">
+                <span class="font-sans font-bold text-lg">Shooting de Marque</span>
+                <span class="plus-icon text-2xl transition-transform">+</span>
+              </button>
+              <div class="accordion-content pt-2 text-ink/70">
+                <p>Nous créons des images percutantes pour votre entreprise, alliant esthétique vintage et modernité, afin de sublimer votre identité visuelle.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="relative h-96 md:h-full" data-anim="right">
+          <img data-sg-img="strip[2].image" src="../../../../public/_templates/photo-vintage/img/strip-3.jpg" alt="Portrait prestation" class="absolute top-0 left-0 w-48 h-64 object-cover rounded-sm float-photo rotate-[-5deg] shadow-2xl" data-anim="fade" data-anim-delay="0"/>
+          <img data-sg-img="strip[1].image" src="../../../../public/_templates/photo-vintage/img/strip-2.jpg" alt="Gros plan prestation" class="absolute top-12 right-0 w-56 h-72 object-cover rounded-sm float-photo rotate-[4deg] shadow-2xl" data-anim="fade" data-anim-delay="200"/>
+          <img data-sg-img="hero[2].image" src="../../../../public/_templates/photo-vintage/img/hero-2.jpg" alt="Couple prestation" class="absolute bottom-0 left-1/4 w-64 h-80 object-cover rounded-sm float-photo rotate-[-2deg] shadow-2xl" data-anim="fade" data-anim-delay="400"/>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION STATS -->
+    <section class="py-24 px-6">
+      <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-12 text-center">
+        <div data-anim="fade" data-anim-delay="0">
+          <p class="font-sans font-black text-6xl text-lime" data-count="1200" data-count-suffix="+">0</p>
+          <p class="text-peach/80 mt-2">Mariages immortalisés</p>
+        </div>
+        <div data-anim="fade" data-anim-delay="80">
+          <p class="font-sans font-black text-6xl text-lime" data-count="500" data-count-suffix="+">0</p>
+          <p class="text-peach/80 mt-2">Séances portrait & famille</p>
+        </div>
+        <div data-anim="fade" data-anim-delay="160">
+          <p class="font-sans font-black text-6xl text-lime">24/7</p>
+          <p class="text-peach/80 mt-2">Disponibilité pour vos projets</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION TESTIMONIAL -->
+    <section class="py-24 px-6">
+      <div class="max-w-4xl mx-auto text-center">
+        <p class="font-serif text-3xl md:text-4xl leading-relaxed text-peach/90 mb-8" data-anim="fade" data-sg-path="testimonial.quote">
+          « Saisir l’éphémère. Immortaliser des souvenirs avec une netteté saisissante. La photographie fige le temps et transforme la beauté de la vie en art éternel. »
+        </p>
+        <div class="flex items-center justify-center gap-4" data-anim="fade">
+          <img data-sg-img="testimonial.avatar" src="../../../../public/_templates/photo-vintage/img/testimonial.jpg" alt="Vivian Guillen" class="w-12 h-12 rounded-full object-cover"/>
+          <div>
+            <p class="font-sans font-bold text-peach" data-sg-path="testimonial.name">Vivian Guillen</p>
+            <p class="text-peach/70 text-sm" data-sg-path="testimonial.role">Fondatrice & CEO, Amberlight Co.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION CONTACT -->
+    <section id="contact" class="py-24 px-6 bg-cocoa">
+      <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        <div data-anim="left">
+          <p class="text-sm uppercase tracking-wide2 text-peach/60 mb-4">Contactez-nous</p>
+          <h2 class="font-sans font-black uppercase leading-[0.86] tracking-tighter text-5xl md:text-6xl text-peach mb-8">
+            <span class="inline-flex items-baseline gap-x-4">
+              <em class="font-serif italic font-normal lowercase tracking-normal text-4xl md:text-5xl" data-sg-path="contact.getIn">contactez</em>
+              <span data-sg-path="contact.touch">NOUS</span>
+            </span>
+          </h2>
+          <p class="text-peach/80 leading-relaxed mb-8">
+            Que ce soit pour un mariage, un shooting de marque ou un portrait, nous sommes à votre écoute pour créer des images qui vous ressemblent.
+          </p>
+          <div class="space-y-4">
+            <p class="text-peach/90">
+              <span class="font-sans font-bold">Site web :</span> <span data-sg-path="contact.website">www.halcyonfilms.com</span>
+            </p>
+            <p class="text-peach/90">
+              <span class="font-sans font-bold">Téléphone :</span> <span data-sg-path="contact.phone">+1 (415) 802-7740</span>
+            </p>
+          </div>
+        </div>
+        <div class="relative h-96" data-anim="right">
+          <img data-sg-img="hero[1].image" src="../../../../public/_templates/photo-vintage/img/hero-2.jpg" alt="Contact" class="absolute top-0 left-0 w-56 h-72 object-cover rounded-sm float-photo rotate-[-4deg] shadow-2xl" data-anim="fade" data-anim-delay="0"/>
+          <img data-sg-img="strip[3].image" src="../../../../public/_templates/photo-vintage/img/strip-4.jpg" alt="Contact" class="absolute bottom-0 right-0 w-64 h-80 object-cover rounded-sm float-photo rotate-[3deg] shadow-2xl" data-anim="fade" data-anim-delay="200"/>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-maroon py-24 px-6">
+    <div class="max-w-7xl mx-auto text-center">
+      <div class="mb-12">
+        <h2 class="font-sans font-black uppercase leading-[0.86] tracking-tighter text-5xl md:text-7xl text-peach">
+          <em class="font-serif italic font-normal lowercase tracking-normal text-4xl md:text-6xl block mb-2" data-sg-path="footer.line1em">nous sommes un studio</em>
+          <span class="inline-flex items-baseline gap-x-4">
+            <span data-sg-path="footer.line2pre">PHOTO</span>
+          </span>
+          <span class="block" data-sg-path="footer.line3">VINTAGE & CRÉATIF</span>
+        </h2>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-12 text-sm uppercase tracking-wide2 text-peach/80">
+        <a href="#" data-sg-path="footer.links[0]" class="hover:text-peach transition-colors" data-anim="fade" data-anim-delay="0">Accueil</a>
+        <a href="#" data-sg-path="footer.links[1]" class="hover:text-peach transition-colors" data-anim="fade" data-anim-delay="80">À propos</a>
+        <a href="#" data-sg-path="footer.links[2]" class="hover:text-peach transition-colors" data-anim="fade" data-anim-delay="160">Prestations</a>
+        <a href="#" data-sg-path="footer.links[3]" class="hover:text-peach transition-colors" data-anim="fade" data-anim-delay="240">Réalisations</a>
+        <a href="#" data-sg-path="footer.links[4]" class="hover:text-peach transition-colors" data-anim="fade" data-anim-delay="320">Tarifs</a>
+        <a href="#" data-sg-path="footer.links[5]" class="hover:text-peach transition-colors" data-anim="fade" data-anim-delay="400">Contact</a>
+        <a href="#" data-sg-path="footer.links[6]" class="hover:text-peach transition-colors" data-anim="fade" data-anim-delay="480">Journal</a>
+        <a href="#" data-sg-path="footer.links[7]" class="hover:text-peach transition-colors" data-anim="fade" data-anim-delay="560">Histoires</a>
+      </div>
+
+      <div class="flex justify-center gap-6 mb-12 text-sm text-peach/80">
+        <a href="#" data-sg-path="footer.social[0]" class="hover:text-peach transition-colors" data-anim="fade" data-anim-delay="0">Instagram</a>
+        <a href="#" data-sg-path="footer.social[1]" class="hover:text-peach transition-colors" data-anim="fade" data-anim-delay="80">LinkedIn</a>
+        <a href="#" data-sg-path="footer.social[2]" class="hover:text-peach transition-colors" data-anim="fade" data-anim-delay="160">Facebook</a>
+      </div>
+
+      <p class="text-xs text-peach/60" data-sg-path="footer.copyright" data-anim="fade">© Tous droits réservés Halcyon Films.</p>
+      <p class="text-xs text-peach/40 mt-2" data-anim="fade">Propulsé par Akyra</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const accordions = document.querySelectorAll('.accordion-item');
+      accordions.forEach(item => {
+        const header = item.querySelector('.accordion-header');
+        header.addEventListener('click', () => {
+          item.classList.toggle('open');
+        });
+      });
+    });
+  </script>
+
+<!-- ═══ AKYRA MOTION KIT — animations partagées (vanilla, sans dépendance, respecte prefers-reduced-motion) ═══ -->
+<style>
+  [data-anim]{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+  [data-anim="fade"]{transform:none}
+  [data-anim="left"]{transform:translateX(-26px)}
+  [data-anim="right"]{transform:translateX(26px)}
+  [data-anim="scale"]{transform:scale(.96)}
+  [data-anim].in{opacity:1!important;transform:none!important}
+  /* Apparition du texte mot à mot */
+  .anim-words .w{display:inline-block;opacity:0;transform:translateY(0.5em);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .anim-words.in .w{opacity:1;transform:none}
+  /* Galerie accordéon : au survol, la vignette s'élargit, les autres se rétractent (CSS pur) */
+  .gallery-expand{display:flex}
+  .gallery-expand>.gx{flex:1 1 0;min-width:0;overflow:hidden;transition:flex-grow .7s cubic-bezier(.16,1,.3,1)}
+  .gallery-expand>.gx img{width:100%;height:100%;object-fit:cover}
+  @media (hover:hover){
+    .gallery-expand:hover>.gx{flex-grow:.6}
+    .gallery-expand>.gx:hover{flex-grow:3}
+  }
+  @media (prefers-reduced-motion:reduce){[data-anim],.anim-words .w{opacity:1!important;transform:none!important;transition:none!important}.gallery-expand>.gx{transition:none}}
+</style>
+<script>
+(function(){
+  var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var IO = 'IntersectionObserver' in window;
+
+  // 1) Révélation au scroll des éléments [data-anim] (stagger via data-anim-delay en ms)
+  var reveals = document.querySelectorAll('[data-anim]');
+  function showReveal(el){
+    var d = parseInt(el.getAttribute('data-anim-delay')||'0',10);
+    if(d) setTimeout(function(){el.classList.add('in')}, d); else el.classList.add('in');
+  }
+  if(RM || !IO){ reveals.forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioR = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ showReveal(en.target); ioR.unobserve(en.target);} });
+    },{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(function(e){ ioR.observe(e); });
+  }
+
+  // 2) Texte mot à mot : <h1 class="anim-words">…</h1>.
+  //    Découpe DOM-SAFE : on n'enveloppe QUE les nœuds texte (les balises internes
+  //    — dégradés, pilules — sont préservées intactes, jamais transformées en texte).
+  document.querySelectorAll('.anim-words').forEach(function(el){
+    if(el.dataset.split) return; el.dataset.split='1';
+    // Garde-fou : si le titre contient des balises internes (dégradé, pilule…),
+    // on NE découpe PAS (sinon dégradé cassé / mots invisibles) — il reste intact.
+    if(el.children.length > 0){ el.classList.remove('anim-words'); return; }
+    var wi = 0, textNodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    while(walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(function(tn){
+      if(!tn.nodeValue || !tn.nodeValue.trim()) return;
+      var frag = document.createDocumentFragment();
+      tn.nodeValue.split(/(\s+)/).forEach(function(part){
+        if(part === '') return;
+        if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+        var s = document.createElement('span'); s.className='w'; s.textContent=part;
+        s.style.transitionDelay=((wi++)*45)+'ms'; frag.appendChild(s);
+      });
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  });
+  if(RM || !IO){ document.querySelectorAll('.anim-words').forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioW = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ioW.unobserve(en.target);} });
+    },{threshold:0.25});
+    document.querySelectorAll('.anim-words').forEach(function(e){ ioW.observe(e); });
+  }
+
+  // 3) Compteurs : <span data-count="1200" data-count-suffix="+" data-count-decimals="0">0</span>
+  function fmt(v,dec){ return v.toLocaleString('fr-FR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+  function countUp(el){
+    var target=parseFloat(el.getAttribute('data-count'))||0,
+        suf=el.getAttribute('data-count-suffix')||'', pre=el.getAttribute('data-count-prefix')||'',
+        dec=parseInt(el.getAttribute('data-count-decimals')||'0',10), dur=1500, start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=pre+fmt(target*e,dec)+suf; if(p<1)requestAnimationFrame(step); else el.textContent=pre+fmt(target,dec)+suf; }
+    requestAnimationFrame(step);
+  }
+  var nums = document.querySelectorAll('[data-count]');
+  if(RM || !IO){ nums.forEach(function(el){ el.textContent=(el.getAttribute('data-count-prefix')||'')+fmt(parseFloat(el.getAttribute('data-count'))||0,parseInt(el.getAttribute('data-count-decimals')||'0',10))+(el.getAttribute('data-count-suffix')||''); }); }
+  else {
+    var ioN = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ countUp(en.target); ioN.unobserve(en.target);} });
+    },{threshold:0.6});
+    nums.forEach(function(el){ ioN.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>

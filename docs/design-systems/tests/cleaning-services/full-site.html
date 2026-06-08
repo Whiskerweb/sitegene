@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neatly – Services de Nettoyage de Confiance près de Chez Vous</title>
+  <meta name="description" content="Nettoyage professionnel pour la maison, fiable et sur mesure. Réservez en ligne en quelques clics et profitez d’un intérieur impeccable.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FEBF03',
+            ink: '#171206',
+            bg: '#F2F7F9',
+            muted: '#5B5955',
+            border: '#E5EAEC',
+            white: '#FFFFFF',
+            blue: '#2B80F7',
+            danger: '#F02A2B'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            inter: ['Inter', 'sans-serif']
+          },
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom CSS -->
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fff; color: #171206; margin: 0; }
+  </style>
+</head>
+<body class="bg-white">
+
+  <!-- HEADER -->
+  <nav class="bg-ink sticky top-0 z-50 border-b border-white/10" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2">
+        <span class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center"><svg class="w-5 h-5 text-ink" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z"/></svg></span>
+        <span data-sg-path="brand" class="text-white font-bold text-lg tracking-tight">Neatly</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8 text-sm text-white/80">
+        <a href="#about" data-sg-path="nav[0]" class="hover:text-white transition-colors">À propos</a>
+        <a href="#services" data-sg-path="nav[1]" class="hover:text-white transition-colors">Services</a>
+        <a href="#blog" data-sg-path="nav[2]" class="hover:text-white transition-colors">Blog</a>
+        <a href="#contact" data-sg-path="nav[3]" class="hover:text-white transition-colors">Contact</a>
+      </div>
+      <a href="#contact" data-sg-path="nav.cta" class="bg-primary text-ink font-semibold text-sm px-5 py-2.5 rounded-full hover:brightness-110 transition-all">Réserver maintenant</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="relative bg-ink overflow-hidden" style="min-height:600px;">
+    <img data-sg-img="hero.image" src="../../../../public/_templates/cleaning-services/img/hero.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-50" data-anim="fade" />
+    <div class="relative max-w-7xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 mb-6" data-anim="fade" data-anim-delay="0">
+          <span class="text-primary">★★★★★</span>
+          <span data-sg-path="hero.rating" class="text-white font-bold text-sm">4.7</span>
+          <span data-sg-path="hero.ratingText" class="text-white/60 text-xs">Avis vérifiés Google & Yelp</span>
+        </div>
+        <h1 data-sg-path="hero.title" class="text-white font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6 anim-words">Des Services de Nettoyage Fiables et Professionnels</h1>
+        <p data-sg-path="hero.subtitle" class="text-white/70 text-lg mb-8 max-w-md" data-anim="fade" data-anim-delay="200">Des prestations de nettoyage haut de gamme pour votre maison, alliant fiabilité, qualité et respect de l’environnement.</p>
+        <a href="tel:+4033949940" data-sg-path="hero.cta" class="inline-block bg-primary text-ink font-semibold px-7 py-3.5 rounded-full hover:brightness-110 transition-all" data-anim="fade" data-anim-delay="400">Appelez-nous : +403-394-9940</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BADGE -->
+  <div class="bg-bg py-4" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="inline-flex items-center gap-2 bg-primary/10 text-primary font-semibold text-sm px-4 py-2 rounded-full border border-primary/20">
+        <span>⭐</span>
+        <span data-sg-path="badge">Prestataire premium noté 5 étoiles !</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services" class="bg-bg py-20" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <span class="text-primary font-semibold text-sm" data-sg-path="services.label">Nettoyage Écologique</span>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="bg-white p-6 rounded-2xl border border-border" data-anim="fade" data-anim-delay="0">
+          <img data-sg-img="services.items[0].image" src="../../../../public/_templates/cleaning-services/img/service-spray.jpg" alt="Nettoyage Écoresponsable" class="w-full h-48 object-cover rounded-xl mb-6" />
+          <h3 data-sg-path="services.items[0].title" class="font-bold text-xl mb-3">Nettoyage Écoresponsable</h3>
+          <p data-sg-path="services.items[0].desc" class="text-muted text-sm">Des solutions de nettoyage écologiques, utilisant des produits sûrs et performants, pour un intérieur sain sans compromis.</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-border" data-anim="fade" data-anim-delay="80">
+          <img data-sg-img="services.items[1].image" src="../../../../public/_templates/cleaning-services/img/service-vacuuming.jpg" alt="Nettoyage Régulier" class="w-full h-48 object-cover rounded-xl mb-6" />
+          <h3 data-sg-path="services.items[1].title" class="font-bold text-xl mb-3">Nettoyage Régulier</h3>
+          <p data-sg-path="services.items[1].desc" class="text-muted text-sm">Un service sur mesure pour maintenir votre maison propre et accueillante, semaine après semaine.</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-border" data-anim="fade" data-anim-delay="160">
+          <img data-sg-img="services.items[2].image" src="../../../../public/_templates/cleaning-services/img/service-floor.jpg" alt="Entretien des Sols" class="w-full h-48 object-cover rounded-xl mb-6" />
+          <h3 data-sg-path="services.items[2].title" class="font-bold text-xl mb-3">Entretien des Sols</h3>
+          <p data-sg-path="services.items[2].desc" class="text-muted text-sm">Nettoyage et soin de tous types de sols avec des méthodes douces et écologiques, pour un résultat impeccable.</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-border" data-anim="fade" data-anim-delay="240">
+          <img data-sg-img="services.items[3].image" src="../../../../public/_templates/cleaning-services/img/service-detail.jpg" alt="Nettoyage de Cuisine" class="w-full h-48 object-cover rounded-xl mb-6" />
+          <h3 data-sg-path="services.items[3].title" class="font-bold text-xl mb-3">Nettoyage de Cuisine</h3>
+          <p data-sg-path="services.items[3].desc" class="text-muted text-sm">Un service minutieux pour une cuisine étincelante, alliant propreté irréprochable et respect des normes d’hygiène.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section class="bg-white py-20" data-anim="fade">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <p data-sg-path="trust.paragraph" class="text-muted text-lg leading-relaxed">Chaque professionnel est rigoureusement sélectionné, formé et vérifié avant d’intervenir chez vous. Nous garantissons des agents dignes de confiance, respectueux de votre espace et de votre sécurité.</p>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="bg-bg py-20" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 data-sg-path="howItWorks.title" class="font-bold text-3xl md:text-4xl mb-4">Comment ça marche ?</h2>
+        <p data-sg-path="howItWorks.subtitle" class="text-muted text-lg">Choisissez votre service, sélectionnez une date et indiquez la durée nécessaire. C’est simple et rapide.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-12">
+        <div class="text-center" data-anim="fade" data-anim-delay="0">
+          <div class="text-6xl font-bold text-primary/20 mb-4" data-sg-path="howItWorks.steps[0].number">1.</div>
+          <h3 data-sg-path="howItWorks.steps[0].title" class="font-bold text-xl mb-3">Réservez en Ligne</h3>
+          <p data-sg-path="howItWorks.steps[0].desc" class="text-muted text-sm">Sélectionnez le service souhaité, choisissez une date et précisez la durée en quelques clics.</p>
+        </div>
+        <div class="text-center" data-anim="fade" data-anim-delay="80">
+          <div class="text-6xl font-bold text-primary/20 mb-4" data-sg-path="howItWorks.steps[1].number">2.</div>
+          <h3 data-sg-path="howItWorks.steps[1].title" class="font-bold text-xl mb-3">Nettoyage Professionnel</h3>
+          <p data-sg-path="howItWorks.steps[1].desc" class="text-muted text-sm">Un expert formé et vérifié intervient chez vous pour un nettoyage soigné et efficace.</p>
+        </div>
+        <div class="text-center" data-anim="fade" data-anim-delay="160">
+          <div class="text-6xl font-bold text-primary/20 mb-4" data-sg-path="howItWorks.steps[2].number">3.</div>
+          <h3 data-sg-path="howItWorks.steps[2].title" class="font-bold text-xl mb-3">Profitez de Votre Intérieur</h3>
+          <p data-sg-path="howItWorks.steps[2].desc" class="text-muted text-sm">Détendez-vous dans un espace propre et rafraîchi, où tout est pensé pour votre confort.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="bg-white py-20" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+        <div data-anim="fade" data-anim-delay="0">
+          <div class="font-bold text-5xl mb-2"><span data-count="4.7" data-count-decimals="1">0</span></div>
+          <p data-sg-path="stats[0].label" class="text-muted">Note Moyenne</p>
+        </div>
+        <div data-anim="fade" data-anim-delay="80">
+          <div class="font-bold text-5xl mb-2"><span data-count="1200" data-count-suffix="+">0</span></div>
+          <p data-sg-path="stats[1].label" class="text-muted">Maisons Nettoyées</p>
+        </div>
+        <div data-anim="fade" data-anim-delay="160">
+          <div class="font-bold text-5xl mb-2"><span data-count="300" data-count-suffix="+">0</span></div>
+          <p data-sg-path="stats[2].label" class="text-muted">Clients Fidèles</p>
+        </div>
+        <div data-anim="fade" data-anim-delay="240">
+          <div class="font-bold text-5xl mb-2"><span data-count="100" data-count-suffix="%">0</span></div>
+          <p data-sg-path="stats[3].label" class="text-muted">Équipe Vérifiée</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="bg-bg py-20" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 data-sg-path="whyUs.title" class="font-bold text-3xl md:text-4xl mb-4">Gagnez du Temps</h2>
+        <p data-sg-path="whyUs.subtitle" class="text-muted text-lg">Confiez-nous le ménage et consacrez votre temps à ce qui compte vraiment : travail, famille ou détente.</p>
+      </div>
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <img data-sg-img="whyUs.image" src="../../../../public/_templates/cleaning-services/img/why-us.jpg" alt="Femme détendue sur un canapé" class="rounded-2xl w-full h-full object-cover" data-anim="fade" />
+        <div class="grid sm:grid-cols-2 gap-8">
+          <div data-anim="fade" data-anim-delay="0">
+            <h3 data-sg-path="whyUs.features[0].title" class="font-bold text-xl mb-3">Temps Libre Garanti</h3>
+            <p data-sg-path="whyUs.features[0].desc" class="text-muted text-sm">Un service professionnel vous libère des tâches ménagères pour profiter pleinement de votre journée.</p>
+          </div>
+          <div data-anim="fade" data-anim-delay="80">
+            <h3 data-sg-path="whyUs.features[1].title" class="font-bold text-xl mb-3">Sécurité et Sérénité</h3>
+            <p data-sg-path="whyUs.features[1].desc" class="text-muted text-sm">Nos agents sont soigneusement sélectionnés et formés pour intervenir en toute confiance chez vous.</p>
+          </div>
+          <div data-anim="fade" data-anim-delay="160">
+            <h3 data-sg-path="whyUs.features[2].title" class="font-bold text-xl mb-3">Réservation Simplifiée</h3>
+            <p data-sg-path="whyUs.features[2].desc" class="text-muted text-sm">Réservez en quelques minutes en ligne, sans appel ni complication. Nous nous occupons de tout.</p>
+          </div>
+          <div data-anim="fade" data-anim-delay="240">
+            <h3 data-sg-path="whyUs.features[3].title" class="font-bold text-xl mb-3">Recommandés par nos Clients</h3>
+            <p data-sg-path="whyUs.features[3].desc" class="text-muted text-sm">Des centaines d’avis 5 étoiles de la part de particuliers et professionnels satisfaits dans toute la région.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="bg-white py-20" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 data-sg-path="testimonials.title" class="font-bold text-3xl md:text-4xl mb-4">Ils Nous Recommandent</h2>
+        <p data-sg-path="testimonials.subtitle" class="text-muted text-lg">Après notre passage, votre maison n’est pas seulement propre : elle respire la fraîcheur et le bien-être.</p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-bg p-6 rounded-2xl" data-anim="fade" data-anim-delay="0">
+          <p data-sg-path="testimonials.items[0].quote" class="text-muted mb-6">« Je travaille beaucoup et j’avais du mal à tout gérer. Ce service a tout changé : l’agent a fait un travail remarquable, sans précipitation. »</p>
+          <div class="flex items-center gap-4">
+            <div>
+              <p data-sg-path="testimonials.items[0].author" class="font-semibold">Daniel Carter</p>
+              <p data-sg-path="testimonials.items[0].role" class="text-muted text-sm">Software Engineer</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-bg p-6 rounded-2xl" data-anim="fade" data-anim-delay="80">
+          <p data-sg-path="testimonials.items[1].quote" class="text-muted mb-6">« J’ai testé plusieurs services, mais celui-ci est le plus fiable. Réservation simple, ponctualité et résultat impeccable. »</p>
+          <div class="flex items-center gap-4">
+            <div>
+              <p data-sg-path="testimonials.items[1].author" class="font-semibold">Sarah Mitchell</p>
+              <p data-sg-path="testimonials.items[1].role" class="text-muted text-sm">Marketing Manager</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-bg p-6 rounded-2xl" data-anim="fade" data-anim-delay="160">
+          <p data-sg-path="testimonials.items[2].quote" class="text-muted mb-6">« J’ai fait appel à eux pour un nettoyage complet, et le résultat était exceptionnel. La maison était prête pour une visite le jour même. »</p>
+          <div class="flex items-center gap-4">
+            <div>
+              <p data-sg-path="testimonials.items[2].author" class="font-semibold">Michael Thompson</p>
+              <p data-sg-path="testimonials.items[2].role" class="text-muted text-sm">Real Estate Agent</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-bg p-6 rounded-2xl" data-anim="fade" data-anim-delay="240">
+          <p data-sg-path="testimonials.items[3].quote" class="text-muted mb-6">« Je suis très exigeante sur la propreté, et ils ont dépassé mes attentes. Leur minutie, surtout en cuisine, était impressionnante. »</p>
+          <div class="flex items-center gap-4">
+            <div>
+              <p data-sg-path="testimonials.items[3].author" class="font-semibold">Emily Rogers</p>
+              <p data-sg-path="testimonials.items[3].role" class="text-muted text-sm">Interior Designer</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-bg p-6 rounded-2xl" data-anim="fade" data-anim-delay="320">
+          <p data-sg-path="testimonials.items[4].quote" class="text-muted mb-6">« L’équipe était sympathique et ultra-professionnelle. Ils ont tout fait briller avec soin. Je les recommande sans hésiter ! »</p>
+          <div class="flex items-center gap-4">
+            <div>
+              <p data-sg-path="testimonials.items[4].author" class="font-semibold">James Wilson</p>
+              <p data-sg-path="testimonials.items[4].role" class="text-muted text-sm">Project Manager</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="bg-bg py-20" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 data-sg-path="features.title" class="font-bold text-3xl md:text-4xl mb-4">Fiabilité et Ponctualité</h2>
+        <p data-sg-path="features.subtitle" class="text-muted text-lg">Nos professionnels interviennent toujours à l’heure pour que votre journée se déroule sans imprévu.</p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="bg-white p-6 rounded-2xl border border-border" data-anim="fade" data-anim-delay="0">
+          <h3 data-sg-path="features.items[0]" class="font-bold text-lg mb-3">Des Résultats Constants et Fiables</h3>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-border" data-anim="fade" data-anim-delay="80">
+          <h3 data-sg-path="features.items[1]" class="font-bold text-lg mb-3">Adaptés à Votre Rythme de Vie</h3>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-border" data-anim="fade" data-anim-delay="160">
+          <h3 data-sg-path="features.items[2]" class="font-bold text-lg mb-3">Un Nettoyage Qui Fait la Différence</h3>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-border" data-anim="fade" data-anim-delay="240">
+          <h3 data-sg-path="features.items[3]" class="font-bold text-lg mb-3">Un Environnement Plus Sain chez Vous</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="bg-white py-20" data-anim="fade">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 data-sg-path="faq.title" class="font-bold text-3xl md:text-4xl mb-4">Questions Fréquentes</h2>
+        <p data-sg-path="faq.subtitle" class="text-muted text-lg">Réserver est ultra-simple : choisissez votre service, sélectionnez une date et une heure, et validez en quelques clics.</p>
+      </div>
+      <div class="space-y-4" id="faq-accordion">
+        <div class="border border-border rounded-xl" data-anim="fade" data-anim-delay="0">
+          <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-semibold">
+            <span data-sg-path="faq.items[0].question">Comment réserver un nettoyage ?</span>
+            <span class="accordion-icon text-primary text-2xl">+</span>
+          </button>
+          <div class="accordion-content hidden p-6 pt-0 text-muted text-sm">
+            <p data-sg-path="faq.items[0].answer">La réservation en ligne est rapide : sélectionnez le service, choisissez une date et une heure, puis confirmez en quelques étapes.</p>
+          </div>
+        </div>
+        <div class="border border-border rounded-xl" data-anim="fade" data-anim-delay="80">
+          <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-semibold">
+            <span data-sg-path="faq.items[1].question">Vos agents sont-ils formés ?</span>
+            <span class="accordion-icon text-primary text-2xl">+</span>
+          </button>
+          <div class="accordion-content hidden p-6 pt-0 text-muted text-sm">
+            <p data-sg-path="faq.items[1].answer">Oui, chaque agent est vérifié, formé et préparé pour intervenir chez vous en toute sécurité et professionnalisme.</p>
+          </div>
+        </div>
+        <div class="border border-border rounded-xl" data-anim="fade" data-anim-delay="160">
+          <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-semibold">
+            <span data-sg-path="faq.items[2].question">Quels produits utilisez-vous ?</span>
+            <span class="accordion-icon text-primary text-2xl">+</span>
+          </button>
+          <div class="accordion-content hidden p-6 pt-0 text-muted text-sm">
+            <p data-sg-path="faq.items[2].answer">Nous utilisons des produits écologiques et non toxiques, sûrs pour les enfants, les animaux et l’environnement, sans sacrifier l’efficacité.</p>
+          </div>
+        </div>
+        <div class="border border-border rounded-xl" data-anim="fade" data-anim-delay="240">
+          <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-semibold">
+            <span data-sg-path="faq.items[3].question">Que faire en cas d’insatisfaction ?</span>
+            <span class="accordion-icon text-primary text-2xl">+</span>
+          </button>
+          <div class="accordion-content hidden p-6 pt-0 text-muted text-sm">
+            <p data-sg-path="faq.items[3].answer">Votre satisfaction est notre priorité. Si le résultat ne vous convient pas, contactez-nous sous 24h pour une reprise gratuite.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-bg py-20" data-anim="fade">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 data-sg-path="cta.title" class="font-bold text-3xl md:text-4xl mb-4">Un Intérieur Impeccable</h2>
+      <p data-sg-path="cta.subtitle" class="text-muted text-lg mb-8">Oubliez le stress du ménage et profitez pleinement de votre temps libre. Notre équipe s’occupe de tout.</p>
+      <a href="tel:+4033949940" class="inline-block bg-primary text-ink font-semibold px-7 py-3.5 rounded-full hover:brightness-110 transition-all mb-6">Appelez-nous : +403-394-9940</a>
+      <p class="text-muted text-sm" data-sg-path="cta.caption">Un nettoyage professionnel et méticuleux pour un intérieur qui respire la propreté au quotidien.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-ink text-white/80 py-16" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <p class="text-lg" data-sg-path="footer.tagline">Un nettoyage professionnel et méticuleux pour un intérieur qui respire la propreté au quotidien.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8 mb-12">
+        <div>
+          <h4 data-sg-path="footer.columns[0].heading" class="font-semibold text-white mb-4">Entreprise</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:text-white transition-colors" data-sg-path="footer.columns[0].links[0]">Accueil</a></li>
+            <li><a href="#" class="hover:text-white transition-colors" data-sg-path="footer.columns[0].links[1]">Qui sommes-nous</a></li>
+            <li><a href="#" class="hover:text-white transition-colors" data-sg-path="footer.columns[0].links[2]">Articles</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-sg-path="footer.columns[1].heading" class="font-semibold text-white mb-4">Autres</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:text-white transition-colors" data-sg-path="footer.columns[1].links[0]">Nos services</a></li>
+            <li><a href="#" class="hover:text-white transition-colors" data-sg-path="footer.columns[1].links[1]">Contactez-nous</a></li>
+            <li><a href="#" class="hover:text-white transition-colors" data-sg-path="footer.columns[1].links[2]">Réserver</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-sg-path="footer.columns[2].heading" class="font-semibold text-white mb-4">Mentions légales</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:text-white transition-colors" data-sg-path="footer.columns[2].links[0]">Politique de confidentialité</a></li>
+            <li><a href="#" class="hover:text-white transition-colors" data-sg-path="footer.columns[2].links[1]">Conditions générales</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/10 pt-8 text-center text-sm text-white/60">
+        <p data-sg-path="footer.copyright">Copyright © 2026 Neatly</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Accordion Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const accordionHeaders = document.querySelectorAll('.accordion-header');
+      accordionHeaders.forEach(header => {
+        header.addEventListener('click', function () {
+          const content = this.nextElementSibling;
+          const icon = this.querySelector('.accordion-icon');
+          const parent = this.parentElement;
+
+          if (content.classList.contains('hidden')) {
+            content.classList.remove('hidden');
+            icon.textContent = '−';
+            parent.classList.add('open');
+          } else {
+            content.classList.add('hidden');
+            icon.textContent = '+';
+            parent.classList.remove('open');
+          }
+        });
+      });
+    });
+  </script>
+
+<!-- ═══ AKYRA MOTION KIT — animations partagées (vanilla, sans dépendance, respecte prefers-reduced-motion) ═══ -->
+<style>
+  [data-anim]{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+  [data-anim="fade"]{transform:none}
+  [data-anim="left"]{transform:translateX(-26px)}
+  [data-anim="right"]{transform:translateX(26px)}
+  [data-anim="scale"]{transform:scale(.96)}
+  [data-anim].in{opacity:1!important;transform:none!important}
+  /* Apparition du texte mot à mot */
+  .anim-words .w{display:inline-block;opacity:0;transform:translateY(0.5em);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .anim-words.in .w{opacity:1;transform:none}
+  /* Galerie accordéon : au survol, la vignette s'élargit, les autres se rétractent (CSS pur) */
+  .gallery-expand{display:flex}
+  .gallery-expand>.gx{flex:1 1 0;min-width:0;overflow:hidden;transition:flex-grow .7s cubic-bezier(.16,1,.3,1)}
+  .gallery-expand>.gx img{width:100%;height:100%;object-fit:cover}
+  @media (hover:hover){
+    .gallery-expand:hover>.gx{flex-grow:.6}
+    .gallery-expand>.gx:hover{flex-grow:3}
+  }
+  @media (prefers-reduced-motion:reduce){[data-anim],.anim-words .w{opacity:1!important;transform:none!important;transition:none!important}.gallery-expand>.gx{transition:none}}
+</style>
+<script>
+(function(){
+  var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var IO = 'IntersectionObserver' in window;
+
+  // 1) Révélation au scroll des éléments [data-anim] (stagger via data-anim-delay en ms)
+  var reveals = document.querySelectorAll('[data-anim]');
+  function showReveal(el){
+    var d = parseInt(el.getAttribute('data-anim-delay')||'0',10);
+    if(d) setTimeout(function(){el.classList.add('in')}, d); else el.classList.add('in');
+  }
+  if(RM || !IO){ reveals.forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioR = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ showReveal(en.target); ioR.unobserve(en.target);} });
+    },{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(function(e){ ioR.observe(e); });
+  }
+
+  // 2) Texte mot à mot : <h1 class="anim-words">…</h1>.
+  //    Découpe DOM-SAFE : on n'enveloppe QUE les nœuds texte (les balises internes
+  //    — dégradés, pilules — sont préservées intactes, jamais transformées en texte).
+  document.querySelectorAll('.anim-words').forEach(function(el){
+    if(el.dataset.split) return; el.dataset.split='1';
+    // Garde-fou : si le titre contient des balises internes (dégradé, pilule…),
+    // on NE découpe PAS (sinon dégradé cassé / mots invisibles) — il reste intact.
+    if(el.children.length > 0){ el.classList.remove('anim-words'); return; }
+    var wi = 0, textNodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    while(walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(function(tn){
+      if(!tn.nodeValue || !tn.nodeValue.trim()) return;
+      var frag = document.createDocumentFragment();
+      tn.nodeValue.split(/(\s+)/).forEach(function(part){
+        if(part === '') return;
+        if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+        var s = document.createElement('span'); s.className='w'; s.textContent=part;
+        s.style.transitionDelay=((wi++)*45)+'ms'; frag.appendChild(s);
+      });
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  });
+  if(RM || !IO){ document.querySelectorAll('.anim-words').forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioW = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ioW.unobserve(en.target);} });
+    },{threshold:0.25});
+    document.querySelectorAll('.anim-words').forEach(function(e){ ioW.observe(e); });
+  }
+
+  // 3) Compteurs : <span data-count="1200" data-count-suffix="+" data-count-decimals="0">0</span>
+  function fmt(v,dec){ return v.toLocaleString('fr-FR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+  function countUp(el){
+    var target=parseFloat(el.getAttribute('data-count'))||0,
+        suf=el.getAttribute('data-count-suffix')||'', pre=el.getAttribute('data-count-prefix')||'',
+        dec=parseInt(el.getAttribute('data-count-decimals')||'0',10), dur=1500, start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=pre+fmt(target*e,dec)+suf; if(p<1)requestAnimationFrame(step); else el.textContent=pre+fmt(target,dec)+suf; }
+    requestAnimationFrame(step);
+  }
+  var nums = document.querySelectorAll('[data-count]');
+  if(RM || !IO){ nums.forEach(function(el){ el.textContent=(el.getAttribute('data-count-prefix')||'')+fmt(parseFloat(el.getAttribute('data-count'))||0,parseInt(el.getAttribute('data-count-decimals')||'0',10))+(el.getAttribute('data-count-suffix')||''); }); }
+  else {
+    var ioN = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ countUp(en.target); ioN.unobserve(en.target);} });
+    },{threshold:0.6});
+    nums.forEach(function(el){ ioN.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>
