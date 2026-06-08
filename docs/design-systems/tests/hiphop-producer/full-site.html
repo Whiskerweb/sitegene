@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KAIRO - Producteur Hip-Hop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;500;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#000000',
+            paper: '#cccccc',
+            white2: '#ffffff',
+            accent: '#0000ee',
+            panel: '#0a0a0a',
+            line: 'rgba(204,204,204,0.2)'
+          },
+          fontFamily: {
+            display: ['"Big Shoulders Display"', 'sans-serif'],
+            sans: ['Inter', 'sans-serif']
+          },
+          letterSpacing: {
+            label: '0.18em'
+          },
+        }
+      }
+    };
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #000; color: #ccc; margin: 0; }
+    .font-display { font-family: '"Big Shoulders Display"', sans-serif; }
+  </style>
+</head>
+<body class="bg-ink text-paper">
+
+  <!-- Header -->
+  <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-sm bg-ink/50">
+    <nav class="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between relative">
+      <ul class="hidden md:flex items-center gap-7 font-sans text-[11px] font-medium tracking-label uppercase text-paper/70">
+        <li><a href="#releases" data-sg-path="nav[0]" class="hover:text-white2 transition-colors">Sorties</a></li>
+        <li><a href="#tour" data-sg-path="nav[1]" class="hover:text-white2 transition-colors">Tournée</a></li>
+      </ul>
+      <a href="#top" data-sg-path="brand" class="font-display font-extrabold text-2xl tracking-wider uppercase text-white2 absolute left-1/2 -translate-x-1/2">KAIRO</a>
+      <ul class="hidden md:flex items-center gap-7 font-sans text-[11px] font-medium tracking-label uppercase text-paper/70">
+        <li><a href="#about" data-sg-path="nav[2]" class="hover:text-white2 transition-colors">À propos</a></li>
+        <li><a href="#booking" data-sg-path="nav[3]" class="hover:text-white2 transition-colors">Réservations</a></li>
+      </ul>
+      <a href="#booking" data-sg-path="cta" class="md:hidden font-sans text-[11px] font-medium tracking-label uppercase text-white2">Réserver</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="top" class="relative min-h-screen flex flex-col justify-center overflow-hidden pt-16">
+    <div class="relative z-10 mx-auto max-w-7xl w-full px-6 text-center">
+      <span data-sg-path="hero.badge" class="inline-block font-sans text-[10px] font-semibold tracking-label uppercase border border-paper/40 rounded-full px-4 py-1 text-paper mb-8">Nouvelle sortie</span>
+      <h1 data-anim="fade" class="font-display font-black uppercase leading-[0.92] text-white2 text-6xl sm:text-7xl md:text-8xl lg:text-[112px]">
+        <span class="block" data-sg-path="hero.titleLine1">« Silent Ops »</span>
+        <span class="block" data-sg-path="hero.titleLine2">disponible maintenant</span>
+      </h1>
+    </div>
+    <div class="relative z-10 mx-auto max-w-7xl w-full px-6 mt-16 grid grid-cols-1 md:grid-cols-3 gap-px bg-line border-y border-line">
+      <div class="bg-ink p-6" data-anim data-anim-delay="0">
+        <span data-sg-path="hero.info[0].label" class="font-sans text-[10px] tracking-label uppercase text-paper/60">Écouter sur Apple Music</span>
+        <p data-sg-path="hero.info[0].value" class="font-display text-2xl text-white2 mt-1"><a href="#" class="hover:text-accent transition-colors">Lien</a></p>
+      </div>
+      <div class="bg-ink p-6" data-anim data-anim-delay="80">
+        <span data-sg-path="hero.info[1].label" class="font-sans text-[10px] tracking-label uppercase text-paper/60">Écouter sur Spotify</span>
+        <p data-sg-path="hero.info[1].value" class="font-display text-2xl text-white2 mt-1"><a href="#" class="hover:text-accent transition-colors">Lien</a></p>
+      </div>
+      <div class="bg-ink p-6" data-anim data-anim-delay="160">
+        <span data-sg-path="hero.info[2].label" class="font-sans text-[10px] tracking-label uppercase text-paper/60">Écouter sur YouTube Music</span>
+        <p data-sg-path="hero.info[2].value" class="font-display text-2xl text-white2 mt-1"><a href="#" class="hover:text-accent transition-colors">Lien</a></p>
+      </div>
+    </div>
+    <div class="absolute inset-0 z-0 opacity-30">
+      <img data-sg-img src="../../../../public/_templates/hiphop-producer/img/hero.jpg" alt="KAIRO en studio" class="w-full h-full object-cover">
+    </div>
+  </section>
+
+  <!-- Releases Section -->
+  <section id="releases" class="py-24">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="flex items-center gap-4 mb-12" data-anim>
+        <h2 data-sg-path="releasesLabel" class="font-display font-black uppercase text-4xl md:text-5xl text-white2">Sorties</h2>
+        <div class="w-full h-px bg-line"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-panel p-4" data-anim data-anim-delay="0">
+          <img data-sg-img src="../../../../public/_templates/hiphop-producer/img/rel1.jpg" alt="Cover Silent Ops" class="w-full aspect-square object-cover mb-4">
+          <h3 data-sg-path="releases[0].title" class="font-display font-bold uppercase text-xl text-white2">Silent Ops</h3>
+          <p data-sg-path="releases[0].type" class="font-sans text-xs tracking-label uppercase text-paper/60 mt-1">Single · 2026</p>
+        </div>
+        <div class="bg-panel p-4" data-anim data-anim-delay="80">
+          <img data-sg-img src="../../../../public/_templates/hiphop-producer/img/rel2.jpg" alt="Cover Jet Black Skies" class="w-full aspect-square object-cover mb-4">
+          <h3 data-sg-path="releases[1].title" class="font-display font-bold uppercase text-xl text-white2">Jet Black Skies</h3>
+          <p data-sg-path="releases[1].type" class="font-sans text-xs tracking-label uppercase text-paper/60 mt-1">Album · 2025</p>
+        </div>
+        <div class="bg-panel p-4" data-anim data-anim-delay="160">
+          <img data-sg-img src="../../../../public/_templates/hiphop-producer/img/rel3.jpg" alt="Cover Burning Soul" class="w-full aspect-square object-cover mb-4">
+          <h3 data-sg-path="releases[2].title" class="font-display font-bold uppercase text-xl text-white2">Burning Soul</h3>
+          <p data-sg-path="releases[2].type" class="font-sans text-xs tracking-label uppercase text-paper/60 mt-1">Single · 2025</p>
+        </div>
+        <div class="bg-panel p-4" data-anim data-anim-delay="240">
+          <img data-sg-img src="../../../../public/_templates/hiphop-producer/img/rel4.jpg" alt="Cover Concrete Lullabies" class="w-full aspect-square object-cover mb-4">
+          <h3 data-sg-path="releases[3].title" class="font-display font-bold uppercase text-xl text-white2">Concrete Lullabies</h3>
+          <p data-sg-path="releases[3].type" class="font-sans text-xs tracking-label uppercase text-paper/60 mt-1">EP · 2024</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tour Section -->
+  <section id="tour" class="py-24">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="flex items-center gap-4 mb-12" data-anim>
+        <h2 data-sg-path="tourLabel" class="font-display font-black uppercase text-4xl md:text-5xl text-white2">#KAIROTour</h2>
+        <div class="w-full h-px bg-line"></div>
+      </div>
+      <div class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 border-b border-line" data-anim data-anim-delay="0">
+          <div class="font-display text-2xl text-white2" data-sg-path="tour[0].date">12 SEP</div>
+          <div class="font-sans text-sm text-paper" data-sg-path="tour[0].city">Berlin, DE</div>
+          <div class="font-sans text-sm text-paper/70" data-sg-path="tour[0].venue">Astra Kulturhaus</div>
+          <div class="text-right"><a href="#" class="font-sans text-xs tracking-label uppercase text-accent hover:text-white2 transition-colors" data-sg-path="tour[0].link">Billets</a></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 border-b border-line" data-anim data-anim-delay="80">
+          <div class="font-display text-2xl text-white2" data-sg-path="tour[1].date">21 SEP</div>
+          <div class="font-sans text-sm text-paper" data-sg-path="tour[1].city">Paris, FR</div>
+          <div class="font-sans text-sm text-paper/70" data-sg-path="tour[1].venue">La Cigale</div>
+          <div class="text-right"><a href="#" class="font-sans text-xs tracking-label uppercase text-accent hover:text-white2 transition-colors" data-sg-path="tour[1].link">Billets</a></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 border-b border-line" data-anim data-anim-delay="160">
+          <div class="font-display text-2xl text-white2" data-sg-path="tour[2].date">04 OCT</div>
+          <div class="font-sans text-sm text-paper" data-sg-path="tour[2].city">London, UK</div>
+          <div class="font-sans text-sm text-paper/70" data-sg-path="tour[2].venue">Village Underground</div>
+          <div class="text-right"><a href="#" class="font-sans text-xs tracking-label uppercase text-accent hover:text-white2 transition-colors" data-sg-path="tour[2].link">Billets</a></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 border-b border-line" data-anim data-anim-delay="240">
+          <div class="font-display text-2xl text-white2" data-sg-path="tour[3].date">18 OCT</div>
+          <div class="font-sans text-sm text-paper" data-sg-path="tour[3].city">Amsterdam, NL</div>
+          <div class="font-sans text-sm text-paper/70" data-sg-path="tour[3].venue">Melkweg – Max</div>
+          <div class="text-right"><a href="#" class="font-sans text-xs tracking-label uppercase text-accent hover:text-white2 transition-colors" data-sg-path="tour[3].link">Billets</a></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 border-b border-line" data-anim data-anim-delay="320">
+          <div class="font-display text-2xl text-white2" data-sg-path="tour[4].date">02 NOV</div>
+          <div class="font-sans text-sm text-paper" data-sg-path="tour[4].city">Brussels, BE</div>
+          <div class="font-sans text-sm text-paper/70" data-sg-path="tour[4].venue">Ancienne Belgique</div>
+          <div class="text-right"><a href="#" class="font-sans text-xs tracking-label uppercase text-accent hover:text-white2 transition-colors" data-sg-path="tour[4].link">Billets</a></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 border-b border-line" data-anim data-anim-delay="400">
+          <div class="font-display text-2xl text-white2" data-sg-path="tour[5].date">15 NOV</div>
+          <div class="font-sans text-sm text-paper" data-sg-path="tour[5].city">Lyon, FR</div>
+          <div class="font-sans text-sm text-paper/70" data-sg-path="tour[5].venue">Le Transbordeur</div>
+          <div class="text-right"><a href="#" class="font-sans text-xs tracking-label uppercase text-accent hover:text-white2 transition-colors" data-sg-path="tour[5].link">Billets</a></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 p-4" data-anim data-anim-delay="480">
+          <div class="font-display text-2xl text-white2" data-sg-path="tour[6].date">29 NOV</div>
+          <div class="font-sans text-sm text-paper" data-sg-path="tour[6].city">Madrid, ES</div>
+          <div class="font-sans text-sm text-paper/70" data-sg-path="tour[6].venue">Sala La Riviera</div>
+          <div class="text-right"><a href="#" class="font-sans text-xs tracking-label uppercase text-accent hover:text-white2 transition-colors" data-sg-path="tour[6].link">Billets</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-24">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div data-anim>
+          <img data-sg-img src="../../../../public/_templates/hiphop-producer/img/portrait.jpg" alt="Portrait de KAIRO" class="w-full h-auto object-cover">
+        </div>
+        <div data-anim data-anim-delay="80">
+          <p data-sg-path="bio.quote" class="font-sans text-lg text-paper leading-relaxed mb-8">« Je suis KAIRO – artiste hip-hop et producteur. Des beats sombres, des histoires vraies et une énergie brute. Pas de faux-semblants – juste la vérité dans chaque texte. »</p>
+          <a href="#" class="font-sans text-xs tracking-label uppercase text-accent hover:text-white2 transition-colors" data-sg-path="bio.readMore">Lire l’histoire complète</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking Section -->
+  <section id="booking" class="py-24">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div data-anim>
+          <h2 class="font-display font-black uppercase text-4xl md:text-5xl text-white2 mb-8">Réservations</h2>
+          <p class="font-sans text-paper/80 leading-relaxed mb-8">Pour les dates de concert, les collaborations ou les demandes spéciales, envoyez-moi un message. Disponible 24/7 pour les projets qui résonnent.</p>
+          <div class="flex items-center gap-6">
+            <a href="mailto:#" class="font-sans text-xs tracking-label uppercase text-accent hover:text-white2 transition-colors">Email</a>
+            <a href="#" class="font-sans text-xs tracking-label uppercase text-accent hover:text-white2 transition-colors">Instagram</a>
+          </div>
+        </div>
+        <div class="bg-panel p-8" data-anim data-anim-delay="80">
+          <h3 class="font-display font-bold uppercase text-2xl text-white2 mb-6">Contact</h3>
+          <form class="space-y-6">
+            <div>
+              <label class="font-sans text-xs tracking-label uppercase text-paper/60">Nom</label>
+              <input type="text" class="w-full bg-transparent border-b border-line py-2 mt-2 focus:outline-none focus:border-accent transition-colors">
+            </div>
+            <div>
+              <label class="font-sans text-xs tracking-label uppercase text-paper/60">Email</label>
+              <input type="email" class="w-full bg-transparent border-b border-line py-2 mt-2 focus:outline-none focus:border-accent transition-colors">
+            </div>
+            <div>
+              <label class="font-sans text-xs tracking-label uppercase text-paper/60">Message</label>
+              <textarea rows="4" class="w-full bg-transparent border-b border-line py-2 mt-2 focus:outline-none focus:border-accent transition-colors resize-none"></textarea>
+            </div>
+            <button type="submit" class="font-sans text-xs tracking-label uppercase text-white2 bg-accent px-6 py-3 hover:bg-accent/80 transition-colors">Envoyer</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="py-24">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-line border border-line">
+        <div class="bg-panel p-8 text-center" data-anim data-anim-delay="0">
+          <div class="font-display text-5xl text-white2"><span data-count="1200" data-count-suffix="+">0</span></div>
+          <p class="font-sans text-xs tracking-label uppercase text-paper/60 mt-4">Titres produits</p>
+        </div>
+        <div class="bg-panel p-8 text-center" data-anim data-anim-delay="80">
+          <div class="font-display text-5xl text-white2"><span data-count="45" data-count-suffix="+">0</span></div>
+          <p class="font-sans text-xs tracking-label uppercase text-paper/60 mt-4">Scènes montées</p>
+        </div>
+        <div class="bg-panel p-8 text-center" data-anim data-anim-delay="160">
+          <div class="font-display text-5xl text-white2">24/7</div>
+          <p class="font-sans text-xs tracking-label uppercase text-paper/60 mt-4">Disponibilité</p>
+        </div>
+        <div class="bg-panel p-8 text-center" data-anim data-anim-delay="240">
+          <div class="font-display text-5xl text-white2"><span data-count="8" data-count-suffix="+">0</span></div>
+          <p class="font-sans text-xs tracking-label uppercase text-paper/60 mt-4">Projets en 2026</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Listen Section -->
+  <section class="py-24">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="flex items-center gap-4 mb-12" data-anim>
+        <h2 data-sg-path="listenLabel" class="font-display font-black uppercase text-4xl md:text-5xl text-white2">Écoutez-moi sur</h2>
+        <div class="w-full h-px bg-line"></div>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
+        <a href="#" class="bg-panel p-6 text-center hover:bg-panel/50 transition-colors" data-anim data-anim-delay="0">
+          <p data-sg-path="socials[0].label" class="font-sans text-xs tracking-label uppercase text-white2">Spotify</p>
+        </a>
+        <a href="#" class="bg-panel p-6 text-center hover:bg-panel/50 transition-colors" data-anim data-anim-delay="80">
+          <p data-sg-path="socials[1].label" class="font-sans text-xs tracking-label uppercase text-white2">Apple Music</p>
+        </a>
+        <a href="#" class="bg-panel p-6 text-center hover:bg-panel/50 transition-colors" data-anim data-anim-delay="160">
+          <p data-sg-path="socials[2].label" class="font-sans text-xs tracking-label uppercase text-white2">YouTube</p>
+        </a>
+        <a href="#" class="bg-panel p-6 text-center hover:bg-panel/50 transition-colors" data-anim data-anim-delay="240">
+          <p data-sg-path="socials[3].label" class="font-sans text-xs tracking-label uppercase text-white2">SoundCloud</p>
+        </a>
+        <a href="#" class="bg-panel p-6 text-center hover:bg-panel/50 transition-colors" data-anim data-anim-delay="320">
+          <p data-sg-path="socials[4].label" class="font-sans text-xs tracking-label uppercase text-white2">Instagram</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-24">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="space-y-4">
+        <div class="faq-item border-b border-line" data-anim>
+          <button class="faq-question w-full flex justify-between items-center py-6 text-left">
+            <span class="font-display font-bold uppercase text-xl text-white2">Quels sont vos influences musicales ?</span>
+            <span class="faq-icon font-display text-2xl text-white2 transition-transform">+</span>
+          </button>
+          <div class="faq-answer overflow-hidden max-h-0 transition-all duration-300">
+            <p class="font-sans text-paper/80 pb-6">J’écoute de tout, mais surtout du boom bap, du trap sombre et des instrumentales cinématiques. Des producteurs comme Alchemist, Metro Boomin et Madlib m’inspirent au quotidien.</p>
+          </div>
+        </div>
+        <div class="faq-item border-b border-line" data-anim data-anim-delay="80">
+          <button class="faq-question w-full flex justify-between items-center py-6 text-left">
+            <span class="font-display font-bold uppercase text-xl text-white2">Proposez-vous des beats en licence exclusive ?</span>
+            <span class="faq-icon font-display text-2xl text-white2 transition-transform">+</span>
+          </button>
+          <div class="faq-answer overflow-hidden max-h-0 transition-all duration-300">
+            <p class="font-sans text-paper/80 pb-6">Oui, je vends des licences exclusives pour certains beats. Contactez-moi pour discuter des tarifs et des disponibilités.</p>
+          </div>
+        </div>
+        <div class="faq-item border-b border-line" data-anim data-anim-delay="160">
+          <button class="faq-question w-full flex justify-between items-center py-6 text-left">
+            <span class="font-display font-bold uppercase text-xl text-white2">Comment se passe une réservation pour un concert ?</span>
+            <span class="faq-icon font-display text-2xl text-white2 transition-transform">+</span>
+          </button>
+          <div class="faq-answer overflow-hidden max-h-0 transition-all duration-300">
+            <p class="font-sans text-paper/80 pb-6">Envoyez-moi un email avec les détails de l’événement (date, lieu, cachet, public attendu). Je réponds sous 48h avec une proposition.</p>
+          </div>
+        </div>
+        <div class="faq-item border-b border-line" data-anim data-anim-delay="240">
+          <button class="faq-question w-full flex justify-between items-center py-6 text-left">
+            <span class="font-display font-bold uppercase text-xl text-white2">Avez-vous un studio d’enregistrement ?</span>
+            <span class="faq-icon font-display text-2xl text-white2 transition-transform">+</span>
+          </button>
+          <div class="faq-answer overflow-hidden max-h-0 transition-all duration-300">
+            <p class="font-sans text-paper/80 pb-6">Oui, mon studio est basé à Paris. Équipé pour l’enregistrement, le mixage et le mastering. Ouvert aux collaborations et aux sessions en présentiel.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 border-t border-line">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="font-sans text-xs tracking-label uppercase text-paper/60" data-sg-path="footer.copyright">© KAIRO</div>
+        <div class="font-sans text-xs tracking-label uppercase text-paper/60" data-sg-path="footer.credit">Artiste hip-hop · producteur</div>
+        <div class="font-sans text-xs tracking-label uppercase text-paper/60">Propulsé par Akyra</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const faqItems = document.querySelectorAll('.faq-item');
+
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        const icon = item.querySelector('.faq-icon');
+
+        question.addEventListener('click', () => {
+          const isOpen = item.classList.contains('open');
+
+          faqItems.forEach(i => {
+            i.classList.remove('open');
+            i.querySelector('.faq-answer').style.maxHeight = null;
+            i.querySelector('.faq-icon').textContent = '+';
+          });
+
+          if (!isOpen) {
+            item.classList.add('open');
+            answer.style.maxHeight = answer.scrollHeight + 'px';
+            icon.textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+<!-- ═══ AKYRA MOTION KIT — animations partagées (vanilla, sans dépendance, respecte prefers-reduced-motion) ═══ -->
+<style>
+  [data-anim]{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+  [data-anim="fade"]{transform:none}
+  [data-anim="left"]{transform:translateX(-26px)}
+  [data-anim="right"]{transform:translateX(26px)}
+  [data-anim="scale"]{transform:scale(.96)}
+  [data-anim].in{opacity:1!important;transform:none!important}
+  /* Apparition du texte mot à mot */
+  .anim-words .w{display:inline-block;opacity:0;transform:translateY(0.5em);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .anim-words.in .w{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){[data-anim],.anim-words .w{opacity:1!important;transform:none!important;transition:none!important}}
+</style>
+<script>
+(function(){
+  var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var IO = 'IntersectionObserver' in window;
+
+  // 1) Révélation au scroll des éléments [data-anim] (stagger via data-anim-delay en ms)
+  var reveals = document.querySelectorAll('[data-anim]');
+  function showReveal(el){
+    var d = parseInt(el.getAttribute('data-anim-delay')||'0',10);
+    if(d) setTimeout(function(){el.classList.add('in')}, d); else el.classList.add('in');
+  }
+  if(RM || !IO){ reveals.forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioR = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ showReveal(en.target); ioR.unobserve(en.target);} });
+    },{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(function(e){ ioR.observe(e); });
+  }
+
+  // 2) Texte mot à mot : <h1 class="anim-words">…</h1>.
+  //    Découpe DOM-SAFE : on n'enveloppe QUE les nœuds texte (les balises internes
+  //    — dégradés, pilules — sont préservées intactes, jamais transformées en texte).
+  document.querySelectorAll('.anim-words').forEach(function(el){
+    if(el.dataset.split) return; el.dataset.split='1';
+    // Garde-fou : si le titre contient des balises internes (dégradé, pilule…),
+    // on NE découpe PAS (sinon dégradé cassé / mots invisibles) — il reste intact.
+    if(el.children.length > 0){ el.classList.remove('anim-words'); return; }
+    var wi = 0, textNodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    while(walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(function(tn){
+      if(!tn.nodeValue || !tn.nodeValue.trim()) return;
+      var frag = document.createDocumentFragment();
+      tn.nodeValue.split(/(\s+)/).forEach(function(part){
+        if(part === '') return;
+        if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+        var s = document.createElement('span'); s.className='w'; s.textContent=part;
+        s.style.transitionDelay=((wi++)*45)+'ms'; frag.appendChild(s);
+      });
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  });
+  if(RM || !IO){ document.querySelectorAll('.anim-words').forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioW = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ioW.unobserve(en.target);} });
+    },{threshold:0.25});
+    document.querySelectorAll('.anim-words').forEach(function(e){ ioW.observe(e); });
+  }
+
+  // 3) Compteurs : <span data-count="1200" data-count-suffix="+" data-count-decimals="0">0</span>
+  function fmt(v,dec){ return v.toLocaleString('fr-FR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+  function countUp(el){
+    var target=parseFloat(el.getAttribute('data-count'))||0,
+        suf=el.getAttribute('data-count-suffix')||'', pre=el.getAttribute('data-count-prefix')||'',
+        dec=parseInt(el.getAttribute('data-count-decimals')||'0',10), dur=1500, start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=pre+fmt(target*e,dec)+suf; if(p<1)requestAnimationFrame(step); else el.textContent=pre+fmt(target,dec)+suf; }
+    requestAnimationFrame(step);
+  }
+  var nums = document.querySelectorAll('[data-count]');
+  if(RM || !IO){ nums.forEach(function(el){ el.textContent=(el.getAttribute('data-count-prefix')||'')+fmt(parseFloat(el.getAttribute('data-count'))||0,parseInt(el.getAttribute('data-count-decimals')||'0',10))+(el.getAttribute('data-count-suffix')||''); }); }
+  else {
+    var ioN = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ countUp(en.target); ioN.unobserve(en.target);} });
+    },{threshold:0.6});
+    nums.forEach(function(el){ ioN.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>

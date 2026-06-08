@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Healix – L’alliance de la santé et de l’innovation</title>
+  <meta name="description" content="Du bien-être au quotidien aux analyses santé avancées, notre plateforme vous accompagne à chaque étape.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Urbanist:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#0a0a0a',
+            primary: '#0a0a0a',
+            muted: '#3b3b3b',
+            bg: '#ffffff',
+            surface: '#f0f5f6',
+            accent: '#ffce8a'
+          },
+          fontFamily: {
+            sans: ['Urbanist', 'ui-sans-serif', 'system-ui'],
+            inter: ['Inter', 'ui-sans-serif']
+          },
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom CSS -->
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', ui-sans-serif, system-ui; background: #fff; color: #0a0a0a; margin: 0; }
+    h1, h2, h3 { font-family: 'Urbanist', sans-serif; }
+  </style>
+</head>
+<body class="bg-white">
+
+  <!-- Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-black/5">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#" data-sg-path="brand" class="flex items-center gap-2 font-bold text-xl text-ink">Healix</a>
+      <nav class="hidden md:flex items-center gap-8 text-sm text-muted">
+        <a href="#features" data-sg-path="nav[1]" class="hover:text-ink transition-colors">Toutes les pages</a>
+        <a href="#features" data-sg-path="nav[2]" class="hover:text-ink transition-colors">Fonctionnalités</a>
+        <a href="#pricing" data-sg-path="nav[3]" class="hover:text-ink transition-colors">Tarifs</a>
+        <a href="#testimonials" data-sg-path="nav[4]" class="hover:text-ink transition-colors">Avis</a>
+        <a href="#" data-sg-path="nav[5]" class="hover:text-ink transition-colors">Études de cas</a>
+        <a href="#" data-sg-path="nav[6]" class="hover:text-ink transition-colors">Contact</a>
+      </nav>
+      <a href="#cta" data-sg-path="nav.cta" class="rounded-full bg-ink text-white text-sm font-semibold px-5 py-2.5">Commencer gratuitement</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="bg-white pt-24 md:pt-28 pb-16">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="relative rounded-[40px] overflow-hidden min-h-[600px] md:min-h-[680px]">
+          <img data-sg-img="hero.image" src="../../../../public/_templates/health-saas/img/hero-doctor.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" data-anim="fade" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/10"></div>
+          <div class="relative z-10 h-full min-h-[600px] md:min-h-[680px] flex flex-col justify-end p-8 md:p-14 max-w-2xl">
+            <span data-sg-path="hero.tagline" class="inline-block self-start text-xs font-semibold uppercase tracking-wider text-ink bg-accent rounded-full px-4 py-1 mb-6" data-anim="fade" data-anim-delay="0">Des solutions fiables pour votre santé au quotidien</span>
+            <h1 data-sg-path="hero.title" class="text-white font-semibold text-5xl md:text-7xl leading-[1.02] tracking-tight anim-words" data-anim="words">L’alliance de la santé et de l’innovation</h1>
+            <p data-sg-path="hero.subtitle" class="text-white/85 text-base md:text-lg max-w-md mt-5" data-anim="fade" data-anim-delay="200">Du bien-être au quotidien aux analyses santé avancées, notre plateforme est conçue pour vous accompagner.</p>
+            <div class="mt-8 flex items-end gap-3" data-anim="fade" data-anim-delay="400">
+              <span data-sg-path="hero.stat_num" class="text-4xl md:text-5xl font-bold text-white"><span data-count="190" data-count-suffix="K" data-count-decimals="0">0</span>+</span>
+              <p data-sg-path="hero.stat_label" class="text-white/75 text-xs max-w-[190px] mb-1">Systèmes soignés à travers le monde</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Section -->
+    <section id="features" class="bg-surface py-20 md:py-28">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto">
+          <h2 data-sg-path="why.title" class="text-4xl md:text-5xl font-semibold text-ink" data-anim="fade">Pourquoi choisir Healix pour le suivi et la surveillance de votre santé ?</h2>
+        </div>
+        <div class="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Card 1 -->
+          <div class="bg-white p-8 rounded-[24px] flex flex-col" data-anim="fade" data-anim-delay="0">
+            <h3 data-sg-path="why.features[0].title" class="text-2xl font-semibold text-ink">Une meilleure conscience de votre santé</h3>
+            <p data-sg-path="why.features[0].body" class="mt-4 text-muted text-sm">Healix vous motive à rester actif grâce à des objectifs sur mesure et des rappels personnalisés.</p>
+            <div class="mt-6 flex items-end gap-3">
+              <span data-sg-path="why.features[0].stat_num" class="text-3xl font-bold text-ink"><span data-count="36" data-count-suffix="k" data-count-decimals="0">0</span>+</span>
+              <p data-sg-path="why.features[0].stat_label" class="text-muted text-xs">Augmentation des niveaux d’activité physique</p>
+            </div>
+            <div class="mt-6 flex flex-wrap gap-2">
+              <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Nombre de pas</span>
+              <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Activité physique</span>
+              <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Objectifs personnalisés</span>
+              <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Cardiovasculaire</span>
+              <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Forme</span>
+            </div>
+            <a href="#" class="mt-8 self-start text-sm font-semibold text-ink hover:text-muted transition-colors" data-sg-path="why.features[0].explore_label">Découvrir →</a>
+          </div>
+          <!-- Card 2 -->
+          <div class="bg-white p-8 rounded-[24px] flex flex-col" data-anim="fade" data-anim-delay="80">
+            <h3 data-sg-path="why.features[1].title" class="text-2xl font-semibold text-ink">Des soins personnalisés à la demande</h3>
+            <p data-sg-path="why.features[1].body" class="mt-4 text-muted text-sm">Du bien-être au quotidien aux analyses santé avancées, nous vous accompagnons à chaque étape.</p>
+            <div class="mt-6 flex items-end gap-3">
+              <span data-sg-path="why.features[1].stat_num" class="text-3xl font-bold text-ink"><span data-count="11" data-count-suffix="%" data-count-decimals="0">0</span></span>
+              <p data-sg-path="why.features[1].stat_label" class="text-muted text-xs">Amélioration du score de bien-être</p>
+            </div>
+            <div class="mt-6 flex flex-wrap gap-2">
+              <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Rééducation</span>
+              <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Santé</span>
+              <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Surveillance</span>
+            </div>
+            <a href="#" class="mt-8 self-start text-sm font-semibold text-ink hover:text-muted transition-colors" data-sg-path="why.features[1].explore_label">Découvrir →</a>
+          </div>
+          <!-- Card 3 -->
+          <div class="bg-white p-8 rounded-[24px] flex flex-col" data-anim="fade" data-anim-delay="160">
+            <h3 data-sg-path="why.features[2].title" class="text-2xl font-semibold text-ink">Une réaction plus rapide aux changements</h3>
+            <p data-sg-path="why.features[2].body" class="mt-4 text-muted text-sm">Healix vous aide à suivre et comprendre l’évolution de votre mode de vie en temps réel.</p>
+            <div class="mt-6 flex items-end gap-3">
+              <span data-sg-path="why.features[2].stat_num" class="text-3xl font-bold text-ink"><span data-count="11.36" data-count-suffix="%" data-count-decimals="2">0</span></span>
+              <p data-sg-path="why.features[2].stat_label" class="text-muted text-xs">Temps de réaction santé optimisé</p>
+            </div>
+            <div class="mt-6 flex flex-wrap gap-2">
+              <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Surveillance</span>
+              <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Technologie</span>
+              <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Alertes</span>
+            </div>
+            <a href="#" class="mt-8 self-start text-sm font-semibold text-ink hover:text-muted transition-colors" data-sg-path="why.features[2].explore_label">Découvrir →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="bg-white py-20 md:py-28">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto">
+          <span class="inline-block text-xs font-semibold uppercase tracking-wider text-muted">Fonctionnalités</span>
+          <h2 data-sg-path="features.title" class="mt-4 text-4xl md:text-5xl font-semibold text-ink" data-anim="fade">Des fonctionnalités conçues pour votre parcours santé</h2>
+          <p data-sg-path="features.subtitle" class="mt-4 text-muted" data-anim="fade" data-anim-delay="200">Healix vous aide à suivre et comprendre votre santé pour prendre des décisions éclairées et adopter un mode de vie plus sain.</p>
+        </div>
+        <div class="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="flex flex-col" data-anim="fade" data-anim-delay="0">
+            <h3 data-sg-path="features.items[0].title" class="text-xl font-semibold text-ink">Obtenez des réponses à vos questions santé</h3>
+            <p data-sg-path="features.items[0].body" class="mt-4 text-muted text-sm">Healix vous encourage à rester actif et informé grâce à des analyses santé pilotées par l’IA.</p>
+          </div>
+          <div class="flex flex-col" data-anim="fade" data-anim-delay="80">
+            <h3 data-sg-path="features.items[1].title" class="text-xl font-semibold text-ink">Surveillez vos constantes en temps réel</h3>
+            <p data-sg-path="features.items[1].body" class="mt-4 text-muted text-sm">Suivez votre fréquence cardiaque, votre oxygénation sanguine et la qualité de votre sommeil via vos appareils connectés.</p>
+          </div>
+          <div class="flex flex-col" data-anim="fade" data-anim-delay="160">
+            <h3 data-sg-path="features.items[2].title" class="text-xl font-semibold text-ink">Recevez des alertes santé personnalisées</h3>
+            <p data-sg-path="features.items[2].body" class="mt-4 text-muted text-sm">Bénéficiez de conseils et d’alertes adaptés à l’évolution de vos données individuelles.</p>
+          </div>
+          <div class="flex flex-col" data-anim="fade" data-anim-delay="240">
+            <h3 data-sg-path="features.items[3].title" class="text-xl font-semibold text-ink">Synchronisez tous vos appareils santé</h3>
+            <p data-sg-path="features.items[3].body" class="mt-4 text-muted text-sm">Connectez vos wearables et appareils intelligents pour une vue unifiée de vos données santé.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Steps Section -->
+    <section class="bg-surface py-20 md:py-28">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto">
+          <h2 data-sg-path="steps.title" class="text-4xl md:text-5xl font-semibold text-ink" data-anim="fade">Des étapes simples pour démarrer votre parcours santé</h2>
+        </div>
+        <div class="mt-16 grid md:grid-cols-3 gap-8">
+          <div class="bg-white p-8 rounded-[24px]" data-anim="fade" data-anim-delay="0">
+            <span data-sg-path="steps.items[0].number" class="text-xs font-semibold text-muted">01</span>
+            <span class="ml-4 text-sm font-semibold text-ink" data-sg-path="steps.items[0].label">Découvrir</span>
+            <h3 data-sg-path="steps.items[0].title" class="mt-4 text-2xl font-semibold text-ink">Téléchargez l’appli et connectez vos appareils</h3>
+            <p data-sg-path="steps.items[0].body" class="mt-4 text-muted text-sm">Synchronisez Healix avec vos wearables pour des mises à jour en temps réel.</p>
+          </div>
+          <div class="bg-white p-8 rounded-[24px]" data-anim="fade" data-anim-delay="80">
+            <span data-sg-path="steps.items[1].number" class="text-xs font-semibold text-muted">02</span>
+            <span class="ml-4 text-sm font-semibold text-ink" data-sg-path="steps.items[1].label">Découvrir</span>
+            <h3 data-sg-path="steps.items[1].title" class="mt-4 text-2xl font-semibold text-ink">Définissez vos objectifs santé et commencez le suivi</h3>
+            <p data-sg-path="steps.items[1].body" class="mt-4 text-muted text-sm">Fixez vos cibles bien-être pour une expérience entièrement personnalisée.</p>
+          </div>
+          <div class="bg-white p-8 rounded-[24px]" data-anim="fade" data-anim-delay="160">
+            <span data-sg-path="steps.items[2].number" class="text-xs font-semibold text-muted">03</span>
+            <span class="ml-4 text-sm font-semibold text-ink" data-sg-path="steps.items[2].label">Découvrir</span>
+            <h3 data-sg-path="steps.items[2].title" class="mt-4 text-2xl font-semibold text-ink">Suivez et atteignez vos objectifs pour rester en bonne santé</h3>
+            <p data-sg-path="steps.items[2].body" class="mt-4 text-muted text-sm">Commencez le suivi, recevez des analyses et ajustez vos habitudes en fonction des données.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="bg-white py-20 md:py-28">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto">
+          <h2 data-sg-path="social_proof.title" class="text-4xl md:text-5xl font-semibold text-ink" data-anim="fade">Les études montrent qu'un suivi santé proactif peut réduire les risques de maladies chroniques jusqu'à <span class="text-ink"><span data-count="78" data-count-suffix="%" data-count-decimals="0">0</span>%</span></h2>
+          <p data-sg-path="social_proof.subtitle" class="mt-8 text-xl font-semibold text-ink" data-anim="fade" data-anim-delay="200">L'importance du suivi santé</p>
+          <p data-sg-path="social_proof.body" class="mt-4 text-muted" data-anim="fade" data-anim-delay="400">Les études révèlent qu'un suivi santé proactif peut diminuer les risques de maladies chroniques jusqu'à</p>
+          <div class="mt-8 flex flex-wrap justify-center gap-2">
+            <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Réadaptation</span>
+            <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Santé</span>
+            <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Surveillance</span>
+            <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Technologie</span>
+            <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Personnalisé</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="bg-surface py-20 md:py-28">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto">
+          <h2 data-sg-path="testimonials.title" class="text-4xl md:text-5xl font-semibold text-ink" data-anim="fade">Découvrez comment Healix a transformé des vies grâce au suivi santé personnalisé</h2>
+          <p data-sg-path="testimonials.cta_text" class="mt-8 text-muted" data-anim="fade" data-anim-delay="200">Vous avez une success story avec Healix ? Nous serions ravis de la découvrir !</p>
+          <a href="#" class="mt-4 inline-block rounded-full bg-ink text-white text-sm font-semibold px-5 py-2.5" data-sg-path="testimonials.cta_label" data-anim="fade" data-anim-delay="400">Partagez votre vidéo</a>
+        </div>
+        <div class="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="bg-white p-8 rounded-[24px]" data-anim="fade" data-anim-delay="0">
+            <p data-sg-path="testimonials.items[0].body" class="text-muted text-sm">“Healix a changé ma vie. Je peux désormais suivre ma santé en continu et me sentir bien plus confiant dans mes performances quotidiennes.”</p>
+            <div class="mt-6">
+              <p data-sg-path="testimonials.items[0].name" class="font-semibold text-ink">Guy Hawkins</p>
+              <p data-sg-path="testimonials.items[0].role" class="text-xs text-muted">Marathonien</p>
+            </div>
+            <div class="mt-6 flex flex-wrap gap-2">
+              <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Augmentation de l’activité</span>
+              <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">physique</span>
+            </div>
+          </div>
+          <div class="bg-white p-8 rounded-[24px]" data-anim="fade" data-anim-delay="80">
+            <p data-sg-path="testimonials.items[1].body" class="text-muted text-sm">“J’adore la fonction de chat avec les médecins. Savoir que je peux contacter un expert en santé à tout moment me rassure énormément.”</p>
+            <div class="mt-6">
+              <p data-sg-path="testimonials.items[1].name" class="font-semibold text-ink">Jane Austen</p>
+              <p data-sg-path="testimonials.items[1].role" class="text-xs text-muted">Professeure de yoga</p>
+            </div>
+            <div class="mt-6 flex flex-wrap gap-2">
+              <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Tonus physique</span>
+              <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Énergie décuplée</span>
+            </div>
+          </div>
+          <div class="bg-white p-8 rounded-[24px]" data-anim="fade" data-anim-delay="160">
+            <p data-sg-path="testimonials.items[2].body" class="text-muted text-sm">“Healix a complètement transformé ma santé. Les analyses personnalisées m’ont aidé à adopter de meilleures habitudes en quelques semaines seulement.”</p>
+            <div class="mt-6">
+              <p data-sg-path="testimonials.items[2].name" class="font-semibold text-ink">Toni Morrison</p>
+              <p data-sg-path="testimonials.items[2].role" class="text-xs text-muted">Coach bien-être</p>
+            </div>
+            <div class="mt-6 flex flex-wrap gap-2">
+              <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Endurance améliorée</span>
+              <span class="text-xs text-muted bg-surface rounded-full px-3 py-1">Gain de force</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="bg-white py-20 md:py-28">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto">
+          <h2 data-sg-path="pricing.title" class="text-4xl md:text-5xl font-semibold text-ink" data-anim="fade">Trouvez l'abonnement adapté à votre parcours santé</h2>
+          <p data-sg-path="pricing.subtitle" class="mt-4 text-muted" data-anim="fade" data-anim-delay="200">Des formules flexibles pour répondre à vos besoins de suivi santé.</p>
+          <div class="mt-8 flex justify-center items-center gap-4">
+            <span data-sg-path="pricing.toggle_monthly" class="text-sm text-muted">Facturation mensuelle</span>
+            <div class="relative">
+              <input type="checkbox" id="pricing-toggle" class="sr-only">
+              <label for="pricing-toggle" class="block w-12 h-6 bg-surface rounded-full cursor-pointer">
+                <span class="block w-4 h-4 bg-ink rounded-full absolute top-1 left-1 transition-transform translate-x-6"></span>
+              </label>
+            </div>
+            <span data-sg-path="pricing.toggle_yearly" class="text-sm font-semibold text-ink">Facturation annuelle</span>
+          </div>
+        </div>
+        <div class="mt-16 grid lg:grid-cols-3 gap-8">
+          <!-- Plan 1 -->
+          <div class="bg-surface p-8 rounded-[24px] flex flex-col" data-anim="fade" data-anim-delay="0">
+            <h3 data-sg-path="pricing.plans[0].name" class="text-2xl font-semibold text-ink">Découverte Bien-être</h3>
+            <p data-sg-path="pricing.plans[0].desc" class="mt-2 text-muted text-sm">Améliorez la qualité de votre sommeil grâce à des analyses personnalisées.</p>
+            <p data-sg-path="pricing.plans[0].price" class="mt-6 text-5xl font-bold text-ink">$59<span class="text-lg font-medium text-muted" data-sg-path="pricing.plans[0].period">/mois</span></p>
+            <a href="#" class="mt-8 w-full text-center rounded-full bg-ink text-white text-sm font-semibold px-5 py-3" data-sg-path="pricing.plans[0].cta">Commencer gratuitement</a>
+            <ul class="mt-8 space-y-4 text-sm text-muted">
+              <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Articles et conseils</li>
+              <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Rappels d'activité</li>
+              <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Suivi santé de base</li>
+              <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Bilan bien-être hebdomadaire</li>
+            </ul>
+          </div>
+          <!-- Plan 2 (Popular) -->
+          <div class="bg-surface p-8 rounded-[24px] flex flex-col border-2 border-ink" data-anim="fade" data-anim-delay="80">
+            <div class="flex justify-between items-center">
+              <h3 data-sg-path="pricing.plans[1].name" class="text-2xl font-semibold text-ink">Équilibre Sommeil</h3>
+              <span class="text-xs font-semibold text-white bg-ink rounded-full px-3 py-1">POPULAIRE</span>
+            </div>
+            <p data-sg-path="pricing.plans[1].desc" class="mt-2 text-muted text-sm">Parfait pour un suivi global et l'adoption d'habitudes saines.</p>
+            <p data-sg-path="pricing.plans[1].price" class="mt-6 text-5xl font-bold text-ink">$79<span class="text-lg font-medium text-muted" data-sg-path="pricing.plans[1].period">/mois</span></p>
+            <a href="#" class="mt-8 w-full text-center rounded-full bg-ink text-white text-sm font-semibold px-5 py-3" data-sg-path="pricing.plans[1].cta">Commencer gratuitement</a>
+            <ul class="mt-8 space-y-4 text-sm text-muted">
+              <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Articles et conseils</li>
+              <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Rappels d'activité</li>
+              <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Suivi santé de base</li>
+              <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Bilan bien-être hebdomadaire</li>
+              <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Chat prioritaire avec un médecin</li>
+            </ul>
+          </div>
+          <!-- Plan 3 -->
+          <div class="bg-surface p-8 rounded-[24px] flex flex-col" data-anim="fade" data-anim-delay="160">
+            <h3 data-sg-path="pricing.plans[2].name" class="text-2xl font-semibold text-ink">Gestion du Poids</h3>
+            <p data-sg-path="pricing.plans[2].desc" class="mt-2 text-muted text-sm">Concentrez-vous sur l'atteinte et le maintien d'un poids santé.</p>
+            <p data-sg-path="pricing.plans[2].price" class="mt-6 text-5xl font-bold text-ink">$99<span class="text-lg font-medium text-muted" data-sg-path="pricing.plans[2].period">/mois</span></p>
+            <a href="#" class="mt-8 w-full text-center rounded-full bg-ink text-white text-sm font-semibold px-5 py-3" data-sg-path="pricing.plans[2].cta">Commencer gratuitement</a>
+            <ul class="mt-8 space-y-4 text-sm text-muted">
+              <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Articles et conseils</li>
+              <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Rappels d'activité</li>
+              <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Suivi santé avancé</li>
+              <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Bilan bien-être hebdomadaire</li>
+              <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Rapports personnalisés</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Comparison Table -->
+        <div class="mt-20 overflow-x-auto">
+          <table class="w-full text-left">
+            <thead>
+              <tr class="border-b border-black/10">
+                <th class="py-4 text-sm font-semibold text-muted"></th>
+                <th class="py-4 text-sm font-semibold text-ink" data-sg-path="pricing.compare.columns[0]">Découverte Bien-être</th>
+                <th class="py-4 text-sm font-semibold text-ink" data-sg-path="pricing.compare.columns[1]">Équilibre Sommeil</th>
+                <th class="py-4 text-sm font-semibold text-ink" data-sg-path="pricing.compare.columns[2]">Gestion du Poids</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-black/5">
+              <tr data-anim="fade" data-anim-delay="0">
+                <td data-sg-path="pricing.compare.rows[0].feature" class="py-6 text-sm font-medium text-ink">Rapports santé personnalisés</td>
+                <td data-sg-path="pricing.compare.rows[0].values[0]" class="py-6 text-sm text-muted">Synthèses basiques</td>
+                <td data-sg-path="pricing.compare.rows[0].values[1]" class="py-6 text-sm text-muted">Rapports détaillés</td>
+                <td data-sg-path="pricing.compare.rows[0].values[2]" class="py-6 text-sm text-muted">Analyses approfondies</td>
+              </tr>
+              <tr data-anim="fade" data-anim-delay="80">
+                <td data-sg-path="pricing.compare.rows[1].feature" class="py-6 text-sm font-medium text-ink">Fixation et suivi d'objectifs</td>
+                <td data-sg-path="pricing.compare.rows[1].values[0]" class="py-6 text-sm text-muted">Accès basique</td>
+                <td data-sg-path="pricing.compare.rows[1].values[1]" class="py-6 text-sm text-muted">Accès prioritaire</td>
+                <td data-sg-path="pricing.compare.rows[1].values[2]" class="py-6 text-sm text-muted">Accès prioritaire</td>
+              </tr>
+              <tr data-anim="fade" data-anim-delay="160">
+                <td data-sg-path="pricing.compare.rows[2].feature" class="py-6 text-sm font-medium text-ink">Synchronisation des appareils</td>
+                <td data-sg-path="pricing.compare.rows[2].values[0]" class="py-6 text-sm text-muted">Appareils limités</td>
+                <td data-sg-path="pricing.compare.rows[2].values[1]" class="py-6 text-sm text-muted">Plusieurs appareils</td>
+                <td data-sg-path="pricing.compare.rows[2].values[2]" class="py-6 text-sm text-muted">Tous les appareils compatibles</td>
+              </tr>
+              <tr data-anim="fade" data-anim-delay="240">
+                <td data-sg-path="pricing.compare.rows[3].feature" class="py-6 text-sm font-medium text-ink">Rappels personnalisés</td>
+                <td data-sg-path="pricing.compare.rows[3].values[0]" class="py-6 text-sm text-muted">Non</td>
+                <td data-sg-path="pricing.compare.rows[3].values[1]" class="py-6 text-sm text-muted">Non</td>
+                <td data-sg-path="pricing.compare.rows[3].values[2]" class="py-6 text-sm text-muted">Oui</td>
+              </tr>
+              <tr data-anim="fade" data-anim-delay="320">
+                <td data-sg-path="pricing.compare.rows[4].feature" class="py-6 text-sm font-medium text-ink">Téléchargement des rapports</td>
+                <td data-sg-path="pricing.compare.rows[4].values[0]" class="py-6 text-sm text-muted">Non</td>
+                <td data-sg-path="pricing.compare.rows[4].values[1]" class="py-6 text-sm text-muted">Format PDF</td>
+                <td data-sg-path="pricing.compare.rows[4].values[2]" class="py-6 text-sm text-muted">Formats PDF et CSV</td>
+              </tr>
+              <tr data-anim="fade" data-anim-delay="400">
+                <td data-sg-path="pricing.compare.rows[5].feature" class="py-6 text-sm font-medium text-ink">Support client 24/7</td>
+                <td data-sg-path="pricing.compare.rows[5].values[0]" class="py-6 text-sm text-muted">Support par email</td>
+                <td data-sg-path="pricing.compare.rows[5].values[1]" class="py-6 text-sm text-muted">Email et chat prioritaire</td>
+                <td data-sg-path="pricing.compare.rows[5].values[2]" class="py-6 text-sm text-muted">Support prioritaire 24/7</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="bg-surface py-20 md:py-28">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto">
+          <h2 data-sg-path="faq.title" class="text-4xl md:text-5xl font-semibold text-ink" data-anim="fade">Questions fréquentes</h2>
+          <p data-sg-path="faq.subtitle" class="mt-4 text-muted" data-anim="fade" data-anim-delay="200">Pour toute question sans réponse, contactez notre équipe support par email. Nous vous répondrons dans les plus brefs délais.</p>
+        </div>
+        <div class="mt-16 max-w-3xl mx-auto space-y-4" id="faq-accordion">
+          <div class="faq-item bg-white rounded-[24px]">
+            <button class="faq-question w-full flex justify-between items-center p-6 text-left">
+              <span data-sg-path="faq.items[0].q" class="font-semibold text-ink">Mes données sont-elles sécurisées avec Healix ?</span>
+              <span class="faq-icon text-2xl font-light text-muted">+</span>
+            </button>
+            <div class="faq-answer hidden p-6 pt-0 text-muted text-sm">
+              <p data-sg-path="faq.items[0].a">Votre confidentialité est notre priorité. Healix utilise un chiffrement avancé pour protéger vos données, et vous en gardez le contrôle total.</p>
+            </div>
+          </div>
+          <div class="faq-item bg-white rounded-[24px]">
+            <button class="faq-question w-full flex justify-between items-center p-6 text-left">
+              <span data-sg-path="faq.items[1].q" class="font-semibold text-ink">Puis-je utiliser Healix sans appareil connecté ?</span>
+              <span class="faq-icon text-2xl font-light text-muted">+</span>
+            </button>
+            <div class="faq-answer hidden p-6 pt-0 text-muted text-sm">
+              <p data-sg-path="faq.items[1].a">Oui, Healix fonctionne sans accessoire connecté. Vous pouvez saisir manuellement vos données ou utiliser les capteurs de votre smartphone.</p>
+            </div>
+          </div>
+          <div class="faq-item bg-white rounded-[24px]">
+            <button class="faq-question w-full flex justify-between items-center p-6 text-left">
+              <span data-sg-path="faq.items[2].q" class="font-semibold text-ink">Que comprend le support par chat avec un médecin ?</span>
+              <span class="faq-icon text-2xl font-light text-muted">+</span>
+            </button>
+            <div class="faq-answer hidden p-6 pt-0 text-muted text-sm">
+              <p data-sg-path="faq.items[2].a">Le chat médical vous permet d'échanger directement avec des professionnels de santé agréés via l'application.</p>
+            </div>
+          </div>
+          <div class="faq-item bg-white rounded-[24px]">
+            <button class="faq-question w-full flex justify-between items-center p-6 text-left">
+              <span data-sg-path="faq.items[3].q" class="font-semibold text-ink">Puis-je changer d'abonnement par la suite ?</span>
+              <span class="faq-icon text-2xl font-light text-muted">+</span>
+            </button>
+            <div class="faq-answer hidden p-6 pt-0 text-muted text-sm">
+              <p data-sg-path="faq.items[3].a">Absolument. Vous pouvez modifier votre abonnement à tout moment depuis votre compte, sans frais supplémentaires.</p>
+            </div>
+          </div>
+          <div class="faq-item bg-white rounded-[24px]">
+            <button class="faq-question w-full flex justify-between items-center p-6 text-left">
+              <span data-sg-path="faq.items[4].q" class="font-semibold text-ink">Healix propose-t-il un essai gratuit ?</span>
+              <span class="faq-icon text-2xl font-light text-muted">+</span>
+            </button>
+            <div class="faq-answer hidden p-6 pt-0 text-muted text-sm">
+              <p data-sg-path="faq.items[4].a">Oui, nous offrons un essai gratuit de 14 jours sur tous nos abonnements. Aucune carte bancaire n'est requise pour commencer.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section id="cta" class="bg-white py-20 md:py-28">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="relative rounded-[40px] overflow-hidden bg-surface p-12 md:p-20 text-center">
+          <span data-sg-path="cta_section.eyebrow" class="inline-block text-xs font-semibold uppercase tracking-wider text-muted" data-anim="fade">Commencez votre parcours santé avec Healix dès aujourd'hui. Votre santé, vos données, votre pouvoir.</span>
+          <h2 data-sg-path="cta_section.title" class="mt-6 text-4xl md:text-5xl font-semibold text-ink" data-anim="fade" data-anim-delay="200">Échangez avec l'un de nos experts en santé connectée pour découvrir comment Healix peut accompagner votre bien-être.</h2>
+          <a href="#" class="mt-8 inline-block rounded-full bg-ink text-white text-sm font-semibold px-5 py-3" data-sg-path="cta_section.cta" data-anim="fade" data-anim-delay="400">Commencer gratuitement</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-black/5 py-16">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-start gap-8">
+        <div class="flex flex-col">
+          <a href="#" data-sg-path="footer.brand" class="font-bold text-xl text-ink">Healix</a>
+          <div class="mt-6 flex gap-6 text-sm text-muted">
+            <a href="#" data-sg-path="footer.links_left[0]" class="hover:text-ink">À propos</a>
+            <a href="#" data-sg-path="footer.links_left[1]" class="hover:text-ink">Articles & Conseils</a>
+          </div>
+        </div>
+        <div class="flex gap-6 text-sm text-muted">
+          <a href="#" data-sg-path="footer.links_right[0]" class="hover:text-ink">Centre d'Aide</a>
+          <a href="#" data-sg-path="footer.links_right[1]" class="hover:text-ink">Nous Contacter</a>
+          <a href="#" data-sg-path="footer.links_right[2]" class="hover:text-ink">Politique de Confidentialité</a>
+          <a href="#" data-sg-path="footer.links_right[3]" class="hover:text-ink">Conditions Générales</a>
+        </div>
+      </div>
+      <div class="mt-12 pt-8 border-t border-black/5 text-xs text-muted">
+        <p data-sg-path="footer.copyright">Copyright © 2024 Healix. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Accordion Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const accordion = document.getElementById('faq-accordion');
+      if (accordion) {
+        accordion.addEventListener('click', (e) => {
+          const questionButton = e.target.closest('.faq-question');
+          if (!questionButton) return;
+
+          const item = questionButton.parentElement;
+          const answer = item.querySelector('.faq-answer');
+          const icon = questionButton.querySelector('.faq-icon');
+
+          item.classList.toggle('open');
+          if (item.classList.contains('open')) {
+            answer.classList.remove('hidden');
+            icon.textContent = '−';
+          } else {
+            answer.classList.add('hidden');
+            icon.textContent = '+';
+          }
+        });
+      }
+    });
+  </script>
+
+<!-- ═══ AKYRA MOTION KIT — animations partagées (vanilla, sans dépendance, respecte prefers-reduced-motion) ═══ -->
+<style>
+  [data-anim]{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+  [data-anim="fade"]{transform:none}
+  [data-anim="left"]{transform:translateX(-26px)}
+  [data-anim="right"]{transform:translateX(26px)}
+  [data-anim="scale"]{transform:scale(.96)}
+  [data-anim].in{opacity:1!important;transform:none!important}
+  /* Apparition du texte mot à mot */
+  .anim-words .w{display:inline-block;opacity:0;transform:translateY(0.5em);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .anim-words.in .w{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){[data-anim],.anim-words .w{opacity:1!important;transform:none!important;transition:none!important}}
+</style>
+<script>
+(function(){
+  var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var IO = 'IntersectionObserver' in window;
+
+  // 1) Révélation au scroll des éléments [data-anim] (stagger via data-anim-delay en ms)
+  var reveals = document.querySelectorAll('[data-anim]');
+  function showReveal(el){
+    var d = parseInt(el.getAttribute('data-anim-delay')||'0',10);
+    if(d) setTimeout(function(){el.classList.add('in')}, d); else el.classList.add('in');
+  }
+  if(RM || !IO){ reveals.forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioR = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ showReveal(en.target); ioR.unobserve(en.target);} });
+    },{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(function(e){ ioR.observe(e); });
+  }
+
+  // 2) Texte mot à mot : <h1 class="anim-words">…</h1>.
+  //    Découpe DOM-SAFE : on n'enveloppe QUE les nœuds texte (les balises internes
+  //    — dégradés, pilules — sont préservées intactes, jamais transformées en texte).
+  document.querySelectorAll('.anim-words').forEach(function(el){
+    if(el.dataset.split) return; el.dataset.split='1';
+    // Garde-fou : si le titre contient des balises internes (dégradé, pilule…),
+    // on NE découpe PAS (sinon dégradé cassé / mots invisibles) — il reste intact.
+    if(el.children.length > 0){ el.classList.remove('anim-words'); return; }
+    var wi = 0, textNodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    while(walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(function(tn){
+      if(!tn.nodeValue || !tn.nodeValue.trim()) return;
+      var frag = document.createDocumentFragment();
+      tn.nodeValue.split(/(\s+)/).forEach(function(part){
+        if(part === '') return;
+        if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+        var s = document.createElement('span'); s.className='w'; s.textContent=part;
+        s.style.transitionDelay=((wi++)*45)+'ms'; frag.appendChild(s);
+      });
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  });
+  if(RM || !IO){ document.querySelectorAll('.anim-words').forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioW = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ioW.unobserve(en.target);} });
+    },{threshold:0.25});
+    document.querySelectorAll('.anim-words').forEach(function(e){ ioW.observe(e); });
+  }
+
+  // 3) Compteurs : <span data-count="1200" data-count-suffix="+" data-count-decimals="0">0</span>
+  function fmt(v,dec){ return v.toLocaleString('fr-FR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+  function countUp(el){
+    var target=parseFloat(el.getAttribute('data-count'))||0,
+        suf=el.getAttribute('data-count-suffix')||'', pre=el.getAttribute('data-count-prefix')||'',
+        dec=parseInt(el.getAttribute('data-count-decimals')||'0',10), dur=1500, start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=pre+fmt(target*e,dec)+suf; if(p<1)requestAnimationFrame(step); else el.textContent=pre+fmt(target,dec)+suf; }
+    requestAnimationFrame(step);
+  }
+  var nums = document.querySelectorAll('[data-count]');
+  if(RM || !IO){ nums.forEach(function(el){ el.textContent=(el.getAttribute('data-count-prefix')||'')+fmt(parseFloat(el.getAttribute('data-count'))||0,parseInt(el.getAttribute('data-count-decimals')||'0',10))+(el.getAttribute('data-count-suffix')||''); }); }
+  else {
+    var ioN = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ countUp(en.target); ioN.unobserve(en.target);} });
+    },{threshold:0.6});
+    nums.forEach(function(el){ ioN.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>
