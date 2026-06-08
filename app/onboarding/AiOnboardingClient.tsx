@@ -43,6 +43,7 @@ export default function AiOnboardingClient() {
   const [uploading, setUploading] = useState(false);
   const [buildLine, setBuildLine] = useState(0);
   const [errorMsg, setErrorMsg] = useState("");
+  const [generated, setGenerated] = useState(true);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -170,6 +171,7 @@ export default function AiOnboardingClient() {
       });
       const data = await res.json();
       if (!res.ok || !data?.ok) throw new Error(data?.error ?? "Génération impossible.");
+      setGenerated(data.generated !== false);
       setPhase("result");
     } catch (e) {
       setErrorMsg(e instanceof Error ? e.message : "Erreur");
@@ -349,6 +351,20 @@ export default function AiOnboardingClient() {
 
       {phase === "result" && (
         <div className="mx-auto max-w-5xl px-4 py-8">
+          {!generated && (
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-amber-50 px-4 py-3 ring-1 ring-amber-200">
+              <p className="text-sm text-amber-800">
+                La génération sur-mesure n'a pas abouti (surcharge passagère) — voici une
+                version de base. Relancez la génération pour un site vraiment à votre image.
+              </p>
+              <button
+                onClick={generate}
+                className="flex items-center gap-2 rounded-full bg-amber-600 px-4 py-2 text-sm font-medium text-white hover:bg-amber-700"
+              >
+                <Sparkles className="h-4 w-4" /> Régénérer
+              </button>
+            </div>
+          )}
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="grid h-7 w-7 place-items-center rounded-full bg-green-100 text-green-600">

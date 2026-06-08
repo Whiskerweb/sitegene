@@ -136,14 +136,19 @@ ${
 
 type MistralGen = { ok: true; text: string } | { ok: false; reason: string };
 
-/** Appel Mistral dédié à la génération : gros max_tokens, timeout long, retry 2×.
- *  Remonte la RAISON d'échec (observabilité) au lieu d'un simple null. */
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+/** Appel Mistral dédié à la génération : gros max_tokens, timeout long, retry
+ *  ROBUSTE (4×, backoff exponentiel, gestion explicite du 429/rate-limit) car la
+ *  génération est longue (~30-90s) et sensible aux limites de débit. Remonte la
+ *  RAISON d'échec (observabilité). */
 async function callMistralGen(system: string, user: string, timeoutMs: number): Promise<MistralGen> {
   const key = process.env.MISTRAL_API_KEY;
   if (!key) return { ok: false, reason: "no-key" };
   const model = process.env.MISTRAL_MODEL || "mistral-large-latest";
   let reason = "inconnu";
-  for (let attempt = 1; attempt <= 2; attempt++) {
+  const MAX = 4;
+  for (let attempt = 1; attempt <= MAX; attempt++) {
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), timeoutMs);
     try {
@@ -161,8 +166,15 @@ async function callMistralGen(system: string, user: string, timeoutMs: number): 
         }),
         signal: ctrl.signal,
       });
+      if (res.status === 429) {
+        // Rate limit : attente plus longue avant de réessayer.
+        reason = "http-429";
+        if (attempt < MAX) await sleep(Math.min(30_000, 5_000 * attempt));
+        continue;
+      }
       if (!res.ok) {
         reason = `http-${res.status}`;
+        if (attempt < MAX) await sleep(2_000 * attempt);
         continue;
       }
       const j = await res.json();
@@ -171,6 +183,7 @@ async function callMistralGen(system: string, user: string, timeoutMs: number): 
       reason = "réponse-vide";
     } catch (e) {
       reason = e instanceof Error && e.name === "AbortError" ? "timeout" : "fetch-fail";
+      if (attempt < MAX) await sleep(2_000 * attempt);
     } finally {
       clearTimeout(timer);
     }
