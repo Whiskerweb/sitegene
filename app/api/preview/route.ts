@@ -5,7 +5,7 @@ import {
   fetchDefaultContent,
   fetchTemplateManifest,
 } from "@/lib/site-server";
-import { contentForTemplate, metaForTemplate } from "@/lib/site-content";
+import { contentForTemplate, metaForTemplate, type AnyContent } from "@/lib/site-content";
 import { injectEditChrome, type EditableFieldSpec } from "@/lib/edit-runtime";
 import { getEffect } from "@/lib/effects";
 import {
@@ -52,10 +52,14 @@ export async function GET(request: Request) {
   // Snapshot de la peau à rendre (brouillon le plus récent), sinon défaut.
   const sc = await loadEditableSnapshot(admin, site.id, renderTpl);
   const raw = sc?.content_json ?? (await fetchDefaultContent(origin, renderTpl));
+  // Shell bespoke (site sur-mesure généré par l'IA), sinon null.
+  const generatedHtml = sc?.generated_html ?? null;
   // ?path= permet à l'éditeur de prévisualiser une page précise (multi-pages).
   const pagePath = url.searchParams.get("path") || "/";
-  // Contenu par lignée : v2 (SPA) ou PLAT (HTML clone-site).
-  let content = contentForTemplate(raw, renderTpl);
+  // Shell bespoke → contenu PLAT (data-sg) sans normalisation v2 ; sinon lignée.
+  let content: AnyContent = generatedHtml
+    ? (raw as AnyContent)
+    : contentForTemplate(raw, renderTpl);
 
   // Aperçu éphémère d'un composant (effet) avant commit : re-validation
   // complète (effet connu + possédé + config sanitizée), merge non persisté.
@@ -102,7 +106,7 @@ export async function GET(request: Request) {
     renderTpl,
     content,
     metaForTemplate(content, renderTpl, pagePath),
-    { pagePath }, // pas de basePath : liens inter-pages inertes dans l'éditeur
+    { pagePath, shellHtml: generatedHtml }, // pas de basePath : liens inter-pages inertes dans l'éditeur
   );
   if (!html) return new Response("Template indisponible.", { status: 500 });
 

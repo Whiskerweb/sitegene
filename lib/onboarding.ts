@@ -33,6 +33,10 @@ import {
   type TemplateManifest,
 } from "@/lib/intake-map";
 import { briefToOverrides } from "@/lib/mistral";
+import { pickDesignSystem } from "@/lib/theme-match";
+import { imagePlanFor } from "@/lib/image-plan";
+import { generateBespokeSite } from "@/lib/design-system-gen";
+import { saveDraftSnapshot } from "@/lib/site-content-store";
 
 export type OnboardingState = {
   siteId: string;
@@ -439,7 +443,7 @@ export async function regenerateForSite(
 }
 
 /** Brief enrichi des réponses structurées, pour la réécriture IA du site final. */
-function briefFromIntake(intake: Intake & { categoryId?: string }): string {
+export function briefFromIntake(intake: Intake & { categoryId?: string }): string {
   const parts = [
     intake.brief,
     intake.brand && `Nom de la marque : ${intake.brand}`,
@@ -538,6 +542,95 @@ export async function finalizeChoice(
 
   if (opts?.enrich !== false) await enrichFinalContent(origin, siteId);
   return true;
+}
+
+export type AiFinalizeResult = {
+  ok: boolean;
+  templateId?: TemplateId;
+  generated?: boolean;
+  rationale?: string;
+};
+
+/**
+ * Finalise l'onboarding IA : choisit le design system adapté (cross-métier),
+ * GÉNÈRE un site sur-mesure depuis le design-system.md + les infos client, et
+ * persiste le shell bespoke (snapshot generated_html). En cas d'échec/timeout de
+ * la génération, bascule sur le pipeline déterministe (`finalizeChoice`) — le
+ * client a TOUJOURS un site. Le contenu reste éditable (data-sg) et publiable.
+ */
+export async function finalizeAiOnboarding(
+  origin: string,
+  siteId: string,
+): Promise<AiFinalizeResult> {
+  const admin = createAdminClient();
+  const { data: ob } = await admin
+    .from("site_onboarding")
+    .select("intake, chosen_template_id")
+    .eq("site_id", siteId)
+    .maybeSingle();
+  if (!ob) return { ok: false };
+  const intake = (ob.intake ?? {}) as Intake & { categoryId?: string };
+  const categoryId = intake.categoryId ?? DEFAULT_CATEGORY.id;
+
+  // 1) Thème : réutilise celui déjà choisi (étape « plan photo ») sinon le choisit
+  //    maintenant — pour que le plan photo annoncé corresponde au site généré.
+  let rationale = "";
+  let templateId: TemplateId;
+  if (ob.chosen_template_id && isTemplateId(ob.chosen_template_id)) {
+    templateId = ob.chosen_template_id;
+  } else {
+    const choice = await pickDesignSystem(origin, intake);
+    templateId = choice.templateId;
+    rationale = choice.rationale;
+  }
+
+  // 2) Contenu de base déterministe (textes/contacts réels + photos mappées).
+  const baseContent = await buildDraftContent(
+    origin,
+    { intake, categoryId, templateId },
+    { emptyPhotos: "placeholder", mask: "strict" },
+  );
+
+  // 3) Génération sur-mesure depuis le design system.
+  if (baseContent) {
+    const brief = intake.brief?.trim() || briefFromIntake(intake);
+    const imagePlan = await imagePlanFor(origin, templateId, intake);
+    const gen = await generateBespokeSite({
+      origin,
+      templateId,
+      content: baseContent as Record<string, unknown>,
+      brief,
+      imagePlan,
+      timeoutMs: 110_000,
+    });
+    if (gen) {
+      await ensureTemplateRow(admin, templateId);
+      const { error: tplErr } = await admin
+        .from("sites")
+        .update({ template_id: templateId })
+        .eq("id", siteId);
+      if (!tplErr) {
+        await saveDraftSnapshot(admin, siteId, templateId, gen.content, "ai", gen.html);
+        await admin
+          .from("site_onboarding")
+          .update({
+            chosen_template_id: templateId,
+            step: 100, // paywall
+            updated_at: new Date().toISOString(),
+          })
+          .eq("site_id", siteId);
+        return { ok: true, templateId, generated: true, rationale };
+      }
+    }
+  }
+
+  // 4) Fallback déterministe : site garanti, même sans génération IA.
+  const ok = await finalizeChoice(origin, siteId, templateId, {
+    enrich: true,
+    emptyPhotos: "placeholder",
+    mask: "strict",
+  });
+  return { ok, templateId, generated: false, rationale };
 }
 
 /**
