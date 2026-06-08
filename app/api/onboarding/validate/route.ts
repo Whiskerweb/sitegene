@@ -1,7 +1,6 @@
 import { NextResponse, after } from "next/server";
 import { getUser } from "@/lib/auth";
-import { createAdminClient } from "@/lib/supabase/admin";
-import { userOwnsSite, enqueueSiteGeneration } from "@/lib/onboarding";
+import { userOwnsSite, commitHeaderAndEnqueue } from "@/lib/onboarding";
 
 export const maxDuration = 30;
 
@@ -20,8 +19,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Accès refusé." }, { status: 403 });
   }
 
-  const admin = createAdminClient();
-  await enqueueSiteGeneration(admin, siteId);
+  // Persiste le header validé comme aperçu courant + met en file la génération.
+  const commit = await commitHeaderAndEnqueue(siteId);
+  if (!commit.ok) {
+    return NextResponse.json({ error: `Validation impossible (${commit.reason}).` }, { status: 400 });
+  }
 
   // Démarrage immédiat (le worker se charge de la génération longue, hors requête).
   const origin = new URL(request.url).origin;

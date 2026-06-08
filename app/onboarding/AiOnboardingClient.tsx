@@ -359,22 +359,38 @@ export default function AiOnboardingClient() {
               ensuite à partir de ce style.
             </p>
           </div>
-          <div className="relative overflow-hidden rounded-2xl ring-1 ring-slate-200">
-            {headerLoading && (
-              <div className="absolute inset-0 z-10 grid place-items-center bg-white/70">
-                <div className="flex flex-col items-center gap-2 text-slate-500">
-                  <Loader2 className="h-6 w-6 animate-spin" />
-                  <span className="text-sm">Création de votre style…</span>
-                </div>
-              </div>
-            )}
-            {headerNonce > 0 && (
+          <div className="relative h-[70vh] overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200">
+            {headerNonce > 0 && !headerLoading && (
               <iframe
                 key={headerNonce}
                 title="Aperçu du style"
                 src={`/api/onboarding/header?siteId=${encodeURIComponent(siteId)}&n=${headerNonce}`}
-                className="h-[70vh] w-full bg-white"
+                className="h-full w-full"
               />
+            )}
+            {(headerLoading || headerNonce === 0) && (
+              // Skeleton animé : on « voit » la page se construire (rassurant).
+              <div className="absolute inset-0 flex flex-col">
+                <div className="flex items-center justify-between px-8 py-6">
+                  <div className="h-4 w-28 animate-pulse rounded bg-slate-200" />
+                  <div className="hidden gap-6 sm:flex">
+                    <div className="h-3 w-16 animate-pulse rounded bg-slate-200" />
+                    <div className="h-3 w-16 animate-pulse rounded bg-slate-200" />
+                    <div className="h-3 w-16 animate-pulse rounded bg-slate-200" />
+                  </div>
+                  <div className="h-8 w-24 animate-pulse rounded-full bg-slate-200" />
+                </div>
+                <div className="flex flex-1 flex-col items-center justify-center gap-4 px-8">
+                  <div className="h-10 w-3/5 animate-pulse rounded-lg bg-slate-200" />
+                  <div className="h-10 w-2/5 animate-pulse rounded-lg bg-slate-200" />
+                  <div className="mt-2 h-3 w-1/3 animate-pulse rounded bg-slate-100" />
+                  <div className="mt-4 h-10 w-40 animate-pulse rounded-full bg-slate-200" />
+                </div>
+                <div className="flex items-center justify-center gap-2 pb-8 text-slate-500">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <span className="text-sm">Création de votre style… (~15 s)</span>
+                </div>
+              </div>
             )}
           </div>
           <div className="mt-5 flex flex-wrap items-center justify-center gap-3">

@@ -40,6 +40,7 @@ import {
   generateHeader,
   generateBody,
   assembleSite,
+  extractContentFromShell,
   type GenFacts,
 } from "@/lib/design-system-gen";
 import { saveDraftSnapshot } from "@/lib/site-content-store";
@@ -726,6 +727,37 @@ export async function loadOnboardingHeaderDoc(siteId: string): Promise<string | 
     .maybeSingle();
   const h = (ob?.intake as { __headerHtml?: unknown })?.__headerHtml;
   return typeof h === "string" && h.length > 0 ? h : null;
+}
+
+/**
+ * Validation du style : persiste le HEADER validé comme aperçu COURANT du site
+ * (bonne peau visible immédiatement sur le dashboard), cale `sites.template_id`,
+ * puis met en file la génération du site complet (qui remplacera le header).
+ */
+export async function commitHeaderAndEnqueue(
+  siteId: string,
+): Promise<{ ok: boolean; reason?: string; templateId?: TemplateId }> {
+  const admin = createAdminClient();
+  const { data: ob } = await admin
+    .from("site_onboarding")
+    .select("intake, chosen_template_id")
+    .eq("site_id", siteId)
+    .maybeSingle();
+  if (!ob) return { ok: false, reason: "onboarding-absent" };
+  const intake = (ob.intake ?? {}) as Intake & { __headerHtml?: string };
+  const templateId =
+    ob.chosen_template_id && isTemplateId(ob.chosen_template_id) ? ob.chosen_template_id : null;
+  const headerDoc = typeof intake.__headerHtml === "string" ? intake.__headerHtml : "";
+  if (!templateId || !headerDoc) return { ok: false, reason: "header-absent" };
+
+  // Aperçu courant = le header validé (sera remplacé par le site complet).
+  const { content } = extractContentFromShell(headerDoc, templateId);
+  await ensureTemplateRow(admin, templateId);
+  await admin.from("sites").update({ template_id: templateId }).eq("id", siteId);
+  await saveDraftSnapshot(admin, siteId, templateId, content, "ai", headerDoc);
+
+  await enqueueSiteGeneration(admin, siteId);
+  return { ok: true, templateId };
 }
 
 /** Met en file une génération de site (idempotent : pas de doublon pending/running). */
