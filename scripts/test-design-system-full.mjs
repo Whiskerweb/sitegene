@@ -24,15 +24,22 @@ fs.mkdirSync(outDir, { recursive: true });
 // Contenu intégral du template (source de vérité), pour la génération démo.
 const idx = fs.readFileSync(`public/_templates/${tpl}/index.html`, "utf-8");
 const a = idx.indexOf("__SITE_CONTENT__ ||");
-const b = idx.indexOf("{", a);
-let d = 0, i = b, q = null;
-for (; i < idx.length; i++) { const c = idx[i]; if (q) { if (c === "\\") i++; else if (c === q) q = null; continue; } if (c === '"' || c === "'" || c === "`") q = c; else if (c === "{") d++; else if (c === "}") { d--; if (d === 0) { i++; break; } } }
-// Le bloc __SITE_CONTENT__ peut être du JSON strict OU un objet JS (clés non
-// quotées) : on tente JSON.parse, sinon on évalue comme littéral JS.
-const rawContentBlock = idx.slice(b, i);
 let content;
-try { content = JSON.parse(rawContentBlock); }
-catch { content = new Function("return (" + rawContentBlock + ")")(); }
+if (a !== -1) {
+  // Templates PLAT : le contenu est inline dans index.html (__SITE_CONTENT__).
+  const b = idx.indexOf("{", a);
+  let d = 0, i = b, q = null;
+  for (; i < idx.length; i++) { const c = idx[i]; if (q) { if (c === "\\") i++; else if (c === q) q = null; continue; } if (c === '"' || c === "'" || c === "`") q = c; else if (c === "{") d++; else if (c === "}") { d--; if (d === 0) { i++; break; } } }
+  const rawContentBlock = idx.slice(b, i);
+  try { content = JSON.parse(rawContentBlock); }
+  catch { content = new Function("return (" + rawContentBlock + ")")(); }
+} else {
+  // Templates SPA (alice-r, potozon, target…) : le contenu vit dans
+  // default-content.json (pages[].content). On prend la page d'accueil.
+  const dc = JSON.parse(fs.readFileSync(`public/_templates/${tpl}/default-content.json`, "utf-8"));
+  const home = (dc.pages || []).find((p) => p.slug === "/") || (dc.pages || [])[0] || {};
+  content = home.content || dc.content || dc;
+}
 // Réécrit les chemins d'images vers un chemin servable depuis outDir.
 const imgBase = `../../../../public/_templates/${tpl}`;
 const fixImgs = (o) => {
@@ -47,6 +54,11 @@ const SYSTEM = `Tu es un développeur front senior. On te donne le DESIGN SYSTEM
 
 ANTI-SLOP (ne jamais retomber dans les défauts LLM) :
 - La SEULE source de vérité esthétique est le DESIGN SYSTEM. N'injecte JAMAIS les clichés génériques : pas de dégradé violet/indigo « IA » s'il n'est pas dans le design system, pas de glassmorphism générique partout, pas de « trois cartes égales » par réflexe, pas de hero centré sur mesh sombre par défaut, pas d'Inter+slate-900 si le design system dit autre chose, pas de micro-animations en boucle infinie. Respecte les polices, couleurs et structures du design system, point.
+
+STRUCTURE HTML (impératif technique) :
+- Charge Tailwind via <script src="https://cdn.tailwindcss.com"></script>.
+- Le bloc \`tailwind.config = { ... }\` est du JavaScript : il DOIT être dans un <script> séparé (jamais à l'intérieur d'un <style>), sinon les couleurs/polices custom (ex. bg-yellow, bg-violet) sont ignorées et ne s'affichent pas.
+- Le CSS custom (keyframes, classes .xxx, reset) va dans un <style> séparé, distinct du <script> de config.
 
 EXIGENCES :
 - Le HEADER doit être reproduit AU MILLIMÈTRE (classes Tailwind exactes du design system).

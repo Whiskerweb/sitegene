@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Potozon - La photographie autrement</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#111111',
+            paper: '#fcfcfc',
+            yellow: '#ffc400',
+            violet: '#8b7cf6',
+            muted: '#9ca3af',
+            line: '#e5e7eb'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif']
+          },
+        }
+      }
+    };
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #111111; color: #fcfcfc; margin: 0; }
+    .sticker { display: inline-flex; align-items: center; justify-content: center; border-radius: 9999px; transform: rotate(-12deg); }
+    @keyframes spin-slow { to { transform: rotate(360deg); } }
+    .sticker-spin { animation: spin-slow 18s linear infinite; }
+    @media (prefers-reduced-motion: reduce) { .sticker-spin { animation: none; } }
+    .ribbon { display: inline-block; transform: rotate(-3deg); }
+    .faq-item .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+    .faq-item.open .faq-answer { max-height: 200px; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+  </style>
+</head>
+<body class="bg-ink text-paper">
+
+  <!-- Header -->
+  <header class="fixed top-0 inset-x-0 z-50">
+    <nav class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between text-paper">
+      <a href="#top" data-sg-path="brand" class="text-lg font-bold tracking-tight">Potozon</a>
+      <ul class="hidden md:flex items-center gap-8 text-sm text-paper/80">
+        <li><a href="#services" data-sg-path="nav[0]" class="hover:text-paper transition-colors">Services</a></li>
+        <li><a href="#works" data-sg-path="nav[1]" class="hover:text-paper transition-colors">Galerie</a></li>
+      </ul>
+      <a href="#contact" data-sg-path="nav.cta" class="rounded-full bg-yellow text-ink text-sm font-bold px-5 py-2.5 hover:brightness-95 transition-all">Réserver</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="top" class="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden px-6 pt-20" data-anim="fade">
+      <span data-sg-path="hero.sticker" class="sticker sticker-spin bg-violet text-ink text-[11px] font-bold uppercase tracking-wide w-28 h-28 mb-6">Une nouvelle dimension</span>
+      <h1 data-anim="fade" class="font-bold tracking-tight leading-[0.95] text-5xl sm:text-6xl md:text-7xl">
+        <span class="block" data-sg-path="hero.line1">La photographie</span>
+        <span class="block" data-sg-path="hero.line2">autrement<span data-sg-path="hero.ribbon" class="ribbon bg-yellow text-ink px-3">Sublime</span></span>
+      </h1>
+      <p data-sg-path="hero.subtitle" class="mt-6 text-paper/70 text-base md:text-lg max-w-lg" data-anim="fade" data-anim-delay="200">Des instants intemporels saisis dans une toute nouvelle dimension.</p>
+      <a href="#contact" data-sg-path="hero.cta" class="inline-block mt-8 rounded-full bg-yellow text-ink font-bold px-7 py-3.5 hover:brightness-95 transition-all" data-anim="fade" data-anim-delay="400">Réserver une séance</a>
+    </section>
+
+    <!-- Intro Section -->
+    <section class="py-24 md:py-32 px-6">
+      <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        <div data-anim="left">
+          <p data-sg-path="textLeft" class="text-lg text-paper/80 leading-relaxed">La photographie est l’art, la pratique et l’application de la création d’images durables.</p>
+        </div>
+        <div data-anim="right">
+          <p data-sg-path="textRight.body" class="text-lg text-paper/80 leading-relaxed mb-6">L’International Center of Photography de New York est le plus grand au monde.</p>
+          <a href="#" data-sg-path="textRight.cta" class="font-bold text-paper hover:text-yellow transition-colors">LIRE LA SUITE</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cards Section -->
+    <section class="py-24 md:py-32 px-6 overflow-hidden">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="relative" data-anim="fade" data-anim-delay="0">
+            <img src="../../../../public/_templates/potozon/img/c1.jpg" alt="Carte 1" data-sg-img class="w-full h-auto object-cover" style="transform: rotate(-3deg); margin-top: 0px;">
+            <div class="absolute inset-0" style="background-color: #E5412A; opacity: 0.2;"></div>
+          </div>
+          <div class="relative" data-anim="fade" data-anim-delay="80">
+            <img src="../../../../public/_templates/potozon/img/c2.jpg" alt="Carte 2" data-sg-img class="w-full h-auto object-cover" style="transform: rotate(2deg); margin-top: 40px;">
+            <div class="absolute inset-0" style="background-color: #FFC400; opacity: 0.2;"></div>
+          </div>
+          <div class="relative" data-anim="fade" data-anim-delay="160">
+            <img src="../../../../public/_templates/potozon/img/c3.jpg" alt="Carte 3" data-sg-img class="w-full h-auto object-cover" style="transform: rotate(-2deg); margin-top: 8px;">
+            <div class="absolute inset-0" style="background-color: #F15A24; opacity: 0.2;"></div>
+          </div>
+          <div class="relative" data-anim="fade" data-anim-delay="240">
+            <img src="../../../../public/_templates/potozon/img/c4.jpg" alt="Carte 4" data-sg-img class="w-full h-auto object-cover" style="transform: rotate(3deg); margin-top: 48px;">
+            <div class="absolute inset-0" style="background-color: #A99BE8; opacity: 0.2;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Quote Section -->
+    <section class="py-24 md:py-32 px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-3 gap-12 items-center">
+          <div class="lg:col-span-1" data-anim="left">
+            <img src="../../../../public/_templates/potozon/img/p7.jpg" alt="Avatar de Mara K." data-sg-img class="w-32 h-32 rounded-full object-cover mx-auto lg:mx-0">
+          </div>
+          <div class="lg:col-span-2 text-center lg:text-left" data-anim="fade">
+            <p data-sg-path="featuredQuote.text" class="text-2xl md:text-3xl font-medium leading-snug mb-6">« Potozon a transporté notre séance dans une toute nouvelle dimension. Chaque image est éclatante, vivante et incomparablement nôtre. »</p>
+            <p data-sg-path="featuredQuote.name" class="font-bold">Mara K.</p>
+            <p data-sg-path="featuredQuote.role" class="text-sm text-paper/70">Directrice artistique</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-16">
+          <img src="../../../../public/_templates/potozon/img/p4.jpg" alt="Image de la citation 1" data-sg-img class="w-full h-auto object-cover" data-anim="fade" data-anim-delay="0">
+          <img src="../../../../public/_templates/potozon/img/p12.jpg" alt="Image de la citation 2" data-sg-img class="w-full h-auto object-cover" data-anim="fade" data-anim-delay="80">
+        </div>
+      </div>
+    </section>
+
+    <!-- Scrolling Text Section -->
+    <section class="py-16 overflow-hidden">
+      <div class="whitespace-nowrap">
+        <p class="text-4xl md:text-6xl font-bold inline-block" data-anim="left">
+          <span style="color: #ffc400;">Nous sommes</span> <span style="color: #ffa500;">Potozon</span> — un studio qui traite la photographie comme une <span style="color: #8b7cf6;">nouvelle dimension.</span> <span style="color: #ffc400;">Couleur,</span> mouvement et cadrage <span style="color: #e5412a;">audacieux,</span> capturés avec éclat et sans limite de temps.
+        </p>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 md:py-32 px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-20" data-anim="fade">
+          <p data-sg-path="servicesIntro" class="text-lg text-paper/80 leading-relaxed">Du portrait aux univers de marque, chaque prestation est shootée à la manière Potozon — audacieuse, colorée, vivante.</p>
+        </div>
+        <div class="space-y-24">
+          <!-- Service 1 -->
+          <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div data-anim="left">
+              <span class="text-sm text-paper/70" data-sg-path="services[0].n">01</span>
+              <h3 data-sg-path="services[0].name" class="text-3xl font-bold my-4">Séances portrait</h3>
+              <p data-sg-path="services[0].desc" class="text-paper/80 leading-relaxed mb-6">Des portraits intemporels qui révèlent la personnalité, l’humeur et l’histoire silencieuse de chaque visage — sublimés par une couleur intense.</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="text-xs bg-paper/10 px-3 py-1 rounded-full" data-sg-path="services[0].tags[0]">Studio</span>
+                <span class="text-xs bg-paper/10 px-3 py-1 rounded-full" data-sg-path="services[0].tags[1]">Éditorial</span>
+                <span class="text-xs bg-paper/10 px-3 py-1 rounded-full" data-sg-path="services[0].tags[2]">Portraits pro</span>
+              </div>
+            </div>
+            <div class="relative" data-anim="right">
+              <img src="../../../../public/_templates/potozon/img/p1.jpg" alt="Séances portrait" data-sg-img class="w-full h-auto object-cover">
+              <div class="absolute inset-0" style="background-color: #E5412A; opacity: 0.2;"></div>
+            </div>
+          </div>
+          <!-- Service 2 -->
+          <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="lg:order-2" data-anim="right">
+              <span class="text-sm text-paper/70" data-sg-path="services[1].n">02</span>
+              <h3 data-sg-path="services[1].name" class="text-3xl font-bold my-4">Événements & extérieur</h3>
+              <p data-sg-path="services[1].desc" class="text-paper/80 leading-relaxed mb-6">Une couverture sincère et pleine d’énergie de vos mariages, lancements et instants en plein air, saisis tels qu’ils se vivent.</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="text-xs bg-paper/10 px-3 py-1 rounded-full" data-sg-path="services[1].tags[0]">Mariages</span>
+                <span class="text-xs bg-paper/10 px-3 py-1 rounded-full" data-sg-path="services[1].tags[1]">Concerts</span>
+                <span class="text-xs bg-paper/10 px-3 py-1 rounded-full" data-sg-path="services[1].tags[2]">Voyage</span>
+              </div>
+            </div>
+            <div class="lg:order-1 relative" data-anim="left">
+              <img src="../../../../public/_templates/potozon/img/p5.jpg" alt="Événements & extérieur" data-sg-img class="w-full h-auto object-cover">
+              <div class="absolute inset-0" style="background-color: #FFC400; opacity: 0.2;"></div>
+            </div>
+          </div>
+          <!-- Service 3 -->
+          <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div data-anim="left">
+              <span class="text-sm text-paper/70" data-sg-path="services[2].n">03</span>
+              <h3 data-sg-path="services[2].name" class="text-3xl font-bold my-4">Univers famille</h3>
+              <p data-sg-path="services[2].desc" class="text-paper/80 leading-relaxed mb-6">Des moments de famille chaleureux et joueurs, capturés dans une lumière douce, intime et honnête.</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="text-xs bg-paper/10 px-3 py-1 rounded-full" data-sg-path="services[2].tags[0]">Naissance</span>
+                <span class="text-xs bg-paper/10 px-3 py-1 rounded-full" data-sg-path="services[2].tags[1]">Lifestyle</span>
+                <span class="text-xs bg-paper/10 px-3 py-1 rounded-full" data-sg-path="services[2].tags[2]">Générations</span>
+              </div>
+            </div>
+            <div class="relative" data-anim="right">
+              <img src="../../../../public/_templates/potozon/img/p4.jpg" alt="Univers famille" data-sg-img class="w-full h-auto object-cover">
+              <div class="absolute inset-0" style="background-color: #F15A24; opacity: 0.2;"></div>
+            </div>
+          </div>
+          <!-- Service 4 -->
+          <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="lg:order-2" data-anim="right">
+              <span class="text-sm text-paper/70" data-sg-path="services[3].n">04</span>
+              <h3 data-sg-path="services[3].name" class="text-3xl font-bold my-4">Retouche & étalonnage</h3>
+              <p data-sg-path="services[3].desc" class="text-paper/80 leading-relaxed mb-6">Une post-production raffinée et un étalonnage couleur signature qui subliment chaque image tout en la gardant authentique.</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="text-xs bg-paper/10 px-3 py-1 rounded-full" data-sg-path="services[3].tags[0]">Étalonnage</span>
+                <span class="text-xs bg-paper/10 px-3 py-1 rounded-full" data-sg-path="services[3].tags[1]">Retouche peau</span>
+                <span class="text-xs bg-paper/10 px-3 py-1 rounded-full" data-sg-path="services[3].tags[2]">Compositing</span>
+              </div>
+            </div>
+            <div class="lg:order-1 relative" data-anim="left">
+              <img src="../../../../public/_templates/potozon/img/p2.jpg" alt="Retouche & étalonnage" data-sg-img class="w-full h-auto object-cover">
+              <div class="absolute inset-0" style="background-color: #A99BE8; opacity: 0.2;"></div>
+            </div>
+          </div>
+          <!-- Service 5 -->
+          <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div data-anim="left">
+              <span class="text-sm text-paper/70" data-sg-path="services[4].n">05</span>
+              <h3 data-sg-path="services[4].name" class="text-3xl font-bold my-4">Marque & commercial</h3>
+              <p data-sg-path="services[4].desc" class="text-paper/80 leading-relaxed mb-6">Donnez vie à vos produits et à votre histoire de marque grâce à des visuels percutants qui arrêtent le défilement.</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="text-xs bg-paper/10 px-3 py-1 rounded-full" data-sg-path="services[4].tags[0]">Produit</span>
+                <span class="text-xs bg-paper/10 px-3 py-1 rounded-full" data-sg-path="services[4].tags[1]">Campagnes</span>
+                <span class="text-xs bg-paper/10 px-3 py-1 rounded-full" data-sg-path="services[4].tags[2]">Contenu</span>
+              </div>
+            </div>
+            <div class="relative" data-anim="right">
+              <img src="../../../../public/_templates/potozon/img/p6.jpg" alt="Marque & commercial" data-sg-img class="w-full h-auto object-cover">
+              <div class="absolute inset-0" style="background-color: #8B7CF6; opacity: 0.2;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Collaborations Section -->
+    <section class="py-24 md:py-32 px-6">
+      <div class="max-w-7xl mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-12" data-anim="fade">Ils nous ont fait confiance</h2>
+        <div class="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 text-2xl font-bold text-paper/60" data-anim="fade">
+          <span data-sg-path="collaborations[0]">VOGUE</span>
+          <span data-sg-path="collaborations[1]">NIKE</span>
+          <span data-sg-path="collaborations[2]">AIRBNB</span>
+          <span data-sg-path="collaborations[3]">SPOTIFY</span>
+          <span data-sg-path="collaborations[4]">CANON</span>
+          <span data-sg-path="collaborations[5]">GUCCI</span>
+          <span data-sg-path="collaborations[6]">APPLE</span>
+          <span data-sg-path="collaborations[7]">LEICA</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Works Section -->
+    <section id="works" class="py-24 md:py-32 px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-20" data-anim="fade">
+          <h2 class="text-4xl font-bold mb-4">Nos dernières réalisations</h2>
+          <p class="text-paper/80">Une sélection de projets récents qui illustrent notre approche : audacieuse, colorée et profondément humaine.</p>
+        </div>
+        <div class="space-y-12">
+          <!-- Work 1 -->
+          <div class="grid lg:grid-cols-2 gap-12 items-center" data-anim="fade">
+            <div>
+              <p class="text-sm text-paper/70 mb-2" data-sg-path="works[0].date">Janvier 2026</p>
+              <p class="text-sm text-paper/70 mb-4" data-sg-path="works[0].category">Éditorial mode</p>
+              <h3 data-sg-path="works[0].title" class="text-3xl font-bold mb-4">Le denim réinventé</h3>
+              <p data-sg-path="works[0].desc" class="text-paper/80 leading-relaxed">Un éditorial mode qui explore le denim au-delà de sa forme traditionnelle — texture, couleur et polyvalence.</p>
+            </div>
+            <div class="relative">
+              <img src="../../../../public/_templates/potozon/img/p3.jpg" alt="Le denim réinventé" data-sg-img class="w-full h-auto object-cover">
+              <div class="absolute inset-0" style="background-color: #E5412A; opacity: 0.2;"></div>
+            </div>
+          </div>
+          <!-- Work 2 -->
+          <div class="grid lg:grid-cols-2 gap-12 items-center" data-anim="fade">
+            <div class="lg:order-2">
+              <p class="text-sm text-paper/70 mb-2" data-sg-path="works[1].date">Décembre 2025</p>
+              <p class="text-sm text-paper/70 mb-4" data-sg-path="works[1].category">Univers famille</p>
+              <h3 data-sg-path="works[1].title" class="text-3xl font-bold mb-4">Les premiers jours de Zoé</h3>
+              <p data-sg-path="works[1].desc" class="text-paper/80 leading-relaxed">Les tout premiers instants d’une vie capturés dans un cadre calme et cocooning, baigné de lumière naturelle.</p>
+            </div>
+            <div class="lg:order-1 relative">
+              <img src="../../../../public/_templates/potozon/img/p4.jpg" alt="Les premiers jours de Zoé" data-sg-img class="w-full h-auto object-cover">
+              <div class="absolute inset-0" style="background-color: #FFC400; opacity: 0.2;"></div>
+            </div>
+          </div>
+          <!-- Work 3 -->
+          <div class="grid lg:grid-cols-2 gap-12 items-center" data-anim="fade">
+            <div>
+              <p class="text-sm text-paper/70 mb-2" data-sg-path="works[2].date">Novembre 2025</p>
+              <p class="text-sm text-paper/70 mb-4" data-sg-path="works[2].category">Lifestyle extérieur</p>
+              <h3 data-sg-path="works[2].title" class="text-3xl font-bold mb-4">Le matin en mouvement</h3>
+              <p data-sg-path="works[2].desc" class="text-paper/80 leading-relaxed">Une séance lifestyle au lever du soleil qui met en valeur la lumière naturelle et les expressions spontanées.</p>
+            </div>
+            <div class="relative">
+              <img src="../../../../public/_templates/potozon/img/p5.jpg" alt="Le matin en mouvement" data-sg-img class="w-full h-auto object-cover">
+              <div class="absolute inset-0" style="background-color: #A99BE8; opacity: 0.2;"></div>
+            </div>
+          </div>
+          <!-- Work 4 -->
+          <div class="grid lg:grid-cols-2 gap-12 items-center" data-anim="fade">
+            <div class="lg:order-2">
+              <p class="text-sm text-paper/70 mb-2" data-sg-path="works[3].date">Octobre 2025</p>
+              <p class="text-sm text-paper/70 mb-4" data-sg-path="works[3].category">Marque & commercial</p>
+              <h3 data-sg-path="works[3].title" class="text-3xl font-bold mb-4">Essence Gaïa</h3>
+              <p data-sg-path="works[3].desc" class="text-paper/80 leading-relaxed">Un éditorial de marque inspiré par la nature, la chaleur et la beauté organique.</p>
+            </div>
+            <div class="lg:order-1 relative">
+              <img src="../../../../public/_templates/potozon/img/p6.jpg" alt="Essence Gaïa" data-sg-img class="w-full h-auto object-cover">
+              <div class="absolute inset-0" style="background-color: #F15A24; opacity: 0.2;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Beyond Section -->
+    <section class="py-24 md:py-32 px-6">
+      <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+        <div data-anim="left">
+          <h2 data-sg-path="beyond.title" class="text-4xl font-bold mb-6">Capturer au-delà du cadre</h2>
+          <p data-sg-path="beyond.body" class="text-lg text-paper/80 leading-relaxed mb-8">La photographie, pour nous, est plus qu’une image — c’est une émotion préservée. Nous cherchons la lumière, la couleur et ces instants suspendus, uniques, qui font qu’une histoire mérite d’être racontée.</p>
+          <a href="#contact" data-sg-path="beyond.cta" class="inline-block rounded-full bg-yellow text-ink font-bold px-7 py-3.5 hover:brightness-95 transition-all">Lancer un projet</a>
+        </div>
+        <div class="grid grid-cols-3 gap-8" data-anim="fade">
+          <div class="text-center">
+            <p class="text-4xl font-bold" style="color: #E5412A;"><span data-count="12" data-count-suffix="+" data-count-decimals="0">0</span>+</p>
+            <p class="text-sm text-paper/70 mt-2" data-sg-path="beyond.stats[0].l">Années derrière l’objectif</p>
+          </div>
+          <div class="text-center">
+            <p class="text-4xl font-bold" style="color: #FFC400;"><span data-count="450" data-count-suffix="" data-count-decimals="0">0</span></p>
+            <p class="text-sm text-paper/70 mt-2" data-sg-path="beyond.stats[1].l">Projets livrés</p>
+          </div>
+          <div class="text-center">
+            <p class="text-4xl font-bold" style="color: #A99BE8;"><span data-count="38" data-count-suffix="" data-count-decimals="0">0</span></p>
+            <p class="text-sm text-paper/70 mt-2" data-sg-path="beyond.stats[2].l">Prix & publications</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-24 md:py-32 px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-20" data-anim="fade">
+          <h2 class="text-4xl font-bold mb-4">Ce qu'ils en disent</h2>
+          <p class="text-paper/80">Des mots qui nous touchent et nous motivent à continuer de créer avec passion.</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="bg-paper/5 p-8 rounded-lg" data-anim="fade" data-anim-delay="0">
+            <p data-sg-path="testimonials[0].text" class="text-ink leading-relaxed mb-6">« Potozon a photographié notre mariage avec un art fou. Chaque image est vivante et sincère. »</p>
+            <div class="flex items-center gap-4">
+              <img src="../../../../public/_templates/potozon/img/p7.jpg" alt="Avatar de Amara Okafor" data-sg-img class="w-12 h-12 rounded-full object-cover">
+              <div>
+                <p data-sg-path="testimonials[0].name" class="font-bold text-ink">Amara Okafor</p>
+                <p data-sg-path="testimonials[0].role" class="text-xs text-ink/70">Mariée</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-paper/5 p-8 rounded-lg" data-anim="fade" data-anim-delay="80">
+            <p data-sg-path="testimonials[1].text" class="text-ink leading-relaxed mb-6">« La séance la plus naturelle que j’aie jamais vécue. Le résultat parle plus fort que tous les mots. »</p>
+            <div class="flex items-center gap-4">
+              <img src="../../../../public/_templates/potozon/img/p8.jpg" alt="Avatar de Lukas Meyer" data-sg-img class="w-12 h-12 rounded-full object-cover">
+              <div>
+                <p data-sg-path="testimonials[1].name" class="font-bold text-ink">Lukas Meyer</p>
+                <p data-sg-path="testimonials[1].role" class="text-xs text-ink/70">Directeur artistique</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-paper/5 p-8 rounded-lg" data-anim="fade" data-anim-delay="160">
+            <p data-sg-path="testimonials[2].text" class="text-ink leading-relaxed mb-6">« Sincère, patient et terriblement talentueux. Notre séance famille avait des airs de jeu. »</p>
+            <div class="flex items-center gap-4">
+              <img src="../../../../public/_templates/potozon/img/p9.jpg" alt="Avatar de Sofia Bianchi" data-sg-img class="w-12 h-12 rounded-full object-cover">
+              <div>
+                <p data-sg-path="testimonials[2].name" class="font-bold text-ink">Sofia Bianchi</p>
+                <p data-sg-path="testimonials[2].role" class="text-xs text-ink/70">Séance famille</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-24 md:py-32 px-6">
+      <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-16" data-anim="fade">
+          <h2 class="text-4xl font-bold mb-4">Questions fréquentes</h2>
+          <p class="text-paper/80">Des réponses claires pour vous aider à avancer sereinement dans votre projet.</p>
+        </div>
+        <div class="space-y-4">
+          <div class="faq-item border-b border-paper/10 pb-4" data-anim="fade" data-anim-delay="0">
+            <button class="faq-question w-full flex justify-between items-center text-left text-lg font-medium py-4">
+              <span data-sg-path="faqs[0].q">Comment réserver une séance ?</span>
+              <span class="faq-icon text-2xl transition-transform">+</span>
+            </button>
+            <div class="faq-answer text-paper/80 pt-2">
+              <p data-sg-path="faqs[0].a">Écrivez-nous par email, partagez votre vision et vos dates — nous vous envoyons une proposition sur mesure sous 48 heures.</p>
+            </div>
+          </div>
+          <div class="faq-item border-b border-paper/10 pb-4" data-anim="fade" data-anim-delay="80">
+            <button class="faq-question w-full flex justify-between items-center text-left text-lg font-medium py-4">
+              <span data-sg-path="faqs[1].q">Que comprend une séance ?</span>
+              <span class="faq-icon text-2xl transition-transform">+</span>
+            </button>
+            <div class="faq-answer text-paper/80 pt-2">
+              <p data-sg-path="faqs[1].a">La préparation en amont, la séance elle-même, l’étalonnage couleur signature et une galerie privée en ligne avec téléchargements haute définition.</p>
+            </div>
+          </div>
+          <div class="faq-item border-b border-paper/10 pb-4" data-anim="fade" data-anim-delay="160">
+            <button class="faq-question w-full flex justify-between items-center text-left text-lg font-medium py-4">
+              <span data-sg-path="faqs[2].q">Sous quel délai vais-je recevoir mes photos ?</span>
+              <span class="faq-icon text-2xl transition-transform">+</span>
+            </button>
+            <div class="faq-answer text-paper/80 pt-2">
+              <p data-sg-path="faqs[2].a">Les galeries retouchées sont livrées sous 7 à 14 jours selon l’ampleur du projet.</p>
+            </div>
+          </div>
+          <div class="faq-item border-b border-paper/10 pb-4" data-anim="fade" data-anim-delay="240">
+            <button class="faq-question w-full flex justify-between items-center text-left text-lg font-medium py-4">
+              <span data-sg-path="faqs[3].q">Vous déplacez-vous ?</span>
+              <span class="faq-icon text-2xl transition-transform">+</span>
+            </button>
+            <div class="faq-answer text-paper/80 pt-2">
+              <p data-sg-path="faqs[3].a">Absolument — nous travaillons partout et sommes disponibles dans le monde entier pour les beaux projets.</p>
+            </div>
+          </div>
+          <div class="faq-item border-b border-paper/10 pb-4" data-anim="fade" data-anim-delay="320">
+            <button class="faq-question w-full flex justify-between items-center text-left text-lg font-medium py-4">
+              <span data-sg-path="faqs[4].q">Puis-je commander des tirages ?</span>
+              <span class="faq-icon text-2xl transition-transform">+</span>
+            </button>
+            <div class="faq-answer text-paper/80 pt-2">
+              <p data-sg-path="faqs[4].a">Oui, tirages fine-art et albums sont disponibles en option, en qualité premium, vérifiés à la main avant expédition.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section id="contact" class="py-24 md:py-32 px-6 text-center">
+      <div class="max-w-2xl mx-auto" data-anim="fade">
+        <h2 class="text-4xl font-bold mb-4">Prêt à capturer votre histoire ?</h2>
+        <p class="text-paper/80 mb-8">Écrivez-nous, partagez votre vision et commençons à créer ensemble.</p>
+        <a href="mailto:contact@potozon.com" class="inline-block rounded-full bg-yellow text-ink font-bold px-7 py-3.5 hover:brightness-95 transition-all">Nous écrire</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-12 px-6 border-t border-paper/10">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-sm text-paper/70">
+      <p>© 2026 Potozon. Tous droits réservés.</p>
+      <p class="mt-4 md:mt-0">Propulsé par <a href="#" class="font-bold text-paper hover:text-yellow transition-colors">Akyra</a></p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const button = item.querySelector('.faq-question');
+        button.addEventListener('click', () => {
+          const isOpen = item.classList.contains('open');
+          faqItems.forEach(i => i.classList.remove('open'));
+          if (!isOpen) {
+            item.classList.add('open');
+          }
+        });
+      });
+    });
+  </script>
+
+<!-- ═══ AKYRA MOTION KIT — animations partagées (vanilla, sans dépendance, respecte prefers-reduced-motion) ═══ -->
+<style>
+  [data-anim]{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+  [data-anim="fade"]{transform:none}
+  [data-anim="left"]{transform:translateX(-26px)}
+  [data-anim="right"]{transform:translateX(26px)}
+  [data-anim="scale"]{transform:scale(.96)}
+  [data-anim].in{opacity:1!important;transform:none!important}
+  /* Apparition du texte mot à mot */
+  .anim-words .w{display:inline-block;opacity:0;transform:translateY(0.5em);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .anim-words.in .w{opacity:1;transform:none}
+  /* Galerie accordéon : au survol, la vignette s'élargit, les autres se rétractent (CSS pur) */
+  .gallery-expand{display:flex}
+  .gallery-expand>.gx{flex:1 1 0;min-width:0;overflow:hidden;transition:flex-grow .7s cubic-bezier(.16,1,.3,1)}
+  .gallery-expand>.gx img{width:100%;height:100%;object-fit:cover}
+  @media (hover:hover){
+    .gallery-expand:hover>.gx{flex-grow:.6}
+    .gallery-expand>.gx:hover{flex-grow:3}
+  }
+  @media (prefers-reduced-motion:reduce){[data-anim],.anim-words .w{opacity:1!important;transform:none!important;transition:none!important}.gallery-expand>.gx{transition:none}}
+</style>
+<script>
+(function(){
+  var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var IO = 'IntersectionObserver' in window;
+
+  // 1) Révélation au scroll des éléments [data-anim] (stagger via data-anim-delay en ms)
+  var reveals = document.querySelectorAll('[data-anim]');
+  function showReveal(el){
+    var d = parseInt(el.getAttribute('data-anim-delay')||'0',10);
+    if(d) setTimeout(function(){el.classList.add('in')}, d); else el.classList.add('in');
+  }
+  if(RM || !IO){ reveals.forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioR = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ showReveal(en.target); ioR.unobserve(en.target);} });
+    },{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(function(e){ ioR.observe(e); });
+  }
+
+  // 2) Texte mot à mot : <h1 class="anim-words">…</h1>.
+  //    Découpe DOM-SAFE : on n'enveloppe QUE les nœuds texte (les balises internes
+  //    — dégradés, pilules — sont préservées intactes, jamais transformées en texte).
+  document.querySelectorAll('.anim-words').forEach(function(el){
+    if(el.dataset.split) return; el.dataset.split='1';
+    // Garde-fou : si le titre contient des balises internes (dégradé, pilule…),
+    // on NE découpe PAS (sinon dégradé cassé / mots invisibles) — il reste intact.
+    if(el.children.length > 0){ el.classList.remove('anim-words'); return; }
+    var wi = 0, textNodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    while(walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(function(tn){
+      if(!tn.nodeValue || !tn.nodeValue.trim()) return;
+      var frag = document.createDocumentFragment();
+      tn.nodeValue.split(/(\s+)/).forEach(function(part){
+        if(part === '') return;
+        if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+        var s = document.createElement('span'); s.className='w'; s.textContent=part;
+        s.style.transitionDelay=((wi++)*45)+'ms'; frag.appendChild(s);
+      });
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  });
+  if(RM || !IO){ document.querySelectorAll('.anim-words').forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioW = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ioW.unobserve(en.target);} });
+    },{threshold:0.25});
+    document.querySelectorAll('.anim-words').forEach(function(e){ ioW.observe(e); });
+  }
+
+  // 3) Compteurs : <span data-count="1200" data-count-suffix="+" data-count-decimals="0">0</span>
+  function fmt(v,dec){ return v.toLocaleString('fr-FR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+  function countUp(el){
+    var target=parseFloat(el.getAttribute('data-count'))||0,
+        suf=el.getAttribute('data-count-suffix')||'', pre=el.getAttribute('data-count-prefix')||'',
+        dec=parseInt(el.getAttribute('data-count-decimals')||'0',10), dur=1500, start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=pre+fmt(target*e,dec)+suf; if(p<1)requestAnimationFrame(step); else el.textContent=pre+fmt(target,dec)+suf; }
+    requestAnimationFrame(step);
+  }
+  var nums = document.querySelectorAll('[data-count]');
+  if(RM || !IO){ nums.forEach(function(el){ el.textContent=(el.getAttribute('data-count-prefix')||'')+fmt(parseFloat(el.getAttribute('data-count'))||0,parseInt(el.getAttribute('data-count-decimals')||'0',10))+(el.getAttribute('data-count-suffix')||''); }); }
+  else {
+    var ioN = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ countUp(en.target); ioN.unobserve(en.target);} });
+    },{threshold:0.6});
+    nums.forEach(function(el){ ioN.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>

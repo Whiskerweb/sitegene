@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alice R — Photographe éditorial</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#1a1108',
+            ink2: '#3a2210',
+            brown: '#6b3a14',
+            white: '#ffffff',
+            muted: '#9ca3af',
+            line: '#e5e7eb'
+          },
+          fontFamily: {
+            sans: ['"Hanken Grotesk"', 'sans-serif']
+          },
+        }
+      }
+    };
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Hanken Grotesk', sans-serif; background-color: #1a1108; color: #fff; margin: 0; }
+    .arc-photo { position: absolute; object-fit: cover; border-radius: 6px; box-shadow: 0 18px 50px rgba(0,0,0,.45); }
+    @keyframes arcfloat {
+      0%, 100% { transform: translateY(0) rotate(var(--r)); }
+      50% { transform: translateY(-10px) rotate(var(--r)); }
+    }
+    .arc-photo { animation: arcfloat 7s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      .arc-photo { animation: none; }
+    }
+    .faq-item .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+    .faq-item.open .faq-answer { max-height: 200px; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+  </style>
+</head>
+<body class="bg-ink text-white">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 inset-x-0 z-50">
+    <nav class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between text-white">
+      <a href="#top" data-sg-path="hero.brand" class="text-lg font-medium tracking-tight">Alice R</a>
+      <ul class="hidden md:flex items-center gap-8 text-sm text-white/80">
+        <li><a href="#services" data-sg-path="nav[0]" class="hover:text-white transition-colors">Services</a></li>
+        <li><a href="#works" data-sg-path="nav[1]" class="hover:text-white transition-colors">Galerie</a></li>
+        <li><a href="#contact" data-sg-path="nav[2]" class="hover:text-white transition-colors">Contact</a></li>
+      </ul>
+      <a href="#contact" data-sg-path="hero.ctaPrimary" class="rounded-full bg-white text-ink text-sm font-medium px-5 py-2.5 hover:bg-white/90 transition-colors">Réserver une séance</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="top" class="relative min-h-screen overflow-hidden flex items-center justify-center text-center pt-20">
+      <!-- Couronne de photos -->
+      <img data-sg-img="arcPhotos[0].img" src="../../../../public/_templates/alice-r/img/p1.jpg" class="arc-photo" style="top:20%;left:17%;width:150px;height:188px;--r:10deg" data-anim="fade" data-anim-delay="0">
+      <img data-sg-img="arcPhotos[1].img" src="../../../../public/_templates/alice-r/img/p2.jpg" class="arc-photo" style="top:12%;left:29%;width:165px;height:206px;--r:-6deg" data-anim="fade" data-anim-delay="80">
+      <img data-sg-img="arcPhotos[2].img" src="../../../../public/_templates/alice-r/img/p3.jpg" class="arc-photo" style="top:8%;left:43%;width:150px;height:188px;--r:4deg" data-anim="fade" data-anim-delay="160">
+      <img data-sg-img="arcPhotos[3].img" src="../../../../public/_templates/alice-r/img/p4.jpg" class="arc-photo" style="top:11%;left:57%;width:160px;height:200px;--r:-3deg" data-anim="fade" data-anim-delay="240">
+      <img data-sg-img="arcPhotos[4].img" src="../../../../public/_templates/alice-r/img/p5.jpg" class="arc-photo" style="top:20%;left:70%;width:165px;height:206px;--r:7deg" data-anim="fade" data-anim-delay="320">
+      <img data-sg-img="arcPhotos[5].img" src="../../../../public/_templates/alice-r/img/p6.jpg" class="arc-photo" style="top:38%;left:82%;width:150px;height:188px;--r:-8deg" data-anim="fade" data-anim-delay="400">
+      <img data-sg-img="arcPhotos[6].img" src="../../../../public/_templates/alice-r/img/p7.jpg" class="arc-photo" style="top:36%;left:8%;width:155px;height:194px;--r:-9deg" data-anim="fade" data-anim-delay="480">
+      <img data-sg-img="arcPhotos[7].img" src="../../../../public/_templates/alice-r/img/p8.jpg" class="arc-photo" style="top:58%;left:12%;width:160px;height:200px;--r:8deg" data-anim="fade" data-anim-delay="560">
+      <img data-sg-img="arcPhotos[8].img" src="../../../../public/_templates/alice-r/img/p9.jpg" class="arc-photo" style="top:60%;left:84%;width:155px;height:194px;--r:6deg" data-anim="fade" data-anim-delay="640">
+      <img data-sg-img="arcPhotos[9].img" src="../../../../public/_templates/alice-r/img/p10.jpg" class="arc-photo" style="top:80%;left:10%;width:150px;height:188px;--r:-5deg" data-anim="fade" data-anim-delay="720">
+      <img data-sg-img="arcPhotos[10].img" src="../../../../public/_templates/alice-r/img/p11.jpg" class="arc-photo" style="top:82%;left:85%;width:150px;height:188px;--r:7deg" data-anim="fade" data-anim-delay="800">
+      <img data-sg-img="arcPhotos[11].img" src="../../../../public/_templates/alice-r/img/p12.jpg" class="arc-photo" style="top:90%;left:26%;width:140px;height:175px;--r:9deg" data-anim="fade" data-anim-delay="880">
+      <img data-sg-img="arcPhotos[12].img" src="../../../../public/_templates/alice-r/img/p13.jpg" class="arc-photo" style="top:92%;left:70%;width:140px;height:175px;--r:-7deg" data-anim="fade" data-anim-delay="960">
+
+      <!-- Titre central -->
+      <div class="relative z-10 max-w-2xl px-6" data-anim="fade">
+        <h1 class="text-4xl font-medium leading-[1.1] text-white sm:text-5xl md:text-6xl" data-sg-path="hero.title">
+          <span class="block" data-sg-path="hero.title[0]">Des photos intemporelles</span>
+          <span class="block" data-sg-path="hero.title[1]">qui racontent votre histoire</span>
+        </h1>
+        <p data-sg-path="hero.subtitle" class="mt-6 text-white/70 text-base md:text-lg max-w-lg mx-auto">Photographie professionnelle pour vos moments de vie, vos marques et vos souvenirs inoubliables.</p>
+        <a href="#contact" data-sg-path="hero.ctaPrimary" class="inline-block mt-8 rounded-full bg-white text-ink font-medium px-7 py-3.5 hover:bg-white/90 transition-colors">Réserver une séance</a>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="py-24 md:py-32" data-anim="fade">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-3 gap-12 text-center md:text-left">
+          <div class="flex flex-col items-center md:items-start gap-4" data-anim="fade" data-anim-delay="0">
+            <h3 data-sg-path="features[0].title" class="text-lg font-medium">Livraison rapide</h3>
+            <p data-sg-path="features[0].body" class="text-white/70">Votre galerie retouchée, livrée en quelques jours</p>
+          </div>
+          <div class="flex flex-col items-center md:items-start gap-4" data-anim="fade" data-anim-delay="80">
+            <h3 data-sg-path="features[1].title" class="text-lg font-medium">Approche personnelle</h3>
+            <p data-sg-path="features[1].body" class="text-white/70">Chaque séance est pensée autour de votre vision</p>
+          </div>
+          <div class="flex flex-col items-center md:items-start gap-4" data-anim="fade" data-anim-delay="160">
+            <h3 data-sg-path="features[2].title" class="text-lg font-medium">Style naturel</h3>
+            <p data-sg-path="features[2].body" class="text-white/70">Des photos authentiques, pleines d’émotion et d’élégance</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED QUOTE -->
+    <section class="py-24 md:py-32" data-anim="fade">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+          <div class="flex flex-col gap-8">
+            <blockquote data-sg-path="featuredQuote.text" class="text-2xl md:text-3xl font-medium leading-snug" data-anim="left">
+              « Alice a un don rare — elle capture l’émotion d’un instant, pas seulement l’instant. Chaque photo est un souvenir que l’on garde pour toujours. »
+            </blockquote>
+            <div class="flex items-center gap-4" data-anim="left" data-anim-delay="80">
+              <img data-sg-img="featuredQuote.avatar" src="../../../../public/_templates/alice-r/img/p7.jpg" alt="Avatar d'Élise Caron" class="w-14 h-14 rounded-full object-cover">
+              <div>
+                <p data-sg-path="featuredQuote.name" class="font-medium">Élise Caron</p>
+                <p data-sg-path="featuredQuote.role" class="text-sm text-white/70">Mariée</p>
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <img data-sg-img="featuredQuote.images[0]" src="../../../../public/_templates/alice-r/img/p4.jpg" alt="Photo éditoriale" class="rounded-lg object-cover h-64 w-full" data-anim="right" data-anim-delay="0">
+            <img data-sg-img="featuredQuote.images[1]" src="../../../../public/_templates/alice-r/img/p12.jpg" alt="Photo éditoriale" class="rounded-lg object-cover h-64 w-full" data-anim="right" data-anim-delay="80">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCROLL TEXT -->
+    <section class="py-24 md:py-32" data-anim="fade">
+      <div class="max-w-4xl mx-auto px-6 text-center">
+        <p data-sg-path="scrollText" class="text-xl md:text-2xl text-white/80 leading-relaxed">
+          La photographie, pour moi, est plus qu’une image — c’est une émotion préservée. Je cherche la lumière, l’émotion et ces instants suspendus, uniques, qui font qu’une histoire mérite d’être racontée.
+        </p>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="py-24 md:py-32" data-anim="fade">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="max-w-2xl mb-16">
+          <p data-sg-path="servicesIntro" class="text-white/70 mb-4" data-anim="fade">Du portrait intimiste à l’histoire de marque complète, chaque séance est construite autour de votre vision.</p>
+        </div>
+        <div class="space-y-16">
+          <!-- Service 1 -->
+          <div class="grid md:grid-cols-2 gap-12 items-center" data-anim="fade">
+            <div class="flex flex-col gap-4">
+              <span data-sg-path="services[0].n" class="text-sm text-white/50">01</span>
+              <h3 data-sg-path="services[0].name" class="text-3xl font-medium">Séances portrait</h3>
+              <p data-sg-path="services[0].desc" class="text-white/70">Des portraits intemporels qui révèlent la personnalité, l’humeur et l’histoire silencieuse de chaque visage.</p>
+              <div class="flex gap-2 mt-4">
+                <span class="text-xs text-white/50 border border-white/20 px-2 py-1 rounded-full" data-sg-path="services[0].tags[0]">Studio</span>
+                <span class="text-xs text-white/50 border border-white/20 px-2 py-1 rounded-full" data-sg-path="services[0].tags[1]">Éditorial</span>
+                <span class="text-xs text-white/50 border border-white/20 px-2 py-1 rounded-full" data-sg-path="services[0].tags[2]">Portraits pro</span>
+              </div>
+            </div>
+            <img data-sg-img="services[0].img" src="../../../../public/_templates/alice-r/img/p1.jpg" alt="Séance portrait" class="rounded-lg object-cover w-full h-80" data-anim="right">
+          </div>
+          <!-- Service 2 -->
+          <div class="grid md:grid-cols-2 gap-12 items-center" data-anim="fade">
+            <div class="flex flex-col gap-4 md:order-2">
+              <span data-sg-path="services[1].n" class="text-sm text-white/50">02</span>
+              <h3 data-sg-path="services[1].name" class="text-3xl font-medium">Mariages & événements</h3>
+              <p data-sg-path="services[1].desc" class="text-white/70">Une couverture sincère et émouvante de vos mariages et réceptions, tels qu’ils se vivent vraiment.</p>
+              <div class="flex gap-2 mt-4">
+                <span class="text-xs text-white/50 border border-white/20 px-2 py-1 rounded-full" data-sg-path="services[1].tags[0]">Mariages</span>
+                <span class="text-xs text-white/50 border border-white/20 px-2 py-1 rounded-full" data-sg-path="services[1].tags[1]">Fiançailles</span>
+                <span class="text-xs text-white/50 border border-white/20 px-2 py-1 rounded-full" data-sg-path="services[1].tags[2]">Destination</span>
+              </div>
+            </div>
+            <img data-sg-img="services[1].img" src="../../../../public/_templates/alice-r/img/p5.jpg" alt="Mariage" class="rounded-lg object-cover w-full h-80" data-anim="left">
+          </div>
+          <!-- Service 3 -->
+          <div class="grid md:grid-cols-2 gap-12 items-center" data-anim="fade">
+            <div class="flex flex-col gap-4">
+              <span data-sg-path="services[2].n" class="text-sm text-white/50">03</span>
+              <h3 data-sg-path="services[2].name" class="text-3xl font-medium">Séances famille</h3>
+              <p data-sg-path="services[2].desc" class="text-white/70">Des moments de famille chaleureux et naturels, dans une lumière douce, intime et honnête.</p>
+              <div class="flex gap-2 mt-4">
+                <span class="text-xs text-white/50 border border-white/20 px-2 py-1 rounded-full" data-sg-path="services[2].tags[0]">Naissance</span>
+                <span class="text-xs text-white/50 border border-white/20 px-2 py-1 rounded-full" data-sg-path="services[2].tags[1]">Lifestyle</span>
+                <span class="text-xs text-white/50 border border-white/20 px-2 py-1 rounded-full" data-sg-path="services[2].tags[2]">Générations</span>
+              </div>
+            </div>
+            <img data-sg-img="services[2].img" src="../../../../public/_templates/alice-r/img/p4.jpg" alt="Séance famille" class="rounded-lg object-cover w-full h-80" data-anim="right">
+          </div>
+          <!-- Service 4 -->
+          <div class="grid md:grid-cols-2 gap-12 items-center" data-anim="fade">
+            <div class="flex flex-col gap-4 md:order-2">
+              <span data-sg-path="services[3].n" class="text-sm text-white/50">04</span>
+              <h3 data-sg-path="services[3].name" class="text-3xl font-medium">Marque & éditorial</h3>
+              <p data-sg-path="services[3].desc" class="text-white/70">Des histoires visuelles raffinées qui donnent vie à vos produits et à votre marque avec élégance.</p>
+              <div class="flex gap-2 mt-4">
+                <span class="text-xs text-white/50 border border-white/20 px-2 py-1 rounded-full" data-sg-path="services[3].tags[0]">Produit</span>
+                <span class="text-xs text-white/50 border border-white/20 px-2 py-1 rounded-full" data-sg-path="services[3].tags[1]">Campagnes</span>
+                <span class="text-xs text-white/50 border border-white/20 px-2 py-1 rounded-full" data-sg-path="services[3].tags[2]">Lookbooks</span>
+              </div>
+            </div>
+            <img data-sg-img="services[3].img" src="../../../../public/_templates/alice-r/img/p6.jpg" alt="Marque éditoriale" class="rounded-lg object-cover w-full h-80" data-anim="left">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLLABORATIONS -->
+    <section class="py-24 md:py-32" data-anim="fade">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 text-2xl md:text-3xl font-medium text-white/50">
+          <span data-sg-path="collaborations[0]" data-anim="fade" data-anim-delay="0">VOGUE</span>
+          <span data-sg-path="collaborations[1]" data-anim="fade" data-anim-delay="80">AESOP</span>
+          <span data-sg-path="collaborations[2]" data-anim="fade" data-anim-delay="160">AIRBNB</span>
+          <span data-sg-path="collaborations[3]" data-anim="fade" data-anim-delay="240">KINFOLK</span>
+          <span data-sg-path="collaborations[4]" data-anim="fade" data-anim-delay="320">CANON</span>
+          <span data-sg-path="collaborations[5]" data-anim="fade" data-anim-delay="400">CÉLINE</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKS -->
+    <section id="works" class="py-24 md:py-32" data-anim="fade">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="space-y-24">
+          <!-- Work 1 -->
+          <div class="grid md:grid-cols-2 gap-12 items-center" data-anim="fade">
+            <div class="flex flex-col gap-4">
+              <span class="text-sm text-white/50" data-sg-path="works[0].date">Janvier 2026</span>
+              <span class="text-sm text-white/50" data-sg-path="works[0].category">Éditorial mode</span>
+              <h3 data-sg-path="works[0].title" class="text-3xl font-medium">Heure dorée</h3>
+              <p data-sg-path="works[0].desc" class="text-white/70">Un éditorial à la poursuite des dernières lumières chaudes du jour, sur des étoffes douces et texturées.</p>
+            </div>
+            <img data-sg-img="works[0].img" src="../../../../public/_templates/alice-r/img/p3.jpg" alt="Heure dorée" class="rounded-lg object-cover w-full h-96" data-anim="right">
+          </div>
+          <!-- Work 2 -->
+          <div class="grid md:grid-cols-2 gap-12 items-center" data-anim="fade">
+            <div class="flex flex-col gap-4 md:order-2">
+              <span class="text-sm text-white/50" data-sg-path="works[1].date">Décembre 2025</span>
+              <span class="text-sm text-white/50" data-sg-path="works[1].category">Séances famille</span>
+              <h3 data-sg-path="works[1].title" class="text-3xl font-medium">Les premiers jours de Zoé</h3>
+              <p data-sg-path="works[1].desc" class="text-white/70">Les tout premiers instants d’une vie, capturés dans un cocon calme baigné de lumière naturelle.</p>
+            </div>
+            <img data-sg-img="works[1].img" src="../../../../public/_templates/alice-r/img/p8.jpg" alt="Les premiers jours de Zoé" class="rounded-lg object-cover w-full h-96" data-anim="left">
+          </div>
+          <!-- Work 3 -->
+          <div class="grid md:grid-cols-2 gap-12 items-center" data-anim="fade">
+            <div class="flex flex-col gap-4">
+              <span class="text-sm text-white/50" data-sg-path="works[2].date">Novembre 2025</span>
+              <span class="text-sm text-white/50" data-sg-path="works[2].category">Mariage</span>
+              <h3 data-sg-path="works[2].title" class="text-3xl font-medium">Un serment murmuré</h3>
+              <p data-sg-path="works[2].desc" class="text-white/70">Une cérémonie intime documentée en images sincères et émouvantes, de l’aube au crépuscule.</p>
+            </div>
+            <img data-sg-img="works[2].img" src="../../../../public/_templates/alice-r/img/p9.jpg" alt="Un serment murmuré" class="rounded-lg object-cover w-full h-96" data-anim="right">
+          </div>
+          <!-- Work 4 -->
+          <div class="grid md:grid-cols-2 gap-12 items-center" data-anim="fade">
+            <div class="flex flex-col gap-4 md:order-2">
+              <span class="text-sm text-white/50" data-sg-path="works[3].date">Octobre 2025</span>
+              <span class="text-sm text-white/50" data-sg-path="works[3].category">Marque & éditorial</span>
+              <h3 data-sg-path="works[3].title" class="text-3xl font-medium">Maison Verte</h3>
+              <p data-sg-path="works[3].desc" class="text-white/70">Une histoire de marque inspirée par la nature, la chaleur et la beauté de l’artisanat.</p>
+            </div>
+            <img data-sg-img="works[3].img" src="../../../../public/_templates/alice-r/img/p6.jpg" alt="Maison Verte" class="rounded-lg object-cover w-full h-96" data-anim="left">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BEYOND -->
+    <section class="py-24 md:py-32" data-anim="fade">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+          <div class="flex flex-col gap-8">
+            <h2 data-sg-path="beyond.title" class="text-3xl md:text-4xl font-medium" data-anim="left">Capturer au-delà du cadre</h2>
+            <p data-sg-path="beyond.body" class="text-white/70 leading-relaxed" data-anim="left" data-anim-delay="80">
+              Chaque séance est une collaboration. Je prends le temps de comprendre votre histoire, puis je la traduis en images sincères, chaleureuses et durables.
+            </p>
+            <a href="#contact" data-sg-path="beyond.cta" class="inline-block mt-4 rounded-full bg-white text-ink font-medium px-7 py-3.5 hover:bg-white/90 transition-colors self-start" data-anim="left" data-anim-delay="160">Commencer votre histoire</a>
+          </div>
+          <div class="grid grid-cols-3 gap-8 text-center">
+            <div data-anim="right" data-anim-delay="0">
+              <p class="text-4xl font-medium"><span data-count="10" data-count-suffix="+">0</span></p>
+              <p data-sg-path="beyond.stats[0].l" class="text-sm text-white/70 mt-2">Années derrière l’objectif</p>
+            </div>
+            <div data-anim="right" data-anim-delay="80">
+              <p class="text-4xl font-medium"><span data-count="320" data-count-suffix="">0</span></p>
+              <p data-sg-path="beyond.stats[1].l" class="text-sm text-white/70 mt-2">Histoires racontées</p>
+            </div>
+            <div data-anim="right" data-anim-delay="160">
+              <p class="text-4xl font-medium"><span data-count="24" data-count-suffix="">0</span></p>
+              <p data-sg-path="beyond.stats[2].l" class="text-sm text-white/70 mt-2">Prix & publications</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="py-24 md:py-32" data-anim="fade">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="flex flex-col gap-6 p-8 border border-white/10 rounded-lg" data-anim="fade" data-anim-delay="0">
+            <p data-sg-path="testimonials[0].text" class="text-white/80">« Alice a photographié notre mariage avec un art fou. Chaque image est vivante et sincère. »</p>
+            <div class="flex items-center gap-4">
+              <img data-sg-img="testimonials[0].avatar" src="../../../../public/_templates/alice-r/img/p7.jpg" alt="Avatar d'Amara Okafor" class="w-12 h-12 rounded-full object-cover">
+              <div>
+                <p data-sg-path="testimonials[0].name" class="font-medium">Amara Okafor</p>
+                <p data-sg-path="testimonials[0].role" class="text-sm text-white/70">Mariée</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col gap-6 p-8 border border-white/10 rounded-lg" data-anim="fade" data-anim-delay="80">
+            <p data-sg-path="testimonials[1].text" class="text-white/80">« La séance la plus naturelle que j’aie jamais vécue. Le résultat parle de lui-même. »</p>
+            <div class="flex items-center gap-4">
+              <img data-sg-img="testimonials[1].avatar" src="../../../../public/_templates/alice-r/img/p8.jpg" alt="Avatar de Lukas Meyer" class="w-12 h-12 rounded-full object-cover">
+              <div>
+                <p data-sg-path="testimonials[1].name" class="font-medium">Lukas Meyer</p>
+                <p data-sg-path="testimonials[1].role" class="text-sm text-white/70">Directeur artistique</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col gap-6 p-8 border border-white/10 rounded-lg" data-anim="fade" data-anim-delay="160">
+            <p data-sg-path="testimonials[2].text" class="text-white/80">« Sincère, patiente et terriblement talentueuse. Notre séance famille a eu la douceur d’un après-midi tranquille. »</p>
+            <div class="flex items-center gap-4">
+              <img data-sg-img="testimonials[2].avatar" src="../../../../public/_templates/alice-r/img/p9.jpg" alt="Avatar de Sofia Bianchi" class="w-12 h-12 rounded-full object-cover">
+              <div>
+                <p data-sg-path="testimonials[2].name" class="font-medium">Sofia Bianchi</p>
+                <p data-sg-path="testimonials[2].role" class="text-sm text-white/70">Séance famille</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-24 md:py-32" data-anim="fade">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="space-y-4">
+          <div class="faq-item border-b border-white/10 py-6" data-anim="fade" data-anim-delay="0">
+            <button class="faq-question w-full flex justify-between items-center text-left">
+              <span data-sg-path="faqs[0].q" class="text-lg font-medium">Comment réserver une séance ?</span>
+              <span class="faq-icon text-2xl transition-transform">+</span>
+            </button>
+            <div class="faq-answer pt-4 text-white/70">
+              <p data-sg-path="faqs[0].a">Écrivez-moi via le formulaire de contact ou par email, partagez votre vision et vos dates — je vous envoie une proposition sur mesure sous 48 h.</p>
+            </div>
+          </div>
+          <div class="faq-item border-b border-white/10 py-6" data-anim="fade" data-anim-delay="80">
+            <button class="faq-question w-full flex justify-between items-center text-left">
+              <span data-sg-path="faqs[1].q" class="text-lg font-medium">Que comprend une séance ?</span>
+              <span class="faq-icon text-2xl transition-transform">+</span>
+            </button>
+            <div class="faq-answer pt-4 text-white/70">
+              <p data-sg-path="faqs[1].a">La préparation en amont, la séance elle-même, la retouche professionnelle et une galerie privée en ligne avec téléchargements haute définition.</p>
+            </div>
+          </div>
+          <div class="faq-item border-b border-white/10 py-6" data-anim="fade" data-anim-delay="160">
+            <button class="faq-question w-full flex justify-between items-center text-left">
+              <span data-sg-path="faqs[2].q" class="text-lg font-medium">Sous quel délai vais-je recevoir mes photos ?</span>
+              <span class="faq-icon text-2xl transition-transform">+</span>
+            </button>
+            <div class="faq-answer pt-4 text-white/70">
+              <p data-sg-path="faqs[2].a">Les galeries retouchées sont livrées sous 7 à 14 jours selon l’ampleur du projet.</p>
+            </div>
+          </div>
+          <div class="faq-item border-b border-white/10 py-6" data-anim="fade" data-anim-delay="240">
+            <button class="faq-question w-full flex justify-between items-center text-left">
+              <span data-sg-path="faqs[3].q" class="text-lg font-medium">Vous déplacez-vous ?</span>
+              <span class="faq-icon text-2xl transition-transform">+</span>
+            </button>
+            <div class="faq-answer pt-4 text-white/70">
+              <p data-sg-path="faqs[3].a">Absolument — je travaille localement et me déplace partout dans le monde pour les beaux projets.</p>
+            </div>
+          </div>
+          <div class="faq-item border-b border-white/10 py-6" data-anim="fade" data-anim-delay="320">
+            <button class="faq-question w-full flex justify-between items-center text-left">
+              <span data-sg-path="faqs[4].q" class="text-lg font-medium">Puis-je commander des tirages ?</span>
+              <span class="faq-icon text-2xl transition-transform">+</span>
+            </button>
+            <div class="faq-answer pt-4 text-white/70">
+              <p data-sg-path="faqs[4].a">Oui — tirages fine-art et albums sont disponibles en option, en qualité premium, vérifiés à la main avant expédition.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="py-24 md:py-32" data-anim="fade">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <img data-sg-img="gallery[0]" src="../../../../public/_templates/alice-r/img/p10.jpg" alt="Galerie photo" class="rounded-lg object-cover w-full h-64" data-anim="fade" data-anim-delay="0">
+          <img data-sg-img="gallery[1]" src="../../../../public/_templates/alice-r/img/p11.jpg" alt="Galerie photo" class="rounded-lg object-cover w-full h-64" data-anim="fade" data-anim-delay="80">
+          <img data-sg-img="gallery[2]" src="../../../../public/_templates/alice-r/img/p12.jpg" alt="Galerie photo" class="rounded-lg object-cover w-full h-64" data-anim="fade" data-anim-delay="160">
+          <img data-sg-img="gallery[3]" src="../../../../public/_templates/alice-r/img/p13.jpg" alt="Galerie photo" class="rounded-lg object-cover w-full h-64" data-anim="fade" data-anim-delay="240">
+          <img data-sg-img="gallery[4]" src="../../../../public/_templates/alice-r/img/p1.jpg" alt="Galerie photo" class="rounded-lg object-cover w-full h-64" data-anim="fade" data-anim-delay="320">
+          <img data-sg-img="gallery[5]" src="../../../../public/_templates/alice-r/img/p2.jpg" alt="Galerie photo" class="rounded-lg object-cover w-full h-64" data-anim="fade" data-anim-delay="400">
+          <img data-sg-img="gallery[6]" src="../../../../public/_templates/alice-r/img/p3.jpg" alt="Galerie photo" class="rounded-lg object-cover w-full h-64" data-anim="fade" data-anim-delay="480">
+          <img data-sg-img="gallery[7]" src="../../../../public/_templates/alice-r/img/p4.jpg" alt="Galerie photo" class="rounded-lg object-cover w-full h-64" data-anim="fade" data-anim-delay="560">
+          <img data-sg-img="gallery[8]" src="../../../../public/_templates/alice-r/img/p5.jpg" alt="Galerie photo" class="rounded-lg object-cover w-full h-64" data-anim="fade" data-anim-delay="640">
+          <img data-sg-img="gallery[9]" src="../../../../public/_templates/alice-r/img/p6.jpg" alt="Galerie photo" class="rounded-lg object-cover w-full h-64" data-anim="fade" data-anim-delay="720">
+          <img data-sg-img="gallery[10]" src="../../../../public/_templates/alice-r/img/p7.jpg" alt="Galerie photo" class="rounded-lg object-cover w-full h-64" data-anim="fade" data-anim-delay="800">
+          <img data-sg-img="gallery[11]" src="../../../../public/_templates/alice-r/img/p8.jpg" alt="Galerie photo" class="rounded-lg object-cover w-full h-64" data-anim="fade" data-anim-delay="880">
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-24 md:py-32" data-anim="fade">
+      <div class="max-w-4xl mx-auto px-6 text-center">
+        <h2 class="text-4xl md:text-5xl font-medium" data-anim="fade">Prêt à raconter votre histoire ?</h2>
+        <p class="mt-6 text-white/70 text-lg max-w-2xl mx-auto" data-anim="fade" data-anim-delay="80">Écrivez-moi pour discuter de votre projet, de vos dates et de votre vision. Je vous réponds sous 48 h.</p>
+        <a href="mailto:contact@alice-r.com" class="inline-block mt-8 rounded-full bg-white text-ink font-medium px-7 py-3.5 hover:bg-white/90 transition-colors" data-anim="fade" data-anim-delay="160">contact@alice-r.com</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="py-16 border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+      <p class="text-sm text-white/50">© 2026 Alice R. Tous droits réservés.</p>
+      <p class="text-sm text-white/50">Propulsé par <a href="#" class="hover:text-white">Akyra</a></p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const button = item.querySelector('.faq-question');
+        button.addEventListener('click', () => {
+          item.classList.toggle('open');
+        });
+      });
+    });
+  </script>
+
+<!-- ═══ AKYRA MOTION KIT — animations partagées (vanilla, sans dépendance, respecte prefers-reduced-motion) ═══ -->
+<style>
+  [data-anim]{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+  [data-anim="fade"]{transform:none}
+  [data-anim="left"]{transform:translateX(-26px)}
+  [data-anim="right"]{transform:translateX(26px)}
+  [data-anim="scale"]{transform:scale(.96)}
+  [data-anim].in{opacity:1!important;transform:none!important}
+  /* Apparition du texte mot à mot */
+  .anim-words .w{display:inline-block;opacity:0;transform:translateY(0.5em);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .anim-words.in .w{opacity:1;transform:none}
+  /* Galerie accordéon : au survol, la vignette s'élargit, les autres se rétractent (CSS pur) */
+  .gallery-expand{display:flex}
+  .gallery-expand>.gx{flex:1 1 0;min-width:0;overflow:hidden;transition:flex-grow .7s cubic-bezier(.16,1,.3,1)}
+  .gallery-expand>.gx img{width:100%;height:100%;object-fit:cover}
+  @media (hover:hover){
+    .gallery-expand:hover>.gx{flex-grow:.6}
+    .gallery-expand>.gx:hover{flex-grow:3}
+  }
+  @media (prefers-reduced-motion:reduce){[data-anim],.anim-words .w{opacity:1!important;transform:none!important;transition:none!important}.gallery-expand>.gx{transition:none}}
+</style>
+<script>
+(function(){
+  var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var IO = 'IntersectionObserver' in window;
+
+  // 1) Révélation au scroll des éléments [data-anim] (stagger via data-anim-delay en ms)
+  var reveals = document.querySelectorAll('[data-anim]');
+  function showReveal(el){
+    var d = parseInt(el.getAttribute('data-anim-delay')||'0',10);
+    if(d) setTimeout(function(){el.classList.add('in')}, d); else el.classList.add('in');
+  }
+  if(RM || !IO){ reveals.forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioR = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ showReveal(en.target); ioR.unobserve(en.target);} });
+    },{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(function(e){ ioR.observe(e); });
+  }
+
+  // 2) Texte mot à mot : <h1 class="anim-words">…</h1>.
+  //    Découpe DOM-SAFE : on n'enveloppe QUE les nœuds texte (les balises internes
+  //    — dégradés, pilules — sont préservées intactes, jamais transformées en texte).
+  document.querySelectorAll('.anim-words').forEach(function(el){
+    if(el.dataset.split) return; el.dataset.split='1';
+    // Garde-fou : si le titre contient des balises internes (dégradé, pilule…),
+    // on NE découpe PAS (sinon dégradé cassé / mots invisibles) — il reste intact.
+    if(el.children.length > 0){ el.classList.remove('anim-words'); return; }
+    var wi = 0, textNodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    while(walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(function(tn){
+      if(!tn.nodeValue || !tn.nodeValue.trim()) return;
+      var frag = document.createDocumentFragment();
+      tn.nodeValue.split(/(\s+)/).forEach(function(part){
+        if(part === '') return;
+        if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+        var s = document.createElement('span'); s.className='w'; s.textContent=part;
+        s.style.transitionDelay=((wi++)*45)+'ms'; frag.appendChild(s);
+      });
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  });
+  if(RM || !IO){ document.querySelectorAll('.anim-words').forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioW = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ioW.unobserve(en.target);} });
+    },{threshold:0.25});
+    document.querySelectorAll('.anim-words').forEach(function(e){ ioW.observe(e); });
+  }
+
+  // 3) Compteurs : <span data-count="1200" data-count-suffix="+" data-count-decimals="0">0</span>
+  function fmt(v,dec){ return v.toLocaleString('fr-FR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+  function countUp(el){
+    var target=parseFloat(el.getAttribute('data-count'))||0,
+        suf=el.getAttribute('data-count-suffix')||'', pre=el.getAttribute('data-count-prefix')||'',
+        dec=parseInt(el.getAttribute('data-count-decimals')||'0',10), dur=1500, start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=pre+fmt(target*e,dec)+suf; if(p<1)requestAnimationFrame(step); else el.textContent=pre+fmt(target,dec)+suf; }
+    requestAnimationFrame(step);
+  }
+  var nums = document.querySelectorAll('[data-count]');
+  if(RM || !IO){ nums.forEach(function(el){ el.textContent=(el.getAttribute('data-count-prefix')||'')+fmt(parseFloat(el.getAttribute('data-count'))||0,parseInt(el.getAttribute('data-count-decimals')||'0',10))+(el.getAttribute('data-count-suffix')||''); }); }
+  else {
+    var ioN = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ countUp(en.target); ioN.unobserve(en.target);} });
+    },{threshold:0.6});
+    nums.forEach(function(el){ ioN.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>
