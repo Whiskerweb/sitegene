@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clara Whitfield | Photographe Portrait & Lifestyle à Paris</title>
+  <meta name="description" content="Photographe portrait et lifestyle à Paris — raconter des histoires à travers l'objectif avec élégance intemporelle et authenticité.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400;1,500;1,600;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#2C2827',
+            bg: '#F7F3F0',
+            dark: '#1A1715',
+            faint: '#8A8480'
+          },
+          fontFamily: {
+            display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['Inter', 'Helvetica', 'Arial', 'sans-serif']
+          },
+          letterSpacing: {
+            wide2: '0.18em',
+          },
+        }
+      }
+    };
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', Helvetica, Arial, sans-serif; background: #F7F3F0; color: #2C2827; margin: 0; }
+    .font-display { font-family: '"Cormorant Garamond"', Georgia, serif; }
+    .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #2C2827; margin-right: 14px; vertical-align: middle; }
+    .gallery-expand { display: flex; width: 100%; overflow: hidden; }
+    .gallery-expand .gx { flex: 1; transition: flex 0.4s ease; }
+    .gallery-expand .gx:hover { flex: 2; }
+    .gallery-expand .gx img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .faq-item .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .faq-item.open .faq-answer { max-height: 200px; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="fixed top-0 inset-x-0 z-50 px-6 md:px-12 py-6 flex items-center justify-between mix-blend-difference text-white">
+    <a href="#" data-sg-path="brand" class="font-display italic text-xl md:text-2xl tracking-tight">CLARA WHITFIELD</a>
+    <ul class="flex items-center gap-7 text-[11px] uppercase tracking-wide2">
+      <li><a href="#work" data-sg-path="nav[0]" class="hover:opacity-60 transition-opacity">Réalisations</a></li>
+      <li><a href="#about" data-sg-path="nav[1]" class="hover:opacity-60 transition-opacity">À propos</a></li>
+      <li><a href="#contact" data-sg-path="nav[2]" class="hover:opacity-60 transition-opacity">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <header id="top" class="px-6 md:px-12 pt-32 md:pt-40 pb-16 md:pb-24">
+    <div class="max-w-[100rem] mx-auto">
+      <h1 data-anim="fade" class="font-display italic font-light leading-[0.95] text-[44px] sm:text-6xl md:text-7xl lg:text-[108px] max-w-3xl text-ink">
+        <span class="dot"></span><span data-sg-path="hero.title">Raconter des histoires à travers l'objectif</span>
+      </h1>
+      <div class="mt-8 flex items-end justify-between flex-wrap gap-4">
+        <p data-anim="fade" data-anim-delay="80" data-sg-path="hero.tagline" class="text-sm text-faint max-w-[220px] leading-relaxed">Capturer les moments qui comptent — portraits et instants de vie.</p>
+        <span data-anim="fade" data-anim-delay="160" class="text-2xl text-ink select-none hidden md:inline">↓</span>
+      </div>
+      <div class="mt-12 gallery-expand gap-3 md:gap-4 h-[320px] md:h-[460px]">
+        <div class="gx" data-anim="left" data-anim-delay="0"><img data-sg-img="hero.portrait" src="../../../../public/_templates/portrait-lifestyle/img/hero-portrait.jpg" alt="" class="grayscale" /></div>
+        <div class="gx" data-anim="left" data-anim-delay="80"><img data-sg-img="hero.lifestyle[0]" src="../../../../public/_templates/portrait-lifestyle/img/life1.jpg" alt="" /></div>
+        <div class="gx" data-anim="left" data-anim-delay="160"><img data-sg-img="hero.lifestyle[1]" src="../../../../public/_templates/portrait-lifestyle/img/life2.jpg" alt="" /></div>
+        <div class="gx" data-anim="left" data-anim-delay="240"><img data-sg-img="hero.lifestyle[2]" src="../../../../public/_templates/portrait-lifestyle/img/life3.jpg" alt="" /></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- SERVICES -->
+    <section id="about" class="px-6 md:px-12 py-20">
+      <div class="max-w-[100rem] mx-auto">
+        <div class="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+          <div data-anim="left">
+            <h2 class="font-display italic font-light leading-[0.95] text-4xl md:text-5xl text-ink">
+              <span class="dot"></span><span data-sg-path="services.label">Ce que je propose</span>
+            </h2>
+            <p data-anim="fade" data-anim-delay="80" data-sg-path="services.intro" class="mt-8 text-base leading-relaxed text-ink max-w-md">
+              Je crée des photographies intemporelles en portrait et lifestyle, adaptées à votre histoire. Mon approche allie art et authenticité pour des images qui vous ressemblent.
+            </p>
+          </div>
+          <div class="grid grid-cols-1 gap-8" data-anim="right" data-anim-delay="160">
+            <div class="flex gap-6">
+              <span data-sg-path="services.items[0].num" class="font-display italic text-4xl text-faint">01</span>
+              <div>
+                <h3 data-sg-path="services.items[0].name" class="font-display italic text-xl text-ink">Portrait</h3>
+                <p data-sg-path="services.items[0].text" class="mt-2 text-sm leading-relaxed text-faint">Des portraits intemporels qui célèbrent votre singularité et votre élégance, capturant l'essence de qui vous êtes dans chaque image.</p>
+              </div>
+            </div>
+            <div class="flex gap-6">
+              <span data-sg-path="services.items[1].num" class="font-display italic text-4xl text-faint">02</span>
+              <div>
+                <h3 data-sg-path="services.items[1].name" class="font-display italic text-xl text-ink">Lifestyle</h3>
+                <p data-sg-path="services.items[1].text" class="mt-2 text-sm leading-relaxed text-faint">Des récits authentiques à travers des moments naturels du quotidien, mettant en lumière la beauté des petits bonheurs de la vie.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK -->
+    <section id="work" class="px-6 md:px-12 py-20">
+      <div class="max-w-[100rem] mx-auto">
+        <div class="flex justify-between items-center mb-12">
+          <h2 class="font-display italic font-light leading-[0.95] text-4xl md:text-5xl text-ink">
+            <span class="dot"></span><span data-sg-path="work.label">Un aperçu de mes réalisations</span>
+          </h2>
+          <a href="#" data-sg-path="work.cta" class="text-sm uppercase tracking-wide2 hover:opacity-60 transition-opacity" data-anim="fade">Voir mes réalisations</a>
+        </div>
+        <p data-anim="fade" data-sg-path="work.intro" class="text-base leading-relaxed text-faint max-w-2xl mb-16">
+          Découvrez une sélection de mes plus belles créations, où chaque portrait et instant de vie révèle l'émotion et l'art derrière l'objectif.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="group" data-anim="scale" data-anim-delay="0">
+            <img data-sg-img="work.items[0].image" src="../../../../public/_templates/portrait-lifestyle/img/work1.jpg" alt="Portrait élégant" class="w-full h-auto object-cover aspect-[3/4] grayscale group-hover:grayscale-0 transition-all duration-300" />
+            <div class="mt-4">
+              <h3 data-sg-path="work.items[0].title" class="font-display italic text-lg text-ink">Élégance intemporelle</h3>
+              <p data-sg-path="work.items[0].category" class="text-xs uppercase tracking-wide2 text-faint mt-1">Portrait</p>
+            </div>
+          </div>
+          <div class="group" data-anim="scale" data-anim-delay="80">
+            <img data-sg-img="work.items[1].image" src="../../../../public/_templates/portrait-lifestyle/img/work2.jpg" alt="Rituels du matin" class="w-full h-auto object-cover aspect-[4/3] group-hover:scale-105 transition-transform duration-300" />
+            <div class="mt-4">
+              <h3 data-sg-path="work.items[1].title" class="font-display italic text-lg text-ink">Rituels du matin</h3>
+              <p data-sg-path="work.items[1].category" class="text-xs uppercase tracking-wide2 text-faint mt-1">Lifestyle</p>
+            </div>
+          </div>
+          <div class="group" data-anim="scale" data-anim-delay="160">
+            <img data-sg-img="work.items[2].image" src="../../../../public/_templates/portrait-lifestyle/img/work3.jpg" alt="Lueur dorée" class="w-full h-auto object-cover aspect-[3/4] grayscale group-hover:grayscale-0 transition-all duration-300" />
+            <div class="mt-4">
+              <h3 data-sg-path="work.items[2].title" class="font-display italic text-lg text-ink">Lueur dorée</h3>
+              <p data-sg-path="work.items[2].category" class="text-xs uppercase tracking-wide2 text-faint mt-1">Portrait</p>
+            </div>
+          </div>
+          <div class="group" data-anim="scale" data-anim-delay="240">
+            <img data-sg-img="work.items[3].image" src="../../../../public/_templates/portrait-lifestyle/img/work4.jpg" alt="L'artisan au travail" class="w-full h-auto object-cover aspect-[4/3] group-hover:scale-105 transition-transform duration-300" />
+            <div class="mt-4">
+              <h3 data-sg-path="work.items[3].title" class="font-display italic text-lg text-ink">L'artisan au travail</h3>
+              <p data-sg-path="work.items[3].category" class="text-xs uppercase tracking-wide2 text-faint mt-1">Lifestyle</p>
+            </div>
+          </div>
+          <div class="group" data-anim="scale" data-anim-delay="320">
+            <img data-sg-img="work.items[4].image" src="../../../../public/_templates/portrait-lifestyle/img/work5.jpg" alt="Home Sweet Home" class="w-full h-auto object-cover aspect-[4/3] group-hover:scale-105 transition-transform duration-300" />
+            <div class="mt-4">
+              <h3 data-sg-path="work.items[4].title" class="font-display italic text-lg text-ink">Home Sweet Home</h3>
+              <p data-sg-path="work.items[4].category" class="text-xs uppercase tracking-wide2 text-faint mt-1">Lifestyle</p>
+            </div>
+          </div>
+          <div class="group" data-anim="scale" data-anim-delay="400">
+            <img data-sg-img="work.items[5].image" src="../../../../public/_templates/portrait-lifestyle/img/work6.jpg" alt="Muse urbaine" class="w-full h-auto object-cover aspect-[3/4] grayscale group-hover:grayscale-0 transition-all duration-300" />
+            <div class="mt-4">
+              <h3 data-sg-path="work.items[5].title" class="font-display italic text-lg text-ink">Muse urbaine</h3>
+              <p data-sg-path="work.items[5].category" class="text-xs uppercase tracking-wide2 text-faint mt-1">Portrait</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIAL -->
+    <section class="px-6 md:px-12 py-20">
+      <div class="max-w-[100rem] mx-auto">
+        <div class="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+          <div data-anim="left">
+            <img data-sg-img="testimonial.image" src="../../../../public/_templates/portrait-lifestyle/img/testimonial.jpg" alt="Portrait de cliente" class="w-full h-auto object-cover aspect-[3/4] grayscale" />
+          </div>
+          <div data-anim="right">
+            <blockquote data-sg-path="testimonial.quote" class="font-display italic text-2xl md:text-3xl leading-relaxed text-ink">
+              “Clara a un talent incroyable pour capturer l'émotion et l'essence de chaque instant. Ses photos parlent d'elles-mêmes.”
+            </blockquote>
+            <p data-sg-path="testimonial.author" class="mt-6 text-sm uppercase tracking-wide2 text-faint">Rachel Karina, cliente portrait</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="px-6 md:px-12 py-20">
+      <div class="max-w-[100rem] mx-auto">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div data-anim="fade" data-anim-delay="0">
+            <p class="font-display italic text-5xl md:text-6xl text-ink"><span data-count="1200" data-count-suffix="+">0</span></p>
+            <p data-sg-path="stats[0]" class="mt-2 text-xs uppercase tracking-wide2 text-faint">Projets réalisés</p>
+          </div>
+          <div data-anim="fade" data-anim-delay="80">
+            <p class="font-display italic text-5xl md:text-6xl text-ink"><span data-count="98" data-count-suffix="%">0</span></p>
+            <p data-sg-path="stats[1]" class="mt-2 text-xs uppercase tracking-wide2 text-faint">Clients satisfaits</p>
+          </div>
+          <div data-anim="fade" data-anim-delay="160">
+            <p class="font-display italic text-5xl md:text-6xl text-ink">24/7</p>
+            <p data-sg-path="stats[2]" class="mt-2 text-xs uppercase tracking-wide2 text-faint">Disponibilité</p>
+          </div>
+          <div data-anim="fade" data-anim-delay="240">
+            <p class="font-display italic text-5xl md:text-6xl text-ink"><span data-count="50" data-count-suffix="+">0</span></p>
+            <p data-sg-path="stats[3]" class="mt-2 text-xs uppercase tracking-wide2 text-faint">Séances par an</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contact" class="px-6 md:px-12 py-20">
+      <div class="max-w-[100rem] mx-auto">
+        <div class="relative bg-cover bg-center rounded-lg overflow-hidden" style="background-image: url('../../../../public/_templates/portrait-lifestyle/img/studio.jpg');">
+          <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+          <div class="relative px-8 md:px-16 py-20 md:py-32 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div data-anim="left">
+              <h2 class="font-display italic font-light leading-[0.95] text-4xl md:text-5xl text-white">
+                <span class="dot" style="background: white;"></span><span data-sg-path="cta.title">Collaborons ensemble</span>
+              </h2>
+              <p data-anim="fade" data-anim-delay="80" data-sg-path="cta.text" class="mt-6 text-base leading-relaxed text-white max-w-md">
+                Prêt à immortaliser votre histoire ? Contactez-moi pour réserver votre séance ou en savoir plus sur mes services.
+              </p>
+            </div>
+            <div class="flex flex-col items-start md:items-end gap-6" data-anim="right" data-anim-delay="160">
+              <a href="#" data-sg-path="cta.button" class="px-6 py-3 border border-white text-white text-sm uppercase tracking-wide2 hover:bg-white hover:text-ink transition-colors">Me contacter</a>
+              <p data-sg-path="cta.instagram" class="text-sm text-white">Instagram : @clara.whitfield</p>
+              <p data-sg-path="cta.email" class="text-sm text-white">Email : hello@clarawhitfield.com</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-dark text-bg px-6 md:px-12 py-12">
+    <div class="max-w-[100rem] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+      <a href="#top" class="text-sm hover:opacity-60 transition-opacity">Haut de page ↑</a>
+      <p class="text-sm">Propulsé par <a href="#" class="underline hover:opacity-60 transition-opacity">Akyra</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // FAQ Accordion (vanilla)
+    document.addEventListener('DOMContentLoaded', () => {
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question.addEventListener('click', () => {
+          item.classList.toggle('open');
+        });
+      });
+    });
+  </script>
+
+<!-- ═══ AKYRA MOTION KIT — animations partagées (vanilla, sans dépendance, respecte prefers-reduced-motion) ═══ -->
+<style>
+  [data-anim]{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+  [data-anim="fade"]{transform:none}
+  [data-anim="left"]{transform:translateX(-26px)}
+  [data-anim="right"]{transform:translateX(26px)}
+  [data-anim="scale"]{transform:scale(.96)}
+  [data-anim].in{opacity:1!important;transform:none!important}
+  /* Apparition du texte mot à mot */
+  .anim-words .w{display:inline-block;opacity:0;transform:translateY(0.5em);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .anim-words.in .w{opacity:1;transform:none}
+  /* Galerie accordéon : au survol, la vignette s'élargit, les autres se rétractent (CSS pur) */
+  .gallery-expand{display:flex}
+  .gallery-expand>.gx{flex:1 1 0;min-width:0;overflow:hidden;transition:flex-grow .7s cubic-bezier(.16,1,.3,1)}
+  .gallery-expand>.gx img{width:100%;height:100%;object-fit:cover}
+  @media (hover:hover){
+    .gallery-expand:hover>.gx{flex-grow:.6}
+    .gallery-expand>.gx:hover{flex-grow:3}
+  }
+  @media (prefers-reduced-motion:reduce){[data-anim],.anim-words .w{opacity:1!important;transform:none!important;transition:none!important}.gallery-expand>.gx{transition:none}}
+</style>
+<script>
+(function(){
+  var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var IO = 'IntersectionObserver' in window;
+
+  // 1) Révélation au scroll des éléments [data-anim] (stagger via data-anim-delay en ms)
+  var reveals = document.querySelectorAll('[data-anim]');
+  function showReveal(el){
+    var d = parseInt(el.getAttribute('data-anim-delay')||'0',10);
+    if(d) setTimeout(function(){el.classList.add('in')}, d); else el.classList.add('in');
+  }
+  if(RM || !IO){ reveals.forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioR = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ showReveal(en.target); ioR.unobserve(en.target);} });
+    },{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(function(e){ ioR.observe(e); });
+  }
+
+  // 2) Texte mot à mot : <h1 class="anim-words">…</h1>.
+  //    Découpe DOM-SAFE : on n'enveloppe QUE les nœuds texte (les balises internes
+  //    — dégradés, pilules — sont préservées intactes, jamais transformées en texte).
+  document.querySelectorAll('.anim-words').forEach(function(el){
+    if(el.dataset.split) return; el.dataset.split='1';
+    // Garde-fou : si le titre contient des balises internes (dégradé, pilule…),
+    // on NE découpe PAS (sinon dégradé cassé / mots invisibles) — il reste intact.
+    if(el.children.length > 0){ el.classList.remove('anim-words'); return; }
+    var wi = 0, textNodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    while(walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(function(tn){
+      if(!tn.nodeValue || !tn.nodeValue.trim()) return;
+      var frag = document.createDocumentFragment();
+      tn.nodeValue.split(/(\s+)/).forEach(function(part){
+        if(part === '') return;
+        if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+        var s = document.createElement('span'); s.className='w'; s.textContent=part;
+        s.style.transitionDelay=((wi++)*45)+'ms'; frag.appendChild(s);
+      });
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  });
+  if(RM || !IO){ document.querySelectorAll('.anim-words').forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioW = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ioW.unobserve(en.target);} });
+    },{threshold:0.25});
+    document.querySelectorAll('.anim-words').forEach(function(e){ ioW.observe(e); });
+  }
+
+  // 3) Compteurs : <span data-count="1200" data-count-suffix="+" data-count-decimals="0">0</span>
+  function fmt(v,dec){ return v.toLocaleString('fr-FR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+  function countUp(el){
+    var target=parseFloat(el.getAttribute('data-count'))||0,
+        suf=el.getAttribute('data-count-suffix')||'', pre=el.getAttribute('data-count-prefix')||'',
+        dec=parseInt(el.getAttribute('data-count-decimals')||'0',10), dur=1500, start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=pre+fmt(target*e,dec)+suf; if(p<1)requestAnimationFrame(step); else el.textContent=pre+fmt(target,dec)+suf; }
+    requestAnimationFrame(step);
+  }
+  var nums = document.querySelectorAll('[data-count]');
+  if(RM || !IO){ nums.forEach(function(el){ el.textContent=(el.getAttribute('data-count-prefix')||'')+fmt(parseFloat(el.getAttribute('data-count'))||0,parseInt(el.getAttribute('data-count-decimals')||'0',10))+(el.getAttribute('data-count-suffix')||''); }); }
+  else {
+    var ioN = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ countUp(en.target); ioN.unobserve(en.target);} });
+    },{threshold:0.6});
+    nums.forEach(function(el){ ioN.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>

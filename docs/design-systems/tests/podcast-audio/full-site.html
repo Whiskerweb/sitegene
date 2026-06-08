@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Northwire - Podcast Audio Cinématographique</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family:'Geist',sans-serif; background:#0a0a0a; color:#eee; margin:0; }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:'#0a0a0a',
+            panel:'#131313',
+            paper:'#eeeeee',
+            cream:'#f4f1ea',
+            muted:'#757575',
+            line:'#222222',
+            lineL:'#e2e2e2',
+            accent:'#0000ee',
+            yellow:'#ebf213'
+          },
+          fontFamily: {
+            sans:['Geist','sans-serif'],
+            mono:['"Geist Mono"','monospace'],
+            serif:['"Instrument Serif"','serif']
+          },
+          letterSpacing: {
+            label:'0.16em'
+          },
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-ink">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-sm bg-ink/30">
+    <nav class="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
+      <a href="#top" data-sg-path="brand" class="font-serif text-2xl tracking-wide text-paper">NORTHWIRE</a>
+      <ul class="hidden md:flex items-center gap-9 font-mono text-[12px] tracking-label uppercase text-paper/70">
+        <li><a href="#top" data-sg-path="nav[0]" class="hover:text-paper transition-colors">Accueil</a></li>
+        <li><a href="#about" data-sg-path="nav[1]" class="hover:text-paper transition-colors">À propos</a></li>
+        <li><a href="#episodes" data-sg-path="nav[2]" class="hover:text-paper transition-colors">Épisodes</a></li>
+        <li><a href="#community" data-sg-path="nav[3]" class="hover:text-paper transition-colors">Écouter maintenant</a></li>
+        <li><a href="#gallery" data-sg-path="nav[4]" class="hover:text-paper transition-colors">Galerie</a></li>
+        <li><a href="#contact" data-sg-path="nav[5]" class="hover:text-paper transition-colors">Réservation & contact</a></li>
+      </ul>
+      <a href="#community" data-sg-path="cta" class="font-mono text-[12px] tracking-label uppercase border border-paper/30 rounded-full px-4 py-1.5 text-paper hover:bg-paper hover:text-ink transition-colors">Écouter maintenant</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="top" class="relative min-h-screen flex items-center overflow-hidden pt-16" data-anim="fade">
+    <div class="mx-auto max-w-7xl w-full px-6 grid lg:grid-cols-[1.3fr_0.7fr] gap-12 items-center">
+      <div>
+        <p data-sg-path="hero.eyebrow" class="font-mono text-[12px] tracking-label uppercase text-yellow mb-6">Un podcast audio cinématographique</p>
+        <h1 data-sg-path="hero.title" class="font-serif leading-[0.95] text-paper text-5xl sm:text-6xl md:text-7xl lg:text-[88px] anim-words">Un son authentique. Une narration envoûtante.</h1>
+        <p data-sg-path="hero.tagline" class="mt-8 font-sans font-light text-base md:text-lg text-paper/70 max-w-xl" data-anim="fade" data-anim-delay="200">Inédit et sans script. Imprévisible. Un refuge pour les aventures sonores et les récits qui persistent bien après la dernière note.</p>
+        <a href="#episodes" data-sg-path="hero.button" class="inline-block mt-10 font-mono text-[12px] tracking-label uppercase bg-paper text-ink rounded-md px-6 py-3 hover:bg-yellow transition-colors" data-anim="fade" data-anim-delay="400">Dernier épisode</a>
+      </div>
+      <div class="relative aspect-square rounded-xl overflow-hidden" data-anim="scale" data-anim-delay="600">
+        <img data-sg-img="hero.image" src="../../../../public/_templates/podcast-audio/img/hero.jpg" alt="Visuel du podcast Northwire" class="w-full h-full object-cover" />
+      </div>
+    </div>
+    <div class="absolute bottom-6 inset-x-0 z-10 mx-auto max-w-7xl px-6 flex justify-between font-mono text-[11px] tracking-label uppercase text-paper/50">
+      <span data-sg-path="hero.leftLabel">Podcast narratif</span>
+      <span data-sg-path="hero.rightLabel">Toutes les 2 semaines</span>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="py-24" data-anim="fade">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div data-anim="left">
+          <p data-sg-path="about.label" class="font-mono text-[12px] tracking-label uppercase text-yellow mb-6">À propos</p>
+          <h2 data-sg-path="about.wordmark" class="font-serif text-4xl md:text-5xl text-paper mb-8">Northwire</h2>
+          <p data-sg-path="about.p1" class="font-sans font-light text-base text-paper/80 mb-6" data-anim="fade" data-anim-delay="200">Northwire est un podcast axé sur le son, conçu pour les auditeurs exigeants. Chaque épisode est composé comme un court-métrage pour les oreilles, mêlant enregistrements de terrain, silences mis en musique et voix si proches qu’on croirait les toucher.</p>
+          <p data-sg-path="about.p2" class="font-sans font-light text-base text-paper/80" data-anim="fade" data-anim-delay="400">Pas de remplissage, pas de formule toute faite. Juste des conversations sincères et une immersion sonore, enregistrées dans un studio tamisé et diffusées quand l’histoire est prête.</p>
+        </div>
+        <div class="relative rounded-xl overflow-hidden" data-anim="right" data-anim-delay="200">
+          <img data-sg-img="about.image" src="../../../../public/_templates/podcast-audio/img/host.jpg" alt="Cassian Vey, animateur et sound designer" class="w-full h-full object-cover" />
+          <div class="absolute bottom-4 left-4 bg-ink/80 backdrop-blur-sm p-3 rounded-md">
+            <p data-sg-path="about.hostName" class="font-sans text-sm text-paper font-medium">Cassian Vey</p>
+            <p data-sg-path="about.hostRole" class="font-mono text-[11px] tracking-label uppercase text-paper/70">Animateur & sound designer</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EPISODES -->
+  <section id="episodes" class="py-24" data-anim="fade">
+    <div class="mx-auto max-w-7xl px-6">
+      <p data-sg-path="episodesLabel" class="font-mono text-[12px] tracking-label uppercase text-yellow mb-12">Épisodes</p>
+      <div class="space-y-8">
+        <!-- Episode 1 -->
+        <div class="grid md:grid-cols-[1fr_2fr_1fr] gap-6 items-center py-6 border-b border-line" data-anim="fade" data-anim-delay="0">
+          <div class="font-mono text-[11px] tracking-label uppercase text-paper/60" data-sg-path="episodes[0].date">6 avril 2026</div>
+          <div>
+            <h3 data-sg-path="episodes[0].title" class="font-serif text-xl text-paper mb-2">Le Son du silence</h3>
+            <p data-sg-path="episodes[0].desc" class="font-sans text-sm text-paper/70">Pourquoi sommes-nous accros au bruit de fond ?</p>
+          </div>
+          <div class="flex justify-between items-center">
+            <a href="#" data-sg-path="episodes[0].more" class="font-mono text-[11px] tracking-label uppercase text-paper/70 hover:text-paper transition-colors">En savoir plus</a>
+            <button class="w-10 h-10 flex items-center justify-center bg-yellow text-ink rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg>
+            </button>
+          </div>
+        </div>
+        <!-- Episode 2 -->
+        <div class="grid md:grid-cols-[1fr_2fr_1fr] gap-6 items-center py-6 border-b border-line" data-anim="fade" data-anim-delay="80">
+          <div class="font-mono text-[11px] tracking-label uppercase text-paper/60" data-sg-path="episodes[1].date">23 mars 2026</div>
+          <div>
+            <h3 data-sg-path="episodes[1].title" class="font-serif text-xl text-paper mb-2">Voix du changement</h3>
+            <p data-sg-path="episodes[1].desc" class="font-sans text-sm text-paper/70">Des récits qui inspirent et provoquent la réflexion.</p>
+          </div>
+          <div class="flex justify-between items-center">
+            <a href="#" data-sg-path="episodes[1].more" class="font-mono text-[11px] tracking-label uppercase text-paper/70 hover:text-paper transition-colors">En savoir plus</a>
+            <button class="w-10 h-10 flex items-center justify-center bg-yellow text-ink rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg>
+            </button>
+          </div>
+        </div>
+        <!-- Episode 3 -->
+        <div class="grid md:grid-cols-[1fr_2fr_1fr] gap-6 items-center py-6 border-b border-line" data-anim="fade" data-anim-delay="160">
+          <div class="font-mono text-[11px] tracking-label uppercase text-paper/60" data-sg-path="episodes[2].date">9 mars 2026</div>
+          <div>
+            <h3 data-sg-path="episodes[2].title" class="font-serif text-xl text-paper mb-2">Échos du temps</h3>
+            <p data-sg-path="episodes[2].desc" class="font-sans text-sm text-paper/70">Plongée au cœur des récits qui façonnent notre histoire.</p>
+          </div>
+          <div class="flex justify-between items-center">
+            <a href="#" data-sg-path="episodes[2].more" class="font-mono text-[11px] tracking-label uppercase text-paper/70 hover:text-paper transition-colors">En savoir plus</a>
+            <button class="w-10 h-10 flex items-center justify-center bg-yellow text-ink rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="mt-12 grid md:grid-cols-3 gap-6">
+        <!-- Episode Cards -->
+        <div class="group" data-anim="fade" data-anim-delay="0">
+          <div class="relative rounded-xl overflow-hidden mb-4 aspect-video">
+            <img data-sg-img="episodes[0].cover" src="../../../../public/_templates/podcast-audio/img/ep1.jpg" alt="Le Son du silence" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent"></div>
+            <button class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center bg-yellow text-ink rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg>
+            </button>
+          </div>
+          <p data-sg-path="episodes[0].caption" class="font-serif text-lg text-paper">Le Son du silence</p>
+        </div>
+        <div class="group" data-anim="fade" data-anim-delay="80">
+          <div class="relative rounded-xl overflow-hidden mb-4 aspect-video">
+            <img data-sg-img="episodes[1].cover" src="../../../../public/_templates/podcast-audio/img/ep2.jpg" alt="Voix du changement" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent"></div>
+            <button class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center bg-yellow text-ink rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg>
+            </button>
+          </div>
+          <p data-sg-path="episodes[1].caption" class="font-serif text-lg text-paper">Voix du changement</p>
+        </div>
+        <div class="group" data-anim="fade" data-anim-delay="160">
+          <div class="relative rounded-xl overflow-hidden mb-4 aspect-video">
+            <img data-sg-img="episodes[2].cover" src="../../../../public/_templates/podcast-audio/img/ep3.jpg" alt="Échos du temps" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent"></div>
+            <button class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center bg-yellow text-ink rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg>
+            </button>
+          </div>
+          <p data-sg-path="episodes[2].caption" class="font-serif text-lg text-paper">Échos du temps</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMUNITY -->
+  <section id="community" class="py-24" data-anim="fade">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div data-anim="left">
+          <p data-sg-path="community.eyebrow" class="font-mono text-[12px] tracking-label uppercase text-yellow mb-6">Rejoignez la communauté</p>
+          <h2 data-sg-path="community.title" class="font-serif text-4xl md:text-5xl text-paper mb-8">Écoutez. Restez connectés.</h2>
+          <p data-sg-path="community.text" class="font-sans font-light text-base text-paper/80 mb-8">Nouveaux épisodes, notes sonores en coulisses et sessions réservées aux auditeurs, directement sur votre plateforme préférée.</p>
+          <a href="#" data-sg-path="community.button" class="inline-block font-mono text-[12px] tracking-label uppercase bg-yellow text-ink rounded-md px-6 py-3 hover:bg-paper hover:text-yellow transition-colors">Écouter maintenant</a>
+        </div>
+        <div class="relative rounded-xl overflow-hidden" data-anim="right" data-anim-delay="200">
+          <img data-sg-img="community.image" src="../../../../public/_templates/podcast-audio/img/cta.jpg" alt="Communauté Northwire" class="w-full h-full object-cover" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-24 border-t border-line">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+        <div class="font-mono text-[11px] tracking-label uppercase text-paper/50" data-sg-path="footer.links[0]">NorthwireFM</div>
+        <div class="font-serif text-2xl tracking-wide text-paper" data-sg-path="brand">NORTHWIRE</div>
+        <div class="font-mono text-[11px] tracking-label uppercase text-paper/50" data-sg-path="footer.links[2]">On The Air</div>
+      </div>
+      <div class="mt-12 text-center">
+        <p class="font-mono text-[11px] tracking-label uppercase text-paper/40">Propulsé par Akyra</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Accordion FAQ (none on homepage, but script is ready)
+    document.addEventListener('DOMContentLoaded', () => {
+      const accordions = document.querySelectorAll('[data-accordion]');
+      accordions.forEach(accordion => {
+        const trigger = accordion.querySelector('[data-accordion-trigger]');
+        const content = accordion.querySelector('[data-accordion-content]');
+        trigger.addEventListener('click', () => {
+          accordion.classList.toggle('open');
+        });
+      });
+    });
+  </script>
+
+<!-- ═══ AKYRA MOTION KIT — animations partagées (vanilla, sans dépendance, respecte prefers-reduced-motion) ═══ -->
+<style>
+  [data-anim]{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+  [data-anim="fade"]{transform:none}
+  [data-anim="left"]{transform:translateX(-26px)}
+  [data-anim="right"]{transform:translateX(26px)}
+  [data-anim="scale"]{transform:scale(.96)}
+  [data-anim].in{opacity:1!important;transform:none!important}
+  /* Apparition du texte mot à mot */
+  .anim-words .w{display:inline-block;opacity:0;transform:translateY(0.5em);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .anim-words.in .w{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){[data-anim],.anim-words .w{opacity:1!important;transform:none!important;transition:none!important}}
+</style>
+<script>
+(function(){
+  var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var IO = 'IntersectionObserver' in window;
+
+  // 1) Révélation au scroll des éléments [data-anim] (stagger via data-anim-delay en ms)
+  var reveals = document.querySelectorAll('[data-anim]');
+  function showReveal(el){
+    var d = parseInt(el.getAttribute('data-anim-delay')||'0',10);
+    if(d) setTimeout(function(){el.classList.add('in')}, d); else el.classList.add('in');
+  }
+  if(RM || !IO){ reveals.forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioR = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ showReveal(en.target); ioR.unobserve(en.target);} });
+    },{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(function(e){ ioR.observe(e); });
+  }
+
+  // 2) Texte mot à mot : <h1 class="anim-words">…</h1>.
+  //    Découpe DOM-SAFE : on n'enveloppe QUE les nœuds texte (les balises internes
+  //    — dégradés, pilules — sont préservées intactes, jamais transformées en texte).
+  document.querySelectorAll('.anim-words').forEach(function(el){
+    if(el.dataset.split) return; el.dataset.split='1';
+    // Garde-fou : si le titre contient des balises internes (dégradé, pilule…),
+    // on NE découpe PAS (sinon dégradé cassé / mots invisibles) — il reste intact.
+    if(el.children.length > 0){ el.classList.remove('anim-words'); return; }
+    var wi = 0, textNodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    while(walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(function(tn){
+      if(!tn.nodeValue || !tn.nodeValue.trim()) return;
+      var frag = document.createDocumentFragment();
+      tn.nodeValue.split(/(\s+)/).forEach(function(part){
+        if(part === '') return;
+        if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+        var s = document.createElement('span'); s.className='w'; s.textContent=part;
+        s.style.transitionDelay=((wi++)*45)+'ms'; frag.appendChild(s);
+      });
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  });
+  if(RM || !IO){ document.querySelectorAll('.anim-words').forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioW = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ioW.unobserve(en.target);} });
+    },{threshold:0.25});
+    document.querySelectorAll('.anim-words').forEach(function(e){ ioW.observe(e); });
+  }
+
+  // 3) Compteurs : <span data-count="1200" data-count-suffix="+" data-count-decimals="0">0</span>
+  function fmt(v,dec){ return v.toLocaleString('fr-FR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+  function countUp(el){
+    var target=parseFloat(el.getAttribute('data-count'))||0,
+        suf=el.getAttribute('data-count-suffix')||'', pre=el.getAttribute('data-count-prefix')||'',
+        dec=parseInt(el.getAttribute('data-count-decimals')||'0',10), dur=1500, start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=pre+fmt(target*e,dec)+suf; if(p<1)requestAnimationFrame(step); else el.textContent=pre+fmt(target,dec)+suf; }
+    requestAnimationFrame(step);
+  }
+  var nums = document.querySelectorAll('[data-count]');
+  if(RM || !IO){ nums.forEach(function(el){ el.textContent=(el.getAttribute('data-count-prefix')||'')+fmt(parseFloat(el.getAttribute('data-count'))||0,parseInt(el.getAttribute('data-count-decimals')||'0',10))+(el.getAttribute('data-count-suffix')||''); }); }
+  else {
+    var ioN = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ countUp(en.target); ioN.unobserve(en.target);} });
+    },{threshold:0.6});
+    nums.forEach(function(el){ ioN.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>
