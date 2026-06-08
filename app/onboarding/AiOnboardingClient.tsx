@@ -21,14 +21,7 @@ type Progress = { filled: string[]; missing: string[] };
 type ImageSlot = { path: string; role: string; description: string; required: boolean };
 type ImagePlan = { count: number; requiredCount: number; slots: ImageSlot[] };
 type Plan = { templateId: string; rationale: string; imagePlan: ImagePlan };
-type Phase = "loading" | "chat" | "plan" | "building" | "result" | "error";
-
-const BUILD_LINES = [
-  "Je choisis la direction artistique qui vous ressemble…",
-  "Je compose votre site sur-mesure…",
-  "Je rédige vos textes et place vos photos…",
-  "Je peaufine les animations…",
-];
+type Phase = "loading" | "chat" | "plan" | "header" | "error";
 
 export default function AiOnboardingClient() {
   const router = useRouter();
@@ -41,9 +34,10 @@ export default function AiOnboardingClient() {
   const [plan, setPlan] = useState<Plan | null>(null);
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [uploading, setUploading] = useState(false);
-  const [buildLine, setBuildLine] = useState(0);
   const [errorMsg, setErrorMsg] = useState("");
-  const [generated, setGenerated] = useState(true);
+  const [headerLoading, setHeaderLoading] = useState(false);
+  const [headerNonce, setHeaderNonce] = useState(0);
+  const [validating, setValidating] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -124,13 +118,6 @@ export default function AiOnboardingClient() {
     };
   }, [router, runTurn]);
 
-  // Loader théâtral pendant la génération.
-  useEffect(() => {
-    if (phase !== "building") return;
-    const t = setInterval(() => setBuildLine((i) => (i + 1) % BUILD_LINES.length), 2600);
-    return () => clearInterval(t);
-  }, [phase]);
-
   const send = useCallback(() => {
     const text = input.trim();
     if (!text || sending || !siteId) return;
@@ -159,25 +146,46 @@ export default function AiOnboardingClient() {
     [siteId],
   );
 
-  const generate = useCallback(async () => {
+  // Génère le HEADER (aperçu du style) — rapide, synchrone.
+  const showStyle = useCallback(async () => {
     if (!siteId) return;
-    setPhase("building");
-    setBuildLine(0);
+    setHeaderLoading(true);
+    setPhase("header");
     try {
-      const res = await fetch("/api/onboarding/finalize", {
+      const res = await fetch("/api/onboarding/header", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ siteId }),
       });
       const data = await res.json();
-      if (!res.ok || !data?.ok) throw new Error(data?.error ?? "Génération impossible.");
-      setGenerated(data.generated !== false);
-      setPhase("result");
+      if (!res.ok || !data?.ok) throw new Error(data?.error ?? "Aperçu impossible.");
+      setHeaderNonce((n) => n + 1); // force le rechargement de l'iframe
     } catch (e) {
       setErrorMsg(e instanceof Error ? e.message : "Erreur");
       setPhase("error");
+    } finally {
+      setHeaderLoading(false);
     }
   }, [siteId]);
+
+  // Valide le style → met en file la génération du site complet, part au dashboard.
+  const validateStyle = useCallback(async () => {
+    if (!siteId) return;
+    setValidating(true);
+    try {
+      const res = await fetch("/api/onboarding/validate", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ siteId }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data?.ok) throw new Error(data?.error ?? "Validation impossible.");
+      router.push(typeof data.redirect === "string" ? data.redirect : "/dashboard?building=1");
+    } catch (e) {
+      setErrorMsg(e instanceof Error ? e.message : "Erreur");
+      setValidating(false);
+    }
+  }, [siteId, router]);
 
   const totalSlots = SOCLE_TOTAL;
   const filledCount = Math.min(progress.filled.length, totalSlots);
@@ -326,66 +334,70 @@ export default function AiOnboardingClient() {
             )}
 
             <button
-              onClick={generate}
+              onClick={showStyle}
               className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3 font-medium text-white hover:bg-slate-800"
             >
-              Générer mon site <ArrowRight className="h-4 w-4" />
+              Voir mon style <ArrowRight className="h-4 w-4" />
             </button>
             <p className="mt-2 text-center text-xs text-slate-400">
-              Vous pourrez tout ajuster ensuite. Aucune photo ? On utilisera des visuels neutres.
+              Vous validez d'abord le style, puis on construit le site complet. Aucune photo ?
+              On utilisera des visuels neutres que vous remplacerez.
             </p>
           </div>
         </div>
       )}
 
-      {phase === "building" && (
-        <div className="flex flex-col items-center justify-center gap-4 py-32 text-center">
-          <div className="relative">
-            <Sparkles className="h-10 w-10 text-sky-500" />
-            <Loader2 className="absolute -inset-2 h-14 w-14 animate-spin text-sky-200" />
-          </div>
-          <p className="text-lg font-medium">{BUILD_LINES[buildLine]}</p>
-          <p className="text-sm text-slate-500">Cela prend une trentaine de secondes…</p>
-        </div>
-      )}
-
-      {phase === "result" && (
+      {phase === "header" && (
         <div className="mx-auto max-w-5xl px-4 py-8">
-          {!generated && (
-            <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-amber-50 px-4 py-3 ring-1 ring-amber-200">
-              <p className="text-sm text-amber-800">
-                La génération sur-mesure n'a pas abouti (surcharge passagère) — voici une
-                version de base. Relancez la génération pour un site vraiment à votre image.
-              </p>
-              <button
-                onClick={generate}
-                className="flex items-center gap-2 rounded-full bg-amber-600 px-4 py-2 text-sm font-medium text-white hover:bg-amber-700"
-              >
-                <Sparkles className="h-4 w-4" /> Régénérer
-              </button>
+          <div className="mb-4 text-center">
+            <div className="inline-flex items-center gap-2 text-sky-600">
+              <Sparkles className="h-5 w-5" />
+              <span className="text-sm font-semibold">Voici le style de votre site</span>
             </div>
-          )}
-          <div className="mb-4 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="grid h-7 w-7 place-items-center rounded-full bg-green-100 text-green-600">
-                <Check className="h-4 w-4" />
-              </span>
-              <h2 className="text-lg font-semibold">Votre site est prêt !</h2>
-            </div>
+            <p className="mt-1 text-sm text-slate-500">
+              Validez l'ambiance, ou essayez une autre direction. Le site complet se construira
+              ensuite à partir de ce style.
+            </p>
+          </div>
+          <div className="relative overflow-hidden rounded-2xl ring-1 ring-slate-200">
+            {headerLoading && (
+              <div className="absolute inset-0 z-10 grid place-items-center bg-white/70">
+                <div className="flex flex-col items-center gap-2 text-slate-500">
+                  <Loader2 className="h-6 w-6 animate-spin" />
+                  <span className="text-sm">Création de votre style…</span>
+                </div>
+              </div>
+            )}
+            {headerNonce > 0 && (
+              <iframe
+                key={headerNonce}
+                title="Aperçu du style"
+                src={`/api/onboarding/header?siteId=${encodeURIComponent(siteId)}&n=${headerNonce}`}
+                className="h-[70vh] w-full bg-white"
+              />
+            )}
+          </div>
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
             <button
-              onClick={() => router.push("/editor")}
-              className="rounded-full bg-slate-900 px-5 py-2 text-sm font-medium text-white hover:bg-slate-800"
+              onClick={showStyle}
+              disabled={headerLoading || validating}
+              className="flex items-center gap-2 rounded-full border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50"
             >
-              Modifier &amp; publier
+              <Sparkles className="h-4 w-4" /> Essayer un autre style
+            </button>
+            <button
+              onClick={validateStyle}
+              disabled={headerLoading || validating}
+              className="flex items-center gap-2 rounded-full bg-slate-900 px-6 py-2.5 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-50"
+            >
+              {validating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
+              Valider ce style
             </button>
           </div>
-          <div className="overflow-hidden rounded-2xl ring-1 ring-slate-200">
-            <iframe
-              title="Aperçu de votre site"
-              src={`/api/preview?siteId=${encodeURIComponent(siteId)}`}
-              className="h-[72vh] w-full bg-white"
-            />
-          </div>
+          <p className="mt-2 text-center text-xs text-slate-400">
+            Après validation, votre site se construit en arrière-plan — vous le retrouverez prêt
+            sur votre tableau de bord.
+          </p>
         </div>
       )}
     </div>

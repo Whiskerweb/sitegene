@@ -35,7 +35,13 @@ import {
 import { briefToOverrides } from "@/lib/mistral";
 import { pickDesignSystem } from "@/lib/theme-match";
 import { imagePlanFor } from "@/lib/image-plan";
-import { generateBespokeSite, type GenFacts } from "@/lib/design-system-gen";
+import {
+  generateBespokeSite,
+  generateHeader,
+  generateBody,
+  assembleSite,
+  type GenFacts,
+} from "@/lib/design-system-gen";
 import { saveDraftSnapshot } from "@/lib/site-content-store";
 
 export type OnboardingState = {
@@ -584,22 +590,7 @@ export async function finalizeAiOnboarding(
   }
 
   // 2) Faits COMPACTS de l'activité (aucun contenu de démo → pas de fuite).
-  const facts: GenFacts = {
-    brand: intake.brand,
-    activity: intake.about || intake.trade || intake.jobTitle || intake.genre,
-    services: intake.services?.length ? intake.services : intake.eventTypes,
-    priceRange: intake.priceRange,
-    area: intake.area || intake.city,
-    tone: intake.tone,
-    contact: [intake.contactEmail, intake.contactPhone].filter(Boolean).join(" · ") || undefined,
-    brief: intake.brief?.trim() || briefFromIntake(intake),
-    extras: [
-      intake.certifications && `Certifications : ${intake.certifications}`,
-      intake.experienceYears && `Expérience : ${intake.experienceYears}`,
-      intake.availability && `Disponibilité : ${intake.availability}`,
-      intake.socialLinks && `Réseaux : ${intake.socialLinks}`,
-    ].filter(Boolean) as string[],
-  };
+  const facts = buildGenFacts(intake);
   const imagePlan = await imagePlanFor(origin, templateId, intake);
   // Sans photo client → placeholder neutre (jamais d'<img src=""> = trou noir).
   const photoUrls =
@@ -658,6 +649,192 @@ export async function finalizeAiOnboarding(
     mask: "strict",
   });
   return { ok, templateId, generated: false, rationale };
+}
+
+/** Faits compacts (aucun contenu de démo) à partir de l'intake — pour la génération. */
+export function buildGenFacts(intake: Intake): GenFacts {
+  return {
+    brand: intake.brand,
+    activity: intake.about || intake.trade || intake.jobTitle || intake.genre,
+    services: intake.services?.length ? intake.services : intake.eventTypes,
+    priceRange: intake.priceRange,
+    area: intake.area || intake.city,
+    tone: intake.tone,
+    contact: [intake.contactEmail, intake.contactPhone].filter(Boolean).join(" · ") || undefined,
+    brief: intake.brief?.trim() || briefFromIntake(intake),
+    extras: [
+      intake.certifications && `Certifications : ${intake.certifications}`,
+      intake.experienceYears && `Expérience : ${intake.experienceYears}`,
+      intake.availability && `Disponibilité : ${intake.availability}`,
+      intake.socialLinks && `Réseaux : ${intake.socialLinks}`,
+    ].filter(Boolean) as string[],
+  };
+}
+
+/** Photos du client, ou placeholder neutre si aucune (jamais d'<img src="">). */
+export function photoUrlsForIntake(intake: Intake): string[] {
+  return Array.isArray(intake.photoUrls) && intake.photoUrls.length
+    ? intake.photoUrls
+    : [PHOTO_PLACEHOLDER_URL];
+}
+
+/**
+ * Génère le HEADER (nav + hero) pour validation du style, et le stocke dans
+ * `site_onboarding.intake.__headerHtml`. Persiste le thème choisi.
+ */
+export async function generateOnboardingHeader(
+  origin: string,
+  siteId: string,
+): Promise<{ ok: boolean; templateId?: TemplateId; reason?: string }> {
+  const admin = createAdminClient();
+  const { data: ob } = await admin
+    .from("site_onboarding")
+    .select("intake, chosen_template_id")
+    .eq("site_id", siteId)
+    .maybeSingle();
+  if (!ob) return { ok: false, reason: "onboarding-absent" };
+  const intake = (ob.intake ?? {}) as Intake & { categoryId?: string; __headerHtml?: string };
+  const templateId =
+    ob.chosen_template_id && isTemplateId(ob.chosen_template_id)
+      ? ob.chosen_template_id
+      : (await pickDesignSystem(origin, intake)).templateId;
+  const facts = buildGenFacts(intake);
+  const photoUrls = photoUrlsForIntake(intake);
+  const imagePlan = await imagePlanFor(origin, templateId, intake);
+
+  const header = await generateHeader({ origin, templateId, facts, imagePlan, photoUrls });
+  if (!header.ok) return { ok: false, templateId, reason: header.reason };
+
+  await admin
+    .from("site_onboarding")
+    .update({
+      intake: { ...intake, __headerHtml: header.headerDoc },
+      chosen_template_id: templateId,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("site_id", siteId);
+  return { ok: true, templateId };
+}
+
+/** Lit le header HTML stocké pour l'aperçu (ou null). */
+export async function loadOnboardingHeaderDoc(siteId: string): Promise<string | null> {
+  const admin = createAdminClient();
+  const { data: ob } = await admin
+    .from("site_onboarding")
+    .select("intake")
+    .eq("site_id", siteId)
+    .maybeSingle();
+  const h = (ob?.intake as { __headerHtml?: unknown })?.__headerHtml;
+  return typeof h === "string" && h.length > 0 ? h : null;
+}
+
+/** Met en file une génération de site (idempotent : pas de doublon pending/running). */
+export async function enqueueSiteGeneration(admin: Admin, siteId: string): Promise<void> {
+  const { data: existing } = await admin
+    .from("jobs")
+    .select("id")
+    .eq("site_id", siteId)
+    .eq("type", "generate_site")
+    .in("status", ["pending", "running"])
+    .maybeSingle();
+  if (existing) return;
+  await admin.from("jobs").insert({ type: "generate_site", status: "pending", site_id: siteId });
+}
+
+/**
+ * Worker : traite UN job `generate_site` (site précis, sinon le plus ancien
+ * pending). Claim anti-concurrence, génère le CORPS qui prolonge le header validé
+ * (`intake.__headerHtml`), assemble, persiste `generated_html`, marque le job.
+ * Appelé immédiatement (after()) ET par le cron Vercel (filet).
+ */
+export async function runSiteGenerationJob(
+  origin: string,
+  opts?: { siteId?: string },
+): Promise<{ processed: boolean; siteId?: string; ok?: boolean; reason?: string }> {
+  const admin = createAdminClient();
+
+  let sel = admin
+    .from("jobs")
+    .select("id, site_id")
+    .eq("type", "generate_site")
+    .eq("status", "pending")
+    .order("created_at", { ascending: true })
+    .limit(1);
+  if (opts?.siteId) sel = sel.eq("site_id", opts.siteId);
+  const { data: job } = await sel.maybeSingle();
+  if (!job) return { processed: false };
+
+  // Claim : ne passe en running QUE si encore pending (anti double-traitement).
+  const { data: claimed } = await admin
+    .from("jobs")
+    .update({ status: "running", started_at: new Date().toISOString() })
+    .eq("id", job.id)
+    .eq("status", "pending")
+    .select("id")
+    .maybeSingle();
+  if (!claimed) return { processed: false };
+
+  const siteId = job.site_id as string;
+  try {
+    const { data: ob } = await admin
+      .from("site_onboarding")
+      .select("intake, chosen_template_id")
+      .eq("site_id", siteId)
+      .maybeSingle();
+    const intake = (ob?.intake ?? {}) as Intake & { categoryId?: string; __headerHtml?: string };
+    const headerDoc = typeof intake.__headerHtml === "string" ? intake.__headerHtml : "";
+    const templateId =
+      ob?.chosen_template_id && isTemplateId(ob.chosen_template_id)
+        ? ob.chosen_template_id
+        : (await pickDesignSystem(origin, intake)).templateId;
+    const facts = buildGenFacts(intake);
+    const photoUrls = photoUrlsForIntake(intake);
+    const imagePlan = await imagePlanFor(origin, templateId, intake);
+
+    let result: { html: string; content: Record<string, unknown> };
+    if (headerDoc) {
+      const body = await generateBody({ origin, templateId, facts, headerDoc, imagePlan, photoUrls });
+      if (!body.ok) throw new Error(`body:${body.reason}`);
+      result = await assembleSite({ origin, templateId, headerDoc, bodyHtml: body.bodyHtml, photoUrls });
+    } else {
+      // Pas de header validé (cas limite) → génération complète d'un coup.
+      const gen = await generateBespokeSite({ origin, templateId, facts, imagePlan, photoUrls });
+      if (!gen.ok) throw new Error(`full:${gen.reason}`);
+      result = { html: gen.html, content: gen.content };
+    }
+
+    await ensureTemplateRow(admin, templateId);
+    await admin.from("sites").update({ template_id: templateId }).eq("id", siteId);
+    await saveDraftSnapshot(admin, siteId, templateId, result.content, "ai", result.html);
+
+    // Nettoie le header temporaire + passe au paywall.
+    const cleanedIntake = { ...intake };
+    delete cleanedIntake.__headerHtml;
+    await admin
+      .from("site_onboarding")
+      .update({
+        intake: cleanedIntake,
+        chosen_template_id: templateId,
+        step: 100,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("site_id", siteId);
+
+    await admin
+      .from("jobs")
+      .update({ status: "done", finished_at: new Date().toISOString(), result: { templateId } })
+      .eq("id", job.id);
+    console.info(`[runSiteGenerationJob] généré ${siteId} (${templateId})`);
+    return { processed: true, siteId, ok: true };
+  } catch (e) {
+    const reason = e instanceof Error ? e.message : String(e);
+    console.error(`[runSiteGenerationJob] échec ${siteId}: ${reason}`);
+    await admin
+      .from("jobs")
+      .update({ status: "error", finished_at: new Date().toISOString(), error: reason.slice(0, 500) })
+      .eq("id", job.id);
+    return { processed: true, siteId, ok: false, reason };
+  }
 }
 
 /**

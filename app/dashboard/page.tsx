@@ -2,17 +2,16 @@ import { requireUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getBalance } from "@/lib/credits-server";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { GlassCard } from "@/components/ui/GlassCard";
 import { Card } from "@/components/ui/Card";
-import { StatCard } from "@/components/ui/StatCard";
 import { StatusPill } from "@/components/ui/StatusPill";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Spinner } from "@/components/ui/Spinner";
-import { BorderBeam } from "@/components/ui/border-beam";
+import GenerationWatcher from "@/components/dashboard/GenerationWatcher";
 import { SitePreview } from "@/components/ui/SitePreview";
-import { SiteActions } from "@/components/ui/SiteActions";
 import { IconCloud } from "@/components/ui/icons";
+import { HeroBanner } from "@/components/ui/HeroBanner";
+import { MetricsRow } from "@/components/ui/MetricsRow";
 import PaywallModal from "@/components/dashboard/PaywallModal";
 import TrialBanner from "@/components/dashboard/TrialBanner";
 import { PublishButton } from "@/components/dashboard/PublishButton";
@@ -70,29 +69,41 @@ export default async function MonSite({
     );
   }
 
-  const [{ data: notes }, { data: job }, { data: lastContent }] = await Promise.all([
-    admin
-      .from("notes")
-      .select("id, message, status, created_at, resulting_content_version")
-      .eq("site_id", site.id)
-      .order("created_at", { ascending: false })
-      .limit(50),
-    admin
-      .from("jobs")
-      .select("status")
-      .eq("site_id", site.id)
-      .in("status", ["pending", "running"])
-      .order("created_at", { ascending: false })
-      .limit(1)
-      .maybeSingle(),
-    admin
-      .from("site_content")
-      .select("version, created_at")
-      .eq("site_id", site.id)
-      .order("version", { ascending: false })
-      .limit(1)
-      .maybeSingle(),
-  ]);
+  const [{ data: notes }, { data: job }, { data: genJob }, { data: lastContent }] =
+    await Promise.all([
+      admin
+        .from("notes")
+        .select("id, message, status, created_at, resulting_content_version")
+        .eq("site_id", site.id)
+        .order("created_at", { ascending: false })
+        .limit(50),
+      // Jobs opérateur (create/modify) — bannière « Claude travaille ».
+      admin
+        .from("jobs")
+        .select("status")
+        .eq("site_id", site.id)
+        .neq("type", "generate_site")
+        .in("status", ["pending", "running"])
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle(),
+      // Dernier job de génération de site (tous statuts) — surveillé côté client.
+      admin
+        .from("jobs")
+        .select("status")
+        .eq("site_id", site.id)
+        .eq("type", "generate_site")
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle(),
+      admin
+        .from("site_content")
+        .select("version, created_at")
+        .eq("site_id", site.id)
+        .order("version", { ascending: false })
+        .limit(1)
+        .maybeSingle(),
+    ]);
 
   const allNotes = notes ?? [];
   const inProgress = allNotes.filter((n) => n.status === "open" || n.status === "in_progress").length;
@@ -114,6 +125,16 @@ export default async function MonSite({
     !!currentSkin &&
     (currentSkin.template_id !== (publishedSkin?.template_id ?? null) || !currentSkin.is_published);
 
+  // Badge de statut affiché sur le hero sombre (façon tier Traaaction).
+  const statusBadge: { text: string; tone: "violet" | "amber" | "blue" | "gray" | "emerald" } =
+    isLive && !hasUnpublishedSkin
+      ? { text: "En ligne", tone: "emerald" }
+      : isLive && hasUnpublishedSkin
+        ? { text: "Non publié", tone: "amber" }
+        : site.status === "revealed"
+          ? { text: "Aperçu prêt", tone: "violet" }
+          : { text: "En préparation", tone: "gray" };
+
   return (
     <>
       <PageHeader
@@ -125,118 +146,130 @@ export default async function MonSite({
         <TrialBanner siteId={site.id} trialEndsAt={site.trial_ends_at as string} />
       )}
 
-      {job && (
-        <GlassCard className="mb-6 flex items-center gap-3 border border-sky-300 p-4">
-          <Spinner size={18} />
-          <span className="text-[15px] font-medium text-night">
-            Claude travaille sur votre site… La mise à jour apparaîtra dans un instant.
-          </span>
-        </GlassCard>
-      )}
-
-      {/* Hero site */}
-      <GlassCard className="relative overflow-hidden p-6 md:p-7">
-        <BorderBeam size={320} duration={8} borderWidth={2} colorFrom="#8b6bff" colorTo="#e8b468" />
-        <BorderBeam size={320} duration={8} delay={4} borderWidth={2} colorFrom="#6d4aff" colorTo="#3de0a0" />
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <StatusPill status={site.status} kind="site" />
+      {/* Hero sombre — réplique de la bannière revenue Traaaction */}
+      <HeroBanner
+        label="Votre portfolio"
+        value={firstName || "Mon site"}
+        badge={statusBadge}
+        right={
+          <div className="flex flex-col items-start gap-2 sm:items-end">
             {site.slug && (
-              <code className="rounded-lg border border-[rgb(var(--m-line))] bg-[rgb(var(--m-overlay)/0.06)] px-3 py-1.5 text-sm text-[rgb(var(--m-muted))]">
+              <code className="rounded-lg bg-white/10 px-3 py-1.5 text-sm text-gray-200 ring-1 ring-inset ring-white/10">
                 /s/{site.slug}
               </code>
             )}
-            {/* Statut de la peau en préparation vs en ligne. */}
-            {currentSkin && (
-              hasUnpublishedSkin ? (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-gold-400/14 px-2.5 py-1 text-xs font-semibold text-gold-500">
-                  <span className="h-1.5 w-1.5 rounded-full bg-gold-400" /> Non publié
-                </span>
-              ) : (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-mint-400/12 px-2.5 py-1 text-xs font-semibold text-mint-500">
-                  <span className="h-1.5 w-1.5 rounded-full bg-mint-400" /> En ligne
-                </span>
-              )
+            {isLive && fullUrl && (
+              <a
+                href={fullUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-white px-4 py-2 text-xs font-semibold text-gray-900 shadow-[0_1px_2px_rgba(0,0,0,0.3)] transition-colors hover:bg-gray-100"
+              >
+                Voir le site →
+              </a>
             )}
           </div>
-          {isLive && (
-            <SiteActions editHref="/editor" viewHref="/apercu" link={fullUrl} />
+        }
+      />
+
+      {job && (
+        <div className="mt-4 flex items-center gap-3 rounded-xl border border-violet-200 bg-violet-50 p-4">
+          <Spinner size={18} />
+          <span className="text-[15px] font-medium text-gray-900">
+            Claude travaille sur votre site… La mise à jour apparaîtra dans un instant.
+          </span>
+        </div>
+      )}
+
+      {/* Génération du site en tâche de fond (flux onboarding IA) — poll + relance. */}
+      <GenerationWatcher
+        siteId={site.id}
+        initialStatus={(genJob?.status as string) ?? "none"}
+      />
+
+      {/* Aperçu de la peau en cours d'édition (ce que le client prépare) */}
+      <div className="card-hover mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white">
+        {currentSkin || lastContent ? (
+          <SitePreview src={`/api/preview?siteId=${site.id}`} />
+        ) : (
+          <div className="flex aspect-[16/10] items-center justify-center bg-gray-50 text-center text-sm text-gray-400">
+            {site.status === "revealed"
+              ? "Votre aperçu est prêt — mettez-le en ligne pour le rendre public."
+              : "Votre site est en préparation."}
+          </div>
+        )}
+      </div>
+
+      {/* Actions */}
+      {isLive && hasUnpublishedSkin && (
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <PublishButton siteId={site.id} balance={balance} />
+          {fullUrl && (
+            <Button href={fullUrl} variant="subtle" target="_blank">
+              Voir la version en ligne →
+            </Button>
           )}
         </div>
+      )}
 
-        {/* Aperçu de la peau EN COURS D'ÉDITION (ce que le client prépare). */}
-        <div className="mt-5 overflow-hidden rounded-[18px] border border-sky-300 bg-white">
-          {currentSkin || lastContent ? (
-            <SitePreview src={`/api/preview?siteId=${site.id}`} />
+      {isLive && !hasUnpublishedSkin && (
+        <div className="mt-4 flex flex-wrap gap-3">
+          <Button href="/editor">Modifier mon site</Button>
+        </div>
+      )}
+
+      {!isLive && (
+        <div className="mt-4 flex flex-wrap gap-3">
+          {locked ? (
+            <PaywallModal
+              siteId={site.id}
+              firstName={firstName}
+              defaultOpen={Boolean(sp.paywall) || Boolean(sp.fromChat)}
+              trigger={<Button>Publier mon site</Button>}
+            />
           ) : (
-            <div className="flex aspect-[16/10] items-center justify-center bg-surface-2 text-center text-sm text-mist">
-              {site.status === "revealed"
-                ? "Votre aperçu est prêt — mettez-le en ligne pour le rendre public."
-                : "Votre site est en préparation."}
-            </div>
+            lastContent && <Button href="/editor">Modifier mon site</Button>
+          )}
+          {locked && lastContent && (
+            <PaywallModal
+              siteId={site.id}
+              firstName={firstName}
+              trigger={<Button variant="subtle">Modifier mon site</Button>}
+            />
           )}
         </div>
+      )}
 
-        {/* Site en ligne : publier les modifications de peau non encore publiées. */}
-        {isLive && hasUnpublishedSkin && (
-          <div className="mt-5 flex flex-wrap items-center gap-3">
-            <PublishButton siteId={site.id} balance={balance} />
-            {fullUrl && (
-              <Button href={fullUrl} variant="subtle" target="_blank">
-                Voir la version en ligne →
-              </Button>
-            )}
-          </div>
-        )}
-
-        {!isLive && (
-          <div className="mt-5 flex flex-wrap gap-3">
-            {locked ? (
-              <PaywallModal
-                siteId={site.id}
-                firstName={firstName}
-                defaultOpen={Boolean(sp.paywall) || Boolean(sp.fromChat)}
-                trigger={<Button>Publier mon site</Button>}
-              />
-            ) : (
-              lastContent && <Button href="/editor">Modifier mon site</Button>
-            )}
-            {locked && lastContent && (
-              <PaywallModal
-                siteId={site.id}
-                firstName={firstName}
-                trigger={<Button variant="subtle">Modifier mon site</Button>}
-              />
-            )}
-          </div>
-        )}
-      </GlassCard>
-
-      {/* Stats */}
-      <div className="mt-6 grid gap-4 sm:grid-cols-3">
-        <StatCard label="Crédits disponibles" value={balance} tone="blue" />
-        <StatCard label="Modifications en cours" value={inProgress} tone="lav" />
-        <StatCard
-          label="Dernière mise à jour"
-          value={<span className="text-[20px]">{fmtDate(lastContent?.created_at)}</span>}
-          tone="mint"
+      {/* KPI façon Traaaction (carte unique découpée en colonnes) */}
+      <div className="mt-6">
+        <MetricsRow
+          metrics={[
+            { label: "Crédits disponibles", value: balance, tone: "violet" },
+            { label: "Modifications en cours", value: inProgress, tone: "indigo" },
+            { label: "Dernière mise à jour", value: fmtDate(lastContent?.created_at), tone: "sky" },
+          ]}
         />
       </div>
 
       {/* Activité récente */}
       <div className="mt-8">
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="font-archivo text-lg font-semibold text-night">Activité récente</h2>
+          <h2
+            className="text-lg font-semibold text-gray-900"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Activité récente
+          </h2>
         </div>
         {allNotes.length === 0 ? (
-          <Card className="p-6 text-sm text-slate">
+          <Card className="p-6 text-sm text-gray-500">
             Aucune demande pour l'instant. Quand vous demanderez une modification, son suivi apparaîtra ici.
           </Card>
         ) : (
           <div className="space-y-2">
             {allNotes.slice(0, 3).map((n) => (
-              <Card key={n.id} className="flex items-start justify-between gap-4 p-4">
-                <p className="line-clamp-2 text-sm text-slate">{n.message}</p>
+              <Card key={n.id} className="card-hover flex items-start justify-between gap-4 p-4">
+                <p className="line-clamp-2 text-sm text-gray-600">{n.message}</p>
                 <StatusPill status={n.status} kind="note" />
               </Card>
             ))}
