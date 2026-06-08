@@ -136,14 +136,21 @@ gauche, la photo principale est à droite.
     </div>
   </div>
 
-  <!-- Strate 2 — LE WORDMARK RAYÉ DE LA MARQUE : bande décorative géante EN BAS du
-       hero, pleine largeur, le mot = LA MARQUE en capitales. Effet rayé (striped).
-       select-none + pointer-events-none. C'est le second élément signature. -->
-  <div class="pointer-events-none relative -mt-6 select-none md:-mt-10 overflow-hidden">
+  <!-- Strate 2 — LE WORDMARK RAYÉ DE LA MARQUE : bande décorative géante
+       ENTIÈREMENT EN DESSOUS du contenu du hero (titre + photo). Pleine largeur,
+       le mot = LA MARQUE en capitales, effet rayé (striped). select-none +
+       pointer-events-none. NE DOIT JAMAIS CHEVAUCHER LA PHOTO : marge POSITIVE
+       au-dessus (mt-8), aucune marge négative. -->
+  <div class="pointer-events-none relative mt-8 select-none overflow-hidden">
     <span class="block whitespace-nowrap text-center font-display text-[24vw] font-extrabold uppercase leading-[0.78] tracking-tighter wordmark-striped">{MARQUE}</span>
   </div>
 </section>
 ```
+
+> ⚠️ ERREUR À ÉVITER : ne JAMAIS tirer le wordmark vers le haut (pas de
+> `-mt-*`). La photo du hero est haute (`h-[560px]`) ; une marge négative ferait
+> remonter le wordmark dans le bas de la photo. Le wordmark commence APRÈS la
+> photo, séparé par une marge positive.
 
 **Hiérarchie à respecter absolument** : le **titre marine PLEIN** est l'élément
 n°1 (le plus gros texte lisible, en haut) ; le **wordmark rayé de la marque** est
@@ -177,7 +184,8 @@ corps de page :
    dominant, lisible immédiatement, avec une **vignette-image dans les mots**.
 2. **WORDMARK RAYÉ de la MARQUE en bande basse** (`text-[24vw] wordmark-striped`,
    `select-none pointer-events-none`) : le décor typographique signature, EN BAS
-   du hero, jamais au-dessus du titre.
+   du hero, jamais au-dessus du titre, et **entièrement sous la photo (jamais de
+   chevauchement, marge positive `mt-8`, pas de `-mt`)**.
 3. Hiérarchie titre-plein > wordmark-rayé respectée (ne pas inverser).
 4. Palette **marine dominante** + orange parcimonieux : CTA hero orange, CTA nav
    marine. Ne jamais inverser.
@@ -196,14 +204,24 @@ Ordre observé :
   `group overflow-hidden rounded-2xl border border-ox-line bg-white`, photo en
   tête `h-40` ou `h-72`, badge `absolute left-3 top-3 rounded-full bg-white/90
   px-3 py-1 text-[11px] uppercase text-ox-navy`. Grilles `md:grid-cols-3`.
-- **PROCESS — « CONNEXION ET INSTALLATION »** : étapes numérotées 01→04
-  (numéros oranges), `md:grid-cols-[1.4fr_1fr_1fr_1fr]`, texte « Une méthode
-  rigoureuse, du diagnostic à la mise en service… ».
+- **PROCESS — « CONNEXION ET INSTALLATION »** : en-tête centré (éyebrow + H2 +
+  intro « Une méthode rigoureuse, du diagnostic à la mise en service… ») PUIS les
+  étapes numérotées sur **UNE seule rangée régulière**. Le nombre de colonnes =
+  le nombre d'étapes : `mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4` pour 4
+  étapes (jamais 4 étapes dans une grille à 3 colonnes — sinon la 4ᵉ se retrouve
+  seule à la ligne). Chaque étape : numéro orange `font-display text-5xl
+  font-extrabold text-ox-orange`, titre `mt-2 font-display text-xl font-bold
+  text-ox-navy`, description `mt-2 text-sm text-ox-mut`. Centrées (`text-center`).
 - **POURQUOI NOUS** : grille de bénéfices (Accompagnement dédié, Paiement
   sécurisé, Qualité certifiée…), `md:grid-cols-3`.
 - **TARIFS — « DES FORMULES SOUPLES »** : cartes formules (Essentielle, Standard)
   sur `bg-ox-navy2` (panneau sombre) avec features et CTA.
-- **TÉMOIGNAGES — « NOS CLIENTS »** : avatars `h-11 w-11 rounded-full`, citations.
+- **TÉMOIGNAGES — « NOS CLIENTS »** : grille de **3 cartes** (jamais une seule)
+  `md:grid-cols-3 gap-6`, chaque carte `rounded-2xl border border-ox-line bg-white
+  p-6` : citation `text-[15px] leading-relaxed text-ox-navy`, puis en bas
+  l'auteur avec avatar `h-11 w-11 rounded-full object-cover` + nom `font-bold
+  text-ox-navy` et rôle `text-xs text-ox-mut`. Toujours au moins 3 avis pour
+  remplir la rangée.
 - **RÉALISATIONS** : galerie de photos `rounded-2xl`.
 - **ÉQUIPE — « NOTRE ÉQUIPE »** + **BLOG & CONSEILS** : grilles de cartes.
 - **CTA FINAL — « PRÊT À FAIRE PASSER… »** : panneau marine `bg-ox-navy
