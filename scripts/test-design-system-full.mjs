@@ -46,6 +46,14 @@ EXIGENCES :
 - Page autonome : <head> avec Tailwind CDN, les Google Fonts, le bloc tailwind.config et le CSS custom du design system recopiés tels quels. Inclus un petit <script> vanilla pour l'accordéon FAQ (toggle de la classe .open).
 - Utilise EXACTEMENT le contenu fourni (textes + chemins d'images tels quels).
 - N'invente aucun style hors design system. Aucune couleur étrangère.
+
+ANIMATIONS (obligatoire — un kit JS partagé sera injecté, tu dois juste ANNOTER le HTML) :
+- Sur CHAQUE bloc qui apparaît au scroll (en-tête de section, carte, ligne de stat, image, paragraphe important), ajoute l'attribut **data-anim** (valeurs : défaut = montée+fondu ; "fade" ; "left" ; "right" ; "scale").
+- Pour les éléments d'une même rangée/grille, ajoute un décalage : **data-anim-delay="0"**, "80", "160", "240"… (stagger en ms) pour qu'ils apparaissent l'un après l'autre.
+- Le GRAND TITRE du hero (h1) reçoit la classe **anim-words** (apparition mot à mot) UNIQUEMENT s'il est en TEXTE SIMPLE (pas de <span> interne). Si le titre contient des <span> internes (dégradé, pilule, mot stylé), N'utilise PAS anim-words : mets **data-anim="fade"** sur le h1 à la place.
+- CHAQUE CHIFFRE de statistique (compteurs) doit être un <span **data-count="<nombre>"** data-count-suffix="<ex: +, %, h, /7>" data-count-decimals="0">0</span> : le contenu de départ est "0", le kit anime jusqu'au nombre. Mets dans data-count la valeur numérique pure (ex. data-count="1200" data-count-suffix="+"). Pour "24/7", garde le texte tel quel (pas de compteur).
+- N'inclus PAS toi-même le code du kit d'animation : il est ajouté automatiquement. Annote seulement.
+
 - Réponds UNIQUEMENT avec le code HTML complet (<!DOCTYPE html> … </html>), sans backticks ni commentaire autour.`;
 
 async function callMistral(user) {
@@ -86,7 +94,12 @@ ${JSON.stringify(contentFixed, null, 2)}
 Produis la page d'accueil complète (header + toutes les sections + footer).`;
 
 console.log(`Génération SITE COMPLET de ${tpl} depuis le design system…`);
-const { html, usage } = await callMistral(user);
+const { html: raw, usage } = await callMistral(user);
+// Injecte le kit d'animation partagé juste avant </body> (ou </html> en repli).
+const motionKit = fs.readFileSync("public/_templates/_shared/motion.html", "utf-8");
+let html = raw;
+if (/<\/body>/i.test(html)) html = html.replace(/<\/body>/i, motionKit + "\n</body>");
+else html = html.replace(/<\/html>/i, motionKit + "\n</html>");
 const outFile = path.join(outDir, "full-site.html");
 fs.writeFileSync(outFile, html);
 console.log(`  → ${outFile} (${html.length} caractères, ${html.split("\n").length} lignes)`);

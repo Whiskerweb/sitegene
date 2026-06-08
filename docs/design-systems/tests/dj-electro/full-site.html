@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alex Stride - DJ Résident</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#000000',
+            panel: '#080807',
+            paper: '#ffffff',
+            accent: '#fbd295',
+            blue: '#0000ee',
+            muted: '#b4b4b4',
+            faint: '#8a8a8a',
+            line: '#222222',
+          },
+          fontFamily: {
+            display: ['"Clash Display"', 'sans-serif'],
+            body: ['"Open Sans"', 'sans-serif'],
+            sans: ['Manrope', 'sans-serif']
+          },
+        }
+      }
+    };
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: #000;
+      color: #eee;
+      margin: 0;
+    }
+    .font-display {
+      font-family: '"Clash Display"', sans-serif;
+    }
+    .font-body {
+      font-family: '"Open Sans"', sans-serif;
+    }
+    /* Custom for anim-words */
+    .anim-words span {
+      display: inline-block;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body class="bg-ink text-paper">
+
+  <!-- Header -->
+  <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-ink/50 border-b border-line">
+    <nav class="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
+      <a href="#top" data-sg-path="brand" class="font-display font-bold text-lg tracking-tight text-paper">ALEX STRIDE</a>
+      <ul class="hidden md:flex items-center gap-8 font-sans text-[14px] text-muted">
+        <li><a href="#about" data-sg-path="nav[0]" class="hover:text-paper transition-colors">À propos</a></li>
+        <li><a href="#services" data-sg-path="nav[1]" class="hover:text-paper transition-colors">Prestations</a></li>
+        <li><a href="#testimonials" data-sg-path="nav[2]" class="hover:text-paper transition-colors">Témoignages</a></li>
+      </ul>
+      <a href="#contact" data-sg-path="cta" class="font-sans text-[14px] border border-line rounded-full px-5 py-2 text-paper hover:bg-paper hover:text-ink transition-colors">Réservez la date</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="top" class="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden">
+      <div class="mx-auto max-w-7xl w-full px-6 grid lg:grid-cols-2 gap-12 items-center">
+        <div data-anim="left">
+          <span data-sg-path="hero.eyebrow" class="font-sans text-[14px] text-muted">Alex Stride, DJ résident</span>
+          <h1 data-sg-path="hero.title" class="font-display font-bold uppercase tracking-tight leading-[1.02] text-paper text-5xl md:text-6xl lg:text-[64px] mt-4 anim-words">Un DJ qui fait danser votre club jusqu’au bout de la nuit</h1>
+          <p data-sg-path="hero.tagline" class="mt-8 font-body text-base text-faint max-w-md" data-anim="fade" data-anim-delay="200">Faites vibrer votre club au rythme des beats qui électrisent la foule. Plus de 10 ans aux platines pour transformer chaque soirée en un moment inoubliable.</p>
+          <div class="mt-8 flex items-center gap-5" data-anim="fade" data-anim-delay="400">
+            <a href="#contact" data-sg-path="hero.ctaPrimary" class="inline-flex items-center justify-center font-sans text-[15px] font-medium rounded-full px-7 py-3 bg-accent text-ink hover:brightness-95 transition">Contactez-moi</a>
+            <a href="#about" data-sg-path="hero.ctaSecondary" class="inline-flex items-center gap-2 font-sans text-[15px] text-paper hover:text-accent transition">Voir la vidéo</a>
+          </div>
+        </div>
+        <div class="relative aspect-square lg:aspect-[4/5] overflow-hidden rounded-2xl" data-anim="right">
+          <img data-sg-img="hero.image" src="../../../../public/_templates/dj-electro/img/hero.jpg" alt="Alex Stride aux platines dans un club" class="w-full h-full object-cover" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-24" data-anim="fade">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div class="text-center" data-anim="fade" data-anim-delay="0">
+            <p class="font-display font-bold text-4xl md:text-5xl text-paper"><span data-count="10" data-count-suffix="+">0</span></p>
+            <p class="mt-2 font-sans text-sm text-muted" data-sg-path="stats[0].label">Années d’expérience</p>
+          </div>
+          <div class="text-center" data-anim="fade" data-anim-delay="80">
+            <p class="font-display font-bold text-4xl md:text-5xl text-paper"><span data-count="120" data-count-suffix="+">0</span></p>
+            <p class="mt-2 font-sans text-sm text-muted" data-sg-path="stats[1].label">Clubs visités</p>
+          </div>
+          <div class="text-center" data-anim="fade" data-anim-delay="160">
+            <p class="font-display font-bold text-4xl md:text-5xl text-paper"><span data-count="1" data-count-suffix="K+">0</span></p>
+            <p class="mt-2 font-sans text-sm text-muted" data-sg-path="stats[2].label">Prestations réalisées</p>
+          </div>
+          <div class="text-center" data-anim="fade" data-anim-delay="240">
+            <p class="font-display font-bold text-4xl md:text-5xl text-paper"><span data-count="100" data-count-suffix="K+">0</span></p>
+            <p class="mt-2 font-sans text-sm text-muted" data-sg-path="stats[3].label">Auditeurs mensuels</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="bg-panel rounded-2xl border border-line p-8 md:p-12 grid lg:grid-cols-2 gap-12 items-center">
+          <div data-anim="left">
+            <span data-sg-path="about.title" class="font-display font-bold uppercase tracking-tight text-4xl md:text-5xl text-paper">DJ depuis toujours</span>
+            <p data-sg-path="about.p1" class="mt-8 font-body text-base text-faint" data-anim="fade" data-anim-delay="200">Avec des années d’expérience aux platines, je propose des sets énergiques qui maintiennent le public en mouvement. Des grooves deep house aux moments intenses de techno, chaque prestation est conçue pour transformer votre lieu en une expérience électrisante.</p>
+            <p data-sg-path="about.p2" class="mt-6 font-body text-base text-faint" data-anim="fade" data-anim-delay="400">Mon objectif ? Créer des nuits mémorables dont on parle bien après l’extinction des lumières.</p>
+            <div class="mt-8">
+              <a href="#contact" data-sg-path="about.cta" class="inline-flex items-center justify-center font-sans text-[15px] font-medium rounded-full px-7 py-3 bg-accent text-ink hover:brightness-95 transition" data-anim="fade" data-anim-delay="600">Contactez-moi</a>
+            </div>
+          </div>
+          <div class="relative aspect-square overflow-hidden rounded-xl" data-anim="right">
+            <img data-sg-img="about.image" src="../../../../public/_templates/dj-electro/img/about.jpg" alt="Alex Stride en pleine performance" class="w-full h-full object-cover" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="text-center max-w-2xl mx-auto" data-anim="fade">
+          <span data-sg-path="services.label" class="font-sans text-sm text-muted">Ce que je mixe</span>
+        </div>
+        <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="bg-panel rounded-xl border border-line p-8" data-anim="fade" data-anim-delay="0">
+            <h3 data-sg-path="services.items[0].title" class="font-display font-bold uppercase tracking-tight text-2xl text-paper">House</h3>
+            <p data-sg-path="services.items[0].text" class="mt-4 font-body text-sm text-faint">Des ambiances house fluides et groovy pour installer l’ambiance parfaite et remplir la piste de danse.</p>
+          </div>
+          <div class="bg-panel rounded-xl border border-line p-8" data-anim="fade" data-anim-delay="80">
+            <h3 data-sg-path="services.items[1].title" class="font-display font-bold uppercase tracking-tight text-2xl text-paper">EDM</h3>
+            <p data-sg-path="services.items[1].text" class="mt-4 font-body text-sm text-faint">Des sets EDM explosifs, riches en tubes incontournables pour booster l’énergie et enflammer la soirée.</p>
+          </div>
+          <div class="bg-panel rounded-xl border border-line p-8" data-anim="fade" data-anim-delay="160">
+            <h3 data-sg-path="services.items[2].title" class="font-display font-bold uppercase tracking-tight text-2xl text-paper">Techno</h3>
+            <p data-sg-path="services.items[2].text" class="mt-4 font-body text-sm text-faint">Des morceaux techno profonds et pulsatifs pour une expérience immersive et intense sur la piste.</p>
+          </div>
+          <div class="bg-panel rounded-xl border border-line p-8" data-anim="fade" data-anim-delay="240">
+            <h3 data-sg-path="services.items[3].title" class="font-display font-bold uppercase tracking-tight text-2xl text-paper">Electro</h3>
+            <p data-sg-path="services.items[3].text" class="mt-4 font-body text-sm text-faint">Des beats electro ultra-énergiques qui électrisent l’atmosphère et font danser la foule jusqu’au petit matin.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-24">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="text-center max-w-2xl mx-auto" data-anim="fade">
+          <span data-sg-path="testimonialsLabel" class="font-sans text-sm text-muted">Témoignages</span>
+          <h2 data-sg-path="testimonial.title" class="font-display font-bold uppercase tracking-tight text-4xl md:text-5xl text-paper mt-4">Ambiance inoubliable et pistes de danse bondées</h2>
+        </div>
+        <div class="mt-16 bg-panel rounded-2xl border border-line p-8 md:p-12 grid lg:grid-cols-2 gap-12 items-center">
+          <div data-anim="left">
+            <p data-sg-path="testimonial.quote" class="font-body text-lg text-faint leading-relaxed">“Engager ce DJ a été la meilleure décision que nous ayons prise. Son énergie et sa sélection musicale ont gardé notre club plein jusqu’à la fermeture. Le public en redemandait, et nous avons déjà reçu des demandes pour le faire revenir !”</p>
+            <p data-sg-path="testimonial.author" class="mt-8 font-sans text-sm font-medium text-paper">Pulse Nightclub</p>
+          </div>
+          <div class="relative aspect-square overflow-hidden rounded-xl" data-anim="right">
+            <img data-sg-img="testimonial.image" src="../../../../public/_templates/dj-electro/img/testimonial.jpg" alt="Foule dans un club" class="w-full h-full object-cover" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Events Section -->
+    <section class="py-24">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="text-center max-w-2xl mx-auto" data-anim="fade">
+          <span data-sg-path="eventsLabel" class="font-sans text-sm text-muted">Prochains événements</span>
+        </div>
+        <div class="mt-12 space-y-8">
+          <div class="bg-panel rounded-xl border border-line p-8 grid md:grid-cols-2 gap-8 items-center" data-anim="fade" data-anim-delay="0">
+            <div class="flex items-center gap-6">
+              <div class="text-center">
+                <p class="font-display font-bold text-3xl text-paper">30</p>
+                <p class="font-sans text-xs text-muted">NOV</p>
+              </div>
+              <div>
+                <h3 data-sg-path="events[0].title" class="font-display font-bold uppercase tracking-tight text-2xl text-paper">Techno Beats</h3>
+                <p data-sg-path="events[0].text" class="mt-2 font-body text-sm text-faint">Une session en entrepôt après l’aube à Berlin, Allemagne. Préparez-vous à des basses implacables et une piste bondée jusqu’au lever du soleil.</p>
+              </div>
+            </div>
+            <div class="relative aspect-video overflow-hidden rounded-lg">
+              <img data-sg-img="events[0].image" src="../../../../public/_templates/dj-electro/img/event1.jpg" alt="Soirée Techno Beats à Berlin" class="w-full h-full object-cover" />
+            </div>
+          </div>
+          <div class="bg-panel rounded-xl border border-line p-8 grid md:grid-cols-2 gap-8 items-center" data-anim="fade" data-anim-delay="80">
+            <div class="flex items-center gap-6">
+              <div class="text-center">
+                <p class="font-display font-bold text-3xl text-paper">28</p>
+                <p class="font-sans text-xs text-muted">DEC</p>
+              </div>
+              <div>
+                <h3 data-sg-path="events[1].title" class="font-display font-bold uppercase tracking-tight text-2xl text-paper">Electro Fest</h3>
+                <p data-sg-path="events[1].text" class="mt-2 font-body text-sm text-faint">Set électro en tête d’affiche à Amsterdam, Pays-Bas. Un final d’année haute tension conçu pour la grande salle.</p>
+              </div>
+            </div>
+            <div class="relative aspect-video overflow-hidden rounded-lg">
+              <img data-sg-img="events[1].image" src="../../../../public/_templates/dj-electro/img/event2.jpg" alt="Festival Electro Fest à Amsterdam" class="w-full h-full object-cover" />
+            </div>
+          </div>
+          <div class="bg-panel rounded-xl border border-line p-8 grid md:grid-cols-2 gap-8 items-center" data-anim="fade" data-anim-delay="160">
+            <div class="flex items-center gap-6">
+              <div class="text-center">
+                <p class="font-display font-bold text-3xl text-paper">14</p>
+                <p class="font-sans text-xs text-muted">FEB</p>
+              </div>
+              <div>
+                <h3 data-sg-path="events[2].title" class="font-display font-bold uppercase tracking-tight text-2xl text-paper">Dance Night Paris</h3>
+                <p data-sg-path="events[2].text" class="mt-2 font-body text-sm text-faint">Résidence pour la Saint-Valentin à Paris, France. Deep house en début de soirée, house intense à minuit.</p>
+              </div>
+            </div>
+            <div class="relative aspect-video overflow-hidden rounded-lg">
+              <img data-sg-img="events[2].image" src="../../../../public/_templates/dj-electro/img/event3.jpg" alt="Dance Night Paris" class="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
+        <div class="mt-12 text-center">
+          <a href="#" data-sg-path="eventsCta" class="font-sans text-sm text-paper hover:text-accent transition" data-anim="fade" data-anim-delay="240">Tous les événements</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Marquee Section -->
+    <section class="py-12 overflow-hidden">
+      <div class="font-display font-bold uppercase tracking-tight text-4xl md:text-6xl text-paper whitespace-nowrap" data-anim="left">
+        <span data-sg-path="marquee" class="inline-block px-4">DJ DE CONFIANCE POUR VOTRE ÉVÉNEMENT</span>
+        <span data-sg-path="marquee" class="inline-block px-4">DJ DE CONFIANCE POUR VOTRE ÉVÉNEMENT</span>
+        <span data-sg-path="marquee" class="inline-block px-4">DJ DE CONFIANCE POUR VOTRE ÉVÉNEMENT</span>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="text-center max-w-2xl mx-auto" data-anim="fade">
+          <h2 data-sg-path="contact.title" class="font-display font-bold uppercase tracking-tight text-4xl md:text-5xl text-paper">Prenons contact</h2>
+          <p data-sg-path="contact.text" class="mt-6 font-body text-base text-faint">N’hésitez pas à poser vos questions ou à envoyer vos demandes professionnelles.</p>
+        </div>
+        <div class="mt-16 bg-panel rounded-2xl border border-line p-8 md:p-12 grid lg:grid-cols-2 gap-12">
+          <div data-anim="left">
+            <div class="flex items-center gap-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+              <a href="mailto:hello@alexstride.com" data-sg-path="contact.email" class="font-sans text-sm text-paper hover:text-accent transition">hello@alexstride.com</a>
+            </div>
+            <div class="mt-6 flex items-center gap-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+              <a href="tel:+1234567890" data-sg-path="contact.phone" class="font-sans text-sm text-paper hover:text-accent transition">+1 234 567 890</a>
+            </div>
+          </div>
+          <form data-anim="right">
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label for="name" data-sg-path="contact.formName" class="font-sans text-xs text-muted">Nom</label>
+                <input type="text" id="name" placeholder="Jeanne Martin" class="w-full bg-transparent border-0 border-b border-line focus:ring-0 focus:border-accent transition mt-2 py-2 text-sm" />
+              </div>
+              <div>
+                <label for="email" data-sg-path="contact.formEmail" class="font-sans text-xs text-muted">Email</label>
+                <input type="email" id="email" placeholder="example@example.com" class="w-full bg-transparent border-0 border-b border-line focus:ring-0 focus:border-accent transition mt-2 py-2 text-sm" />
+              </div>
+              <div>
+                <label for="location" data-sg-path="contact.formLocation" class="font-sans text-xs text-muted">Lieu</label>
+                <input type="text" id="location" placeholder="Club X, Paris" class="w-full bg-transparent border-0 border-b border-line focus:ring-0 focus:border-accent transition mt-2 py-2 text-sm" />
+              </div>
+              <div>
+                <label for="phone" data-sg-path="contact.formPhone" class="font-sans text-xs text-muted">Téléphone</label>
+                <input type="tel" id="phone" placeholder="+123123123" class="w-full bg-transparent border-0 border-b border-line focus:ring-0 focus:border-accent transition mt-2 py-2 text-sm" />
+              </div>
+            </div>
+            <div class="mt-6">
+              <label for="message" data-sg-path="contact.formMessage" class="font-sans text-xs text-muted">Message</label>
+              <textarea id="message" rows="4" placeholder="Nous souhaitons vous engager pour notre club…" class="w-full bg-transparent border-0 border-b border-line focus:ring-0 focus:border-accent transition mt-2 py-2 text-sm"></textarea>
+            </div>
+            <div class="mt-8">
+              <button type="submit" data-sg-path="contact.formSubmit" class="inline-flex items-center justify-center font-sans text-[15px] font-medium rounded-full px-7 py-3 bg-accent text-ink hover:brightness-95 transition">Envoyer</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-16">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="text-center md:text-left">
+          <p data-sg-path="footer.copyright" class="font-sans text-xs text-muted">© 2026 Alex Stride</p>
+          <p data-sg-path="footer.credit" class="font-sans text-xs text-muted mt-1">DJ résident · House · EDM · Techno · Electro</p>
+        </div>
+        <div class="font-sans text-xs text-muted">
+          Propulsé par <a href="#" class="text-paper hover:text-accent transition">Akyra</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FAQ Accordion Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const accordions = document.querySelectorAll('[data-accordion]');
+      accordions.forEach(accordion => {
+        const items = accordion.querySelectorAll('[data-accordion-item]');
+        items.forEach(item => {
+          const header = item.querySelector('[data-accordion-header]');
+          const content = item.querySelector('[data-accordion-content]');
+          header.addEventListener('click', () => {
+            const isOpen = item.classList.contains('open');
+            items.forEach(i => i.classList.remove('open'));
+            if (!isOpen) {
+              item.classList.add('open');
+            }
+          });
+        });
+      });
+    });
+  </script>
+
+<!-- ═══ AKYRA MOTION KIT — animations partagées (vanilla, sans dépendance, respecte prefers-reduced-motion) ═══ -->
+<style>
+  [data-anim]{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+  [data-anim="fade"]{transform:none}
+  [data-anim="left"]{transform:translateX(-26px)}
+  [data-anim="right"]{transform:translateX(26px)}
+  [data-anim="scale"]{transform:scale(.96)}
+  [data-anim].in{opacity:1!important;transform:none!important}
+  /* Apparition du texte mot à mot */
+  .anim-words .w{display:inline-block;opacity:0;transform:translateY(0.5em);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .anim-words.in .w{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){[data-anim],.anim-words .w{opacity:1!important;transform:none!important;transition:none!important}}
+</style>
+<script>
+(function(){
+  var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var IO = 'IntersectionObserver' in window;
+
+  // 1) Révélation au scroll des éléments [data-anim] (stagger via data-anim-delay en ms)
+  var reveals = document.querySelectorAll('[data-anim]');
+  function showReveal(el){
+    var d = parseInt(el.getAttribute('data-anim-delay')||'0',10);
+    if(d) setTimeout(function(){el.classList.add('in')}, d); else el.classList.add('in');
+  }
+  if(RM || !IO){ reveals.forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioR = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ showReveal(en.target); ioR.unobserve(en.target);} });
+    },{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(function(e){ ioR.observe(e); });
+  }
+
+  // 2) Texte mot à mot : <h1 class="anim-words">…</h1> (découpe auto)
+  document.querySelectorAll('.anim-words').forEach(function(el){
+    if(el.dataset.split) return; el.dataset.split='1';
+    var html = el.innerHTML;
+    el.innerHTML = html.replace(/(\S+)(\s*)/g, function(_,w,sp){ return '<span class="w">'+w+'</span>'+sp; });
+    var ws = el.querySelectorAll('.w');
+    ws.forEach(function(w,i){ w.style.transitionDelay=(i*45)+'ms'; });
+  });
+  if(RM || !IO){ document.querySelectorAll('.anim-words').forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioW = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ioW.unobserve(en.target);} });
+    },{threshold:0.25});
+    document.querySelectorAll('.anim-words').forEach(function(e){ ioW.observe(e); });
+  }
+
+  // 3) Compteurs : <span data-count="1200" data-count-suffix="+" data-count-decimals="0">0</span>
+  function fmt(v,dec){ return v.toLocaleString('fr-FR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+  function countUp(el){
+    var target=parseFloat(el.getAttribute('data-count'))||0,
+        suf=el.getAttribute('data-count-suffix')||'', pre=el.getAttribute('data-count-prefix')||'',
+        dec=parseInt(el.getAttribute('data-count-decimals')||'0',10), dur=1500, start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=pre+fmt(target*e,dec)+suf; if(p<1)requestAnimationFrame(step); else el.textContent=pre+fmt(target,dec)+suf; }
+    requestAnimationFrame(step);
+  }
+  var nums = document.querySelectorAll('[data-count]');
+  if(RM || !IO){ nums.forEach(function(el){ el.textContent=(el.getAttribute('data-count-prefix')||'')+fmt(parseFloat(el.getAttribute('data-count'))||0,parseInt(el.getAttribute('data-count-decimals')||'0',10))+(el.getAttribute('data-count-suffix')||''); }); }
+  else {
+    var ioN = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ countUp(en.target); ioN.unobserve(en.target);} });
+    },{threshold:0.6});
+    nums.forEach(function(el){ ioN.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>

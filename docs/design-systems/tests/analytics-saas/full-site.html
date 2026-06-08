@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Northpeak — L'IA au service de la croissance commerciale</title>
+  <meta name="description" content="Northpeak transforme vos données commerciales en insights pilotés par l'IA. Boostez votre croissance avec des analyses intelligentes, des intégrations et des tableaux de bord conçus pour les équipes modernes.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- tailwind.config.js -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#1e2b3a',
+            muted: '#465478',
+            bg: '#f9fafb',
+            surface: '#ffffff',
+            cyan: '#80e5ff',
+            indigo: '#5b63d8',
+            iris: '#7584d6',
+            violet: '#545c9e',
+            soft: '#dfe1f5',
+            ribbon: '#7d86f0',
+            line: '#e5e8eb',
+          },
+          fontFamily: {
+            sans: ['Manrope', 'sans-serif'],
+            body: ['Inter', 'sans-serif']
+          },
+          fontSize: {
+            d1: ['5rem', { lineHeight: '1.02' }],
+            d2: ['3.5rem', { lineHeight: '1.05' }],
+            d3: ['2.5rem', { lineHeight: '1.1' }]
+          },
+        }
+      }
+    };
+  </script>
+
+  <!-- CSS custom -->
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #f9fafb; color: #1e2b3a; margin: 0; }
+    h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+    /* Titre en dégradé (clip texte) */
+    .grad-title { background: linear-gradient(95deg, #80e5ff 0%, #7584d6 40%, #545c9e 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    /* Fond de hero en dégradé lavande pâle */
+    .grad-soft { background: linear-gradient(120deg, #eef0fb 0%, #f6f3ff 50%, #f9fafb 100%); }
+  </style>
+</head>
+<body class="bg-bg">
+
+  <!-- Header -->
+  <header class="fixed top-4 inset-x-0 z-50 flex justify-center px-4" data-anim="fade">
+    <nav class="w-full max-w-3xl bg-white/70 backdrop-blur-xl border border-white/60 rounded-full shadow-[0_10px_40px_-12px_rgba(84,92,158,.35)] px-3 py-2 flex items-center justify-between">
+      <span data-sg-path="brand" class="font-bold text-lg tracking-tight text-ink pl-3">Northpeak</span>
+      <div class="hidden md:flex items-center gap-7 text-sm text-muted">
+        <a href="#fonctionnement" data-sg-path="nav[0]" class="hover:text-ink transition-colors">Fonctionnement</a>
+        <a href="#integration" data-sg-path="nav[1]" class="hover:text-ink transition-colors">Intégrations</a>
+        <a href="#performance" data-sg-path="nav[2]" class="hover:text-ink transition-colors">Performance</a>
+        <a href="#pricing" data-sg-path="nav[3]" class="hover:text-ink transition-colors">Tarifs</a>
+        <a href="#faq" data-sg-path="nav[4]" class="hover:text-ink transition-colors">FAQ</a>
+      </div>
+      <a href="#cta" data-sg-path="nav.cta" class="rounded-full bg-ribbon text-white text-sm font-semibold px-5 py-2">Demander une démo</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-36 pb-20 grad-soft text-center">
+      <span data-sg-path="hero.kicker" class="text-xs font-semibold uppercase tracking-[0.15em] text-iris">PLATEFORME D'ANALYSE IA</span>
+      <h1 class="font-sans font-semibold text-d2 md:text-d1 tracking-tight mt-5" data-anim="fade">
+        <span class="grad-title" data-sg-path="hero.title_a">Boostez votre croissance</span>
+      </h1>
+      <h1 class="font-sans font-semibold text-d2 md:text-d1 tracking-tight mt-1 flex flex-wrap items-center justify-center gap-x-4 gap-y-2" data-anim="fade" data-anim-delay="80">
+        <span class="text-ink" data-sg-path="hero.title_b">avec</span>
+        <span class="inline-flex items-center rounded-full border border-iris/40 bg-white/60 px-5 py-1 grad-title" data-sg-path="hero.title_c">IA Intelligente</span>
+        <span class="text-ink" data-sg-path="hero.title_d">insights</span>
+      </h1>
+      <p data-sg-path="hero.subtitle" class="mx-auto max-w-xl text-muted text-lg mt-7" data-anim="fade" data-anim-delay="160">Transformez votre entreprise en un clic grâce à un accompagnement analytique puissant et en temps réel.</p>
+      <div class="mt-9 flex justify-center gap-3" data-anim="fade" data-anim-delay="240">
+        <a href="#cta" data-sg-path="hero.cta" class="rounded-full bg-ribbon text-white font-semibold px-7 py-3">Essai gratuit</a>
+        <a href="#fonctionnement" data-sg-path="hero.cta_secondary" class="rounded-full bg-white border border-line text-ink font-semibold px-7 py-3 hover:bg-surface transition-colors">Fonctionnement</a>
+      </div>
+
+      <div class="mt-20" data-anim="fade" data-anim-delay="320">
+        <p class="text-xs font-semibold uppercase tracking-[0.15em] text-muted mb-6" data-sg-path="hero.proof_label">PARTENARIATS EN PLEINE CROISSANCE DANS LE MONDE</p>
+        <div class="flex flex-wrap justify-center items-center gap-x-10 gap-y-4 text-muted">
+          <img src="../../../../public/_templates/analytics-saas/img/logo-avocadoo.svg" alt="Avocadoo" class="h-6" data-sg-img="hero.logos[0]">
+          <img src="../../../../public/_templates/analytics-saas/img/logo-nanowise.svg" alt="Nanowise" class="h-6" data-sg-img="hero.logos[1]">
+          <img src="../../../../public/_templates/analytics-saas/img/logo-nexusgate.svg" alt="Nexusgate" class="h-6" data-sg-img="hero.logos[2]">
+          <img src="../../../../public/_templates/analytics-saas/img/logo-spitfire.svg" alt="Spitfire" class="h-6" data-sg-img="hero.logos[3]">
+          <img src="../../../../public/_templates/analytics-saas/img/logo-gessler.svg" alt="Gessler" class="h-6" data-sg-img="hero.logos[4]">
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section class="py-20 px-4">
+      <div class="max-w-7xl mx-auto bg-surface rounded-3xl border border-line shadow-lg overflow-hidden" data-anim="fade">
+        <div class="flex flex-col lg:flex-row">
+          <!-- Sidebar -->
+          <div class="w-full lg:w-64 bg-soft/50 border-b lg:border-b-0 lg:border-r border-line p-6" data-anim="left">
+            <div class="flex items-center gap-3 mb-8">
+              <div class="w-8 h-8 bg-ribbon rounded-md flex items-center justify-center text-white font-bold">N</div>
+              <span class="font-bold text-ink">Northpeak</span>
+            </div>
+            <nav class="space-y-2">
+              <a href="#" class="flex items-center gap-3 px-3 py-2 text-ink bg-white rounded-lg shadow-sm" data-sg-path="dashboard.sidebar[0]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" /></svg>
+                <span>Tableau de bord</span>
+              </a>
+              <a href="#" class="flex items-center gap-3 px-3 py-2 text-muted hover:text-ink" data-sg-path="dashboard.sidebar[1]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" /></svg>
+                <span>Campagnes</span>
+              </a>
+              <a href="#" class="flex items-center gap-3 px-3 py-2 text-muted hover:text-ink" data-sg-path="dashboard.sidebar[2]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" /></svg>
+                <span>Analyses</span>
+              </a>
+              <a href="#" class="flex items-center gap-3 px-3 py-2 text-muted hover:text-ink" data-sg-path="dashboard.sidebar[3]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+                <span>Intégrations</span>
+              </a>
+              <a href="#" class="flex items-center gap-3 px-3 py-2 text-muted hover:text-ink" data-sg-path="dashboard.sidebar[4]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" /></svg>
+                <span>Rapports</span>
+              </a>
+              <a href="#" class="flex items-center gap-3 px-3 py-2 text-muted hover:text-ink" data-sg-path="dashboard.sidebar[5]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" /></svg>
+                <span>Performance</span>
+              </a>
+              <a href="#" class="flex items-center gap-3 px-3 py-2 text-muted hover:text-ink" data-sg-path="dashboard.sidebar[6]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" /></svg>
+                <span>Paramètres</span>
+              </a>
+            </nav>
+          </div>
+
+          <!-- Main Content -->
+          <div class="flex-1 p-8" data-anim="fade" data-anim-delay="80">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-xl font-semibold text-ink" data-sg-path="dashboard.panel_title">Vue d'ensemble de la performance</h2>
+              <div class="flex items-center gap-4 text-sm text-muted">
+                <span>Partager</span>
+                <span>Exporter</span>
+                <span>Filtres</span>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <div class="bg-white p-6 rounded-xl border border-line shadow-sm" data-anim="fade" data-anim-delay="160">
+                <p class="text-sm text-muted" data-sg-path="dashboard.kpi[0].label">Croissance cette semaine</p>
+                <p class="text-3xl font-bold text-ink mt-2" data-sg-path="dashboard.kpi[0].value">$45,800</p>
+                <p class="text-sm text-green-600" data-sg-path="dashboard.kpi[0].delta">+8.4%</p>
+              </div>
+              <div class="bg-white p-6 rounded-xl border border-line shadow-sm" data-anim="fade" data-anim-delay="240">
+                <p class="text-sm text-muted" data-sg-path="dashboard.kpi[1].label">Campagnes actives</p>
+                <p class="text-3xl font-bold text-ink mt-2" data-sg-path="dashboard.kpi[1].value">24</p>
+                <p class="text-sm text-green-600" data-sg-path="dashboard.kpi[1].delta">+5 nouvelles</p>
+              </div>
+              <div class="bg-white p-6 rounded-xl border border-line shadow-sm" data-anim="fade" data-anim-delay="320">
+                <p class="text-sm text-muted" data-sg-path="dashboard.kpi[2].label">Insights générés par l'IA</p>
+                <p class="text-3xl font-bold text-ink mt-2"><span data-count="1250">0</span></p>
+                <p class="text-sm text-green-600" data-sg-path="dashboard.kpi[2].delta">+12%</p>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div class="bg-white p-6 rounded-xl border border-line shadow-sm" data-anim="fade" data-anim-delay="400">
+                <h3 class="font-semibold text-ink" data-sg-path="dashboard.chart_a_title">Analyse de performance</h3>
+                <div class="h-64 bg-soft/50 rounded-lg mt-4 flex items-center justify-center text-muted">[Graphique]</div>
+              </div>
+              <div class="bg-white p-6 rounded-xl border border-line shadow-sm" data-anim="fade" data-anim-delay="480">
+                <h3 class="font-semibold text-ink" data-sg-path="dashboard.chart_b_title">Répartition des ressources</h3>
+                <div class="h-64 bg-soft/50 rounded-lg mt-4 flex items-center justify-center text-muted">[Camembert]</div>
+                <div class="flex flex-wrap gap-4 mt-4 text-sm">
+                  <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-indigo"></span> <span data-sg-path="dashboard.legend[0]">Budget des campagnes</span></span>
+                  <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-cyan"></span> <span data-sg-path="dashboard.legend[1]">Utilisation des intégrations</span></span>
+                  <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-iris"></span> <span data-sg-path="dashboard.legend[2]">Traitement IA</span></span>
+                  <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-violet"></span> <span data-sg-path="dashboard.legend[3]">Ressources IA</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bento Section -->
+    <section class="py-20 px-4">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Card A -->
+          <div class="bg-surface p-8 rounded-2xl border border-line shadow-sm flex flex-col justify-between lg:col-span-2" data-anim="fade" data-anim-delay="0">
+            <div>
+              <h3 class="text-2xl font-semibold text-ink" data-sg-path="bento.a_title">Posez vos questions à l'IA</h3>
+              <p class="text-muted mt-2" data-sg-path="bento.a_text">Analyse conversationnelle — interrogez vos données en langage naturel.</p>
+            </div>
+            <div class="mt-8 flex justify-end">
+              <div class="w-32 h-32 bg-soft/50 rounded-full flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-iris" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" /></svg>
+              </div>
+            </div>
+          </div>
+          <!-- Card B -->
+          <div class="bg-surface p-8 rounded-2xl border border-line shadow-sm" data-anim="fade" data-anim-delay="80">
+            <p class="text-5xl font-bold grad-title" data-sg-path="bento.b_value">3x</p>
+            <p class="text-muted mt-2" data-sg-path="bento.b_text">Cycles de reporting accélérés</p>
+          </div>
+          <!-- Card C -->
+          <div class="bg-surface p-8 rounded-2xl border border-line shadow-sm" data-anim="fade" data-anim-delay="160">
+            <h3 class="text-xl font-semibold text-ink" data-sg-path="bento.c_title">Rapports personnalisés</h3>
+            <p class="text-muted mt-2" data-sg-path="bento.c_text">Analyse des revenus exportable et personnalisée en un clic.</p>
+          </div>
+          <!-- Card D -->
+          <div class="bg-surface p-8 rounded-2xl border border-line shadow-sm" data-anim="fade" data-anim-delay="240">
+            <h3 class="text-xl font-semibold text-ink" data-sg-path="bento.d_title">Intégrations instantanées</h3>
+            <p class="text-muted mt-2" data-sg-path="bento.d_text">Connectez vos plateformes préférées et synchronisez en quelques secondes.</p>
+          </div>
+          <!-- Card E -->
+          <div class="bg-surface p-8 rounded-2xl border border-line shadow-sm" data-anim="fade" data-anim-delay="320">
+            <h3 class="text-xl font-semibold text-ink" data-sg-path="bento.e_title">Stratégies simplifiées</h3>
+            <p class="text-muted mt-2" data-sg-path="bento.e_text">Playbooks prêts à l'emploi, adaptés à vos objectifs.</p>
+          </div>
+          <!-- Card F -->
+          <div class="bg-surface p-8 rounded-2xl border border-line shadow-sm flex items-center justify-center" data-anim="fade" data-anim-delay="400">
+            <div class="w-40 h-40 bg-soft/50 rounded-full flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-iris" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Steps Section -->
+    <section id="fonctionnement" class="py-20 px-4 text-center">
+      <div class="max-w-4xl mx-auto">
+        <span data-sg-path="steps.kicker" class="text-xs font-semibold uppercase tracking-[0.15em] text-iris">FONCTIONNEMENT</span>
+        <h2 class="font-sans font-semibold text-d3 md:text-d2 tracking-tight mt-5" data-anim="fade">
+          <span class="text-ink" data-sg-path="steps.title_a">Découvrez notre processus</span>
+          <span class="grad-title" data-sg-path="steps.title_b"> simple et efficace</span>
+        </h2>
+        <p data-sg-path="steps.subtitle" class="mx-auto max-w-2xl text-muted text-lg mt-7" data-anim="fade" data-anim-delay="80">Commencez en toute simplicité et voyez votre entreprise prospérer dès le départ, avec un accompagnement personnalisé à chaque étape.</p>
+      </div>
+      <div class="max-w-6xl mx-auto mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-left">
+        <div class="bg-surface p-8 rounded-2xl border border-line shadow-sm" data-anim="fade" data-anim-delay="0">
+          <span class="text-xs font-semibold uppercase tracking-wider text-iris" data-sg-path="steps.items[0].tag">Étape 1</span>
+          <h3 class="text-xl font-semibold text-ink mt-3" data-sg-path="steps.items[0].title">Inscription & Profil</h3>
+          <p class="text-muted mt-3" data-sg-path="steps.items[0].text">Créez votre compte avec notre processus d'installation guidé. Accédez instantanément à votre tableau de bord personnalisé.</p>
+        </div>
+        <div class="bg-surface p-8 rounded-2xl border border-line shadow-sm" data-anim="fade" data-anim-delay="80">
+          <span class="text-xs font-semibold uppercase tracking-wider text-iris" data-sg-path="steps.items[1].tag">Étape 2</span>
+          <h3 class="text-xl font-semibold text-ink mt-3" data-sg-path="steps.items[1].title">Personnalisation</h3>
+          <p class="text-muted mt-3" data-sg-path="steps.items[1].text">Partagez vos objectifs et préférences. Nous adaptons votre expérience avec des insights pilotés par l'IA.</p>
+        </div>
+        <div class="bg-surface p-8 rounded-2xl border border-line shadow-sm" data-anim="fade" data-anim-delay="160">
+          <span class="text-xs font-semibold uppercase tracking-wider text-iris" data-sg-path="steps.items[2].tag">Étape 3</span>
+          <h3 class="text-xl font-semibold text-ink mt-3" data-sg-path="steps.items[2].title">Stratégie</h3>
+          <p class="text-muted mt-3" data-sg-path="steps.items[2].text">Mettez en œuvre des stratégies basées sur les données, alignées sur vos objectifs. Optimisez votre performance en temps réel.</p>
+        </div>
+        <div class="bg-surface p-8 rounded-2xl border border-line shadow-sm" data-anim="fade" data-anim-delay="240">
+          <span class="text-xs font-semibold uppercase tracking-wider text-iris" data-sg-path="steps.items[3].tag">Étape 4</span>
+          <h3 class="text-xl font-semibold text-ink mt-3" data-sg-path="steps.items[3].title">Analyser & Développer</h3>
+          <p class="text-muted mt-3" data-sg-path="steps.items[3].text">Suivez vos succès grâce à des analyses claires. Développez ce qui fonctionne et optimisez pour la croissance.</p>
+        </div>
+      </div>
+      <div class="mt-16" data-anim="fade" data-anim-delay="320">
+        <p class="text-muted" data-sg-path="steps.cta_text">Intégration fluide avec un accompagnement d'experts</p>
+        <a href="#" class="mt-4 inline-block rounded-full bg-ribbon text-white font-semibold px-7 py-3" data-sg-path="steps.cta_btn">Se connecter</a>
+      </div>
+    </section>
+
+    <!-- Integration Section -->
+    <section id="integration" class="py-20 px-4 text-center">
+      <div class="max-w-4xl mx-auto">
+        <span data-sg-path="integration.kicker" class="text-xs font-semibold uppercase tracking-[0.15em] text-iris">INTÉGRATIONS</span>
+        <h2 class="font-sans font-semibold text-d3 md:text-d2 tracking-tight mt-5" data-anim="fade">
+          <span class="text-ink" data-sg-path="integration.title_a">Des intégrations puissantes</span>
+          <span class="grad-title" data-sg-path="integration.title_b"> simplifiées</span>
+        </h2>
+        <p data-sg-path="integration.subtitle" class="mx-auto max-w-2xl text-muted text-lg mt-7" data-anim="fade" data-anim-delay="80">Unifiez vos plateformes préférées au sein d'un écosystème puissant pour une collaboration fluide et une efficacité renforcée.</p>
+      </div>
+      <div class="max-w-6xl mx-auto mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div class="bg-surface p-8 rounded-2xl border border-line shadow-sm text-left" data-anim="left">
+          <span class="text-xs font-semibold uppercase tracking-wider text-iris" data-sg-path="integration.feature_label">Architecture avancée</span>
+          <h3 class="text-2xl font-semibold text-ink mt-3" data-sg-path="integration.feature_title">Module d'analyse</h3>
+          <p class="text-muted mt-3" data-sg-path="integration.feature_text">Optimisez vos intégrations grâce à des métriques de performance en temps réel.</p>
+          <div class="mt-8 bg-soft/50 p-6 rounded-xl">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-ribbon rounded-full flex items-center justify-center text-white font-bold">AI³</div>
+              <div>
+                <p class="font-semibold text-ink" data-sg-path="integration.orb_label">AI³</p>
+                <p class="text-sm text-muted" data-sg-path="integration.orb_text">Couche d'intelligence unifiée</p>
+              </div>
+            </div>
+            <div class="mt-6 h-32 bg-white/50 rounded-lg flex items-center justify-center text-muted">[Diagramme]</div>
+          </div>
+        </div>
+        <div class="relative" data-anim="right">
+          <div class="bg-soft/50 p-8 rounded-2xl">
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+              <p class="text-sm text-muted" data-sg-path="integration.layout_text">Espaces de travail flexibles</p>
+              <div class="mt-4 h-48 bg-soft/30 rounded-lg flex items-center justify-center text-muted">[Mockup]</div>
+            </div>
+            <div class="absolute -bottom-4 -right-4 bg-white p-4 rounded-xl shadow-lg border border-line">
+              <p class="text-3xl font-bold text-ink" data-sg-path="integration.uptime_value">99<span class="text-lg">%</span></p>
+              <p class="text-sm text-muted" data-sg-path="integration.uptime_text">Disponibilité garantie</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-16" data-anim="fade">
+        <p class="text-sm text-muted" data-sg-path="integration.footnote">Vos plateformes préférées sont prêtes à être connectées.</p>
+        <p class="mt-4 text-muted" data-sg-path="integration.cta_text">Bénéficiez de l'assistance de nos spécialistes en intégration</p>
+        <a href="#" class="mt-4 inline-block rounded-full bg-ribbon text-white font-semibold px-7 py-3" data-sg-path="integration.cta_btn">Support instantané</a>
+      </div>
+    </section>
+
+    <!-- Performance Section -->
+    <section id="performance" class="py-20 px-4 text-center">
+      <div class="max-w-4xl mx-auto">
+        <span data-sg-path="performance.kicker" class="text-xs font-semibold uppercase tracking-[0.15em] text-iris">PERFORMANCES</span>
+        <h2 class="font-sans font-semibold text-d3 md:text-d2 tracking-tight mt-5" data-anim="fade">
+          <span class="text-ink" data-sg-path="performance.title_a">Nos Jalons,</span>
+          <span class="grad-title" data-sg-path="performance.title_b"> votre Atout</span>
+        </h2>
+        <p data-sg-path="performance.subtitle" class="mx-auto max-w-2xl text-muted text-lg mt-7" data-anim="fade" data-anim-delay="80">Une croissance mesurable à l’échelle mondiale, grâce à chaque campagne lancée, utilisateur accompagné et solution pilotée par l’IA.</p>
+      </div>
+      <div class="max-w-5xl mx-auto mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+        <div class="bg-surface p-6 rounded-2xl border border-line shadow-sm" data-anim="fade" data-anim-delay="0">
+          <p class="text-4xl font-bold grad-title" data-count="12000" data-count-suffix="+">0</span></p>
+          <p class="text-sm text-muted mt-2" data-sg-path="performance.stats[0].label">Campagnes Lancées</p>
+        </div>
+        <div class="bg-surface p-6 rounded-2xl border border-line shadow-sm" data-anim="fade" data-anim-delay="80">
+          <p class="text-4xl font-bold grad-title" data-count="40000">0</span></p>
+          <p class="text-sm text-muted mt-2" data-sg-path="performance.stats[1].label">Utilisateurs Actifs</p>
+        </div>
+        <div class="bg-surface p-6 rounded-2xl border border-line shadow-sm" data-anim="fade" data-anim-delay="160">
+          <p class="text-4xl font-bold grad-title" data-count="8000000">0</span></p>
+          <p class="text-sm text-muted mt-2" data-sg-path="performance.stats[2].label">Analyses IA Générées</p>
+        </div>
+        <div class="bg-surface p-6 rounded-2xl border border-line shadow-sm" data-anim="fade" data-anim-delay="240">
+          <p class="text-4xl font-bold grad-title" data-count="95000">0</span></p>
+          <p class="text-sm text-muted mt-2" data-sg-path="performance.stats[3].label">Engagement Mondial</p>
+        </div>
+        <div class="bg-surface p-6 rounded-2xl border border-line shadow-sm" data-anim="fade" data-anim-delay="320">
+          <p class="text-4xl font-bold grad-title" data-count="98" data-count-suffix="%">0</span></p>
+          <p class="text-sm text-muted mt-2" data-sg-path="performance.stats[4].label">Satisfaction Client</p>
+        </div>
+        <div class="bg-surface p-6 rounded-2xl border border-line shadow-sm" data-anim="fade" data-anim-delay="400">
+          <p class="text-4xl font-bold grad-title" data-count="320">0</span></p>
+          <p class="text-sm text-muted mt-2" data-sg-path="performance.stats[5].label">Solutions Stratégiques</p>
+        </div>
+      </div>
+      <div class="mt-16" data-anim="fade" data-anim-delay="480">
+        <p class="text-muted" data-sg-path="performance.cta_text">Découvrez notre moteur d’analyses et comment nous transformons les entreprises à travers le monde.</p>
+        <a href="#" class="mt-4 inline-block rounded-full bg-ribbon text-white font-semibold px-7 py-3" data-sg-path="performance.cta_btn">Démonstration Analytique</a>
+      </div>
+    </section>
+
+    <!-- Founders Section -->
+    <section class="py-20 px-4 text-center">
+      <div class="max-w-4xl mx-auto">
+        <span data-sg-path="founders.kicker" class="text-xs font-semibold uppercase tracking-[0.15em] text-iris">À PROPOS</span>
+        <h2 class="font-sans font-semibold text-d3 md:text-d2 tracking-tight mt-5" data-anim="fade">
+          <span class="grad-title" data-sg-path="founders.title">Rencontrez les Fondateurs</span>
+        </h2>
+        <p data-sg-path="founders.subtitle" class="mx-auto max-w-2xl text-muted text-lg mt-7" data-anim="fade" data-anim-delay="80">Les esprits derrière des solutions innovantes, qui façonnent la technologie de demain dès aujourd’hui, avec une expertise au service de l’avenir des entreprises.</p>
+      </div>
+      <div class="max-w-6xl mx-auto mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="text-center" data-anim="fade" data-anim-delay="0">
+          <img src="../../../../public/_templates/analytics-saas/img/founder1.jpg" alt="Elena Marsh" class="w-full h-80 object-cover rounded-2xl" data-sg-img="founders.people[0].image">
+          <h3 class="text-xl font-semibold text-ink mt-4" data-sg-path="founders.people[0].name">Elena Marsh</h3>
+          <p class="text-sm text-muted" data-sg-path="founders.people[0].role">Cofondatrice & CEO</p>
+        </div>
+        <div class="text-center" data-anim="fade" data-anim-delay="80">
+          <img src="../../../../public/_templates/analytics-saas/img/founder2.jpg" alt="Daniel Okafor" class="w-full h-80 object-cover rounded-2xl" data-sg-img="founders.people[1].image">
+          <h3 class="text-xl font-semibold text-ink mt-4" data-sg-path="founders.people[1].name">Daniel Okafor</h3>
+          <p class="text-sm text-muted" data-sg-path="founders.people[1].role">Cofondateur & CTO</p>
+        </div>
+        <div class="text-center" data-anim="fade" data-anim-delay="160">
+          <img src="../../../../public/_templates/analytics-saas/img/founder3.jpg" alt="Priya Nair" class="w-full h-80 object-cover rounded-2xl" data-sg-img="founders.people[2].image">
+          <h3 class="text-xl font-semibold text-ink mt-4" data-sg-path="founders.people[2].name">Priya Nair</h3>
+          <p class="text-sm text-muted" data-sg-path="founders.people[2].role">Cofondatrice & Responsable IA</p>
+        </div>
+      </div>
+      <div class="max-w-4xl mx-auto mt-20 text-left space-y-6 text-muted" data-anim="fade" data-anim-delay="240">
+        <h3 class="text-2xl font-semibold text-ink" data-sg-path="founders.story_title">Notre Histoire —</h3>
+        <p data-sg-path="founders.story_p1">Trois amis unis par une passion commune pour l’IA se sont rencontrés à l’université. Après d’innombrables sessions de codage alimentées par le café, nous avons livré notre premier prototype à une poignée d’équipes qui ont cru en notre vision.</p>
+        <p data-sg-path="founders.story_p2">Aujourd’hui, soutenus par certains des meilleurs acteurs du secteur technologique, nous rendons l’analytique avancée accessible aux entreprises du monde entier — sans la complexité des solutions d’entreprise.</p>
+        <p data-sg-path="founders.story_p3">Nous sommes des leaders dans les solutions d’entreprise pilotées par l’IA, permettant aux entreprises de prendre des décisions plus intelligentes, basées sur les données. Notre équipe allie une expertise approfondie en IA à une réelle compréhension des enjeux business pour des résultats concrets.</p>
+      </div>
+      <div class="max-w-4xl mx-auto mt-12 flex justify-between items-center" data-anim="fade" data-anim-delay="320">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wider text-iris" data-sg-path="founders.badge">Soutenu par des leaders du secteur</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="#" class="rounded-full bg-ribbon text-white font-semibold px-6 py-2 text-sm" data-sg-path="founders.culture_btn">Rejoignez-Nous</a>
+          <img src="../../../../public/_templates/analytics-saas/img/culture.jpg" alt="Culture" class="w-20 h-20 object-cover rounded-xl" data-sg-img="founders.culture_image">
+          <div>
+            <p class="font-semibold text-ink" data-sg-path="founders.culture_title">La Vie chez Northpeak</p>
+            <p class="text-sm text-muted" data-sg-path="founders.culture_text">Notre culture à travers le regard de l'équipe</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-16" data-anim="fade" data-anim-delay="400">
+        <p class="text-muted" data-sg-path="founders.cta_text">Découvrez toute l’histoire</p>
+        <a href="#" class="mt-4 inline-block rounded-full bg-ribbon text-white font-semibold px-7 py-3" data-sg-path="founders.cta_btn">En Savoir Plus</a>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 px-4 text-center">
+      <div class="max-w-4xl mx-auto">
+        <span data-sg-path="testimonials.kicker" class="text-xs font-semibold uppercase tracking-[0.15em] text-iris">AVIS CLIENTS</span>
+        <h2 class="font-sans font-semibold text-d3 md:text-d2 tracking-tight mt-5" data-anim="fade">
+          <span class="text-ink" data-sg-path="testimonials.title_a">Ce Que Nos</span>
+          <span class="grad-title" data-sg-path="testimonials.title_b"> Clients Disent</span>
+        </h2>
+        <p data-sg-path="testimonials.subtitle" class="mx-auto max-w-2xl text-muted text-lg mt-7" data-anim="fade" data-anim-delay="80">Comment nos clients boostent leur croissance grâce à des analyses avancées et pilotées par l’IA.</p>
+      </div>
+      <div class="max-w-6xl mx-auto mt-16">
+        <div class="bg-surface p-8 md:p-12 rounded-3xl border border-line shadow-lg text-left" data-anim="fade">
+          <div class="flex flex-col md:flex-row gap-8 items-center">
+            <img src="../../../../public/_templates/analytics-saas/img/feature.jpg" alt="David Pierce" class="w-full md:w-64 h-64 object-cover rounded-2xl" data-sg-img="testimonials.featured.image">
+            <div class="flex-1">
+              <p class="text-2xl font-semibold text-ink" data-sg-path="testimonials.featured.quote">“Northpeak nous a offert une source unique de vérité. Les insights IA ont révélé des opportunités que notre équipe aurait totalement manquées.”</p>
+              <p class="font-semibold text-ink mt-6" data-sg-path="testimonials.featured.name">David Pierce</p>
+              <p class="text-sm text-muted" data-sg-path="testimonials.featured.role">Consultant marketing chez Apex</p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+          <div class="bg-surface p-6 rounded-2xl border border-line shadow-sm" data-anim="fade" data-anim-delay="0">
+            <p class="text-ink" data-sg-path="testimonials.items[0].quote">“Depuis la mise en place de cette solution, nous avons constaté une amélioration spectaculaire de notre efficacité analytique. Les insights IA nous ont aidés à identifier des opportunités que nous aurions ignorées.”</p>
+            <div class="flex items-center gap-3 mt-4">
+              <img src="../../../../public/_templates/analytics-saas/img/t1.jpg" alt="Greg Weingartner" class="w-10 h-10 rounded-full object-cover" data-sg-img="testimonials.items[0].image">
+              <div>
+                <p class="font-semibold text-ink text-sm" data-sg-path="testimonials.items[0].name">Greg Weingartner</p>
+                <p class="text-xs text-muted" data-sg-path="testimonials.items[0].role">CEO chez Nexusgate</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-surface p-6 rounded-2xl border border-line shadow-sm" data-anim="fade" data-anim-delay="80">
+            <p class="text-ink" data-sg-path="testimonials.items[1].quote">“L’automatisation de la plateforme a fluidifié notre workflow et nettement amélioré la productivité de toute l’équipe.”</p>
+            <div class="flex items-center gap-3 mt-4">
+              <img src="../../../../public/_templates/analytics-saas/img/t2.jpg" alt="Jhon Lande" class="w-10 h-10 rounded-full object-cover" data-sg-img="testimonials.items[1].image">
+              <div>
+                <p class="font-semibold text-ink text-sm" data-sg-path="testimonials.items[1].name">Jhon Lande</p>
+                <p class="text-xs text-muted" data-sg-path="testimonials.items[1].role">Directeur marketing chez Spitfire</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-surface p-6 rounded-2xl border border-line shadow-sm" data-anim="fade" data-anim-delay="160">
+            <p class="text-ink" data-sg-path="testimonials.items[2].quote">“Northpeak fournit des données exploitables qui ont transformé notre processus de décision, passant de l’intuition à des preuves tangibles.”</p>
+            <div class="flex items-center gap-3 mt-4">
+              <img src="../../../../public/_templates/analytics-saas/img/t3.jpg" alt="Mara Velez" class="w-10 h-10 rounded-full object-cover" data-sg-img="testimonials.items[2].image">
+              <div>
+                <p class="font-semibold text-ink text-sm" data-sg-path="testimonials.items[2].name">Mara Velez</p>
+                <p class="text-xs text-muted" data-sg-path="testimonials.items[2].role">Responsable croissance chez Gessler</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-surface p-6 rounded-2xl border border-line shadow-sm" data-anim="fade" data-anim-delay="240">
+            <p class="text-ink" data-sg-path="testimonials.items[3].quote">“L’intégration a pris une après-midi. En une semaine, nous générions des rapports qui prenaient auparavant des jours à nos analystes.”</p>
+            <div class="flex items-center gap-3 mt-4">
+              <img src="../../../../public/_templates/analytics-saas/img/t4.jpg" alt="Sofia Klein" class="w-10 h-10 rounded-full object-cover" data-sg-img="testimonials.items[3].image">
+              <div>
+                <p class="font-semibold text-ink text-sm" data-sg-path="testimonials.items[3].name">Sofia Klein</p>
+                <p class="text-xs text-muted" data-sg-path="testimonials.items[3].role">Responsable opérations chez Avocadoo</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 px-4 text-center">
+      <div class="max-w-4xl mx-auto">
+        <span data-sg-path="pricing.kicker" class="text-xs font-semibold uppercase tracking-[0.15em] text-iris">TARIFS</span>
+        <h2 class="font-sans font-semibold text-d3 md:text-d2 tracking-tight mt-5" data-anim="fade">
+          <span class="text-ink" data-sg-path="pricing.title_a">Découvrez</span>
+          <span class="grad-title" data-sg-path="pricing.title_b"> Nos Offres</span>
+        </h2>
+        <p data-sg-path="pricing.subtitle" class="mx-auto max-w-2xl text-muted text-lg mt-7" data-anim="fade" data-anim-delay="80">Des formules mensuelles ultra-flexibles et des abonnements annuels économiques.</p>
+        <div class="mt-8 flex justify-center items-center gap-4" data-anim="fade" data-anim-delay="160">
+          <span class="text-sm text-muted" data-sg-path="pricing.toggle_monthly">Mensuel</span>
+          <div class="relative">
+            <input type="checkbox" class="sr-only">
+            <div class="w-12 h-6 bg-soft rounded-full"></div>
+            <div class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform"></div>
+          </div>
+          <span class="text-sm font-semibold text-ink" data-sg-path="pricing.toggle_annual">Annuel</span>
+        </div>
+      </div>
+      <div class="max-w-6xl mx-auto mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-surface p-8 rounded-2xl border border-line shadow-sm text-left flex flex-col" data-anim="fade" data-anim-delay="0">
+          <h3 class="text-xl font-semibold text-ink" data-sg-path="pricing.plans[0].name">Essentiel</h3>
+          <p class="text-4xl font-bold text-ink mt-4" data-sg-path="pricing.plans[0].price">$29<span class="text-lg font-medium text-muted">/mois</span></p>
+          <ul class="mt-6 space-y-3 text-muted flex-grow">
+            <li class="flex items-center gap-2" data-sg-path="pricing.plans[0].features[0]"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Analytique de Base</li>
+            <li class="flex items-center gap-2" data-sg-path="pricing.plans[0].features[1]"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Campagnes Limitées</li>
+            <li class="flex items-center gap-2" data-sg-path="pricing.plans[0].features[2]"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Accès Communauté</li>
+            <li class="flex items-center gap-2" data-sg-path="pricing.plans[0].features[3]"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Support Standard</li>
+          </ul>
+          <a href="#" class="mt-8 w-full text-center rounded-full bg-white border border-line text-ink font-semibold py-3 hover:bg-soft transition-colors" data-sg-path="pricing.plans[0].cta">Acheter</a>
+        </div>
+        <div class="bg-surface p-8 rounded-2xl border-2 border-ribbon shadow-lg text-left flex flex-col relative" data-anim="fade" data-anim-delay="80">
+          <div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-ribbon text-white text-xs font-semibold px-3 py-1 rounded-full">Populaire</div>
+          <h3 class="text-xl font-semibold text-ink" data-sg-path="pricing.plans[1].name">Avancé</h3>
+          <p class="text-4xl font-bold text-ink mt-4" data-sg-path="pricing.plans[1].price">$79<span class="text-lg font-medium text-muted">/mois</span></p>
+          <ul class="mt-6 space-y-3 text-muted flex-grow">
+            <li class="flex items-center gap-2" data-sg-path="pricing.plans[1].features[0]"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Toutes les fonctionnalités Essentiel</li>
+            <li class="flex items-center gap-2" data-sg-path="pricing.plans[1].features[1]"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Campagnes Illimitées</li>
+            <li class="flex items-center gap-2" data-sg-path="pricing.plans[1].features[2]"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Prédictions IA avancées</li>
+            <li class="flex items-center gap-2" data-sg-path="pricing.plans[1].features[3]"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Support prioritaire</li>
+            <li class="flex items-center gap-2" data-sg-path="pricing.plans[1].features[4]"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Outils de collaboration d’équipe</li>
+          </ul>
+          <a href="#" class="mt-8 w-full text-center rounded-full bg-ribbon text-white font-semibold py-3" data-sg-path="pricing.plans[1].cta">Acheter</a>
+        </div>
+        <div class="bg-surface p-8 rounded-2xl border border-line shadow-sm text-left flex flex-col" data-anim="fade" data-anim-delay="160">
+          <h3 class="text-xl font-semibold text-ink" data-sg-path="pricing.plans[2].name">Entreprise</h3>
+          <p class="text-4xl font-bold text-ink mt-4" data-sg-path="pricing.plans[2].price">$199<span class="text-lg font-medium text-muted">/mois</span></p>
+          <ul class="mt-6 space-y-3 text-muted flex-grow">
+            <li class="flex items-center gap-2" data-sg-path="pricing.plans[2].features[0]"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Toutes les fonctionnalités Avancé</li>
+            <li class="flex items-center gap-2" data-sg-path="pricing.plans[2].features[1]"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Modèles IA sur mesure</li>
+            <li class="flex items-center gap-2" data-sg-path="pricing.plans[2].features[2]"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Accès API</li>
+            <li class="flex items-center gap-2" data-sg-path="pricing.plans[2].features[3]"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Intégrations avancées</li>
+            <li class="flex items-center gap-2" data-sg-path="pricing.plans[2].features[4]"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Support prioritaire 24/7</li>
+            <li class="flex items-center gap-2" data-sg-path="pricing.plans[2].features[5]"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Sessions de formation</li>
+          </ul>
+          <a href="#" class="mt-8 w-full text-center rounded-full bg-white border border-line text-ink font-semibold py-3 hover:bg-soft transition-colors" data-sg-path="pricing.plans[2].cta">Contacter les Ventes</a>
+        </div>
+      </div>
+      <div class="mt-20" data-anim="fade" data-anim-delay="240">
+        <p class="text-xs font-semibold uppercase tracking-[0.15em] text-muted mb-6" data-sg-path="pricing.proof_label">APPROUVÉ PAR LES LEADERS DU MARCHÉ</p>
+        <div class="flex flex-wrap justify-center items-center gap-x-10 gap-y-4 text-muted">
+          <img src="../../../../public/_templates/analytics-saas/img/logo-spitfire.svg" alt="Spitfire" class="h-6" data-sg-img="pricing.logos[0]">
+          <img src="../../../../public/_templates/analytics-saas/img/logo-avocadoo.svg" alt="Avocadoo" class="h-6" data-sg-img="pricing.logos[1]">
+          <img src="../../../../public/_templates/analytics-saas/img/logo-nanowise.svg" alt="Nanowise" class="h-6" data-sg-img="pricing.logos[2]">
+          <img src="../../../../public/_templates/analytics-saas/img/logo-nexusgate.svg" alt="Nexusgate" class="h-6" data-sg-img="pricing.logos[3]">
+          <img src="../../../../public/_templates/analytics-saas/img/logo-gessler.svg" alt="Gessler" class="h-6" data-sg-img="pricing.logos[4]">
+        </div>
+      </div>
+      <div class="mt-16" data-anim="fade" data-anim-delay="320">
+        <p class="text-muted" data-sg-path="pricing.cta_text">Hésitez sur le choix de votre formule ?</p>
+        <a href="#" class="mt-4 inline-block rounded-full bg-ribbon text-white font-semibold px-7 py-3" data-sg-path="pricing.cta_btn">Parlez à un Expert</a>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 px-4 text-center">
+      <div class="max-w-4xl mx-auto">
+        <span data-sg-path="faq.kicker" class="text-xs font-semibold uppercase tracking-[0.15em] text-iris">FAQ</span>
+        <h2 class="font-sans font-semibold text-d3 md:text-d2 tracking-tight mt-5" data-anim="fade">
+          <span class="text-ink" data-sg-path="faq.title_a">Questions fréquentes</span>
+          <span class="grad-title" data-sg-path="faq.title_b"> À propos de Northpeak</span>
+        </h2>
+        <p data-sg-path="faq.subtitle" class="mx-auto max-w-2xl text-muted text-lg mt-7" data-anim="fade" data-anim-delay="80">Des réponses simples pour tout clarifier.</p>
+      </div>
+      <div class="max-w-3xl mx-auto mt-16 text-left space-y-4" data-anim="fade" data-anim-delay="160">
+        <div class="faq-item bg-surface rounded-2xl border border-line shadow-sm">
+          <button class="w-full flex justify-between items-center p-6 text-left">
+            <span class="font-semibold text-ink" data-sg-path="faq.items[0].q">La plateforme est-elle adaptée aux débutants ?</span>
+            <span class="faq-icon text-iris text-2xl font-light">+</span>
+          </button>
+          <div class="faq-content hidden p-6 pt-0 text-muted">
+            <p data-sg-path="faq.items[0].a">Absolument. Northpeak propose une configuration guidée, des paramètres par défaut pertinents et des insights en langage clair, pour que vous puissiez en tirer profit dès le premier jour, sans équipe data.</p>
+          </div>
+        </div>
+        <div class="faq-item bg-surface rounded-2xl border border-line shadow-sm">
+          <button class="w-full flex justify-between items-center p-6 text-left">
+            <span class="font-semibold text-ink" data-sg-path="faq.items[1].q">Quelle est la précision des insights IA ?</span>
+            <span class="faq-icon text-iris text-2xl font-light">+</span>
+          </button>
+          <div class="faq-content hidden p-6 pt-0 text-muted">
+            <p data-sg-path="faq.items[1].a">Nos modèles sont évalués en continu par rapport à vos résultats passés. Vous voyez toujours le niveau de confiance derrière chaque recommandation, pour garder le contrôle.</p>
+          </div>
+        </div>
+        <div class="faq-item bg-surface rounded-2xl border border-line shadow-sm">
+          <button class="w-full flex justify-between items-center p-6 text-left">
+            <span class="font-semibold text-ink" data-sg-path="faq.items[2].q">Puis-je intégrer mes outils existants ?</span>
+            <span class="faq-icon text-iris text-2xl font-light">+</span>
+          </button>
+          <div class="faq-content hidden p-6 pt-0 text-muted">
+            <p data-sg-path="faq.items[2].a">Oui. Northpeak se connecte en quelques secondes aux plateformes que vous utilisez déjà, sans travail d'ingénierie pour les intégrations les plus courantes.</p>
+          </div>
+        </div>
+        <div class="faq-item bg-surface rounded-2xl border border-line shadow-sm">
+          <button class="w-full flex justify-between items-center p-6 text-left">
+            <span class="font-semibold text-ink" data-sg-path="faq.items[3].q">Quelles mesures de sécurité appliquez-vous ?</span>
+            <span class="faq-icon text-iris text-2xl font-light">+</span>
+          </button>
+          <div class="faq-content hidden p-6 pt-0 text-muted">
+            <p data-sg-path="faq.items[3].a">Les données sont chiffrées en transit et au repos, avec des contrôles d'accès basés sur les rôles et un journal d'audit. Vos données ne sont jamais utilisées pour entraîner des modèles partagés.</p>
+          </div>
+        </div>
+        <div class="faq-item bg-surface rounded-2xl border border-line shadow-sm">
+          <button class="w-full flex justify-between items-center p-6 text-left">
+            <span class="font-semibold text-ink" data-sg-path="faq.items[4].q">À quelle fréquence les insights sont-ils mis à jour ?</span>
+            <span class="faq-icon text-iris text-2xl font-light">+</span>
+          </button>
+          <div class="faq-content hidden p-6 pt-0 text-muted">
+            <p data-sg-path="faq.items[4].a">Les tableaux de bord se rafraîchissent en quasi temps réel à l'arrivée de nouvelles données, et les insights stratégiques sont recalculés tout au long de la journée.</p>
+          </div>
+        </div>
+        <div class="faq-item bg-surface rounded-2xl border border-line shadow-sm">
+          <button class="w-full flex justify-between items-center p-6 text-left">
+            <span class="font-semibold text-ink" data-sg-path="faq.items[5].q">Quel type de support proposez-vous ?</span>
+            <span class="faq-icon text-iris text-2xl font-light">+</span>
+          </button>
+          <div class="faq-content hidden p-6 pt-0 text-muted">
+            <p data-sg-path="faq.items[5].a">Chaque formule inclut un support. Les formules Advanced et Enterprise ajoutent des canaux prioritaires et 24/7, ainsi qu'un spécialiste dédié pour l'onboarding.</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-16" data-anim="fade" data-anim-delay="240">
+        <p class="text-muted" data-sg-path="faq.cta_text">Des questions restantes ?</p>
+        <a href="#" class="mt-4 inline-block rounded-full bg-ribbon text-white font-semibold px-7 py-3" data-sg-path="faq.cta_btn">Obtenir de l'aide</a>
+      </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section id="cta" class="py-20 px-4 text-center">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="font-sans font-semibold text-d3 md:text-d2 tracking-tight grad-title" data-sg-path="finalcta.title" data-anim="fade">Prêt ? Parlons-en !</h2>
+        <p data-sg-path="finalcta.subtitle" class="mx-auto max-w-2xl text-muted text-lg mt-7" data-anim="fade" data-anim-delay="80">Bénéficiez d'insights d'experts et de réponses adaptées à vos besoins métiers et à votre transformation.</p>
+        <div class="mt-9 flex justify-center gap-3" data-anim="fade" data-anim-delay="160">
+          <a href="#" class="rounded-full bg-ribbon text-white font-semibold px-7 py-3" data-sg-path="finalcta.cta_primary">Réserver un appel</a>
+          <a href="#" class="rounded-full bg-white border border-line text-ink font-semibold px-7 py-3 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" /></svg>
+            <span data-sg-path="finalcta.cta_secondary">2 créneaux disponibles</span>
+          </a>
+        </div>
+      </div>
+      <div class="mt-20 overflow-hidden">
+        <div class="flex animate-marquee whitespace-nowrap text-4xl font-semibold text-soft">
+          <span class="mx-8" data-sg-path="finalcta.marquee[0]">Analyse prédictive</span>
+          <span class="mx-8" data-sg-path="finalcta.marquee[1]">Croissance d'entreprise</span>
+          <span class="mx-8" data-sg-path="finalcta.marquee[2]">Automatisation intelligente</span>
+          <span class="mx-8" data-sg-path="finalcta.marquee[3]">Planification stratégique</span>
+          <span class="mx-8" data-sg-path="finalcta.marquee[0]">Analyse prédictive</span>
+          <span class="mx-8" data-sg-path="finalcta.marquee[1]">Croissance d'entreprise</span>
+          <span class="mx-8" data-sg-path="finalcta.marquee[2]">Automatisation intelligente</span>
+          <span class="mx-8" data-sg-path="finalcta.marquee[3]">Planification stratégique</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-surface border-t border-line pt-20 pb-8 px-4">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div class="lg:col-span-2">
+          <h3 class="text-xl font-semibold text-ink" data-sg-path="footer.newsletter_title">Restez informé</h3>
+          <p class="text-muted mt-2" data-sg-path="footer.newsletter_text">Soyez le premier à connaître les nouveautés</p>
+          <form class="mt-6 flex gap-2">
+            <input type="email" placeholder="Votre email" class="w-full px-4 py-2 border border-line rounded-lg focus:ring-ribbon focus:border-ribbon" data-sg-path="footer.email_placeholder">
+            <button type="submit" class="rounded-lg bg-ribbon text-white font-semibold px-5 py-2">S'abonner</button>
+          </form>
+        </div>
+        <div>
+          <h4 class="font-semibold text-ink">Pages</h4>
+          <ul class="mt-4 space-y-3 text-muted">
+            <li><a href="#" class="hover:text-ink" data-sg-path="footer.col1[0]">Accueil</a></li>
+            <li><a href="#" class="hover:text-ink" data-sg-path="footer.col1[1]">Fonctionnalités</a></li>
+            <li><a href="#" class="hover:text-ink" data-sg-path="footer.col1[2]">Fonctionnement</a></li>
+            <li><a href="#" class="hover:text-ink" data-sg-path="footer.col1[3]">Intégration</a></li>
+            <li><a href="#" class="hover:text-ink" data-sg-path="footer.col1[4]">Performance</a></li>
+            <li><a href="#" class="hover:text-ink" data-sg-path="footer.col1[5]">Tarifs</a></li>
+            <li><a href="#" class="hover:text-ink" data-sg-path="footer.col1[6]">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-ink">Ressources</h4>
+          <ul class="mt-4 space-y-3 text-muted">
+            <li><a href="#" class="hover:text-ink" data-sg-path="footer.col2[0]">À propos</a></li>
+            <li><a href="#" class="hover:text-ink" data-sg-path="footer.col2[1]">Témoignages clients</a></li>
+            <li><a href="#" class="hover:text-ink" data-sg-path="footer.col2[2]">Réserver un appel</a></li>
+            <li><a href="#" class="hover:text-ink" data-sg-path="footer.col2[3]">Blog</a></li>
+            <li><a href="#" class="hover:text-ink" data-sg-path="footer.col2[4]">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-16 pt-8 border-t border-line text-center text-sm text-muted">
+        <p data-sg-path="footer.copyright">Copyright © Northpeak 2026</p>
+      </div>
+      <div class="text-center mt-4 text-xs text-muted">
+        <p>Propulsé par <a href="#" class="font-semibold text-ink">Akyra</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script for FAQ Accordion -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const button = item.querySelector('button');
+        const content = item.querySelector('.faq-content');
+        const icon = item.querySelector('.faq-icon');
+
+        button.addEventListener('click', () => {
+          const isOpen = content.classList.contains('hidden');
+
+          if (isOpen) {
+            content.classList.remove('hidden');
+            item.classList.add('open');
+            icon.textContent = '−';
+          } else {
+            content.classList.add('hidden');
+            item.classList.remove('open');
+            icon.textContent = '+';
+          }
+        });
+      });
+    });
+  </script>
+
+<!-- ═══ AKYRA MOTION KIT — animations partagées (vanilla, sans dépendance, respecte prefers-reduced-motion) ═══ -->
+<style>
+  [data-anim]{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+  [data-anim="fade"]{transform:none}
+  [data-anim="left"]{transform:translateX(-26px)}
+  [data-anim="right"]{transform:translateX(26px)}
+  [data-anim="scale"]{transform:scale(.96)}
+  [data-anim].in{opacity:1!important;transform:none!important}
+  /* Apparition du texte mot à mot */
+  .anim-words .w{display:inline-block;opacity:0;transform:translateY(0.5em);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .anim-words.in .w{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){[data-anim],.anim-words .w{opacity:1!important;transform:none!important;transition:none!important}}
+</style>
+<script>
+(function(){
+  var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var IO = 'IntersectionObserver' in window;
+
+  // 1) Révélation au scroll des éléments [data-anim] (stagger via data-anim-delay en ms)
+  var reveals = document.querySelectorAll('[data-anim]');
+  function showReveal(el){
+    var d = parseInt(el.getAttribute('data-anim-delay')||'0',10);
+    if(d) setTimeout(function(){el.classList.add('in')}, d); else el.classList.add('in');
+  }
+  if(RM || !IO){ reveals.forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioR = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ showReveal(en.target); ioR.unobserve(en.target);} });
+    },{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(function(e){ ioR.observe(e); });
+  }
+
+  // 2) Texte mot à mot : <h1 class="anim-words">…</h1>.
+  //    Découpe DOM-SAFE : on n'enveloppe QUE les nœuds texte (les balises internes
+  //    — dégradés, pilules — sont préservées intactes, jamais transformées en texte).
+  document.querySelectorAll('.anim-words').forEach(function(el){
+    if(el.dataset.split) return; el.dataset.split='1';
+    // Garde-fou : si le titre contient des balises internes (dégradé, pilule…),
+    // on NE découpe PAS (sinon dégradé cassé / mots invisibles) — il reste intact.
+    if(el.children.length > 0){ el.classList.remove('anim-words'); return; }
+    var wi = 0, textNodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    while(walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(function(tn){
+      if(!tn.nodeValue || !tn.nodeValue.trim()) return;
+      var frag = document.createDocumentFragment();
+      tn.nodeValue.split(/(\s+)/).forEach(function(part){
+        if(part === '') return;
+        if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+        var s = document.createElement('span'); s.className='w'; s.textContent=part;
+        s.style.transitionDelay=((wi++)*45)+'ms'; frag.appendChild(s);
+      });
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  });
+  if(RM || !IO){ document.querySelectorAll('.anim-words').forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioW = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ioW.unobserve(en.target);} });
+    },{threshold:0.25});
+    document.querySelectorAll('.anim-words').forEach(function(e){ ioW.observe(e); });
+  }
+
+  // 3) Compteurs : <span data-count="1200" data-count-suffix="+" data-count-decimals="0">0</span>
+  function fmt(v,dec){ return v.toLocaleString('fr-FR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+  function countUp(el){
+    var target=parseFloat(el.getAttribute('data-count'))||0,
+        suf=el.getAttribute('data-count-suffix')||'', pre=el.getAttribute('data-count-prefix')||'',
+        dec=parseInt(el.getAttribute('data-count-decimals')||'0',10), dur=1500, start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=pre+fmt(target*e,dec)+suf; if(p<1)requestAnimationFrame(step); else el.textContent=pre+fmt(target,dec)+suf; }
+    requestAnimationFrame(step);
+  }
+  var nums = document.querySelectorAll('[data-count]');
+  if(RM || !IO){ nums.forEach(function(el){ el.textContent=(el.getAttribute('data-count-prefix')||'')+fmt(parseFloat(el.getAttribute('data-count'))||0,parseInt(el.getAttribute('data-count-decimals')||'0',10))+(el.getAttribute('data-count-suffix')||''); }); }
+  else {
+    var ioN = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ countUp(en.target); ioN.unobserve(en.target);} });
+    },{threshold:0.6});
+    nums.forEach(function(el){ ioN.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -31,6 +31,22 @@
 - **Les tokens en tête** : la palette et la typo sont définies UNE fois (config
   Tailwind inline) et référencées partout par leur nom (`primary`, `ink`, `muted`).
 
+## Animations (kit partagé)
+
+Un **kit d'animation commun** (`public/_templates/_shared/motion.html`, vanilla JS,
+sans dépendance, respecte `prefers-reduced-motion`) est **injecté automatiquement**
+dans chaque site généré. Le design system n'a pas à le recopier ; la génération
+annote seulement le HTML :
+- **`data-anim`** (+ variantes `fade`/`left`/`right`/`scale`, + `data-anim-delay`
+  en ms pour le stagger) sur les blocs qui apparaissent au scroll → fondu + montée.
+- **`anim-words`** sur le grand titre du hero → apparition mot à mot.
+- **`data-count="<n>"`** (+ `data-count-suffix`, `data-count-decimals`) sur chaque
+  chiffre de statistique → compteur animé de 0 à la valeur quand il entre à l'écran.
+
+Le kit révèle les éléments via `IntersectionObserver` ; en `prefers-reduced-motion`
+ou sans IO, tout s'affiche immédiatement (accessibilité). Pour une capture pleine
+page, tout est dans le viewport → tout se révèle.
+
 ## Sections obligatoires (dans cet ordre)
 
 1. **ADN** — 2-3 phrases : intention visuelle, émotion, à qui ça parle, ce qui

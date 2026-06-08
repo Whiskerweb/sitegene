@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mörk Studio — Direction artistique & Design digital</title>
+  <meta name="description" content="Mörk Studio est une agence indépendante qui fusionne direction artistique, identité de marque et développement pour créer des expériences digitales audacieuses, structurées et intentionnelles.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family:'Inter',sans-serif; background:#000; color:#fff; margin:0; }
+    .anim-words span { opacity: 0; display: inline-block; }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:'#000000', paper:'#ffffff', electric:'#0000ee', sky:'#0099ff',
+            mute:'#999999', dim:'#666666', faint:'#bbbbbb', line:'#222222',
+          },
+          fontFamily: { sans:['Inter','sans-serif'] },
+          fontSize: {
+            mega: ['clamp(72px,17vw,236px)', { lineHeight:'0.82', letterSpacing:'-0.03em' }],
+            huge: ['clamp(40px,7vw,80px)',   { lineHeight:'1.0',  letterSpacing:'-0.03em' }],
+            big:  ['clamp(28px,4.4vw,49px)', { lineHeight:'1.08', letterSpacing:'-0.02em' }],
+            price:['clamp(48px,6vw,79px)',   { lineHeight:'1.0',  letterSpacing:'-0.03em' }],
+          },
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-ink text-paper">
+
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-6 md:px-10 py-6" data-anim="fade">
+    <a href="#" data-sg-path="brand" class="text-[13px] font-bold tracking-[0.14em] uppercase">MÖRK STUDIO</a>
+    <ul class="hidden md:flex gap-8 list-none text-[13px] tracking-[0.04em]">
+      <li><a href="#work" data-sg-path="nav[0]" class="hover:opacity-60 transition-opacity">Réalisations</a></li>
+      <li><a href="#about" data-sg-path="nav[1]" class="hover:opacity-60 transition-opacity">Studio</a></li>
+      <li><a href="#contact" data-sg-path="nav[2]" class="hover:opacity-60 transition-opacity">Contact</a></li>
+    </ul>
+    <div class="text-[12px] tracking-[0.08em] tabular-nums opacity-70" id="nav-clock">LOCAL / 00:00:00</div>
+  </nav>
+
+  <script>
+    (function(){
+      function tick(){ var n=new Date(), p=function(x){return String(x).padStart(2,'0')}, el=document.getElementById('nav-clock');
+        if(el) el.textContent='LOCAL / '+p(n.getHours())+':'+p(n.getMinutes())+':'+p(n.getSeconds()); }
+      tick(); setInterval(tick,1000);
+    })();
+  </script>
+
+  <!-- HERO -->
+  <section class="relative px-6 md:px-10 pt-40 md:pt-44 pb-0">
+    <h1 data-sg-path="hero.headline" class="max-w-[680px] text-big font-medium text-white anim-words" data-anim="fade">
+      <span>Motifs,</span> <span>dimensions</span> <span>et</span> <span>instants</span> <span>qui</span> <span>captivent</span> <span>et</span> <span>laissent</span> <span>une</span> <span>empreinte</span> <span>marquante.</span>
+    </h1>
+    <div class="mt-10 bg-white text-black grid grid-cols-1 md:grid-cols-3 max-w-[1000px]" data-anim="fade" data-anim-delay="200">
+      <div data-sg-path="hero.tags[0]" class="px-2 py-2.5 text-[15px] font-medium border-b md:border-b-0 md:border-r border-black/10">Direction artistique</div>
+      <div data-sg-path="hero.tags[1]" class="px-2 py-2.5 text-[15px] font-medium border-b md:border-b-0 md:border-r border-black/10 text-center">Identité de marque</div>
+      <div data-sg-path="hero.tags[2]" class="px-2 py-2.5 text-[15px] font-medium">Stratégie</div>
+    </div>
+    <div class="mt-16 md:mt-24" data-anim="fade" data-anim-delay="400">
+      <span class="text-mega font-semibold tracking-[-0.04em] text-white whitespace-nowrap">
+        <span data-sg-path="wordmark">Mörk</span><span class="align-super text-[0.22em] font-medium">™</span>
+      </span>
+    </div>
+  </section>
+
+  <!-- CLIENTS -->
+  <section class="px-6 md:px-10 py-24 md:py-32" data-anim="fade">
+    <div class="flex justify-between items-center mb-16">
+      <div>
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute" data-sg-path="clients.label">Réalisations プロジェクト</p>
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute mt-1" data-sg-path="clients.index">INDEX — 00</p>
+      </div>
+      <p class="text-[13px] tracking-[0.1em] uppercase text-mute" data-sg-path="clients.meta">CRÉATION NUMÉRIQUE</p>
+    </div>
+    <div class="flex flex-wrap gap-x-12 gap-y-8 items-center justify-center md:justify-start">
+      <span class="text-[24px] font-medium" data-sg-path="clients.logos[0]" data-anim="fade" data-anim-delay="0">Cairo</span>
+      <span class="text-[24px] font-medium" data-sg-path="clients.logos[1]" data-anim="fade" data-anim-delay="80">Orbit</span>
+      <span class="text-[24px] font-medium" data-sg-path="clients.logos[2]" data-anim="fade" data-anim-delay="160">Chen</span>
+      <span class="text-[24px] font-medium" data-sg-path="clients.logos[3]" data-anim="fade" data-anim-delay="240">Manila</span>
+      <span class="text-[24px] font-medium" data-sg-path="clients.logos[4]" data-anim="fade" data-anim-delay="320">Nova</span>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="work" class="px-6 md:px-10 py-24 md:py-32">
+    <div class="max-w-[680px] mb-24" data-anim="fade">
+      <p data-sg-path="projects.intro" class="text-big font-medium leading-tight">Chaque projet est une opportunité de fusionner design et développement, transformant des idées interactives audacieuses en réalités digitales élégantes — conçues avec intention, rapidité et une clarté visuelle qui attire les foules.</p>
+      <a href="#" data-sg-path="projects.cta" class="inline-block mt-8 text-[13px] tracking-[0.1em] uppercase hover:opacity-60 transition-opacity">Voir les réalisations</a>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="relative group" data-anim="fade" data-anim-delay="0">
+        <img src="../../../../public/_templates/studio-portfolio/img/project1.jpg" alt="Halo Wear project" data-sg-img class="w-full h-auto object-cover">
+        <div class="absolute bottom-6 left-6 flex items-baseline gap-4">
+          <h3 data-sg-path="projects.items[0].title" class="text-huge font-medium">Halo Wear</h3>
+          <span data-sg-path="projects.items[0].index" class="text-[13px] tracking-[0.1em] uppercase text-mute">(01)</span>
+        </div>
+      </div>
+      <div class="relative group" data-anim="fade" data-anim-delay="80">
+        <img src="../../../../public/_templates/studio-portfolio/img/project2.jpg" alt="Sonder Goods project" data-sg-img class="w-full h-auto object-cover">
+        <div class="absolute bottom-6 left-6 flex items-baseline gap-4">
+          <h3 data-sg-path="projects.items[1].title" class="text-huge font-medium">Sonder Goods</h3>
+          <span data-sg-path="projects.items[1].index" class="text-[13px] tracking-[0.1em] uppercase text-mute">(02)</span>
+        </div>
+      </div>
+      <div class="relative group" data-anim="fade" data-anim-delay="160">
+        <img src="../../../../public/_templates/studio-portfolio/img/project3.jpg" alt="Lucent Lab project" data-sg-img class="w-full h-auto object-cover">
+        <div class="absolute bottom-6 left-6 flex items-baseline gap-4">
+          <h3 data-sg-path="projects.items[2].title" class="text-huge font-medium">Lucent Lab</h3>
+          <span data-sg-path="projects.items[2].index" class="text-[13px] tracking-[0.1em] uppercase text-mute">(03)</span>
+        </div>
+      </div>
+      <div class="relative group" data-anim="fade" data-anim-delay="240">
+        <img src="../../../../public/_templates/studio-portfolio/img/project4.jpg" alt="Arc & Bloom project" data-sg-img class="w-full h-auto object-cover">
+        <div class="absolute bottom-6 left-6 flex items-baseline gap-4">
+          <h3 data-sg-path="projects.items[3].title" class="text-huge font-medium">Arc & Bloom</h3>
+          <span data-sg-path="projects.items[3].index" class="text-[13px] tracking-[0.1em] uppercase text-mute">(04)</span>
+        </div>
+      </div>
+      <div class="relative group md:col-span-2" data-anim="fade" data-anim-delay="320">
+        <img src="../../../../public/_templates/studio-portfolio/img/project5.jpg" alt="Atelier Nara project" data-sg-img class="w-full h-auto object-cover">
+        <div class="absolute bottom-6 left-6 flex items-baseline gap-4">
+          <h3 data-sg-path="projects.items[4].title" class="text-huge font-medium">Atelier Nara</h3>
+          <span data-sg-path="projects.items[4].index" class="text-[13px] tracking-[0.1em] uppercase text-mute">(05)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATEMENT -->
+  <section id="about" class="px-6 md:px-10 py-24 md:py-32">
+    <div class="flex justify-between items-center mb-16">
+      <div>
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute" data-sg-path="statement.label">Personal Profile プロフィール</p>
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute mt-1" data-sg-path="statement.index">DROP — 05</p>
+      </div>
+      <p class="text-[13px] tracking-[0.1em] uppercase text-mute" data-sg-path="statement.meta">VISUAL THINKER</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+      <div data-anim="fade">
+        <p data-sg-path="statement.text" class="text-big font-medium leading-tight mb-12">Allier design et code avec une clarté fonctionnelle et une précision créative. Créer des systèmes digitaux réfléchis, structurés et aux interactions expressives.</p>
+        <div class="grid grid-cols-2 gap-4">
+          <img src="../../../../public/_templates/studio-portfolio/img/portrait1.jpg" alt="Portrait 1" data-sg-img data-anim="fade" data-anim-delay="0">
+          <img src="../../../../public/_templates/studio-portfolio/img/portrait2.jpg" alt="Portrait 2" data-sg-img data-anim="fade" data-anim-delay="80">
+        </div>
+      </div>
+      <div data-anim="fade" data-anim-delay="160">
+        <p data-sg-path="statement.body" class="text-[18px] leading-relaxed mb-8">Nous faisons le lien entre direction créative et exécution concrète, intégrant design et développement dans un flux de travail unifié pour concevoir des expériences digitales réfléchies, rapides et performantes.</p>
+        <img src="../../../../public/_templates/studio-portfolio/img/profile.jpg" alt="Profile" data-sg-img class="w-full h-auto object-cover">
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPABILITIES -->
+  <section class="px-6 md:px-10 py-24 md:py-32">
+    <div class="flex justify-between items-center mb-16">
+      <div>
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute" data-sg-path="capabilities.label">Capabilities サービス内容</p>
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute mt-1" data-sg-path="capabilities.index">(WDX® — 04)</p>
+      </div>
+      <p class="text-[13px] tracking-[0.1em] uppercase text-mute" data-sg-path="capabilities.meta">EXÉCUTION DIGITALE</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
+      <p data-sg-path="capabilities.cols[0]" class="text-[18px] font-medium" data-anim="fade" data-anim-delay="0">Précis</p>
+      <p data-sg-path="capabilities.cols[1]" class="text-[18px] font-medium" data-anim="fade" data-anim-delay="80">Structuré</p>
+      <p data-sg-path="capabilities.cols[2]" class="text-[18px] font-medium" data-anim="fade" data-anim-delay="160">Ciblé</p>
+      <p data-sg-path="capabilities.cols[3]" class="text-[18px] font-medium" data-anim="fade" data-anim-delay="240">Langage visuel</p>
+    </div>
+    <div class="space-y-8">
+      <div class="flex items-center gap-8 py-6 border-b border-line" data-anim="fade" data-anim-delay="0">
+        <span data-sg-path="capabilities.items[0].no" class="text-[13px] tracking-[0.1em] uppercase text-mute">01</span>
+        <h3 data-sg-path="capabilities.items[0].name" class="text-huge font-medium flex-1">Direction artistique</h3>
+        <p data-sg-path="capabilities.items[0].desc" class="text-[16px] text-mute max-w-[400px]">Nous guidons chaque décision visuelle de bout en bout, garantissant clarté, émotion et impact à chaque point de contact.</p>
+      </div>
+      <div class="flex items-center gap-8 py-6 border-b border-line" data-anim="fade" data-anim-delay="80">
+        <span data-sg-path="capabilities.items[1].no" class="text-[13px] tracking-[0.1em] uppercase text-mute">02</span>
+        <h3 data-sg-path="capabilities.items[1].name" class="text-huge font-medium flex-1">Identité de marque</h3>
+        <p data-sg-path="capabilities.items[1].desc" class="text-[16px] text-mute max-w-[400px]">De la stratégie à l'exécution, nous créons des systèmes de marque cohérents, distinctifs et porteurs de sens.</p>
+      </div>
+      <div class="flex items-center gap-8 py-6 border-b border-line" data-anim="fade" data-anim-delay="160">
+        <span data-sg-path="capabilities.items[2].no" class="text-[13px] tracking-[0.1em] uppercase text-mute">03</span>
+        <h3 data-sg-path="capabilities.items[2].name" class="text-huge font-medium flex-1">Direction motion</h3>
+        <p data-sg-path="capabilities.items[2].desc" class="text-[16px] text-mute max-w-[400px]">Nous utilisons le motion design comme outil créatif, apportant clarté, rythme et dynamisme aux expériences digitales avec intention.</p>
+      </div>
+      <div class="flex items-center gap-8 py-6 border-b border-line" data-anim="fade" data-anim-delay="240">
+        <span data-sg-path="capabilities.items[3].no" class="text-[13px] tracking-[0.1em] uppercase text-mute">04</span>
+        <h3 data-sg-path="capabilities.items[3].name" class="text-huge font-medium flex-1">Sites Framer</h3>
+        <p data-sg-path="capabilities.items[3].desc" class="text-[16px] text-mute max-w-[400px]">Design et exécution se rencontrent pour des sites web évolutifs, rapides et faciles à gérer, conçus en temps réel.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="px-6 md:px-10 py-24 md:py-32">
+    <div class="flex justify-between items-center mb-16">
+      <div>
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute" data-sg-path="experience.label">Experience エクスペリエンス</p>
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute mt-1" data-sg-path="experience.index">(WDX® — 05)</p>
+      </div>
+      <p class="text-[13px] tracking-[0.1em] uppercase text-mute" data-sg-path="experience.meta">SAVOIR-FAIRE DIGITAL</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
+      <p data-sg-path="experience.cols[0]" class="text-[18px] font-medium" data-anim="fade" data-anim-delay="0">International</p>
+      <p data-sg-path="experience.cols[1]" class="text-[18px] font-medium" data-anim="fade" data-anim-delay="80">Collaborations créatives</p>
+      <p data-sg-path="experience.cols[2]" class="text-[18px] font-medium" data-anim="fade" data-anim-delay="160">Studio</p>
+      <p data-sg-path="experience.cols[3]" class="text-[18px] font-medium" data-anim="fade" data-anim-delay="240">Partenariats créatifs</p>
+    </div>
+    <div class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-6 border-b border-line" data-anim="fade" data-anim-delay="0">
+        <h4 data-sg-path="experience.rows[0].studio" class="text-[18px] font-medium">Clavmen Studio</h4>
+        <p data-sg-path="experience.rows[0].period" class="text-[16px] text-mute">2022 - present</p>
+        <p data-sg-path="experience.rows[0].role" class="text-[16px] text-mute">Art Director & Designer</p>
+        <p data-sg-path="experience.rows[0].city" class="text-[16px] text-mute text-right">Tokyo</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-6 border-b border-line" data-anim="fade" data-anim-delay="80">
+        <h4 data-sg-path="experience.rows[1].studio" class="text-[18px] font-medium">Modular Eight</h4>
+        <p data-sg-path="experience.rows[1].period" class="text-[16px] text-mute">2020 – 2022</p>
+        <p data-sg-path="experience.rows[1].role" class="text-[16px] text-mute">Senior Developer</p>
+        <p data-sg-path="experience.rows[1].city" class="text-[16px] text-mute text-right">Osaka</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-6 border-b border-line" data-anim="fade" data-anim-delay="160">
+        <h4 data-sg-path="experience.rows[2].studio" class="text-[18px] font-medium">Haus of Signal</h4>
+        <p data-sg-path="experience.rows[2].period" class="text-[16px] text-mute">2018 – 2020</p>
+        <p data-sg-path="experience.rows[2].role" class="text-[16px] text-mute">Creative Technologist</p>
+        <p data-sg-path="experience.rows[2].city" class="text-[16px] text-mute text-right">Berlin</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-6 border-b border-line" data-anim="fade" data-anim-delay="240">
+        <h4 data-sg-path="experience.rows[3].studio" class="text-[18px] font-medium">Studio Orbit</h4>
+        <p data-sg-path="experience.rows[3].period" class="text-[16px] text-mute">2016 – 2018</p>
+        <p data-sg-path="experience.rows[3].role" class="text-[16px] text-mute">UI/UX Designer</p>
+        <p data-sg-path="experience.rows[3].city" class="text-[16px] text-mute text-right">Dallas</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-6 border-b border-line" data-anim="fade" data-anim-delay="320">
+        <h4 data-sg-path="experience.rows[4].studio" class="text-[18px] font-medium">Novaform Labs</h4>
+        <p data-sg-path="experience.rows[4].period" class="text-[16px] text-mute">2014 – 2016</p>
+        <p data-sg-path="experience.rows[4].role" class="text-[16px] text-mute">Junior Designer</p>
+        <p data-sg-path="experience.rows[4].city" class="text-[16px] text-mute text-right">Kyoto</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="px-6 md:px-10 py-24 md:py-32">
+    <div class="flex justify-between items-center mb-16">
+      <div>
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute" data-sg-path="testimonials.label">Testimonials レビュー</p>
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute mt-1" data-sg-path="testimonials.index">(WDX® — 06)</p>
+      </div>
+      <p class="text-[13px] tracking-[0.1em] uppercase text-mute" data-sg-path="testimonials.meta">AVIS CLIENTS</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="border border-line p-8" data-anim="fade" data-anim-delay="0">
+        <p data-sg-path="testimonials.items[0].quote" class="text-[16px] leading-relaxed mb-8">Mörk a sublimé chaque aspect de notre présence en ligne. Des détails animés à la structure globale, chaque élément semblait pensé et maîtrisé. Le site était non seulement magnifique, mais aussi performant — et toute la collaboration s'est déroulée sans accroc.</p>
+        <div class="flex items-center gap-4">
+          <img src="../../../../public/_templates/studio-portfolio/img/avatar1.jpg" alt="Lisa Kuroda" data-sg-img class="w-12 h-12 rounded-full object-cover">
+          <div>
+            <p data-sg-path="testimonials.items[0].name" class="font-medium">Lisa Kuroda</p>
+            <p data-sg-path="testimonials.items[0].role" class="text-[14px] text-mute">Founder, Studio Analog</p>
+          </div>
+        </div>
+        <p class="text-[20px] font-medium mt-8" data-sg-path="testimonials.items[0].logo">Cairo</p>
+      </div>
+      <div class="border border-line p-8" data-anim="fade" data-anim-delay="80">
+        <p data-sg-path="testimonials.items[1].quote" class="text-[16px] leading-relaxed mb-8">Mörk aborde chaque projet avec une profonde exigence. Leur travail ne se limite pas à l'apparence : il s'agit de la façon dont chaque élément fonctionne, s'articule et s'enchaîne. Ils apportent logique, rigueur et assurance à chaque décision.</p>
+        <div class="flex items-center gap-4">
+          <img src="../../../../public/_templates/studio-portfolio/img/avatar2.jpg" alt="Daniel Reyes" data-sg-img class="w-12 h-12 rounded-full object-cover">
+          <div>
+            <p data-sg-path="testimonials.items[1].name" class="font-medium">Daniel Reyes</p>
+            <p data-sg-path="testimonials.items[1].role" class="text-[14px] text-mute">Director, Framehaus</p>
+          </div>
+        </div>
+        <p class="text-[20px] font-medium mt-8" data-sg-path="testimonials.items[1].logo">Cairo</p>
+      </div>
+      <div class="border border-line p-8" data-anim="fade" data-anim-delay="160">
+        <p data-sg-path="testimonials.items[2].quote" class="text-[16px] leading-relaxed mb-8">Leur capacité à fusionner narration et design d'interaction épuré est inégalée. Mörk ne comprend pas seulement comment les choses doivent être conçues, mais pourquoi elles doivent l'être ainsi — et cette vision transparaît dans chaque détail.</p>
+        <div class="flex items-center gap-4">
+          <img src="../../../../public/_templates/studio-portfolio/img/avatar3.jpg" alt="Mei Tanaka" data-sg-img class="w-12 h-12 rounded-full object-cover">
+          <div>
+            <p data-sg-path="testimonials.items[2].name" class="font-medium">Mei Tanaka</p>
+            <p data-sg-path="testimonials.items[2].role" class="text-[14px] text-mute">UX Designer, Nuro</p>
+          </div>
+        </div>
+        <p class="text-[20px] font-medium mt-8" data-sg-path="testimonials.items[2].logo">Cairo</p>
+      </div>
+      <div class="border border-line p-8" data-anim="fade" data-anim-delay="240">
+        <p data-sg-path="testimonials.items[3].quote" class="text-[16px] leading-relaxed mb-8">Travailler avec Mörk, c'était bien plus que faire appel à un designer : c'était comme s'associer à un partenaire créatif qui comprenait vraiment nos objectifs. Ils ont pris nos idées brutes, leur ont donné du sens et les ont transformées en quelque chose de visuellement époustouflant.</p>
+        <div class="flex items-center gap-4">
+          <img src="../../../../public/_templates/studio-portfolio/img/avatar4.jpg" alt="Julian Pierce" data-sg-img class="w-12 h-12 rounded-full object-cover">
+          <div>
+            <p data-sg-path="testimonials.items[3].name" class="font-medium">Julian Pierce</p>
+            <p data-sg-path="testimonials.items[3].role" class="text-[14px] text-mute">Director, Vektor Inc.</p>
+          </div>
+        </div>
+        <p class="text-[20px] font-medium mt-8" data-sg-path="testimonials.items[3].logo">Cairo</p>
+      </div>
+      <div class="border border-line p-8" data-anim="fade" data-anim-delay="320">
+        <p data-sg-path="testimonials.items[4].quote" class="text-[16px] leading-relaxed mb-8">Mörk allie avec rare maîtrise créativité et rigueur. Une rapidité impressionnante, sans jamais sacrifier le souci du détail. Du brainstorming initial au produit final, chaque étape est réfléchie et la communication, limpide.</p>
+        <div class="flex items-center gap-4">
+          <img src="../../../../public/_templates/studio-portfolio/img/avatar5.jpg" alt="Hana Samoto" data-sg-img class="w-12 h-12 rounded-full object-cover">
+          <div>
+            <p data-sg-path="testimonials.items[4].name" class="font-medium">Hana Samoto</p>
+            <p data-sg-path="testimonials.items[4].role" class="text-[14px] text-mute">CEO, Willow Studio</p>
+          </div>
+        </div>
+        <p class="text-[20px] font-medium mt-8" data-sg-path="testimonials.items[4].logo">Cairo</p>
+      </div>
+    </div>
+    <div class="text-center mt-16">
+      <a href="#" data-sg-path="testimonials.cta" class="inline-block text-[13px] tracking-[0.1em] uppercase hover:opacity-60 transition-opacity">Nous contacter</a>
+    </div>
+  </section>
+
+  <!-- AWARDS -->
+  <section class="px-6 md:px-10 py-24 md:py-32">
+    <div class="flex justify-between items-center mb-16">
+      <div>
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute" data-sg-path="awards.label">Récompenses</p>
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute mt-1" data-sg-path="awards.index">(WDX® — 07)</p>
+      </div>
+      <p class="text-[13px] tracking-[0.1em] uppercase text-mute" data-sg-path="awards.meta">DISTINCTIONS SÉLECTIONNÉES</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
+      <p data-sg-path="awards.cols[0]" class="text-[18px] font-medium" data-anim="fade" data-anim-delay="0">Awwwards</p>
+      <p data-sg-path="awards.cols[1]" class="text-[18px] font-medium" data-anim="fade" data-anim-delay="80">CSSD</p>
+      <p data-sg-path="awards.cols[2]" class="text-[18px] font-medium" data-anim="fade" data-anim-delay="160">Framer</p>
+      <p data-sg-path="awards.cols[3]" class="text-[18px] font-medium" data-anim="fade" data-anim-delay="240">Dribbble</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div data-anim="fade" data-anim-delay="0">
+        <img src="../../../../public/_templates/studio-portfolio/img/award1.jpg" alt="Awwwards" data-sg-img class="w-full h-64 object-cover mb-4">
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute mb-2"><span data-count="27" data-count-suffix="x">0</span> Awwwards</p>
+        <p data-sg-path="awards.items[0].desc" class="text-[16px] leading-relaxed">Récompensé pour des interactions audacieuses, un rythme visuel structuré et une cohérence design remarquable dans les catégories créatives.</p>
+      </div>
+      <div data-anim="fade" data-anim-delay="80">
+        <img src="../../../../public/_templates/studio-portfolio/img/award2.jpg" alt="FWA" data-sg-img class="w-full h-64 object-cover mb-4">
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute mb-2"><span data-count="14" data-count-suffix="x">0</span> FWA</p>
+        <p data-sg-path="awards.items[1].desc" class="text-[16px] leading-relaxed">Primé pour une exécution exceptionnelle, des animations fluides et une originalité marquante dans les expériences digitales modernes.</p>
+      </div>
+      <div data-anim="fade" data-anim-delay="160">
+        <img src="../../../../public/_templates/studio-portfolio/img/award3.jpg" alt="CSSDA" data-sg-img class="w-full h-64 object-cover mb-4">
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute mb-2"><span data-count="9" data-count-suffix="x">0</span> CSSDA</p>
+        <p data-sg-path="awards.items[2].desc" class="text-[16px] leading-relaxed">Célébré pour l'excellence front-end, l'innovation design et la précision technique dans plusieurs projets phares.</p>
+      </div>
+      <div data-anim="fade" data-anim-delay="240">
+        <img src="../../../../public/_templates/studio-portfolio/img/award4.jpg" alt="Dribbble" data-sg-img class="w-full h-64 object-cover mb-4">
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute mb-2"><span data-count="8" data-count-suffix="x">0</span> Dribbble</p>
+        <p data-sg-path="awards.items[3].desc" class="text-[16px] leading-relaxed">Mis en avant pour des systèmes typographiques solides, une hiérarchie visuelle travaillée et des mises en page intentionnelles.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNERS -->
+  <section class="px-6 md:px-10 py-24 md:py-32">
+    <div class="flex justify-between items-center mb-16">
+      <div>
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute" data-sg-path="partners.label">Partenaires</p>
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute mt-1" data-sg-path="partners.index">(WDX® — 08)</p>
+      </div>
+      <p class="text-[13px] tracking-[0.1em] uppercase text-mute" data-sg-path="partners.meta">ÉQUIPES CRÉATIVES</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="relative" data-anim="fade" data-anim-delay="0">
+        <img src="../../../../public/_templates/studio-portfolio/img/gallery1.jpg" alt="Manila" data-sg-img class="w-full h-80 object-cover">
+        <div class="absolute bottom-6 left-6">
+          <p class="text-[13px] tracking-[0.1em] uppercase text-mute" data-sg-path="partners.wordmark">Cairo</p>
+          <h3 data-sg-path="partners.cards[0].city" class="text-huge font-medium">Manila</h3>
+        </div>
+      </div>
+      <div class="relative" data-anim="fade" data-anim-delay="80">
+        <img src="../../../../public/_templates/studio-portfolio/img/gallery2.jpg" alt="Oslo" data-sg-img class="w-full h-80 object-cover">
+        <div class="absolute bottom-6 left-6">
+          <p class="text-[13px] tracking-[0.1em] uppercase text-mute" data-sg-path="partners.wordmark">Cairo</p>
+          <h3 data-sg-path="partners.cards[1].city" class="text-huge font-medium">Oslo</h3>
+        </div>
+      </div>
+      <div class="relative" data-anim="fade" data-anim-delay="160">
+        <img src="../../../../public/_templates/studio-portfolio/img/gallery3.jpg" alt="Tokyo" data-sg-img class="w-full h-80 object-cover">
+        <div class="absolute bottom-6 left-6">
+          <p class="text-[13px] tracking-[0.1em] uppercase text-mute" data-sg-path="partners.wordmark">Cairo</p>
+          <h3 data-sg-path="partners.cards[2].city" class="text-huge font-medium">Tokyo</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="px-6 md:px-10 py-24 md:py-32">
+    <div class="flex justify-between items-center mb-16">
+      <div>
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute" data-sg-path="pricing.label">Tarifs</p>
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute mt-1" data-sg-path="pricing.index">(WDX® — 09)</p>
+      </div>
+      <p class="text-[13px] tracking-[0.1em] uppercase text-mute" data-sg-path="pricing.meta">DEVIS SUR MESURE</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
+      <p data-sg-path="pricing.cols[0]" class="text-[18px] font-medium" data-anim="fade" data-anim-delay="0">Options personnalisées</p>
+      <p data-sg-path="pricing.cols[1]" class="text-[18px] font-medium" data-anim="fade" data-anim-delay="80">Transparence</p>
+      <p data-sg-path="pricing.cols[2]" class="text-[18px] font-medium" data-anim="fade" data-anim-delay="160">Forfaits design</p>
+      <p data-sg-path="pricing.cols[3]" class="text-[18px] font-medium" data-anim="fade" data-anim-delay="240">Grilles tarifaires</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="border border-line p-8" data-anim="fade" data-anim-delay="0">
+        <p class="text-price font-medium"><span data-count="99" data-count-suffix="$">0</span><span class="text-[24px]">/Month</span></p>
+        <h3 data-sg-path="pricing.plans[0].name" class="text-[24px] font-medium mt-4 mb-6">Forfait Découverte</h3>
+        <p data-sg-path="pricing.plans[0].desc" class="text-[16px] text-mute mb-8">Idéal pour les lancements modestes et les sites personnels nécessitant une présence en ligne rapide et efficace.</p>
+        <ul class="space-y-3 text-[16px]">
+          <li data-sg-path="pricing.plans[0].features[0]">Site Framer monopage</li>
+          <li data-sg-path="pricing.plans[0].features[1]">Mise en page et visuels sur mesure</li>
+          <li data-sg-path="pricing.plans[0].features[2]">Adapté mobile</li>
+          <li data-sg-path="pricing.plans[0].features[3]">Configuration SEO de base</li>
+        </ul>
+      </div>
+      <div class="border border-line p-8" data-anim="fade" data-anim-delay="80">
+        <p class="text-price font-medium"><span data-count="299" data-count-suffix="$">0</span><span class="text-[24px]">/Month</span></p>
+        <h3 data-sg-path="pricing.plans[1].name" class="text-[24px] font-medium mt-4 mb-6">Forfait Croissance</h3>
+        <p data-sg-path="pricing.plans[1].desc" class="text-[16px] text-mute mb-8">Conçu pour les marques en expansion recherchant flexibilité et intégration CMS.</p>
+        <ul class="space-y-3 text-[16px]">
+          <li data-sg-path="pricing.plans[1].features[0]">Jusqu'à 5 pages</li>
+          <li data-sg-path="pricing.plans[1].features[1]">Sections alimentées par Framer CMS</li>
+          <li data-sg-path="pricing.plans[1].features[2]">Animations et interactions</li>
+          <li data-sg-path="pricing.plans[1].features[3]">Configuration SEO avancée</li>
+        </ul>
+      </div>
+      <div class="border border-line p-8" data-anim="fade" data-anim-delay="160">
+        <p class="text-price font-medium"><span data-count="899" data-count-suffix="$">0</span><span class="text-[24px]">/Month</span></p>
+        <h3 data-sg-path="pricing.plans[2].name" class="text-[24px] font-medium mt-4 mb-6">Forfait Expertise</h3>
+        <p data-sg-path="pricing.plans[2].desc" class="text-[16px] text-mute mb-8">Parfait pour les studios ou équipes exigeant une structure solide et une exécution professionnelle haut de gamme.</p>
+        <ul class="space-y-3 text-[16px]">
+          <li data-sg-path="pricing.plans[2].features[0]">10+ pages avec CMS</li>
+          <li data-sg-path="pricing.plans[2].features[1]">Stratégie de mise en page avancée</li>
+          <li data-sg-path="pricing.plans[2].features[2]">Systèmes d'animation sur mesure</li>
+          <li data-sg-path="pricing.plans[2].features[3]">Support prioritaire</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ (implied by accordion script) -->
+  <section class="px-6 md:px-10 py-24 md:py-32">
+    <div class="max-w-[800px] mx-auto">
+      <div class="border-b border-line py-6">
+        <button class="accordion-trigger w-full flex justify-between items-center text-left text-[20px] font-medium" data-anim="fade">
+          <span>Quels types de projets acceptez-vous ?</span>
+          <span class="text-[24px]">+</span>
+        </button>
+        <div class="accordion-content hidden pt-4 text-[16px] text-mute">
+          Nous travaillons avec des marques, des studios et des créateurs qui cherchent à donner une forme visuelle forte à leurs idées. Que ce soit pour une identité, un site web, ou une expérience digitale complète, nous privilégions les projets où design et développement peuvent s'exprimer avec intention.
+        </div>
+      </div>
+      <div class="border-b border-line py-6">
+        <button class="accordion-trigger w-full flex justify-between items-center text-left text-[20px] font-medium" data-anim="fade" data-anim-delay="80">
+          <span>Proposez-vous des forfaits mensuels ?</span>
+          <span class="text-[24px]">+</span>
+        </button>
+        <div class="accordion-content hidden pt-4 text-[16px] text-mute">
+          Oui, nous proposons des forfaits mensuels pour les projets nécessitant un accompagnement continu. Ces forfaits incluent un nombre défini de pages, des mises à jour régulières et un support prioritaire.
+        </div>
+      </div>
+      <div class="border-b border-line py-6">
+        <button class="accordion-trigger w-full flex justify-between items-center text-left text-[20px] font-medium" data-anim="fade" data-anim-delay="160">
+          <span>Travaillez-vous avec des équipes externes ?</span>
+          <span class="text-[24px]">+</span>
+        </button>
+        <div class="accordion-content hidden pt-4 text-[16px] text-mute">
+          Absolument. Nous collaborons régulièrement avec des équipes créatives, des développeurs et des agences pour intégrer notre expertise en design et en développement dans des projets plus larges.
+        </div>
+      </div>
+      <div class="border-b border-line py-6">
+        <button class="accordion-trigger w-full flex justify-between items-center text-left text-[20px] font-medium" data-anim="fade" data-anim-delay="240">
+          <span>Comment se déroule le processus ?</span>
+          <span class="text-[24px]">+</span>
+        </button>
+        <div class="accordion-content hidden pt-4 text-[16px] text-mute">
+          Notre processus commence par une phase de découverte pour comprendre vos objectifs et vos besoins. Ensuite, nous passons à la conception, puis au développement, avec des revues régulières pour garantir que le résultat final correspond à vos attentes.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="px-6 md:px-10 py-24 md:py-32 border-t border-line">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
+      <div data-anim="fade">
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute mb-4" data-sg-path="footer.brand">MÖRK STUDIO</p>
+        <p data-sg-path="footer.tagline" class="text-[18px] leading-relaxed">Agence de design indépendante. Disponible dans le monde entier.</p>
+      </div>
+      <div data-anim="fade" data-anim-delay="80">
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute mb-4" data-sg-path="footer.nav_label">Navigation</p>
+        <ul class="space-y-3 text-[16px]">
+          <li><a href="#" data-sg-path="footer.nav[0]" class="hover:opacity-60 transition-opacity">Réalisations</a></li>
+          <li><a href="#" data-sg-path="footer.nav[1]" class="hover:opacity-60 transition-opacity">Studio</a></li>
+          <li><a href="#" data-sg-path="footer.nav[2]" class="hover:opacity-60 transition-opacity">Récompenses</a></li>
+          <li><a href="#" data-sg-path="footer.nav[3]" class="hover:opacity-60 transition-opacity">Contact</a></li>
+        </ul>
+      </div>
+      <div data-anim="fade" data-anim-delay="160">
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute mb-4" data-sg-path="footer.social_label">Réseaux</p>
+        <ul class="space-y-3 text-[16px]">
+          <li><a href="#" data-sg-path="footer.social[0]" class="hover:opacity-60 transition-opacity">Instagram</a></li>
+          <li><a href="#" data-sg-path="footer.social[1]" class="hover:opacity-60 transition-opacity">Behance</a></li>
+          <li><a href="#" data-sg-path="footer.social[2]" class="hover:opacity-60 transition-opacity">X (Twitter)</a></li>
+          <li><a href="#" data-sg-path="footer.social[3]" class="hover:opacity-60 transition-opacity">LinkedIn</a></li>
+        </ul>
+      </div>
+      <div data-anim="fade" data-anim-delay="240">
+        <p class="text-[13px] tracking-[0.1em] uppercase text-mute mb-4">Email</p>
+        <a href="mailto:hello@morkstudio.com" data-sg-path="footer.email" class="text-[20px] font-medium hover:opacity-60 transition-opacity">hello@morkstudio.com</a>
+      </div>
+    </div>
+    <div class="mt-24 pt-8 border-t border-line flex flex-col md:flex-row justify-between items-center text-[13px] tracking-[0.08em] text-mute">
+      <p data-sg-path="footer.copyright">© 2024 Mörk Studio — Tous droits réservés.</p>
+      <div class="flex items-center gap-8 mt-4 md:mt-0">
+        <a href="#" data-sg-path="footer.back_to_top" class="hover:opacity-60 transition-opacity">Retour en haut</a>
+        <p>Propulsé par <span class="text-white">Akyra</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const accordions = document.querySelectorAll('.accordion-trigger');
+      accordions.forEach(trigger => {
+        trigger.addEventListener('click', () => {
+          const content = trigger.nextElementSibling;
+          const icon = trigger.querySelector('span:last-child');
+          if (content.classList.contains('hidden')) {
+            content.classList.remove('hidden');
+            trigger.parentElement.classList.add('open');
+            icon.textContent = '−';
+          } else {
+            content.classList.add('hidden');
+            trigger.parentElement.classList.remove('open');
+            icon.textContent = '+';
+          }
+        });
+      });
+    });
+  </script>
+
+<!-- ═══ AKYRA MOTION KIT — animations partagées (vanilla, sans dépendance, respecte prefers-reduced-motion) ═══ -->
+<style>
+  [data-anim]{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+  [data-anim="fade"]{transform:none}
+  [data-anim="left"]{transform:translateX(-26px)}
+  [data-anim="right"]{transform:translateX(26px)}
+  [data-anim="scale"]{transform:scale(.96)}
+  [data-anim].in{opacity:1!important;transform:none!important}
+  /* Apparition du texte mot à mot */
+  .anim-words .w{display:inline-block;opacity:0;transform:translateY(0.5em);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .anim-words.in .w{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){[data-anim],.anim-words .w{opacity:1!important;transform:none!important;transition:none!important}}
+</style>
+<script>
+(function(){
+  var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var IO = 'IntersectionObserver' in window;
+
+  // 1) Révélation au scroll des éléments [data-anim] (stagger via data-anim-delay en ms)
+  var reveals = document.querySelectorAll('[data-anim]');
+  function showReveal(el){
+    var d = parseInt(el.getAttribute('data-anim-delay')||'0',10);
+    if(d) setTimeout(function(){el.classList.add('in')}, d); else el.classList.add('in');
+  }
+  if(RM || !IO){ reveals.forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioR = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ showReveal(en.target); ioR.unobserve(en.target);} });
+    },{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(function(e){ ioR.observe(e); });
+  }
+
+  // 2) Texte mot à mot : <h1 class="anim-words">…</h1> (découpe auto)
+  document.querySelectorAll('.anim-words').forEach(function(el){
+    if(el.dataset.split) return; el.dataset.split='1';
+    var html = el.innerHTML;
+    el.innerHTML = html.replace(/(\S+)(\s*)/g, function(_,w,sp){ return '<span class="w">'+w+'</span>'+sp; });
+    var ws = el.querySelectorAll('.w');
+    ws.forEach(function(w,i){ w.style.transitionDelay=(i*45)+'ms'; });
+  });
+  if(RM || !IO){ document.querySelectorAll('.anim-words').forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioW = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ioW.unobserve(en.target);} });
+    },{threshold:0.25});
+    document.querySelectorAll('.anim-words').forEach(function(e){ ioW.observe(e); });
+  }
+
+  // 3) Compteurs : <span data-count="1200" data-count-suffix="+" data-count-decimals="0">0</span>
+  function fmt(v,dec){ return v.toLocaleString('fr-FR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+  function countUp(el){
+    var target=parseFloat(el.getAttribute('data-count'))||0,
+        suf=el.getAttribute('data-count-suffix')||'', pre=el.getAttribute('data-count-prefix')||'',
+        dec=parseInt(el.getAttribute('data-count-decimals')||'0',10), dur=1500, start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=pre+fmt(target*e,dec)+suf; if(p<1)requestAnimationFrame(step); else el.textContent=pre+fmt(target,dec)+suf; }
+    requestAnimationFrame(step);
+  }
+  var nums = document.querySelectorAll('[data-count]');
+  if(RM || !IO){ nums.forEach(function(el){ el.textContent=(el.getAttribute('data-count-prefix')||'')+fmt(parseFloat(el.getAttribute('data-count'))||0,parseInt(el.getAttribute('data-count-decimals')||'0',10))+(el.getAttribute('data-count-suffix')||''); }); }
+  else {
+    var ioN = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ countUp(en.target); ioN.unobserve(en.target);} });
+    },{threshold:0.6});
+    nums.forEach(function(el){ ioN.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>
