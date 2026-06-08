@@ -111,11 +111,12 @@ export async function saveDraftSnapshot(
   if (top && !top.is_published) {
     const patch: Record<string, unknown> = { content_json: contentJson };
     if (generatedHtml !== undefined) patch.generated_html = generatedHtml;
-    await admin.from("site_content").update(patch).eq("id", top.id);
+    const { error } = await admin.from("site_content").update(patch).eq("id", top.id);
+    if (error) throw new Error(`saveDraftSnapshot update: ${error.message}`);
     return top.version;
   }
   const version = (top?.version ?? 0) + 1;
-  await admin.from("site_content").insert({
+  const { error } = await admin.from("site_content").insert({
     site_id: siteId,
     template_id: templateId,
     version,
@@ -124,6 +125,7 @@ export async function saveDraftSnapshot(
     created_by: createdBy,
     ...(generatedHtml !== undefined ? { generated_html: generatedHtml } : {}),
   });
+  if (error) throw new Error(`saveDraftSnapshot insert: ${error.message}`);
   return version;
 }
 

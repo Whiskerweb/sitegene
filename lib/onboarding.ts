@@ -604,12 +604,14 @@ export async function finalizeAiOnboarding(
       timeoutMs: 110_000,
     });
     if (gen) {
-      await ensureTemplateRow(admin, templateId);
-      const { error: tplErr } = await admin
-        .from("sites")
-        .update({ template_id: templateId })
-        .eq("id", siteId);
-      if (!tplErr) {
+      try {
+        await ensureTemplateRow(admin, templateId);
+        const { error: tplErr } = await admin
+          .from("sites")
+          .update({ template_id: templateId })
+          .eq("id", siteId);
+        if (tplErr) throw new Error(tplErr.message);
+        // Persiste le shell bespoke + le contenu extrait (lève si l'écriture échoue).
         await saveDraftSnapshot(admin, siteId, templateId, gen.content, "ai", gen.html);
         await admin
           .from("site_onboarding")
@@ -620,6 +622,13 @@ export async function finalizeAiOnboarding(
           })
           .eq("site_id", siteId);
         return { ok: true, templateId, generated: true, rationale };
+      } catch (e) {
+        // Échec de persistance (ex. colonne manquante) → on NE renvoie PAS un faux
+        // succès : on bascule sur le pipeline déterministe ci-dessous.
+        console.error(
+          "[finalizeAiOnboarding] persistance échouée, fallback déterministe:",
+          e instanceof Error ? e.message : e,
+        );
       }
     }
   }
