@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aqualis – Plombier de confiance, urgence 24/7</title>
+    <meta name="description" content="Plomberie moderne : réparation, installation et urgence 24/7. Une équipe qualifiée et un service fiable pour votre maison et votre entreprise.">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts - Manrope -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0059A9',
+                        blue2: '#2672B6',
+                        ink: '#010A11',
+                        bg: '#F2F5F9',
+                        muted: '#5B5E66',
+                        border: '#E4E8EE',
+                        white: '#FFFFFF',
+                        danger: '#F2181E'
+                    },
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                    },
+                }
+            }
+        };
+    </script>
+
+    <!-- Custom CSS -->
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Manrope', sans-serif; background: #fff; color: #010A11; margin: 0; }
+
+        /* Accordion styles */
+        .accordion-item {
+            border-bottom: 1px solid #E4E8EE;
+        }
+        .accordion-header {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 1.5rem 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #010A11;
+        }
+        .accordion-header:hover {
+            color: #0059A9;
+        }
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        .accordion-item.open .accordion-icon {
+            transform: rotate(45deg);
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 0 0 0;
+        }
+        .accordion-item.open .accordion-content {
+            max-height: 200px; /* Adjust as needed */
+            padding: 0 0 1.5rem 0;
+        }
+        .accordion-content p {
+            color: #5B5E66;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- Header -->
+    <header>
+        <!-- Nav -->
+        <nav class="bg-white sticky top-0 z-50 border-b border-border" data-anim="fade">
+            <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+                <a href="#" data-sg-path="brand"><span class="text-ink font-extrabold text-xl tracking-tight">Aqualis</span></a>
+                <div class="hidden md:flex items-center gap-8 text-sm text-muted">
+                    <a href="#services" data-sg-path="nav[0]" class="hover:text-ink transition-colors">Services</a>
+                    <a href="#about" data-sg-path="nav[1]" class="hover:text-ink transition-colors">À propos</a>
+                    <a href="#blog" data-sg-path="nav[2]" class="hover:text-ink transition-colors">Blog</a>
+                    <a href="#" data-sg-path="nav[3]" class="hover:text-ink transition-colors">Pages</a>
+                </div>
+                <a href="#contact" data-sg-path="nav.cta" class="bg-primary text-white font-semibold text-sm px-5 py-2.5 rounded-full hover:brightness-110 transition-all">Nous contacter</a>
+            </div>
+        </nav>
+
+        <!-- Hero -->
+        <section class="relative bg-ink overflow-hidden" style="min-height:560px;">
+            <img data-sg-img="hero.image" src="../../../../public/_templates/plumber-pro/img/hero.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-60" data-anim="fade" />
+            <div class="absolute inset-0 bg-gradient-to-r from-ink via-ink/70 to-transparent"></div>
+            <div class="relative max-w-7xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center">
+                <div data-anim="left">
+                    <span data-sg-path="hero.eyebrow" class="inline-block border border-white/25 text-white/80 text-[11px] uppercase tracking-wider font-semibold px-4 py-1.5 rounded-full mb-6">Spécialistes plomberie certifiés</span>
+                    <h1 data-sg-path="hero.title" class="text-white font-extrabold text-4xl md:text-5xl lg:text-6xl leading-[1.05] mb-6">Des services de plomberie sur lesquels vous pouvez compter</h1>
+                    <p data-sg-path="hero.tagline" class="text-white/70 text-lg mb-8 max-w-md">Une plomberie fiable, abordable et disponible 24/7 pour tous vos besoins, à la maison comme en entreprise.</p>
+                    <div class="flex items-center gap-6">
+                        <a href="#contact" data-sg-path="hero.cta" class="inline-flex items-center gap-2 bg-danger text-white font-semibold px-6 py-3.5 rounded-full hover:brightness-110 transition-all text-sm" data-anim="fade" data-anim-delay="80">Prendre rendez-vous</a>
+                        <div class="flex items-center gap-2" data-anim="fade" data-anim-delay="160">
+                            <span data-sg-path="hero.reviews" class="text-white font-extrabold text-2xl">8<span data-count="8000" data-count-suffix="K+">000</span>+</span>
+                            <span data-sg-path="hero.reviewsLabel" class="text-white/60 text-sm">Avis clients</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </header>
+
+    <main>
+        <!-- Intro Section -->
+        <section id="about" class="py-20 bg-bg" data-anim="fade">
+            <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+                <div data-anim="left">
+                    <span data-sg-path="intro.label" class="inline-block border border-border text-muted text-[11px] uppercase tracking-wider font-semibold px-4 py-1.5 rounded-full mb-4">Notre introduction</span>
+                    <h2 data-sg-path="intro.title" class="text-ink font-extrabold text-3xl md:text-4xl leading-tight mb-6">Chez Aqualis, fort de plusieurs années d'expérience, notre équipe qualifiée</h2>
+                    <img data-sg-img="intro.image" src="../../../../public/_templates/plumber-pro/img/intro.jpg" alt="Plombier travaillant" class="rounded-2xl w-full md:hidden mb-8" data-anim="fade">
+                    <div class="flex flex-col sm:flex-row gap-8">
+                        <a href="#" data-sg-path="intro.cta" class="bg-primary text-white font-semibold px-6 py-3 rounded-full hover:brightness-110 transition-all self-start" data-anim="fade" data-anim-delay="80">En savoir plus</a>
+                        <div class="flex gap-8">
+                            <div data-anim="fade" data-anim-delay="160">
+                                <p class="text-ink font-extrabold text-3xl"><span data-count="12" data-count-suffix="+">0</span></p>
+                                <p class="text-muted text-sm">Années d'expérience</p>
+                            </div>
+                            <div data-anim="fade" data-anim-delay="240">
+                                <p class="text-ink font-extrabold text-3xl"><span data-count="4" data-count-suffix="+">0</span></p>
+                                <p class="text-muted text-sm">Certifications</p>
+                            </div>
+                            <div data-anim="fade" data-anim-delay="320">
+                                <p class="text-ink font-extrabold text-3xl">24/7</p>
+                                <p class="text-muted text-sm">Service d'urgence</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden md:block" data-anim="right">
+                    <img data-sg-img="intro.image" src="../../../../public/_templates/plumber-pro/img/intro.jpg" alt="Plombier travaillant" class="rounded-2xl w-full">
+                    <h3 data-sg-path="intro.sideTitle" class="text-ink font-bold text-xl mt-6 mb-2">La satisfaction client et la qualité d'exécution sont au cœur de tout ce que nous faisons.</h3>
+                    <p data-sg-path="intro.sideText" class="text-muted">Nos professionnels qualifiés s'engagent à fournir des solutions haut de gamme avec un service irréprochable. Nous privilégions un travail de qualité pour que chaque chantier soit réussi du premier coup.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-20 bg-white" data-anim="fade">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span data-sg-path="services.label" class="inline-block border border-border text-muted text-[11px] uppercase tracking-wider font-semibold px-4 py-1.5 rounded-full mb-4">Nos services</span>
+                    <h2 data-sg-path="services.title" class="text-ink font-extrabold text-3xl md:text-4xl leading-tight mb-4">Des solutions de plomberie fiables</h2>
+                    <p data-sg-path="services.subtitle" class="text-muted">Notre équipe qualifiée gère tout, des fuites aux installations, avec précision, rapidité et durabilité.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Service Card 1 -->
+                    <div class="border border-border rounded-2xl p-8 hover:shadow-lg transition-shadow" data-anim="fade" data-anim-delay="0">
+                        <div class="w-12 h-12 bg-primary/10 text-primary rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        </div>
+                        <h3 data-sg-path="services.items[0].title" class="font-bold text-xl mb-2">Dépannage plomberie d'urgence</h3>
+                        <p data-sg-path="services.items[0].desc" class="text-muted text-sm">Intervention rapide 24/7 pour les fuites, ruptures de canalisation et urgences, afin de limiter les dégâts.</p>
+                    </div>
+                    <!-- Service Card 2 -->
+                    <div class="border border-border rounded-2xl p-8 hover:shadow-lg transition-shadow" data-anim="fade" data-anim-delay="80">
+                        <div class="w-12 h-12 bg-primary/10 text-primary rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                        </div>
+                        <h3 data-sg-path="services.items[1].title" class="font-bold text-xl mb-2">Débouchage de canalisations</h3>
+                        <p data-sg-path="services.items[1].desc" class="text-muted text-sm">Service de débouchage rapide et complet pour fuites, bouchons et obstructions dans votre logement.</p>
+                    </div>
+                    <!-- Service Card 3 -->
+                    <div class="border border-border rounded-2xl p-8 hover:shadow-lg transition-shadow" data-anim="fade" data-anim-delay="160">
+                        <div class="w-12 h-12 bg-primary/10 text-primary rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10s5 2 5 2a8.003 8.003 0 013.657 6.657z" /><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 16.121A3 3 0 1014.12 11.88l-4.242 4.242z" /></svg>
+                        </div>
+                        <h3 data-sg-path="services.items[2].title" class="font-bold text-xl mb-2">Installation & remplacement</h3>
+                        <p data-sg-path="services.items[2].desc" class="text-muted text-sm">Solutions d'installation rapides pour bouchons, fuites et chantiers, livrées dans les délais.</p>
+                    </div>
+                    <!-- Service Card 4 -->
+                    <div class="border border-border rounded-2xl p-8 hover:shadow-lg transition-shadow" data-anim="fade" data-anim-delay="240">
+                        <div class="w-12 h-12 bg-primary/10 text-primary rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" /></svg>
+                        </div>
+                        <h3 data-sg-path="services.items[3].title" class="font-bold text-xl mb-2">Chauffe-eau & ballon</h3>
+                        <p data-sg-path="services.items[3].desc" class="text-muted text-sm">Service d'urgence permanent pour vos problèmes de chauffe-eau, réparations rapides et dégâts limités.</p>
+                    </div>
+                </div>
+                <div class="text-center mt-12">
+                    <a href="#" data-sg-path="services.cta" class="bg-primary text-white font-semibold px-6 py-3 rounded-full hover:brightness-110 transition-all" data-anim="fade">Voir tous les services</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Steps Section -->
+        <section class="py-20 bg-bg" data-anim="fade">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span data-sg-path="steps.label" class="inline-block border border-border text-muted text-[11px] uppercase tracking-wider font-semibold px-4 py-1.5 rounded-full mb-4">Comment ça marche</span>
+                    <h2 data-sg-path="steps.title" class="text-ink font-extrabold text-3xl md:text-4xl leading-tight mb-4">Des étapes simples pour démarrer dès maintenant</h2>
+                    <p data-sg-path="steps.subtitle" class="text-muted">Notre équipe qualifiée gère tout, des fuites aux installations, avec précision, rapidité et durabilité.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Step 1 -->
+                    <div class="text-left" data-anim="fade" data-anim-delay="0">
+                        <div class="text-5xl font-extrabold text-muted/20 mb-4">01</div>
+                        <h3 data-sg-path="steps.items[0].title" class="font-bold text-xl mb-2">Réservez un service</h3>
+                        <p data-sg-path="steps.items[0].desc" class="text-muted text-sm">Planifiez votre intervention en ligne ou par téléphone en quelques étapes simples — rapide et pratique.</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="text-left" data-anim="fade" data-anim-delay="80">
+                        <div class="text-5xl font-extrabold text-muted/20 mb-4">02</div>
+                        <h3 data-sg-path="steps.items[1].title" class="font-bold text-xl mb-2">Recevez un diagnostic</h3>
+                        <p data-sg-path="steps.items[1].desc" class="text-muted text-sm">Nos plombiers arrivent à l'heure, évaluent le problème avec soin et proposent la meilleure solution.</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="text-left" data-anim="fade" data-anim-delay="160">
+                        <div class="text-5xl font-extrabold text-muted/20 mb-4">03</div>
+                        <h3 data-sg-path="steps.items[2].title" class="font-bold text-xl mb-2">On répare</h3>
+                        <p data-sg-path="steps.items[2].desc" class="text-muted text-sm">Nous intervenons avec des outils de qualité et des techniques éprouvées pour une réparation durable.</p>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="text-left" data-anim="fade" data-anim-delay="240">
+                        <div class="text-5xl font-extrabold text-muted/20 mb-4">04</div>
+                        <h3 data-sg-path="steps.items[3].title" class="font-bold text-xl mb-2">L'esprit tranquille</h3>
+                        <p data-sg-path="steps.items[3].desc" class="text-muted text-sm">Avec notre garantie de bonne exécution et un service fiable, votre plomberie est entre de bonnes mains.</p>
+                    </div>
+                </div>
+                <div class="text-center mt-12">
+                    <a href="#contact" data-sg-path="steps.cta" class="bg-primary text-white font-semibold px-6 py-3 rounded-full hover:brightness-110 transition-all" data-anim="fade">Nous contacter</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-20 bg-white" data-anim="fade">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span data-sg-path="stats.label" class="inline-block border border-border text-muted text-[11px] uppercase tracking-wider font-semibold px-4 py-1.5 rounded-full mb-4">Nos chiffres</span>
+                    <h2 data-sg-path="stats.title" class="text-ink font-extrabold text-3xl md:text-4xl leading-tight mb-4">Une meilleure plomberie pour chaque espace</h2>
+                    <p data-sg-path="stats.subtitle" class="text-muted">Des résultats mesurables qui font la différence, intervention après intervention.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                    <div data-anim="fade" data-anim-delay="0">
+                        <p class="text-ink font-extrabold text-5xl mb-2"><span data-count="8000" data-count-suffix="K+">0</span></p>
+                        <p class="text-muted">Avis clients</p>
+                    </div>
+                    <div data-anim="fade" data-anim-delay="80">
+                        <p class="text-ink font-extrabold text-5xl mb-2"><span data-count="12" data-count-suffix="+">0</span></p>
+                        <p class="text-muted">Années d'expérience</p>
+                    </div>
+                    <div data-anim="fade" data-anim-delay="160">
+                        <p class="text-ink font-extrabold text-5xl mb-2"><span data-count="98" data-count-suffix="%">0</span></p>
+                        <p class="text-muted">Clients satisfaits</p>
+                    </div>
+                    <div data-anim="fade" data-anim-delay="240">
+                        <p class="text-ink font-extrabold text-5xl mb-2">24/7</p>
+                        <p class="text-muted">Disponibilité urgence</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="py-20 bg-bg" data-anim="fade">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span data-sg-path="testimonials.label" class="inline-block border border-border text-muted text-[11px] uppercase tracking-wider font-semibold px-4 py-1.5 rounded-full mb-4">Témoignages</span>
+                    <h2 data-sg-path="testimonials.title" class="text-ink font-extrabold text-3xl md:text-4xl leading-tight">De vrais avis honnêtes de vrais clients</h2>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Testimonial 1 -->
+                    <div class="bg-white p-6 rounded-2xl border border-border" data-anim="fade" data-anim-delay="0">
+                        <p data-sg-path="testimonials.items[0].quote" class="text-muted text-sm mb-6">“Aqualis nous a sauvés ! Une grosse fuite en pleine nuit, et leur équipe est arrivée en moins d'une heure. Rapide, professionnel et très sympa — ils ont réglé le problème vite et tout laissé impeccable. Je recommande vivement pour une intervention fiable et sans stress !”</p>
+                        <div class="flex items-center gap-4">
+                            <img data-sg-img="testimonials.items[0].avatar" src="../../../../public/_templates/plumber-pro/img/avatar-1.jpg" alt="Julien Caron" class="w-12 h-12 rounded-full object-cover">
+                            <div>
+                                <p data-sg-path="testimonials.items[0].author" class="font-semibold text-sm">Julien Caron</p>
+                                <p data-sg-path="testimonials.items[0].role" class="text-muted text-xs">Propriétaire</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-1 mt-4">
+                            <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-muted/30">★</span>
+                        </div>
+                    </div>
+                    <!-- Testimonial 2 -->
+                    <div class="bg-white p-6 rounded-2xl border border-border" data-anim="fade" data-anim-delay="80">
+                        <p data-sg-path="testimonials.items[1].quote" class="text-muted text-sm mb-6">“J'ai appelé Aqualis pour remplacer un chauffe-eau, et ils ont dépassé mes attentes. Le technicien était courtois et soigneux.”</p>
+                        <div class="flex items-center gap-4">
+                            <img data-sg-img="testimonials.items[1].avatar" src="../../../../public/_templates/plumber-pro/img/avatar-2.jpg" alt="Olivia Bonnet" class="w-12 h-12 rounded-full object-cover">
+                            <div>
+                                <p data-sg-path="testimonials.items[1].author" class="font-semibold text-sm">Olivia Bonnet</p>
+                                <p data-sg-path="testimonials.items[1].role" class="text-muted text-xs">Gestionnaire d'immeuble</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-1 mt-4">
+                            <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-muted/30">★</span>
+                        </div>
+                    </div>
+                    <!-- Testimonial 3 -->
+                    <div class="bg-white p-6 rounded-2xl border border-border" data-anim="fade" data-anim-delay="160">
+                        <p data-sg-path="testimonials.items[2].quote" class="text-muted text-sm mb-6">“Un service impeccable du début à la fin. La prise de rendez-vous a été simple, ils sont arrivés à l'heure et ont débouché notre évier rapidement.”</p>
+                        <div class="flex items-center gap-4">
+                            <img data-sg-img="testimonials.items[2].avatar" src="../../../../public/_templates/plumber-pro/img/avatar-3.jpg" alt="Marc Leblanc" class="w-12 h-12 rounded-full object-cover">
+                            <div>
+                                <p data-sg-path="testimonials.items[2].author" class="font-semibold text-sm">Marc Leblanc</p>
+                                <p data-sg-path="testimonials.items[2].role" class="text-muted text-xs">Chef d'entreprise</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-1 mt-4">
+                            <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-muted/30">★</span>
+                        </div>
+                    </div>
+                    <!-- Testimonial 4 -->
+                    <div class="bg-white p-6 rounded-2xl border border-border" data-anim="fade" data-anim-delay="240">
+                        <p data-sg-path="testimonials.items[3].quote" class="text-muted text-sm mb-6">“Nous avons travaillé avec plusieurs plombiers, mais Aqualis sort du lot. Réactif et une équipe vraiment agréable.”</p>
+                        <div class="flex items-center gap-4">
+                            <img data-sg-img="testimonials.items[3].avatar" src="../../../../public/_templates/plumber-pro/img/avatar-4.jpg" alt="Sophie Chastel" class="w-12 h-12 rounded-full object-cover">
+                            <div>
+                                <p data-sg-path="testimonials.items[3].author" class="font-semibold text-sm">Sophie Chastel</p>
+                                <p data-sg-path="testimonials.items[3].role" class="text-muted text-xs">Chef d'entreprise</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-1 mt-4">
+                            <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-muted/30">★</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="py-20 bg-white" data-anim="fade">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span data-sg-path="team.label" class="inline-block border border-border text-muted text-[11px] uppercase tracking-wider font-semibold px-4 py-1.5 rounded-full mb-4">Notre équipe</span>
+                    <h2 data-sg-path="team.title" class="text-ink font-extrabold text-3xl md:text-4xl leading-tight">Rencontrez les professionnels d'Aqualis</h2>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Team Member 1 -->
+                    <div class="text-center" data-anim="fade" data-anim-delay="0">
+                        <img data-sg-img="team.members[0].image" src="../../../../public/_templates/plumber-pro/img/team-1.jpg" alt="Jean Carrère" class="rounded-2xl w-full mb-6">
+                        <h3 data-sg-path="team.members[0].name" class="font-bold text-xl">Jean Carrère</h3>
+                        <p data-sg-path="team.members[0].role" class="text-muted text-sm">Plombier responsable</p>
+                    </div>
+                    <!-- Team Member 2 -->
+                    <div class="text-center" data-anim="fade" data-anim-delay="80">
+                        <img data-sg-img="team.members[1].image" src="../../../../public/_templates/plumber-pro/img/team-2.jpg" alt="Marina López" class="rounded-2xl w-full mb-6">
+                        <h3 data-sg-path="team.members[1].name" class="font-bold text-xl">Marina López</h3>
+                        <p data-sg-path="team.members[1].role" class="text-muted text-sm">Plombière responsable</p>
+                    </div>
+                    <!-- Team Member 3 -->
+                    <div class="text-center" data-anim="fade" data-anim-delay="160">
+                        <img data-sg-img="team.members[2].image" src="../../../../public/_templates/plumber-pro/img/team-3.jpg" alt="Damien Kessler" class="rounded-2xl w-full mb-6">
+                        <h3 data-sg-path="team.members[2].name" class="font-bold text-xl">Damien Kessler</h3>
+                        <p data-sg-path="team.members[2].role" class="text-muted text-sm">Installation de canalisations</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="py-20 bg-bg" data-anim="fade">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span data-sg-path="faq.label" class="inline-block border border-border text-muted text-[11px] uppercase tracking-wider font-semibold px-4 py-1.5 rounded-full mb-4">FAQ</span>
+                    <h2 data-sg-path="faq.title" class="text-ink font-extrabold text-3xl md:text-4xl leading-tight mb-4">Tout ce que vous devez savoir</h2>
+                    <p data-sg-path="faq.subtitle" class="text-muted">Réserver votre intervention est très simple : choisissez votre service, une date et un créneau, et c'est réglé.</p>
+                </div>
+                <div class="max-w-3xl mx-auto" id="faq-accordion">
+                    <!-- FAQ Item 1 -->
+                    <div class="accordion-item" data-anim="fade" data-anim-delay="0">
+                        <button class="accordion-header">
+                            <span data-sg-path="faq.items[0].question">Comment prendre rendez-vous ?</span>
+                            <span class="accordion-icon text-muted text-xl">+</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p data-sg-path="faq.items[0].answer">La réservation en ligne ne prend que quelques minutes. Choisissez votre service, sélectionnez une date et un créneau pratiques, et confirmez instantanément en quelques clics.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 2 -->
+                    <div class="accordion-item" data-anim="fade" data-anim-delay="80">
+                        <button class="accordion-header">
+                            <span data-sg-path="faq.items[1].question">Intervenez-vous vraiment 24/7 en urgence ?</span>
+                            <span class="accordion-icon text-muted text-xl">+</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p data-sg-path="faq.items[1].answer">Oui — notre service d'urgence est disponible jour et nuit, week-ends compris, pour les fuites, ruptures de canalisation et tout incident nécessitant une intervention rapide.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 3 -->
+                    <div class="accordion-item" data-anim="fade" data-anim-delay="160">
+                        <button class="accordion-header">
+                            <span data-sg-path="faq.items[2].question">Vos plombiers sont-ils certifiés ?</span>
+                            <span class="accordion-icon text-muted text-xl">+</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p data-sg-path="faq.items[2].answer">Tous nos plombiers sont qualifiés, certifiés et assurés. Chacun suit une formation continue avant d'intervenir chez un client.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 4 -->
+                    <div class="accordion-item" data-anim="fade" data-anim-delay="240">
+                        <button class="accordion-header">
+                            <span data-sg-path="faq.items[3].question">Que se passe-t-il si je ne suis pas satisfait ?</span>
+                            <span class="accordion-icon text-muted text-xl">+</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p data-sg-path="faq.items[3].answer">Votre satisfaction est notre priorité. Si le résultat ne vous convient pas, contactez-nous sous 24h et nous renvoyons une équipe sans frais supplémentaires.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <section id="blog" class="py-20 bg-white" data-anim="fade">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span data-sg-path="blog.label" class="inline-block border border-border text-muted text-[11px] uppercase tracking-wider font-semibold px-4 py-1.5 rounded-full mb-4">Notre blog</span>
+                    <h2 data-sg-path="blog.title" class="text-ink font-extrabold text-3xl md:text-4xl leading-tight mb-4">Conseils plomberie & actualités</h2>
+                    <p data-sg-path="blog.subtitle" class="text-muted">Notre équipe qualifiée gère tout, des fuites aux installations, avec précision, rapidité et durabilité.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 mb-12">
+                    <!-- Featured Blog Post 1 -->
+                    <div class="group" data-anim="fade" data-anim-delay="0">
+                        <img data-sg-img="blog.featured[0].image" src="../../../../public/_templates/plumber-pro/img/blog-1.jpg" alt="5 problèmes de plomberie courants" class="rounded-2xl w-full mb-6">
+                        <div class="flex items-center gap-4 text-sm text-muted mb-2">
+                            <span data-sg-path="blog.featured[0].author">Émilie Carrère</span>
+                            <span data-sg-path="blog.featured[0].date">1 sept. 2025</span>
+                        </div>
+                        <h3 data-sg-path="blog.featured[0].title" class="font-bold text-2xl mb-2 group-hover:text-primary transition-colors">5 problèmes de plomberie courants et comment les régler facilement chez soi.</h3>
+                        <p data-sg-path="blog.featured[0].excerpt" class="text-muted text-sm">Des solutions simples pour les soucis courants — fuites, bouchons et basse pression — pour économiser temps et argent.</p>
+                    </div>
+                    <!-- Featured Blog Post 2 -->
+                    <div class="group" data-anim="fade" data-anim-delay="80">
+                        <img data-sg-img="blog.featured[1].image" src="../../../../public/_templates/plumber-pro/img/blog-2.jpg" alt="Pourquoi ne jamais ignorer un robinet qui fuit" class="rounded-2xl w-full mb-6">
+                        <div class="flex items-center gap-4 text-sm text-muted mb-2">
+                            <span data-sg-path="blog.featured[1].author">Émilie Carrère</span>
+                            <span data-sg-path="blog.featured[1].date">1 sept. 2025</span>
+                        </div>
+                        <h3 data-sg-path="blog.featured[1].title" class="font-bold text-2xl mb-2 group-hover:text-primary transition-colors">Pourquoi ne jamais ignorer un robinet qui fuit, et ce que ça peut vous coûter.</h3>
+                        <p data-sg-path="blog.featured[1].excerpt" class="text-muted text-sm">Évitez les soucis de plomberie grâce à des réparations rapides pour les fuites, bouchons et bien plus.</p>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <!-- Blog List Item 1 -->
+                    <div class="flex items-center justify-between p-4 border-b border-border group" data-anim="fade" data-anim-delay="0">
+                        <div>
+                            <h4 data-sg-path="blog.list[0].title" class="font-semibold group-hover:text-primary transition-colors">Le guide du propriétaire pour l'entretien de la plomberie.</h4>
+                            <p class="text-sm text-muted mt-1"><span data-sg-path="blog.list[0].author">Nathalie Roy</span> • <span data-sg-path="blog.list[0].date">1 sept. 2025</span></p>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-muted group-hover:text-primary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </div>
+                    <!-- Blog List Item 2 -->
+                    <div class="flex items-center justify-between p-4 border-b border-border group" data-anim="fade" data-anim-delay="80">
+                        <div>
+                            <h4 data-sg-path="blog.list[1].title" class="font-semibold group-hover:text-primary transition-colors">Faire soi-même ou appeler un pro — quel est le bon choix ?</h4>
+                            <p class="text-sm text-muted mt-1"><span data-sg-path="blog.list[1].author">Théo Sicard</span> • <span data-sg-path="blog.list[1].date">1 sept. 2025</span></p>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-muted group-hover:text-primary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </div>
+                    <!-- Blog List Item 3 -->
+                    <div class="flex items-center justify-between p-4 border-b border-border group" data-anim="fade" data-anim-delay="160">
+                        <div>
+                            <h4 data-sg-path="blog.list[2].title" class="font-semibold group-hover:text-primary transition-colors">Stopper la fuite : réparer un robinet qui goutte en toute simplicité.</h4>
+                            <p class="text-sm text-muted mt-1"><span data-sg-path="blog.list[2].author">Alex Tournier</span> • <span data-sg-path="blog.list[2].date">1 sept. 2025</span></p>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-muted group-hover:text-primary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </div>
+                </div>
+                <div class="text-center mt-12">
+                    <a href="#" data-sg-path="blog.cta" class="bg-primary text-white font-semibold px-6 py-3 rounded-full hover:brightness-110 transition-all" data-anim="fade">Voir tous les articles</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section id="contact" class="py-20 bg-bg" data-anim="fade">
+            <div class="max-w-4xl mx-auto px-6">
+                <div class="bg-primary text-white rounded-3xl p-12 md:p-16 text-center">
+                    <h2 data-sg-path="cta.title" class="font-extrabold text-3xl md:text-4xl leading-tight mb-4">Besoin d'un plombier ? Démarrons dès aujourd'hui</h2>
+                    <p data-sg-path="cta.subtitle" class="text-white/80 mb-8 max-w-xl mx-auto">Ne laissez plus une fuite gâcher votre journée. Notre équipe intervient vite, proprement et avec le sourire.</p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <a href="#" data-sg-path="cta.button" class="bg-danger text-white font-semibold px-6 py-3 rounded-full hover:brightness-110 transition-all" data-anim="fade">Prendre rendez-vous</a>
+                        <a href="tel:0123456789" class="font-semibold hover:text-white/80 transition-colors" data-anim="fade" data-anim-delay="80">
+                            <span class="text-white/80">Ou appelez-nous :</span> <span data-sg-path="cta.phone">(01) 23 45 67 89</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-ink text-white/80 pt-20 pb-8" data-anim="fade">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 data-sg-path="footer.tagline" class="text-2xl md:text-3xl font-bold text-white max-w-2xl mx-auto">Une plomberie professionnelle, soignée et fiable, pour que votre logement reste sain au quotidien.</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <!-- Footer Column 1 -->
+                <div>
+                    <h4 data-sg-path="footer.columns[0].heading" class="font-semibold text-white mb-4">Entreprise</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" data-sg-path="footer.columns[0].links[0]" class="hover:text-white transition-colors">Accueil</a></li>
+                        <li><a href="#" data-sg-path="footer.columns[0].links[1]" class="hover:text-white transition-colors">À propos</a></li>
+                        <li><a href="#" data-sg-path="footer.columns[0].links[2]" class="hover:text-white transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                <!-- Footer Column 2 -->
+                <div>
+                    <h4 data-sg-path="footer.columns[1].heading" class="font-semibold text-white mb-4">Services</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" data-sg-path="footer.columns[1].links[0]" class="hover:text-white transition-colors">Urgence 24/7</a></li>
+                        <li><a href="#" data-sg-path="footer.columns[1].links[1]" class="hover:text-white transition-colors">Débouchage</a></li>
+                        <li><a href="#" data-sg-path="footer.columns[1].links[2]" class="hover:text-white transition-colors">Installation</a></li>
+                    </ul>
+                </div>
+                <!-- Footer Column 3 -->
+                <div>
+                    <h4 data-sg-path="footer.columns[2].heading" class="font-semibold text-white mb-4">Légal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" data-sg-path="footer.columns[2].links[0]" class="hover:text-white transition-colors">Politique de confidentialité</a></li>
+                        <li><a href="#" data-sg-path="footer.columns[2].links[1]" class="hover:text-white transition-colors">Conditions générales</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 text-center text-sm">
+                <p data-sg-path="footer.copyright">© 2026 Aqualis. Tous droits réservés.</p>
+                <p class="mt-2 text-white/50">Propulsé par <a href="#" class="hover:text-white">Akyra</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Accordion Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const accordionItems = document.querySelectorAll('.accordion-item');
+
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                header.addEventListener('click', () => {
+                    // Close other open items
+                    accordionItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('open')) {
+                            otherItem.classList.remove('open');
+                        }
+                    });
+                    // Toggle current item
+                    item.classList.toggle('open');
+                });
+            });
+        });
+    </script>
+
+<!-- ═══ AKYRA MOTION KIT — animations partagées (vanilla, sans dépendance, respecte prefers-reduced-motion) ═══ -->
+<style>
+  [data-anim]{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+  [data-anim="fade"]{transform:none}
+  [data-anim="left"]{transform:translateX(-26px)}
+  [data-anim="right"]{transform:translateX(26px)}
+  [data-anim="scale"]{transform:scale(.96)}
+  [data-anim].in{opacity:1!important;transform:none!important}
+  /* Apparition du texte mot à mot */
+  .anim-words .w{display:inline-block;opacity:0;transform:translateY(0.5em);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .anim-words.in .w{opacity:1;transform:none}
+  /* Galerie accordéon : au survol, la vignette s'élargit, les autres se rétractent (CSS pur) */
+  .gallery-expand{display:flex}
+  .gallery-expand>.gx{flex:1 1 0;min-width:0;overflow:hidden;transition:flex-grow .7s cubic-bezier(.16,1,.3,1)}
+  .gallery-expand>.gx img{width:100%;height:100%;object-fit:cover}
+  @media (hover:hover){
+    .gallery-expand:hover>.gx{flex-grow:.6}
+    .gallery-expand>.gx:hover{flex-grow:3}
+  }
+  @media (prefers-reduced-motion:reduce){[data-anim],.anim-words .w{opacity:1!important;transform:none!important;transition:none!important}.gallery-expand>.gx{transition:none}}
+</style>
+<script>
+(function(){
+  var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var IO = 'IntersectionObserver' in window;
+
+  // 1) Révélation au scroll des éléments [data-anim] (stagger via data-anim-delay en ms)
+  var reveals = document.querySelectorAll('[data-anim]');
+  function showReveal(el){
+    var d = parseInt(el.getAttribute('data-anim-delay')||'0',10);
+    if(d) setTimeout(function(){el.classList.add('in')}, d); else el.classList.add('in');
+  }
+  if(RM || !IO){ reveals.forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioR = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ showReveal(en.target); ioR.unobserve(en.target);} });
+    },{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(function(e){ ioR.observe(e); });
+  }
+
+  // 2) Texte mot à mot : <h1 class="anim-words">…</h1>.
+  //    Découpe DOM-SAFE : on n'enveloppe QUE les nœuds texte (les balises internes
+  //    — dégradés, pilules — sont préservées intactes, jamais transformées en texte).
+  document.querySelectorAll('.anim-words').forEach(function(el){
+    if(el.dataset.split) return; el.dataset.split='1';
+    // Garde-fou : si le titre contient des balises internes (dégradé, pilule…),
+    // on NE découpe PAS (sinon dégradé cassé / mots invisibles) — il reste intact.
+    if(el.children.length > 0){ el.classList.remove('anim-words'); return; }
+    var wi = 0, textNodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    while(walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(function(tn){
+      if(!tn.nodeValue || !tn.nodeValue.trim()) return;
+      var frag = document.createDocumentFragment();
+      tn.nodeValue.split(/(\s+)/).forEach(function(part){
+        if(part === '') return;
+        if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+        var s = document.createElement('span'); s.className='w'; s.textContent=part;
+        s.style.transitionDelay=((wi++)*45)+'ms'; frag.appendChild(s);
+      });
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  });
+  if(RM || !IO){ document.querySelectorAll('.anim-words').forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioW = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ioW.unobserve(en.target);} });
+    },{threshold:0.25});
+    document.querySelectorAll('.anim-words').forEach(function(e){ ioW.observe(e); });
+  }
+
+  // 3) Compteurs : <span data-count="1200" data-count-suffix="+" data-count-decimals="0">0</span>
+  function fmt(v,dec){ return v.toLocaleString('fr-FR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+  function countUp(el){
+    var target=parseFloat(el.getAttribute('data-count'))||0,
+        suf=el.getAttribute('data-count-suffix')||'', pre=el.getAttribute('data-count-prefix')||'',
+        dec=parseInt(el.getAttribute('data-count-decimals')||'0',10), dur=1500, start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=pre+fmt(target*e,dec)+suf; if(p<1)requestAnimationFrame(step); else el.textContent=pre+fmt(target,dec)+suf; }
+    requestAnimationFrame(step);
+  }
+  var nums = document.querySelectorAll('[data-count]');
+  if(RM || !IO){ nums.forEach(function(el){ el.textContent=(el.getAttribute('data-count-prefix')||'')+fmt(parseFloat(el.getAttribute('data-count'))||0,parseInt(el.getAttribute('data-count-decimals')||'0',10))+(el.getAttribute('data-count-suffix')||''); }); }
+  else {
+    var ioN = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ countUp(en.target); ioN.unobserve(en.target);} });
+    },{threshold:0.6});
+    nums.forEach(function(el){ ioN.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>
