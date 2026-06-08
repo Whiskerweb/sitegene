@@ -11,7 +11,7 @@
  * Porté de `scripts/test-design-system-full.mjs` (POC validé sur les 30 templates).
  * SERVEUR uniquement.
  */
-import { setPath, collectImageSlots } from "@/lib/content-overlay";
+import { collectImageSlots } from "@/lib/content-overlay";
 
 const MISTRAL_URL = "https://api.mistral.ai/v1/chat/completions";
 
@@ -234,6 +234,30 @@ function decodeEntities(s: string): string {
 }
 
 /**
+ * Affecte une valeur à un chemin, ROBUSTE aux collisions de clés (deux data-sg
+ * dont l'un est préfixe de l'autre) : un intermédiaire primitif est remplacé par
+ * un conteneur ; on n'écrase jamais un objet existant par une chaîne. Évite le
+ * crash « Cannot assign to read only property of string » de setPath.
+ */
+function safeSet(obj: Record<string, unknown>, path: string, value: unknown): void {
+  const parts = path.replace(/\[(\d+)\]/g, ".$1").split(".").filter(Boolean);
+  if (parts.length === 0) return;
+  let cur: Record<string, unknown> = obj;
+  for (let i = 0; i < parts.length - 1; i++) {
+    const k = parts[i];
+    const next = cur[k];
+    if (next == null || typeof next !== "object") {
+      cur[k] = /^\d+$/.test(parts[i + 1]) ? [] : {};
+    }
+    cur = cur[k] as Record<string, unknown>;
+  }
+  const last = parts[parts.length - 1];
+  // Collision inverse (un objet existe déjà à cette clé) → ne pas le clobber.
+  if (cur[last] != null && typeof cur[last] === "object") return;
+  cur[last] = value;
+}
+
+/**
  * Reconstruit un content_json à partir du shell généré : chaque `data-sg-path`
  * → son texte, chaque `data-sg-img` → son `src`. Les clés correspondent donc
  * EXACTEMENT aux data-sg du shell (hydratation + édition cohérentes).
@@ -249,7 +273,7 @@ export function extractContentFromShell(
     const tag = m[0];
     const key = /data-sg-img="([^"]+)"/i.exec(tag)?.[1];
     const src = /\bsrc="([^"]+)"/i.exec(tag)?.[1];
-    if (key && src) setPath(content, key, src);
+    if (key && src) safeSet(content, key, src);
   }
 
   // Textes : ouvrant avec data-sg-path puis texte jusqu'au prochain "<" fermant.
@@ -259,7 +283,7 @@ export function extractContentFromShell(
   )) {
     const key = m[2];
     const text = decodeEntities(m[3].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim());
-    if (text) setPath(content, key, text);
+    if (text) safeSet(content, key, text);
   }
 
   const imageSlots = templateId ? collectImageSlots(content, templateId) : [];

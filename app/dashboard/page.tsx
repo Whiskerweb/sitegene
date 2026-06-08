@@ -220,6 +220,11 @@ export default async function MonSite({
 
       {!isLive && (
         <div className="mt-4 flex flex-wrap gap-3">
+          {(currentSkin || lastContent) && (
+            <Button href={`/api/preview?siteId=${site.id}`} variant="subtle" target="_blank">
+              Visualiser mon site →
+            </Button>
+          )}
           {locked ? (
             <PaywallModal
               siteId={site.id}
