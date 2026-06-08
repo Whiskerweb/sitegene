@@ -35,7 +35,7 @@ import {
 import { briefToOverrides } from "@/lib/mistral";
 import { pickDesignSystem } from "@/lib/theme-match";
 import { imagePlanFor } from "@/lib/image-plan";
-import { generateBespokeSite } from "@/lib/design-system-gen";
+import { generateBespokeSite, type GenFacts } from "@/lib/design-system-gen";
 import { saveDraftSnapshot } from "@/lib/site-content-store";
 
 export type OnboardingState = {
@@ -570,7 +570,6 @@ export async function finalizeAiOnboarding(
     .maybeSingle();
   if (!ob) return { ok: false };
   const intake = (ob.intake ?? {}) as Intake & { categoryId?: string };
-  const categoryId = intake.categoryId ?? DEFAULT_CATEGORY.id;
 
   // 1) Thème : réutilise celui déjà choisi (étape « plan photo ») sinon le choisit
   //    maintenant — pour que le plan photo annoncé corresponde au site généré.
@@ -584,53 +583,72 @@ export async function finalizeAiOnboarding(
     rationale = choice.rationale;
   }
 
-  // 2) Contenu de base déterministe (textes/contacts réels + photos mappées).
-  const baseContent = await buildDraftContent(
-    origin,
-    { intake, categoryId, templateId },
-    { emptyPhotos: "placeholder", mask: "strict" },
-  );
+  // 2) Faits COMPACTS de l'activité (aucun contenu de démo → pas de fuite).
+  const facts: GenFacts = {
+    brand: intake.brand,
+    activity: intake.about || intake.trade || intake.jobTitle || intake.genre,
+    services: intake.services?.length ? intake.services : intake.eventTypes,
+    priceRange: intake.priceRange,
+    area: intake.area || intake.city,
+    tone: intake.tone,
+    contact: [intake.contactEmail, intake.contactPhone].filter(Boolean).join(" · ") || undefined,
+    brief: intake.brief?.trim() || briefFromIntake(intake),
+    extras: [
+      intake.certifications && `Certifications : ${intake.certifications}`,
+      intake.experienceYears && `Expérience : ${intake.experienceYears}`,
+      intake.availability && `Disponibilité : ${intake.availability}`,
+      intake.socialLinks && `Réseaux : ${intake.socialLinks}`,
+    ].filter(Boolean) as string[],
+  };
+  const imagePlan = await imagePlanFor(origin, templateId, intake);
+  // Sans photo client → placeholder neutre (jamais d'<img src=""> = trou noir).
+  const photoUrls =
+    Array.isArray(intake.photoUrls) && intake.photoUrls.length
+      ? intake.photoUrls
+      : [PHOTO_PLACEHOLDER_URL];
 
   // 3) Génération sur-mesure depuis le design system.
-  if (baseContent) {
-    const brief = intake.brief?.trim() || briefFromIntake(intake);
-    const imagePlan = await imagePlanFor(origin, templateId, intake);
-    const gen = await generateBespokeSite({
-      origin,
-      templateId,
-      content: baseContent as Record<string, unknown>,
-      brief,
-      imagePlan,
-      timeoutMs: 110_000,
-    });
-    if (gen) {
-      try {
-        await ensureTemplateRow(admin, templateId);
-        const { error: tplErr } = await admin
-          .from("sites")
-          .update({ template_id: templateId })
-          .eq("id", siteId);
-        if (tplErr) throw new Error(tplErr.message);
-        // Persiste le shell bespoke + le contenu extrait (lève si l'écriture échoue).
-        await saveDraftSnapshot(admin, siteId, templateId, gen.content, "ai", gen.html);
-        await admin
-          .from("site_onboarding")
-          .update({
-            chosen_template_id: templateId,
-            step: 100, // paywall
-            updated_at: new Date().toISOString(),
-          })
-          .eq("site_id", siteId);
-        return { ok: true, templateId, generated: true, rationale };
-      } catch (e) {
-        // Échec de persistance (ex. colonne manquante) → on NE renvoie PAS un faux
-        // succès : on bascule sur le pipeline déterministe ci-dessous.
-        console.error(
-          "[finalizeAiOnboarding] persistance échouée, fallback déterministe:",
-          e instanceof Error ? e.message : e,
-        );
-      }
+  const gen = await generateBespokeSite({
+    origin,
+    templateId,
+    facts,
+    imagePlan,
+    photoUrls,
+    timeoutMs: 110_000,
+  });
+  if (gen.ok) {
+    try {
+      await ensureTemplateRow(admin, templateId);
+      const { error: tplErr } = await admin
+        .from("sites")
+        .update({ template_id: templateId })
+        .eq("id", siteId);
+      if (tplErr) throw new Error(tplErr.message);
+      // Persiste le shell bespoke + le contenu extrait (lève si l'écriture échoue).
+      await saveDraftSnapshot(admin, siteId, templateId, gen.content, "ai", gen.html);
+      await admin
+        .from("site_onboarding")
+        .update({
+          chosen_template_id: templateId,
+          step: 100, // paywall
+          updated_at: new Date().toISOString(),
+        })
+        .eq("site_id", siteId);
+      console.info(
+        `[finalizeAiOnboarding] généré: ${templateId} (${Object.keys(gen.content).length} champs, ${photoUrls.length} photos)`,
+      );
+      return { ok: true, templateId, generated: true, rationale };
+    } catch (e) {
+      // Échec de persistance → on NE renvoie PAS un faux succès : fallback.
+      console.error(
+        "[finalizeAiOnboarding] persistance échouée, fallback déterministe:",
+        e instanceof Error ? e.message : e,
+      );
     }
+  } else {
+    console.error(
+      `[finalizeAiOnboarding] génération échouée (${gen.reason}) → fallback déterministe (${templateId})`,
+    );
   }
 
   // 4) Fallback déterministe : site garanti, même sans génération IA.

@@ -11,6 +11,7 @@
  * SERVEUR uniquement.
  */
 import type { Intake } from "@/lib/onboarding-config";
+import { getCategory } from "@/lib/categories";
 
 const MISTRAL_URL = "https://api.mistral.ai/v1/chat/completions";
 
@@ -79,6 +80,7 @@ TON OBJECTIF est de remplir un SOCLE d'informations essentielles (la liste des m
 }
 
 CLÉS d'intake possibles (n'écris que celles que tu peux renseigner depuis le dernier message) :
+- categoryId : la grande famille du métier, à déduire dès que l'activité est connue. UNE valeur parmi EXACTEMENT : "photographe", "musicien", "artisan" (métiers manuels/services à domicile), "portfolio" (indépendants, créatifs, coachs, consultants, professions libérales), "saas" (produit/app/tech). Choisis la plus proche (ex. fleuriste→artisan, coach→portfolio, traiteur→artisan, avocat→portfolio).
 - brand (string) · about (string : description de l'activité) · trade (string : métier) · jobTitle · genre
 - services (string[]) · eventTypes (string[])
 - priceRange (string) · wantsPricingPage (boolean : false si la personne ne veut pas de page tarifs)
@@ -124,9 +126,9 @@ async function callJson(messages: { role: string; content: string }[], timeoutMs
 }
 
 const ALLOWED_KEYS = new Set([
-  "brand", "about", "trade", "jobTitle", "genre", "services", "eventTypes", "priceRange",
-  "wantsPricingPage", "area", "city", "tone", "contactEmail", "contactPhone", "instagram",
-  "websiteUrl", "availability", "certifications", "experienceYears", "socialLinks",
+  "categoryId", "brand", "about", "trade", "jobTitle", "genre", "services", "eventTypes",
+  "priceRange", "wantsPricingPage", "area", "city", "tone", "contactEmail", "contactPhone",
+  "instagram", "websiteUrl", "availability", "certifications", "experienceYears", "socialLinks",
   "musicLinks", "upcomingDates", "skills", "projects", "brief",
 ]);
 
@@ -136,7 +138,10 @@ function sanitizePatch(raw: unknown): Partial<Intake> {
   const out: Record<string, unknown> = {};
   for (const [k, v] of Object.entries(raw as Record<string, unknown>)) {
     if (!ALLOWED_KEYS.has(k)) continue;
-    if (k === "services" || k === "eventTypes") {
+    if (k === "categoryId") {
+      // Valide contre le catalogue de catégories (sinon ignoré).
+      if (typeof v === "string" && getCategory(v)) out[k] = v;
+    } else if (k === "services" || k === "eventTypes") {
       if (Array.isArray(v)) out[k] = v.map(String).filter(Boolean).slice(0, 12);
     } else if (k === "wantsPricingPage") {
       if (typeof v === "boolean") out[k] = v;
