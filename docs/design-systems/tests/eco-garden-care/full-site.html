@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eco Garden Care – Expertise en Jardinage & Aménagement Paysager</title>
+  <meta name="description" content="Services professionnels d’entretien de jardin et de pelouse. Outils écologiques, jardiniers experts et assistance 24/7.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#BEDD25',
+            ink: '#1F1F1F',
+            forest: '#274839',
+            bg: '#F2F1E7',
+            muted: '#606060',
+            white: '#FFFFFF'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['"Playfair Display"', 'serif']
+          },
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom CSS -->
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #F2F1E7; color: #1F1F1F; margin: 0; }
+    /* Bouton pilule lime */
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: #BEDD25; color: #1F1F1F; font-size: 15px; font-weight: 600; padding: 12px 24px; border-radius: 50px; text-decoration: none; transition: .2s; }
+    .btn-primary:hover { background: #afc91f; transform: translateY(-1px); }
+    /* Soulignement nav au survol */
+    .nav-link { position: relative; color: #1F1F1F; text-decoration: none; font-size: 15px; }
+    .nav-link:hover { color: #274839; }
+    /* Badge-pilule lime à pastille (label de section + badges du hero) */
+    .section-label { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: #1F1F1F; background: rgba(190, 221, 37, .18); border-radius: 50px; padding: 6px 14px; }
+    .section-label::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #BEDD25; }
+    /* Accordion FAQ */
+    .faq-item .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+    .faq-item.open .faq-answer { max-height: 200px; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+  </style>
+</head>
+<body class="bg-bg">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-bg/90 backdrop-blur-sm border-b border-ink/5" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2 text-[18px] font-semibold text-ink no-underline" data-sg-path="brand">
+        <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary"><svg class="w-4 h-4 text-forest" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7 6 5 10 5 14a7 7 0 0014 0c0-4-2-8-7-12z"/></svg></span>
+        <span>Eco Garden Care</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="#about" data-sg-path="nav[0]" class="nav-link">À propos</a>
+        <a href="#services" data-sg-path="nav[1]" class="nav-link">Services</a>
+        <a href="#contact" data-sg-path="navContact" class="nav-link">Contact &amp; devis</a>
+      </nav>
+      <a href="#contact" data-sg-path="navCta" class="btn-primary text-sm hidden md:inline-flex">Devis gratuit
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="pt-16 min-h-screen flex items-center relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-full md:w-1/2 h-full">
+      <img data-sg-img="hero.image" src="../../../../public/_templates/eco-garden-care/img/hero.jpg" alt="" class="w-full h-full object-cover" data-anim="fade" data-anim-delay="0"/>
+      <div class="absolute inset-0 bg-gradient-to-l from-transparent to-bg"></div>
+    </div>
+    <div class="relative max-w-6xl mx-auto px-6 py-24 md:py-32 w-full">
+      <div class="max-w-xl" data-anim="left">
+        <div class="flex flex-wrap gap-3 mb-8">
+          <span data-sg-path="features[0].title" class="section-label text-sm" data-anim="fade" data-anim-delay="100">Jardiniers qualifiés</span>
+          <span data-sg-path="features[1].title" class="section-label text-sm" data-anim="fade" data-anim-delay="200">Outils écologiques</span>
+        </div>
+        <h1 data-sg-path="hero.tagline" class="text-4xl md:text-[62px] font-medium leading-tight text-ink mb-6" style="font-family:'Playfair Display',serif;" data-anim="fade" data-anim-delay="300">Transformez votre espace extérieur en toute <em>simplicité</em></h1>
+        <p data-sg-path="hero.description" class="text-[18px] text-muted mb-8 leading-relaxed" data-anim="fade" data-anim-delay="400">Créez un espace extérieur plus vert et plus beau grâce à notre expertise en jardinage et en aménagement paysager.</p>
+        <a href="#contact" data-sg-path="hero.cta" class="btn-primary" data-anim="fade" data-anim-delay="500">Réservez votre service
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="py-20" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-3 gap-12">
+        <div class="text-center" data-anim="fade" data-anim-delay="0">
+          <div class="text-4xl mb-4" data-sg-path="features[0].icon">🌿</div>
+          <h3 class="text-xl font-semibold mb-2" data-sg-path="features[0].title">Jardiniers qualifiés</h3>
+          <p class="text-muted" data-sg-path="features[0].text">Nos experts mettent leur savoir-faire au service de votre jardin pour le sublimer dès aujourd’hui.</p>
+        </div>
+        <div class="text-center" data-anim="fade" data-anim-delay="80">
+          <div class="text-4xl mb-4" data-sg-path="features[1].icon">🌱</div>
+          <h3 class="text-xl font-semibold mb-2" data-sg-path="features[1].title">Outils écologiques</h3>
+          <p class="text-muted" data-sg-path="features[1].text">Nous utilisons des outils respectueux de l’environnement et des méthodes durables pour prendre soin de votre jardin.</p>
+        </div>
+        <div class="text-center" data-anim="fade" data-anim-delay="160">
+          <div class="text-4xl mb-4" data-sg-path="features[2].icon">💬</div>
+          <h3 class="text-xl font-semibold mb-2" data-sg-path="features[2].title">Support client 24/7</h3>
+          <p class="text-muted" data-sg-path="features[2].text">Notre équipe est disponible à tout moment pour répondre à vos questions et vous accompagner.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="py-20" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <span class="section-label" data-sg-path="about.label" data-anim="fade">À propos</span>
+        <h2 class="text-4xl md:text-[52px] font-medium mt-4 mb-6" style="font-family:'Playfair Display',serif;" data-sg-path="about.title" data-anim="fade">Engagés pour des espaces verts toujours plus <em>beaux</em></h2>
+        <p class="max-w-2xl mx-auto text-muted" data-sg-path="about.description" data-anim="fade">Nous créons et entretenons des espaces extérieurs frais, dynamiques et magnifiquement conçus, avec passion et expertise.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div data-anim="left">
+          <img data-sg-img="about.image" src="../../../../public/_templates/eco-garden-care/img/about.jpg" alt="Jardinier travaillant dans un jardin" class="rounded-[24px] w-full h-auto object-cover"/>
+        </div>
+        <div data-anim="right">
+          <div class="space-y-8">
+            <div>
+              <h3 class="text-xl font-semibold mb-2" data-sg-path="about.values[0].title">Qualité irréprochable</h3>
+              <p class="text-muted" data-sg-path="about.values[0].text">Un service fiable, une communication claire et des résultats constants.</p>
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold mb-2" data-sg-path="about.values[1].title">Soins sur mesure</h3>
+              <p class="text-muted" data-sg-path="about.values[1].text">Des prestations adaptées à votre espace extérieur et à votre mode de vie.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="py-20" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <span class="section-label" data-sg-path="services.label" data-anim="fade">Nos services</span>
+        <h2 class="text-4xl md:text-[52px] font-medium mt-4" style="font-family:'Playfair Display',serif;" data-sg-path="services.title" data-anim="fade">Nos <em>expertises</em></h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-[24px] overflow-hidden shadow-sm" data-anim="fade" data-anim-delay="0">
+          <img data-sg-img="services.items[0].image" src="../../../../public/_templates/eco-garden-care/img/service-shrub.jpg" alt="Taille des arbustes" class="w-full h-56 object-cover"/>
+          <div class="p-8">
+            <h3 class="text-xl font-semibold mb-2" data-sg-path="services.items[0].title">Taille des arbustes</h3>
+            <p class="text-muted mb-6" data-sg-path="services.items[0].text">Offrez à votre jardin un entretien impeccable grâce à notre service de taille d’arbustes. Prenez rendez-vous dès aujourd’hui.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-[24px] overflow-hidden shadow-sm" data-anim="fade" data-anim-delay="80">
+          <img data-sg-img="services.items[1].image" src="../../../../public/_templates/eco-garden-care/img/service-lawn.jpg" alt="Entretien de jardin" class="w-full h-56 object-cover"/>
+          <div class="p-8">
+            <h3 class="text-xl font-semibold mb-2" data-sg-path="services.items[1].title">Entretien de jardin</h3>
+            <p class="text-muted mb-6" data-sg-path="services.items[1].text">Avec notre prise en charge complète, votre jardin reste luxuriant, harmonieux et parfaitement entretenu.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-[24px] overflow-hidden shadow-sm" data-anim="fade" data-anim-delay="160">
+          <img data-sg-img="services.items[2].image" src="../../../../public/_templates/eco-garden-care/img/service-maintenance.jpg" alt="Aménagement paysager" class="w-full h-56 object-cover"/>
+          <div class="p-8">
+            <h3 class="text-xl font-semibold mb-2" data-sg-path="services.items[2].title">Aménagement paysager</h3>
+            <p class="text-muted mb-6" data-sg-path="services.items[2].text">Valorisez votre propriété avec nos solutions d’aménagement paysager haut de gamme. Contactez-nous.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="py-20" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div data-anim="fade" data-anim-delay="0">
+          <p class="text-5xl font-semibold text-forest"><span data-count="169">0</span></p>
+          <p class="text-muted mt-2" data-sg-path="stats[0].label">Pelouses entretenues</p>
+        </div>
+        <div data-anim="fade" data-anim-delay="80">
+          <p class="text-5xl font-semibold text-forest"><span data-count="51">0</span></p>
+          <p class="text-muted mt-2" data-sg-path="stats[1].label">Projets d’aménagement</p>
+        </div>
+        <div data-anim="fade" data-anim-delay="160">
+          <p class="text-5xl font-semibold text-forest"><span data-count="34" data-count-suffix="%">0</span></p>
+          <p class="text-muted mt-2" data-sg-path="stats[2].label">Satisfaction client</p>
+        </div>
+        <div data-anim="fade" data-anim-delay="240">
+          <p class="text-5xl font-semibold text-forest"><span data-count="169">0</span></p>
+          <p class="text-muted mt-2" data-sg-path="stats[3].label">Clients satisfaits</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA MID -->
+  <section class="py-20" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="bg-forest text-white rounded-[24px] p-12 md:p-20 flex flex-col md:flex-row items-center gap-12 overflow-hidden">
+        <div class="md:w-1/2" data-anim="left">
+          <h2 class="text-4xl md:text-[52px] font-medium mb-6" style="font-family:'Playfair Display',serif;" data-sg-path="cta_mid.title">Embellissez votre extérieur <em>naturellement</em></h2>
+          <p class="text-muted/80 mb-8" data-sg-path="cta_mid.text">Notre équipe utilise des méthodes durables, des outils de qualité et des techniques respectueuses des plantes pour des pelouses éclatantes.</p>
+          <div class="flex flex-wrap gap-3 mb-8">
+            <span class="section-label bg-white/20 text-white" data-sg-path="cta_mid.badge1">Audit gratuit de votre jardin</span>
+            <span class="section-label bg-white/20 text-white" data-sg-path="cta_mid.badge2">Outils écologiques et traitements sûrs</span>
+          </div>
+          <a href="#contact" class="btn-primary bg-white text-forest" data-sg-path="cta_mid.cta">Devis gratuit
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="md:w-1/2" data-anim="right">
+          <img data-sg-img="cta_mid.image" src="../../../../public/_templates/eco-garden-care/img/cta-bg.jpg" alt="Jardin bien entretenu" class="rounded-[24px] w-full h-auto object-cover"/>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="py-20" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <span class="section-label" data-sg-path="process.label" data-anim="fade">Notre méthode</span>
+        <h2 class="text-4xl md:text-[52px] font-medium mt-4" style="font-family:'Playfair Display',serif;" data-sg-path="process.title">Fidèles à <span data-count="12000">0</span> clients <em>satisfaits</em></h2>
+      </div>
+      <div class="relative">
+        <img data-sg-img="process.image" src="../../../../public/_templates/eco-garden-care/img/process.jpg" alt="Jardinier avec une brouette" class="rounded-[24px] w-full h-auto object-cover mb-12" data-anim="fade"/>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="bg-white p-8 rounded-[24px] shadow-sm" data-anim="fade" data-anim-delay="0">
+            <p class="text-forest font-semibold mb-2" data-sg-path="process.steps[0].number">001</p>
+            <h3 class="text-xl font-semibold mb-2" data-sg-path="process.steps[0].title">Devis détaillé</h3>
+            <p class="text-muted" data-sg-path="process.steps[0].text">Nous vous fournissons une estimation précise après inspection de votre espace.</p>
+          </div>
+          <div class="bg-white p-8 rounded-[24px] shadow-sm" data-anim="fade" data-anim-delay="80">
+            <p class="text-forest font-semibold mb-2" data-sg-path="process.steps[1].number">002</p>
+            <h3 class="text-xl font-semibold mb-2" data-sg-path="process.steps[1].title">Planification du service</h3>
+            <p class="text-muted" data-sg-path="process.steps[1].text">Choisissez une date et un horaire qui vous conviennent pour l’intervention.</p>
+          </div>
+          <div class="bg-white p-8 rounded-[24px] shadow-sm" data-anim="fade" data-anim-delay="160">
+            <p class="text-forest font-semibold mb-2" data-sg-path="process.steps[2].number">003</p>
+            <h3 class="text-xl font-semibold mb-2" data-sg-path="process.steps[2].title">Réalisation du service</h3>
+            <p class="text-muted" data-sg-path="process.steps[2].text">Notre équipe intervient avec professionnalisme et minutie pour un résultat optimal.</p>
+          </div>
+          <div class="bg-white p-8 rounded-[24px] shadow-sm" data-anim="fade" data-anim-delay="240">
+            <p class="text-forest font-semibold mb-2" data-sg-path="process.steps[3].number">004</p>
+            <h3 class="text-xl font-semibold mb-2" data-sg-path="process.steps[3].title">Suivi post-service</h3>
+            <p class="text-muted" data-sg-path="process.steps[3].text">Nous restons à votre écoute pour garantir votre entière satisfaction.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="py-20" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <span class="section-label" data-sg-path="testimonials.label" data-anim="fade">Témoignages</span>
+        <h2 class="text-4xl md:text-[52px] font-medium mt-4" style="font-family:'Playfair Display',serif;" data-sg-path="testimonials.title">Appréciés de nos <em>clients</em></h2>
+        <p class="max-w-2xl mx-auto text-muted mt-4" data-sg-path="testimonials.subtitle">Nos clients nous font confiance pour entretenir leurs jardins et pelouses avec dévouement, compétence et souci du détail.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white p-8 rounded-[24px] shadow-sm" data-anim="fade" data-anim-delay="0">
+          <p class="text-muted mb-6 italic" data-sg-path="testimonials.items[0].quote">"Un service exceptionnel ! Ma pelouse n’a jamais été aussi verte et saine. L’équipe a été professionnelle, ponctuelle et méticuleuse. Mon jardin est désormais un véritable havre de paix, coloré et vibrant."</p>
+          <div class="flex items-center gap-4">
+            <img data-sg-img="testimonials.items[0].avatar" src="../../../../public/_templates/eco-garden-care/img/testimonial1.jpg" alt="Daniel K." class="w-12 h-12 rounded-full object-cover"/>
+            <div>
+              <p class="font-semibold" data-sg-path="testimonials.items[0].name">Daniel K.</p>
+              <p class="text-sm text-muted" data-sg-path="testimonials.items[0].role">Gestionnaire de copropriété</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-8 rounded-[24px] shadow-sm" data-anim="fade" data-anim-delay="80">
+          <p class="text-muted mb-6 italic" data-sg-path="testimonials.items[1].quote">"Un travail incroyable ! Notre pelouse fait l’admiration du quartier. Ponctuels, courtois et toujours irréprochables, je recommande leurs services à quiconque cherche un entretien de pelouse fiable."</p>
+          <div class="flex items-center gap-4">
+            <img data-sg-img="testimonials.items[1].avatar" src="../../../../public/_templates/eco-garden-care/img/testimonial2.jpg" alt="Angela R." class="w-12 h-12 rounded-full object-cover"/>
+            <div>
+              <p class="font-semibold" data-sg-path="testimonials.items[1].name">Angela R.</p>
+              <p class="text-sm text-muted" data-sg-path="testimonials.items[1].role">Propriétaire particulier</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-8 rounded-[24px] shadow-sm" data-anim="fade" data-anim-delay="160">
+          <p class="text-muted mb-6 italic" data-sg-path="testimonials.items[2].quote">"Ils ont métamorphosé notre propriété en un paysage époustouflant. Leur équipe est professionnelle, efficace et attentive aux moindres détails. Je les recommande vivement pour un entretien de pelouse d’excellence."</p>
+          <div class="flex items-center gap-4">
+            <img data-sg-img="testimonials.items[2].avatar" src="../../../../public/_templates/eco-garden-care/img/testimonial3.jpg" alt="Jessica P." class="w-12 h-12 rounded-full object-cover"/>
+            <div>
+              <p class="font-semibold" data-sg-path="testimonials.items[2].name">Jessica P.</p>
+              <p class="text-sm text-muted" data-sg-path="testimonials.items[2].role">Propriétaire d’une maison de ville</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="py-20" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <span class="section-label" data-sg-path="gallery.label" data-anim="fade">Réalisations</span>
+        <h2 class="text-4xl md:text-[52px] font-medium mt-4" style="font-family:'Playfair Display',serif;" data-sg-path="gallery.title">Notre galerie d’<em>aménagements</em></h2>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <img data-sg-img="gallery.images[0]" src="../../../../public/_templates/eco-garden-care/img/gallery1.jpg" alt="Aménagement de jardin 1" class="rounded-[24px] w-full h-64 object-cover" data-anim="fade" data-anim-delay="0"/>
+        <img data-sg-img="gallery.images[1]" src="../../../../public/_templates/eco-garden-care/img/gallery2.jpg" alt="Aménagement de jardin 2" class="rounded-[24px] w-full h-64 object-cover" data-anim="fade" data-anim-delay="80"/>
+        <img data-sg-img="gallery.images[2]" src="../../../../public/_templates/eco-garden-care/img/gallery3.jpg" alt="Aménagement de jardin 3" class="rounded-[24px] w-full h-64 object-cover" data-anim="fade" data-anim-delay="160"/>
+        <img data-sg-img="gallery.images[3]" src="../../../../public/_templates/eco-garden-care/img/gallery4.jpg" alt="Aménagement de jardin 4" class="rounded-[24px] w-full h-64 object-cover" data-anim="fade" data-anim-delay="240"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-20" data-anim="fade">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <span class="section-label" data-sg-path="faq.label" data-anim="fade">FAQ</span>
+        <h2 class="text-4xl md:text-[52px] font-medium mt-4" style="font-family:'Playfair Display',serif;" data-sg-path="faq.title">Questions <em>fréquentes</em></h2>
+      </div>
+      <div class="space-y-4" id="faq-accordion">
+        <div class="faq-item bg-white rounded-[24px] p-6 shadow-sm" data-anim="fade" data-anim-delay="0">
+          <button class="faq-question w-full flex justify-between items-center text-left">
+            <span class="font-semibold" data-sg-path="faq.items[0].q">À quelle fréquence dois-je faire entretenir ma pelouse ?</span>
+            <span class="faq-icon text-forest text-2xl transition-transform">+</span>
+          </button>
+          <div class="faq-answer pt-4 text-muted">
+            <p data-sg-path="faq.items[0].a">Cela dépend de votre type de pelouse et de ses besoins, mais un entretien hebdomadaire ou bi-hebdomadaire permet de garder un espace extérieur sain et impeccable.</p>
+          </div>
+        </div>
+        <div class="faq-item bg-white rounded-[24px] p-6 shadow-sm" data-anim="fade" data-anim-delay="80">
+          <button class="faq-question w-full flex justify-between items-center text-left">
+            <span class="font-semibold" data-sg-path="faq.items[1].q">Quels sont les avantages de l’aération de ma pelouse ?</span>
+            <span class="faq-icon text-forest text-2xl transition-transform">+</span>
+          </button>
+          <div class="faq-answer pt-4 text-muted">
+            <p data-sg-path="faq.items[1].a">L’aération réduit la compaction du sol, améliore l’absorption de l’eau et des nutriments, favorise un enracinement plus profond et donne une pelouse plus dense et plus résistante.</p>
+          </div>
+        </div>
+        <div class="faq-item bg-white rounded-[24px] p-6 shadow-sm" data-anim="fade" data-anim-delay="160">
+          <button class="faq-question w-full flex justify-between items-center text-left">
+            <span class="font-semibold" data-sg-path="faq.items[2].q">Quand est-il préférable de fertiliser ma pelouse ?</span>
+            <span class="faq-icon text-forest text-2xl transition-transform">+</span>
+          </button>
+          <div class="faq-answer pt-4 text-muted">
+            <p data-sg-path="faq.items[2].a">Pour la plupart des gazons, le printemps et l’automne sont les périodes idéales. La fertilisation printanière stimule la croissance, tandis que celle d’automne renforce les racines avant l’hiver.</p>
+          </div>
+        </div>
+        <div class="faq-item bg-white rounded-[24px] p-6 shadow-sm" data-anim="fade" data-anim-delay="240">
+          <button class="faq-question w-full flex justify-between items-center text-left">
+            <span class="font-semibold" data-sg-path="faq.items[3].q">Comment lutter contre les mauvaises herbes dans ma pelouse ?</span>
+            <span class="faq-icon text-forest text-2xl transition-transform">+</span>
+          </button>
+          <div class="faq-answer pt-4 text-muted">
+            <p data-sg-path="faq.items[3].a">Une tonte régulière, un arrosage adapté et une pelouse dense sont les meilleures défenses naturelles. Nous proposons également des traitements ciblés contre les mauvaises herbes.</p>
+          </div>
+        </div>
+        <div class="faq-item bg-white rounded-[24px] p-6 shadow-sm" data-anim="fade" data-anim-delay="320">
+          <button class="faq-question w-full flex justify-between items-center text-left">
+            <span class="font-semibold" data-sg-path="faq.items[4].q">Quel type de gazon convient le mieux à mon climat ?</span>
+            <span class="faq-icon text-forest text-2xl transition-transform">+</span>
+          </button>
+          <div class="faq-answer pt-4 text-muted">
+            <p data-sg-path="faq.items[4].a">Cela dépend de votre région et de l’ensoleillement. Nos experts analyseront votre jardin et vous conseilleront la variété de gazon la plus adaptée lors de notre audit gratuit.</p>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-12 bg-white rounded-[24px] p-8 shadow-sm" data-anim="fade">
+        <h3 class="text-2xl font-semibold mb-2" data-sg-path="faq.cta_title">Transformez votre jardin dès aujourd’hui</h3>
+        <p class="text-muted mb-6" data-sg-path="faq.cta_text">Donnez vie à votre jardin grâce à des soins experts et des solutions écologiques. Notre équipe de jardiniers qualifiés est prête à s’occuper de tout, de l’entretien courant aux projets plus ambitieux.</p>
+        <a href="#contact" class="btn-primary" data-sg-path="faq.cta">Nous contacter
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section class="py-20" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <span class="section-label" data-sg-path="blog.label" data-anim="fade">Vie verte</span>
+        <h2 class="text-4xl md:text-[52px] font-medium mt-4" style="font-family:'Playfair Display',serif;" data-sg-path="blog.title">Le Blog des <em>Experts</em></h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-[24px] overflow-hidden shadow-sm" data-anim="fade" data-anim-delay="0">
+          <img data-sg-img="blog.posts[0].image" src="../../../../public/_templates/eco-garden-care/img/blog1.jpg" alt="Article de blog 1" class="w-full h-56 object-cover"/>
+          <div class="p-6">
+            <p class="text-sm text-muted mb-2" data-sg-path="blog.posts[0].date">10 janv. 2026</p>
+            <h3 class="text-xl font-semibold" data-sg-path="blog.posts[0].title">Sublimez votre extérieur avec nos conseils d’experts</h3>
+          </div>
+        </div>
+        <div class="bg-white rounded-[24px] overflow-hidden shadow-sm" data-anim="fade" data-anim-delay="80">
+          <img data-sg-img="blog.posts[1].image" src="../../../../public/_templates/eco-garden-care/img/blog2.jpg" alt="Article de blog 2" class="w-full h-56 object-cover"/>
+          <div class="p-6">
+            <p class="text-sm text-muted mb-2" data-sg-path="blog.posts[1].date">8 janv. 2026</p>
+            <h3 class="text-xl font-semibold" data-sg-path="blog.posts[1].title">Métamorphosez votre jardin avec nos astuces saisonnières</h3>
+          </div>
+        </div>
+        <div class="bg-white rounded-[24px] overflow-hidden shadow-sm" data-anim="fade" data-anim-delay="160">
+          <img data-sg-img="blog.posts[2].image" src="../../../../public/_templates/eco-garden-care/img/blog3.jpg" alt="Article de blog 3" class="w-full h-56 object-cover"/>
+          <div class="p-6">
+            <p class="text-sm text-muted mb-2" data-sg-path="blog.posts[2].date">19 janv. 2026</p>
+            <h3 class="text-xl font-semibold" data-sg-path="blog.posts[2].title">Optimisez votre espace grâce aux solutions de jardinage vertical</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER CTA -->
+  <section id="contact" class="py-20" data-anim="fade">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-4xl md:text-[52px] font-medium mb-6" style="font-family:'Playfair Display',serif;" data-sg-path="footer_cta.title">Offrez une nouvelle vie à votre jardin avec nos <em>experts</em></h2>
+      <p class="text-muted mb-8" data-sg-path="footer_cta.text">Laissez-vous séduire par un jardin plus vert et plus harmonieux, conçu sur mesure pour refléter vos envies.</p>
+      <a href="#" class="btn-primary" data-sg-path="footer_cta.cta">Demandez un devis gratuit
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-forest text-white py-20" data-anim="fade">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <a href="#" class="flex items-center gap-2 text-[20px] font-semibold text-white no-underline justify-center mb-4" data-sg-path="brand">
+          <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary"><svg class="w-5 h-5 text-forest" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7 6 5 10 5 14a7 7 0 0014 0c0-4-2-8-7-12z"/></svg></span>
+          <span>Eco Garden Care</span>
+        </a>
+        <p class="max-w-xl mx-auto text-muted/80" data-sg-path="footer.tagline">Nous proposons des services d’entretien d’espaces verts et de pelouses, conçus pour votre entière satisfaction.</p>
+      </div>
+      <div class="grid md:grid-cols-4 gap-8">
+        <div>
+          <h4 class="font-semibold mb-4">Liens rapides</h4>
+          <ul class="space-y-2 text-muted/80">
+            <li><a href="#" class="hover:text-white" data-sg-path="footer.quickLinks[0]">À propos</a></li>
+            <li><a href="#" class="hover:text-white" data-sg-path="footer.quickLinks[1]">Nos prestations</a></li>
+            <li><a href="#" class="hover:text-white" data-sg-path="footer.quickLinks[2]">Contactez-nous</a></li>
+            <li><a href="#" class="hover:text-white" data-sg-path="footer.quickLinks[3]">Notre blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Nos services</h4>
+          <ul class="space-y-2 text-muted/80">
+            <li><a href="#" class="hover:text-white" data-sg-path="footer.services[0]">Tonte de pelouse</a></li>
+            <li><a href="#" class="hover:text-white" data-sg-path="footer.services[1]">Entretien de jardin</a></li>
+            <li><a href="#" class="hover:text-white" data-sg-path="footer.services[2]">Taille d’arbres et arbustes</a></li>
+            <li><a href="#" class="hover:text-white" data-sg-path="footer.services[3]">Nettoyages saisonniers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Contact</h4>
+          <ul class="space-y-2 text-muted/80">
+            <li><a href="mailto:info@gardencare.com" class="hover:text-white" data-sg-path="footer.email">info@gardencare.com</a></li>
+            <li><a href="tel:+10001234567" class="hover:text-white" data-sg-path="footer.phone">+1 (000) 123-4567</a></li>
+            <li data-sg-path="footer.address">123 Greenway Street, City Name</li>
+            <li data-sg-path="footer.hours">Lun – Sam : 8 h 00 – 18 h 00</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/10 mt-12 pt-8 text-center text-muted/80">
+        <p data-sg-path="footer.copyright">© 2026 Eco Garden Care. Tous droits réservés.</p>
+        <p class="text-sm mt-2">Propulsé par <a href="#" class="text-white hover:underline">Akyra</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Accordion FAQ Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const accordion = document.getElementById('faq-accordion');
+      if (accordion) {
+        accordion.addEventListener('click', (e) => {
+          const question = e.target.closest('.faq-question');
+          if (question) {
+            const item = question.parentElement;
+            item.classList.toggle('open');
+          }
+        });
+      }
+    });
+  </script>
+
+<!-- ═══ AKYRA MOTION KIT — animations partagées (vanilla, sans dépendance, respecte prefers-reduced-motion) ═══ -->
+<style>
+  [data-anim]{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+  [data-anim="fade"]{transform:none}
+  [data-anim="left"]{transform:translateX(-26px)}
+  [data-anim="right"]{transform:translateX(26px)}
+  [data-anim="scale"]{transform:scale(.96)}
+  [data-anim].in{opacity:1!important;transform:none!important}
+  /* Apparition du texte mot à mot */
+  .anim-words .w{display:inline-block;opacity:0;transform:translateY(0.5em);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .anim-words.in .w{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){[data-anim],.anim-words .w{opacity:1!important;transform:none!important;transition:none!important}}
+</style>
+<script>
+(function(){
+  var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var IO = 'IntersectionObserver' in window;
+
+  // 1) Révélation au scroll des éléments [data-anim] (stagger via data-anim-delay en ms)
+  var reveals = document.querySelectorAll('[data-anim]');
+  function showReveal(el){
+    var d = parseInt(el.getAttribute('data-anim-delay')||'0',10);
+    if(d) setTimeout(function(){el.classList.add('in')}, d); else el.classList.add('in');
+  }
+  if(RM || !IO){ reveals.forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioR = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ showReveal(en.target); ioR.unobserve(en.target);} });
+    },{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(function(e){ ioR.observe(e); });
+  }
+
+  // 2) Texte mot à mot : <h1 class="anim-words">…</h1>.
+  //    Découpe DOM-SAFE : on n'enveloppe QUE les nœuds texte (les balises internes
+  //    — dégradés, pilules — sont préservées intactes, jamais transformées en texte).
+  document.querySelectorAll('.anim-words').forEach(function(el){
+    if(el.dataset.split) return; el.dataset.split='1';
+    // Garde-fou : si le titre contient des balises internes (dégradé, pilule…),
+    // on NE découpe PAS (sinon dégradé cassé / mots invisibles) — il reste intact.
+    if(el.children.length > 0){ el.classList.remove('anim-words'); return; }
+    var wi = 0, textNodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    while(walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(function(tn){
+      if(!tn.nodeValue || !tn.nodeValue.trim()) return;
+      var frag = document.createDocumentFragment();
+      tn.nodeValue.split(/(\s+)/).forEach(function(part){
+        if(part === '') return;
+        if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+        var s = document.createElement('span'); s.className='w'; s.textContent=part;
+        s.style.transitionDelay=((wi++)*45)+'ms'; frag.appendChild(s);
+      });
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  });
+  if(RM || !IO){ document.querySelectorAll('.anim-words').forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioW = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ioW.unobserve(en.target);} });
+    },{threshold:0.25});
+    document.querySelectorAll('.anim-words').forEach(function(e){ ioW.observe(e); });
+  }
+
+  // 3) Compteurs : <span data-count="1200" data-count-suffix="+" data-count-decimals="0">0</span>
+  function fmt(v,dec){ return v.toLocaleString('fr-FR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+  function countUp(el){
+    var target=parseFloat(el.getAttribute('data-count'))||0,
+        suf=el.getAttribute('data-count-suffix')||'', pre=el.getAttribute('data-count-prefix')||'',
+        dec=parseInt(el.getAttribute('data-count-decimals')||'0',10), dur=1500, start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=pre+fmt(target*e,dec)+suf; if(p<1)requestAnimationFrame(step); else el.textContent=pre+fmt(target,dec)+suf; }
+    requestAnimationFrame(step);
+  }
+  var nums = document.querySelectorAll('[data-count]');
+  if(RM || !IO){ nums.forEach(function(el){ el.textContent=(el.getAttribute('data-count-prefix')||'')+fmt(parseFloat(el.getAttribute('data-count'))||0,parseInt(el.getAttribute('data-count-decimals')||'0',10))+(el.getAttribute('data-count-suffix')||''); }); }
+  else {
+    var ioN = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ countUp(en.target); ioN.unobserve(en.target);} });
+    },{threshold:0.6});
+    nums.forEach(function(el){ ioN.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>

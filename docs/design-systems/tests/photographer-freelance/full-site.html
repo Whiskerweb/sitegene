@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Léon Marchal | Photographe Indépendant</title>
+  <meta name="description" content="Léon Marchal — photographe indépendant capturant les meilleurs moments de la vie à travers les portraits, les voyages, la photographie commerciale, événementielle, aérienne et animalière.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#0A0A0A',
+            panel: '#141414',
+            cream: '#FAF5EA',
+            muted: '#BABABA',
+            accent: '#FF6017',
+            accent2: '#FF7738'
+          },
+          fontFamily: {
+            display: ['Archivo', 'Arial', 'sans-serif'],
+            body: ['Inter', 'Arial', 'sans-serif']
+          },
+        }
+      }
+    };
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', Arial, sans-serif; background: #0A0A0A; color: #FAF5EA; margin: 0; }
+    .font-display { font-family: 'Archivo', Arial, sans-serif; }
+    .display-tight { letter-spacing: -0.04em; line-height: 0.92; }
+  </style>
+</head>
+<body class="bg-ink text-cream">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 inset-x-0 z-50">
+    <nav class="flex items-center justify-between px-6 md:px-10 py-5">
+      <a href="#top" data-sg-path="brand" class="font-display text-lg md:text-xl font-semibold tracking-tight text-cream">Léon Marchal</a>
+      <ul class="hidden md:flex items-center gap-8 text-[13px] tracking-wide text-cream/80">
+        <li><a href="#work" data-sg-path="nav[0]" class="hover:text-cream transition-colors">Réalisations</a></li>
+        <li><a href="#about" data-sg-path="nav[1]" class="hover:text-cream transition-colors">À propos</a></li>
+        <li><a href="#reviews" data-sg-path="nav[2]" class="hover:text-cream transition-colors">Avis</a></li>
+        <li><a href="#blog" data-sg-path="nav[3]" class="hover:text-cream transition-colors">Blogs</a></li>
+      </ul>
+      <a href="#contact" data-sg-path="hero.ctaSecondary" class="hidden md:inline-flex items-center gap-2 text-[12px] tracking-wide uppercase border border-cream/30 rounded-full px-5 py-2 hover:bg-accent hover:border-accent hover:text-ink transition-colors">Travailler avec moi</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="top" class="relative h-screen min-h-[680px] w-full overflow-hidden">
+    <img data-sg-img="hero.image" src="../../../../public/_templates/photographer-freelance/img/hero.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" data-anim="fade" />
+    <div class="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-ink/30"></div>
+    <div class="absolute top-28 left-6 md:left-10 max-w-sm z-10">
+      <p data-sg-path="hero.intro" class="text-[12px] md:text-[13px] leading-relaxed text-cream/85 mb-4" data-anim="fade" data-anim-delay="200">Bonjour, Léon Marchal ici. Je suis photographe indépendant et l'artiste derrière l'objectif, capturant les moments magiques de la vie, un clic à la fois.</p>
+      <a href="#contact" data-sg-path="hero.ctaPrimary" class="inline-flex items-center gap-2 text-[11px] tracking-wide uppercase border border-cream/40 rounded-full px-5 py-2 hover:bg-accent hover:border-accent hover:text-ink transition-colors" data-anim="fade" data-anim-delay="400">Me contacter</a>
+    </div>
+    <div class="absolute bottom-24 md:bottom-28 left-6 md:left-10 right-6 z-10">
+      <h1 class="font-display font-normal display-tight text-cream text-[44px] sm:text-[68px] md:text-[96px] lg:text-[112px]" data-anim="fade">
+        <span data-sg-path="hero.titleLine1">Capturer les meilleurs</span><br>
+        <span data-sg-path="hero.titleLine2">Moments de la vie</span>
+      </h1>
+    </div>
+    <div class="absolute bottom-8 left-6 md:left-10 right-6 md:right-10 flex items-center justify-between text-[11px] tracking-wide uppercase text-cream/70 z-10">
+      <span data-sg-path="hero.labelLeft">Portrait · Voyage · Commercial · Événementiel · Aérien · Animalier</span>
+      <span data-sg-path="hero.labelRight">Basé à Lyon, France</span>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="py-24 px-6 md:px-10">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+      <div data-anim="left">
+        <h2 data-sg-path="about.heading" class="font-display font-normal display-tight text-cream text-[40px] md:text-[56px] mb-6">Je suis …</h2>
+        <p data-sg-path="about.paragraph" class="text-[14px] md:text-[15px] leading-relaxed text-cream/85 mb-8">un photographe passionné dédié à capturer les moments les plus précieux de la vie. Avec un œil attentif aux détails et un amour pour la narration, je m'efforce de créer des images qui ne sont pas seulement belles, mais qui évoquent aussi des émotions et racontent une histoire captivante.</p>
+        <a href="#about" data-sg-path="about.cta" class="inline-flex items-center gap-2 text-[12px] tracking-wide uppercase border border-cream/30 rounded-full px-5 py-2 hover:bg-accent hover:border-accent hover:text-ink transition-colors">En savoir plus sur moi →</a>
+      </div>
+      <div class="relative" data-anim="right">
+        <img data-sg-img="about.image" src="../../../../public/_templates/photographer-freelance/img/about.jpg" alt="Portrait de Léon Marchal" class="rounded-lg w-full h-auto object-cover aspect-[3/4]">
+      </div>
+    </div>
+  </section>
+
+  <!-- BRANDS -->
+  <section class="py-24 px-6 md:px-10">
+    <div class="max-w-6xl mx-auto text-center">
+      <p data-sg-path="brands.heading" class="text-[13px] tracking-wide uppercase text-muted mb-12" data-anim="fade">Marques avec lesquelles j'ai travaillé</p>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-8 items-center">
+        <div class="flex justify-center" data-anim="fade" data-anim-delay="0"><img src="https://assets-global.website-files.com/64f6a7c3155f5955651c633d/64f6a7c3155f5955651c638a_aperture.svg" alt="Aperture" class="h-8 filter invert brightness-0.7"></div>
+        <div class="flex justify-center" data-anim="fade" data-anim-delay="80"><img src="https://assets-global.website-files.com/64f6a7c3155f5955651c633d/64f6a7c3155f5955651c638b_northlight.svg" alt="Northlight" class="h-8 filter invert brightness-0.7"></div>
+        <div class="flex justify-center" data-anim="fade" data-anim-delay="160"><img src="https://assets-global.website-files.com/64f6a7c3155f5955651c633d/64f6a7c3155f5955651c638c_veridian.svg" alt="Veridian" class="h-8 filter invert brightness-0.7"></div>
+        <div class="flex justify-center" data-anim="fade" data-anim-delay="240"><img src="https://assets-global.website-files.com/64f6a7c3155f5955651c633d/64f6a7c3155f5955651c638d_stillframe.svg" alt="Stillframe" class="h-8 filter invert brightness-0.7"></div>
+        <div class="flex justify-center" data-anim="fade" data-anim-delay="320"><img src="https://assets-global.website-files.com/64f6a7c3155f5955651c633d/64f6a7c3155f5955651c638e_opaline.svg" alt="Opaline" class="h-8 filter invert brightness-0.7"></div>
+        <div class="flex justify-center" data-anim="fade" data-anim-delay="0"><span class="font-display text-2xl text-muted">露光</span></div>
+        <div class="flex justify-center" data-anim="fade" data-anim-delay="80"><span class="font-display text-2xl text-muted">Lumen</span></div>
+        <div class="flex justify-center" data-anim="fade" data-anim-delay="160"><span class="font-display text-2xl text-muted">標識</span></div>
+        <div class="flex justify-center" data-anim="fade" data-anim-delay="240"><span class="font-display text-2xl text-muted">Halcyon</span></div>
+        <div class="flex justify-center" data-anim="fade" data-anim-delay="320"><span class="font-display text-2xl text-muted">Solace</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALBUMS -->
+  <section id="work" class="py-24 px-6 md:px-10">
+    <div class="max-w-6xl mx-auto">
+      <h2 data-sg-path="albums.heading" class="font-display font-normal display-tight text-cream text-[40px] md:text-[56px] mb-16" data-anim="fade">Albums</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="group" data-anim="fade" data-anim-delay="0">
+          <div class="relative overflow-hidden rounded-lg mb-4">
+            <img data-sg-img="albums.items[0].image" src="../../../../public/_templates/photographer-freelance/img/album-travel.jpg" alt="Album L'Inde en couleurs" class="w-full h-auto object-cover aspect-[4/3] group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <h3 data-sg-path="albums.items[0].title" class="font-display text-[20px] mb-2">L'Inde en couleurs</h3>
+          <div class="flex gap-2">
+            <span data-sg-path="albums.items[0].tags[0]" class="text-[10px] tracking-wide uppercase bg-cream/10 px-2 py-1 rounded-full">Voyage</span>
+            <span data-sg-path="albums.items[0].tags[1]" class="text-[10px] tracking-wide uppercase bg-cream/10 px-2 py-1 rounded-full">Collaboration</span>
+          </div>
+        </div>
+        <div class="group" data-anim="fade" data-anim-delay="80">
+          <div class="relative overflow-hidden rounded-lg mb-4">
+            <img data-sg-img="albums.items[1].image" src="../../../../public/_templates/photographer-freelance/img/album-concept.jpg" alt="Album Échos de rêves" class="w-full h-auto object-cover aspect-[4/3] group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <h3 data-sg-path="albums.items[1].title" class="font-display text-[20px] mb-2">Échos de rêves</h3>
+          <div class="flex gap-2">
+            <span data-sg-path="albums.items[1].tags[0]" class="text-[10px] tracking-wide uppercase bg-cream/10 px-2 py-1 rounded-full">Conceptuel</span>
+            <span data-sg-path="albums.items[1].tags[1]" class="text-[10px] tracking-wide uppercase bg-cream/10 px-2 py-1 rounded-full">Commercial</span>
+          </div>
+        </div>
+        <div class="group" data-anim="fade" data-anim-delay="160">
+          <div class="relative overflow-hidden rounded-lg mb-4">
+            <img data-sg-img="albums.items[2].image" src="../../../../public/_templates/photographer-freelance/img/album-aerial.jpg" alt="Album Les Ailes de la liberté" class="w-full h-auto object-cover aspect-[4/3] group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <h3 data-sg-path="albums.items[2].title" class="font-display text-[20px] mb-2">Les Ailes de la liberté</h3>
+          <div class="flex gap-2">
+            <span data-sg-path="albums.items[2].tags[0]" class="text-[10px] tracking-wide uppercase bg-cream/10 px-2 py-1 rounded-full">Aérien & Drone</span>
+            <span data-sg-path="albums.items[2].tags[1]" class="text-[10px] tracking-wide uppercase bg-cream/10 px-2 py-1 rounded-full">Projet passion</span>
+          </div>
+        </div>
+        <div class="group" data-anim="fade" data-anim-delay="240">
+          <div class="relative overflow-hidden rounded-lg mb-4">
+            <img data-sg-img="albums.items[3].image" src="../../../../public/_templates/photographer-freelance/img/album-product.jpg" alt="Album Perfection artisanale" class="w-full h-auto object-cover aspect-[4/3] group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <h3 data-sg-path="albums.items[3].title" class="font-display text-[20px] mb-2">Perfection artisanale</h3>
+          <div class="flex gap-2">
+            <span data-sg-path="albums.items[3].tags[0]" class="text-[10px] tracking-wide uppercase bg-cream/10 px-2 py-1 rounded-full">Produit</span>
+            <span data-sg-path="albums.items[3].tags[1]" class="text-[10px] tracking-wide uppercase bg-cream/10 px-2 py-1 rounded-full">Commercial</span>
+          </div>
+        </div>
+        <div class="group" data-anim="fade" data-anim-delay="320">
+          <div class="relative overflow-hidden rounded-lg mb-4">
+            <img data-sg-img="albums.items[4].image" src="../../../../public/_templates/photographer-freelance/img/album-wildlife.jpg" alt="Album Merveilles sauvages" class="w-full h-auto object-cover aspect-[4/3] group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <h3 data-sg-path="albums.items[4].title" class="font-display text-[20px] mb-2">Merveilles sauvages</h3>
+          <div class="flex gap-2">
+            <span data-sg-path="albums.items[4].tags[0]" class="text-[10px] tracking-wide uppercase bg-cream/10 px-2 py-1 rounded-full">Faune & Nature</span>
+            <span data-sg-path="albums.items[4].tags[1]" class="text-[10px] tracking-wide uppercase bg-cream/10 px-2 py-1 rounded-full">Projet passion</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERTISE -->
+  <section class="py-24 px-6 md:px-10">
+    <div class="max-w-6xl mx-auto">
+      <h2 data-sg-path="expertise.heading" class="font-display font-normal display-tight text-cream text-[40px] md:text-[56px] mb-16" data-anim="fade">Mon expertise</h2>
+      <div class="grid md:grid-cols-2 gap-12 md:gap-16">
+        <div class="space-y-12" data-anim="fade" data-anim-delay="0">
+          <div>
+            <h3 data-sg-path="expertise.items[0].name" class="font-display text-[24px] mb-3">Documentary Photography</h3>
+            <p data-sg-path="expertise.items[0].text" class="text-[14px] leading-relaxed text-cream/85">La photographie documentaire sert à informer, éduquer et inspirer en offrant une représentation véridique et perspicace du monde. Elle est utilisée pour sensibiliser à des questions importantes, documenter des événements significatifs et préserver des moments historiques.</p>
+          </div>
+          <div>
+            <h3 data-sg-path="expertise.items[1].name" class="font-display text-[24px] mb-3">Event Photography</h3>
+            <p data-sg-path="expertise.items[1].text" class="text-[14px] leading-relaxed text-cream/85">Racontez des histoires puissantes à travers votre photographie événementielle, en capturant des événements et des moments réels. Des petites réunions aux grandes célébrations, chaque image préserve l'énergie et l'émotion de la journée.</p>
+          </div>
+        </div>
+        <div class="space-y-12" data-anim="fade" data-anim-delay="160">
+          <div>
+            <h3 data-sg-path="expertise.items[2].name" class="font-display text-[24px] mb-3">Aerial Photography</h3>
+            <p data-sg-path="expertise.items[2].text" class="text-[14px] leading-relaxed text-cream/85">Obtenez une vue à vol d'oiseau avec une superbe photographie aérienne capturée par drone, parfaite pour l'immobilier, les événements et les paysages panoramiques qui révèlent une nouvelle perspective.</p>
+          </div>
+          <div>
+            <h3 data-sg-path="expertise.items[3].name" class="font-display text-[24px] mb-3">Corporate Photography</h3>
+            <p data-sg-path="expertise.items[3].text" class="text-[14px] leading-relaxed text-cream/85">Améliorez l'image de votre marque avec une photographie corporate professionnelle pour les portraits, les photos d'équipe et les événements d'entreprise qui communiquent confiance et personnalité.</p>
+          </div>
+          <div>
+            <h3 data-sg-path="expertise.items[4].name" class="font-display text-[24px] mb-3">Editorial Photography</h3>
+            <p data-sg-path="expertise.items[4].text" class="text-[14px] leading-relaxed text-cream/85">Donnez vie à vos histoires avec une photographie éditoriale captivante pour les magazines, blogs et publications.</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-20 text-center" data-anim="fade">
+        <h3 data-sg-path="expertise.moreLine1" class="font-display font-normal display-tight text-cream text-[40px] md:text-[56px]">Attendez…</h3>
+        <h3 data-sg-path="expertise.moreLine2" class="font-display font-normal display-tight text-cream text-[40px] md:text-[56px]">Il y a plus !</h3>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
+        <img data-sg-img="expertise.items[0].image" src="../../../../public/_templates/photographer-freelance/img/exp-documentary.jpg" alt="Photographie documentaire" class="rounded-lg w-full h-auto object-cover aspect-[4/3]" data-anim="fade" data-anim-delay="0">
+        <img data-sg-img="expertise.items[1].image" src="../../../../public/_templates/photographer-freelance/img/exp-event.jpg" alt="Photographie événementielle" class="rounded-lg w-full h-auto object-cover aspect-[4/3]" data-anim="fade" data-anim-delay="80">
+        <img data-sg-img="expertise.items[2].image" src="../../../../public/_templates/photographer-freelance/img/exp-aerial.jpg" alt="Photographie aérienne" class="rounded-lg w-full h-auto object-cover aspect-[4/3]" data-anim="fade" data-anim-delay="160">
+        <img data-sg-img="expertise.items[3].image" src="../../../../public/_templates/photographer-freelance/img/exp-corporate.jpg" alt="Photographie corporate" class="rounded-lg w-full h-auto object-cover aspect-[4/3]" data-anim="fade" data-anim-delay="240">
+        <img data-sg-img="expertise.items[4].image" src="../../../../public/_templates/photographer-freelance/img/exp-editorial.jpg" alt="Photographie éditoriale" class="rounded-lg w-full h-auto object-cover aspect-[4/3]" data-anim="fade" data-anim-delay="320">
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="py-24 px-6 md:px-10">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16">
+      <div class="flex items-center gap-8" data-anim="left">
+        <div class="text-[80px] md:text-[100px] font-display display-tight text-cream"><span data-count="1200" data-count-suffix="+">0</span></div>
+        <p class="text-[14px] leading-relaxed text-cream/85">Photos capturées au fil des années, chacune racontant une histoire unique.</p>
+      </div>
+      <div class="flex items-center gap-8" data-anim="right">
+        <div class="text-[80px] md:text-[100px] font-display display-tight text-cream"><span data-count="98" data-count-suffix="%">0</span></div>
+        <p class="text-[14px] leading-relaxed text-cream/85">Clients satisfaits qui reviennent pour capturer leurs moments spéciaux.</p>
+      </div>
+      <div class="flex items-center gap-8" data-anim="left">
+        <div class="text-[80px] md:text-[100px] font-display display-tight text-cream"><span data-count="24" data-count-suffix="/7">24/7</span></div>
+        <p class="text-[14px] leading-relaxed text-cream/85">Disponible pour capturer vos moments, où que vous soyez dans le monde.</p>
+      </div>
+      <div class="flex items-center gap-8" data-anim="right">
+        <div class="text-[80px] md:text-[100px] font-display display-tight text-cream"><span data-count="50" data-count-suffix="+">0</span></div>
+        <p class="text-[14px] leading-relaxed text-cream/85">Projets de photographie documentaire réalisés pour des clients du monde entier.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews" class="py-24 px-6 md:px-10">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <p data-sg-path="reviews.kicker" class="text-[13px] tracking-wide uppercase text-muted mb-4" data-anim="fade">Sourires et histoires de la part de</p>
+        <h2 data-sg-path="reviews.heading" class="font-display font-normal display-tight text-cream text-[40px] md:text-[56px]" data-anim="fade">Mes clients</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-panel p-8 rounded-lg" data-anim="fade" data-anim-delay="0">
+          <p data-sg-path="reviews.items[0].quote" class="text-[14px] leading-relaxed mb-6">"Nous sommes ravis de la photographie de produits fournie par Léon. Il a capturé nos produits de manière magnifique, mettant en valeur leurs caractéristiques uniques et améliorant leur attrait."</p>
+          <div class="flex items-center gap-4">
+            <img data-sg-img="reviews.items[0].avatar" src="../../../../public/_templates/photographer-freelance/img/avatar1.jpg" alt="Avatar de Michael T." class="w-12 h-12 rounded-full object-cover">
+            <div>
+              <p data-sg-path="reviews.items[0].name" class="font-medium">Michael T.</p>
+              <p data-sg-path="reviews.items[0].role" class="text-[12px] text-muted">Responsable Marketing, Stellar Designs</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-panel p-8 rounded-lg" data-anim="fade" data-anim-delay="80">
+          <p data-sg-path="reviews.items[1].quote" class="text-[14px] leading-relaxed mb-6">"Merci, nos images de produits n'ont jamais été aussi belles ! Il a un œil attentif aux détails et un talent pour capturer nos produits sous leur meilleur jour. Nous ne pourrions pas être plus satisfaits des résultats !"</p>
+          <div class="flex items-center gap-4">
+            <img data-sg-img="reviews.items[1].avatar" src="../../../../public/_templates/photographer-freelance/img/avatar2.jpg" alt="Avatar de Aurora Jensen" class="w-12 h-12 rounded-full object-cover">
+            <div>
+              <p data-sg-path="reviews.items[1].name" class="font-medium">Aurora Jensen</p>
+              <p data-sg-path="reviews.items[1].role" class="text-[12px] text-muted">Directrice Marketing</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-panel p-8 rounded-lg" data-anim="fade" data-anim-delay="160">
+          <p data-sg-path="reviews.items[2].quote" class="text-[14px] leading-relaxed mb-6">"Il a fourni des services exceptionnels de photographie de produits pour notre dernière collection. Son attention aux détails et son approche créative ont abouti à des images qui mettaient parfaitement en valeur nos produits. Hautement recommandé !"</p>
+          <div class="flex items-center gap-4">
+            <img data-sg-img="reviews.items[2].avatar" src="../../../../public/_templates/photographer-freelance/img/avatar3.jpg" alt="Avatar de G. Monroe" class="w-12 h-12 rounded-full object-cover">
+            <div>
+              <p data-sg-path="reviews.items[2].name" class="font-medium">G. Monroe</p>
+              <p data-sg-path="reviews.items[2].role" class="text-[12px] text-muted">Responsable Marketing, Stellar Designs</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-panel p-8 rounded-lg" data-anim="fade" data-anim-delay="240">
+          <p data-sg-path="reviews.items[3].quote" class="text-[14px] leading-relaxed mb-6">"Ce fut une expérience fantastique ! Il a apporté un niveau de professionnalisme et de créativité à notre photographie de produits qui a vraiment distingué notre marque. Nous avons hâte de travailler à nouveau avec lui à l'avenir !"</p>
+          <div class="flex items-center gap-4">
+            <img data-sg-img="reviews.items[3].avatar" src="../../../../public/_templates/photographer-freelance/img/avatar4.jpg" alt="Avatar de Camille Roux" class="w-12 h-12 rounded-full object-cover">
+            <div>
+              <p data-sg-path="reviews.items[3].name" class="font-medium">Camille Roux</p>
+              <p data-sg-path="reviews.items[3].role" class="text-[12px] text-muted">Directrice Générale, Stellar Designs</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-12">
+        <a href="#" data-sg-path="reviews.cta" class="inline-flex items-center gap-2 text-[12px] tracking-wide uppercase border border-cream/30 rounded-full px-5 py-2 hover:bg-accent hover:border-accent hover:text-ink transition-colors" data-anim="fade">Voir tous les avis →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section id="blog" class="py-24 px-6 md:px-10">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex justify-between items-end mb-16">
+        <div>
+          <p data-sg-path="blog.kicker" class="text-[13px] tracking-wide uppercase text-muted mb-4" data-anim="fade">Restez inspiré avec mes</p>
+          <h2 data-sg-path="blog.heading" class="font-display font-normal display-tight text-cream text-[40px] md:text-[56px]" data-anim="fade">Articles instructifs</h2>
+        </div>
+        <a href="#" data-sg-path="blog.cta" class="hidden md:inline-flex items-center gap-2 text-[12px] tracking-wide uppercase border border-cream/30 rounded-full px-5 py-2 hover:bg-accent hover:border-accent hover:text-ink transition-colors" data-anim="fade">Tous les blogs →</a>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="group" data-anim="fade" data-anim-delay="0">
+          <div class="relative overflow-hidden rounded-lg mb-4">
+            <img data-sg-img="blog.posts[0].image" src="../../../../public/_templates/photographer-freelance/img/blog-grading.jpg" alt="Article sur les préréglages de correction des couleurs" class="w-full h-auto object-cover aspect-[4/3] group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <div class="flex justify-between items-center mb-2">
+            <span data-sg-path="blog.posts[0].tag" class="text-[10px] tracking-wide uppercase bg-cream/10 px-2 py-1 rounded-full">Ressources</span>
+            <span data-sg-path="blog.posts[0].date" class="text-[12px] text-muted">8 mars 2024</span>
+          </div>
+          <h3 data-sg-path="blog.posts[0].title" class="font-display text-[20px]">Sublimez vos photos avec mes préréglages de correction des couleurs signature</h3>
+        </div>
+        <div class="group" data-anim="fade" data-anim-delay="80">
+          <div class="relative overflow-hidden rounded-lg mb-4">
+            <img data-sg-img="blog.posts[1].image" src="../../../../public/_templates/photographer-freelance/img/blog-candid.jpg" alt="Article sur la photographie candide" class="w-full h-auto object-cover aspect-[4/3] group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <div class="flex justify-between items-center mb-2">
+            <span data-sg-path="blog.posts[1].tag" class="text-[10px] tracking-wide uppercase bg-cream/10 px-2 py-1 rounded-full">Conseils</span>
+            <span data-sg-path="blog.posts[1].date" class="text-[12px] text-muted">14 avril 2024</span>
+          </div>
+          <h3 data-sg-path="blog.posts[1].title" class="font-display text-[20px]">L'art de la photographie candide : capturer les moments naturellement</h3>
+        </div>
+        <div class="group" data-anim="fade" data-anim-delay="160">
+          <div class="relative overflow-hidden rounded-lg mb-4">
+            <img data-sg-img="blog.posts[2].image" src="../../../../public/_templates/photographer-freelance/img/blog-golden.jpg" alt="Article sur l'heure dorée" class="w-full h-auto object-cover aspect-[4/3] group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <div class="flex justify-between items-center mb-2">
+            <span data-sg-path="blog.posts[2].tag" class="text-[10px] tracking-wide uppercase bg-cream/10 px-2 py-1 rounded-full">Conseils</span>
+            <span data-sg-path="blog.posts[2].date" class="text-[12px] text-muted">2 mai 2024</span>
+          </div>
+          <h3 data-sg-path="blog.posts[2].title" class="font-display text-[20px]">Capturer la magie de l'heure dorée : guide du photographe</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-24 px-6 md:px-10">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="font-display font-normal display-tight text-cream text-[40px] md:text-[56px] mb-16" data-anim="fade">
+        <span data-sg-path="faq.headingLine1">Foire aux questions :</span><br>
+        <span data-sg-path="faq.headingLine2">Toutes vos réponses ici</span>
+      </h2>
+      <div class="space-y-4" id="faq-accordion">
+        <div class="faq-item border-b border-cream/10 pb-4" data-anim="fade" data-anim-delay="0">
+          <button class="faq-question w-full flex justify-between items-center text-left py-4">
+            <span data-sg-path="faq.items[0].q" class="font-display text-[18px]">Comment puis-je réserver une séance photo avec vous ?</span>
+            <span class="faq-icon text-2xl transition-transform">+</span>
+          </button>
+          <div class="faq-answer hidden text-[14px] leading-relaxed text-cream/85 pt-2">
+            <p data-sg-path="faq.items[0].a">Vous pouvez réserver une séance en remplissant le formulaire de contact sur mon site web ou en m'envoyant un e-mail directement à votre adresse e-mail. Je vous répondrai sous 24 heures pour discuter des détails et planifier votre séance.</p>
+          </div>
+        </div>
+        <div class="faq-item border-b border-cream/10 pb-4" data-anim="fade" data-anim-delay="80">
+          <button class="faq-question w-full flex justify-between items-center text-left py-4">
+            <span data-sg-path="faq.items[1].q" class="font-display text-[18px]">Quels sont vos tarifs pour les séances photo ?</span>
+            <span class="faq-icon text-2xl transition-transform">+</span>
+          </button>
+          <div class="faq-answer hidden text-[14px] leading-relaxed text-cream/85 pt-2">
+            <p data-sg-path="faq.items[1].a">Les tarifs varient en fonction du type de séance, du lieu et des livrables. Contactez-moi pour un devis personnalisé adapté à votre projet — je suis heureux de travailler avec différents budgets.</p>
+          </div>
+        </div>
+        <div class="faq-item border-b border-cream/10 pb-4" data-anim="fade" data-anim-delay="160">
+          <button class="faq-question w-full flex justify-between items-center text-left py-4">
+            <span data-sg-path="faq.items[2].q" class="font-display text-[18px]">Que comprend votre tarif ?</span>
+            <span class="faq-icon text-2xl transition-transform">+</span>
+          </button>
+          <div class="faq-answer hidden text-[14px] leading-relaxed text-cream/85 pt-2">
+            <p data-sg-path="faq.items[2].a">Le tarif inclut la séance elle-même, l'édition professionnelle des images sélectionnées et la livraison via une galerie en ligne privée. Les options d'impression et de licence sont disponibles sur demande.</p>
+          </div>
+        </div>
+        <div class="faq-item border-b border-cream/10 pb-4" data-anim="fade" data-anim-delay="240">
+          <button class="faq-question w-full flex justify-between items-center text-left py-4">
+            <span data-sg-path="faq.items[3].q" class="font-display text-[18px]">Dans quels types de photographie vous spécialisez-vous ?</span>
+            <span class="faq-icon text-2xl transition-transform">+</span>
+          </button>
+          <div class="faq-answer hidden text-[14px] leading-relaxed text-cream/85 pt-2">
+            <p data-sg-path="faq.items[3].a">Je me spécialise dans la photographie de portrait, de voyage, commerciale, événementielle, aérienne et animalière — apportant un regard documentaire et un amour pour la narration à chaque genre.</p>
+          </div>
+        </div>
+        <div class="faq-item border-b border-cream/10 pb-4" data-anim="fade" data-anim-delay="320">
+          <button class="faq-question w-full flex justify-between items-center text-left py-4">
+            <span data-sg-path="faq.items[4].q" class="font-display text-[18px]">Que comprennent vos forfaits photo ?</span>
+            <span class="faq-icon text-2xl transition-transform">+</span>
+          </button>
+          <div class="faq-answer hidden text-[14px] leading-relaxed text-cream/85 pt-2">
+            <p data-sg-path="faq.items[4].a">Chaque forfait inclut la planification pré-séance, la séance, un ensemble sélectionné d'images haute résolution éditées et une galerie en ligne. Des options supplémentaires comme des heures supplémentaires ou des tirages peuvent être arrangées.</p>
+          </div>
+        </div>
+        <div class="faq-item border-b border-cream/10 pb-4" data-anim="fade" data-anim-delay="400">
+          <button class="faq-question w-full flex justify-between items-center text-left py-4">
+            <span data-sg-path="faq.items[5].q" class="font-display text-[18px]">Combien de temps dure une séance photo typique ?</span>
+            <span class="faq-icon text-2xl transition-transform">+</span>
+          </button>
+          <div class="faq-answer hidden text-[14px] leading-relaxed text-cream/85 pt-2">
+            <p data-sg-path="faq.items[5].a">La plupart des séances durent entre une et trois heures selon l'ampleur du projet. Les événements plus importants ou les séances commerciales peuvent être planifiés pour une journée complète ou une demi-journée.</p>
+          </div>
+        </div>
+        <div class="faq-item border-b border-cream/10 pb-4" data-anim="fade" data-anim-delay="480">
+          <button class="faq-question w-full flex justify-between items-center text-left py-4">
+            <span data-sg-path="faq.items[6].q" class="font-display text-[18px]">Vous déplacez-vous pour les séances ?</span>
+            <span class="faq-icon text-2xl transition-transform">+</span>
+          </button>
+          <div class="faq-answer hidden text-[14px] leading-relaxed text-cream/85 pt-2">
+            <p data-sg-path="faq.items[6].a">Absolument — j'adore les missions à l'étranger. Je suis disponible pour des séances dans le monde entier ; les frais de déplacement et d'hébergement sont simplement ajoutés au devis.</p>
+          </div>
+        </div>
+        <div class="faq-item border-b border-cream/10 pb-4" data-anim="fade" data-anim-delay="560">
+          <button class="faq-question w-full flex justify-between items-center text-left py-4">
+            <span data-sg-path="faq.items[7].q" class="font-display text-[18px]">Que dois-je porter pour ma séance photo ?</span>
+            <span class="faq-icon text-2xl transition-transform">+</span>
+          </button>
+          <div class="faq-answer hidden text-[14px] leading-relaxed text-cream/85 pt-2">
+            <p data-sg-path="faq.items[7].a">Portez quelque chose dans lequel vous vous sentez à l'aise. Les couleurs unies et les textures simples photographient bien ; je vous enverrai un petit guide de style une fois votre séance réservée.</p>
+          </div>
+        </div>
+        <div class="faq-item border-b border-cream/10 pb-4" data-anim="fade" data-anim-delay="640">
+          <button class="faq-question w-full flex justify-between items-center text-left py-4">
+            <span data-sg-path="faq.items[8].q" class="font-display text-[18px]">Combien de temps faut-il pour recevoir mes photos ?</span>
+            <span class="faq-icon text-2xl transition-transform">+</span>
+          </button>
+          <div class="faq-answer hidden text-[14px] leading-relaxed text-cream/85 pt-2">
+            <p data-sg-path="faq.items[8].a">Les galeries éditées sont généralement livrées sous deux à trois semaines. Pour les événements ou les projets plus importants, un petit ensemble de prévisualisations est partagé sous quelques jours.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-24 px-6 md:px-10">
+    <div class="max-w-4xl mx-auto text-center">
+      <p data-sg-path="contact.badge" class="text-[13px] tracking-wide uppercase text-muted mb-4" data-anim="fade">Discutons</p>
+      <h2 class="font-display font-normal display-tight text-cream text-[40px] md:text-[56px] mb-6" data-anim="fade">leon@email.com</h2>
+      <p class="text-[14px] leading-relaxed text-cream/85 mb-10" data-anim="fade">Un projet, une séance ou une simple question ? Écrivez-moi : je réponds personnellement à chaque demande sous 24 heures.</p>
+      <div class="flex justify-center gap-6 mb-16" data-anim="fade">
+        <a href="#" data-sg-path="contact.social[0]" class="text-[13px] tracking-wide text-cream/80 hover:text-accent transition-colors">Instagram</a>
+        <a href="#" data-sg-path="contact.social[1]" class="text-[13px] tracking-wide text-cream/80 hover:text-accent transition-colors">Facebook</a>
+        <a href="#" data-sg-path="contact.social[2]" class="text-[13px] tracking-wide text-cream/80 hover:text-accent transition-colors">Twitter</a>
+        <a href="#" data-sg-path="contact.social[3]" class="text-[13px] tracking-wide text-cream/80 hover:text-accent transition-colors">LinkedIn</a>
+      </div>
+      <a href="#top" class="inline-flex items-center gap-2 text-[12px] tracking-wide uppercase border border-cream/30 rounded-full px-5 py-2 hover:bg-accent hover:border-accent hover:text-ink transition-colors" data-anim="fade">Retour en haut ↑</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-12 px-6 md:px-10 border-t border-cream/10">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="flex gap-8 text-[13px] tracking-wide text-cream/80">
+        <a href="#" data-sg-path="footerNav[0]" class="hover:text-cream transition-colors">Accueil</a>
+        <a href="#" data-sg-path="footerNav[1]" class="hover:text-cream transition-colors">À propos</a>
+        <a href="#" data-sg-path="footerNav[2]" class="hover:text-cream transition-colors">Réalisations</a>
+        <a href="#" data-sg-path="footerNav[3]" class="hover:text-cream transition-colors">Avis</a>
+        <a href="#" data-sg-path="footerNav[4]" class="hover:text-cream transition-colors">Blogs</a>
+        <a href="#" data-sg-path="footerNav[5]" class="hover:text-cream transition-colors">Contact</a>
+      </div>
+      <div class="text-[13px] tracking-wide text-muted">
+        <span>Propulsé par </span><a href="#" class="hover:text-cream transition-colors">Akyra</a>
+        <span class="mx-2">·</span>
+        <a href="#" data-sg-path="footerNav[6]" class="hover:text-cream transition-colors">Plus de modèles</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const accordion = document.getElementById('faq-accordion');
+      if (accordion) {
+        accordion.addEventListener('click', function (e) {
+          const question = e.target.closest('.faq-question');
+          if (!question) return;
+
+          const item = question.parentElement;
+          const answer = item.querySelector('.faq-answer');
+          const icon = question.querySelector('.faq-icon');
+
+          item.classList.toggle('open');
+          if (item.classList.contains('open')) {
+            answer.classList.remove('hidden');
+            icon.textContent = '−';
+          } else {
+            answer.classList.add('hidden');
+            icon.textContent = '+';
+          }
+        });
+      }
+    });
+  </script>
+
+<!-- ═══ AKYRA MOTION KIT — animations partagées (vanilla, sans dépendance, respecte prefers-reduced-motion) ═══ -->
+<style>
+  [data-anim]{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+  [data-anim="fade"]{transform:none}
+  [data-anim="left"]{transform:translateX(-26px)}
+  [data-anim="right"]{transform:translateX(26px)}
+  [data-anim="scale"]{transform:scale(.96)}
+  [data-anim].in{opacity:1!important;transform:none!important}
+  /* Apparition du texte mot à mot */
+  .anim-words .w{display:inline-block;opacity:0;transform:translateY(0.5em);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .anim-words.in .w{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){[data-anim],.anim-words .w{opacity:1!important;transform:none!important;transition:none!important}}
+</style>
+<script>
+(function(){
+  var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var IO = 'IntersectionObserver' in window;
+
+  // 1) Révélation au scroll des éléments [data-anim] (stagger via data-anim-delay en ms)
+  var reveals = document.querySelectorAll('[data-anim]');
+  function showReveal(el){
+    var d = parseInt(el.getAttribute('data-anim-delay')||'0',10);
+    if(d) setTimeout(function(){el.classList.add('in')}, d); else el.classList.add('in');
+  }
+  if(RM || !IO){ reveals.forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioR = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ showReveal(en.target); ioR.unobserve(en.target);} });
+    },{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(function(e){ ioR.observe(e); });
+  }
+
+  // 2) Texte mot à mot : <h1 class="anim-words">…</h1>.
+  //    Découpe DOM-SAFE : on n'enveloppe QUE les nœuds texte (les balises internes
+  //    — dégradés, pilules — sont préservées intactes, jamais transformées en texte).
+  document.querySelectorAll('.anim-words').forEach(function(el){
+    if(el.dataset.split) return; el.dataset.split='1';
+    // Garde-fou : si le titre contient des balises internes (dégradé, pilule…),
+    // on NE découpe PAS (sinon dégradé cassé / mots invisibles) — il reste intact.
+    if(el.children.length > 0){ el.classList.remove('anim-words'); return; }
+    var wi = 0, textNodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    while(walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(function(tn){
+      if(!tn.nodeValue || !tn.nodeValue.trim()) return;
+      var frag = document.createDocumentFragment();
+      tn.nodeValue.split(/(\s+)/).forEach(function(part){
+        if(part === '') return;
+        if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+        var s = document.createElement('span'); s.className='w'; s.textContent=part;
+        s.style.transitionDelay=((wi++)*45)+'ms'; frag.appendChild(s);
+      });
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  });
+  if(RM || !IO){ document.querySelectorAll('.anim-words').forEach(function(e){e.classList.add('in')}); }
+  else {
+    var ioW = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ioW.unobserve(en.target);} });
+    },{threshold:0.25});
+    document.querySelectorAll('.anim-words').forEach(function(e){ ioW.observe(e); });
+  }
+
+  // 3) Compteurs : <span data-count="1200" data-count-suffix="+" data-count-decimals="0">0</span>
+  function fmt(v,dec){ return v.toLocaleString('fr-FR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+  function countUp(el){
+    var target=parseFloat(el.getAttribute('data-count'))||0,
+        suf=el.getAttribute('data-count-suffix')||'', pre=el.getAttribute('data-count-prefix')||'',
+        dec=parseInt(el.getAttribute('data-count-decimals')||'0',10), dur=1500, start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=pre+fmt(target*e,dec)+suf; if(p<1)requestAnimationFrame(step); else el.textContent=pre+fmt(target,dec)+suf; }
+    requestAnimationFrame(step);
+  }
+  var nums = document.querySelectorAll('[data-count]');
+  if(RM || !IO){ nums.forEach(function(el){ el.textContent=(el.getAttribute('data-count-prefix')||'')+fmt(parseFloat(el.getAttribute('data-count'))||0,parseInt(el.getAttribute('data-count-decimals')||'0',10))+(el.getAttribute('data-count-suffix')||''); }); }
+  else {
+    var ioN = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ countUp(en.target); ioN.unobserve(en.target);} });
+    },{threshold:0.6});
+    nums.forEach(function(el){ ioN.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>
