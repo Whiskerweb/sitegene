@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plomben - Plomberie professionnelle et dépannage urgent</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #1b1f48; margin: 0; }
+    h1,h2,h3 { font-family: '"Plus Jakarta Sans"', sans-serif; }
+
+    /* Wordmark effects */
+    .wordmark-light { color: #1b1f480f; }
+    .wordmark-stroke { -webkit-text-stroke: 1.5px rgba(255,255,255,.12); color: transparent; }
+    .wordmark-stroke-navy { -webkit-text-stroke: 1.5px rgba(27,31,72,.45); color: transparent; }
+    .wordmark-striped {
+      background-image: repeating-linear-gradient(180deg,#1b1f48 0px,#1b1f48 4px,transparent 4px,transparent 11px);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      -webkit-mask-image: linear-gradient(90deg,rgba(0,0,0,.12) 0%,#000 65%);
+      mask-image: linear-gradient(90deg,#0000001f,#000 65%);
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ox-navy': '#1b1f48',
+            'ox-navy2': '#16193a',
+            'ox-orange': '#f1542a',
+            'ox-sky': '#eef1f6',
+            'ox-mut': '#6c7080',
+            'ox-line': 'rgba(27,31,72,0.10)',
+          },
+          fontFamily: {
+            display: ['"Plus Jakarta Sans"', 'sans-serif'],
+            sans: ['"Inter"', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-white">
+
+  <!-- Header -->
+  <header class="bg-white">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2.5 text-ox-navy">
+        <span class="flex h-8 w-8 items-center justify-center rounded-full bg-ox-orange">
+          <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5L19.5 10H13l0-8z"/></svg>
+        </span>
+        <span class="font-display text-xl font-extrabold tracking-tight">PLOMBEN</span>
+      </a>
+      <nav class="hidden items-center gap-9 md:flex">
+        <a href="#services" class="flex items-center gap-1 text-[13px] font-semibold uppercase tracking-wide text-ox-navy/80 transition-colors hover:text-ox-orange">Prestations</a>
+        <a href="#urgences" class="flex items-center gap-1 text-[13px] font-semibold uppercase tracking-wide text-ox-navy/80 transition-colors hover:text-ox-orange">Urgences</a>
+        <a href="#tarifs" class="flex items-center gap-1 text-[13px] font-semibold uppercase tracking-wide text-ox-navy/80 transition-colors hover:text-ox-orange">Tarifs</a>
+        <a href="#faq" class="flex items-center gap-1 text-[13px] font-semibold uppercase tracking-wide text-ox-navy/80 transition-colors hover:text-ox-orange">Questions</a>
+        <a href="#contact" class="flex items-center gap-1 text-[13px] font-semibold uppercase tracking-wide text-ox-navy/80 transition-colors hover:text-ox-orange">Contact</a>
+      </nav>
+      <a href="#contact" class="mt-1 inline-flex items-center gap-2 rounded-xl bg-ox-navy px-5 py-3 text-[13px] font-semibold uppercase tracking-wide text-white">Devis gratuit</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-white pt-24 md:pt-28">
+    <div class="max-w-7xl mx-auto px-6 grid items-start gap-8 md:grid-cols-[1.25fr_0.75fr]">
+      <div>
+        <h1 class="font-display text-6xl font-extrabold uppercase leading-[0.92] tracking-tight text-ox-navy sm:text-7xl lg:text-8xl">
+          DÉPANNAGE
+          URGENT
+          <img src="../../../../public/_templates/eloctix/img/hero-inline.jpg" class="inline-block h-12 w-24 rounded-xl object-cover align-middle sm:h-14 sm:w-32 lg:h-16 lg:w-40" alt="Plombier en intervention" />
+          RAPIDE
+        </h1>
+        <p class="mt-6 max-w-md text-[15px] leading-relaxed text-ox-mut">Intervention sous 24-48 h pour fuites, bouchages ou pannes de chauffe-eau. Plomberie professionnelle, devis clair et travail garanti.</p>
+        <a href="#contact" class="mt-6 inline-block rounded-lg bg-ox-orange px-7 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5">Urgence ? Contactez-nous</a>
+      </div>
+      <div class="overflow-hidden rounded-2xl">
+        <img src="../../../../public/_templates/eloctix/img/hero.jpg" class="h-[420px] w-full object-cover sm:h-[520px] lg:h-[560px]" alt="Plombier professionnel en intervention" />
+      </div>
+    </div>
+
+    <div class="pointer-events-none relative mt-8 select-none overflow-hidden">
+      <span class="block whitespace-nowrap text-center font-display text-[24vw] font-extrabold uppercase leading-[0.78] tracking-tighter wordmark-striped">PLOMBEN</span>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-2 gap-8 md:grid-cols-4">
+    <div>
+      <div class="font-display text-4xl font-extrabold text-ox-orange">2010</div>
+      <div class="mt-1 text-xs uppercase tracking-wide text-ox-mut">Fondation</div>
+    </div>
+    <div>
+      <div class="font-display text-4xl font-extrabold text-ox-orange">24/7</div>
+      <div class="mt-1 text-xs uppercase tracking-wide text-ox-mut">Disponibilité</div>
+    </div>
+    <div>
+      <div class="font-display text-4xl font-extrabold text-ox-orange">48 h</div>
+      <div class="mt-1 text-xs uppercase tracking-wide text-ox-mut">Délai moyen</div>
+    </div>
+    <div>
+      <div class="font-display text-4xl font-extrabold text-ox-orange">Garanti</div>
+      <div class="mt-1 text-xs uppercase tracking-wide text-ox-mut">Travail</div>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <section id="services" class="py-20 bg-ox-sky">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center">
+        <div class="text-[13px] font-semibold uppercase tracking-wide text-ox-orange">Nos prestations</div>
+        <h2 class="mt-2 font-display text-3xl md:text-4xl font-extrabold uppercase leading-tight text-ox-navy">Des solutions de plomberie</h2>
+      </div>
+      <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div class="group overflow-hidden rounded-2xl border border-ox-line bg-white">
+          <img src="../../../../public/_templates/eloctix/img/svc1.jpg" class="h-40 w-full object-cover" alt="Dépannage de fuite d'eau" />
+          <div class="p-6">
+            <span class="rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase text-ox-navy">Urgence</span>
+            <h3 class="mt-4 font-display text-xl font-bold text-ox-navy">Dépannage de fuites</h3>
+            <p class="mt-2 text-sm text-ox-mut">Localisation et réparation rapide des fuites d'eau, visibles ou cachées, pour éviter les dégâts des eaux.</p>
+          </div>
+        </div>
+        <div class="group overflow-hidden rounded-2xl border border-ox-line bg-white">
+          <img src="../../../../public/_templates/eloctix/img/svc2.jpg" class="h-40 w-full object-cover" alt="Débouchage de canalisations" />
+          <div class="p-6">
+            <span class="rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase text-ox-navy">Urgence</span>
+            <h3 class="mt-4 font-display text-xl font-bold text-ox-navy">Débouchage de canalisations</h3>
+            <p class="mt-2 text-sm text-ox-mut">Évacuation des bouchons dans éviers, lavabos, douches et WC avec matériel professionnel.</p>
+          </div>
+        </div>
+        <div class="group overflow-hidden rounded-2xl border border-ox-line bg-white">
+          <img src="../../../../public/_templates/eloctix/img/svc3.jpg" class="h-40 w-full object-cover" alt="Installation de chauffe-eau" />
+          <div class="p-6">
+            <span class="rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase text-ox-navy">Installation</span>
+            <h3 class="mt-4 font-display text-xl font-bold text-ox-navy">Chauffe-eau et ballons</h3>
+            <p class="mt-2 text-sm text-ox-mut">Pose, remplacement et entretien de chauffe-eau électriques, thermodynamiques ou solaires.</p>
+          </div>
+        </div>
+        <div class="group overflow-hidden rounded-2xl border border-ox-line bg-white">
+          <img src="../../../../public/_templates/eloctix/img/svc4.jpg" class="h-40 w-full object-cover" alt="Rénovation de salle de bain" />
+          <div class="p-6">
+            <span class="rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase text-ox-navy">Rénovation</span>
+            <h3 class="mt-4 font-display text-xl font-bold text-ox-navy">Salles de bain</h3>
+            <p class="mt-2 text-sm text-ox-mut">Création et rénovation complète de salles de bain, du carrelage à la robinetterie haut de gamme.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center">
+        <div class="text-[13px] font-semibold uppercase tracking-wide text-ox-orange">Notre méthode</div>
+        <h2 class="mt-2 font-display text-3xl md:text-4xl font-extrabold uppercase leading-tight text-ox-navy">Connexion et installation</h2>
+        <p class="mt-4 max-w-2xl mx-auto text-[15px] leading-relaxed text-ox-mut">Une méthode rigoureuse, du diagnostic à la mise en service, pour des installations durables et conformes.</p>
+      </div>
+      <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="text-center">
+          <div class="font-display text-5xl font-extrabold text-ox-orange">1</div>
+          <h3 class="mt-2 font-display text-xl font-bold text-ox-navy">Diagnostic</h3>
+          <p class="mt-2 text-sm text-ox-mut">Analyse précise de la panne ou du besoin, avec explication claire des solutions possibles.</p>
+        </div>
+        <div class="text-center">
+          <div class="font-display text-5xl font-extrabold text-ox-orange">2</div>
+          <h3 class="mt-2 font-display text-xl font-bold text-ox-navy">Devis</h3>
+          <p class="mt-2 text-sm text-ox-mut">Proposition détaillée et transparente, sans frais cachés, avec options adaptées à votre budget.</p>
+        </div>
+        <div class="text-center">
+          <div class="font-display text-5xl font-extrabold text-ox-orange">3</div>
+          <h3 class="mt-2 font-display text-xl font-bold text-ox-navy">Intervention</h3>
+          <p class="mt-2 text-sm text-ox-mut">Travail soigné avec matériel professionnel, dans le respect des normes en vigueur.</p>
+        </div>
+        <div class="text-center">
+          <div class="font-display text-5xl font-extrabold text-ox-orange">4</div>
+          <h3 class="mt-2 font-display text-xl font-bold text-ox-navy">Contrôle</h3>
+          <p class="mt-2 text-sm text-ox-mut">Vérification complète du bon fonctionnement et conseils pour l'entretien futur.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Engagements -->
+  <section class="py-20 bg-ox-sky">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center">
+        <div class="text-[13px] font-semibold uppercase tracking-wide text-ox-orange">Nos engagements</div>
+        <h2 class="mt-2 font-display text-3xl md:text-4xl font-extrabold uppercase leading-tight text-ox-navy">Votre satisfaction</h2>
+      </div>
+      <div class="mt-12 grid gap-8 md:grid-cols-3">
+        <div class="rounded-2xl border border-ox-line bg-white p-8 text-center">
+          <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-ox-orange/10">
+            <svg class="h-8 w-8 text-ox-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+          <h3 class="mt-4 font-display text-xl font-bold text-ox-navy">Intervention rapide</h3>
+          <p class="mt-2 text-sm text-ox-mut">Disponibles 24/7 pour les urgences, nous intervenons sous 24 à 48 h pour les demandes planifiées.</p>
+        </div>
+        <div class="rounded-2xl border border-ox-line bg-white p-8 text-center">
+          <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-ox-orange/10">
+            <svg class="h-8 w-8 text-ox-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+          <h3 class="mt-4 font-display text-xl font-bold text-ox-navy">Travail garanti</h3>
+          <p class="mt-2 text-sm text-ox-mut">Toutes nos interventions sont couvertes par une garantie de 12 mois sur main d'œuvre et pièces.</p>
+        </div>
+        <div class="rounded-2xl border border-ox-line bg-white p-8 text-center">
+          <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-ox-orange/10">
+            <svg class="h-8 w-8 text-ox-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+          </div>
+          <h3 class="mt-4 font-display text-xl font-bold text-ox-navy">Devis gratuit</h3>
+          <p class="mt-2 text-sm text-ox-mut">Estimation sans engagement pour tous vos projets, avec options détaillées et tarifs clairs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tarifs -->
+  <section id="tarifs" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center">
+        <div class="text-[13px] font-semibold uppercase tracking-wide text-ox-orange">Nos formules</div>
+        <h2 class="mt-2 font-display text-3xl md:text-4xl font-extrabold uppercase leading-tight text-ox-navy">Des tarifs transparents</h2>
+      </div>
+      <div class="mt-12 grid gap-8 md:grid-cols-2">
+        <div class="rounded-3xl bg-ox-navy2 p-8 text-white">
+          <h3 class="font-display text-2xl font-bold">Formule Urgence</h3>
+          <p class="mt-2 text-sm text-white/80">Pour les dépannages immédiats et interventions sous 24 h.</p>
+          <div class="mt-6">
+            <span class="text-4xl font-extrabold">89 €</span>
+            <span class="text-sm text-white/80">HT / intervention</span>
+          </div>
+          <ul class="mt-6 space-y-3 text-sm">
+            <li class="flex items-center gap-2"><svg class="h-4 w-4 text-ox-orange" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Déplacement inclus dans un rayon de 30 km</li>
+            <li class="flex items-center gap-2"><svg class="h-4 w-4 text-ox-orange" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Diagnostic complet de la panne</li>
+            <li class="flex items-center gap-2"><svg class="h-4 w-4 text-ox-orange" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Main d'œuvre et déplacement garantis 12 mois</li>
+          </ul>
+          <a href="#contact" class="mt-8 block w-full rounded-lg bg-ox-orange py-3 text-center text-sm font-semibold text-white">Demander un dépannage</a>
+        </div>
+        <div class="rounded-3xl bg-ox-navy2 p-8 text-white">
+          <h3 class="font-display text-2xl font-bold">Formule Projet</h3>
+          <p class="mt-2 text-sm text-white/80">Pour les installations et rénovations complètes, avec suivi personnalisé.</p>
+          <div class="mt-6">
+            <span class="text-4xl font-extrabold">Sur devis</span>
+          </div>
+          <ul class="mt-6 space-y-3 text-sm">
+            <li class="flex items-center gap-2"><svg class="h-4 w-4 text-ox-orange" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Étude personnalisée de votre projet</li>
+            <li class="flex items-center gap-2"><svg class="h-4 w-4 text-ox-orange" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Conseils sur les matériaux et équipements</li>
+            <li class="flex items-center gap-2"><svg class="h-4 w-4 text-ox-orange" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Suivi de chantier et réception des travaux</li>
+          </ul>
+          <a href="#contact" class="mt-8 block w-full rounded-lg bg-white/10 py-3 text-center text-sm font-semibold text-white hover:bg-white/20">Demander un devis</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="py-20 bg-ox-sky">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center">
+        <div class="text-[13px] font-semibold uppercase tracking-wide text-ox-orange">Questions fréquentes</div>
+        <h2 class="mt-2 font-display text-3xl md:text-4xl font-extrabold uppercase leading-tight text-ox-navy">Vos questions, nos réponses</h2>
+      </div>
+      <div class="mt-12 grid gap-6 md:grid-cols-2">
+        <div class="rounded-2xl border border-ox-line bg-white p-6">
+          <h3 class="font-display text-lg font-bold text-ox-navy">Quels sont vos délais d'intervention ?</h3>
+          <p class="mt-2 text-sm text-ox-mut">Pour les urgences (fuites, bouchages, pannes de chauffe-eau), nous intervenons sous 24 à 48 h. Pour les projets planifiés, nous fixons un rendez-vous selon vos disponibilités.</p>
+        </div>
+        <div class="rounded-2xl border border-ox-line bg-white p-6">
+          <h3 class="font-display text-lg font-bold text-ox-navy">Travaillez-vous le week-end et les jours fériés ?</h3>
+          <p class="mt-2 text-sm text-ox-mut">Oui, nous assurons un service d'urgence 24/7, y compris les week-ends et jours fériés. Les tarifs restent identiques, sans majoration.</p>
+        </div>
+        <div class="rounded-2xl border border-ox-line bg-white p-6">
+          <h3 class="font-display text-lg font-bold text-ox-navy">Proposez-vous des devis gratuits ?</h3>
+          <p class="mt-2 text-sm text-ox-mut">Absolument. Tous nos devis sont gratuits et sans engagement. Nous vous fournissons une estimation détaillée avec options et tarifs clairs.</p>
+        </div>
+        <div class="rounded-2xl border border-ox-line bg-white p-6">
+          <h3 class="font-display text-lg font-bold text-ox-navy">Quelles garanties offrez-vous ?</h3>
+          <p class="mt-2 text-sm text-ox-mut">Nous garantissons toutes nos interventions 12 mois sur main d'œuvre et pièces. Les équipements installés bénéficient de leur garantie constructeur.</p>
+        </div>
+        <div class="rounded-2xl border border-ox-line bg-white p-6">
+          <h3 class="font-display text-lg font-bold text-ox-navy">Acceptez-vous les paiements en plusieurs fois ?</h3>
+          <p class="mt-2 text-sm text-ox-mut">Pour les projets supérieurs à 1 500 € HT, nous proposons un paiement en 2 ou 3 fois sans frais. N'hésitez pas à nous en parler lors du devis.</p>
+        </div>
+        <div class="rounded-2xl border border-ox-line bg-white p-6">
+          <h3 class="font-display text-lg font-bold text-ox-navy">Intervenez-vous pour les copropriétés ?</h3>
+          <p class="mt-2 text-sm text-ox-mut">Oui, nous travaillons régulièrement avec des syndics et copropriétés pour des interventions sur les parties communes ou privatives.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Final -->
+  <section id="contact" class="bg-ox-navy text-white">
+    <div class="max-w-7xl mx-auto px-6 py-20">
+      <div class="grid items-center gap-12 md:grid-cols-2">
+        <div>
+          <h2 class="font-display text-3xl md:text-4xl font-extrabold uppercase leading-tight">Prêt à résoudre vos problèmes de plomberie ?</h2>
+          <p class="mt-4 text-[15px] leading-relaxed text-white/80">Contactez-nous pour un dépannage urgent ou un projet de rénovation. Devis gratuit sous 24 h.</p>
+          <a href="tel:+33123456789" class="mt-6 inline-block rounded-lg bg-ox-orange px-7 py-3 text-sm font-semibold text-white">01 23 45 67 89</a>
+        </div>
+        <div class="overflow-hidden rounded-2xl">
+          <img src="../../../../public/_templates/eloctix/img/cta.jpg" class="h-64 w-full object-cover md:h-80" alt="Plombier au travail" />
+        </div>
+      </div>
+      <div class="pointer-events-none relative mt-12 select-none overflow-hidden">
+        <span class="block whitespace-nowrap text-center font-display text-[18vw] font-extrabold uppercase leading-[0.7] tracking-tighter wordmark-stroke">PLOMBEN</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-ox-navy pt-16 text-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid gap-8 md:grid-cols-4">
+        <div>
+          <a href="#" class="flex items-center gap-2.5 text-white">
+            <span class="flex h-8 w-8 items-center justify-center rounded-full bg-ox-orange">
+              <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5L19.5 10H13l0-8z"/></svg>
+            </span>
+            <span class="font-display text-xl font-extrabold tracking-tight">PLOMBEN</span>
+          </a>
+          <p class="mt-4 text-sm text-white/80">Plomberie professionnelle et dépannage urgent depuis 2010.</p>
+        </div>
+        <div>
+          <h4 class="font-display font-bold uppercase tracking-wide">Prestations</h4>
+          <ul class="mt-4 space-y-2 text-sm text-white/80">
+            <li><a href="#services" class="hover:text-white">Dépannage de fuites</a></li>
+            <li><a href="#services" class="hover:text-white">Débouchage de canalisations</a></li>
+            <li><a href="#services" class="hover:text-white">Installation de chauffe-eau</a></li>
+            <li><a href="#services" class="hover:text-white">Rénovation de salles de bain</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-display font-bold uppercase tracking-wide">Liens utiles</h4>
+          <ul class="mt-4 space-y-2 text-sm text-white/80">
+            <li><a href="#urgences" class="hover:text-white">Urgences</a></li>
+            <li><a href="#tarifs" class="hover:text-white">Tarifs</a></li>
+            <li><a href="#faq" class="hover:text-white">Questions fréquentes</a></li>
+            <li><a href="#contact" class="hover:text-white">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-display font-bold uppercase tracking-wide">Zone d'intervention</h4>
+          <p class="mt-4 text-sm text-white/80">Paris, Île-de-France et départements limitrophes. Intervention sous 24-48 h.</p>
+        </div>
+      </div>
+      <div class="mt-16 border-t border-white/10 py-6 text-center text-sm text-white/40">
+        Propulsé par Akyra
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
