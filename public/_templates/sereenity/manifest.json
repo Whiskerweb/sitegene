@@ -1,0 +1,140 @@
+{
+  "id": "sereenity",
+  "name": "Sereenity — Coach bien-être (terracotta chaleureux)",
+  "schema": 2,
+  "pageTypes": ["home", "about", "service", "pricing", "contact", "generic"],
+  "sections": {
+    "home": [
+      "hero",
+      "walkthrough",
+      "stats",
+      "services",
+      "process",
+      "valueProps",
+      "testimonials",
+      "tags",
+      "pricing",
+      "faqs",
+      "finalCta"
+    ],
+    "about": ["walkthrough", "valueProps", "stats", "testimonials"],
+    "service": ["services", "process", "pricing", "faqs", "finalCta"],
+    "pricing": ["pricing", "faqs", "finalCta"],
+    "contact": ["finalCta", "faqs"],
+    "generic": ["blocks"]
+  },
+  "photoSlots": 13,
+  "photos": [
+    { "slot": "hero", "role": "hero", "required": true, "note": "Portrait bien-être du hero (visage apaisé, tons crème/pêche, lumière douce)." },
+    { "slot": "session", "role": "scene", "required": true, "note": "Walkthrough : une séance d'accompagnement, cadre apaisant." },
+    { "slot": "session2", "role": "scene", "required": true, "note": "Process : moment d'écoute pendant l'accompagnement (format vertical)." },
+    { "slot": "svc1", "role": "service", "required": true, "note": "Service 01 — Accompagnement individuel." },
+    { "slot": "svc2", "role": "service", "required": true, "note": "Service 02 — Accompagnement de couple." },
+    { "slot": "svc3", "role": "service", "required": true, "note": "Service 03 — Famille & parentalité." },
+    { "slot": "svc4", "role": "service", "required": true, "note": "Service 04 — Jeunes & adolescents." },
+    { "slot": "coach", "role": "portrait", "required": true, "note": "Portrait du coach DÉTOURÉ (fond transparent), posé sur le dégradé clay→peach du panneau valeurs." },
+    { "slot": "ambiance", "role": "ambiance", "required": true, "note": "Nature morte terracotta (ambiance chaude) en fond du CTA final, sous voile encre." },
+    { "slot": "av1", "role": "avatar", "required": true, "note": "Avatar témoignage 1 (visage, fond uni chaud)." },
+    { "slot": "av2", "role": "avatar", "required": true, "note": "Avatar témoignage 2." },
+    { "slot": "av3", "role": "avatar", "required": true, "note": "Avatar témoignage 3." },
+    { "slot": "av4", "role": "avatar", "required": true, "note": "Avatar témoignage 4." },
+    { "slot": "session3", "role": "scene", "required": false, "note": "Asset livré, non référencé par défaut (scène alternative)." },
+    { "slot": "rays", "role": "texture", "required": false, "note": "Asset livré, non référencé (rayons terracotta décoratifs)." },
+    { "slot": "glow", "role": "texture", "required": false, "note": "Asset livré, non référencé (halo jaune ; le halo du hero est en CSS .glow-soft)." }
+  ],
+  "fields": {
+    "editable": [
+      { "path": "brand", "label": "Nom de marque (navbar + footer + CTA final)", "type": "text", "maxLen": 28 },
+      { "path": "navItems", "label": "Libellés de navigation (chacun = une ancre : apropos/accompagnement/tarifs/temoignages/faq)", "type": "list", "maxLen": 18 },
+
+      { "path": "hero.badge", "label": "Hero — mention de note (ex. « 4,9 · noté par mes clients »)", "type": "text", "maxLen": 40 },
+      { "path": "hero.titleLead", "label": "Hero — début du titre", "type": "text", "maxLen": 48 },
+      { "path": "hero.titleEmph", "label": "Hero — fragment en italique terracotta", "type": "text", "maxLen": 24 },
+      { "path": "hero.titleRest", "label": "Hero — fin du titre", "type": "text", "maxLen": 32 },
+      { "path": "hero.subtitle", "label": "Hero — accroche (1 phrase)", "type": "textarea", "maxLen": 160 },
+      { "path": "hero.cta", "label": "Hero — libellé du bouton", "type": "text", "maxLen": 24 },
+      { "path": "hero.proofCount", "label": "Hero — chiffre preuve sociale (ex. 300+)", "type": "text", "maxLen": 8 },
+      { "path": "hero.proofLabel", "label": "Hero — libellé preuve sociale", "type": "text", "maxLen": 70 },
+
+      { "path": "walkthrough.eyebrow", "label": "Walkthrough — éyebrow", "type": "text", "maxLen": 28 },
+      { "path": "walkthrough.title", "label": "Walkthrough — titre", "type": "text", "maxLen": 48 },
+      { "path": "walkthrough.body", "label": "Walkthrough — paragraphe", "type": "textarea", "maxLen": 240 },
+      { "path": "walkthrough.points", "label": "Walkthrough — liste à coches", "type": "list", "maxLen": 32 },
+      { "path": "walkthrough.highlight.value", "label": "Walkthrough — chiffre encart", "type": "text", "maxLen": 12 },
+      { "path": "walkthrough.highlight.label", "label": "Walkthrough — libellé encart", "type": "text", "maxLen": 70 },
+
+      { "path": "stats.eyebrow", "label": "Stats — éyebrow", "type": "text", "maxLen": 28 },
+      { "path": "stats.title", "label": "Stats — titre", "type": "text", "maxLen": 48 },
+      { "path": "stats.items[].value", "label": "Stat — valeur", "type": "text", "maxLen": 10 },
+      { "path": "stats.items[].label", "label": "Stat — libellé", "type": "text", "maxLen": 80 },
+
+      { "path": "servicesIntro.eyebrow", "label": "Services — éyebrow", "type": "text", "maxLen": 28 },
+      { "path": "servicesIntro.title", "label": "Services — titre", "type": "text", "maxLen": 48 },
+      { "path": "servicesIntro.cta", "label": "Services — libellé du lien", "type": "text", "maxLen": 28 },
+      { "path": "services[].n", "label": "Service — numéro (01..)", "type": "text", "maxLen": 4 },
+      { "path": "services[].name", "label": "Service — nom", "type": "text", "maxLen": 40 },
+      { "path": "services[].desc", "label": "Service — description", "type": "textarea", "maxLen": 200 },
+
+      { "path": "process.eyebrow", "label": "Process — éyebrow", "type": "text", "maxLen": 28 },
+      { "path": "process.title", "label": "Process — titre", "type": "text", "maxLen": 48 },
+      { "path": "process.steps[].n", "label": "Étape — numéro", "type": "text", "maxLen": 4 },
+      { "path": "process.steps[].title", "label": "Étape — titre", "type": "text", "maxLen": 40 },
+      { "path": "process.steps[].desc", "label": "Étape — description", "type": "textarea", "maxLen": 160 },
+      { "path": "process.cta", "label": "Process — libellé du bouton", "type": "text", "maxLen": 24 },
+
+      { "path": "valueProps.eyebrow", "label": "Valeurs — éyebrow", "type": "text", "maxLen": 28 },
+      { "path": "valueProps.title", "label": "Valeurs — titre", "type": "text", "maxLen": 48 },
+      { "path": "valueProps.items[].title", "label": "Atout — titre", "type": "text", "maxLen": 48 },
+      { "path": "valueProps.items[].desc", "label": "Atout — description", "type": "textarea", "maxLen": 180 },
+      { "path": "valueProps.closing", "label": "Valeurs — phrase de clôture", "type": "textarea", "maxLen": 200 },
+      { "path": "valueProps.values", "label": "Valeurs — tags", "type": "list", "maxLen": 20 },
+
+      { "path": "testimonialsIntro.eyebrow", "label": "Témoignages — éyebrow", "type": "text", "maxLen": 32 },
+      { "path": "testimonialsIntro.title", "label": "Témoignages — titre", "type": "text", "maxLen": 70 },
+      { "path": "testimonials[].text", "label": "Témoignage — texte", "type": "textarea", "maxLen": 220 },
+      { "path": "testimonials[].name", "label": "Témoignage — auteur", "type": "text", "maxLen": 40 },
+      { "path": "testimonials[].role", "label": "Témoignage — rôle/contexte", "type": "text", "maxLen": 40 },
+
+      { "path": "serviceTags", "label": "Bandeau — tags défilants", "type": "list", "maxLen": 24 },
+
+      { "path": "pricing.eyebrow", "label": "Tarifs — éyebrow", "type": "text", "maxLen": 28 },
+      { "path": "pricing.title", "label": "Tarifs — titre", "type": "text", "maxLen": 48 },
+      { "path": "pricing.note", "label": "Tarifs — note sous le titre", "type": "textarea", "maxLen": 200 },
+      { "path": "pricing.toggleMonthly", "label": "Tarifs — libellé bascule mensuel", "type": "text", "maxLen": 16 },
+      { "path": "pricing.toggleAnnual", "label": "Tarifs — libellé bascule annuel", "type": "text", "maxLen": 20 },
+      { "path": "pricing.plans[].name", "label": "Formule — nom", "type": "text", "maxLen": 24 },
+      { "path": "pricing.plans[].priceMonthly", "label": "Formule — prix mensuel", "type": "text", "maxLen": 12 },
+      { "path": "pricing.plans[].priceAnnual", "label": "Formule — prix annuel", "type": "text", "maxLen": 12 },
+      { "path": "pricing.plans[].unit", "label": "Formule — unité (ex. /séance)", "type": "text", "maxLen": 12 },
+      { "path": "pricing.plans[].desc", "label": "Formule — description", "type": "textarea", "maxLen": 140 },
+      { "path": "pricing.plans[].features", "label": "Formule — liste de features", "type": "list", "maxLen": 48 },
+      { "path": "pricing.plans[].cta", "label": "Formule — libellé du bouton", "type": "text", "maxLen": 24 },
+
+      { "path": "faqIntro.eyebrow", "label": "FAQ — éyebrow", "type": "text", "maxLen": 28 },
+      { "path": "faqIntro.title", "label": "FAQ — titre", "type": "text", "maxLen": 56 },
+      { "path": "faqIntro.body", "label": "FAQ — texte d'intro", "type": "textarea", "maxLen": 140 },
+      { "path": "faqs[].q", "label": "FAQ — question", "type": "text", "maxLen": 100 },
+      { "path": "faqs[].a", "label": "FAQ — réponse", "type": "textarea", "maxLen": 320 },
+
+      { "path": "finalCta.title", "label": "CTA final — grande phrase", "type": "textarea", "maxLen": 140 },
+      { "path": "finalCta.cta", "label": "CTA final — libellé du bouton", "type": "text", "maxLen": 24 },
+
+      { "path": "contact.email", "label": "Email de contact (mailto)", "type": "text", "maxLen": 80 },
+      { "path": "contact.phone", "label": "Téléphone (tel)", "type": "text", "maxLen": 28 },
+      { "path": "contact.address", "label": "Adresse", "type": "text", "maxLen": 80 },
+
+      { "path": "footer.tagline", "label": "Footer — tagline", "type": "textarea", "maxLen": 120 },
+      { "path": "footer.socials", "label": "Footer — réseaux (libellés inertes)", "type": "list", "maxLen": 24 }
+    ],
+    "locked": [
+      { "path": "pricing.plans[].featured", "reason": "DA : une seule carte vedette (bg-ink). Structurel." },
+      { "path": "hero.image", "reason": "Lié au slot photo 'hero'." },
+      { "path": "walkthrough.image", "reason": "Lié au slot photo 'session'." },
+      { "path": "process.image", "reason": "Lié au slot photo 'session2'." },
+      { "path": "services[].img", "reason": "Liés aux slots svc1..svc4." },
+      { "path": "valueProps.coachImage", "reason": "Lié au slot photo 'coach' (image détourée)." },
+      { "path": "valueProps.ambianceImage", "reason": "Lié au slot photo 'ambiance' (fond du CTA final)." },
+      { "path": "testimonials[].avatar", "reason": "Liés aux slots av1..av4." }
+    ]
+  }
+}
