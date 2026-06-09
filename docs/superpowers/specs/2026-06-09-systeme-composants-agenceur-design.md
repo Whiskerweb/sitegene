@@ -173,6 +173,43 @@ Chaque sous-projet aura son propre spec → plan → build.
 **Ordre justifié :** prouver la boucle (1) avant la largeur (2-3) et l'IA (4) ; l'extraction (2) scale
 la library ; Mistral (4) n'arrive qu'avec une vraie library + assembleur à cibler.
 
+## 8bis. Marketplace, rareté & embriquement (plug-and-play)
+
+**Les composants SONT les produits du dashboard.** Un site ne diffère pas tant par sa
+structure (tout le monde a hero / preuve / services / avis / tarifs / FAQ / contact /
+footer) que par le **design** de ses sections et leur **agencement**. On capte et
+catégorise donc les sections de vrais sites pour en faire des **composants achetables**.
+
+**Tiers de rareté** (champ `manifest.rarity`, attribué **à l'extraction par jugement
+humain** — pas calculé) :
+- **common** — section propre et statique (FAQ, bandeau, texte explicatif). Belle mais « normale ».
+- **rare** — parti pris design fort OU animation au scroll (avis en carrousel post-its, reveal…).
+- **epic** — composant signature « waouh ».
+
+La rareté pilote le **prix** dans le marketplace et le **mix** que Mistral compose
+(quelques communs + quelques rares + parfois un épique).
+
+**Catégorie** = le champ `manifest.role` (hero, services, reviews, pricing, contact,
+faq, banner, carousel, footer…). Chaque catégorie existe sous **plusieurs formes**
+(variantes) et raretés.
+
+**On extrait, on n'invente pas.** Les composants ne sont jamais générés from scratch :
+ils sont **extraits de sites réels** (les clones + sites dispo) via SP2, au gate de
+fidélité. Communs et rares sont accessibles depuis les sites actuels ; les épiques
+viennent des meilleures sources.
+
+**Branchement sur l'existant (rien à réinventer côté plateforme) :**
+- **Marketplace + crédits** déjà en place (page Formules, `marketplace_items`, migration
+  0016) → les composants deviennent des items, prix par rareté, licence par compte.
+- **Embriquement / plug-and-play** déjà en place : `content.__components` +
+  `ComponentPosition` (`replace` | `before` | `after` | `inside`) dans `lib/effects/types.ts`.
+  Prendre une section → elle **remplace** (ou s'ajoute à) celle en place.
+- **Les effets `lib/effects` actuels** (parallax, carrousels, displayCards…) = des
+  proto-composants **rares** déjà vendus ; la fonderie les généralise en sections complètes tierisées.
+
+**Rôle de Mistral inchangé** : il choisit un mix de composants (par catégorie + rareté +
+matière client), les agence, remplit le contenu, accorde la peau. Il ne crée rien.
+
 ## 9. Hors-périmètre (YAGNI, pour l'instant)
 
 - Pas d'éditeur WYSIWYG client sur ces sites (l'édition passe par re-génération de recette).
