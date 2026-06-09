@@ -11,6 +11,9 @@ import CtaBanner from "./components/CtaBanner";
 import LogoMarquee from "./components/LogoMarquee";
 import PricingCards from "./components/PricingCards";
 import StatsCountup from "./components/StatsCountup";
+import IntroSplit from "./components/IntroSplit";
+import ProcessSteps from "./components/ProcessSteps";
+import ContactBlock from "./components/ContactBlock";
 import FooterColumns from "./components/FooterColumns";
 
 type FoundryComponent = ComponentType<{ content: any; skin: Skin }>;
@@ -25,6 +28,9 @@ export const COMPONENTS: Record<string, FoundryComponent> = {
   "logo-marquee": LogoMarquee as FoundryComponent,
   "pricing-cards": PricingCards as FoundryComponent,
   "stats-countup": StatsCountup as FoundryComponent,
+  "intro-split": IntroSplit as FoundryComponent,
+  "process-steps": ProcessSteps as FoundryComponent,
+  "contact-block": ContactBlock as FoundryComponent,
   "footer-columns": FooterColumns as FoundryComponent,
 };
 

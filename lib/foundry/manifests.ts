@@ -102,6 +102,36 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
     contentKeys: ["eyebrow", "title", "items"],
     allowedSkinKeys: ["accent", "surface"],
   },
+  "intro-split": {
+    id: "intro-split",
+    role: "about",
+    rarity: "common",
+    description: "Bloc à propos en 2 colonnes : image + texte (éyebrow, titre, paragraphe, liste à coches optionnelle).",
+    whenToUse: ["présenter la personne / l'histoire", "section à propos", "humaniser le site"],
+    vibes: ["warm-serif"],
+    contentKeys: ["eyebrow", "title", "body", "image"],
+    allowedSkinKeys: ["accent", "surface"],
+  },
+  "process-steps": {
+    id: "process-steps",
+    role: "process",
+    rarity: "common",
+    description: "Étapes du parcours en 3 cartes numérotées (comment ça se passe / les étapes).",
+    whenToUse: ["expliquer le déroulé / la méthode", "rassurer sur le process"],
+    vibes: ["warm-serif"],
+    contentKeys: ["eyebrow", "title", "steps"],
+    allowedSkinKeys: ["accent", "surface"],
+  },
+  "contact-block": {
+    id: "contact-block",
+    role: "contact",
+    rarity: "common",
+    description: "Bloc contact : titre + bouton à gauche, coordonnées (email / téléphone / adresse) à droite, sur carte crème.",
+    whenToUse: ["donner les coordonnées + pousser à prendre RDV", "section ou page contact"],
+    vibes: ["warm-serif"],
+    contentKeys: ["eyebrow", "title", "email", "phone", "address", "cta"],
+    allowedSkinKeys: ["accent", "surface"],
+  },
 };
 
 export function getManifest(id: string): ComponentManifest | undefined {

@@ -26,6 +26,16 @@ export const demoRecipe: Recipe = {
       content: { title: "Recommandée par", items: ["Psycho & Vous", "Mag Bien-être", "Radio Sérénité", "Le Cercle", "Présence", "Ancrage"] },
     },
     {
+      component: "intro-split",
+      content: {
+        eyebrow: "Qui je suis",
+        title: "Un accompagnement à hauteur d'humain",
+        body: "Je vous reçois dans un cadre calme et confidentiel, sans jugement. Ensemble, à votre rythme, on dénoue ce qui pèse et on avance vers plus de clarté.",
+        image: `${M}/coach.jpg`,
+        points: ["12 ans d'expérience", "Présentiel & visio", "Sans jugement, à votre rythme"],
+      },
+    },
+    {
       component: "services-rows",
       content: {
         eyebrow: "Mon accompagnement",
@@ -34,6 +44,18 @@ export const demoRecipe: Recipe = {
           { n: "01", name: "Accompagnement individuel", desc: "Des séances en tête-à-tête pour apprivoiser le stress, l'anxiété ou une période de doute." },
           { n: "02", name: "Accompagnement de couple", desc: "Renouer le dialogue, reconstruire la confiance et traverser les tensions." },
           { n: "03", name: "Famille & parentalité", desc: "Un soutien pour les familles qui traversent un conflit ou un changement." },
+        ],
+      },
+    },
+    {
+      component: "process-steps",
+      content: {
+        eyebrow: "Le chemin",
+        title: "Comment ça se passe",
+        steps: [
+          { n: "01", title: "Premier échange", desc: "Un appel offert de 20 minutes pour faire connaissance et cerner votre besoin." },
+          { n: "02", title: "La séance", desc: "En présentiel ou en visio, un cadre où vous êtes pleinement entendu." },
+          { n: "03", title: "Des progrès concrets", desc: "On repère vos schémas, on bâtit votre résilience, pas à pas." },
         ],
       },
     },
@@ -85,6 +107,17 @@ export const demoRecipe: Recipe = {
           { q: "En présentiel ou en visio ?", a: "Les deux : au cabinet ou en visio, avec le même soin et la même qualité d'écoute." },
           { q: "Et si je ne suis pas sûr d'en avoir besoin ?", a: "C'est normal d'hésiter. Le premier échange est sans engagement, justement pour y voir clair ensemble." },
         ],
+      },
+    },
+    {
+      component: "contact-block",
+      content: {
+        eyebrow: "Contact",
+        title: "Parlons de ce qui vous amène",
+        email: "bonjour@sereenity.fr",
+        phone: "+33 1 23 45 67 89",
+        address: "12 rue des Tilleuls, 75011 Paris",
+        cta: "Prendre rendez-vous",
       },
     },
     {

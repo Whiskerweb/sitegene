@@ -5,7 +5,7 @@ import { MANIFESTS, getManifest, listManifests } from "./manifests";
 describe("manifests", () => {
   it("contient les composants de la library", () => {
     expect(listManifests().map((m) => m.id).sort()).toEqual(
-      ["cta-banner", "faq-accordion", "footer-columns", "hero-split-asym", "logo-marquee", "pricing-cards", "reviews-postit-carousel", "services-rows", "stats-countup", "testimonials-carousel"]
+      ["contact-block", "cta-banner", "faq-accordion", "footer-columns", "hero-split-asym", "intro-split", "logo-marquee", "pricing-cards", "process-steps", "reviews-postit-carousel", "services-rows", "stats-countup", "testimonials-carousel"]
     );
   });
   it("propose plusieurs formes pour la catégorie reviews (common + rare)", () => {

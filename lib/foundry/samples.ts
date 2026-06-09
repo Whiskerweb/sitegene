@@ -83,6 +83,30 @@ export const SAMPLES: Record<string, Record<string, unknown>> = {
       { value: 2000, suffix: "+", label: "séances en visio menées" },
     ],
   },
+  "intro-split": {
+    eyebrow: "Qui je suis",
+    title: "Un accompagnement à hauteur d'humain",
+    body: "Je vous reçois dans un cadre calme et confidentiel, sans jugement. Ensemble, à votre rythme, on dénoue ce qui pèse et on avance vers plus de clarté.",
+    image: `${M}/coach.jpg`,
+    points: ["12 ans d'expérience", "Présentiel & visio", "Sans jugement, à votre rythme"],
+  },
+  "process-steps": {
+    eyebrow: "Le chemin",
+    title: "Comment ça se passe",
+    steps: [
+      { n: "01", title: "Premier échange", desc: "Un appel offert de 20 minutes pour faire connaissance et cerner votre besoin." },
+      { n: "02", title: "La séance", desc: "En présentiel ou en visio, un cadre où vous êtes pleinement entendu." },
+      { n: "03", title: "Des progrès concrets", desc: "On repère vos schémas, on bâtit votre résilience, pas à pas." },
+    ],
+  },
+  "contact-block": {
+    eyebrow: "Contact",
+    title: "Parlons de ce qui vous amène",
+    email: "bonjour@sereenity.fr",
+    phone: "+33 1 23 45 67 89",
+    address: "12 rue des Tilleuls, 75011 Paris",
+    cta: "Prendre rendez-vous",
+  },
 };
 
 export function getSample(id: string): Record<string, unknown> {
