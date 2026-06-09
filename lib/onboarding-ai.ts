@@ -19,13 +19,15 @@ export type ChatMsg = { role: "user" | "assistant"; content: string };
 
 /** Socle d'infos requis avant de pouvoir conclure l'onboarding. */
 type Slot = { key: string; label: string; filled: (i: Intake) => boolean };
-const SOCLE: Slot[] = [
+// Ordre : identité en premier (brand, activity, tone) → sections du corps ensuite.
+export const SOCLE: Slot[] = [
   { key: "brand", label: "nom de l'activité / de la marque", filled: (i) => !!i.brand?.trim() },
   {
     key: "activity",
     label: "description de l'activité (métier, ce que la personne propose)",
     filled: (i) => !!(i.about?.trim() || i.trade?.trim() || i.jobTitle?.trim() || i.genre?.trim()),
   },
+  { key: "tone", label: "ambiance / ton souhaité pour le site", filled: (i) => !!i.tone },
   {
     key: "services",
     label: "prestations / services proposés",
@@ -41,13 +43,37 @@ const SOCLE: Slot[] = [
     label: "zone d'intervention / ville",
     filled: (i) => !!(i.area?.trim() || i.city?.trim()),
   },
-  { key: "tone", label: "ambiance / ton souhaité pour le site", filled: (i) => !!i.tone },
   {
     key: "contact",
     label: "email ou téléphone de contact",
     filled: (i) => !!(i.contactEmail?.trim() || i.contactPhone?.trim()),
   },
 ];
+
+/** Clés des slots dans l'ordre du SOCLE. */
+export const SOCLE_ORDER = SOCLE.map((s) => s.key); // ["brand","activity","tone","services","priceRange","area","contact"]
+
+/** Slots qui passent de NON-remplis à remplis entre deux intakes. */
+export function newlyFilledSlots(before: Intake, after: Intake): string[] {
+  return SOCLE.filter((s) => !s.filled(before) && s.filled(after)).map((s) => s.key);
+}
+
+/** Section du corps déclenchée par un slot (null = pas de section, ex. identité). */
+export function slotToSection(slot: string): string | null {
+  switch (slot) {
+    case "services": return "services";
+    case "priceRange": return "pricing"; // (→ 'approach' résolu par sectionPlanForIntake)
+    case "area": return "about";
+    case "contact": return "contact";
+    default: return null;
+  }
+}
+
+/** L'identité (header générable) est-elle connue ? activity + categoryId requis. */
+export function identityReady(intake: Intake & { categoryId?: string }): boolean {
+  const hasActivity = !!(intake.about?.trim() || intake.trade?.trim() || intake.jobTitle?.trim() || intake.genre?.trim());
+  return hasActivity && !!intake.categoryId;
+}
 
 function progressFor(intake: Intake): { filled: string[]; missing: string[] } {
   const filled: string[] = [];
@@ -93,6 +119,7 @@ CLÉS d'intake possibles (n'écris que celles que tu peux renseigner depuis le d
 RÈGLES :
 - Si l'historique est vide : accueille chaleureusement (1 phrase) puis pose la 1re question sur l'activité.
 - Ne conclus (done:true) que lorsque la liste des manquants est VIDE. S'il reste des manquants, pose une question qui cible l'un d'eux (sans être robotique).
+- Pose toujours une question qui cible le PREMIER élément de la liste des manquants (dans l'ordre donné), sans être robotique.
 - Pour "tone", déduis-le du discours si possible plutôt que de poser une question fermée.
 - Reste bref. Pas de listes à puces dans "assistant".`;
 
