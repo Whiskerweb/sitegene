@@ -5,6 +5,7 @@ import { MANIFESTS } from "@/lib/foundry/manifests";
 import HeroSplitAsym from "./components/HeroSplitAsym";
 import ServicesRows from "./components/ServicesRows";
 import TestimonialsCarousel from "./components/TestimonialsCarousel";
+import ReviewsPostitCarousel from "./components/ReviewsPostitCarousel";
 import FooterColumns from "./components/FooterColumns";
 
 type FoundryComponent = ComponentType<{ content: any; skin: Skin }>;
@@ -13,6 +14,7 @@ export const COMPONENTS: Record<string, FoundryComponent> = {
   "hero-split-asym": HeroSplitAsym as FoundryComponent,
   "services-rows": ServicesRows as FoundryComponent,
   "testimonials-carousel": TestimonialsCarousel as FoundryComponent,
+  "reviews-postit-carousel": ReviewsPostitCarousel as FoundryComponent,
   "footer-columns": FooterColumns as FoundryComponent,
 };
 

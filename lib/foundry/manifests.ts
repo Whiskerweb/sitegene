@@ -25,7 +25,7 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
   "testimonials-carousel": {
     id: "testimonials-carousel",
     role: "reviews",
-    rarity: "rare",
+    rarity: "common",
     description: "Carrousel de cartes-avis en défilement continu (marquee) : citation, avatar, nom, rôle.",
     whenToUse: ["au moins 3 témoignages clients", "renforcer la confiance"],
     vibes: ["warm-serif"],
@@ -41,6 +41,16 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
     vibes: ["warm-serif"],
     contentKeys: ["brand", "tagline", "columns", "copyright"],
     allowedSkinKeys: ["surface"],
+  },
+  "reviews-postit-carousel": {
+    id: "reviews-postit-carousel",
+    role: "reviews",
+    rarity: "rare",
+    description: "Avis clients en marquee de « notes épinglées » : cartes blanches légèrement inclinées avec un pin coloré qui dépasse, sur un fond pinboard jaune doux. Citation, avatar, nom.",
+    whenToUse: ["au moins 3 avis clients", "vouloir un bloc avis à fort parti pris design", "ambiance chaleureuse/créative"],
+    vibes: ["warm-serif"],
+    contentKeys: ["eyebrow", "title", "items"],
+    allowedSkinKeys: ["accent", "surface"],
   },
 };
 

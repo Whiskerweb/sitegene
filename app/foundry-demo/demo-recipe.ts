@@ -34,7 +34,7 @@ export const demoRecipe: Recipe = {
       },
     },
     {
-      component: "testimonials-carousel",
+      component: "reviews-postit-carousel",
       content: {
         eyebrow: "Témoignages",
         title: "Vous n'êtes pas seul",
