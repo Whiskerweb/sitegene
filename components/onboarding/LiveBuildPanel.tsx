@@ -126,8 +126,10 @@ export default function LiveBuildPanel({ siteId, onAllDone }: LiveBuildPanelProp
           /* Iframe avec transition de fondu à chaque bump de nonce */
           <div
             key={nonce}
-            className="absolute inset-0 animate-[fadeIn_0.4s_ease-out_both]"
+            className="absolute inset-0"
+            style={{ animation: "lbpFade 0.45s ease-out both" }}
           >
+            <style>{`@keyframes lbpFade{from{opacity:0}to{opacity:1}}`}</style>
             <iframe
               key={nonce}
               src={`/api/onboarding/live-preview?siteId=${encodeURIComponent(siteId)}&n=${nonce}`}
