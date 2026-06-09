@@ -17,6 +17,7 @@ export const dynamic = "force-dynamic";
 const titleMap = {
   "/dashboard": "Mon site",
   "/dashboard/bibliotheque": "Bibliothèque",
+  "/dashboard/composants": "Composants",
   "/dashboard/marketplace": "Formules",
   "/dashboard/credits": "Crédits & facturation",
   "/dashboard/settings": "Paramètres",
@@ -34,6 +35,7 @@ export default async function DashboardLayout({
   const nav: NavItem[] = [
     { href: "/dashboard", label: "Mon site", icon: <IconCloud size={18} /> },
     { href: "/dashboard/bibliotheque", label: "Bibliothèque", icon: <IconPhoto size={18} /> },
+    { href: "/dashboard/composants", label: "Composants", icon: <IconStar4 size={18} /> },
     {
       href: "/dashboard/marketplace",
       label: "Formules",
