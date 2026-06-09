@@ -52,6 +52,26 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
     contentKeys: ["eyebrow", "title", "items"],
     allowedSkinKeys: ["accent", "surface"],
   },
+  "faq-accordion": {
+    id: "faq-accordion",
+    role: "faq",
+    rarity: "common",
+    description: "FAQ en accordéon 2 colonnes : intro (éyebrow + titre) à gauche, questions dépliables à droite (icône + qui pivote, réponse en hauteur animée).",
+    whenToUse: ["lever les objections avant conversion", "4 à 6 questions fréquentes"],
+    vibes: ["warm-serif"],
+    contentKeys: ["eyebrow", "title", "items"],
+    allowedSkinKeys: ["accent", "surface"],
+  },
+  "cta-banner": {
+    id: "cta-banner",
+    role: "cta",
+    rarity: "common",
+    description: "Bandeau de conversion : panneau encre (image de fond optionnelle + voile), grande phrase Castoro et bouton pilule. Clôture de page.",
+    whenToUse: ["pousser à l'action en fin de page", "rappeler le CTA principal"],
+    vibes: ["warm-serif"],
+    contentKeys: ["title", "cta"],
+    allowedSkinKeys: ["accent", "surface"],
+  },
 };
 
 export function getManifest(id: string): ComponentManifest | undefined {

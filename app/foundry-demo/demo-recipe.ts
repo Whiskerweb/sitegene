@@ -46,6 +46,27 @@ export const demoRecipe: Recipe = {
       },
     },
     {
+      component: "faq-accordion",
+      content: {
+        eyebrow: "Vos questions",
+        title: "Les questions que l'on me pose souvent",
+        items: [
+          { q: "Comment se passe une première séance ?", a: "On fait connaissance en douceur : vous racontez ce qui vous amène, à votre rythme, et on définit ensemble un cap clair." },
+          { q: "Les séances sont-elles confidentielles ?", a: "Strictement. Tout ce qui se dit reste entre nous — c'est la base de la confiance et du travail." },
+          { q: "En présentiel ou en visio ?", a: "Les deux : au cabinet ou en visio, avec le même soin et la même qualité d'écoute." },
+          { q: "Et si je ne suis pas sûr d'en avoir besoin ?", a: "C'est normal d'hésiter. Le premier échange est sans engagement, justement pour y voir clair ensemble." },
+        ],
+      },
+    },
+    {
+      component: "cta-banner",
+      content: {
+        title: "Votre cheminement commence par un premier pas : celui de tendre la main.",
+        cta: "Prendre rendez-vous",
+        image: `${M}/int4.jpg`,
+      },
+    },
+    {
       component: "footer-columns",
       content: {
         brand: "Sereenity",
