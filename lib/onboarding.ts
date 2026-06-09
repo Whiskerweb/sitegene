@@ -70,6 +70,19 @@ export type OnboardingState = {
 
 type Admin = ReturnType<typeof createAdminClient>;
 
+/** Clés transientes du build (aperçu live) à NE jamais écraser lors d'une écriture
+ *  d'intake concurrente avec une génération de fond. */
+const TRANSIENT_INTAKE_KEYS = ["__headerHtml", "__sections", "__triedTemplates"] as const;
+
+/** Recharge l'intake courant et superpose ses clés transientes sur `base` (anti-clobber). */
+async function withFreshTransient(admin: Admin, siteId: string, base: Record<string, unknown>): Promise<Record<string, unknown>> {
+  const { data } = await admin.from("site_onboarding").select("intake").eq("site_id", siteId).maybeSingle();
+  const cur = (data?.intake ?? {}) as Record<string, unknown>;
+  const out = { ...base };
+  for (const k of TRANSIENT_INTAKE_KEYS) if (cur[k] !== undefined) out[k] = cur[k];
+  return out;
+}
+
 /** Le client a déjà un site en ligne : l'onboarding n'a plus lieu d'être. */
 export class AlreadyLiveError extends Error {
   constructor() {
@@ -284,7 +297,7 @@ export async function saveIntake(
     .maybeSingle();
   if (!ob) return null;
 
-  const merged = { ...(ob.intake as Record<string, unknown>), ...patch };
+  const merged = await withFreshTransient(admin, siteId, { ...(ob.intake as Record<string, unknown>), ...patch });
   const mergedSkipped = Array.from(
     new Set([...((ob.skipped_questions as string[]) ?? []), ...(skipped ?? [])]),
   );
@@ -316,9 +329,10 @@ export async function appendPhotoUrls(
     .maybeSingle();
   const intake = (ob?.intake ?? {}) as Intake;
   const next = [...(intake.photoUrls ?? []), ...urls];
+  const mergedIntake = await withFreshTransient(admin, siteId, { ...intake, photoUrls: next });
   await admin
     .from("site_onboarding")
-    .update({ intake: { ...intake, photoUrls: next }, updated_at: new Date().toISOString() })
+    .update({ intake: mergedIntake, updated_at: new Date().toISOString() })
     .eq("site_id", siteId);
   return next;
 }
@@ -678,10 +692,14 @@ export async function generateOnboardingHeader(
   // à l'ancienne feuille CSS → on les réinitialise pour forcer une re-génération.
   const resetSections = opts?.another ? { __sections: {} } : {};
 
+  // Anti-clobber : la génération Mistral a pu durer 15-60 s ; on relit l'intake
+  // COURANT (champs de chat ajoutés entre-temps) au lieu d'écraser avec le stale.
+  const { data: curOb } = await admin.from("site_onboarding").select("intake").eq("site_id", siteId).maybeSingle();
+  const freshIntake = (curOb?.intake ?? intake) as typeof intake;
   await admin
     .from("site_onboarding")
     .update({
-      intake: { ...intake, ...resetSections, __headerHtml: header.headerDoc, __triedTemplates: nextTried },
+      intake: { ...freshIntake, ...resetSections, __headerHtml: header.headerDoc, __triedTemplates: nextTried },
       chosen_template_id: templateId,
       updated_at: new Date().toISOString(),
     })

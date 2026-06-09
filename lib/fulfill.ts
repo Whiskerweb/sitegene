@@ -184,6 +184,23 @@ export async function fulfillPayment(
       .from("sites")
       .update({ billing_status: "active" })
       .eq("id", siteId);
+
+    // Réconciliation anti-TOCTOU : si on a différé la mise en ligne (génération en
+    // cours au moment du 1er check) mais que le job s'est terminé entre-temps, et
+    // que le worker a lu billing_status AVANT ce passage à "active", le site
+    // resterait payé mais non publié. On retente la mise en ligne maintenant.
+    if (selfServe && !slug && !(await generationPending(admin, siteId))) {
+      const { data: stillDraft } = await admin
+        .from("sites")
+        .select("status")
+        .eq("id", siteId)
+        .maybeSingle();
+      if (stillDraft && stillDraft.status !== "live") {
+        const base = await slugBaseForSite(admin, siteId, code?.prospect_id ?? null);
+        slug = await goLive(admin, siteId, base);
+      }
+    }
+
     await admin.from("events").insert({ token, site_id: siteId, type: "purchased" });
   }
 
