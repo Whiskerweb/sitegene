@@ -37,4 +37,14 @@ describe("validateRecipe", () => {
     expect(v.ok).toBe(false);
     expect(v.errors.join(" ")).toContain("non autorisé");
   });
+  it("accepte une clé de skin autorisée", () => {
+    const v = validateRecipe({ ...base, sections: [{ component: "footer-columns", content: { brand: "X", tagline: "t", columns: [], copyright: "c" }, skin: { surface: "#fff" } }] });
+    expect(v.ok).toBe(true);
+    expect(v.resolved).toHaveLength(1);
+  });
+  it("exclut de resolved une section invalide (resolved sûr même si ok=false)", () => {
+    const v = validateRecipe({ ...base, sections: [{ component: "footer-columns", content: { brand: "X" } }] });
+    expect(v.ok).toBe(false);
+    expect(v.resolved).toHaveLength(0);
+  });
 });

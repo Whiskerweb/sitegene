@@ -15,11 +15,13 @@ export function getVibe(id: string): Vibe | undefined {
 }
 
 export function vibeToCssVars(vibe: Vibe, brand?: { primary?: string }): Record<string, string> {
+  // Une couleur de marque vide/blanche n'est pas une surcharge : on retombe sur la vibe.
+  const brandPrimary = brand?.primary?.trim();
   return {
     "--c-ink": vibe.palette.ink,
     "--c-surface": vibe.palette.surface,
     "--c-card": vibe.palette.card,
-    "--c-accent": brand?.primary || vibe.palette.accent,
+    "--c-accent": brandPrimary ? brandPrimary : vibe.palette.accent,
     "--c-accent2": vibe.palette.accent2,
     "--c-muted": vibe.palette.muted,
     "--font-heading": vibe.fonts.heading,

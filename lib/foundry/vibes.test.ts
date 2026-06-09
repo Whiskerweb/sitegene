@@ -17,4 +17,8 @@ describe("vibes", () => {
     const vars = vibeToCssVars(VIBES["warm-serif"], { primary: "#123456" });
     expect(vars["--c-accent"]).toBe("#123456");
   });
+  it("une couleur de marque vide ne surcharge pas l'accent", () => {
+    expect(vibeToCssVars(VIBES["warm-serif"], { primary: "" })["--c-accent"]).toBe("#8d6959");
+    expect(vibeToCssVars(VIBES["warm-serif"], { primary: "  " })["--c-accent"]).toBe("#8d6959");
+  });
 });
