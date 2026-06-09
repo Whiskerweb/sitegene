@@ -1,11 +1,12 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { getUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { userOwnsSite, saveIntake } from "@/lib/onboarding";
-import { nextTurn, type ChatMsg } from "@/lib/onboarding-ai";
+import { userOwnsSite, saveIntake, ensureHeaderForIntake } from "@/lib/onboarding";
+import { newlyFilledSlots, slotToSection, identityReady, nextTurn, type ChatMsg } from "@/lib/onboarding-ai";
+import { triggerSectionGeneration } from "@/lib/onboarding-sections";
 import type { Intake } from "@/lib/onboarding-config";
 
-export const maxDuration = 60;
+export const maxDuration = 90;
 
 /**
  * Un tour du chatbot d'onboarding temps réel. Le client envoie le transcript
@@ -45,8 +46,22 @@ export async function POST(request: Request) {
   const intake = (ob?.intake ?? {}) as Intake;
 
   const turn = await nextTurn({ history, intake });
+  const merged = { ...intake, ...turn.intakePatch } as Intake & { categoryId?: string };
   if (Object.keys(turn.intakePatch).length > 0) {
     await saveIntake(siteId, turn.intakePatch);
+
+    // Construit le site EN TÂCHE DE FOND, au fil des réponses (le chat reste rapide).
+    const origin = new URL(request.url).origin;
+    if (!identityReady(intake) && identityReady(merged)) {
+      // Identité complétée → header (+ rattrapage des sections déjà répondues).
+      after(() => ensureHeaderForIntake(origin, siteId).catch(() => {}));
+    } else {
+      // Slots de section nouvellement remplis → génère la section correspondante.
+      for (const slot of newlyFilledSlots(intake, merged)) {
+        const sec = slotToSection(slot);
+        if (sec) after(() => triggerSectionGeneration(origin, siteId, sec).catch(() => {}));
+      }
+    }
   }
 
   return NextResponse.json({
