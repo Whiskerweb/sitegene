@@ -16,7 +16,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import type { Intake } from "@/lib/onboarding-config";
 import { isTemplateId, type TemplateId } from "@/lib/templates";
 import { imagePlanFor } from "@/lib/image-plan";
-import { generateSection } from "@/lib/design-system-gen";
+import { generateSection, assembleProgressive } from "@/lib/design-system-gen";
 import { buildGenFacts, photoUrlsForIntake } from "@/lib/onboarding-facts";
 
 type Admin = ReturnType<typeof createAdminClient>;
@@ -191,4 +191,20 @@ export async function buildStateForSite(siteId: string): Promise<BuildState> {
   const headerReady = !!intake.__headerHtml;
   const allDone = headerReady && sections.every((s) => s.status === "done");
   return { templateId, headerReady, sections, allDone };
+}
+
+/** HTML assemblé du build en cours (header + sections done), pour l'iframe d'aperçu. null si pas de header. */
+export async function loadLivePreviewHtml(origin: string, siteId: string): Promise<string | null> {
+  const admin = createAdminClient();
+  const loaded = await loadIntake(admin, siteId);
+  if (!loaded?.intake.__headerHtml || !loaded.templateId) return null;
+  const { intake } = loaded;
+  const templateId = loaded.templateId;
+  const headerDoc = intake.__headerHtml as string;
+  const plan = sectionPlanForIntake(intake);
+  const sections = plan
+    .filter((d) => intake.__sections?.[d.key]?.status === "done")
+    .map((d) => ({ key: d.key, html: intake.__sections![d.key].html! }));
+  const { html } = await assembleProgressive({ origin, templateId, headerDoc, sections, photoUrls: photoUrlsForIntake(intake) });
+  return html;
 }
