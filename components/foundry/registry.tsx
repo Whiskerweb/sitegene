@@ -8,6 +8,9 @@ import TestimonialsCarousel from "./components/TestimonialsCarousel";
 import ReviewsPostitCarousel from "./components/ReviewsPostitCarousel";
 import FaqAccordion from "./components/FaqAccordion";
 import CtaBanner from "./components/CtaBanner";
+import LogoMarquee from "./components/LogoMarquee";
+import PricingCards from "./components/PricingCards";
+import StatsCountup from "./components/StatsCountup";
 import FooterColumns from "./components/FooterColumns";
 
 type FoundryComponent = ComponentType<{ content: any; skin: Skin }>;
@@ -19,6 +22,9 @@ export const COMPONENTS: Record<string, FoundryComponent> = {
   "reviews-postit-carousel": ReviewsPostitCarousel as FoundryComponent,
   "faq-accordion": FaqAccordion as FoundryComponent,
   "cta-banner": CtaBanner as FoundryComponent,
+  "logo-marquee": LogoMarquee as FoundryComponent,
+  "pricing-cards": PricingCards as FoundryComponent,
+  "stats-countup": StatsCountup as FoundryComponent,
   "footer-columns": FooterColumns as FoundryComponent,
 };
 

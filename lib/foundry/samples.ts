@@ -60,6 +60,29 @@ export const SAMPLES: Record<string, Record<string, unknown>> = {
     ],
     copyright: "© Sereenity. Tous droits réservés.",
   },
+  "logo-marquee": {
+    title: "Recommandée par",
+    items: ["Psycho & Vous", "Mag Bien-être", "Radio Sérénité", "Le Cercle", "Présence", "Ancrage"],
+  },
+  "pricing-cards": {
+    eyebrow: "Tarifs",
+    title: "Des formules claires, sans surprise",
+    plans: [
+      { name: "Découverte", price: "49 €", period: "/séance", desc: "Pour faire un premier pas en douceur.", features: ["Une séance d'accompagnement", "En visio ou en présentiel", "Objectifs personnalisés", "Accès à l'espace client"], cta: "Réserver ma séance" },
+      { name: "Évolution", price: "89 €", period: "/séance", featured: true, desc: "Le rythme idéal pour un vrai changement.", features: ["Accompagnement dédié", "En visio ou en présentiel", "Plan de progression sur-mesure", "Messagerie entre les séances"], cta: "Réserver ma séance" },
+      { name: "Sérénité", price: "229 €", period: "/mois", desc: "Le suivi le plus complet.", features: ["Séances illimitées", "Soutien prioritaire", "Messagerie entre les séances", "Ligne d'écoute"], cta: "Réserver ma séance" },
+    ],
+  },
+  "stats-countup": {
+    eyebrow: "En quelques chiffres",
+    title: "Un accompagnement qui change les choses",
+    items: [
+      { value: 500, suffix: "+", label: "personnes accompagnées" },
+      { value: 92, suffix: "%", label: "ressentent un mieux dès 3 séances" },
+      { value: 12, suffix: "", label: "ans d'expérience" },
+      { value: 2000, suffix: "+", label: "séances en visio menées" },
+    ],
+  },
 };
 
 export function getSample(id: string): Record<string, unknown> {

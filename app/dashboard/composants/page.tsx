@@ -8,17 +8,20 @@ export const dynamic = "force-dynamic";
 const CATEGORY_LABEL: Record<string, string> = {
   hero: "En-tête / Hero",
   services: "Services",
+  logos: "Logos / Confiance",
+  stats: "Chiffres clés",
   reviews: "Avis clients",
   gallery: "Galerie / Cartes",
   media: "Image / Média",
   statement: "Slogan / Valeurs",
+  pricing: "Tarifs",
   faq: "FAQ",
   cta: "Appel à l'action",
   decor: "Ambiance / Décor",
   footer: "Pied de page",
   effets: "Effets divers",
 };
-const CATEGORY_ORDER = ["hero", "services", "reviews", "gallery", "media", "statement", "faq", "cta", "decor", "footer", "effets"];
+const CATEGORY_ORDER = ["hero", "services", "logos", "stats", "reviews", "gallery", "media", "statement", "pricing", "faq", "cta", "decor", "footer", "effets"];
 
 const RARITY: Record<Rarity, { label: string; bg: string; fg: string; dot: string }> = {
   common: { label: "Commun", bg: "#eef1e7", fg: "#5d6b3f", dot: "#8e9867" },

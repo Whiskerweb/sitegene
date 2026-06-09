@@ -72,6 +72,36 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
     contentKeys: ["title", "cta"],
     allowedSkinKeys: ["accent", "surface"],
   },
+  "logo-marquee": {
+    id: "logo-marquee",
+    role: "logos",
+    rarity: "common",
+    description: "Bandeau de confiance : noms/partenaires en défilement continu (marquee), discret et atténué.",
+    whenToUse: ["afficher des partenaires / médias / clients", "preuve de confiance légère sous le hero"],
+    vibes: ["warm-serif"],
+    contentKeys: ["items"],
+    allowedSkinKeys: ["surface"],
+  },
+  "pricing-cards": {
+    id: "pricing-cards",
+    role: "pricing",
+    rarity: "common",
+    description: "Tarifs en 3 cartes (une vedette en encre) : nom, prix, features à coches, bouton. Clair et lisible.",
+    whenToUse: ["présenter des offres/forfaits", "page ou section tarifs"],
+    vibes: ["warm-serif"],
+    contentKeys: ["eyebrow", "title", "plans"],
+    allowedSkinKeys: ["accent", "surface"],
+  },
+  "stats-countup": {
+    id: "stats-countup",
+    role: "stats",
+    rarity: "rare",
+    description: "Chiffres clés en grand, qui s'incrémentent de 0 à leur valeur à l'entrée dans l'écran (count-up au scroll).",
+    whenToUse: ["preuve sociale chiffrée (clients, %, années)", "marquer la crédibilité"],
+    vibes: ["warm-serif"],
+    contentKeys: ["eyebrow", "title", "items"],
+    allowedSkinKeys: ["accent", "surface"],
+  },
 };
 
 export function getManifest(id: string): ComponentManifest | undefined {

@@ -22,6 +22,10 @@ export const demoRecipe: Recipe = {
       },
     },
     {
+      component: "logo-marquee",
+      content: { title: "Recommandée par", items: ["Psycho & Vous", "Mag Bien-être", "Radio Sérénité", "Le Cercle", "Présence", "Ancrage"] },
+    },
+    {
       component: "services-rows",
       content: {
         eyebrow: "Mon accompagnement",
@@ -34,6 +38,19 @@ export const demoRecipe: Recipe = {
       },
     },
     {
+      component: "stats-countup",
+      content: {
+        eyebrow: "En quelques chiffres",
+        title: "Un accompagnement qui change les choses",
+        items: [
+          { value: 500, suffix: "+", label: "personnes accompagnées" },
+          { value: 92, suffix: "%", label: "ressentent un mieux dès 3 séances" },
+          { value: 12, suffix: "", label: "ans d'expérience" },
+          { value: 2000, suffix: "+", label: "séances en visio menées" },
+        ],
+      },
+    },
+    {
       component: "reviews-postit-carousel",
       content: {
         eyebrow: "Témoignages",
@@ -42,6 +59,18 @@ export const demoRecipe: Recipe = {
           { text: "L'accompagnement a changé ma vie.", name: "Émilie C.", role: "Accompagnement individuel", avatar: `${M}/av1.jpg` },
           { text: "Je me suis senti écouté et accompagné.", name: "Marc L.", role: "Séances en visio", avatar: `${M}/av2.jpg` },
           { text: "On m'a aidée sans me laisser définir par ma douleur.", name: "Hana M.", role: "Accompagnement du deuil", avatar: `${M}/av3.jpg` },
+        ],
+      },
+    },
+    {
+      component: "pricing-cards",
+      content: {
+        eyebrow: "Tarifs",
+        title: "Des formules claires, sans surprise",
+        plans: [
+          { name: "Découverte", price: "49 €", period: "/séance", desc: "Pour faire un premier pas en douceur.", features: ["Une séance d'accompagnement", "En visio ou en présentiel", "Objectifs personnalisés", "Accès à l'espace client"], cta: "Réserver ma séance" },
+          { name: "Évolution", price: "89 €", period: "/séance", featured: true, desc: "Le rythme idéal pour un vrai changement.", features: ["Accompagnement dédié", "En visio ou en présentiel", "Plan de progression sur-mesure", "Messagerie entre les séances"], cta: "Réserver ma séance" },
+          { name: "Sérénité", price: "229 €", period: "/mois", desc: "Le suivi le plus complet.", features: ["Séances illimitées", "Soutien prioritaire", "Messagerie entre les séances", "Ligne d'écoute"], cta: "Réserver ma séance" },
         ],
       },
     },
