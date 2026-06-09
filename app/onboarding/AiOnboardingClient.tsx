@@ -187,6 +187,7 @@ export default function AiOnboardingClient() {
     } catch (e) {
       setErrorMsg(e instanceof Error ? e.message : "Erreur");
       setValidating(false);
+      setPhase("error");
     }
   }, [siteId, router]);
 

@@ -97,6 +97,22 @@ export async function listSiteTemplates(
  * peau n'est pas publiée, on l'écrase ; sinon on crée une nouvelle version.
  * Retourne la version écrite.
  */
+/**
+ * Prochaine version pour ce SITE : la contrainte `unique (site_id, version)` est
+ * GLOBALE (pas par template). Pour une nouvelle peau on prend donc le max de
+ * TOUTES les peaux du site + 1 (sinon collision v1 avec une peau existante).
+ */
+async function nextSiteVersion(admin: SupabaseClient, siteId: string): Promise<number> {
+  const { data } = await admin
+    .from("site_content")
+    .select("version")
+    .eq("site_id", siteId)
+    .order("version", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  return (((data as { version?: number } | null)?.version ?? 0) as number) + 1;
+}
+
 export async function saveDraftSnapshot(
   admin: SupabaseClient,
   siteId: string,
@@ -115,7 +131,7 @@ export async function saveDraftSnapshot(
     if (error) throw new Error(`saveDraftSnapshot update: ${error.message}`);
     return top.version;
   }
-  const version = (top?.version ?? 0) + 1;
+  const version = await nextSiteVersion(admin, siteId);
   const { error } = await admin.from("site_content").insert({
     site_id: siteId,
     template_id: templateId,
@@ -141,10 +157,11 @@ export async function ensureSnapshot(
 ): Promise<boolean> {
   const existing = await loadEditableSnapshot(admin, siteId, templateId);
   if (existing) return false;
+  const version = await nextSiteVersion(admin, siteId);
   await admin.from("site_content").insert({
     site_id: siteId,
     template_id: templateId,
-    version: 1,
+    version,
     content_json: contentJson,
     is_published: false,
     created_by: "client",
