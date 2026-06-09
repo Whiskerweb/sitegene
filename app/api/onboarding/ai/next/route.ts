@@ -56,10 +56,15 @@ export async function POST(request: Request) {
       // Identité complétée → header (+ rattrapage des sections déjà répondues).
       after(() => ensureHeaderForIntake(origin, siteId).catch(() => {}));
     } else {
-      // Slots de section nouvellement remplis → génère la section correspondante.
-      for (const slot of newlyFilledSlots(intake, merged)) {
-        const sec = slotToSection(slot);
-        if (sec) after(() => triggerSectionGeneration(origin, siteId, sec).catch(() => {}));
+      // Sections nouvellement remplies → génère SÉQUENTIELLEMENT dans un seul after()
+      // (évite les courses concurrentes sur l'intake JSONB).
+      const sections = newlyFilledSlots(intake, merged).map(slotToSection).filter((s): s is string => !!s);
+      if (sections.length > 0) {
+        after(async () => {
+          for (const sec of sections) {
+            await triggerSectionGeneration(origin, siteId, sec).catch(() => {});
+          }
+        });
       }
     }
   }

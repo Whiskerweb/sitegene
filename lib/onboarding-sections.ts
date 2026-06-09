@@ -79,7 +79,6 @@ type IntakeX = Intake & {
   categoryId?: string;
   __headerHtml?: string;
   __sections?: Record<string, SectionState>;
-  __sectionPlan?: string[];
 };
 
 async function loadIntake(
@@ -111,11 +110,17 @@ function priorContext(intake: IntakeX, plan: string[], upTo: string): string {
   return out.join("\n");
 }
 
-/** Génère UNE section et la persiste dans intake.__sections (idempotent). */
+/**
+ * Génère UNE section et la persiste dans intake.__sections (idempotent).
+ * `force` : régénère tout ce qui n'est PAS `done` (utilisé par le filet job pour
+ * reprendre une section bloquée en `streaming` après éviction d'un after()).
+ * Par défaut (chat live), on saute `done` ET `streaming` (génération en cours).
+ */
 export async function triggerSectionGeneration(
   origin: string,
   siteId: string,
   sectionKey: string,
+  opts?: { force?: boolean },
 ): Promise<void> {
   const admin = createAdminClient();
   const loaded = await loadIntake(admin, siteId);
@@ -125,7 +130,8 @@ export async function triggerSectionGeneration(
   const def = plan.find((d) => d.key === sectionKey);
   if (!def) return;
   const existing = intake.__sections?.[sectionKey];
-  if (existing && (existing.status === "done" || existing.status === "streaming")) return;
+  const skip = existing?.status === "done" || (!opts?.force && existing?.status === "streaming");
+  if (skip) return;
 
   await patchSections(admin, siteId, { [sectionKey]: { status: "streaming", title: def.title } });
 

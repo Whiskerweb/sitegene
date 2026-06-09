@@ -45,7 +45,6 @@ import {
   type GenFacts,
 } from "@/lib/design-system-gen";
 import { sectionPlanForIntake, triggerSectionGeneration, type SectionState } from "@/lib/onboarding-sections";
-import { SOCLE } from "@/lib/onboarding-ai";
 import { saveDraftSnapshot } from "@/lib/site-content-store";
 import { sendSiteReady } from "@/lib/email/send";
 import {
@@ -689,22 +688,11 @@ export async function generateOnboardingHeader(
   return { ok: true, templateId };
 }
 
-/**
- * Génère le header (si absent) puis déclenche immédiatement la génération des
- * sections dont la matière est déjà connue (questions déjà répondues par le
- * client). Utile après le commit du header pour amorcer le build progressif.
- */
 export async function ensureHeaderForIntake(origin: string, siteId: string): Promise<void> {
-  const res = await generateOnboardingHeader(origin, siteId);
-  if (!res.ok) return;
-  // Rattrape les sections dont la matière est déjà connue (questions déjà répondues).
-  const admin = createAdminClient();
-  const { data: ob } = await admin.from("site_onboarding").select("intake").eq("site_id", siteId).maybeSingle();
-  const intake = (ob?.intake ?? {}) as Intake;
-  for (const def of sectionPlanForIntake(intake)) {
-    const slot = SOCLE.find((s) => s.key === def.slot);
-    if (slot?.filled(intake)) await triggerSectionGeneration(origin, siteId, def.key); // séquentiel (rate-limit)
-  }
+  // Génère UNIQUEMENT le header (budget after() borné). Les sections dont les
+  // réponses étaient déjà connues seront produites par le filet job (validate/cron)
+  // — on ne fan-out pas plusieurs générations dans un seul after() (risque d'éviction).
+  await generateOnboardingHeader(origin, siteId);
 }
 
 /** Lit le header HTML stocké pour l'aperçu (ou null). */
@@ -777,7 +765,7 @@ export async function runSiteGenerationJob(
 
   let sel = admin
     .from("jobs")
-    .select("id, site_id")
+    .select("id, site_id, result")
     .eq("type", "generate_site")
     .eq("status", "pending")
     .order("created_at", { ascending: true })
@@ -808,7 +796,6 @@ export async function runSiteGenerationJob(
       __headerHtml?: string;
       __triedTemplates?: string[];
       __sections?: Record<string, SectionState>;
-      __sectionPlan?: string[];
     };
     const headerDoc = typeof intake.__headerHtml === "string" ? intake.__headerHtml : "";
     const templateId =
@@ -824,9 +811,10 @@ export async function runSiteGenerationJob(
     const hasSomeSections = Object.keys(intake.__sections ?? {}).length > 0;
     if (headerDoc && hasSomeSections) {
       // Filet du build progressif : génère les sections manquantes puis assemble (séquentiel).
+      // force:true → reprend aussi les sections bloquées en `streaming` (after() évincé).
       for (const d of plan) {
         if (intake.__sections?.[d.key]?.status !== "done") {
-          await triggerSectionGeneration(origin, siteId, d.key);
+          await triggerSectionGeneration(origin, siteId, d.key, { force: true });
         }
       }
       const { data: ob2 } = await admin.from("site_onboarding").select("intake").eq("site_id", siteId).maybeSingle();
@@ -856,7 +844,6 @@ export async function runSiteGenerationJob(
     delete cleanedIntake.__headerHtml;
     delete cleanedIntake.__triedTemplates;
     delete cleanedIntake.__sections;
-    delete cleanedIntake.__sectionPlan;
     await admin
       .from("site_onboarding")
       .update({
@@ -897,10 +884,15 @@ export async function runSiteGenerationJob(
   } catch (e) {
     const reason = e instanceof Error ? e.message : String(e);
     console.error(`[runSiteGenerationJob] échec ${siteId}: ${reason}`);
-    await admin
-      .from("jobs")
-      .update({ status: "error", finished_at: new Date().toISOString(), error: reason.slice(0, 500) })
-      .eq("id", job.id);
+    const prevAttempts = ((job as { result?: { attempts?: number } }).result?.attempts ?? 0);
+    const attempts = prevAttempts + 1;
+    const MAX_ATTEMPTS = 3;
+    if (attempts < MAX_ATTEMPTS) {
+      // Reprise : on remet en file (le cron reprend dans ~2 min), borné à MAX_ATTEMPTS.
+      await admin.from("jobs").update({ status: "pending", started_at: null, error: reason.slice(0, 500), result: { attempts } }).eq("id", job.id);
+    } else {
+      await admin.from("jobs").update({ status: "error", finished_at: new Date().toISOString(), error: reason.slice(0, 500), result: { attempts } }).eq("id", job.id);
+    }
     return { processed: true, siteId, ok: false, reason };
   }
 }
