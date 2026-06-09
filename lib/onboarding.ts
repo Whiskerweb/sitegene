@@ -46,6 +46,7 @@ import {
 } from "@/lib/design-system-gen";
 import { sectionPlanForIntake, triggerSectionGeneration, type SectionState } from "@/lib/onboarding-sections";
 import { saveDraftSnapshot } from "@/lib/site-content-store";
+import { goLive, slugBaseForSite } from "@/lib/fulfill";
 import { sendSiteReady } from "@/lib/email/send";
 import {
   briefFromIntake,
@@ -859,6 +860,20 @@ export async function runSiteGenerationJob(
       .update({ status: "done", finished_at: new Date().toISOString(), result: { templateId } })
       .eq("id", job.id);
     console.info(`[runSiteGenerationJob] généré ${siteId} (${templateId})`);
+
+    // Mise en ligne DIFFÉRÉE : si le client a payé PENDANT la génération, le
+    // fulfillment a volontairement repoussé la publication (pas de site partiel).
+    // Maintenant que le site est complet, on le met en ligne.
+    try {
+      const { data: s2 } = await admin.from("sites").select("status, billing_status").eq("id", siteId).maybeSingle();
+      if (s2 && s2.status !== "live" && s2.billing_status === "active") {
+        const base = await slugBaseForSite(admin, siteId, null);
+        await goLive(admin, siteId, base);
+        console.info(`[runSiteGenerationJob] mise en ligne différée ${siteId}`);
+      }
+    } catch (e) {
+      console.error("[runSiteGenerationJob] goLive différé échoué:", e instanceof Error ? e.message : e);
+    }
 
     // Email « votre site est prêt » — best-effort, ne bloque jamais le job.
     try {

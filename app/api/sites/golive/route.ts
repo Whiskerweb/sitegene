@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { generationPending } from "@/lib/generation-status";
 import { isValidSlug, normalizeSlug } from "@/lib/templates";
 
 /** Nomme le site et le met en ligne (publie le contenu, statut live). */
@@ -27,6 +28,14 @@ export async function POST(request: Request) {
     .maybeSingle();
   if (!code?.site_id) {
     return NextResponse.json({ error: "Site introuvable." }, { status: 400 });
+  }
+
+  // Génération en cours : ne JAMAIS publier un site partiel.
+  if (await generationPending(admin, code.site_id)) {
+    return NextResponse.json(
+      { error: "Votre site est encore en construction. Réessayez dans un instant." },
+      { status: 409 },
+    );
   }
 
   // Unicité du slug.

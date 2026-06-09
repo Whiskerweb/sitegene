@@ -3,6 +3,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { grantCredits } from "@/lib/credits-server";
 import { SIGNUP_CREDITS } from "@/lib/stripe";
 import { sendReceipt } from "@/lib/email/send";
+import { generationPending } from "@/lib/generation-status";
 import { isValidSlug, normalizeSlug } from "@/lib/templates";
 
 export type FulfillResult = {
@@ -165,9 +166,14 @@ export async function fulfillPayment(
   let slug: string | null = null;
   if (siteId) {
     if (selfServe) {
-      // Site déjà finalisé pendant l'onboarding → mise en ligne immédiate.
-      const base = await slugBaseForSite(admin, siteId, code?.prospect_id ?? null);
-      slug = await goLive(admin, siteId, base);
+      if (await generationPending(admin, siteId)) {
+        // Génération pas finie : on NE publie PAS un site partiel. Le worker
+        // (runSiteGenerationJob) met le site en ligne à la fin du job. slug reste null.
+      } else {
+        // Site déjà finalisé pendant l'onboarding → mise en ligne immédiate.
+        const base = await slugBaseForSite(admin, siteId, code?.prospect_id ?? null);
+        slug = await goLive(admin, siteId, base);
+      }
     } else {
       // Outreach : on attribue le site, le slug est choisi sur /welcome/name.
       await admin.from("sites").update({ owner_user_id: userId }).eq("id", siteId);

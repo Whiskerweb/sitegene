@@ -107,6 +107,9 @@ export default async function MonSite({
 
   const allNotes = notes ?? [];
   const inProgress = allNotes.filter((n) => n.status === "open" || n.status === "in_progress").length;
+  // Génération de site en cours : on ne propose pas de publier un site partiel
+  // (le GenerationWatcher affiche déjà la bannière « en construction »).
+  const building = genJob?.status === "pending" || genJob?.status === "running";
   const isLive = site.status === "live" && !!site.slug;
   const billing = (site.billing_status as string) ?? "none";
   // 1 site / N peaux : verrou = site ni en ligne ni débloqué (jamais souscrit).
@@ -225,17 +228,18 @@ export default async function MonSite({
               Visualiser mon site →
             </Button>
           )}
-          {locked ? (
-            <PaywallModal
-              siteId={site.id}
-              firstName={firstName}
-              defaultOpen={Boolean(sp.paywall) || Boolean(sp.fromChat)}
-              trigger={<Button>Publier mon site</Button>}
-            />
-          ) : (
-            lastContent && <Button href="/editor">Modifier mon site</Button>
-          )}
-          {locked && lastContent && (
+          {!building &&
+            (locked ? (
+              <PaywallModal
+                siteId={site.id}
+                firstName={firstName}
+                defaultOpen={Boolean(sp.paywall) || Boolean(sp.fromChat)}
+                trigger={<Button>Publier mon site</Button>}
+              />
+            ) : (
+              lastContent && <Button href="/editor">Modifier mon site</Button>
+            ))}
+          {!building && locked && lastContent && (
             <PaywallModal
               siteId={site.id}
               firstName={firstName}
