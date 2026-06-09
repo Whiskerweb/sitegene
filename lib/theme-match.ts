@@ -106,16 +106,28 @@ export type ThemeChoice = { templateId: TemplateId; rationale: string };
 export async function pickDesignSystem(
   origin: string,
   intake: Intake,
-  opts?: { fallbackTemplateId?: string },
+  opts?: { fallbackTemplateId?: string; exclude?: string[] },
 ): Promise<ThemeChoice> {
   const index = await buildAdnIndex(origin);
+  const exclude = new Set(opts?.exclude ?? []);
+  // Candidats hors exclusions (« essayer un autre style » → autres DA).
+  const candidates = index.filter((e) => !exclude.has(e.templateId));
+  const pool = candidates.length > 0 ? candidates : index;
+
   const fallback =
-    (opts?.fallbackTemplateId && isTemplateId(opts.fallbackTemplateId) && opts.fallbackTemplateId) ||
-    // défaut : 1er template de la catégorie détectée, sinon electrician-pro.
-    (intake.categoryId && CATEGORIES.find((c) => c.id === intake.categoryId)?.defaultTemplateId) ||
+    (opts?.fallbackTemplateId &&
+      isTemplateId(opts.fallbackTemplateId) &&
+      !exclude.has(opts.fallbackTemplateId) &&
+      opts.fallbackTemplateId) ||
+    pool.find(
+      (e) =>
+        e.templateId ===
+        (intake.categoryId && CATEGORIES.find((c) => c.id === intake.categoryId)?.defaultTemplateId),
+    )?.templateId ||
+    pool[0]?.templateId ||
     "electrician-pro";
 
-  const catalogue = index
+  const catalogue = pool
     .map((e) => `- ${e.templateId} [${e.category}] « ${e.name} » : ${e.adn}`)
     .join("\n");
 
@@ -142,7 +154,7 @@ Choisis le templateId le plus adapté.`;
     try {
       const obj = JSON.parse(raw) as { templateId?: unknown; rationale?: unknown };
       const tid = typeof obj.templateId === "string" ? obj.templateId : "";
-      if (isTemplateId(tid)) {
+      if (isTemplateId(tid) && !exclude.has(tid)) {
         return {
           templateId: tid,
           rationale: typeof obj.rationale === "string" ? obj.rationale : "",

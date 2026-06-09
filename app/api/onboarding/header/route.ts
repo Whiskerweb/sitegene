@@ -17,8 +17,9 @@ export async function POST(request: Request) {
   if (!(await userOwnsSite(user.id, siteId))) {
     return NextResponse.json({ error: "Accès refusé." }, { status: 403 });
   }
+  const another = body?.another === true;
   const origin = new URL(request.url).origin;
-  const res = await generateOnboardingHeader(origin, siteId);
+  const res = await generateOnboardingHeader(origin, siteId, { another });
   if (!res.ok) {
     return NextResponse.json({ error: `Aperçu indisponible (${res.reason}).` }, { status: 502 });
   }

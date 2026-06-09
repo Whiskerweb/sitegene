@@ -146,8 +146,9 @@ export default function AiOnboardingClient() {
     [siteId],
   );
 
-  // Génère le HEADER (aperçu du style) — rapide, synchrone.
-  const showStyle = useCallback(async () => {
+  // Génère le HEADER (aperçu du style) — rapide, synchrone. `another` → autre DA.
+  const showStyle = useCallback(
+    async (another = false) => {
     if (!siteId) return;
     setHeaderLoading(true);
     setPhase("header");
@@ -155,7 +156,7 @@ export default function AiOnboardingClient() {
       const res = await fetch("/api/onboarding/header", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ siteId }),
+        body: JSON.stringify({ siteId, another }),
       });
       const data = await res.json();
       if (!res.ok || !data?.ok) throw new Error(data?.error ?? "Aperçu impossible.");
@@ -166,7 +167,9 @@ export default function AiOnboardingClient() {
     } finally {
       setHeaderLoading(false);
     }
-  }, [siteId]);
+    },
+    [siteId],
+  );
 
   // Valide le style → met en file la génération du site complet, part au dashboard.
   const validateStyle = useCallback(async () => {
@@ -334,7 +337,7 @@ export default function AiOnboardingClient() {
             )}
 
             <button
-              onClick={showStyle}
+              onClick={() => showStyle(false)}
               className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3 font-medium text-white hover:bg-slate-800"
             >
               Voir mon style <ArrowRight className="h-4 w-4" />
@@ -395,7 +398,7 @@ export default function AiOnboardingClient() {
           </div>
           <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
             <button
-              onClick={showStyle}
+              onClick={() => showStyle(true)}
               disabled={headerLoading || validating}
               className="flex items-center gap-2 rounded-full border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50"
             >

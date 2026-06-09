@@ -686,6 +686,7 @@ export function photoUrlsForIntake(intake: Intake): string[] {
 export async function generateOnboardingHeader(
   origin: string,
   siteId: string,
+  opts?: { another?: boolean },
 ): Promise<{ ok: boolean; templateId?: TemplateId; reason?: string }> {
   const admin = createAdminClient();
   const { data: ob } = await admin
@@ -694,11 +695,25 @@ export async function generateOnboardingHeader(
     .eq("site_id", siteId)
     .maybeSingle();
   if (!ob) return { ok: false, reason: "onboarding-absent" };
-  const intake = (ob.intake ?? {}) as Intake & { categoryId?: string; __headerHtml?: string };
-  const templateId =
-    ob.chosen_template_id && isTemplateId(ob.chosen_template_id)
-      ? ob.chosen_template_id
-      : (await pickDesignSystem(origin, intake)).templateId;
+  const intake = (ob.intake ?? {}) as Intake & {
+    categoryId?: string;
+    __headerHtml?: string;
+    __triedTemplates?: string[];
+  };
+  const tried = Array.isArray(intake.__triedTemplates) ? intake.__triedTemplates : [];
+  const current =
+    ob.chosen_template_id && isTemplateId(ob.chosen_template_id) ? ob.chosen_template_id : null;
+
+  // « Essayer un autre style » (ou 1re fois sans thème) → on pioche une AUTRE DA.
+  let templateId: TemplateId;
+  if (opts?.another || !current) {
+    const exclude = Array.from(new Set([...tried, ...(current ? [current] : [])]));
+    templateId = (await pickDesignSystem(origin, intake, { exclude })).templateId;
+  } else {
+    templateId = current;
+  }
+  const nextTried = Array.from(new Set([...tried, templateId]));
+
   const facts = buildGenFacts(intake);
   const photoUrls = photoUrlsForIntake(intake);
   const imagePlan = await imagePlanFor(origin, templateId, intake);
@@ -709,7 +724,7 @@ export async function generateOnboardingHeader(
   await admin
     .from("site_onboarding")
     .update({
-      intake: { ...intake, __headerHtml: header.headerDoc },
+      intake: { ...intake, __headerHtml: header.headerDoc, __triedTemplates: nextTried },
       chosen_template_id: templateId,
       updated_at: new Date().toISOString(),
     })
@@ -813,7 +828,11 @@ export async function runSiteGenerationJob(
       .select("intake, chosen_template_id")
       .eq("site_id", siteId)
       .maybeSingle();
-    const intake = (ob?.intake ?? {}) as Intake & { categoryId?: string; __headerHtml?: string };
+    const intake = (ob?.intake ?? {}) as Intake & {
+      categoryId?: string;
+      __headerHtml?: string;
+      __triedTemplates?: string[];
+    };
     const headerDoc = typeof intake.__headerHtml === "string" ? intake.__headerHtml : "";
     const templateId =
       ob?.chosen_template_id && isTemplateId(ob.chosen_template_id)
@@ -842,6 +861,7 @@ export async function runSiteGenerationJob(
     // Nettoie le header temporaire + passe au paywall.
     const cleanedIntake = { ...intake };
     delete cleanedIntake.__headerHtml;
+    delete cleanedIntake.__triedTemplates;
     await admin
       .from("site_onboarding")
       .update({
