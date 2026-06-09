@@ -840,11 +840,12 @@ export async function runSiteGenerationJob(
     await admin.from("sites").update({ template_id: templateId }).eq("id", siteId);
     await saveDraftSnapshot(admin, siteId, templateId, result.content, "ai", result.html);
 
-    // Nettoie les champs transitoires + passe au paywall.
+    // Nettoie le suivi « essayer un autre style ». On CONSERVE __headerHtml et
+    // __sections : ils rendent buildStateForSite durable (allDone reste vrai après
+    // le filet → le reveal du tunnel se déclenche bien). Le snapshot generated_html
+    // reste la source de vérité du rendu ; ces clés ne servent qu'à l'aperçu live.
     const cleanedIntake = { ...intake };
-    delete cleanedIntake.__headerHtml;
     delete cleanedIntake.__triedTemplates;
-    delete cleanedIntake.__sections;
     await admin
       .from("site_onboarding")
       .update({
