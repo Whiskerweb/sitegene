@@ -22,7 +22,7 @@ import PaywallModal from "@/components/dashboard/PaywallModal";
 
 type Msg = { role: "user" | "assistant"; content: string };
 type Progress = { filled: string[]; missing: string[] };
-type Phase = "loading" | "chat" | "reveal" | "error";
+type Phase = "loading" | "chat" | "finishing" | "reveal" | "error";
 type MobileTab = "chat" | "preview";
 
 export default function AiOnboardingClient() {
@@ -42,7 +42,10 @@ export default function AiOnboardingClient() {
   const [validated, setValidated] = useState(false);
   const [buildAllDone, setBuildAllDone] = useState(false);
   useEffect(() => {
+    // Discussion conclue + site complet → révélation. Conclue mais site pas encore
+    // prêt → écran d'attente narré `finishing` (jamais coincé dans le chat).
     if (validated && buildAllDone) setPhase("reveal");
+    else if (validated) setPhase("finishing");
   }, [validated, buildAllDone]);
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -284,6 +287,29 @@ export default function AiOnboardingClient() {
             <div className={"lg:block " + (mobileTab === "preview" ? "block" : "hidden")}>
               <LiveBuildPanel siteId={siteId} onAllDone={() => setBuildAllDone(true)} />
             </div>
+          </div>
+        </div>
+      )}
+
+      {phase === "finishing" && (
+        <div className="mx-auto max-w-3xl px-4 py-8">
+          <div className="mb-5 text-center">
+            <div className="inline-flex items-center gap-2 text-sky-600">
+              <Loader2 className="h-5 w-5 animate-spin" />
+              <span className="text-sm font-semibold">On termine votre site…</span>
+            </div>
+            <p className="mt-1 text-sm text-slate-500">
+              Vos réponses sont enregistrées — on assemble les dernières sections. Ça y est presque.
+            </p>
+          </div>
+          <LiveBuildPanel siteId={siteId} onAllDone={() => setBuildAllDone(true)} />
+          <div className="mt-5 text-center">
+            <button
+              onClick={() => router.push("/dashboard?building=1")}
+              className="text-sm font-medium text-slate-500 underline-offset-4 hover:text-slate-700 hover:underline"
+            >
+              Continuer vers mon tableau de bord →
+            </button>
           </div>
         </div>
       )}
