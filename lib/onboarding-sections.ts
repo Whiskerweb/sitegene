@@ -18,6 +18,8 @@ import { isTemplateId, type TemplateId } from "@/lib/templates";
 import { imagePlanFor } from "@/lib/image-plan";
 import { generateSection, assembleProgressive } from "@/lib/design-system-gen";
 import { buildGenFacts, photoUrlsForIntake } from "@/lib/onboarding-facts";
+import { ensureTemplateRow } from "@/lib/generate";
+import { saveDraftSnapshot } from "@/lib/site-content-store";
 
 type Admin = ReturnType<typeof createAdminClient>;
 
@@ -207,4 +209,43 @@ export async function loadLivePreviewHtml(origin: string, siteId: string): Promi
     .map((d) => ({ key: d.key, html: intake.__sections![d.key].html! }));
   const { html } = await assembleProgressive({ origin, templateId, headerDoc, sections, photoUrls: photoUrlsForIntake(intake) });
   return html;
+}
+
+/**
+ * Assemble header + sections `done` → snapshot courant + step=100.
+ * Renvoie allDone (toutes sections prêtes ?).
+ * Utilisé par la route de validation : si allDone, le site est complet et aucun
+ * job de génération n'est nécessaire ; sinon le job est enqueué en filet.
+ */
+export async function commitProgressive(
+  origin: string,
+  siteId: string,
+): Promise<{ ok: boolean; allDone: boolean; templateId?: string; reason?: string }> {
+  const admin = createAdminClient();
+  const loaded = await loadIntake(admin, siteId);
+  if (!loaded?.templateId || !loaded.intake.__headerHtml)
+    return { ok: false, allDone: false, reason: "header-absent" };
+  const { intake, templateId } = loaded;
+  const headerDoc = intake.__headerHtml!;
+  const plan = sectionPlanForIntake(intake);
+  const sections = plan
+    .filter((d) => intake.__sections?.[d.key]?.status === "done")
+    .map((d) => ({ key: d.key, html: intake.__sections![d.key].html! }));
+  const allDone = plan.every((d) => intake.__sections?.[d.key]?.status === "done");
+
+  const { html, content } = await assembleProgressive({
+    origin,
+    templateId,
+    headerDoc,
+    sections,
+    photoUrls: photoUrlsForIntake(intake),
+  });
+  await ensureTemplateRow(admin, templateId);
+  await admin.from("sites").update({ template_id: templateId }).eq("id", siteId);
+  await saveDraftSnapshot(admin, siteId, templateId, content, "ai", html);
+  await admin
+    .from("site_onboarding")
+    .update({ chosen_template_id: templateId, step: 100, updated_at: new Date().toISOString() })
+    .eq("site_id", siteId);
+  return { ok: true, allDone, templateId };
 }
