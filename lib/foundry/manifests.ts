@@ -5,6 +5,7 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
   "hero-split-asym": {
     id: "hero-split-asym",
     role: "hero",
+    rarity: "rare",
     description: "Hero 3 colonnes : accroche + preuve sociale (avatars) à gauche, grande photo au centre, mini-bloc + 2e photo à droite.",
     whenToUse: ["forte preuve sociale", "métier visuel/humain (coach, photographe, bien-être)", "hero riche premium"],
     vibes: ["warm-serif"],
@@ -14,6 +15,7 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
   "services-rows": {
     id: "services-rows",
     role: "services",
+    rarity: "common",
     description: "Liste de services en grandes lignes numérotées (numéro + titre + description), séparées par des filets.",
     whenToUse: ["présenter 3 à 6 offres", "métier orienté prestations (coach, artisan)"],
     vibes: ["warm-serif"],
@@ -22,7 +24,8 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
   },
   "testimonials-carousel": {
     id: "testimonials-carousel",
-    role: "testimonials",
+    role: "reviews",
+    rarity: "rare",
     description: "Carrousel de cartes-avis en défilement continu (marquee) : citation, avatar, nom, rôle.",
     whenToUse: ["au moins 3 témoignages clients", "renforcer la confiance"],
     vibes: ["warm-serif"],
@@ -32,6 +35,7 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
   "footer-columns": {
     id: "footer-columns",
     role: "footer",
+    rarity: "common",
     description: "Footer en colonnes : marque + tagline, liens, contact ; barre basse copyright.",
     whenToUse: ["clôture de page (toujours)"],
     vibes: ["warm-serif"],

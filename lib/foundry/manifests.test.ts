@@ -14,6 +14,8 @@ describe("manifests", () => {
       expect(m.whenToUse.length).toBeGreaterThan(0);
       expect(m.vibes).toContain("warm-serif");
       expect(m.contentKeys.length).toBeGreaterThan(0);
+      expect(["common", "rare", "epic"]).toContain(m.rarity);
+      expect(m.role.length).toBeGreaterThan(0);
       expect(m.id).toBe(getManifest(m.id)!.id);
     }
   });
