@@ -18,7 +18,7 @@ import { getCategory, DEFAULT_CATEGORY } from "@/lib/categories";
 import { detectCategory } from "@/lib/category-detect";
 import { mineIntake, mergeMined } from "@/lib/intake-mine";
 import { isSpaTemplate, isTemplateId, type TemplateId } from "@/lib/templates";
-import { dropSectionsForIntake, eventLabel, type Intake } from "@/lib/onboarding-config";
+import { dropSectionsForIntake, type Intake } from "@/lib/onboarding-config";
 import {
   flagsForIntake,
   dropSectionsForFlags,
@@ -40,11 +40,21 @@ import {
   generateHeader,
   generateBody,
   assembleSite,
+  assembleProgressive,
   extractContentFromShell,
   type GenFacts,
 } from "@/lib/design-system-gen";
+import { sectionPlanForIntake, triggerSectionGeneration, type SectionState } from "@/lib/onboarding-sections";
+import { SOCLE } from "@/lib/onboarding-ai";
 import { saveDraftSnapshot } from "@/lib/site-content-store";
 import { sendSiteReady } from "@/lib/email/send";
+import {
+  briefFromIntake,
+  buildGenFacts,
+  photoUrlsForIntake,
+} from "@/lib/onboarding-facts";
+// Re-exporte les helpers pour que les importeurs existants restent intacts.
+export { briefFromIntake, buildGenFacts, photoUrlsForIntake } from "@/lib/onboarding-facts";
 
 export type OnboardingState = {
   siteId: string;
@@ -450,38 +460,6 @@ export async function regenerateForSite(
   return { content, templateId };
 }
 
-/** Brief enrichi des réponses structurées, pour la réécriture IA du site final. */
-export function briefFromIntake(intake: Intake & { categoryId?: string }): string {
-  const parts = [
-    intake.brief,
-    intake.brand && `Nom de la marque : ${intake.brand}`,
-    intake.eventTypes?.length &&
-      `Spécialités : ${intake.eventTypes.map(eventLabel).join(", ")}`,
-    intake.about && `À propos : ${intake.about}`,
-    intake.techRider && `Fiche technique : ${intake.techRider}`,
-    // [3.3] Champs étendus par catégorie — tout ce que le client a donné nourrit l'IA.
-    intake.experienceYears && `Expérience : ${intake.experienceYears}`,
-    intake.priceRange && `Tarifs : ${intake.priceRange}`,
-    intake.city && `Ville : ${intake.city}`,
-    intake.genre && `Genre musical : ${intake.genre}`,
-    intake.socialLinks && `Réseaux : ${intake.socialLinks}`,
-    intake.musicLinks && `Extraits musicaux : ${intake.musicLinks}`,
-    intake.upcomingDates && `Prochaines dates : ${intake.upcomingDates}`,
-    intake.trade && `Métier et spécialités : ${intake.trade}`,
-    intake.area && `Zone d'intervention : ${intake.area}`,
-    intake.certifications && `Certifications : ${intake.certifications}`,
-    intake.reviewsLink && `Avis clients : ${intake.reviewsLink}`,
-    intake.jobTitle && `Titre professionnel : ${intake.jobTitle}`,
-    intake.skills && `Compétences : ${intake.skills}`,
-    intake.projects && `Projets : ${intake.projects}`,
-    intake.availability && `Disponibilité : ${intake.availability}`,
-    intake.instagram && `Instagram : ${intake.instagram}`,
-    intake.contactPhone && `Téléphone : ${intake.contactPhone}`,
-    intake.contactEmail && `Email de contact : ${intake.contactEmail}`,
-  ];
-  return parts.filter(Boolean).join("\n");
-}
-
 /**
  * Fige la DA choisie : persiste le template, écrit le contenu final
  * DÉTERMINISTE dans la dernière version (non publiée) et passe l'étape au
@@ -653,32 +631,6 @@ export async function finalizeAiOnboarding(
   return { ok, templateId, generated: false, rationale };
 }
 
-/** Faits compacts (aucun contenu de démo) à partir de l'intake — pour la génération. */
-export function buildGenFacts(intake: Intake): GenFacts {
-  return {
-    brand: intake.brand,
-    activity: intake.about || intake.trade || intake.jobTitle || intake.genre,
-    services: intake.services?.length ? intake.services : intake.eventTypes,
-    priceRange: intake.priceRange,
-    area: intake.area || intake.city,
-    tone: intake.tone,
-    contact: [intake.contactEmail, intake.contactPhone].filter(Boolean).join(" · ") || undefined,
-    brief: intake.brief?.trim() || briefFromIntake(intake),
-    extras: [
-      intake.certifications && `Certifications : ${intake.certifications}`,
-      intake.experienceYears && `Expérience : ${intake.experienceYears}`,
-      intake.availability && `Disponibilité : ${intake.availability}`,
-      intake.socialLinks && `Réseaux : ${intake.socialLinks}`,
-    ].filter(Boolean) as string[],
-  };
-}
-
-/** Photos du client, ou placeholder neutre si aucune (jamais d'<img src="">). */
-export function photoUrlsForIntake(intake: Intake): string[] {
-  return Array.isArray(intake.photoUrls) && intake.photoUrls.length
-    ? intake.photoUrls
-    : [PHOTO_PLACEHOLDER_URL];
-}
 
 /**
  * Génère le HEADER (nav + hero) pour validation du style, et le stocke dans
@@ -722,15 +674,37 @@ export async function generateOnboardingHeader(
   const header = await generateHeader({ origin, templateId, facts, imagePlan, photoUrls });
   if (!header.ok) return { ok: false, templateId, reason: header.reason };
 
+  // Quand on change de DA (opts?.another), les sections déjà générées sont liées
+  // à l'ancienne feuille CSS → on les réinitialise pour forcer une re-génération.
+  const resetSections = opts?.another ? { __sections: {} } : {};
+
   await admin
     .from("site_onboarding")
     .update({
-      intake: { ...intake, __headerHtml: header.headerDoc, __triedTemplates: nextTried },
+      intake: { ...intake, ...resetSections, __headerHtml: header.headerDoc, __triedTemplates: nextTried },
       chosen_template_id: templateId,
       updated_at: new Date().toISOString(),
     })
     .eq("site_id", siteId);
   return { ok: true, templateId };
+}
+
+/**
+ * Génère le header (si absent) puis déclenche immédiatement la génération des
+ * sections dont la matière est déjà connue (questions déjà répondues par le
+ * client). Utile après le commit du header pour amorcer le build progressif.
+ */
+export async function ensureHeaderForIntake(origin: string, siteId: string): Promise<void> {
+  const res = await generateOnboardingHeader(origin, siteId);
+  if (!res.ok) return;
+  // Rattrape les sections dont la matière est déjà connue (questions déjà répondues).
+  const admin = createAdminClient();
+  const { data: ob } = await admin.from("site_onboarding").select("intake").eq("site_id", siteId).maybeSingle();
+  const intake = (ob?.intake ?? {}) as Intake;
+  for (const def of sectionPlanForIntake(intake)) {
+    const slot = SOCLE.find((s) => s.key === def.slot);
+    if (slot?.filled(intake)) await triggerSectionGeneration(origin, siteId, def.key); // séquentiel (rate-limit)
+  }
 }
 
 /** Lit le header HTML stocké pour l'aperçu (ou null). */
@@ -833,6 +807,8 @@ export async function runSiteGenerationJob(
       categoryId?: string;
       __headerHtml?: string;
       __triedTemplates?: string[];
+      __sections?: Record<string, SectionState>;
+      __sectionPlan?: string[];
     };
     const headerDoc = typeof intake.__headerHtml === "string" ? intake.__headerHtml : "";
     const templateId =
@@ -844,7 +820,23 @@ export async function runSiteGenerationJob(
     const imagePlan = await imagePlanFor(origin, templateId, intake);
 
     let result: { html: string; content: Record<string, unknown> };
-    if (headerDoc) {
+    const plan = sectionPlanForIntake(intake);
+    const hasSomeSections = Object.keys(intake.__sections ?? {}).length > 0;
+    if (headerDoc && hasSomeSections) {
+      // Filet du build progressif : génère les sections manquantes puis assemble (séquentiel).
+      for (const d of plan) {
+        if (intake.__sections?.[d.key]?.status !== "done") {
+          await triggerSectionGeneration(origin, siteId, d.key);
+        }
+      }
+      const { data: ob2 } = await admin.from("site_onboarding").select("intake").eq("site_id", siteId).maybeSingle();
+      const ix = (ob2?.intake ?? {}) as typeof intake;
+      const sections = plan
+        .filter((d) => ix.__sections?.[d.key]?.status === "done")
+        .map((d) => ({ key: d.key, html: ix.__sections![d.key].html! }));
+      if (sections.length === 0) throw new Error("sections:toutes-en-échec");
+      result = await assembleProgressive({ origin, templateId, headerDoc, sections, photoUrls });
+    } else if (headerDoc) {
       const body = await generateBody({ origin, templateId, facts, headerDoc, imagePlan, photoUrls });
       if (!body.ok) throw new Error(`body:${body.reason}`);
       result = await assembleSite({ origin, templateId, headerDoc, bodyHtml: body.bodyHtml, photoUrls });
@@ -859,10 +851,12 @@ export async function runSiteGenerationJob(
     await admin.from("sites").update({ template_id: templateId }).eq("id", siteId);
     await saveDraftSnapshot(admin, siteId, templateId, result.content, "ai", result.html);
 
-    // Nettoie le header temporaire + passe au paywall.
+    // Nettoie les champs transitoires + passe au paywall.
     const cleanedIntake = { ...intake };
     delete cleanedIntake.__headerHtml;
     delete cleanedIntake.__triedTemplates;
+    delete cleanedIntake.__sections;
+    delete cleanedIntake.__sectionPlan;
     await admin
       .from("site_onboarding")
       .update({

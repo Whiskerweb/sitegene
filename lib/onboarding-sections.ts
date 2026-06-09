@@ -17,7 +17,7 @@ import type { Intake } from "@/lib/onboarding-config";
 import { isTemplateId, type TemplateId } from "@/lib/templates";
 import { imagePlanFor } from "@/lib/image-plan";
 import { generateSection } from "@/lib/design-system-gen";
-import { buildGenFacts, photoUrlsForIntake } from "@/lib/onboarding";
+import { buildGenFacts, photoUrlsForIntake } from "@/lib/onboarding-facts";
 
 type Admin = ReturnType<typeof createAdminClient>;
 
