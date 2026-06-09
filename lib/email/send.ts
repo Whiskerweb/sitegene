@@ -1,6 +1,12 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { sendRaw } from "./client";
-import { receiptEmail, outreachEmail, customOutreachEmail, trialChargeFailedEmail } from "./templates";
+import {
+  receiptEmail,
+  siteReadyEmail,
+  outreachEmail,
+  customOutreachEmail,
+  trialChargeFailedEmail,
+} from "./templates";
 
 /**
  * URL publique pour les liens des emails. Priorité à EMAIL_PUBLIC_BASE_URL.
@@ -70,6 +76,31 @@ export async function sendReceipt(
   await logEvent(admin, {
     to_email: opts.to,
     kind: "receipt",
+    provider_id: res.id,
+    event: "sent",
+  });
+  return res.id;
+}
+
+/** Notifie que le site généré en tâche de fond est prêt. Renvoie l'id Resend (ou null). */
+export async function sendSiteReady(
+  admin: SupabaseClient,
+  opts: { to: string; firstName?: string | null },
+): Promise<string | null> {
+  const mail = siteReadyEmail({
+    firstName: opts.firstName,
+    dashboardUrl: `${appUrl()}/dashboard`,
+  });
+  const res = await sendRaw({
+    from: fromTransactional(),
+    to: opts.to,
+    subject: mail.subject,
+    html: mail.html,
+    text: mail.text,
+  });
+  await logEvent(admin, {
+    to_email: opts.to,
+    kind: "site_ready",
     provider_id: res.id,
     event: "sent",
   });

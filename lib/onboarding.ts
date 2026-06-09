@@ -44,6 +44,7 @@ import {
   type GenFacts,
 } from "@/lib/design-system-gen";
 import { saveDraftSnapshot } from "@/lib/site-content-store";
+import { sendSiteReady } from "@/lib/email/send";
 
 export type OnboardingState = {
   siteId: string;
@@ -877,6 +878,27 @@ export async function runSiteGenerationJob(
       .update({ status: "done", finished_at: new Date().toISOString(), result: { templateId } })
       .eq("id", job.id);
     console.info(`[runSiteGenerationJob] généré ${siteId} (${templateId})`);
+
+    // Email « votre site est prêt » — best-effort, ne bloque jamais le job.
+    try {
+      const { data: s } = await admin
+        .from("sites")
+        .select("owner_user_id")
+        .eq("id", siteId)
+        .maybeSingle();
+      const ownerId = (s?.owner_user_id as string) ?? null;
+      if (ownerId) {
+        const { data: u } = await admin.auth.admin.getUserById(ownerId);
+        const to = u?.user?.email ?? null;
+        const firstName =
+          (u?.user?.user_metadata?.first_name as string | undefined) ??
+          (intake.brand?.trim() || null);
+        if (to) await sendSiteReady(admin, { to, firstName });
+      }
+    } catch (e) {
+      console.error("[runSiteGenerationJob] email prêt échoué:", e instanceof Error ? e.message : e);
+    }
+
     return { processed: true, siteId, ok: true };
   } catch (e) {
     const reason = e instanceof Error ? e.message : String(e);

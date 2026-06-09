@@ -67,6 +67,40 @@ export function receiptEmail(opts: {
   });
 }
 
+/** Notification : le site sur-mesure généré en tâche de fond est prêt. */
+export function siteReadyEmail(opts: {
+  firstName?: string | null;
+  dashboardUrl: string;
+}): EmailParts {
+  const hi = opts.firstName ? `Bonjour ${esc(opts.firstName)},` : "Bonjour,";
+  const bodyHtml = [
+    p(`<strong>${hi}</strong>`),
+    p("Bonne nouvelle : votre site sur-mesure est prêt ! ✨"),
+    p("Découvrez-le, ajustez tout ce que vous voulez, puis mettez-le en ligne depuis votre espace."),
+    button("Voir mon site", opts.dashboardUrl),
+    p(`<span style="font-size:13px;color:#6b6878;">Une question ? Répondez simplement à cet email.</span>`),
+  ].join("\n");
+
+  const text = [
+    `${opts.firstName ? `Bonjour ${opts.firstName},` : "Bonjour,"}`,
+    "",
+    "Bonne nouvelle : votre site sur-mesure est prêt !",
+    "Découvrez-le et personnalisez-le depuis votre espace :",
+    opts.dashboardUrl,
+    "",
+    "Une question ? Répondez simplement à cet email.",
+    "Akyra · akyra.io",
+  ].join("\n");
+
+  return wrap({
+    subject: "Votre site Akyra est prêt ✨",
+    preheader: "Votre site sur-mesure vient d'être généré.",
+    bodyHtml,
+    text,
+    footerKind: "transactional",
+  });
+}
+
 /** Relance après échec du débit de fin d'essai (carte refusée off-session). */
 export function trialChargeFailedEmail(opts: {
   firstName?: string | null;
