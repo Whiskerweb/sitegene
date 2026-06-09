@@ -1073,27 +1073,90 @@ body {
    markup existant (text-night, bg-surface, border-sky-300, bg-white…)
    suive le thème. Les composants refondus utilisent --m-* directement.
    ============================================================ */
-.akyra.dash {
+/* ------------------------------------------------------------------
+   Skin « Traaaction » du dashboard (clair-only, accent violet).
+   On surcharge les tokens --m-* avec la palette exacte de Traaaction
+   (fond #FAFAFA, surfaces blanches, ink #141414, edge #E5E7EB,
+   brand violet #8B5CF6) puis on remappe les tokens « DA Cloud » legacy
+   dessus → tout le markup existant (text-night, bg-surface, border-sky-300…)
+   suit la nouvelle DA sans réécriture. Titres en Nunito Sans.
+   ------------------------------------------------------------------ */
+.akyra.dash,
+.akyra.dash.dark {
+  /* Palette Traaaction (toujours claire, même si .dark est posée) */
+  --m-page: 250 250 250;        /* #FAFAFA — fond application */
+  --m-surface: 255 255 255;     /* #FFFFFF — cartes */
+  --m-elevated: 250 250 250;    /* #FAFAFA — surfaces secondaires */
+  --m-line: 229 231 235;        /* #E5E7EB — bordures */
+  --m-ink: 20 20 20;            /* #141414 — titres / texte fort */
+  --m-muted: 107 107 107;       /* #6B6B6B — corps */
+  --m-faint: 156 163 175;       /* #9CA3AF — légendes / icônes */
+  --m-overlay: 17 24 39;        /* gray-900 — base des hovers/voiles */
+  --m-accent: 139 92 246;       /* #8B5CF6 — violet brand */
+  --m-on-accent: 255 255 255;
+
+  /* Titres du dashboard en Nunito Sans (display Traaaction) */
+  --font-display: var(--font-nunito), system-ui, sans-serif;
+
+  /* Remap des tokens « DA Cloud » legacy → palette Traaaction */
   --color-surface: rgb(var(--m-surface));
   --color-surface-2: rgb(var(--m-elevated));
   --color-white: rgb(var(--m-surface));
   --color-night: rgb(var(--m-ink));
   --color-slate: rgb(var(--m-muted));
   --color-mist: rgb(var(--m-faint));
-  --color-sky-50: rgb(var(--m-elevated));
-  --color-sky-100: rgb(var(--m-overlay) / 0.06);
-  --color-sky-200: rgb(var(--m-overlay) / 0.1);
+  --color-sky-50: #fafafa;
+  --color-sky-100: #f3f4f6;
+  --color-sky-200: #eceef1;
   --color-sky-300: rgb(var(--m-line));
-  --color-brand: #8b6bff;
-  --color-brand-700: #6d4aff;
-  --color-blue: rgb(var(--m-overlay) / 0.06);
-  --color-lav: rgb(var(--m-overlay) / 0.06);
-  --color-pink: rgb(var(--m-overlay) / 0.06);
-  --color-mint: rgb(var(--m-overlay) / 0.06);
+  --color-brand: #8b5cf6;
+  --color-brand-700: #7c3aed;
+  /* Réaligne le violet « électrique » custom sur le violet Traaaction
+     (= violet Tailwind par défaut) → cohérence avec violet-50/100/200/900. */
+  --color-violet-400: #a78bfa;
+  --color-violet-500: #8b5cf6;
+  --color-violet-600: #7c3aed;
+  --color-blue: #f5f3ff;          /* violet-50 — fond accent doux */
+  --color-lav: #f5f3ff;
+  --color-pink: #f5f3ff;
+  --color-mint: #ecfdf5;
+
+  /* Bascule des tokens « sombres » legacy (utilisés par l'admin) vers le clair
+     Traaaction : le markup admin existant (text-paper, bg-ink-800, border-line…)
+     suit la DA sans réécriture, le tout scopé au dashboard/admin.
+     NB : le hero sombre utilise bg-gray-900 (et non bg-ink-900) → il reste foncé. */
+  --color-paper: #141414;   /* text-paper → texte fort */
+  --color-muted: #6b6b6b;   /* text-muted → corps */
+  --color-faint: #9ca3af;   /* text-faint → légendes */
+  --color-ink-900: #fafafa; /* bg-ink-900 → fond */
+  --color-ink-800: #ffffff; /* bg-ink-800 → cartes */
+  --color-ink-700: #f3f4f6; /* bg-ink-700 → surfaces */
+  --line: #e5e7eb;          /* .border-line → bordure */
 }
-/* Verre premium adapté au thème courant */
+/* Carte « verre » réduite à une carte blanche nette (DA Traaaction). */
 .akyra.dash .glass {
-  background: rgb(var(--m-overlay) / 0.04);
+  background: #ffffff;
   border-color: rgb(var(--m-line));
+  box-shadow: none;
 }
+.akyra.dash .glass::before { display: none; }
+
+/* Scrollbar fine « Dub.co » (scopée au dashboard). */
+.akyra.dash ::-webkit-scrollbar { width: 6px; height: 6px; }
+.akyra.dash ::-webkit-scrollbar-track { background: transparent; }
+.akyra.dash ::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 3px; }
+.akyra.dash ::-webkit-scrollbar-thumb:hover { background: #d1d5db; }
+
+/* Survol de carte (translation + ombre douce), façon Traaaction. */
+.akyra.dash .card-hover { transition: transform .2s ease, box-shadow .2s ease; }
+.akyra.dash .card-hover:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(16, 24, 40, 0.06);
+}
+
+/* ===== Foundry (SP1) ===== */
+@keyframes foundry-marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+.foundry-marquee { animation: foundry-marquee 40s linear infinite }
+.foundry-marquee:hover { animation-play-state: paused }
+@media (prefers-reduced-motion: reduce) { .foundry-marquee { animation: none } }
 
