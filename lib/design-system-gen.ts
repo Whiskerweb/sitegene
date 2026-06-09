@@ -435,10 +435,98 @@ export async function assembleSite(input: {
   bodyHtml: string;
   photoUrls?: string[];
 }): Promise<{ html: string; content: Record<string, unknown> }> {
-  const { origin, templateId, headerDoc, bodyHtml, photoUrls } = input;
-  let html = /<\/body>/i.test(headerDoc)
-    ? headerDoc.replace(/<\/body>/i, `${bodyHtml}\n</body>`)
-    : headerDoc + bodyHtml;
+  // Délègue à assembleProgressive avec un fragment unique (corps entier).
+  return assembleProgressive({
+    origin: input.origin,
+    templateId: input.templateId,
+    headerDoc: input.headerDoc,
+    sections: [{ key: "body", html: input.bodyHtml }],
+    photoUrls: input.photoUrls,
+  });
+}
+
+// ──────────────────── Génération par section (progressif) ────────────────────
+
+/** Insère des fragments de section (dans l'ordre) avant </body> du headerDoc. Pur. */
+export function assembleProgressiveHtml(
+  headerDoc: string,
+  sections: { key: string; html: string }[],
+): string {
+  if (sections.length === 0) return headerDoc;
+  const body = sections.map((s) => s.html).join("\n");
+  if (/<\/body>/i.test(headerDoc)) return headerDoc.replace(/<\/body>/i, `${body}\n</body>`);
+  return headerDoc + body;
+}
+
+const SYSTEM_SECTION = `Tu es un développeur front senior. On te donne le DESIGN SYSTEM d'un template, les FAITS du client, le HEADER DÉJÀ CONSTRUIT, et le CONTEXTE des sections déjà produites. Produis UNIQUEMENT UN bloc <section>…</section> (ou <footer> si la section demandée est "contact") pour la section demandée, en réutilisant EXACTEMENT les classes Tailwind, couleurs, polices et conventions du HEADER. NE répète NI <head>, NI <html>/<body>, NI le header, NI les autres sections.
+
+${RULES_COMMON}
+
+- Alterne le fond par rapport aux sections déjà produites (CONTEXTE fourni) pour garder le rythme vertical du design system.
+- Si la section "contact" : inclus le bloc contact ET le <footer> final.
+- Réponds UNIQUEMENT avec le markup HTML de CETTE section (commence par <section ou <footer), sans <!DOCTYPE>, sans <head>, sans backticks ni commentaire.`;
+
+export type SectionResult = { ok: true; sectionHtml: string } | { ok: false; reason: string };
+
+/** Génère une seule section HTML en prolongeant le header validé, avec contexte des sections déjà produites. */
+export async function generateSection(input: {
+  origin: string;
+  templateId: string;
+  sectionKey: string;
+  sectionTitle: string;
+  sectionBrief: string;
+  facts: GenFacts;
+  headerDoc: string;
+  priorSectionsContext?: string;
+  imagePlan?: ImagePlanLite;
+  photoUrls?: string[];
+  timeoutMs?: number;
+}): Promise<SectionResult> {
+  const { origin, templateId, sectionKey, sectionTitle, sectionBrief, facts, headerDoc } = input;
+  const designSystem = await loadDesignSystem(origin, templateId);
+  if (!designSystem) return { ok: false, reason: "design-system-introuvable" };
+
+  const user = `${buildUserPrompt(designSystem, facts, input.imagePlan, input.photoUrls)}
+
+HEADER DÉJÀ CONSTRUIT (référence de classes/couleurs/polices ; ne le répète pas) :
+"""
+${headerDoc}
+"""
+
+SECTIONS DÉJÀ PRODUITES (pour alterner les fonds / garder le rythme) :
+"""
+${input.priorSectionsContext || "(aucune — c'est la 1re section du corps)"}
+"""
+
+SECTION À PRODUIRE MAINTENANT : « ${sectionTitle} » (clé: ${sectionKey})
+Matière de cette section :
+"""
+${sectionBrief}
+"""
+
+Produis UNIQUEMENT le markup de cette section (et le footer si clé "contact").`;
+
+  const gen = await callMistralGen(SYSTEM_SECTION, user, input.timeoutMs ?? 60_000);
+  if (!gen.ok) return { ok: false, reason: gen.reason };
+  let sectionHtml = stripFences(gen.text)
+    .replace(/^[\s\S]*?(?=<section|<footer)/i, "") // retire tout préambule avant le 1er <section/<footer
+    .replace(/<\/body>[\s\S]*$/i, "")
+    .trim();
+  if (!sectionHtml) return { ok: false, reason: "section-vide" };
+  if (input.photoUrls?.length) sectionHtml = assignPhotosInOrder(sectionHtml, input.photoUrls);
+  return { ok: true, sectionHtml };
+}
+
+/** Assemble header + N fragments de section → page complète + content éditable. */
+export async function assembleProgressive(input: {
+  origin: string;
+  templateId: string;
+  headerDoc: string;
+  sections: { key: string; html: string }[];
+  photoUrls?: string[];
+}): Promise<{ html: string; content: Record<string, unknown> }> {
+  const { origin, templateId, headerDoc, sections, photoUrls } = input;
+  let html = assembleProgressiveHtml(headerDoc, sections);
   // Réassigne les photos sur le document COMPLET (header + corps, même ordre).
   if (photoUrls?.length) html = assignPhotosInOrder(html, photoUrls);
   const motion = await loadMotionKit(origin);
