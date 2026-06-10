@@ -30,6 +30,11 @@ export async function GET(
     .eq("status", "live")
     .maybeSingle();
 
+  // Site ASSEMBLÉ (fonderie) : rendu React hydraté sur /a/<slug>.
+  if (site?.template_id === "foundry") {
+    return Response.redirect(`${origin}/a/${slug}`, 308);
+  }
+
   if (site && site.template_id) {
     // Le snapshot publié porte SA peau (peut différer de la peau en cours
     // d'édition si l'utilisateur a changé de template sans republier).
