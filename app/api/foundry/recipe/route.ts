@@ -4,8 +4,11 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { getManifest } from "@/lib/foundry/manifests";
 import { componentPrice } from "@/lib/marketplace";
 import { ownedItems } from "@/lib/marketplace-server";
-import { normalizeSectionContent } from "@/lib/foundry/agenceur";
+import { normalizeSectionContent, sanitizeUserContent } from "@/lib/foundry/agenceur";
+import { repairCharte } from "@/lib/foundry/charte";
+import { getVibe } from "@/lib/foundry/vibes";
 import { validateRecipe } from "@/lib/foundry/recipe";
+import type { VibeId } from "@/lib/foundry/types";
 import {
   FOUNDRY_TEMPLATE_ID,
   loadRecipeDraft,
@@ -14,14 +17,19 @@ import {
 } from "@/lib/foundry/server";
 
 const MIN_SECTIONS = 4;
+const HEX = /^#[0-9a-fA-F]{6}$/;
+const OPS = ["swap", "add", "remove", "reorder", "content", "palette"];
 
 /**
- * Plug-and-play sur la recette du site assemblé :
- *  - swap   : remplace la section `index` par un composant du MÊME rôle
- *  - add    : insère un composant dont le rôle est absent (avant le footer)
- *  - remove : retire la section `index` (hero et footer protégés)
- * Les composants rare/epic doivent être possédés — ceux déjà livrés dans le
- * site comptent comme possédés (ils sont inclus à la génération).
+ * Plug-and-play sur la recette du site assemblé (éditeur visuel « L'Atelier ») :
+ *  - swap    : remplace la section `index` par un composant du MÊME rôle
+ *  - add     : insère un composant dont le rôle est absent (avant le footer)
+ *  - remove  : retire la section `index` (hero et footer protégés)
+ *  - reorder : déplace la section `from` vers `to` (libre, façon Canva)
+ *  - content : remplace le contenu de `index` (textes + images édités à la main)
+ *  - palette : change la direction artistique (preset ou charte sur mesure), live
+ * swap/add gating d'achat (rare/epic non livrés/possédés) ; reorder/content/palette
+ * n'introduisent aucun composant → pas de gating.
  */
 export async function POST(request: Request) {
   const user = await getUser();
@@ -32,7 +40,7 @@ export async function POST(request: Request) {
   const op = typeof body?.op === "string" ? body.op : "";
   const index = Number.isInteger(body?.index) ? (body.index as number) : -1;
   const componentId = typeof body?.componentId === "string" ? body.componentId : "";
-  if (!siteId || !["swap", "add", "remove"].includes(op)) {
+  if (!siteId || !OPS.includes(op)) {
     return NextResponse.json({ error: "Requête invalide." }, { status: 400 });
   }
 
@@ -53,6 +61,26 @@ export async function POST(request: Request) {
   if (!draft) return NextResponse.json({ error: "Recette introuvable." }, { status: 404 });
   const recipe = draft.recipe;
   const sections = [...recipe.sections];
+
+  // --- Palette : change la DA sans toucher aux sections ----------------------
+  if (op === "palette") {
+    let next = recipe;
+    if (body?.charteSpec && typeof body.charteSpec === "object") {
+      // Charte sur mesure : TOUJOURS re-réparée serveur (contraste, fonts).
+      const vibe = repairCharte(body.charteSpec);
+      next = { ...recipe, vibe: "custom", customVibe: vibe };
+    } else if (typeof body?.vibeId === "string" && getVibe(body.vibeId)) {
+      next = { ...recipe, vibe: getVibe(body.vibeId)!.id as VibeId, customVibe: undefined };
+    } else {
+      return NextResponse.json({ error: "Charte invalide." }, { status: 400 });
+    }
+    if (typeof body?.accent === "string") {
+      next = { ...next, brand: HEX.test(body.accent.trim()) ? { primary: body.accent.trim() } : undefined };
+    }
+    await saveRecipeDraft(admin, siteId, next);
+    const effective = next.customVibe ?? getVibe(next.vibe)!;
+    return NextResponse.json({ ok: true, vibe: effective, brandPrimary: next.brand?.primary ?? null });
+  }
 
   // --- Gating d'achat (rare/epic non livrés avec le site) -------------------
   if (op === "swap" || op === "add") {
@@ -114,6 +142,26 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Votre site est déjà au minimum de sections." }, { status: 400 });
     }
     sections.splice(index, 1);
+  }
+
+  if (op === "reorder") {
+    const from = index;
+    const to = Number.isInteger(body?.to) ? (body.to as number) : -1;
+    if (from < 0 || from >= sections.length || to < 0 || to >= sections.length) {
+      return NextResponse.json({ error: "Position invalide." }, { status: 400 });
+    }
+    const [moved] = sections.splice(from, 1);
+    sections.splice(to, 0, moved);
+  }
+
+  if (op === "content") {
+    const target = sections[index];
+    if (!target) return NextResponse.json({ error: "Section introuvable." }, { status: 400 });
+    if (!body?.content || typeof body.content !== "object") {
+      return NextResponse.json({ error: "Contenu invalide." }, { status: 400 });
+    }
+    // Édition manuelle : on PRÉSERVE textes ET images du client (pas la banque).
+    sections[index] = { ...target, content: sanitizeUserContent(target.component, body.content) };
   }
 
   const next = { ...recipe, sections };

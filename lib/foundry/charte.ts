@@ -55,6 +55,18 @@ function findFont(name: unknown, role: "heading" | "body"): FontDef | undefined 
   return CHARTE_FONTS.find((f) => f.roles.includes(role) && f.family.toLowerCase() === n);
 }
 
+/** Pile CSS d'une fonte par sa famille (pour l'aperçu live de la palette). */
+export function fontCss(family: string): string {
+  return CHARTE_FONTS.find((f) => f.family === family)?.css ?? family;
+}
+
+/** Feuille Google Fonts pour une paire (heading, body) — aperçu live. */
+export function fontHref(headingFamily: string, bodyFamily: string): string {
+  const h = CHARTE_FONTS.find((f) => f.family === headingFamily) ?? CHARTE_FONTS.find((f) => f.roles.includes("heading"))!;
+  const b = CHARTE_FONTS.find((f) => f.family === bodyFamily) ?? CHARTE_FONTS.find((f) => f.roles.includes("body"))!;
+  return `${GF_BASE}?family=${h.gf}&family=${b.gf}&display=swap`;
+}
+
 // --- Couleur : parsing, luminance, contraste (WCAG), saturation ------------------
 
 const HEX6 = /^#[0-9a-fA-F]{6}$/;

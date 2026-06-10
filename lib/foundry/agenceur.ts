@@ -51,9 +51,27 @@ function mergedItemRef(sampleItems: Record<string, unknown>[]): Record<string, u
   return ref;
 }
 
-function normalizeValue(sampleVal: unknown, rawVal: unknown, key: string, itemIndex = 0): unknown {
-  // Les images viennent TOUJOURS de la banque locale (l'IA n'invente pas d'URL).
-  if (IMAGE_KEY.test(key)) return sampleVal;
+/** Options de normalisation. `userImages` : accepte une URL d'image fournie par
+ * l'utilisateur (édition manuelle) au lieu de forcer la banque (cas agenceur). */
+type NormOpts = { userImages?: boolean };
+
+/** Une chaîne d'image est acceptée si non vide (URL uploadée ou chemin /_templates). */
+function acceptedImage(rawVal: unknown, fallback: unknown): unknown {
+  return typeof rawVal === "string" && rawVal.trim() ? rawVal.trim().slice(0, 2000) : fallback;
+}
+
+function normalizeValue(sampleVal: unknown, rawVal: unknown, key: string, opts: NormOpts = {}): unknown {
+  if (IMAGE_KEY.test(key)) {
+    // Agenceur : images TOUJOURS de la banque (l'IA n'invente pas d'URL).
+    // Édition manuelle : on accepte l'URL (ou la liste d'URL) choisie par le client.
+    if (!opts.userImages) return sampleVal;
+    if (Array.isArray(sampleVal)) {
+      if (!Array.isArray(rawVal)) return sampleVal;
+      const imgs = rawVal.filter((x): x is string => typeof x === "string" && !!x.trim()).map((x) => x.trim().slice(0, 2000)).slice(0, 12);
+      return imgs.length > 0 ? imgs : sampleVal;
+    }
+    return acceptedImage(rawVal, sampleVal);
+  }
 
   if (typeof sampleVal === "string") {
     return typeof rawVal === "string" && rawVal.trim() ? rawVal.trim().slice(0, MAX_TEXT) : sampleVal;
@@ -68,7 +86,7 @@ function normalizeValue(sampleVal: unknown, rawVal: unknown, key: string, itemIn
     if (!Array.isArray(rawVal) || rawVal.length === 0) return sampleVal;
     const first = sampleVal[0];
     if (typeof first === "string") {
-      // Tableau d'images (avatars…) déjà intercepté plus haut ; ici du texte pur.
+      // Tableau de chaînes (images intercepté plus haut, ou texte pur).
       const items = rawVal
         .filter((x): x is string => typeof x === "string" && !!x.trim())
         .map((x) => x.trim().slice(0, MAX_TEXT))
@@ -80,17 +98,19 @@ function normalizeValue(sampleVal: unknown, rawVal: unknown, key: string, itemIn
       const ref = mergedItemRef(sampleItems);
       const items = rawVal
         .filter(isPlainObject)
-        .slice(0, 8)
+        .slice(0, 12)
         .map((rawItem, i) => {
           const base = sampleItems[i % sampleItems.length];
           const out: Record<string, unknown> = {};
           for (const k of Object.keys(ref)) {
             if (IMAGE_KEY.test(k)) {
-              // Image d'item : celle du sample correspondant (banque locale).
-              if (k in base) out[k] = base[k];
-              else if (ref[k] !== undefined) out[k] = ref[k];
+              out[k] = opts.userImages
+                ? acceptedImage(rawItem[k], k in base ? base[k] : ref[k])
+                : k in base
+                  ? base[k]
+                  : ref[k];
             } else if (k in rawItem) {
-              out[k] = normalizeValue(ref[k], rawItem[k], k, i);
+              out[k] = normalizeValue(ref[k], rawItem[k], k, opts);
             } else if (k in base) {
               out[k] = base[k];
             }
@@ -104,7 +124,7 @@ function normalizeValue(sampleVal: unknown, rawVal: unknown, key: string, itemIn
   if (isPlainObject(sampleVal)) {
     const raw = isPlainObject(rawVal) ? rawVal : {};
     const out: Record<string, unknown> = {};
-    for (const k of Object.keys(sampleVal)) out[k] = normalizeValue(sampleVal[k], raw[k], k);
+    for (const k of Object.keys(sampleVal)) out[k] = normalizeValue(sampleVal[k], raw[k], k, opts);
     return out;
   }
   return sampleVal;
@@ -126,6 +146,26 @@ export function normalizeSectionContent(
   const out: Record<string, unknown> = {};
   for (const key of keys) {
     out[key] = normalizeValue(sample[key], rawObj[key], key);
+  }
+  return out;
+}
+
+/**
+ * Contenu édité À LA MAIN par le propriétaire : même calage sur la forme du
+ * sample, mais on PRÉSERVE ses textes ET ses images (URL uploadées ou choisies).
+ * Sert à l'éditeur visuel — jamais à l'agenceur.
+ */
+export function sanitizeUserContent(
+  componentId: string,
+  raw: unknown,
+): Record<string, unknown> {
+  const sample = getSample(componentId);
+  const rawObj = isPlainObject(raw) ? raw : {};
+  const manifest = getManifest(componentId);
+  const keys = new Set<string>([...Object.keys(sample), ...(manifest?.contentKeys ?? [])]);
+  const out: Record<string, unknown> = {};
+  for (const key of keys) {
+    out[key] = normalizeValue(sample[key], rawObj[key], key, { userImages: true });
   }
   return out;
 }

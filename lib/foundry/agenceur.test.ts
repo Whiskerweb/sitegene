@@ -2,6 +2,7 @@
 import { describe, it, expect } from "vitest";
 import {
   normalizeSectionContent,
+  sanitizeUserContent,
   repairRecipe,
   fallbackRecipe,
   parseAgenceurJson,
@@ -51,6 +52,35 @@ describe("normalizeSectionContent", () => {
     const out = normalizeSectionContent("cta-banner", { title: "x".repeat(2000), cta: 42 });
     expect((out.title as string).length).toBeLessThanOrEqual(600);
     expect(out.cta).toBe(getSample("cta-banner").cta);
+  });
+});
+
+describe("sanitizeUserContent (édition manuelle)", () => {
+  it("PRÉSERVE l'image et le texte choisis par le client (contrairement à l'agenceur)", () => {
+    const out = sanitizeUserContent("hero-split-asym", {
+      title: "Mon titre à moi",
+      image: "https://cdn.akyra.io/site/abc.jpg",
+      avatars: ["https://cdn.akyra.io/a1.jpg", "https://cdn.akyra.io/a2.jpg"],
+    });
+    expect(out.title).toBe("Mon titre à moi");
+    expect(out.image).toBe("https://cdn.akyra.io/site/abc.jpg");
+    expect(out.avatars).toEqual(["https://cdn.akyra.io/a1.jpg", "https://cdn.akyra.io/a2.jpg"]);
+    // L'agenceur, lui, écraserait l'image par la banque :
+    expect(normalizeSectionContent("hero-split-asym", { image: "https://evil/x.jpg" }).image).not.toBe(
+      "https://evil/x.jpg",
+    );
+  });
+  it("préserve les images dans les items de liste (avatars d'avis)", () => {
+    const out = sanitizeUserContent("reviews-postit-carousel", {
+      items: [{ text: "Top !", name: "Léa", avatar: "https://cdn.akyra.io/lea.jpg" }],
+    }) as { items: Array<Record<string, unknown>> };
+    expect(out.items[0].avatar).toBe("https://cdn.akyra.io/lea.jpg");
+    expect(out.items[0].text).toBe("Top !");
+  });
+  it("retombe sur le sample quand une image est vide, garde la forme rendable", () => {
+    const out = sanitizeUserContent("hero-split-asym", { image: "" });
+    expect(typeof out.image).toBe("string");
+    expect((out.image as string).length).toBeGreaterThan(0);
   });
 });
 
