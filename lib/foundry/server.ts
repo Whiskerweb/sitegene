@@ -240,3 +240,19 @@ export function resolveNavHref(target: string | undefined, siteSlug: string): st
   if (/^https?:\/\//.test(target)) return target;
   return `/a/${siteSlug}/${target}`;
 }
+
+/**
+ * Injecte des `href` résolus dans les liens de la navbar (rendu public) — la
+ * navbar peut alors naviguer entre les pages du site.
+ */
+export function withResolvedNav(recipe: Recipe, siteSlug: string): Recipe {
+  const sections = recipe.sections.map((s) => {
+    if (getManifest(s.component)?.role !== "navbar") return s;
+    const links = (Array.isArray(s.content.links) ? s.content.links : [])
+      .map(normalizeNavLink)
+      .filter((l) => l.label)
+      .map((l) => ({ label: l.label, href: resolveNavHref(l.target, siteSlug) }));
+    return { ...s, content: { ...s.content, links } };
+  });
+  return { ...recipe, sections };
+}

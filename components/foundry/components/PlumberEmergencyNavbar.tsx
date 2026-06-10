@@ -2,13 +2,14 @@
 // soulignés accent2 au survol, CTA contour encre qui s'inverse au survol.
 import type { CSSProperties } from "react";
 import type { Skin } from "@/lib/foundry/types";
+import { navLabel, navHref } from "@/lib/foundry/nav";
 
 const LINKS_FALLBACK = ["Services", "Blog", "Contact"];
 
 export default function PlumberEmergencyNavbar({ content, skin }: { content: any; skin: Skin }) {
   const root: CSSProperties = {};
   if (skin.accent) root["--c-accent" as keyof CSSProperties] = skin.accent as never;
-  const links: string[] = Array.isArray(content?.links) && content.links.length ? content.links : LINKS_FALLBACK;
+  const links: unknown[] = Array.isArray(content?.links) && content.links.length ? content.links : LINKS_FALLBACK;
   return (
     <nav className="penav relative z-10" style={root}>
       <style>{`
@@ -31,7 +32,7 @@ export default function PlumberEmergencyNavbar({ content, skin }: { content: any
 
         <div className="hidden items-center gap-8 md:flex">
           {links.map((l, i) => (
-            <a key={i} href="#" className="penav-link text-sm font-medium transition-colors" style={{ color: "var(--c-muted)" }}>{l}</a>
+            <a key={i} href={navHref(l)} className="penav-link text-sm font-medium transition-colors" style={{ color: "var(--c-muted)" }}>{navLabel(l)}</a>
           ))}
         </div>
 

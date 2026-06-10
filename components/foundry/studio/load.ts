@@ -11,7 +11,7 @@ import { CHARTE_FONTS } from "@/lib/foundry/charte";
 import { COMPONENT_PRICE_CREDITS } from "@/lib/marketplace";
 import { ownedItems } from "@/lib/marketplace-server";
 import { getBalance } from "@/lib/credits-server";
-import { loadRecipeDraft, recipeCards, acquiredFromSnapshot } from "@/lib/foundry/server";
+import { loadRecipeDraft, acquiredFromSnapshot, pagesFromSnapshot } from "@/lib/foundry/server";
 import { loadPublishedSnapshot } from "@/lib/site-content-store";
 import { listSitePhotos } from "@/lib/site-photos";
 import { COMPONENTS } from "@/components/foundry/registry";
@@ -24,10 +24,15 @@ export async function loadStudioData(
   userId: string,
   site: { id: string; slug: string | null; status: string; billing_status: string | null },
   businessName: string,
+  pageId?: string | null,
 ): Promise<StudioData | null> {
   const draft = await loadRecipeDraft(admin, site.id);
   if (!draft) return null;
   const { recipe } = draft;
+
+  const allPages = pagesFromSnapshot(draft.row);
+  const currentPage = pageId ? allPages.find((p) => p.id === pageId) ?? null : null;
+  if (pageId && !currentPage) return null; // page demandée introuvable
 
   const [owned, balance, published, photos] = await Promise.all([
     ownedItems(admin, userId),
@@ -36,14 +41,18 @@ export async function loadStudioData(
     listSitePhotos(admin, site.id),
   ]);
 
-  const cards = recipeCards(recipe);
-  const sections: StudioSection[] = recipe.sections.map((s, i) => ({
-    component: s.component,
-    role: cards[i]?.role ?? getManifest(s.component)?.role ?? "section",
-    roleLabel: cards[i]?.roleLabel ?? roleLabel(getManifest(s.component)?.role ?? "section"),
-    rarity: cards[i]?.rarity ?? "common",
-    content: s.content as Record<string, unknown>,
-  }));
+  // Sections éditées : celles de la sous-page, sinon celles de l'accueil.
+  const srcSections = currentPage ? currentPage.sections : recipe.sections;
+  const sections: StudioSection[] = srcSections.map((s) => {
+    const m = getManifest(s.component);
+    return {
+      component: s.component,
+      role: m?.role ?? "section",
+      roleLabel: roleLabel(m?.role ?? "section"),
+      rarity: m?.rarity ?? "common",
+      content: s.content as Record<string, unknown>,
+    };
+  });
 
   // Catalogue : uniquement les pièces RENDABLES (présentes dans le registre).
   // Acquis = dans la recette OU déjà acquis (livré/payé) pour ce site → gratuit.
@@ -89,6 +98,9 @@ export async function loadStudioData(
       body: CHARTE_FONTS.filter((f) => f.roles.includes("body")).map((f) => f.family),
     },
     mediaBank: photos.map((p) => p.url),
+    pages: allPages.map((p) => ({ id: p.id, title: p.title, slug: p.slug })),
+    pageId: currentPage?.id ?? null,
+    pageTitle: currentPage?.title ?? null,
   };
 }
 

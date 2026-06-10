@@ -12,9 +12,14 @@ export const dynamic = "force-dynamic";
  * « L'Atelier » — éditeur visuel plein écran d'un site assemblé (fonderie).
  * Réservé au propriétaire d'un site foundry ; sinon retour au dashboard.
  */
-export default async function AtelierPage() {
+export default async function AtelierPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
   const user = await requireUser();
   const admin = createAdminClient();
+  const { page } = await searchParams;
 
   const site = await primarySiteForUser<{
     id: string;
@@ -32,7 +37,9 @@ export default async function AtelierPage() {
     .maybeSingle();
   const businessName = ((ob?.intake as { brand?: string } | null)?.brand ?? "").trim();
 
-  const data = await loadStudioData(admin, user.id, site, businessName);
+  let data = await loadStudioData(admin, user.id, site, businessName, page ?? null);
+  // Page demandée introuvable → on retombe sur l'accueil plutôt qu'une 404.
+  if (!data && page) data = await loadStudioData(admin, user.id, site, businessName, null);
   if (!data) redirect("/dashboard");
 
   return <StudioEditor data={data} />;

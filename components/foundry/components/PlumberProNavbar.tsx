@@ -4,6 +4,7 @@
 // liens soulignés au survol, tél en pastille ronde + CTA pilule.
 import type { CSSProperties } from "react";
 import type { Skin } from "@/lib/foundry/types";
+import { navLabel, navHref } from "@/lib/foundry/nav";
 
 const LINKS_FALLBACK = ["Accueil", "À propos", "Services", "Blog", "Contact"];
 
@@ -11,7 +12,7 @@ export default function PlumberProNavbar({ content, skin }: { content: any; skin
   const root: CSSProperties = {};
   if (skin.accent) root["--c-accent" as keyof CSSProperties] = skin.accent as never;
   if (skin.surface) root["--c-surface" as keyof CSSProperties] = skin.surface as never;
-  const links: string[] = Array.isArray(content?.links) && content.links.length ? content.links : LINKS_FALLBACK;
+  const links: unknown[] = Array.isArray(content?.links) && content.links.length ? content.links : LINKS_FALLBACK;
   return (
     <div style={root}>
       <style>{`
@@ -49,7 +50,7 @@ export default function PlumberProNavbar({ content, skin }: { content: any; skin
           </a>
           <div className="hidden items-center gap-8 lg:flex">
             {links.map((l, i) => (
-              <a key={i} href="#" className="ppnav-link text-sm font-semibold transition-colors" style={{ color: "color-mix(in srgb, var(--c-ink) 80%, transparent)" }}>{l}</a>
+              <a key={i} href={navHref(l)} className="ppnav-link text-sm font-semibold transition-colors" style={{ color: "color-mix(in srgb, var(--c-ink) 80%, transparent)" }}>{navLabel(l)}</a>
             ))}
           </div>
           <div className="flex items-center gap-5">

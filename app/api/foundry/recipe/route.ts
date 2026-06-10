@@ -13,7 +13,8 @@ import {
   FOUNDRY_TEMPLATE_ID,
   acquiredFromSnapshot,
   loadRecipeDraft,
-  recipeCards,
+  pagesFromSnapshot,
+  saveSitePages,
   saveRecipeDraft,
 } from "@/lib/foundry/server";
 
@@ -41,6 +42,9 @@ export async function POST(request: Request) {
   const op = typeof body?.op === "string" ? body.op : "";
   const index = Number.isInteger(body?.index) ? (body.index as number) : -1;
   const componentId = typeof body?.componentId === "string" ? body.componentId : "";
+  // pageId : on édite les sections d'une SOUS-PAGE (sinon l'accueil). La palette
+  // reste globale (charte partagée) — pageId ignoré pour 'palette'.
+  const pageId = typeof body?.pageId === "string" ? body.pageId : "";
   if (!siteId || !OPS.includes(op)) {
     return NextResponse.json({ error: "Requête invalide." }, { status: 400 });
   }
@@ -61,7 +65,42 @@ export async function POST(request: Request) {
   const draft = await loadRecipeDraft(admin, siteId);
   if (!draft) return NextResponse.json({ error: "Recette introuvable." }, { status: 404 });
   const recipe = draft.recipe;
-  const sections = [...recipe.sections];
+
+  // Cible de l'édition de sections : une sous-page (pageId) ou l'accueil.
+  // La palette est globale → jamais portée par une page.
+  const editingPage = pageId && op !== "palette" ? pagesFromSnapshot(draft.row).find((p) => p.id === pageId) ?? null : null;
+  if (pageId && op !== "palette" && !editingPage) {
+    return NextResponse.json({ error: "Page introuvable." }, { status: 404 });
+  }
+  const onPage = !!editingPage;
+  const minSections = onPage ? 1 : MIN_SECTIONS; // une sous-page peut être courte
+  const sections = [...(editingPage ? editingPage.sections : recipe.sections)];
+
+  /** Persiste les sections travaillées (sous-page ou accueil) + renvoie la réponse. */
+  async function persistSections(workSections: typeof sections) {
+    const pinned = pinExtremes(workSections); // navbar/footer hérités → no-op sur une page
+    if (editingPage) {
+      const pages = pagesFromSnapshot(draft!.row).map((p) =>
+        p.id === editingPage!.id ? { ...editingPage!, sections: pinned } : p,
+      );
+      // Valide la recette COMPOSÉE (accueil + page) pour rester sûr.
+      const v = validateRecipe({ ...recipe, sections: pinned });
+      if (!v.ok) return NextResponse.json({ error: "Opération impossible." }, { status: 500 });
+      await saveSitePages(admin, siteId, pages);
+    } else {
+      const next = { ...recipe, sections: pinned };
+      const v = validateRecipe(next);
+      if (!v.ok) {
+        console.error("[foundry/recipe] recette invalide après op", op, v.errors);
+        return NextResponse.json({ error: "Opération impossible." }, { status: 500 });
+      }
+      await saveRecipeDraft(admin, siteId, next);
+    }
+    return NextResponse.json({
+      ok: true,
+      sections: pinned.map((s) => ({ component: s.component, content: s.content })),
+    });
+  }
 
   // --- Set : restaure un état complet (annuler / rétablir) -------------------
   if (op === "set") {
@@ -69,7 +108,7 @@ export async function POST(request: Request) {
     if (!rawSections) return NextResponse.json({ error: "État invalide." }, { status: 400 });
     // N'autorise QUE des composants déjà acquis (un undo/redo ne traverse que des
     // états déjà atteints) — un set ne peut pas introduire une pièce non payée.
-    const acquired = new Set([...sections.map((s) => s.component), ...acquiredFromSnapshot(draft.row)]);
+    const acquired = new Set([...recipe.sections.map((s) => s.component), ...sections.map((s) => s.component), ...acquiredFromSnapshot(draft.row)]);
     const owned = await ownedItems(admin, user.id);
     const rebuilt = rawSections
       .filter((s: unknown) => s && typeof (s as { component?: unknown }).component === "string")
@@ -81,6 +120,8 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: "État non autorisé." }, { status: 402 });
       }
     }
+    // En mode page : on restaure les sections de la page. Sinon, l'accueil + sa charte.
+    if (editingPage) return persistSections(rebuilt);
     let next = { ...recipe, sections: rebuilt };
     if (body?.charteSpec && typeof body.charteSpec === "object") {
       next = { ...next, vibe: "custom", customVibe: repairCharte(body.charteSpec) };
@@ -94,7 +135,6 @@ export async function POST(request: Request) {
     await saveRecipeDraft(admin, siteId, next);
     return NextResponse.json({
       ok: true,
-      cards: recipeCards(next),
       sections: next.sections.map((s: { component: string; content: Record<string, unknown> }) => ({ component: s.component, content: s.content })),
     });
   }
@@ -153,7 +193,7 @@ export async function POST(request: Request) {
       );
     }
     if (newManifest.id === target.component) {
-      return NextResponse.json({ ok: true, unchanged: true, cards: recipeCards(recipe) });
+      return NextResponse.json({ ok: true, unchanged: true });
     }
     // Report SÉMANTIQUE : le titre/texte/images de la section en place
     // alimentent la nouvelle pièce, même si les clés diffèrent.
@@ -162,13 +202,19 @@ export async function POST(request: Request) {
 
   if (op === "add") {
     const manifest = getManifest(componentId)!;
+    if (onPage && (manifest.role === "navbar" || manifest.role === "footer")) {
+      return NextResponse.json(
+        { error: "L'en-tête et le pied de page sont communs au site — modifiez-les depuis l'Accueil." },
+        { status: 400 },
+      );
+    }
     if (sections.some((s) => getManifest(s.component)?.role === manifest.role)) {
       return NextResponse.json(
-        { error: "Votre site a déjà une section de ce type — utilisez « Remplacer »." },
+        { error: "Cette page a déjà une section de ce type — utilisez « Remplacer »." },
         { status: 409 },
       );
     }
-    const at = index >= 1 && index < sections.length ? index : Math.max(1, sections.length - 1);
+    const at = index >= 0 && index <= sections.length ? index : sections.length;
     sections.splice(at, 0, { component: componentId, content: normalizeSectionContent(componentId, {}) });
   }
 
@@ -179,8 +225,8 @@ export async function POST(request: Request) {
     if (role === "hero" || role === "footer") {
       return NextResponse.json({ error: "Le hero et le footer ne se retirent pas." }, { status: 400 });
     }
-    if (sections.length <= MIN_SECTIONS) {
-      return NextResponse.json({ error: "Votre site est déjà au minimum de sections." }, { status: 400 });
+    if (sections.length <= minSections) {
+      return NextResponse.json({ error: "Cette page est déjà au minimum de sections." }, { status: 400 });
     }
     sections.splice(index, 1);
   }
@@ -205,20 +251,7 @@ export async function POST(request: Request) {
     sections[index] = { ...target, content: sanitizeUserContent(target.component, body.content) };
   }
 
-  // Invariants de position (navbar en tête, footer en queue) après toute op.
-  const next = { ...recipe, sections: pinExtremes(sections) };
-  const v = validateRecipe(next);
-  if (!v.ok) {
-    console.error("[foundry/recipe] recette invalide après op", op, v.errors);
-    return NextResponse.json({ error: "Opération impossible." }, { status: 500 });
-  }
-
-  await saveRecipeDraft(admin, siteId, next);
-  // Renvoie aussi les sections (component + content effectif) pour que l'éditeur
-  // reste exactement aligné sur ce qui est persisté (ordre épinglé + contenu).
-  return NextResponse.json({
-    ok: true,
-    cards: recipeCards(next),
-    sections: next.sections.map((s) => ({ component: s.component, content: s.content })),
-  });
+  // Persiste (sous-page ou accueil) avec invariants de position + renvoie les
+  // sections effectives pour aligner l'éditeur.
+  return persistSections(sections);
 }

@@ -49,6 +49,10 @@ export default function StudioEditor({ data }: { data: StudioData }) {
   const [replaceAt, setReplaceAt] = useState<number | null>(null);
   const [addOpen, setAddOpen] = useState(false);
   const [reorderFrom, setReorderFrom] = useState<number | null>(null);
+  const [createOpen, setCreateOpen] = useState(false);
+  const [newTitle, setNewTitle] = useState("");
+  const [newPurpose, setNewPurpose] = useState("");
+  const [creating, setCreating] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [publishing, setPublishing] = useState(false);
@@ -64,7 +68,8 @@ export default function StudioEditor({ data }: { data: StudioData }) {
     window.setTimeout(() => setToast((t) => (t === msg ? null : t)), 2600);
   }, []);
 
-  /** Appel API recette commun ; renvoie le JSON ou null (toast d'erreur). */
+  /** Appel API recette commun ; renvoie le JSON ou null (toast d'erreur).
+   *  pageId est joint d'office : les ops de sections visent la page courante. */
   const call = useCallback(
     async (body: Record<string, unknown>): Promise<any | null> => {
       setSaving(true);
@@ -72,7 +77,7 @@ export default function StudioEditor({ data }: { data: StudioData }) {
         const res = await fetch("/api/foundry/recipe", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ siteId: data.siteId, ...body }),
+          body: JSON.stringify({ siteId: data.siteId, pageId: data.pageId ?? undefined, ...body }),
         });
         const json = await res.json().catch(() => null);
         if (res.status === 402) { flash(`À débloquer pour ${json?.price ?? "?"} ✦.`); return null; }
@@ -85,7 +90,7 @@ export default function StudioEditor({ data }: { data: StudioData }) {
         setSaving(false);
       }
     },
-    [data.siteId, flash],
+    [data.siteId, data.pageId, flash],
   );
 
   // --- Refs synchrones (pour l'historique) + état mutateurs -------------------
@@ -253,16 +258,49 @@ export default function StudioEditor({ data }: { data: StudioData }) {
     }
   }
 
+  // --- Pages ------------------------------------------------------------------
+  function goToPage(id: string | null) {
+    router.push(id ? `/atelier?page=${id}` : "/atelier");
+  }
+  async function createPage() {
+    if (newTitle.trim().length < 2 || newPurpose.trim().length < 10) return;
+    setCreating(true);
+    try {
+      const res = await fetch("/api/foundry/page", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ siteId: data.siteId, op: "create", title: newTitle.trim(), purpose: newPurpose.trim() }),
+      });
+      const json = await res.json().catch(() => null);
+      if (!res.ok || !json?.ok) { flash(json?.error ?? "Création impossible."); return; }
+      router.push(`/atelier?page=${json.page.id}`);
+    } finally {
+      setCreating(false);
+    }
+  }
+  async function deletePage(id: string) {
+    const res = await fetch("/api/foundry/page", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ siteId: data.siteId, op: "delete", pageId: id }),
+    });
+    if (res.ok) { if (data.pageId === id) router.push("/atelier"); else router.refresh(); }
+    else flash("Suppression impossible.");
+  }
+
   const replaceCandidates = (index: number): CatalogEntry[] => {
     const role = sections[index].role;
     return [...catalogById.values()].filter((c) => c.role === role);
   };
+  const onPage = !!data.pageId;
   const addGroups = useMemo(() => {
     const present = new Set(sections.map((s) => s.role));
     const recommended = new Set(["about", "services", "reviews", "stats", "faq", "pricing", "gallery", "process", "cta"]);
     const byRole = new Map<string, CatalogEntry[]>();
     for (const c of catalogById.values()) {
       if (present.has(c.role)) continue; // un seul bloc par type → « Remplacer » sinon
+      // En-tête et pied de page sont communs au site (gérés depuis l'Accueil).
+      if (onPage && (c.role === "navbar" || c.role === "footer")) continue;
       if (!byRole.has(c.role)) byRole.set(c.role, []);
       byRole.get(c.role)!.push(c);
     }
@@ -301,6 +339,37 @@ export default function StudioEditor({ data }: { data: StudioData }) {
           </button>
         </div>
       </header>
+
+      {/* ===== Onglets de pages ===== */}
+      <div className="flex shrink-0 items-center gap-1 overflow-x-auto border-b border-neutral-200 bg-white/70 px-4 py-1.5">
+        <PageTabBtn active={!data.pageId} onClick={() => goToPage(null)}>Accueil</PageTabBtn>
+        {data.pages.map((p) => (
+          <span key={p.id} className="group relative inline-flex items-center">
+            <PageTabBtn active={data.pageId === p.id} onClick={() => goToPage(p.id)}>{p.title}</PageTabBtn>
+            <button
+              onClick={() => deletePage(p.id)}
+              title="Supprimer la page"
+              className="ml-0.5 hidden h-5 w-5 place-items-center rounded-full text-neutral-300 hover:bg-red-50 hover:text-red-500 group-hover:grid"
+            >
+              <X size={11} />
+            </button>
+          </span>
+        ))}
+        <button
+          onClick={() => { setNewTitle(""); setNewPurpose(""); setCreateOpen(true); }}
+          className="ml-1 inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-[13px] font-semibold text-neutral-500 transition hover:bg-neutral-100 hover:text-neutral-900"
+        >
+          <Plus size={14} /> Créer une page
+        </button>
+      </div>
+
+      {/* Bandeau mode sous-page */}
+      {onPage && (
+        <div className="shrink-0 bg-violet-50 px-4 py-1.5 text-center text-[12.5px] text-violet-700">
+          Vous modifiez la page « {data.pageTitle} ». L'en-tête et le pied de page sont communs au site —
+          <button onClick={() => goToPage(null)} className="ml-1 font-semibold underline-offset-2 hover:underline">gérez-les depuis l'Accueil</button>.
+        </div>
+      )}
 
       <div className="flex min-h-0 flex-1">
         {/* ===== Canvas central ===== */}
@@ -395,6 +464,46 @@ export default function StudioEditor({ data }: { data: StudioData }) {
         />
       )}
 
+      {/* ===== Modale « Créer une page » ===== */}
+      {createOpen && (
+        <div className="fixed inset-0 z-[75] flex items-center justify-center bg-black/40 p-4" onClick={() => !creating && setCreateOpen(false)}>
+          <div className="w-full max-w-lg rounded-3xl bg-white p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <h2 className="text-[17px] font-bold text-neutral-900">Créer une nouvelle page</h2>
+            <p className="mt-1 text-[13px] text-neutral-500">Décrivez la page : l'IA la compose dans votre charte, avec le même en-tête et le même pied de page que votre site.</p>
+
+            <label className="mt-5 block text-[12px] font-semibold uppercase tracking-wide text-neutral-400">Nom de la page</label>
+            <input
+              value={newTitle}
+              onChange={(e) => setNewTitle(e.target.value)}
+              placeholder="Ex. Services, À propos, Tarifs, Contact…"
+              maxLength={60}
+              className="mt-1.5 w-full rounded-xl border border-neutral-200 px-3.5 py-2.5 text-[14px] outline-none focus:border-neutral-900"
+            />
+
+            <label className="mt-4 block text-[12px] font-semibold uppercase tracking-wide text-neutral-400">À quoi sert cette page ?</label>
+            <textarea
+              value={newPurpose}
+              onChange={(e) => setNewPurpose(e.target.value)}
+              rows={3}
+              maxLength={1000}
+              placeholder="Ex. Présenter en détail mes prestations de rénovation, avec les étapes et un appel à devis."
+              className="mt-1.5 w-full resize-none rounded-xl border border-neutral-200 px-3.5 py-2.5 text-[14px] leading-relaxed outline-none focus:border-neutral-900"
+            />
+
+            <div className="mt-5 flex items-center justify-end gap-2">
+              <button onClick={() => setCreateOpen(false)} disabled={creating} className="rounded-full px-4 py-2 text-[13px] font-semibold text-neutral-500 hover:text-neutral-800 disabled:opacity-50">Annuler</button>
+              <button
+                onClick={createPage}
+                disabled={creating || newTitle.trim().length < 2 || newPurpose.trim().length < 10}
+                className="inline-flex items-center gap-1.5 rounded-full bg-neutral-900 px-5 py-2 text-[13px] font-semibold text-white transition hover:bg-neutral-700 disabled:opacity-40"
+              >
+                <Sparkles size={14} /> {creating ? "L'IA compose…" : "Créer la page"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ===== Toast ===== */}
       {toast && (
         <div className="pointer-events-none fixed bottom-6 left-1/2 z-[80] -translate-x-1/2 rounded-full bg-neutral-900 px-5 py-2.5 text-[13.5px] font-semibold text-white shadow-xl">{toast}</div>
@@ -402,5 +511,16 @@ export default function StudioEditor({ data }: { data: StudioData }) {
       {/* Solde discret */}
       <div className="pointer-events-none fixed bottom-6 right-6 z-[80] rounded-full bg-white px-3.5 py-1.5 text-[12.5px] font-semibold text-neutral-500 shadow-md">{balance} ✦</div>
     </div>
+  );
+}
+
+function PageTabBtn({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`shrink-0 rounded-full px-3.5 py-1.5 text-[13px] font-semibold transition ${active ? "bg-neutral-900 text-white" : "text-neutral-600 hover:bg-neutral-100"}`}
+    >
+      {children}
+    </button>
   );
 }

@@ -27,6 +27,13 @@ export interface CatalogEntry {
   sample: Record<string, unknown>;
 }
 
+/** Onglet de page dans l'éditeur (accueil + sous-pages). */
+export interface PageTab {
+  id: string;
+  title: string;
+  slug: string;
+}
+
 export interface StudioData {
   siteId: string;
   slug: string | null;
@@ -42,4 +49,10 @@ export interface StudioData {
   presets: StudioVibe[];
   fonts: { heading: string[]; body: string[] };
   mediaBank: string[];
+  /** Sous-pages du site (onglets). */
+  pages: PageTab[];
+  /** Page en cours d'édition : null = accueil, sinon id de sous-page. */
+  pageId: string | null;
+  /** Titre de la page courante (sous-page). */
+  pageTitle: string | null;
 }

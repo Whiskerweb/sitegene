@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { createPublicClient } from "@/lib/supabase/public";
 import Assembler from "@/components/foundry/Assembler";
-import { FOUNDRY_TEMPLATE_ID, recipeFromSnapshot, type FoundryContent } from "@/lib/foundry/server";
+import { FOUNDRY_TEMPLATE_ID, recipeFromSnapshot, withResolvedNav, type FoundryContent } from "@/lib/foundry/server";
 import type { ContentRow } from "@/lib/site-content-store";
 
 export const dynamic = "force-dynamic";
@@ -59,5 +59,5 @@ export default async function FoundrySitePage({
   const { slug } = await params;
   const data = await loadPublished(slug);
   if (!data) notFound();
-  return <Assembler recipe={data.recipe} />;
+  return <Assembler recipe={withResolvedNav(data.recipe, slug)} />;
 }

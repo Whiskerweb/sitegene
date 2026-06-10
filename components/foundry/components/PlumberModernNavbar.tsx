@@ -4,13 +4,14 @@
 // liens soulignés au survol, CTA pilule encre avec point accent2.
 import type { CSSProperties } from "react";
 import type { Skin } from "@/lib/foundry/types";
+import { navLabel, navHref } from "@/lib/foundry/nav";
 
 const LINKS_FALLBACK = ["Accueil", "À propos", "Services", "Contact"];
 
 export default function PlumberModernNavbar({ content, skin }: { content: any; skin: Skin }) {
   const root: CSSProperties = { background: skin.accent ?? "var(--c-accent)" };
   if (skin.accent) root["--c-accent" as keyof CSSProperties] = skin.accent as never;
-  const links: string[] = Array.isArray(content?.links) && content.links.length ? content.links : LINKS_FALLBACK;
+  const links: unknown[] = Array.isArray(content?.links) && content.links.length ? content.links : LINKS_FALLBACK;
   return (
     <header className="relative z-10" style={root}>
       <style>{`
@@ -27,7 +28,7 @@ export default function PlumberModernNavbar({ content, skin }: { content: any; s
         </a>
         <nav className="hidden items-center gap-9 md:flex">
           {links.map((l, i) => (
-            <a key={i} href="#" className="pmnav-link text-sm font-medium text-white/85 hover:text-white">{l}</a>
+            <a key={i} href={navHref(l)} className="pmnav-link text-sm font-medium text-white/85 hover:text-white">{navLabel(l)}</a>
           ))}
         </nav>
         <a href="#contact" className="hidden items-center gap-2 rounded-[var(--r-pill)] px-5 py-2.5 text-sm font-medium text-white transition-all hover:brightness-110 sm:inline-flex" style={{ background: "var(--c-ink)" }}>
