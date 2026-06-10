@@ -4,7 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { getManifest } from "@/lib/foundry/manifests";
 import { componentPrice } from "@/lib/marketplace";
 import { ownedItems } from "@/lib/marketplace-server";
-import { normalizeSectionContent, sanitizeUserContent } from "@/lib/foundry/agenceur";
+import { normalizeSectionContent, sanitizeUserContent, adaptContent } from "@/lib/foundry/agenceur";
 import { repairCharte } from "@/lib/foundry/charte";
 import { getVibe } from "@/lib/foundry/vibes";
 import { validateRecipe, pinExtremes } from "@/lib/foundry/recipe";
@@ -155,9 +155,9 @@ export async function POST(request: Request) {
     if (newManifest.id === target.component) {
       return NextResponse.json({ ok: true, unchanged: true, cards: recipeCards(recipe) });
     }
-    // Le contenu du client suit (textes ET images, clés compatibles) ; le reste
-    // vient du sample. La nouvelle pièce arrive donc avec les infos du site.
-    sections[index] = { component: componentId, content: sanitizeUserContent(componentId, target.content) };
+    // Report SÉMANTIQUE : le titre/texte/images de la section en place
+    // alimentent la nouvelle pièce, même si les clés diffèrent.
+    sections[index] = { component: componentId, content: adaptContent(componentId, target.content) };
   }
 
   if (op === "add") {

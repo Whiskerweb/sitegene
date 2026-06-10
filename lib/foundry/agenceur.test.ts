@@ -3,15 +3,16 @@ import { describe, it, expect } from "vitest";
 import {
   normalizeSectionContent,
   sanitizeUserContent,
+  adaptContent,
   repairRecipe,
   fallbackRecipe,
   parseAgenceurJson,
   generateRecipe,
   type AgenceurInput,
 } from "./agenceur";
+import { getSample } from "./samples";
 import { validateRecipe } from "./recipe";
 import { getManifest } from "./manifests";
-import { getSample } from "./samples";
 
 const INPUT: AgenceurInput = {
   brief: "Je suis plombier chauffagiste à Rennes, dépannage et rénovation.",
@@ -81,6 +82,40 @@ describe("sanitizeUserContent (édition manuelle)", () => {
     const out = sanitizeUserContent("hero-split-asym", { image: "" });
     expect(typeof out.image).toBe("string");
     expect((out.image as string).length).toBeGreaterThan(0);
+  });
+});
+
+describe("adaptContent (report sémantique au remplacement)", () => {
+  it("reporte titre, texte et image entre composants à clés différentes", () => {
+    // Source : un hero « plumber-pro » (title, tagline, image, eyebrow).
+    const from = {
+      eyebrow: "Plombiers certifiés",
+      title: "Dépannage plomberie 24/7 à Rennes",
+      tagline: "Une intervention rapide et soignée, jour et nuit.",
+      cta: "Appeler",
+      image: "https://cdn.akyra.io/mon-hero.jpg",
+    };
+    // Cible : hero-split-asym (badge, title, subtitle, cta, image, image2, avatars).
+    const out = adaptContent("hero-split-asym", from);
+    expect(out.title).toBe("Dépannage plomberie 24/7 à Rennes"); // heading → heading
+    expect(out.subtitle).toBe("Une intervention rapide et soignée, jour et nuit."); // tagline → para
+    expect(out.image).toBe("https://cdn.akyra.io/mon-hero.jpg"); // image → image
+    // AUCUN texte d'exemple coaching ne doit fuiter dans les champs reportés.
+    const coachTitle = getSample("hero-split-asym").title;
+    expect(out.title).not.toBe(coachTitle);
+  });
+  it("titre multi-lignes : un titre simple est réparti, pas de sample étranger", () => {
+    // Cible plumber-modern-hero a titleA/titleB/titleC.
+    const out = adaptContent("plumber-modern-hero", { title: "Votre toiture refaite proprement" }) as Record<string, string>;
+    const joined = [out.titleA, out.titleB, out.titleC].join(" ").trim();
+    expect(joined.length).toBeGreaterThan(0);
+    // Aucune des lignes ne reprend le sample d'origine "Tous vos besoins".
+    expect(out.titleA).not.toBe(getSample("plumber-modern-hero").titleA);
+  });
+  it("préserve les listes de même clé (avis)", () => {
+    const items = [{ text: "Super", name: "Léa", role: "Cliente", avatar: "/x.jpg" }];
+    const out = adaptContent("reviews-postit-carousel", { items }) as { items: unknown[] };
+    expect(out.items).toHaveLength(1);
   });
 });
 

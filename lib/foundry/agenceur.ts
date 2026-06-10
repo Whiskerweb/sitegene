@@ -186,6 +186,91 @@ function applyBusinessName(sections: RecipeSection[], businessName: string): voi
 
 const HEX = /^#[0-9a-fA-F]{6}$/;
 
+// --- Report SÉMANTIQUE de contenu (remplacement de section) -------------------
+// Les composants n'ont pas les mêmes clés (title vs titleA/B/C, tagline vs
+// subtitle…). On reporte donc par RÔLE de champ, pas par nom de clé, pour que la
+// nouvelle pièce hérite du titre/texte/images du client — jamais du sample.
+const HEADING_KEY = /^(title|titlea|titleb|titlec|heading|headline)$/i;
+const EYEBROW_KEY = /^(eyebrow|badge|label|kicker)$/i;
+const PARA_KEY = /^(subtitle|subhead|tagline|desc|description|body|text|intro|bio|paragraph|lead)$/i;
+const CTA_KEY = /^(cta|button|buttonlabel|action)$/i;
+
+type FieldCat = "heading" | "eyebrow" | "para" | "cta" | "image" | "imageList" | "other";
+function catOf(key: string, val: unknown): FieldCat {
+  if (IMAGE_KEY.test(key)) return Array.isArray(val) ? "imageList" : "image";
+  if (HEADING_KEY.test(key)) return "heading";
+  if (EYEBROW_KEY.test(key)) return "eyebrow";
+  if (CTA_KEY.test(key)) return "cta";
+  if (PARA_KEY.test(key)) return "para";
+  return "other";
+}
+
+/** Répartit un texte en n lignes par mots (titre simple ↔ titre multi-lignes). */
+function splitInto(text: string, n: number): string[] {
+  const words = text.trim().split(/\s+/).filter(Boolean);
+  if (n <= 1) return [text];
+  const per = Math.ceil(words.length / n);
+  const parts: string[] = [];
+  for (let i = 0; i < n; i++) parts.push(words.slice(i * per, (i + 1) * per).join(" "));
+  return parts;
+}
+
+/**
+ * Adapte le contenu du client à la FORME d'un autre composant (remplacement) :
+ * son titre devient le titre, son texte le texte, ses images les images — même
+ * si les noms de clés diffèrent. Les champs sans équivalent gardent le sample.
+ */
+export function adaptContent(toId: string, fromContent: unknown): Record<string, unknown> {
+  const sample = getSample(toId);
+  const src = isPlainObject(fromContent) ? fromContent : {};
+
+  const pool: Record<"heading" | "eyebrow" | "para" | "cta", string[]> = { heading: [], eyebrow: [], para: [], cta: [] };
+  const srcImages: string[] = [];
+  for (const [k, v] of Object.entries(src)) {
+    const c = catOf(k, v);
+    if (c === "image") {
+      if (typeof v === "string" && v.trim()) srcImages.push(v.trim());
+    } else if (c === "imageList") {
+      if (Array.isArray(v)) for (const x of v) if (typeof x === "string" && x.trim()) srcImages.push(x.trim());
+    } else if (c === "heading" || c === "eyebrow" || c === "para" || c === "cta") {
+      if (typeof v === "string" && v.trim()) pool[c].push(v.trim());
+    }
+  }
+
+  const out: Record<string, unknown> = {};
+  const headingKeys = Object.entries(sample).filter(([k, v]) => catOf(k, v) === "heading").map(([k]) => k);
+  if (headingKeys.length && pool.heading.length) {
+    const lines = pool.heading.length >= headingKeys.length
+      ? pool.heading.slice(0, headingKeys.length)
+      : splitInto(pool.heading.join(" "), headingKeys.length);
+    headingKeys.forEach((k, i) => { out[k] = lines[i] || pool.heading[pool.heading.length - 1] || sample[k]; });
+  }
+
+  const idx = { eyebrow: 0, para: 0, cta: 0 };
+  let imgPtr = 0;
+  const done = new Set(headingKeys);
+  for (const [k, v] of Object.entries(sample)) {
+    if (done.has(k)) continue;
+    const c = catOf(k, v);
+    if (c === "eyebrow" || c === "para" || c === "cta") {
+      const p = pool[c]; const i = idx[c]++;
+      out[k] = p[i] ?? p[p.length - 1] ?? sample[k]; // ordre puis réutilise le dernier (jamais le sample étranger si une source existe)
+    } else if (c === "image") {
+      out[k] = imgPtr < srcImages.length ? srcImages[imgPtr++] : (srcImages[srcImages.length - 1] ?? sample[k]);
+    } else if (c === "imageList") {
+      const rest = srcImages.slice(imgPtr);
+      out[k] = rest.length ? rest : sample[k];
+      imgPtr = srcImages.length;
+    } else if (Array.isArray(v) && Array.isArray((src as Record<string, unknown>)[k])) {
+      out[k] = (src as Record<string, unknown>)[k]; // liste de même clé (avis, étapes…) : contenu client conservé
+    } else {
+      out[k] = sample[k];
+    }
+  }
+  // Garantit formes/longueurs rendables tout en préservant les images du client.
+  return sanitizeUserContent(toId, out);
+}
+
 /**
  * Construit une recette VALIDE à partir de sections brutes (sortie IA) :
  * composants inconnus écartés, un seul composant par rôle, hero en tête et
