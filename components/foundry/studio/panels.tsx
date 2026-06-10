@@ -1,0 +1,584 @@
+"use client";
+// components/foundry/studio/panels.tsx
+// Panneaux de L'Atelier (éditeur visuel) : aperçu rendu sur la charte du client,
+// sélecteur d'image, panneau de contenu (sans jargon), tiroir de remplacement
+// comparatif (filet rouge sur l'actuelle), palette live façon Stitch, ajout de bloc.
+import { useEffect, useRef, useState, type CSSProperties } from "react";
+import {
+  ArrowLeftRight,
+  Check,
+  ImageIcon,
+  Link2,
+  Lock,
+  Plus,
+  Trash2,
+  Upload,
+  X,
+} from "lucide-react";
+import { COMPONENTS } from "@/components/foundry/registry";
+import { vibeToCssVars } from "@/lib/foundry/vibes";
+import { vibeToSpec, fontHref } from "@/lib/foundry/charte";
+import { fieldsFor, type FieldType } from "@/lib/foundry/fields";
+import type { CatalogEntry, StudioSection, StudioVibe } from "./types";
+
+/* ============================== Aperçu thémé ============================== */
+
+export function Themed({
+  vibe,
+  brandPrimary,
+  children,
+  style,
+}: {
+  vibe: StudioVibe;
+  brandPrimary: string | null;
+  children: React.ReactNode;
+  style?: CSSProperties;
+}) {
+  const vars = vibeToCssVars(vibe, brandPrimary ? { primary: brandPrimary } : undefined) as unknown as CSSProperties;
+  return (
+    <div style={{ ...vars, fontFamily: "var(--font-body)", background: "var(--c-surface)", color: "var(--c-ink)", ...style }}>
+      <link rel="stylesheet" href={vibe.fontHref} precedence="foundry-fonts" />
+      {children}
+    </div>
+  );
+}
+
+/** Vignette d'un composant rendue sur la charte du client (non interactive). */
+export function Preview({
+  id,
+  content,
+  vibe,
+  brandPrimary,
+  width = 460,
+  height = 250,
+}: {
+  id: string;
+  content: Record<string, unknown>;
+  vibe: StudioVibe;
+  brandPrimary: string | null;
+  width?: number;
+  height?: number;
+}) {
+  const C = COMPONENTS[id];
+  const scale = width / 1280;
+  return (
+    <div style={{ width, height, overflow: "hidden", position: "relative", background: "var(--c-surface)" }}>
+      {C ? (
+        <Themed
+          vibe={vibe}
+          brandPrimary={brandPrimary}
+          style={{ position: "absolute", inset: 0, width: 1280, transform: `scale(${scale})`, transformOrigin: "top left", pointerEvents: "none" }}
+        >
+          <C content={content} skin={{}} />
+        </Themed>
+      ) : null}
+    </div>
+  );
+}
+
+function RarityChip({ rarity }: { rarity: CatalogEntry["rarity"] }) {
+  const map = {
+    common: { label: "Inclus", cls: "bg-neutral-100 text-neutral-500" },
+    rare: { label: "Rare", cls: "bg-violet-50 text-violet-600" },
+    epic: { label: "Épique", cls: "bg-amber-50 text-amber-700" },
+  } as const;
+  const r = map[rarity];
+  return <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${r.cls}`}>{r.label}</span>;
+}
+
+/* ============================ Sélecteur d'image ============================ */
+
+export function ImagePicker({
+  open,
+  siteId,
+  mediaBank,
+  onPick,
+  onClose,
+}: {
+  open: boolean;
+  siteId: string;
+  mediaBank: string[];
+  onPick: (url: string) => void;
+  onClose: () => void;
+}) {
+  const [tab, setTab] = useState<"bank" | "upload" | "url">("bank");
+  const [url, setUrl] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+  if (!open) return null;
+
+  async function upload(file: File) {
+    setBusy(true);
+    setErr(null);
+    try {
+      const fd = new FormData();
+      fd.append("siteId", siteId);
+      fd.append("file", file);
+      const res = await fetch("/api/site/photo", { method: "POST", body: fd });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data?.url) throw new Error(data?.error ?? "Import impossible.");
+      onPick(data.url as string);
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Import impossible.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/40 p-4" onClick={onClose}>
+      <div className="flex max-h-[80vh] w-full max-w-3xl flex-col overflow-hidden rounded-3xl bg-white shadow-2xl" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between border-b border-neutral-100 px-5 py-3.5">
+          <div className="flex gap-1">
+            {([["bank", "Mes images"], ["upload", "Importer"], ["url", "Lien"]] as const).map(([k, l]) => (
+              <button
+                key={k}
+                onClick={() => setTab(k)}
+                className={`rounded-full px-3.5 py-1.5 text-[13px] font-semibold transition ${tab === k ? "bg-neutral-900 text-white" : "text-neutral-500 hover:text-neutral-800"}`}
+              >
+                {l}
+              </button>
+            ))}
+          </div>
+          <button onClick={onClose} className="grid h-8 w-8 place-items-center rounded-full text-neutral-400 hover:bg-neutral-100"><X size={16} /></button>
+        </div>
+        <div className="overflow-y-auto p-5">
+          {err ? <p className="mb-3 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">{err}</p> : null}
+          {tab === "bank" && (
+            <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
+              {mediaBank.map((src) => (
+                <button key={src} onClick={() => onPick(src)} className="group relative aspect-[4/3] overflow-hidden rounded-xl border border-neutral-200 hover:border-neutral-900">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={src} alt="" className="h-full w-full object-cover transition group-hover:scale-105" />
+                </button>
+              ))}
+              {mediaBank.length === 0 && <p className="col-span-full py-8 text-center text-sm text-neutral-400">Importez votre première image →</p>}
+            </div>
+          )}
+          {tab === "upload" && (
+            <div
+              className="flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-neutral-200 px-6 py-14 text-center"
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => { e.preventDefault(); const f = e.dataTransfer.files?.[0]; if (f) void upload(f); }}
+            >
+              <Upload size={26} className="text-neutral-400" />
+              <p className="text-sm text-neutral-500">Glissez une image ici, ou</p>
+              <button onClick={() => fileRef.current?.click()} disabled={busy} className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white disabled:opacity-50">
+                {busy ? "Import…" : "Choisir un fichier"}
+              </button>
+              <p className="text-xs text-neutral-400">JPG, PNG ou WebP — 8 Mo max.</p>
+              <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" hidden onChange={(e) => { const f = e.target.files?.[0]; if (f) void upload(f); }} />
+            </div>
+          )}
+          {tab === "url" && (
+            <div className="flex flex-col gap-3">
+              <input value={url} onChange={(e) => setUrl(e.target.value)} placeholder="https://…" className="w-full rounded-xl border border-neutral-200 px-4 py-3 text-sm outline-none focus:border-neutral-900" />
+              <button onClick={() => url.trim() && onPick(url.trim())} className="self-start rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white">Utiliser ce lien</button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* =============================== Champs ================================= */
+
+const inputCls = "w-full rounded-xl border border-neutral-200 bg-white px-3 py-2 text-[13.5px] text-neutral-800 outline-none transition focus:border-neutral-900";
+
+function ImageField({ value, siteId, mediaBank, onChange }: { value: string; siteId: string; mediaBank: string[]; onChange: (v: string) => void }) {
+  const [pick, setPick] = useState(false);
+  return (
+    <div className="flex items-center gap-3">
+      <div className="h-14 w-20 shrink-0 overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50">
+        {value ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={value} alt="" className="h-full w-full object-cover" />
+        ) : (
+          <span className="grid h-full place-items-center text-neutral-300"><ImageIcon size={18} /></span>
+        )}
+      </div>
+      <button onClick={() => setPick(true)} className="rounded-lg border border-neutral-200 px-3 py-1.5 text-[12.5px] font-semibold text-neutral-700 hover:border-neutral-900">Changer l'image</button>
+      <ImagePicker open={pick} siteId={siteId} mediaBank={mediaBank} onClose={() => setPick(false)} onPick={(u) => { onChange(u); setPick(false); }} />
+    </div>
+  );
+}
+
+function ScalarInput({ type, value, onChange }: { type: FieldType; value: unknown; onChange: (v: unknown) => void }) {
+  if (type === "textarea") return <textarea value={String(value ?? "")} onChange={(e) => onChange(e.target.value)} rows={3} className={`${inputCls} resize-none leading-relaxed`} />;
+  if (type === "number") return <input type="number" value={Number(value ?? 0)} onChange={(e) => onChange(Number(e.target.value))} className={inputCls} />;
+  if (type === "boolean") return (
+    <button onClick={() => onChange(!value)} className={`relative h-6 w-11 rounded-full transition ${value ? "bg-neutral-900" : "bg-neutral-200"}`}>
+      <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white transition ${value ? "left-[22px]" : "left-0.5"}`} />
+    </button>
+  );
+  return <input value={String(value ?? "")} onChange={(e) => onChange(e.target.value)} className={inputCls} />;
+}
+
+export function ContentPanel({
+  section,
+  siteId,
+  mediaBank,
+  onChange,
+}: {
+  section: StudioSection;
+  siteId: string;
+  mediaBank: string[];
+  onChange: (content: Record<string, unknown>) => void;
+}) {
+  const fields = fieldsFor(section.content);
+  const patch = (key: string, value: unknown) => onChange({ ...section.content, [key]: value });
+
+  return (
+    <div className="flex flex-col gap-5">
+      {fields.map((f) => (
+        <div key={f.key} className="flex flex-col gap-1.5">
+          <label className="text-[12px] font-semibold uppercase tracking-wide text-neutral-400">{f.label}</label>
+
+          {(f.type === "text" || f.type === "textarea" || f.type === "number" || f.type === "boolean") && (
+            <ScalarInput type={f.type} value={f.value} onChange={(v) => patch(f.key, v)} />
+          )}
+
+          {f.type === "image" && (
+            <ImageField value={String(f.value ?? "")} siteId={siteId} mediaBank={mediaBank} onChange={(v) => patch(f.key, v)} />
+          )}
+
+          {f.type === "imageList" && Array.isArray(f.value) && (
+            <div className="flex flex-col gap-2">
+              {(f.value as string[]).map((src, i) => (
+                <ImageField
+                  key={i}
+                  value={src}
+                  siteId={siteId}
+                  mediaBank={mediaBank}
+                  onChange={(v) => { const next = [...(f.value as string[])]; next[i] = v; patch(f.key, next); }}
+                />
+              ))}
+            </div>
+          )}
+
+          {f.type === "stringList" && Array.isArray(f.value) && (
+            <div className="flex flex-col gap-1.5">
+              {(f.value as string[]).map((s, i) => (
+                <div key={i} className="flex items-center gap-1.5">
+                  <input value={s} onChange={(e) => { const next = [...(f.value as string[])]; next[i] = e.target.value; patch(f.key, next); }} className={inputCls} />
+                  <button onClick={() => patch(f.key, (f.value as string[]).filter((_, j) => j !== i))} className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-neutral-300 hover:bg-red-50 hover:text-red-500"><Trash2 size={14} /></button>
+                </div>
+              ))}
+              <button onClick={() => patch(f.key, [...(f.value as string[]), ""])} className="self-start text-[12.5px] font-semibold text-neutral-500 hover:text-neutral-900">+ Ajouter</button>
+            </div>
+          )}
+
+          {f.type === "objectList" && Array.isArray(f.value) && (
+            <div className="flex flex-col gap-2.5">
+              {(f.value as Array<Record<string, unknown>>).map((item, i) => (
+                <div key={i} className="rounded-xl border border-neutral-200 bg-neutral-50/60 p-3">
+                  <div className="mb-2 flex items-center justify-between">
+                    <span className="text-[11px] font-bold text-neutral-400">#{i + 1}</span>
+                    <button onClick={() => patch(f.key, (f.value as unknown[]).filter((_, j) => j !== i))} className="grid h-7 w-7 place-items-center rounded-lg text-neutral-300 hover:bg-red-50 hover:text-red-500"><Trash2 size={13} /></button>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    {(f.itemFields ?? []).map((sub) => (
+                      <div key={sub.key} className="flex flex-col gap-1">
+                        <span className="text-[11px] font-medium text-neutral-400">{sub.label}</span>
+                        {sub.type === "image" ? (
+                          <ImageField value={String(item[sub.key] ?? "")} siteId={siteId} mediaBank={mediaBank} onChange={(v) => { const next = [...(f.value as Array<Record<string, unknown>>)]; next[i] = { ...next[i], [sub.key]: v }; patch(f.key, next); }} />
+                        ) : (
+                          <ScalarInput type={sub.type} value={item[sub.key]} onChange={(v) => { const next = [...(f.value as Array<Record<string, unknown>>)]; next[i] = { ...next[i], [sub.key]: v }; patch(f.key, next); }} />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+              <button
+                onClick={() => { const arr = f.value as Array<Record<string, unknown>>; patch(f.key, [...arr, { ...(arr[0] ?? {}) }]); }}
+                className="self-start text-[12.5px] font-semibold text-neutral-500 hover:text-neutral-900"
+              >
+                + Ajouter un élément
+              </button>
+            </div>
+          )}
+        </div>
+      ))}
+      {fields.length === 0 && <p className="text-sm text-neutral-400">Cette section n'a pas de contenu modifiable.</p>}
+    </div>
+  );
+}
+
+/* ===================== Tiroir « Remplacer » (comparatif) ===================== */
+
+export function ReplaceDrawer({
+  section,
+  index,
+  candidates,
+  vibe,
+  brandPrimary,
+  onChoose,
+  onBuy,
+  onClose,
+}: {
+  section: StudioSection;
+  index: number;
+  candidates: CatalogEntry[];
+  vibe: StudioVibe;
+  brandPrimary: string | null;
+  onChoose: (id: string) => void;
+  onBuy: (entry: CatalogEntry) => void;
+  onClose: () => void;
+}) {
+  const others = candidates.filter((c) => c.id !== section.component);
+  return (
+    <div className="fixed inset-0 z-[60] flex justify-end bg-black/40" onClick={onClose}>
+      <div className="flex h-full w-full max-w-2xl flex-col bg-neutral-50 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between border-b border-neutral-200 bg-white px-5 py-4">
+          <div>
+            <h2 className="text-[15px] font-bold text-neutral-900">Remplacer « {section.roleLabel} »</h2>
+            <p className="text-[12.5px] text-neutral-500">Choisissez une autre forme — vos textes et images suivront quand c'est possible.</p>
+          </div>
+          <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-full text-neutral-400 hover:bg-neutral-100"><X size={18} /></button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-5">
+          {/* Section actuelle, barrée d'un filet rouge */}
+          <p className="mb-2 text-[11px] font-bold uppercase tracking-wide text-red-500">Sera remplacée</p>
+          <div className="relative mb-7 overflow-hidden rounded-2xl border-2 border-red-300">
+            <Preview id={section.component} content={section.content} vibe={vibe} brandPrimary={brandPrimary} width={600} height={230} />
+            <div className="pointer-events-none absolute inset-0" style={{ background: "rgba(239,68,68,0.14)" }} />
+            <svg className="pointer-events-none absolute inset-0 h-full w-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+              <line x1="0" y1="100" x2="100" y2="0" stroke="rgba(239,68,68,0.55)" strokeWidth="0.8" vectorEffect="non-scaling-stroke" />
+            </svg>
+            <span className="absolute right-3 top-3 rounded-full bg-red-500 px-2.5 py-1 text-[11px] font-bold text-white">Actuelle</span>
+          </div>
+
+          {/* Remplaçantes */}
+          <p className="mb-3 text-[11px] font-bold uppercase tracking-wide text-neutral-400">Remplacer par</p>
+          <div className="grid grid-cols-1 gap-4">
+            {others.map((c) => {
+              const locked = !c.owned && c.price > 0;
+              return (
+                <div key={c.id} className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">
+                  <div className="relative border-b border-neutral-100">
+                    <Preview id={c.id} content={c.sample} vibe={vibe} brandPrimary={brandPrimary} width={600} height={230} />
+                    {locked && <div className="absolute inset-0 grid place-items-center bg-white/55 backdrop-blur-[1px]"><Lock size={22} className="text-neutral-500" /></div>}
+                  </div>
+                  <div className="flex items-center justify-between gap-2 p-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[13.5px] font-semibold text-neutral-800">{c.label}</span>
+                      <RarityChip rarity={c.rarity} />
+                    </div>
+                    {locked ? (
+                      <button onClick={() => onBuy(c)} className="rounded-full bg-amber-500 px-3.5 py-1.5 text-[12.5px] font-semibold text-white hover:bg-amber-600">Débloquer · {c.price} ✦</button>
+                    ) : (
+                      <button onClick={() => onChoose(c.id)} className="inline-flex items-center gap-1.5 rounded-full bg-neutral-900 px-3.5 py-1.5 text-[12.5px] font-semibold text-white hover:bg-neutral-700"><ArrowLeftRight size={13} /> Choisir</button>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+            {others.length === 0 && <p className="py-8 text-center text-sm text-neutral-400">Pas encore d'autre forme pour ce type de section.</p>}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* =========================== Palette live (Stitch) =========================== */
+
+const RADIUS_PRESETS: Record<string, { card: string; xl: string }> = {
+  Net: { card: "6px", xl: "12px" },
+  Doux: { card: "16px", xl: "24px" },
+  Rond: { card: "24px", xl: "32px" },
+};
+const COLOR_FIELDS: Array<{ key: keyof StudioVibe["palette"]; label: string }> = [
+  { key: "accent", label: "Accent" },
+  { key: "ink", label: "Texte" },
+  { key: "surface", label: "Fond" },
+  { key: "card", label: "Cartes" },
+  { key: "accent2", label: "Accent 2" },
+  { key: "muted", label: "Texte doux" },
+];
+
+export function PalettePanel({
+  vibe,
+  presets,
+  fonts,
+  onLive,
+  onPersistCharte,
+  onPersistPreset,
+}: {
+  vibe: StudioVibe;
+  presets: StudioVibe[];
+  fonts: { heading: string[]; body: string[] };
+  onLive: (v: StudioVibe) => void;
+  onPersistCharte: (spec: ReturnType<typeof vibeToSpec>) => void;
+  onPersistPreset: (vibeId: string) => void;
+}) {
+  const headingFamily = vibe.fonts.heading.split(",")[0].replace(/['"]/g, "").trim();
+  const bodyFamily = vibe.fonts.body.split(",")[0].replace(/['"]/g, "").trim();
+
+  // Toute édition manuelle → charte « custom » (live + persistée, re-réparée serveur).
+  function edit(next: StudioVibe) {
+    const custom = { ...next, id: "custom" as const };
+    onLive(custom);
+    onPersistCharte(vibeToSpec(custom));
+  }
+  const setColor = (key: keyof StudioVibe["palette"], val: string) => edit({ ...vibe, palette: { ...vibe.palette, [key]: val } });
+  const setFont = (which: "heading" | "body", family: string) =>
+    edit({ ...vibe, fonts: { ...vibe.fonts, [which]: family }, fontHref: which === "heading" ? fontHref(family, bodyFamily) : fontHref(headingFamily, family) });
+  const setRadius = (name: keyof typeof RADIUS_PRESETS) => edit({ ...vibe, radius: { ...vibe.radius, ...RADIUS_PRESETS[name] } });
+
+  const selectCls = "w-full rounded-xl border border-neutral-200 bg-white px-3 py-2 text-[13px] text-neutral-800 outline-none focus:border-neutral-900";
+
+  return (
+    <div className="flex flex-col gap-6">
+      <div>
+        <p className="mb-2 text-[12px] font-semibold uppercase tracking-wide text-neutral-400">Ambiances</p>
+        <div className="flex flex-wrap gap-2">
+          {presets.map((p) => {
+            const active = vibe.id === p.id;
+            return (
+              <button
+                key={p.id}
+                onClick={() => onPersistPreset(p.id)}
+                title={p.label}
+                className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1.5 transition ${active ? "border-neutral-900 ring-1 ring-neutral-900" : "border-neutral-200 hover:border-neutral-400"}`}
+              >
+                <span className="flex">
+                  {[p.palette.accent, p.palette.accent2, p.palette.ink].map((c, i) => (
+                    <span key={i} className="h-3.5 w-3.5 rounded-full border border-white" style={{ background: c, marginLeft: i ? -5 : 0 }} />
+                  ))}
+                </span>
+                <span className="text-[12px] font-semibold text-neutral-700">{p.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div>
+        <p className="mb-2 text-[12px] font-semibold uppercase tracking-wide text-neutral-400">Couleurs</p>
+        <div className="grid grid-cols-2 gap-2.5">
+          {COLOR_FIELDS.map(({ key, label }) => (
+            <label key={key} className="flex items-center gap-2 rounded-xl border border-neutral-200 bg-white px-2.5 py-2">
+              <span className="relative h-7 w-7 shrink-0 overflow-hidden rounded-lg border border-neutral-200" style={{ background: vibe.palette[key] }}>
+                <input type="color" value={vibe.palette[key]} onChange={(e) => setColor(key, e.target.value)} className="absolute inset-0 h-full w-full cursor-pointer opacity-0" />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-[12px] font-semibold text-neutral-700">{label}</span>
+                <span className="block font-mono text-[10px] uppercase text-neutral-400">{vibe.palette[key]}</span>
+              </span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3">
+        <label className="flex flex-col gap-1">
+          <span className="text-[12px] font-semibold uppercase tracking-wide text-neutral-400">Titres</span>
+          <select value={headingFamily} onChange={(e) => setFont("heading", e.target.value)} className={selectCls}>
+            {fonts.heading.map((f) => <option key={f} value={f}>{f}</option>)}
+          </select>
+        </label>
+        <label className="flex flex-col gap-1">
+          <span className="text-[12px] font-semibold uppercase tracking-wide text-neutral-400">Texte</span>
+          <select value={bodyFamily} onChange={(e) => setFont("body", e.target.value)} className={selectCls}>
+            {fonts.body.map((f) => <option key={f} value={f}>{f}</option>)}
+          </select>
+        </label>
+      </div>
+
+      <div>
+        <p className="mb-2 text-[12px] font-semibold uppercase tracking-wide text-neutral-400">Coins</p>
+        <div className="flex gap-2">
+          {(Object.keys(RADIUS_PRESETS) as Array<keyof typeof RADIUS_PRESETS>).map((name) => {
+            const active = vibe.radius.card === RADIUS_PRESETS[name].card;
+            return (
+              <button key={name} onClick={() => setRadius(name)} className={`flex-1 rounded-xl border px-3 py-2 text-[12.5px] font-semibold transition ${active ? "border-neutral-900 bg-neutral-900 text-white" : "border-neutral-200 text-neutral-600 hover:border-neutral-400"}`}>{name}</button>
+            );
+          })}
+        </div>
+      </div>
+      <p className="text-[11.5px] leading-relaxed text-neutral-400">Vos couleurs s'appliquent à tout le site en direct. Les contrastes illisibles sont corrigés automatiquement.</p>
+    </div>
+  );
+}
+
+/* ============================ Ajouter un bloc ============================ */
+
+export function AddPanel({
+  groups,
+  vibe,
+  brandPrimary,
+  onAdd,
+  onBuy,
+  onClose,
+}: {
+  groups: Array<{ role: string; roleLabel: string; recommended: boolean; entries: CatalogEntry[] }>;
+  vibe: StudioVibe;
+  brandPrimary: string | null;
+  onAdd: (entry: CatalogEntry) => void;
+  onBuy: (entry: CatalogEntry) => void;
+  onClose: () => void;
+}) {
+  const [openRole, setOpenRole] = useState<string | null>(groups.find((g) => g.recommended)?.role ?? groups[0]?.role ?? null);
+  return (
+    <div className="fixed inset-0 z-[60] flex justify-end bg-black/40" onClick={onClose}>
+      <div className="flex h-full w-full max-w-2xl flex-col bg-neutral-50 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between border-b border-neutral-200 bg-white px-5 py-4">
+          <div>
+            <h2 className="text-[15px] font-bold text-neutral-900">Ajouter un bloc</h2>
+            <p className="text-[12.5px] text-neutral-500">Choisissez une section à ajouter à votre site.</p>
+          </div>
+          <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-full text-neutral-400 hover:bg-neutral-100"><X size={18} /></button>
+        </div>
+        <div className="flex-1 overflow-y-auto p-5">
+          {groups.length === 0 && <p className="py-8 text-center text-sm text-neutral-400">Votre site contient déjà tous les types de blocs.</p>}
+          <div className="flex flex-col gap-2.5">
+            {groups.map((g) => {
+              const open = openRole === g.role;
+              return (
+                <div key={g.role} className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">
+                  <button onClick={() => setOpenRole(open ? null : g.role)} className="flex w-full items-center justify-between px-4 py-3 text-left">
+                    <span className="flex items-center gap-2">
+                      <span className="text-[14px] font-semibold text-neutral-800">{g.roleLabel}</span>
+                      {g.recommended && <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] font-semibold text-emerald-600">Recommandé</span>}
+                    </span>
+                    <span className="text-[12px] text-neutral-400">{g.entries.length} forme{g.entries.length > 1 ? "s" : ""}</span>
+                  </button>
+                  {open && (
+                    <div className="grid grid-cols-1 gap-3 border-t border-neutral-100 p-3">
+                      {g.entries.map((c) => {
+                        const locked = !c.owned && c.price > 0;
+                        return (
+                          <div key={c.id} className="overflow-hidden rounded-xl border border-neutral-200">
+                            <div className="relative border-b border-neutral-100">
+                              <Preview id={c.id} content={c.sample} vibe={vibe} brandPrimary={brandPrimary} width={600} height={210} />
+                              {locked && <div className="absolute inset-0 grid place-items-center bg-white/55 backdrop-blur-[1px]"><Lock size={20} className="text-neutral-500" /></div>}
+                            </div>
+                            <div className="flex items-center justify-between gap-2 p-2.5">
+                              <RarityChip rarity={c.rarity} />
+                              {locked ? (
+                                <button onClick={() => onBuy(c)} className="rounded-full bg-amber-500 px-3 py-1.5 text-[12px] font-semibold text-white hover:bg-amber-600">Débloquer · {c.price} ✦</button>
+                              ) : (
+                                <button onClick={() => onAdd(c)} className="inline-flex items-center gap-1.5 rounded-full bg-neutral-900 px-3 py-1.5 text-[12px] font-semibold text-white hover:bg-neutral-700"><Plus size={13} /> Ajouter</button>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export { RarityChip };
