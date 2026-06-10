@@ -42,5 +42,10 @@ export default async function AtelierPage({
   if (!data && page) data = await loadStudioData(admin, user.id, site, businessName, null);
   if (!data) redirect("/dashboard");
 
-  return <StudioEditor data={data} />;
+  // key par page ET par composition des pages : l'éditeur (état local :
+  // sections, historique, panneaux) repart de l'état serveur quand on change
+  // de page, ou qu'une page est créée/renommée/supprimée (liens navbar) —
+  // sinon le canvas garderait l'ancienne page affichée.
+  const editorKey = [data.pageId ?? "home", ...data.pages.map((p) => `${p.id}:${p.slug}`)].join("|");
+  return <StudioEditor key={editorKey} data={data} />;
 }

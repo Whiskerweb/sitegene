@@ -6,6 +6,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Recipe } from "./types";
 import { getManifest } from "./manifests";
+import { normalizeSectionContent } from "./agenceur";
 import { roleLabel } from "./roles";
 import {
   loadEditableSnapshot,
@@ -211,6 +212,28 @@ export function normalizeNavLink(l: unknown): NavLink {
   return { label: "" };
 }
 
+/** Navbar par défaut d'un site multi-pages (sobre, pilotée par la charte). */
+export const DEFAULT_NAVBAR_ID = "plumber-emergency-navbar";
+
+/**
+ * Garantit une navbar en tête de l'accueil : sans elle, les liens de pages
+ * n'ont nulle part où vivre (la plupart des recettes générées n'en ont pas).
+ * Renvoie la recette telle quelle si une navbar existe déjà.
+ */
+export function ensureNavbar(recipe: Recipe, businessName: string): { recipe: Recipe; added: boolean } {
+  const has = recipe.sections.some((s) => getManifest(s.component)?.role === "navbar");
+  if (has) return { recipe, added: false };
+  const content = normalizeSectionContent(DEFAULT_NAVBAR_ID, {
+    brand: businessName.trim().slice(0, 60) || undefined,
+    links: [{ label: "Accueil", target: "home" }],
+    cta: "Nous contacter",
+  });
+  return {
+    recipe: { ...recipe, sections: [{ component: DEFAULT_NAVBAR_ID, content }, ...recipe.sections] },
+    added: true,
+  };
+}
+
 /** Ajoute un lien vers une page dans la navbar de l'accueil (si présente, sans doublon de cible). */
 export function addNavLink(recipe: Recipe, label: string, target: string): Recipe {
   const sections = recipe.sections.map((s) => {
@@ -218,6 +241,18 @@ export function addNavLink(recipe: Recipe, label: string, target: string): Recip
     const links = (Array.isArray(s.content.links) ? s.content.links : []).map(normalizeNavLink);
     if (links.some((l) => l.target === target)) return s;
     return { ...s, content: { ...s.content, links: [...links, { label, target }] } };
+  });
+  return { ...recipe, sections };
+}
+
+/** Renomme un lien de navbar EN PLACE (renommage de page : position conservée). */
+export function renameNavLink(recipe: Recipe, oldTarget: string, label: string, newTarget: string): Recipe {
+  const sections = recipe.sections.map((s) => {
+    if (getManifest(s.component)?.role !== "navbar") return s;
+    const links = (Array.isArray(s.content.links) ? s.content.links : [])
+      .map(normalizeNavLink)
+      .map((l) => (l.target === oldTarget ? { label, target: newTarget } : l));
+    return { ...s, content: { ...s.content, links } };
   });
   return { ...recipe, sections };
 }

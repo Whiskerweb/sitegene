@@ -8,7 +8,12 @@ import {
   fallbackRecipe,
   parseAgenceurJson,
   generateRecipe,
+  repairSubPageSections,
+  fallbackSubPageSections,
+  deriveSubPageTitle,
+  generateSubPage,
   type AgenceurInput,
+  type SubPageInput,
 } from "./agenceur";
 import { getSample } from "./samples";
 import { validateRecipe } from "./recipe";
@@ -211,5 +216,108 @@ describe("generateRecipe", () => {
     const noise = await generateRecipe(INPUT, async () => "je ne sais pas");
     expect(noise.source).toBe("fallback");
     expect(validateRecipe(noise.recipe).ok).toBe(true);
+  });
+});
+
+// --- Sous-pages -------------------------------------------------------------------
+
+const PAGE_INPUT: SubPageInput = {
+  request: "Une page tarifs avec mes trois formules et les questions fréquentes sur les prix.",
+  businessName: "Breizh Plomberie",
+  brief: INPUT.brief,
+  homeComponents: ["hero-split-asym", "services-rows", "faq-accordion", "contact-block", "footer-columns"],
+  existingTitles: ["Nos services"],
+};
+
+describe("deriveSubPageTitle", () => {
+  it("reconnaît les intentions courantes", () => {
+    expect(deriveSubPageTitle("une page avec mes tarifs et formules")).toBe("Tarifs");
+    expect(deriveSubPageTitle("pour me contacter et prendre rendez-vous")).toBe("Contact");
+    expect(deriveSubPageTitle("présenter mon équipe et notre histoire")).toBe("À propos");
+    expect(deriveSubPageTitle("montrer mes réalisations de chantier")).toBe("Réalisations");
+  });
+  it("sinon, extrait des mots significatifs de la demande", () => {
+    const t = deriveSubPageTitle("je veux une page sur l'isolation thermique");
+    expect(t.length).toBeGreaterThanOrEqual(2);
+    expect(t.length).toBeLessThanOrEqual(30);
+    expect(t).not.toMatch(/^je veux/i);
+  });
+  it("ne renvoie jamais une chaîne vide", () => {
+    expect(deriveSubPageTitle("").length).toBeGreaterThanOrEqual(2);
+    expect(deriveSubPageTitle("ok").length).toBeGreaterThanOrEqual(2);
+  });
+});
+
+describe("repairSubPageSections", () => {
+  it("écarte navbar, footer ET hero (réservés à l'accueil)", () => {
+    const out = repairSubPageSections([
+      { component: "hero-split-asym", content: {} },
+      { component: "plumber-pro-navbar", content: {} },
+      { component: "intro-split", content: {} },
+      { component: "pricing-cards", content: {} },
+      { component: "footer-columns", content: {} },
+    ]);
+    const roles = out.map((s) => getManifest(s.component)!.role);
+    expect(roles).not.toContain("hero");
+    expect(roles).not.toContain("navbar");
+    expect(roles).not.toContain("footer");
+    expect(out.map((s) => s.component)).toContain("pricing-cards");
+  });
+  it("complète à 3 sections minimum, un seul composant par rôle", () => {
+    const out = repairSubPageSections([{ component: "pricing-cards", content: {} }]);
+    expect(out.length).toBeGreaterThanOrEqual(3);
+    const roles = out.map((s) => getManifest(s.component)!.role);
+    expect(new Set(roles).size).toBe(roles.length);
+  });
+});
+
+describe("fallbackSubPageSections", () => {
+  it("choisit un plan selon l'intention (tarifs → pricing-cards)", () => {
+    const out = fallbackSubPageSections(PAGE_INPUT, "Tarifs");
+    expect(out.map((s) => s.component)).toContain("pricing-cards");
+  });
+  it("l'en-tête de page porte le TITRE de la page, pas le texte d'exemple", () => {
+    const out = fallbackSubPageSections(PAGE_INPUT, "Tarifs");
+    const head = out[0];
+    const values = Object.values(head.content).filter((v): v is string => typeof v === "string");
+    expect(values.some((v) => v.includes("Tarifs"))).toBe(true);
+    const sample = getSample(head.component);
+    const sampleHeadings = Object.entries(sample).filter(([k]) => /^title/i.test(k)).map(([, v]) => v);
+    for (const sh of sampleHeadings) {
+      expect(values).not.toContain(sh);
+    }
+  });
+  it("contact → bloc contact présent", () => {
+    const out = fallbackSubPageSections({ ...PAGE_INPUT, request: "comment me joindre" }, "Contact");
+    expect(out.map((s) => s.component)).toContain("contact-block");
+  });
+});
+
+describe("generateSubPage", () => {
+  it("source ai : titre IA nettoyé + sections réparées (hero écarté)", async () => {
+    const res = await generateSubPage(PAGE_INPUT, async () =>
+      JSON.stringify({
+        title: " « Tarifs »  ",
+        sections: [
+          { component: "hero-split-asym", content: {} },
+          { component: "intro-split", content: { title: "Nos tarifs plomberie" } },
+          { component: "pricing-cards", content: {} },
+          { component: "cta-banner", content: {} },
+        ],
+      }),
+    );
+    expect(res.source).toBe("ai");
+    expect(res.title).toBe("Tarifs");
+    expect(res.sections.map((s) => s.component)).not.toContain("hero-split-asym");
+    expect(res.sections.map((s) => s.component)).toContain("pricing-cards");
+  });
+  it("repli : titre dérivé de la demande + plan selon l'intention", async () => {
+    const res = await generateSubPage(PAGE_INPUT, async () => {
+      throw new Error("réseau");
+    });
+    expect(res.source).toBe("fallback");
+    expect(res.title).toBe("Tarifs");
+    expect(res.sections.map((s) => s.component)).toContain("pricing-cards");
+    expect(res.sections.length).toBeGreaterThanOrEqual(3);
   });
 });

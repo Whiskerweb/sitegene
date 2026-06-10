@@ -202,9 +202,9 @@ export async function POST(request: Request) {
 
   if (op === "add") {
     const manifest = getManifest(componentId)!;
-    if (onPage && (manifest.role === "navbar" || manifest.role === "footer")) {
+    if (onPage && (manifest.role === "navbar" || manifest.role === "footer" || manifest.role === "hero")) {
       return NextResponse.json(
-        { error: "L'en-tête et le pied de page sont communs au site — modifiez-les depuis l'Accueil." },
+        { error: "L'en-tête, le pied de page et le hero appartiennent à l'Accueil — une sous-page commence par un bloc de contenu." },
         { status: 400 },
       );
     }
@@ -222,7 +222,9 @@ export async function POST(request: Request) {
     const target = sections[index];
     if (!target) return NextResponse.json({ error: "Section introuvable." }, { status: 400 });
     const role = getManifest(target.component)?.role;
-    if (role === "hero" || role === "footer") {
+    // Sur l'accueil, hero et footer sont l'identité du site. Sur une sous-page
+    // ils n'ont pas leur place : on laisse retirer un hero hérité d'avant.
+    if (!onPage && (role === "hero" || role === "footer")) {
       return NextResponse.json({ error: "Le hero et le footer ne se retirent pas." }, { status: 400 });
     }
     if (sections.length <= minSections) {

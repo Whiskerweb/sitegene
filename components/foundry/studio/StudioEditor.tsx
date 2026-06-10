@@ -9,6 +9,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   ArrowLeftRight,
+  Check,
   ChevronDown,
   ChevronUp,
   ExternalLink,
@@ -36,6 +37,25 @@ import ReorderOverlay from "./ReorderOverlay";
 
 type RightPanel = { kind: "content"; index: number } | { kind: "palette" } | null;
 
+/** Étapes affichées pendant la composition d'une page (cosmétique, rythme l'attente). */
+const GEN_STEPS = [
+  "Je lis votre demande",
+  "Je parcours le catalogue de blocs",
+  "Je choisis la structure de la page",
+  "J'écris vos textes",
+  "J'accorde tout à votre charte",
+];
+
+/** Idées de pages : un clic remplit la demande, le client peut la retoucher. */
+const PAGE_IDEAS = [
+  { label: "Tarifs", ask: "Une page tarifs qui présente mes formules et leurs prix, avec les questions fréquentes sur le paiement." },
+  { label: "Nos services", ask: "Une page qui détaille toutes mes prestations, comment je travaille, et un appel à demander un devis." },
+  { label: "À propos", ask: "Une page à propos qui raconte mon parcours, mes valeurs et pourquoi me faire confiance." },
+  { label: "Contact", ask: "Une page contact avec mes coordonnées, mes horaires et comment me joindre rapidement." },
+  { label: "Réalisations", ask: "Une page qui montre mes dernières réalisations et ce que mes clients en disent." },
+  { label: "FAQ", ask: "Une page qui répond aux questions que mes clients me posent le plus souvent." },
+];
+
 export default function StudioEditor({ data }: { data: StudioData }) {
   const router = useRouter();
   const [sections, setSections] = useState<StudioSection[]>(data.sections);
@@ -50,9 +70,11 @@ export default function StudioEditor({ data }: { data: StudioData }) {
   const [addOpen, setAddOpen] = useState(false);
   const [reorderFrom, setReorderFrom] = useState<number | null>(null);
   const [createOpen, setCreateOpen] = useState(false);
-  const [newTitle, setNewTitle] = useState("");
-  const [newPurpose, setNewPurpose] = useState("");
+  const [pageAsk, setPageAsk] = useState("");
   const [creating, setCreating] = useState(false);
+  const [genStep, setGenStep] = useState(0);
+  const [renaming, setRenaming] = useState<{ id: string; value: string } | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [publishing, setPublishing] = useState(false);
@@ -262,23 +284,55 @@ export default function StudioEditor({ data }: { data: StudioData }) {
   function goToPage(id: string | null) {
     router.push(id ? `/atelier?page=${id}` : "/atelier");
   }
+  // Toast laissé par l'instance précédente (l'éditeur remonte à chaque changement de page).
+  useEffect(() => {
+    try {
+      const msg = sessionStorage.getItem("atelier:flash");
+      if (msg) { sessionStorage.removeItem("atelier:flash"); flash(msg); }
+    } catch { /* stockage indisponible : pas de toast, rien de cassé */ }
+  }, [flash]);
+  // Fait avancer les étapes affichées pendant la composition.
+  useEffect(() => {
+    if (!creating) { setGenStep(0); return; }
+    const t = setInterval(() => setGenStep((s) => Math.min(s + 1, GEN_STEPS.length - 1)), 4200);
+    return () => clearInterval(t);
+  }, [creating]);
   async function createPage() {
-    if (newTitle.trim().length < 2 || newPurpose.trim().length < 10) return;
+    if (pageAsk.trim().length < 8 || creating) return;
     setCreating(true);
     try {
       const res = await fetch("/api/foundry/page", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ siteId: data.siteId, op: "create", title: newTitle.trim(), purpose: newPurpose.trim() }),
+        body: JSON.stringify({ siteId: data.siteId, op: "create", request: pageAsk.trim() }),
       });
       const json = await res.json().catch(() => null);
-      if (!res.ok || !json?.ok) { flash(json?.error ?? "Création impossible."); return; }
+      if (!res.ok || !json?.ok) { setCreating(false); flash(json?.error ?? "Création impossible. Réessayez."); return; }
+      try {
+        const extra = json.navbarAdded ? " — une barre de navigation a été ajoutée en haut de votre site" : "";
+        sessionStorage.setItem("atelier:flash", `Votre page « ${json.page.title} » est prête ✨${extra}`);
+      } catch { /* ignore */ }
+      // On garde l'écran de composition affiché : la navigation remonte l'éditeur.
       router.push(`/atelier?page=${json.page.id}`);
-    } finally {
+    } catch {
       setCreating(false);
+      flash("Connexion interrompue. Réessayez.");
     }
   }
+  async function renamePage(id: string, title: string) {
+    const t = title.trim();
+    setRenaming(null);
+    if (t.length < 2 || t === data.pages.find((p) => p.id === id)?.title) return;
+    const res = await fetch("/api/foundry/page", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ siteId: data.siteId, op: "rename", pageId: id, title: t }),
+    });
+    if (res.ok) router.refresh();
+    else flash("Renommage impossible.");
+  }
   async function deletePage(id: string) {
+    setConfirmDelete(null);
     const res = await fetch("/api/foundry/page", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -287,6 +341,12 @@ export default function StudioEditor({ data }: { data: StudioData }) {
     if (res.ok) { if (data.pageId === id) router.push("/atelier"); else router.refresh(); }
     else flash("Suppression impossible.");
   }
+  // La demande de confirmation de suppression expire toute seule.
+  useEffect(() => {
+    if (!confirmDelete) return;
+    const t = setTimeout(() => setConfirmDelete(null), 3500);
+    return () => clearTimeout(t);
+  }, [confirmDelete]);
 
   const replaceCandidates = (index: number): CatalogEntry[] => {
     const role = sections[index].role;
@@ -299,8 +359,8 @@ export default function StudioEditor({ data }: { data: StudioData }) {
     const byRole = new Map<string, CatalogEntry[]>();
     for (const c of catalogById.values()) {
       if (present.has(c.role)) continue; // un seul bloc par type → « Remplacer » sinon
-      // En-tête et pied de page sont communs au site (gérés depuis l'Accueil).
-      if (onPage && (c.role === "navbar" || c.role === "footer")) continue;
+      // En-tête, pied de page et hero appartiennent à l'Accueil.
+      if (onPage && (c.role === "navbar" || c.role === "footer" || c.role === "hero")) continue;
       if (!byRole.has(c.role)) byRole.set(c.role, []);
       byRole.get(c.role)!.push(c);
     }
@@ -345,18 +405,59 @@ export default function StudioEditor({ data }: { data: StudioData }) {
         <PageTabBtn active={!data.pageId} onClick={() => goToPage(null)}>Accueil</PageTabBtn>
         {data.pages.map((p) => (
           <span key={p.id} className="group relative inline-flex items-center">
-            <PageTabBtn active={data.pageId === p.id} onClick={() => goToPage(p.id)}>{p.title}</PageTabBtn>
-            <button
-              onClick={() => deletePage(p.id)}
-              title="Supprimer la page"
-              className="ml-0.5 hidden h-5 w-5 place-items-center rounded-full text-neutral-300 hover:bg-red-50 hover:text-red-500 group-hover:grid"
-            >
-              <X size={11} />
-            </button>
+            {renaming?.id === p.id ? (
+              <input
+                autoFocus
+                value={renaming.value}
+                onChange={(e) => setRenaming({ id: p.id, value: e.target.value })}
+                onBlur={() => void renamePage(p.id, renaming.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") void renamePage(p.id, renaming.value);
+                  if (e.key === "Escape") setRenaming(null);
+                }}
+                maxLength={40}
+                className="w-36 rounded-full border border-neutral-300 px-3 py-1 text-[13px] font-semibold text-neutral-900 outline-none focus:border-neutral-900"
+              />
+            ) : (
+              <PageTabBtn
+                active={data.pageId === p.id}
+                onClick={() => goToPage(p.id)}
+                onDoubleClick={() => setRenaming({ id: p.id, value: p.title })}
+              >
+                {p.title}
+              </PageTabBtn>
+            )}
+            {renaming?.id !== p.id && (
+              confirmDelete === p.id ? (
+                <button
+                  onClick={() => void deletePage(p.id)}
+                  className="ml-0.5 rounded-full bg-red-500 px-2.5 py-1 text-[11.5px] font-bold text-white"
+                >
+                  Supprimer ?
+                </button>
+              ) : (
+                <span className="hidden items-center group-hover:inline-flex">
+                  <button
+                    onClick={() => setRenaming({ id: p.id, value: p.title })}
+                    title="Renommer la page"
+                    className="ml-0.5 grid h-5 w-5 place-items-center rounded-full text-neutral-300 hover:bg-neutral-100 hover:text-neutral-700"
+                  >
+                    <Pencil size={11} />
+                  </button>
+                  <button
+                    onClick={() => setConfirmDelete(p.id)}
+                    title="Supprimer la page"
+                    className="grid h-5 w-5 place-items-center rounded-full text-neutral-300 hover:bg-red-50 hover:text-red-500"
+                  >
+                    <X size={11} />
+                  </button>
+                </span>
+              )
+            )}
           </span>
         ))}
         <button
-          onClick={() => { setNewTitle(""); setNewPurpose(""); setCreateOpen(true); }}
+          onClick={() => { setPageAsk(""); setCreateOpen(true); }}
           className="ml-1 inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-[13px] font-semibold text-neutral-500 transition hover:bg-neutral-100 hover:text-neutral-900"
         >
           <Plus size={14} /> Créer une page
@@ -379,7 +480,8 @@ export default function StudioEditor({ data }: { data: StudioData }) {
               {sections.map((s, i) => {
                 const C = COMPONENTS[s.component];
                 const isSel = selected === i;
-                const canRemove = s.role !== "hero" && s.role !== "footer";
+                // Sur une sous-page, même un hero hérité peut être retiré.
+                const canRemove = onPage ? s.role !== "footer" : s.role !== "hero" && s.role !== "footer";
                 return (
                   <div
                     key={`${s.component}-${i}`}
@@ -430,7 +532,7 @@ export default function StudioEditor({ data }: { data: StudioData }) {
               {right.kind === "palette" ? (
                 <PalettePanel vibe={vibe} presets={data.presets} fonts={data.fonts} onLive={liveVibe} onPersistCharte={persistCharte} onPersistPreset={persistPreset} />
               ) : rightSection ? (
-                <ContentPanel section={rightSection} siteId={data.siteId} mediaBank={data.mediaBank} onChange={(c) => editContent(right.index, c)} />
+                <ContentPanel section={rightSection} siteId={data.siteId} mediaBank={data.mediaBank} pages={data.pages} onChange={(c) => editContent(right.index, c)} />
               ) : null}
             </div>
           </aside>
@@ -464,42 +566,78 @@ export default function StudioEditor({ data }: { data: StudioData }) {
         />
       )}
 
-      {/* ===== Modale « Créer une page » ===== */}
+      {/* ===== « Créer une page » : demande libre → composition IA ===== */}
       {createOpen && (
-        <div className="fixed inset-0 z-[75] flex items-center justify-center bg-black/40 p-4" onClick={() => !creating && setCreateOpen(false)}>
-          <div className="w-full max-w-lg rounded-3xl bg-white p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
-            <h2 className="text-[17px] font-bold text-neutral-900">Créer une nouvelle page</h2>
-            <p className="mt-1 text-[13px] text-neutral-500">Décrivez la page : l'IA la compose dans votre charte, avec le même en-tête et le même pied de page que votre site.</p>
+        <div className="fixed inset-0 z-[75] flex items-center justify-center bg-neutral-950/45 p-4 backdrop-blur-[2px]" onClick={() => !creating && setCreateOpen(false)}>
+          <div className="w-full max-w-xl overflow-hidden rounded-3xl bg-white shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            {creating ? (
+              <div className="px-8 py-10">
+                <div className="mx-auto flex max-w-sm flex-col items-center text-center">
+                  <div className="relative grid h-14 w-14 place-items-center">
+                    <span className="absolute inset-0 animate-ping rounded-2xl bg-violet-300/60" style={{ animationDuration: "1.8s" }} />
+                    <span className="relative grid h-14 w-14 place-items-center rounded-2xl bg-neutral-900 text-white"><Sparkles size={22} /></span>
+                  </div>
+                  <h2 className="mt-5 text-[17px] font-bold text-neutral-900">Votre page se compose</h2>
+                  <p className="mt-1 text-[13px] text-neutral-500">Quelques secondes — elle arrive directement dans l'éditeur.</p>
+                  <ul className="mt-7 w-full space-y-3 text-left">
+                    {GEN_STEPS.map((label, i) => (
+                      <li key={label} className={`flex items-center gap-3 text-[13.5px] transition-all duration-500 ${i <= genStep ? "translate-x-0 opacity-100" : "translate-x-1 opacity-35"}`}>
+                        <span className={`grid h-5 w-5 shrink-0 place-items-center rounded-full text-[10px] font-bold transition-colors ${i < genStep ? "bg-emerald-100 text-emerald-600" : i === genStep ? "bg-neutral-900 text-white" : "bg-neutral-100 text-neutral-400"}`}>
+                          {i < genStep ? <Check size={11} /> : i === genStep ? <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" /> : i + 1}
+                        </span>
+                        <span className={i === genStep ? "font-semibold text-neutral-900" : "text-neutral-500"}>{label}…</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ) : (
+              <div className="p-7">
+                <div className="flex items-start gap-3.5">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-neutral-900 text-white"><Sparkles size={17} /></span>
+                  <div>
+                    <h2 className="text-[17px] font-bold text-neutral-900">Quelle page ajoutons-nous ?</h2>
+                    <p className="mt-0.5 text-[13px] leading-relaxed text-neutral-500">
+                      Dites-le avec vos mots : l'IA choisit les blocs, écrit vos textes et nomme la page. Vous retouchez ensuite.
+                    </p>
+                  </div>
+                </div>
 
-            <label className="mt-5 block text-[12px] font-semibold uppercase tracking-wide text-neutral-400">Nom de la page</label>
-            <input
-              value={newTitle}
-              onChange={(e) => setNewTitle(e.target.value)}
-              placeholder="Ex. Services, À propos, Tarifs, Contact…"
-              maxLength={60}
-              className="mt-1.5 w-full rounded-xl border border-neutral-200 px-3.5 py-2.5 text-[14px] outline-none focus:border-neutral-900"
-            />
+                <textarea
+                  autoFocus
+                  value={pageAsk}
+                  onChange={(e) => setPageAsk(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); void createPage(); } }}
+                  rows={3}
+                  maxLength={1000}
+                  placeholder="Ex. « Une page tarifs avec mes trois formules et les questions qu'on me pose sur les prix. »"
+                  className="mt-5 w-full resize-none rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3.5 text-[14px] leading-relaxed text-neutral-900 outline-none transition focus:border-neutral-900 focus:bg-white"
+                />
 
-            <label className="mt-4 block text-[12px] font-semibold uppercase tracking-wide text-neutral-400">À quoi sert cette page ?</label>
-            <textarea
-              value={newPurpose}
-              onChange={(e) => setNewPurpose(e.target.value)}
-              rows={3}
-              maxLength={1000}
-              placeholder="Ex. Présenter en détail mes prestations de rénovation, avec les étapes et un appel à devis."
-              className="mt-1.5 w-full resize-none rounded-xl border border-neutral-200 px-3.5 py-2.5 text-[14px] leading-relaxed outline-none focus:border-neutral-900"
-            />
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {PAGE_IDEAS.map((s) => (
+                    <button
+                      key={s.label}
+                      onClick={() => setPageAsk(s.ask)}
+                      className="rounded-full border border-neutral-200 px-3 py-1.5 text-[12.5px] font-semibold text-neutral-600 transition hover:border-neutral-900 hover:text-neutral-900"
+                    >
+                      {s.label}
+                    </button>
+                  ))}
+                </div>
 
-            <div className="mt-5 flex items-center justify-end gap-2">
-              <button onClick={() => setCreateOpen(false)} disabled={creating} className="rounded-full px-4 py-2 text-[13px] font-semibold text-neutral-500 hover:text-neutral-800 disabled:opacity-50">Annuler</button>
-              <button
-                onClick={createPage}
-                disabled={creating || newTitle.trim().length < 2 || newPurpose.trim().length < 10}
-                className="inline-flex items-center gap-1.5 rounded-full bg-neutral-900 px-5 py-2 text-[13px] font-semibold text-white transition hover:bg-neutral-700 disabled:opacity-40"
-              >
-                <Sparkles size={14} /> {creating ? "L'IA compose…" : "Créer la page"}
-              </button>
-            </div>
+                <div className="mt-6 flex items-center justify-between">
+                  <button onClick={() => setCreateOpen(false)} className="rounded-full px-4 py-2 text-[13px] font-semibold text-neutral-500 hover:text-neutral-800">Annuler</button>
+                  <button
+                    onClick={() => void createPage()}
+                    disabled={pageAsk.trim().length < 8}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-neutral-900 px-5 py-2.5 text-[13px] font-semibold text-white transition hover:bg-neutral-700 disabled:opacity-40"
+                  >
+                    <Sparkles size={14} /> Composer ma page
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -514,10 +652,11 @@ export default function StudioEditor({ data }: { data: StudioData }) {
   );
 }
 
-function PageTabBtn({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
+function PageTabBtn({ active, onClick, onDoubleClick, children }: { active: boolean; onClick: () => void; onDoubleClick?: () => void; children: React.ReactNode }) {
   return (
     <button
       onClick={onClick}
+      onDoubleClick={onDoubleClick}
       className={`shrink-0 rounded-full px-3.5 py-1.5 text-[13px] font-semibold transition ${active ? "bg-neutral-900 text-white" : "text-neutral-600 hover:bg-neutral-100"}`}
     >
       {children}

@@ -20,7 +20,7 @@ import { vibeToCssVars } from "@/lib/foundry/vibes";
 import { vibeToSpec, fontHref } from "@/lib/foundry/charte";
 import { adaptContent } from "@/lib/foundry/agenceur";
 import { fieldsFor, type FieldType } from "@/lib/foundry/fields";
-import type { CatalogEntry, StudioSection, StudioVibe } from "./types";
+import type { CatalogEntry, PageTab, StudioSection, StudioVibe } from "./types";
 
 /* ============================== Aperçu thémé ============================== */
 
@@ -221,22 +221,31 @@ export function ContentPanel({
   section,
   siteId,
   mediaBank,
+  pages = [],
   onChange,
 }: {
   section: StudioSection;
   siteId: string;
   mediaBank: string[];
+  /** Pages du site — destinations proposées pour les liens du menu. */
+  pages?: PageTab[];
   onChange: (content: Record<string, unknown>) => void;
 }) {
   const fields = fieldsFor(section.content);
   const patch = (key: string, value: unknown) => onChange({ ...section.content, [key]: value });
+  // Les liens du menu (navbar) ont leur éditeur dédié : libellé + destination.
+  const isNavLinks = (key: string) => section.role === "navbar" && key === "links";
 
   return (
     <div className="flex flex-col gap-5">
       {fields.map((f) => (
         <div key={f.key} className="flex flex-col gap-1.5">
-          <label className="text-[12px] font-semibold uppercase tracking-wide text-neutral-400">{f.label}</label>
+          <label className="text-[12px] font-semibold uppercase tracking-wide text-neutral-400">{isNavLinks(f.key) ? "Boutons du menu" : f.label}</label>
 
+          {isNavLinks(f.key) && Array.isArray(f.value) ? (
+            <NavLinksField value={f.value} pages={pages} onChange={(v) => patch(f.key, v)} />
+          ) : (
+            <>
           {(f.type === "text" || f.type === "textarea" || f.type === "number" || f.type === "boolean") && (
             <ScalarInput type={f.type} value={f.value} onChange={(v) => patch(f.key, v)} />
           )}
@@ -301,9 +310,107 @@ export function ContentPanel({
               </button>
             </div>
           )}
+            </>
+          )}
         </div>
       ))}
       {fields.length === 0 && <p className="text-sm text-neutral-400">Cette section n'a pas de contenu modifiable.</p>}
+    </div>
+  );
+}
+
+/* ===================== Boutons du menu (liens de navbar) ===================== */
+
+type NavLinkValue = string | { label?: string; target?: string };
+
+/** Cible normalisée d'un lien stocké (chaîne = pas de destination). */
+function navTargetOf(l: NavLinkValue): string {
+  return typeof l === "object" && typeof l.target === "string" ? l.target : "";
+}
+function navLabelOf(l: NavLinkValue): string {
+  return typeof l === "string" ? l : (l.label ?? "");
+}
+
+/**
+ * Éditeur des boutons du menu : libellé + destination (Accueil, une page du
+ * site, ou un lien externe). Stocke une chaîne simple sans destination, sinon
+ * {label, target} — le format que le site publié sait résoudre.
+ */
+function NavLinksField({
+  value,
+  pages,
+  onChange,
+}: {
+  value: unknown[];
+  pages: PageTab[];
+  onChange: (v: unknown[]) => void;
+}) {
+  const links = value as NavLinkValue[];
+  const set = (i: number, label: string, target: string) => {
+    const next = [...links];
+    next[i] = target ? { label, target } : label;
+    onChange(next);
+  };
+  const isExternal = (t: string) => /^https?:\/\//.test(t);
+  return (
+    <div className="flex flex-col gap-2">
+      {links.map((l, i) => {
+        const label = navLabelOf(l);
+        const target = navTargetOf(l);
+        // Valeur du sélecteur : "" (aucune), "home", slug de page, "__ext" (externe).
+        const selectValue = isExternal(target) ? "__ext" : target;
+        return (
+          <div key={i} className="rounded-xl border border-neutral-200 bg-neutral-50/60 p-2.5">
+            <div className="flex items-center gap-1.5">
+              <input
+                value={label}
+                onChange={(e) => set(i, e.target.value, target)}
+                placeholder="Libellé"
+                className={inputCls}
+              />
+              <button
+                onClick={() => onChange(links.filter((_, j) => j !== i))}
+                className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-neutral-300 hover:bg-red-50 hover:text-red-500"
+                title="Retirer ce bouton"
+              >
+                <Trash2 size={14} />
+              </button>
+            </div>
+            <div className="mt-1.5 flex items-center gap-1.5">
+              <Link2 size={13} className="shrink-0 text-neutral-300" />
+              <select
+                value={selectValue}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  set(i, label, v === "__ext" ? "https://" : v);
+                }}
+                className="h-8 w-full rounded-lg border border-neutral-200 bg-white px-2 text-[12.5px] text-neutral-700 outline-none focus:border-neutral-900"
+              >
+                <option value="">Sans lien</option>
+                <option value="home">Accueil</option>
+                {pages.map((p) => (
+                  <option key={p.id} value={p.slug}>Page « {p.title} »</option>
+                ))}
+                <option value="__ext">Lien externe…</option>
+              </select>
+            </div>
+            {isExternal(target) && (
+              <input
+                value={target}
+                onChange={(e) => set(i, label, e.target.value)}
+                placeholder="https://…"
+                className={`${inputCls} mt-1.5`}
+              />
+            )}
+          </div>
+        );
+      })}
+      <button
+        onClick={() => onChange([...links, "Nouveau"])}
+        className="self-start text-[12.5px] font-semibold text-neutral-500 hover:text-neutral-900"
+      >
+        + Ajouter un bouton
+      </button>
     </div>
   );
 }

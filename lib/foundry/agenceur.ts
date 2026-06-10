@@ -84,6 +84,23 @@ function normalizeValue(sampleVal: unknown, rawVal: unknown, key: string, opts: 
   }
   if (Array.isArray(sampleVal)) {
     if (!Array.isArray(rawVal) || rawVal.length === 0) return sampleVal;
+    // Liens de navigation : mélange accepté de chaînes et d'objets {label,target}
+    // ({target} = page du site, posé par addNavLink — à PRÉSERVER, undo compris).
+    if (key === "links") {
+      const links = rawVal
+        .map((x) => {
+          if (typeof x === "string" && x.trim()) return x.trim().slice(0, 80);
+          if (isPlainObject(x) && typeof x.label === "string" && x.label.trim()) {
+            const label = x.label.trim().slice(0, 80);
+            const target = typeof x.target === "string" && x.target.trim() ? x.target.trim().slice(0, 120) : undefined;
+            return target ? { label, target } : label;
+          }
+          return null;
+        })
+        .filter((x): x is string | { label: string; target: string } => x !== null)
+        .slice(0, 8);
+      return links.length > 0 ? links : sampleVal;
+    }
     const first = sampleVal[0];
     if (typeof first === "string") {
       // Tableau de chaînes (images intercepté plus haut, ou texte pur).
@@ -458,15 +475,29 @@ export async function generateRecipe(input: AgenceurInput, chatFn: ChatFn): Prom
 // --- Sous-pages (création de page) -----------------------------------------------
 
 export interface SubPageInput {
-  title: string;
-  purpose: string;
+  /** Demande libre du client (« une page tarifs avec mes trois formules »…). */
+  request: string;
   businessName: string;
+  /** Pitch d'origine du client — contexte métier pour des textes justes. */
+  brief?: string;
+  /** Composants de l'accueil : la sous-page ne doit pas le recomposer. */
+  homeComponents?: string[];
+  /** Titres des pages existantes (noms d'onglets à ne pas réutiliser). */
+  existingTitles?: string[];
+}
+
+export interface SubPageResult {
+  /** Nom court de la page (onglet + lien navbar), déduit de la demande. */
+  title: string;
+  sections: RecipeSection[];
+  source: "ai" | "fallback";
 }
 
 /**
- * Sections d'une SOUS-PAGE (sans navbar ni footer — hérités de l'accueil) :
- * composants connus uniquement, un seul par rôle, navbar/footer écartés,
- * contenus normalisés. Minimum 2 sections (complétées si l'IA est trop maigre).
+ * Sections d'une SOUS-PAGE : composants connus uniquement, un seul par rôle,
+ * navbar/footer écartés (hérités de l'accueil) et hero écarté (réservé à
+ * l'accueil — c'est lui qui faisait ressembler les pages à des landings).
+ * Minimum 3 sections (complétées si l'IA est trop maigre).
  */
 export function repairSubPageSections(rawSections: unknown): RecipeSection[] {
   const seen = new Set<string>();
@@ -474,7 +505,7 @@ export function repairSubPageSections(rawSections: unknown): RecipeSection[] {
   for (const raw of Array.isArray(rawSections) ? rawSections : []) {
     if (!isPlainObject(raw) || typeof raw.component !== "string") continue;
     const m = getManifest(raw.component);
-    if (!m || m.role === "navbar" || m.role === "footer") continue; // hérités
+    if (!m || m.role === "navbar" || m.role === "footer" || m.role === "hero") continue;
     if (seen.has(m.role)) continue;
     seen.add(m.role);
     out.push({ component: m.id, content: normalizeSectionContent(m.id, raw.content) });
@@ -491,31 +522,91 @@ export function repairSubPageSections(rawSections: unknown): RecipeSection[] {
   return out;
 }
 
+/** Intentions de page reconnues : titre, plan de secours et intro dédiée. */
+const SUBPAGE_INTENTS: Array<{ match: RegExp; title: string; plan: string[]; intro: string }> = [
+  { match: /tarif|prix|formule|forfait|abonnement/i, title: "Tarifs", plan: ["intro-split", "pricing-cards", "faq-accordion", "cta-banner"], intro: "Des prix clairs, sans surprise : choisissez la formule qui vous correspond." },
+  { match: /contact|rendez-vous|rdv|joindre|appel/i, title: "Contact", plan: ["intro-split", "contact-block", "faq-accordion"], intro: "Une question, un projet ? Voici comment nous joindre — réponse rapide garantie." },
+  { match: /faq|question/i, title: "Questions fréquentes", plan: ["intro-split", "faq-accordion", "contact-block"], intro: "Les réponses aux questions qu'on nous pose le plus souvent." },
+  { match: /avis|t[ée]moignage|r[ée]f[ée]rence/i, title: "Avis clients", plan: ["intro-split", "testimonials-carousel", "stats-countup", "cta-banner"], intro: "Ce que nos clients disent de nous, en toute transparence." },
+  { match: /r[ée]alisation|galerie|portfolio|projet|chantier/i, title: "Réalisations", plan: ["intro-split", "process-steps", "testimonials-carousel", "cta-banner"], intro: "Un aperçu concret de notre savoir-faire à travers nos derniers projets." },
+  { match: /propos|histoire|[ée]quipe|qui (suis|sommes)|valeur/i, title: "À propos", plan: ["intro-split", "stats-countup", "testimonials-carousel", "cta-banner"], intro: "Notre histoire, nos valeurs et ce qui guide notre travail au quotidien." },
+  { match: /devis|estimation/i, title: "Devis", plan: ["intro-split", "process-steps", "contact-block"], intro: "Décrivez votre besoin : nous chiffrons vite, et sans engagement." },
+  { match: /service|prestation|offre|expertise/i, title: "Nos services", plan: ["intro-split", "services-rows", "process-steps", "cta-banner"], intro: "Le détail de nos prestations, pour savoir exactement ce que nous pouvons faire pour vous." },
+];
+
+const SUBPAGE_DEFAULT = { plan: ["intro-split", "services-rows", "faq-accordion", "cta-banner"], intro: "Tout ce qu'il faut savoir, simplement." };
+
+/** Mots de remplissage en tête de demande (« je veux une page sur… »). */
+const REQUEST_FILLER = /^(je (veux|voudrais|souhaite)|j'aimerais|cr[ée]e[rz]?|ajoute[rz]?|fais|une?|nouvelle|page|sous-page|d[ée]di[ée]e?|pour|sur|avec|qui|pr[ée]sente|parle de|de|des|du|la|le|les|mon|ma|mes)\s+/i;
+
+/** Déduit un nom court de page depuis la demande libre (sans IA). */
+export function deriveSubPageTitle(request: string): string {
+  const intent = SUBPAGE_INTENTS.find((r) => r.match.test(request));
+  if (intent) return intent.title;
+  let rest = request.trim();
+  for (let i = 0; i < 8; i++) {
+    const next = rest.replace(REQUEST_FILLER, "");
+    if (next === rest) break;
+    rest = next.trim();
+  }
+  const words = rest.split(/\s+/).filter(Boolean).slice(0, 3).join(" ").replace(/[.,;:!?…]+$/, "");
+  if (words.length < 2) return "Nouvelle page";
+  const t = words.charAt(0).toUpperCase() + words.slice(1);
+  return t.slice(0, 30);
+}
+
+/** Titre renvoyé par l'IA : nettoyé, court, sinon null. */
+function cleanAiTitle(raw: unknown): string | null {
+  if (typeof raw !== "string") return null;
+  const t = raw.trim().replace(/^["'«\s]+|["'»\s]+$/g, "").slice(0, 40);
+  return t.length >= 2 ? t : null;
+}
+
+/**
+ * Sous-page de secours (déterministe) : plan choisi selon l'INTENTION de la
+ * demande, en-tête de page au TITRE de la page (jamais le texte d'exemple).
+ */
+export function fallbackSubPageSections(input: SubPageInput, title: string): RecipeSection[] {
+  const intent = SUBPAGE_INTENTS.find((r) => r.match.test(`${title} ${input.request}`)) ?? SUBPAGE_DEFAULT;
+  const sections = intent.plan.map((id) => ({ component: id, content: normalizeSectionContent(id, {}) }));
+  // En-tête de page : titre + intro dédiée, reportés sémantiquement sur le bloc.
+  const head = sections[0];
+  const name = input.businessName.trim().slice(0, 60);
+  head.content = adaptContent(head.component, {
+    title,
+    ...(name ? { eyebrow: name } : {}),
+    subtitle: intent.intro,
+  });
+  return repairSubPageSections(sections);
+}
+
 function buildSubPageMessages(input: SubPageInput): Array<{ role: "system" | "user"; content: string }> {
-  const system = `Tu es l'ARCHITECTE-AGENCEUR d'Akyra. Tu composes une SOUS-PAGE d'un site vitrine existant (PAS une page d'accueil) à partir d'un CATALOGUE FERMÉ de composants. Tu choisis, ordonnes et rédiges les textes en français — tu ne crées jamais de composant ni de HTML.
+  const home = (input.homeComponents ?? []).join(", ") || "(composition inconnue)";
+  const titles = (input.existingTitles ?? []).join(" · ") || "(aucune)";
+  const system = `Tu es l'ARCHITECTE-AGENCEUR d'Akyra. Le client possède DÉJÀ un site une-page (l'accueil). Tu composes UNE NOUVELLE SOUS-PAGE de ce site à partir d'un CATALOGUE FERMÉ de composants : tu choisis, tu ordonnes, tu rédiges les textes en français — tu ne crées jamais de composant ni de HTML.
 
-C'EST UNE SOUS-PAGE, PAS UNE LANDING :
-- NE mets NI navbar NI footer : ils sont hérités de la page d'accueil (cohérence garantie).
-- Compose 2 à 5 sections de CONTENU pertinentes pour CETTE page et son but précis.
-- Commence par un bloc d'introduction/en-tête de page (intro-split ou un hero sobre), puis le contenu utile.
+UNE SOUS-PAGE N'EST PAS UNE LANDING :
+- PAS de navbar, PAS de footer (hérités de l'accueil), PAS de hero (réservé à l'accueil).
+- 3 à 5 sections : d'abord un EN-TÊTE DE PAGE (ex. "intro-split" : titre de la page + texte d'introduction), puis le contenu UTILE au sujet, et termine par un appel à l'action ou un bloc contact.
+- L'accueil contient déjà : ${home}. Ta page APPROFONDIT UN SUJET : chaque section doit dire quelque chose que l'accueil ne dit pas. Quand un autre composant du même rôle convient, préfère-le à celui déjà utilisé sur l'accueil.
 - Jamais deux composants du même rôle.
-- Reste cohérent avec un site existant : même niveau de langue, ton professionnel.
 
-RÈGLES DE CONTENU :
-- 100 % FRANÇAIS, écrit pour CE sujet précis. Zéro lorem ipsum.
-- Respecte EXACTEMENT la forme du "content" d'exemple (mêmes clés/types). Longueurs proches (±40 %).
+RÈGLES DE CONTENU (strictes) :
+- 100 % FRANÇAIS, écrit pour LE SUJET DE LA PAGE et pour CE client (activité ci-dessous). RÉÉCRIS TOUS les textes — ne recopie JAMAIS les textes d'exemple du catalogue.
+- Respecte EXACTEMENT la FORME du "content" d'exemple (mêmes clés/types). Longueurs proches (±40 %).
 - NE MODIFIE PAS les clés d'images : recopie la valeur de l'exemple à l'identique.
+- "title" : le NOM de la page pour le menu et l'onglet — 1 à 3 mots (ex. « Tarifs », « Nos services », « À propos »). Noms déjà pris (interdits) : ${titles}.
 
-SORTIE : JSON STRICT : {"sections":[{"component":"<id>","content":{...}}]}
+SORTIE : JSON STRICT : {"title":"<nom de la page>","sections":[{"component":"<id>","content":{...}}]}
 
 CATALOGUE :
 ${catalogForPrompt()}`;
 
-  const user = `SITE DE : « ${input.businessName.trim().slice(0, 80) || "(non précisé)"} »
-TITRE DE LA SOUS-PAGE : « ${input.title.trim().slice(0, 80)} »
-BUT / CONTENU DE LA PAGE : « ${input.purpose.trim().slice(0, 1000)} »
+  const user = `ACTIVITÉ DU CLIENT : « ${(input.brief ?? "").trim().slice(0, 600) || "(non précisée)"} »
+NOM DE L'ACTIVITÉ : ${input.businessName.trim().slice(0, 80) || "(non précisé)"}
+DEMANDE DU CLIENT POUR CETTE NOUVELLE PAGE : « ${input.request.trim().slice(0, 1000)} »
 
-Compose les sections de CONTENU de cette sous-page (sans navbar ni footer) et renvoie le JSON.`;
+Compose la sous-page (titre court + sections de contenu, sans navbar/footer/hero) et renvoie le JSON.`;
 
   return [
     { role: "system", content: system },
@@ -523,21 +614,13 @@ Compose les sections de CONTENU de cette sous-page (sans navbar ni footer) et re
   ];
 }
 
-export interface SubPageResult {
-  sections: RecipeSection[];
-  source: "ai" | "fallback";
-}
-
-/** Sections de secours pour une sous-page (déterministes, valides). */
-export function fallbackSubPageSections(): RecipeSection[] {
-  return repairSubPageSections([{ component: "intro-split" }, { component: "services-rows" }, { component: "cta-banner" }]);
-}
-
 /**
- * Génère les sections d'une sous-page. NE PEUT PAS ÉCHOUER : toute erreur
- * retombe sur des sections de contenu déterministes.
+ * Génère une sous-page (titre + sections) depuis la demande libre du client.
+ * NE PEUT PAS ÉCHOUER : toute erreur retombe sur un plan déterministe choisi
+ * selon l'intention de la demande, avec un en-tête au titre de la page.
  */
 export async function generateSubPage(input: SubPageInput, chatFn: ChatFn): Promise<SubPageResult> {
+  const derivedTitle = deriveSubPageTitle(input.request);
   try {
     const raw = await Promise.race([
       chatFn(buildSubPageMessages(input), { json: true, maxTokens: 4000 }),
@@ -547,9 +630,10 @@ export async function generateSubPage(input: SubPageInput, chatFn: ChatFn): Prom
     if (!parsed) throw new Error("réponse illisible");
     const sections = repairSubPageSections(parsed.sections);
     if (sections.length < 2) throw new Error("sous-page trop maigre");
-    return { sections, source: "ai" };
+    const title = cleanAiTitle((parsed as { title?: unknown }).title) ?? derivedTitle;
+    return { title, sections, source: "ai" };
   } catch (e) {
     console.error("[foundry/agenceur] sous-page → repli :", e instanceof Error ? e.message : e);
-    return { sections: fallbackSubPageSections(), source: "fallback" };
+    return { title: derivedTitle, sections: fallbackSubPageSections(input, derivedTitle), source: "fallback" };
   }
 }
