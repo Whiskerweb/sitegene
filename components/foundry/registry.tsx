@@ -2,6 +2,7 @@
 import type { ComponentType } from "react";
 import type { Skin } from "@/lib/foundry/types";
 import { MANIFESTS } from "@/lib/foundry/manifests";
+import { LIBRARY_COMPONENTS } from "./library";
 import HeroSplitAsym from "./components/HeroSplitAsym";
 import ServicesRows from "./components/ServicesRows";
 import TestimonialsCarousel from "./components/TestimonialsCarousel";
@@ -18,7 +19,8 @@ import FooterColumns from "./components/FooterColumns";
 
 type FoundryComponent = ComponentType<{ content: any; skin: Skin }>;
 
-export const COMPONENTS: Record<string, FoundryComponent> = {
+/** Socle historique (extraction Sereenity). */
+const CORE_COMPONENTS: Record<string, FoundryComponent> = {
   "hero-split-asym": HeroSplitAsym as FoundryComponent,
   "services-rows": ServicesRows as FoundryComponent,
   "testimonials-carousel": TestimonialsCarousel as FoundryComponent,
@@ -32,6 +34,12 @@ export const COMPONENTS: Record<string, FoundryComponent> = {
   "process-steps": ProcessSteps as FoundryComponent,
   "contact-block": ContactBlock as FoundryComponent,
   "footer-columns": FooterColumns as FoundryComponent,
+};
+
+/** Registre complet : socle + library extraite des sites. */
+export const COMPONENTS: Record<string, FoundryComponent> = {
+  ...CORE_COMPONENTS,
+  ...(LIBRARY_COMPONENTS as Record<string, FoundryComponent>),
 };
 
 // Garde de parité (dev) : tout manifest a un composant et inversement.

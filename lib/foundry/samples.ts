@@ -2,6 +2,7 @@
 // Contenu d'échantillon par composant — sert aux aperçus du catalogue dashboard
 // et à la route /foundry-preview/[id]. Couvre toutes les contentKeys de chaque manifest.
 import type { Recipe } from "./types";
+import { LIBRARY_SAMPLES } from "./library";
 
 const M = "/_templates/sereenity/media";
 
@@ -12,8 +13,8 @@ const REVIEWS = [
   { text: "Des outils concrets pour me reconstruire, en sécurité dès le premier jour.", name: "David R.", role: "Transition de vie", avatar: `${M}/av1.jpg` },
 ];
 
-/** Contenu d'échantillon par id de composant. */
-export const SAMPLES: Record<string, Record<string, unknown>> = {
+/** Échantillons du socle historique (extraction Sereenity). */
+const CORE_SAMPLES: Record<string, Record<string, unknown>> = {
   "hero-split-asym": {
     badge: "4,9",
     title: "Retrouvez votre équilibre, une séance à la fois.",
@@ -107,6 +108,12 @@ export const SAMPLES: Record<string, Record<string, unknown>> = {
     address: "12 rue des Tilleuls, 75011 Paris",
     cta: "Prendre rendez-vous",
   },
+};
+
+/** Échantillons complets : socle + library extraite des sites. */
+export const SAMPLES: Record<string, Record<string, unknown>> = {
+  ...CORE_SAMPLES,
+  ...LIBRARY_SAMPLES,
 };
 
 export function getSample(id: string): Record<string, unknown> {

@@ -181,6 +181,10 @@ export function repairRecipe(
     sections.unshift({ component: "hero-split-asym", content: normalizeSectionContent("hero-split-asym", {}) });
   }
 
+  // Navbar (optionnelle) toujours TOUT en haut, avant le hero.
+  const navIdx = sections.findIndex((s) => getManifest(s.component)?.role === "navbar");
+  if (navIdx > 0) sections.unshift(sections.splice(navIdx, 1)[0]);
+
   // Footer en queue (injecté si absent).
   const footIdx = sections.findIndex((s) => getManifest(s.component)?.role === "footer");
   if (footIdx !== -1 && footIdx !== sections.length - 1) sections.push(sections.splice(footIdx, 1)[0]);

@@ -1,12 +1,14 @@
 // lib/foundry/manifests.ts
 import type { ComponentManifest, VibeId } from "./types";
 import { VIBE_IDS } from "./vibes";
+import { LIBRARY_MANIFESTS } from "./library";
 
 // Les composants sont pilotés par les CSS vars de la vibe : ils supportent
 // toutes les DA du système (la personnalité vient des tokens, pas du markup).
 const ALL_VIBES: VibeId[] = VIBE_IDS;
 
-export const MANIFESTS: Record<string, ComponentManifest> = {
+/** Socle historique (extraction Sereenity) — la library extraite s'y ajoute. */
+const CORE_MANIFESTS: Record<string, ComponentManifest> = {
   "hero-split-asym": {
     id: "hero-split-asym",
     role: "hero",
@@ -137,6 +139,12 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
     contentKeys: ["eyebrow", "title", "email", "phone", "address", "cta"],
     allowedSkinKeys: ["accent", "surface"],
   },
+};
+
+/** Catalogue complet : socle + library extraite des sites. */
+export const MANIFESTS: Record<string, ComponentManifest> = {
+  ...CORE_MANIFESTS,
+  ...LIBRARY_MANIFESTS,
 };
 
 export function getManifest(id: string): ComponentManifest | undefined {

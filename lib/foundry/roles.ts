@@ -3,6 +3,7 @@
 // catalogue dashboard, l'API de génération (cartes du booster) et l'éditeur.
 
 export const ROLE_LABEL: Record<string, string> = {
+  navbar: "Barre de navigation",
   hero: "Hero",
   logos: "Bandeau de confiance",
   about: "À propos",
@@ -23,6 +24,7 @@ export const ROLE_LABEL: Record<string, string> = {
 };
 
 export const ROLE_ORDER = [
+  "navbar",
   "hero",
   "logos",
   "about",

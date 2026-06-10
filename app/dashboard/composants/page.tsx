@@ -16,6 +16,7 @@ import CatalogBrowser, {
 export const dynamic = "force-dynamic";
 
 const CATEGORY_LABEL: Record<string, string> = {
+  navbar: "Navigation",
   hero: "En-tête / Hero",
   logos: "Logos / Confiance",
   about: "À propos",
@@ -35,7 +36,7 @@ const CATEGORY_LABEL: Record<string, string> = {
   effets: "Effets divers",
 };
 const CATEGORY_ORDER = [
-  "hero", "logos", "about", "services", "process", "stats", "reviews", "gallery",
+  "navbar", "hero", "logos", "about", "services", "process", "stats", "reviews", "gallery",
   "media", "statement", "pricing", "faq", "contact", "cta", "decor", "footer", "effets",
 ];
 
