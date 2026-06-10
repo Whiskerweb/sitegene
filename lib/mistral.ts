@@ -8,7 +8,7 @@ const MISTRAL_URL = "https://api.mistral.ai/v1/chat/completions";
 
 type Msg = { role: "system" | "user" | "assistant"; content: string };
 
-async function chat(messages: Msg[], opts?: { json?: boolean; maxTokens?: number }): Promise<string> {
+export async function chat(messages: Msg[], opts?: { json?: boolean; maxTokens?: number }): Promise<string> {
   const key = process.env.MISTRAL_API_KEY;
   if (!key) throw new Error("MISTRAL_API_KEY manquant.");
   const model = process.env.MISTRAL_MODEL || "mistral-large-latest";

@@ -1,8 +1,20 @@
 // lib/foundry/types.ts
-export type VibeId = "warm-serif";
+export type VibeId =
+  | "warm-serif"
+  | "sage-nature"
+  | "ocean-confiance"
+  | "corail-studio"
+  | "mineral-precis"
+  | "encre-editoriale";
 
 export interface Vibe {
   id: VibeId;
+  /** Nom de palette montré au client (carte DA de l'onboarding). */
+  label: string;
+  /** 3 mots d'ambiance (carte DA). */
+  mood: string[];
+  /** Feuille Google Fonts chargée par l'Assembler (heading + body de la vibe). */
+  fontHref: string;
   palette: { ink: string; surface: string; card: string; accent: string; accent2: string; muted: string };
   fonts: { heading: string; body: string };
   radius: { card: string; xl: string; pill: string };

@@ -1,5 +1,10 @@
 // lib/foundry/manifests.ts
-import type { ComponentManifest } from "./types";
+import type { ComponentManifest, VibeId } from "./types";
+import { VIBE_IDS } from "./vibes";
+
+// Les composants sont pilotés par les CSS vars de la vibe : ils supportent
+// toutes les DA du système (la personnalité vient des tokens, pas du markup).
+const ALL_VIBES: VibeId[] = VIBE_IDS;
 
 export const MANIFESTS: Record<string, ComponentManifest> = {
   "hero-split-asym": {
@@ -8,7 +13,7 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
     rarity: "rare",
     description: "Hero 3 colonnes : accroche + preuve sociale (avatars) à gauche, grande photo au centre, mini-bloc + 2e photo à droite.",
     whenToUse: ["forte preuve sociale", "métier visuel/humain (coach, photographe, bien-être)", "hero riche premium"],
-    vibes: ["warm-serif"],
+    vibes: ALL_VIBES,
     contentKeys: ["badge", "title", "subtitle", "cta", "proofCount", "proofLabel", "image", "image2", "avatars"],
     allowedSkinKeys: ["accent", "surface"],
   },
@@ -18,7 +23,7 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
     rarity: "common",
     description: "Liste de services en grandes lignes numérotées (numéro + titre + description), séparées par des filets.",
     whenToUse: ["présenter 3 à 6 offres", "métier orienté prestations (coach, artisan)"],
-    vibes: ["warm-serif"],
+    vibes: ALL_VIBES,
     contentKeys: ["eyebrow", "title", "items"],
     allowedSkinKeys: ["accent", "surface"],
   },
@@ -28,7 +33,7 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
     rarity: "common",
     description: "Carrousel de cartes-avis en défilement continu (marquee) : citation, avatar, nom, rôle.",
     whenToUse: ["au moins 3 témoignages clients", "renforcer la confiance"],
-    vibes: ["warm-serif"],
+    vibes: ALL_VIBES,
     contentKeys: ["eyebrow", "title", "items"],
     allowedSkinKeys: ["accent", "surface"],
   },
@@ -38,7 +43,7 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
     rarity: "common",
     description: "Footer en colonnes : marque + tagline, liens, contact ; barre basse copyright.",
     whenToUse: ["clôture de page (toujours)"],
-    vibes: ["warm-serif"],
+    vibes: ALL_VIBES,
     contentKeys: ["brand", "tagline", "columns", "copyright"],
     allowedSkinKeys: ["surface"],
   },
@@ -48,7 +53,7 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
     rarity: "rare",
     description: "Avis clients en marquee de « notes épinglées » : cartes blanches légèrement inclinées avec un pin coloré qui dépasse, sur un fond pinboard jaune doux. Citation, avatar, nom.",
     whenToUse: ["au moins 3 avis clients", "vouloir un bloc avis à fort parti pris design", "ambiance chaleureuse/créative"],
-    vibes: ["warm-serif"],
+    vibes: ALL_VIBES,
     contentKeys: ["eyebrow", "title", "items"],
     allowedSkinKeys: ["accent", "surface"],
   },
@@ -58,7 +63,7 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
     rarity: "common",
     description: "FAQ en accordéon 2 colonnes : intro (éyebrow + titre) à gauche, questions dépliables à droite (icône + qui pivote, réponse en hauteur animée).",
     whenToUse: ["lever les objections avant conversion", "4 à 6 questions fréquentes"],
-    vibes: ["warm-serif"],
+    vibes: ALL_VIBES,
     contentKeys: ["eyebrow", "title", "items"],
     allowedSkinKeys: ["accent", "surface"],
   },
@@ -68,7 +73,7 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
     rarity: "common",
     description: "Bandeau de conversion : panneau encre (image de fond optionnelle + voile), grande phrase Castoro et bouton pilule. Clôture de page.",
     whenToUse: ["pousser à l'action en fin de page", "rappeler le CTA principal"],
-    vibes: ["warm-serif"],
+    vibes: ALL_VIBES,
     contentKeys: ["title", "cta"],
     allowedSkinKeys: ["accent", "surface"],
   },
@@ -78,7 +83,7 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
     rarity: "common",
     description: "Bandeau de confiance : noms/partenaires en défilement continu (marquee), discret et atténué.",
     whenToUse: ["afficher des partenaires / médias / clients", "preuve de confiance légère sous le hero"],
-    vibes: ["warm-serif"],
+    vibes: ALL_VIBES,
     contentKeys: ["items"],
     allowedSkinKeys: ["surface"],
   },
@@ -88,7 +93,7 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
     rarity: "common",
     description: "Tarifs en 3 cartes (une vedette en encre) : nom, prix, features à coches, bouton. Clair et lisible.",
     whenToUse: ["présenter des offres/forfaits", "page ou section tarifs"],
-    vibes: ["warm-serif"],
+    vibes: ALL_VIBES,
     contentKeys: ["eyebrow", "title", "plans"],
     allowedSkinKeys: ["accent", "surface"],
   },
@@ -98,7 +103,7 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
     rarity: "rare",
     description: "Chiffres clés en grand, qui s'incrémentent de 0 à leur valeur à l'entrée dans l'écran (count-up au scroll).",
     whenToUse: ["preuve sociale chiffrée (clients, %, années)", "marquer la crédibilité"],
-    vibes: ["warm-serif"],
+    vibes: ALL_VIBES,
     contentKeys: ["eyebrow", "title", "items"],
     allowedSkinKeys: ["accent", "surface"],
   },
@@ -108,7 +113,7 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
     rarity: "common",
     description: "Bloc à propos en 2 colonnes : image + texte (éyebrow, titre, paragraphe, liste à coches optionnelle).",
     whenToUse: ["présenter la personne / l'histoire", "section à propos", "humaniser le site"],
-    vibes: ["warm-serif"],
+    vibes: ALL_VIBES,
     contentKeys: ["eyebrow", "title", "body", "image"],
     allowedSkinKeys: ["accent", "surface"],
   },
@@ -118,7 +123,7 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
     rarity: "common",
     description: "Étapes du parcours en 3 cartes numérotées (comment ça se passe / les étapes).",
     whenToUse: ["expliquer le déroulé / la méthode", "rassurer sur le process"],
-    vibes: ["warm-serif"],
+    vibes: ALL_VIBES,
     contentKeys: ["eyebrow", "title", "steps"],
     allowedSkinKeys: ["accent", "surface"],
   },
@@ -128,7 +133,7 @@ export const MANIFESTS: Record<string, ComponentManifest> = {
     rarity: "common",
     description: "Bloc contact : titre + bouton à gauche, coordonnées (email / téléphone / adresse) à droite, sur carte crème.",
     whenToUse: ["donner les coordonnées + pousser à prendre RDV", "section ou page contact"],
-    vibes: ["warm-serif"],
+    vibes: ALL_VIBES,
     contentKeys: ["eyebrow", "title", "email", "phone", "address", "cta"],
     allowedSkinKeys: ["accent", "surface"],
   },
