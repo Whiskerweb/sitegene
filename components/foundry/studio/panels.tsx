@@ -396,14 +396,103 @@ const RADIUS_PRESETS: Record<string, { card: string; xl: string }> = {
   Doux: { card: "16px", xl: "24px" },
   Rond: { card: "24px", xl: "32px" },
 };
-const COLOR_FIELDS: Array<{ key: keyof StudioVibe["palette"]; label: string }> = [
-  { key: "accent", label: "Accent" },
-  { key: "ink", label: "Texte" },
-  { key: "surface", label: "Fond" },
-  { key: "card", label: "Cartes" },
-  { key: "accent2", label: "Accent 2" },
-  { key: "muted", label: "Texte doux" },
+const COLOR_FIELDS: Array<{ key: keyof StudioVibe["palette"]; label: string; hint: string }> = [
+  { key: "accent", label: "Accent", hint: "Boutons, liens" },
+  { key: "ink", label: "Texte", hint: "Titres & paragraphes" },
+  { key: "surface", label: "Fond", hint: "Arrière-plan des pages" },
+  { key: "card", label: "Cartes", hint: "Encarts, blocs" },
+  { key: "accent2", label: "Accent 2", hint: "Touches secondaires" },
+  { key: "muted", label: "Texte doux", hint: "Légendes" },
 ];
+
+// Nuancier curé — teintes harmonieuses (jamais de néon), 9 familles × 7 nuances.
+const SWATCHES: string[][] = [
+  ["#1c1917", "#44403c", "#78716c", "#a8a29e", "#d6d3d1", "#e7e5e4", "#faf9f7"], // pierre
+  ["#3a2418", "#6b4423", "#8d6959", "#a78a7a", "#c9b3a6", "#e1937d", "#f6e7df"], // terre / clay
+  ["#1a2e05", "#3f6212", "#5a7d52", "#84a98c", "#a7c4a0", "#cad2c5", "#eef2e7"], // sauge
+  ["#0c1626", "#1d4ed8", "#2456e6", "#3b82f6", "#6ea8fe", "#bfdbfe", "#eff6ff"], // océan
+  ["#082f2a", "#0f766e", "#14b8a6", "#5eead4", "#99f6e4", "#ccfbf1", "#f0fdfa"], // émeraude
+  ["#3b0a18", "#9d174d", "#b03a64", "#db2777", "#f472b6", "#fbcfe8", "#fdf2f8"], // framboise
+  ["#2e1065", "#5b21b6", "#7c3aed", "#9d4edd", "#c4b5fd", "#ddd6fe", "#f5f3ff"], // améthyste
+  ["#431407", "#9a3412", "#c2410c", "#e8543f", "#fb923c", "#fed7aa", "#fff7ed"], // corail
+  ["#422006", "#854d0e", "#b07d2e", "#d8a23a", "#facc15", "#fde68a", "#fefce8"], // ambre
+];
+const FLAT_SWATCHES = SWATCHES.flat();
+
+const HEX6 = /^#[0-9a-fA-F]{6}$/;
+
+/** Sélecteur de couleur moderne : nuancier curé + saisie hex + réglage fin. */
+function ColorField({ label, hint, value, onChange }: { label: string; hint: string; value: string; onChange: (v: string) => void }) {
+  const [open, setOpen] = useState(false);
+  const [hex, setHex] = useState(value);
+  useEffect(() => setHex(value), [value]);
+  const commitHex = (v: string) => {
+    setHex(v);
+    if (HEX6.test(v.trim())) onChange(v.trim().toLowerCase());
+  };
+  const current = value.toLowerCase();
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className={`flex w-full items-center gap-2.5 rounded-xl border bg-white px-2.5 py-2 text-left transition ${open ? "border-neutral-900 ring-1 ring-neutral-900" : "border-neutral-200 hover:border-neutral-400"}`}
+      >
+        <span className="h-8 w-8 shrink-0 rounded-lg border border-black/10 shadow-inner" style={{ background: value }} />
+        <span className="min-w-0 flex-1">
+          <span className="block text-[12.5px] font-semibold text-neutral-800">{label}</span>
+          <span className="block truncate text-[10.5px] text-neutral-400">{hint}</span>
+        </span>
+        <span className="font-mono text-[10px] uppercase text-neutral-400">{value.replace("#", "")}</span>
+      </button>
+
+      {open && (
+        <>
+          <div className="fixed inset-0 z-[71]" onClick={() => setOpen(false)} />
+          <div className="absolute left-0 right-0 top-[calc(100%+6px)] z-[72] rounded-2xl border border-neutral-200 bg-white p-3 shadow-2xl">
+            <div className="grid grid-cols-7 gap-1.5">
+              {FLAT_SWATCHES.map((c) => {
+                const sel = c.toLowerCase() === current;
+                return (
+                  <button
+                    key={c}
+                    type="button"
+                    onClick={() => { onChange(c); setHex(c); setOpen(false); }}
+                    title={c}
+                    className={`relative h-6 w-full rounded-md border transition hover:scale-110 ${sel ? "ring-2 ring-neutral-900 ring-offset-1" : "border-black/10"}`}
+                    style={{ background: c }}
+                  >
+                    {sel && <Check size={11} className="absolute inset-0 m-auto" style={{ color: tone(c) }} />}
+                  </button>
+                );
+              })}
+            </div>
+            <div className="mt-3 flex items-center gap-2 border-t border-neutral-100 pt-3">
+              <label className="relative h-8 w-8 shrink-0 overflow-hidden rounded-lg border border-neutral-200" style={{ background: value }} title="Réglage fin">
+                <input type="color" value={HEX6.test(value) ? value : "#000000"} onChange={(e) => onChange(e.target.value)} className="absolute inset-0 h-full w-full cursor-pointer opacity-0" />
+              </label>
+              <span className="font-mono text-[13px] text-neutral-400">#</span>
+              <input
+                value={hex.replace("#", "")}
+                onChange={(e) => commitHex("#" + e.target.value.replace(/[^0-9a-fA-F]/g, "").slice(0, 6))}
+                placeholder="8d6959"
+                className="w-24 rounded-lg border border-neutral-200 px-2 py-1.5 font-mono text-[12px] uppercase text-neutral-700 outline-none focus:border-neutral-900"
+              />
+              <span className="ml-auto text-[11px] text-neutral-400">Réglage fin →</span>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+/** Couleur de coche lisible sur un fond donné (noir/blanc selon luminance). */
+function tone(hex: string): string {
+  if (!HEX6.test(hex)) return "#fff";
+  const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+  return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255 > 0.55 ? "#111" : "#fff";
+}
 
 export function PalettePanel({
   vibe,
@@ -464,17 +553,9 @@ export function PalettePanel({
 
       <div>
         <p className="mb-2 text-[12px] font-semibold uppercase tracking-wide text-neutral-400">Couleurs</p>
-        <div className="grid grid-cols-2 gap-2.5">
-          {COLOR_FIELDS.map(({ key, label }) => (
-            <label key={key} className="flex items-center gap-2 rounded-xl border border-neutral-200 bg-white px-2.5 py-2">
-              <span className="relative h-7 w-7 shrink-0 overflow-hidden rounded-lg border border-neutral-200" style={{ background: vibe.palette[key] }}>
-                <input type="color" value={vibe.palette[key]} onChange={(e) => setColor(key, e.target.value)} className="absolute inset-0 h-full w-full cursor-pointer opacity-0" />
-              </span>
-              <span className="min-w-0">
-                <span className="block text-[12px] font-semibold text-neutral-700">{label}</span>
-                <span className="block font-mono text-[10px] uppercase text-neutral-400">{vibe.palette[key]}</span>
-              </span>
-            </label>
+        <div className="flex flex-col gap-2">
+          {COLOR_FIELDS.map(({ key, label, hint }) => (
+            <ColorField key={key} label={label} hint={hint} value={vibe.palette[key]} onChange={(v) => setColor(key, v)} />
           ))}
         </div>
       </div>
