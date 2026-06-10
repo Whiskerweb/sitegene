@@ -116,25 +116,15 @@ export default async function ComposantsPage({
   };
 
   const all = buildItems();
-  const counts = {
-    common: all.filter((m) => m.rarity === "common").length,
-    rare: all.filter((m) => m.rarity === "rare").length,
-    epic: all.filter((m) => m.rarity === "epic").length,
-  };
-  const nSections = all.filter((m) => m.type === "section").length;
-  const nEffets = all.filter((m) => m.type === "effet").length;
-  const nCats = new Set(all.map((m) => m.role)).size;
 
   return (
     <div className="mx-auto max-w-[1280px] px-1 py-2">
       <header className="mb-6">
         <h1 className="text-2xl font-bold text-neutral-900">Composants</h1>
         <p className="mt-1 text-sm text-neutral-600">
-          {all.length} pièces · {nSections} sections + {nEffets} effets · {nCats} catégories · {counts.common}{" "}
-          communs / {counts.rare} rares / {counts.epic} épiques.
           {foundrySite
-            ? " Les communs sont inclus ; débloquez les rares et épiques, et regardez chaque pièce sur VOTRE site avant de choisir."
-            : " Filtre par section, rareté ou type ; aperçu réel sous la DA « warm-serif »."}
+            ? "Les communs sont inclus. Débloquez les rares et les épiques — et regardez chaque pièce sur votre site avant de choisir."
+            : "Les pièces qui composent les sites Akyra, triées par section."}
         </p>
       </header>
       <CatalogBrowser

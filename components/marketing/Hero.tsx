@@ -43,7 +43,7 @@ export default function Hero() {
     try {
       const { data } = await createClient().auth.getUser();
       if (data.user) {
-        router.push("/onboarding");
+        router.push("/creer");
         return;
       }
     } catch {
@@ -176,7 +176,8 @@ export default function Hero() {
         open={gateOpen}
         onClose={() => setGateOpen(false)}
         brief={prompt.trim()}
-        onAuthed={() => router.push("/onboarding")}
+        redirectTo="/creer"
+        onAuthed={() => router.push("/creer")}
       />
     </section>
   );

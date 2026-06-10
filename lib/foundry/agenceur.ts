@@ -5,7 +5,7 @@
 // sortie passe par normalisation (formes calées sur les samples) + réparation
 // (hero/footer garantis, rôles dédupliqués) + repli déterministe si l'IA échoue :
 // la génération ne peut PAS échouer. Zéro import réseau ici (chatFn injectée).
-import type { Recipe, RecipeSection, VibeId } from "./types";
+import type { Recipe, RecipeSection, Vibe, VibeId } from "./types";
 import { getManifest, listManifests } from "./manifests";
 import { getSample } from "./samples";
 import { getVibe } from "./vibes";
@@ -18,6 +18,8 @@ export interface AgenceurInput {
   vibeId: string;
   /** Accent personnalisé (hex) choisi sur la carte DA — facultatif. */
   accent?: string;
+  /** Charte sur mesure (déjà RÉPARÉE via repairCharte) — prime sur vibeId. */
+  customVibe?: Vibe;
 }
 
 export type ChatFn = (
@@ -153,7 +155,8 @@ export function repairRecipe(
   rawSections: unknown,
   input: AgenceurInput,
 ): Recipe {
-  const vibeId = (getVibe(input.vibeId)?.id ?? "warm-serif") as VibeId;
+  const customVibe = input.customVibe;
+  const vibeId: string = customVibe ? "custom" : ((getVibe(input.vibeId)?.id ?? "warm-serif") as VibeId);
   const accent = input.accent && HEX.test(input.accent.trim()) ? input.accent.trim() : undefined;
 
   const seenRoles = new Set<string>();
@@ -199,7 +202,7 @@ export function repairRecipe(
 
   applyBusinessName(sections, input.businessName);
 
-  return { vibe: vibeId, brand: accent ? { primary: accent } : undefined, sections };
+  return { vibe: vibeId, customVibe, brand: accent ? { primary: accent } : undefined, sections };
 }
 
 // --- Repli déterministe ----------------------------------------------------------
@@ -242,7 +245,7 @@ function catalogForPrompt(): string {
 }
 
 export function buildAgenceurMessages(input: AgenceurInput): Array<{ role: "system" | "user"; content: string }> {
-  const vibe = getVibe(input.vibeId);
+  const vibe = input.customVibe ?? getVibe(input.vibeId);
   const trade = detectTrade(input.brief);
   const system = `Tu es l'ARCHITECTE-AGENCEUR d'Akyra. Tu assembles des sites vitrines en français à partir d'un CATALOGUE FERMÉ de composants. Tu ne crées JAMAIS de composant ni de HTML : tu choisis, tu ordonnes, tu rédiges les textes. Tu penses comme un architecte : utilité de chaque section, rythme visuel, conversion.
 

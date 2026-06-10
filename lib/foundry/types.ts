@@ -8,7 +8,8 @@ export type VibeId =
   | "encre-editoriale";
 
 export interface Vibe {
-  id: VibeId;
+  /** Id d'une vibe curée, ou "custom" pour une charte générée sur mesure. */
+  id: VibeId | "custom";
   /** Nom de palette montré au client (carte DA de l'onboarding). */
   label: string;
   /** 3 mots d'ambiance (carte DA). */
@@ -49,7 +50,10 @@ export interface RecipeSection {
 }
 
 export interface Recipe {
-  vibe: VibeId;
+  /** Id de vibe curée, ou "custom" si customVibe est embarquée. */
+  vibe: string;
+  /** Charte sur mesure (générée par l'IA, réparée serveur) — prime sur `vibe`. */
+  customVibe?: Vibe;
   brand?: { primary?: string; logo?: string };
   sections: RecipeSection[];
 }

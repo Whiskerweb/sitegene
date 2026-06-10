@@ -6,7 +6,9 @@ import type { Recipe, RecipeValidation, ResolvedSection, SkinKey } from "./types
 export function validateRecipe(recipe: Recipe): RecipeValidation {
   const errors: string[] = [];
   const resolved: ResolvedSection[] = [];
-  const vibeOk = !!getVibe(recipe.vibe);
+  // Charte sur mesure embarquée (déjà réparée serveur) OU vibe curée connue.
+  const custom = !!recipe.customVibe;
+  const vibeOk = custom || !!getVibe(recipe.vibe);
   if (!vibeOk) errors.push(`vibe inconnue : ${recipe.vibe}`);
 
   recipe.sections.forEach((s, i) => {
@@ -17,7 +19,8 @@ export function validateRecipe(recipe: Recipe): RecipeValidation {
     }
     // Erreurs propres à CETTE section : si non vide, la section n'est pas résolue.
     const sectionErrors: string[] = [];
-    if (vibeOk && !m.vibes.includes(recipe.vibe)) {
+    // Les composants sont pilotés par tokens : une charte custom vaut pour tous.
+    if (vibeOk && !custom && !m.vibes.includes(recipe.vibe as never)) {
       sectionErrors.push(`[${i}] ${s.component} : non testé pour la vibe ${recipe.vibe}`);
     }
     for (const k of m.contentKeys) {

@@ -13,7 +13,8 @@ export default function Assembler({
   /** Aperçu marketplace : section mise en avant (anneau accent + scroll auto). */
   highlightIndex?: number;
 }) {
-  const vibe = getVibe(recipe.vibe);
+  // Charte sur mesure embarquée dans la recette, sinon vibe curée du registre.
+  const vibe = recipe.customVibe ?? getVibe(recipe.vibe);
   if (!vibe) return <div style={{ padding: 40 }}>Vibe inconnue : {recipe.vibe}</div>;
 
   const v = validateRecipe(recipe);

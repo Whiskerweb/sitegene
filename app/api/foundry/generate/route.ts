@@ -3,6 +3,7 @@ import { getUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { chat } from "@/lib/mistral";
 import { generateRecipe, type AgenceurInput } from "@/lib/foundry/agenceur";
+import { repairCharte } from "@/lib/foundry/charte";
 import {
   FOUNDRY_TEMPLATE_ID,
   ensureFoundryTemplateRow,
@@ -27,6 +28,12 @@ export async function POST(request: Request) {
   const businessName = typeof body?.businessName === "string" ? body.businessName.trim() : "";
   const vibeId = typeof body?.vibeId === "string" ? body.vibeId : "";
   const accent = typeof body?.accent === "string" ? body.accent : undefined;
+  // Charte sur mesure (spec d'échange du tunnel) : JAMAIS prise telle quelle —
+  // re-réparée serveur (contrastes, saturation, fonts en liste blanche).
+  const customVibe =
+    body?.charteSpec && typeof body.charteSpec === "object"
+      ? repairCharte(body.charteSpec)
+      : undefined;
   if (brief.length < 10 || brief.length > 2000) {
     return NextResponse.json({ error: "Décrivez votre activité en quelques phrases (10 caractères minimum)." }, { status: 400 });
   }
@@ -46,7 +53,7 @@ export async function POST(request: Request) {
     .maybeSingle();
   if (liveSite?.id) return NextResponse.json({ redirect: "/dashboard" });
 
-  const input: AgenceurInput = { brief, businessName, vibeId, accent };
+  const input: AgenceurInput = { brief, businessName, vibeId, accent, customVibe };
   const { recipe, source } = await generateRecipe(input, chat);
 
   try {

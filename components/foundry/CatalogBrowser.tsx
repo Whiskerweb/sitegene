@@ -109,20 +109,9 @@ function Card({
       <div className="flex flex-1 flex-col p-4">
         <div className="flex items-center justify-between gap-2">
           <h3 className="text-[15px] font-semibold text-neutral-900">{it.name}</h3>
-          {showMarket ? (
-            <PriceBadge it={it} owned={market!.owned.includes(it.id)} prices={market!.prices} />
-          ) : (
-            <code className="rounded bg-neutral-100 px-1.5 py-0.5 text-[11px] text-neutral-500">{it.id}</code>
-          )}
+          {showMarket ? <PriceBadge it={it} owned={market!.owned.includes(it.id)} prices={market!.prices} /> : null}
         </div>
-        <p className="mt-2 text-[13px] leading-relaxed text-neutral-600">{it.description}</p>
-        {it.whenToUse.length > 0 && (
-          <div className="mt-3 flex flex-wrap gap-1.5">
-            {it.whenToUse.slice(0, 3).map((w) => (
-              <span key={w} className="rounded-full bg-neutral-100 px-2 py-0.5 text-[11px] text-neutral-500">{w}</span>
-            ))}
-          </div>
-        )}
+        <p className="mt-1.5 line-clamp-2 text-[13px] leading-relaxed text-neutral-500">{it.description}</p>
 
         {/* Couche marketplace */}
         {showMarket && (
@@ -179,7 +168,8 @@ export default function CatalogBrowser({
   const router = useRouter();
   const [cat, setCat] = useState<string>(initialCat);
   const [rarity, setRarity] = useState<Rarity | "all">("all");
-  const [type, setType] = useState<ItemType | "all">("all");
+  // Onglet courant : les sections d'abord (les effets sont une vue à part).
+  const [type, setType] = useState<ItemType | "all">("section");
   const [owned, setOwned] = useState<string[]>(market?.owned ?? []);
   const [balance, setBalance] = useState<number>(market?.balance ?? 0);
   const [preview, setPreview] = useState<CatalogItem | null>(null);
@@ -280,30 +270,40 @@ export default function CatalogBrowser({
         </div>
       )}
 
-      {/* Filtres */}
-      <div className="mb-8 flex flex-col gap-3">
+      {/* Filtres — une vue simple : onglets de type, puis une rangée catégories + rareté */}
+      <div className="mb-7 flex flex-col gap-3">
+        <div className="flex items-center justify-between border-b border-black/10">
+          <div className="flex gap-1">
+            {([
+              ["section", "Sections"],
+              ["effet", "Effets"],
+            ] as Array<[ItemType, string]>).map(([k, label]) => (
+              <button
+                key={k}
+                type="button"
+                onClick={() => { setType(k); setCat("all"); }}
+                className={`-mb-px border-b-2 px-4 py-2.5 text-[15px] font-semibold transition-colors ${
+                  type === k ? "border-neutral-900 text-neutral-900" : "border-transparent text-neutral-400 hover:text-neutral-600"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          {ctx ? <span className="text-xs font-medium text-neutral-400">Solde {balance} ✦</span> : null}
+        </div>
         <div className="flex flex-wrap items-center gap-2">
-          <span className="mr-1 text-xs font-semibold uppercase tracking-wide text-neutral-400">Section</span>
-          <Chip active={cat === "all"} onClick={() => setCat("all")}>Toutes</Chip>
+          <Chip active={cat === "all"} onClick={() => setCat("all")}>Tout</Chip>
           {cats.map((c) => (
             <Chip key={c} active={cat === c} onClick={() => setCat(c)}>{categoryLabel[c] ?? c}</Chip>
           ))}
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="mr-1 text-xs font-semibold uppercase tracking-wide text-neutral-400">Rareté</span>
-          <Chip active={rarity === "all"} onClick={() => setRarity("all")}>Toutes</Chip>
+          <span className="mx-2 h-5 w-px bg-black/10" />
           {(["common", "rare", "epic"] as Rarity[]).map((k) => (
-            <Chip key={k} active={rarity === k} onClick={() => setRarity(k)}>{RARITY[k].label}</Chip>
+            <Chip key={k} active={rarity === k} onClick={() => setRarity(rarity === k ? "all" : k)}>
+              {RARITY[k].label}
+            </Chip>
           ))}
-          <span className="ml-4 mr-1 text-xs font-semibold uppercase tracking-wide text-neutral-400">Type</span>
-          <Chip active={type === "all"} onClick={() => setType("all")}>Tous</Chip>
-          <Chip active={type === "section"} onClick={() => setType("section")}>Sections</Chip>
-          <Chip active={type === "effet"} onClick={() => setType("effet")}>Effets</Chip>
         </div>
-        <p className="text-xs text-neutral-400">
-          {filtered.length} pièce{filtered.length > 1 ? "s" : ""} affichée{filtered.length > 1 ? "s" : ""}
-          {ctx ? ` · solde ${balance} ✦` : ""}
-        </p>
       </div>
 
       {/* Résultats groupés par section */}

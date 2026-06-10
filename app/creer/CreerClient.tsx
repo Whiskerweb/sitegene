@@ -3,10 +3,13 @@
 /**
  * Tunnel de création gamifié (~90 s) — l'ADN « assembleur » :
  *   1. pitch  : décrivez votre activité (1 champ + nom)
- *   2. vibe   : choisissez votre direction artistique (cartes palette façon Stitch)
+ *   2. vibe   : CHARTE GRAPHIQUE SUR MESURE — 3 propositions composées par
+ *               l'IA pour ce client (palette calibrée, paire typographique,
+ *               formes), présentées en cartes façon brand-kit : swatches hex,
+ *               spécimens Aa display/body, boutons. Régénérables.
  *   3. pack   : l'architecte assemble — les sections tombent comme des cartes
  *               à rareté (ouverture de booster)
- *   4. reveal : votre site, en vrai, sur votre DA
+ *   4. reveal : votre site, en vrai, sur votre charte
  * Le compte n'est demandé qu'au moment d'assembler (AuthGate inline). L'état
  * survit au redirect OAuth via sessionStorage.
  */
@@ -15,13 +18,22 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import AuthGate from "@/components/auth/AuthGate";
 import { AkyraMark } from "@/components/ui/Logo";
-import { listVibes, getVibe } from "@/lib/foundry/vibes";
-import { suggestVibes } from "@/lib/foundry/suggest";
-import type { Vibe } from "@/lib/foundry/types";
 
 type Phase = "pitch" | "vibe" | "pack" | "reveal";
 
 type Card = { component: string; role: string; roleLabel: string; rarity: "common" | "rare" | "epic" };
+
+/** Vibe sérialisée (renvoyée par /api/foundry/charte). */
+type VibeData = {
+  id: string;
+  label: string;
+  mood: string[];
+  fontHref: string;
+  palette: { ink: string; surface: string; card: string; accent: string; accent2: string; muted: string };
+  fonts: { heading: string; body: string };
+  radius: { card: string; xl: string; pill: string };
+};
+type Charte = { vibe: VibeData; spec: Record<string, unknown>; reason: string };
 
 const STATE_KEY = "akyra_creer";
 
@@ -46,19 +58,19 @@ const ASSEMBLY_STEPS = [
   "Derniers réglages d'agencement…",
 ];
 
-/** Accents proposés sur une carte DA : celui de la vibe + variations sûres. */
-function accentChoices(v: Vibe): string[] {
-  return [v.palette.accent, v.palette.accent2, "#2456e6", "#1f8a5b", "#b03a64"];
-}
+const fontFamilyName = (stack: string) => stack.split(",")[0].replace(/['"]/g, "").trim();
 
 export default function CreerClient() {
   const router = useRouter();
   const [phase, setPhase] = useState<Phase>("pitch");
   const [brief, setBrief] = useState("");
   const [name, setName] = useState("");
-  const [vibeId, setVibeId] = useState<string | null>(null);
+
+  // Chartes sur mesure (étape DA)
+  const [chartes, setChartes] = useState<Charte[] | null>(null);
+  const [chartesLoading, setChartesLoading] = useState(false);
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [accent, setAccent] = useState<string | null>(null);
-  const [showAll, setShowAll] = useState(false);
 
   const [authed, setAuthed] = useState(false);
   const [gateOpen, setGateOpen] = useState(false);
@@ -71,18 +83,28 @@ export default function CreerClient() {
   const [error, setError] = useState<string | null>(null);
   const launchedRef = useRef(false);
 
-  // --- Restauration (retour d'OAuth) + session --------------------------------
+  // --- Restauration (retour d'OAuth ou arrivée depuis la landing) --------------
   useEffect(() => {
     try {
       const raw = sessionStorage.getItem(STATE_KEY);
       if (raw) {
-        const s = JSON.parse(raw) as { brief?: string; name?: string; vibeId?: string; accent?: string };
+        const s = JSON.parse(raw) as {
+          brief?: string;
+          name?: string;
+          chartes?: Charte[];
+          selectedIdx?: number | null;
+          accent?: string;
+        };
         if (s.brief) setBrief(s.brief);
         if (s.name) setName(s.name);
-        if (s.vibeId) setVibeId(s.vibeId);
+        if (Array.isArray(s.chartes) && s.chartes.length > 0) setChartes(s.chartes);
+        if (typeof s.selectedIdx === "number") setSelectedIdx(s.selectedIdx);
         if (s.accent) setAccent(s.accent);
-        if (s.brief && s.vibeId) setPhase("vibe");
-        else if (s.brief) setPhase("pitch");
+        if (s.brief && Array.isArray(s.chartes) && s.chartes.length > 0) setPhase("vibe");
+      } else {
+        // Brief tapé dans la bulle de la landing (clé partagée avec AuthGate).
+        const landingBrief = sessionStorage.getItem("akyra_brief");
+        if (landingBrief?.trim()) setBrief(landingBrief.trim());
       }
     } catch {
       /* sessionStorage indispo : tunnel vierge */
@@ -94,11 +116,38 @@ export default function CreerClient() {
 
   useEffect(() => {
     try {
-      sessionStorage.setItem(STATE_KEY, JSON.stringify({ brief, name, vibeId, accent }));
+      sessionStorage.setItem(STATE_KEY, JSON.stringify({ brief, name, chartes, selectedIdx, accent }));
     } catch {
       /* non bloquant */
     }
-  }, [brief, name, vibeId, accent]);
+  }, [brief, name, chartes, selectedIdx, accent]);
+
+  // --- Chartes sur mesure -------------------------------------------------------
+  async function loadChartes() {
+    setChartesLoading(true);
+    setError(null);
+    setSelectedIdx(null);
+    setAccent(null);
+    try {
+      const res = await fetch("/api/foundry/charte", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ brief: brief.trim(), businessName: name.trim() }),
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data?.ok) throw new Error(data?.error ?? "Impossible de composer vos chartes. Réessayez.");
+      setChartes(data.chartes as Charte[]);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Impossible de composer vos chartes. Réessayez.");
+    } finally {
+      setChartesLoading(false);
+    }
+  }
+
+  function openVibePhase() {
+    setPhase("vibe");
+    if (!chartes && !chartesLoading) void loadChartes();
+  }
 
   // --- Étapes animées pendant l'assemblage ------------------------------------
   useEffect(() => {
@@ -121,15 +170,12 @@ export default function CreerClient() {
     }
   }, [cards, revealed]);
 
-  const suggestions = useMemo(() => suggestVibes(brief), [brief]);
-  const suggestedIds = suggestions.map((s) => s.vibeId as string);
-  const otherVibes = listVibes().filter((v) => !suggestedIds.includes(v.id));
+  const selected = selectedIdx !== null ? (chartes?.[selectedIdx] ?? null) : null;
   const rareCount = (cards ?? []).filter((c) => c.rarity !== "common").length;
-
   const pitchReady = brief.trim().length >= 10 && name.trim().length >= 2;
 
   async function launchAssembly() {
-    if (launchedRef.current) return;
+    if (launchedRef.current || !selected) return;
     launchedRef.current = true;
     setPhase("pack");
     setCards(null);
@@ -143,8 +189,10 @@ export default function CreerClient() {
         body: JSON.stringify({
           brief: brief.trim(),
           businessName: name.trim(),
-          vibeId,
+          vibeId: selected.vibe.id,
           accent: accent ?? undefined,
+          // Charte sur mesure : on renvoie la spec d'échange (re-réparée serveur).
+          charteSpec: selected.vibe.id === "custom" ? selected.spec : undefined,
         }),
       });
       const data = await res.json().catch(() => null);
@@ -165,7 +213,7 @@ export default function CreerClient() {
   }
 
   function onAssembleClick() {
-    if (!vibeId) return;
+    if (!selected) return;
     if (!authed) {
       setGateOpen(true);
       return;
@@ -186,15 +234,16 @@ export default function CreerClient() {
 
   return (
     <div className="akyra min-h-screen">
-      {/* Fonts des 6 vibes pour les spécimens typographiques des cartes DA. */}
-      {phase === "vibe" || phase === "reveal"
-        ? listVibes().map((v) => <link key={v.id} rel="stylesheet" href={v.fontHref} precedence="foundry-fonts" />)
+      {/* Fonts des chartes proposées (spécimens typographiques des cartes). */}
+      {(phase === "vibe" || phase === "reveal") && chartes
+        ? chartes.map((c, i) => <link key={i} rel="stylesheet" href={c.vibe.fontHref} precedence="foundry-fonts" />)
         : null}
       <style>{`
         @keyframes sg-card-in { 0% { opacity: 0; transform: translateY(26px) rotateX(40deg) scale(0.92); } 60% { opacity: 1; } 100% { opacity: 1; transform: none; } }
         @keyframes sg-pop { 0% { transform: scale(0.6); opacity: 0; } 70% { transform: scale(1.06); opacity: 1; } 100% { transform: scale(1); } }
         @keyframes sg-confetti { 0% { transform: translateY(-10vh) rotate(0); opacity: 1; } 100% { transform: translateY(105vh) rotate(var(--spin)); opacity: 0; } }
         @keyframes sg-pulse { 0%,100% { opacity: 0.45 } 50% { opacity: 1 } }
+        @keyframes sg-shimmer { 0% { background-position: -400px 0 } 100% { background-position: 400px 0 } }
       `}</style>
 
       {/* Top bar minimaliste */}
@@ -222,8 +271,8 @@ export default function CreerClient() {
               <span className="text-[rgb(var(--m-muted))]">On assemble le reste.</span>
             </h1>
             <p className="mt-3 text-[15px] text-[rgb(var(--m-muted))]">
-              Deux phrases suffisent. Votre site est assemblé à partir de composants premium — pas de
-              page blanche, pas de template à remplir.
+              Deux phrases suffisent. L'IA compose votre charte graphique, puis votre site est
+              assemblé à partir de composants premium — pas de page blanche.
             </p>
 
             <label className="mt-8 block text-sm font-semibold">Le nom de votre activité</label>
@@ -260,118 +309,172 @@ export default function CreerClient() {
             <button
               type="button"
               disabled={!pitchReady}
-              onClick={() => setPhase("vibe")}
+              onClick={openVibePhase}
               className="mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-[rgb(var(--m-accent))] px-6 text-[15px] font-semibold text-[rgb(var(--m-on-accent))] transition enabled:hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
             >
-              Voir mes ambiances →
+              Composer ma charte graphique →
             </button>
           </section>
         )}
 
-        {/* ============================ 2. VIBE ============================ */}
+        {/* ===================== 2. VIBE (charte sur mesure) ===================== */}
         {phase === "vibe" && (
           <section className="pt-8 sm:pt-12">
             <div className="mx-auto max-w-2xl text-center">
-              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Choisissez votre ambiance</h1>
+              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Votre charte graphique</h1>
               <p className="mt-3 text-[15px] text-[rgb(var(--m-muted))]">
-                Trois directions artistiques pensées pour « {name.trim() || "votre activité"} ».
-                Couleurs, typographies, formes : tout votre site en découlera.
+                {chartesLoading
+                  ? `Le directeur artistique compose trois directions pour « ${name.trim() || "votre activité"} »…`
+                  : `Trois directions composées sur mesure pour « ${name.trim() || "votre activité"} ». Tout votre site en découlera.`}
               </p>
               {error ? (
                 <p className="mt-4 rounded-xl bg-red-50 px-4 py-2.5 text-sm font-medium text-red-600">{error}</p>
               ) : null}
             </div>
 
-            <div className="mt-10 grid gap-5 md:grid-cols-3">
-              {(showAll ? otherVibes.map((v) => ({ vibeId: v.id, reason: `${v.label} — une autre personnalité pour votre site.` })) : suggestions).map((s) => {
-                const v = getVibe(s.vibeId)!;
-                const selected = vibeId === v.id;
-                const a = selected && accent ? accent : v.palette.accent;
-                return (
-                  <button
-                    key={v.id}
-                    type="button"
-                    onClick={() => {
-                      setVibeId(v.id);
-                      setAccent(v.palette.accent);
-                    }}
-                    className={`group relative rounded-3xl border bg-[rgb(var(--m-surface))] p-5 text-left shadow-cloud-sm transition hover:-translate-y-0.5 hover:shadow-cloud ${
-                      selected ? "border-[rgb(var(--m-accent))] ring-2 ring-[rgb(var(--m-accent))]/30" : "border-[rgb(var(--m-line))]"
-                    }`}
-                  >
-                    {/* Mini-maquette colorée par la palette */}
-                    <div className="overflow-hidden rounded-2xl border border-black/5" style={{ background: v.palette.surface }}>
-                      <div className="flex items-center justify-between px-3 py-2" style={{ background: v.palette.card }}>
-                        <span className="text-[11px] font-bold" style={{ color: v.palette.ink, fontFamily: v.fonts.heading }}>
-                          {(name.trim() || "Studio").slice(0, 14)}
-                        </span>
-                        <span className="rounded-full px-2 py-0.5 text-[9px] font-semibold text-white" style={{ background: a }}>
-                          Contact
-                        </span>
-                      </div>
-                      <div className="px-3 py-3">
-                        <div className="text-[15px] leading-snug" style={{ color: v.palette.ink, fontFamily: v.fonts.heading }}>
-                          Un site qui vous ressemble
-                        </div>
-                        <div className="mt-1 text-[10px] leading-relaxed" style={{ color: v.palette.muted, fontFamily: v.fonts.body }}>
-                          Texte courant en {v.fonts.body.split(",")[0].replace(/['"]/g, "")}.
-                        </div>
-                        <div className="mt-2 flex items-center gap-1.5">
-                          <span className="h-5 w-12 rounded-full" style={{ background: a }} />
-                          <span className="h-5 w-8 rounded-full" style={{ background: v.palette.accent2 }} />
-                          <span className="h-5 w-8 rounded-full border" style={{ background: v.palette.card, borderColor: v.palette.muted + "33" }} />
-                        </div>
-                      </div>
+            {/* Squelettes pendant la composition */}
+            {chartesLoading && (
+              <div className="mt-10 grid gap-5 md:grid-cols-3">
+                {[0, 1, 2].map((i) => (
+                  <div key={i} className="rounded-3xl border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] p-5">
+                    <div className="h-28 rounded-2xl bg-[rgb(var(--m-elevated))]" style={{ animation: `sg-pulse 1.6s ease-in-out ${i * 0.2}s infinite` }} />
+                    <div className="mt-4 h-4 w-2/3 rounded bg-[rgb(var(--m-elevated))]" style={{ animation: `sg-pulse 1.6s ease-in-out ${0.1 + i * 0.2}s infinite` }} />
+                    <div className="mt-2 h-3 w-1/2 rounded bg-[rgb(var(--m-elevated))]" style={{ animation: `sg-pulse 1.6s ease-in-out ${0.2 + i * 0.2}s infinite` }} />
+                    <div className="mt-5 flex gap-1.5">
+                      {[...Array(4)].map((_, j) => (
+                        <div key={j} className="h-7 w-7 rounded-full bg-[rgb(var(--m-elevated))]" style={{ animation: `sg-pulse 1.6s ease-in-out ${0.1 * j + i * 0.2}s infinite` }} />
+                      ))}
                     </div>
+                  </div>
+                ))}
+              </div>
+            )}
 
-                    <div className="mt-4 flex items-center justify-between">
-                      <div>
-                        <div className="text-[15px] font-bold tracking-tight">{v.label}</div>
+            {/* Cartes de charte façon brand-kit */}
+            {!chartesLoading && chartes && (
+              <div className="mt-10 grid gap-5 md:grid-cols-3">
+                {chartes.map((c, idx) => {
+                  const v = c.vibe;
+                  const isSel = selectedIdx === idx;
+                  const a = isSel && accent ? accent : v.palette.accent;
+                  const swatches: Array<[string, string]> = [
+                    ["Encre", v.palette.ink],
+                    ["Fond", v.palette.surface],
+                    ["Carte", v.palette.card],
+                    ["Accent", a],
+                    ["Accent 2", v.palette.accent2],
+                  ];
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => {
+                        setSelectedIdx(idx);
+                        setAccent(v.palette.accent);
+                      }}
+                      className={`group relative flex flex-col rounded-3xl border bg-[rgb(var(--m-surface))] p-5 text-left shadow-cloud-sm transition hover:-translate-y-0.5 hover:shadow-cloud ${
+                        isSel ? "border-[rgb(var(--m-accent))] ring-2 ring-[rgb(var(--m-accent))]/30" : "border-[rgb(var(--m-line))]"
+                      }`}
+                    >
+                      {/* Mini-aperçu hero coloré par la charte */}
+                      <div className="overflow-hidden rounded-2xl border border-black/5" style={{ background: v.palette.surface }}>
+                        <div className="flex items-center justify-between px-3 py-2" style={{ background: v.palette.card }}>
+                          <span className="text-[11px] font-bold" style={{ color: v.palette.ink, fontFamily: v.fonts.heading }}>
+                            {(name.trim() || "Studio").slice(0, 16)}
+                          </span>
+                          <span className="px-2 py-0.5 text-[9px] font-semibold text-white" style={{ background: a, borderRadius: v.radius.pill }}>
+                            Contact
+                          </span>
+                        </div>
+                        <div className="px-3 py-3">
+                          <div className="text-[15px] leading-snug" style={{ color: v.palette.ink, fontFamily: v.fonts.heading }}>
+                            Un site qui vous ressemble
+                          </div>
+                          <div className="mt-1 text-[10px] leading-relaxed" style={{ color: v.palette.muted, fontFamily: v.fonts.body }}>
+                            Chaque section reprendra ces couleurs et ces lettres.
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Nom + ambiance */}
+                      <div className="mt-4">
+                        <div className="text-[16px] font-bold tracking-tight">{v.label}</div>
                         <div className="mt-0.5 text-[12px] text-[rgb(var(--m-muted))]">{v.mood.join(" · ")}</div>
                       </div>
-                      {/* Nuancier */}
-                      <div className="flex gap-1">
-                        {[v.palette.ink, a, v.palette.accent2, v.palette.card].map((c, i) => (
-                          <span key={i} className="h-4 w-4 rounded-full border border-black/10" style={{ background: c }} />
-                        ))}
-                      </div>
-                    </div>
-                    <p className="mt-2 text-[12.5px] leading-relaxed text-[rgb(var(--m-muted))]">{s.reason}</p>
 
-                    {/* Accent personnalisable une fois la carte choisie */}
-                    {selected ? (
-                      <div className="mt-3 flex items-center gap-2 border-t border-[rgb(var(--m-line))] pt-3">
-                        <span className="text-[11px] font-semibold text-[rgb(var(--m-muted))]">Couleur d'accent</span>
-                        {accentChoices(v).map((c) => (
-                          <span
-                            key={c}
-                            role="button"
-                            tabIndex={0}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setAccent(c);
-                            }}
-                            onKeyDown={(e) => e.key === "Enter" && setAccent(c)}
-                            className={`h-5 w-5 cursor-pointer rounded-full border border-black/10 transition ${accent === c ? "ring-2 ring-offset-1 ring-[rgb(var(--m-ink))]" : ""}`}
-                            style={{ background: c }}
-                            aria-label={`Accent ${c}`}
-                          />
+                      {/* Palette : swatches + hex (façon brand-kit) */}
+                      <div className="mt-3 grid grid-cols-5 gap-1.5">
+                        {swatches.map(([label, hex]) => (
+                          <div key={label} className="flex flex-col items-center gap-1">
+                            <span className="h-7 w-full rounded-lg border border-black/10" style={{ background: hex }} />
+                            <span className="font-mono text-[8.5px] uppercase text-[rgb(var(--m-faint))]">{hex.replace("#", "")}</span>
+                          </div>
                         ))}
                       </div>
-                    ) : null}
-                  </button>
-                );
-              })}
-            </div>
+
+                      {/* Typographies : spécimens Aa */}
+                      <div className="mt-3 grid grid-cols-2 gap-2">
+                        <div className="rounded-xl border border-[rgb(var(--m-line))] px-3 py-2">
+                          <div className="text-[22px] leading-none" style={{ fontFamily: v.fonts.heading, color: v.palette.ink }}>Aa</div>
+                          <div className="mt-1 text-[10px] font-semibold text-[rgb(var(--m-muted))]">{fontFamilyName(v.fonts.heading)}</div>
+                          <div className="text-[9px] text-[rgb(var(--m-faint))]">Titres</div>
+                        </div>
+                        <div className="rounded-xl border border-[rgb(var(--m-line))] px-3 py-2">
+                          <div className="text-[22px] leading-none" style={{ fontFamily: v.fonts.body, color: v.palette.ink }}>Aa</div>
+                          <div className="mt-1 text-[10px] font-semibold text-[rgb(var(--m-muted))]">{fontFamilyName(v.fonts.body)}</div>
+                          <div className="text-[9px] text-[rgb(var(--m-faint))]">Texte</div>
+                        </div>
+                      </div>
+
+                      {/* Boutons de la charte */}
+                      <div className="mt-3 flex items-center gap-2">
+                        <span className="px-3.5 py-1.5 text-[11px] font-semibold text-white" style={{ background: a, borderRadius: v.radius.pill }}>
+                          Bouton principal
+                        </span>
+                        <span className="px-3.5 py-1.5 text-[11px] font-semibold" style={{ color: v.palette.ink, border: `1px solid ${v.palette.muted}55`, borderRadius: v.radius.pill }}>
+                          Secondaire
+                        </span>
+                      </div>
+
+                      <p className="mt-3 text-[12.5px] leading-relaxed text-[rgb(var(--m-muted))]">{c.reason}</p>
+
+                      {/* Accent personnalisable une fois la carte choisie */}
+                      {isSel ? (
+                        <div className="mt-3 flex items-center gap-2 border-t border-[rgb(var(--m-line))] pt-3">
+                          <span className="text-[11px] font-semibold text-[rgb(var(--m-muted))]">Couleur d'accent</span>
+                          {[v.palette.accent, v.palette.accent2, v.palette.ink].map((cAcc) => (
+                            <span
+                              key={cAcc}
+                              role="button"
+                              tabIndex={0}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setAccent(cAcc);
+                              }}
+                              onKeyDown={(e) => e.key === "Enter" && setAccent(cAcc)}
+                              className={`h-5 w-5 cursor-pointer rounded-full border border-black/10 transition ${accent === cAcc ? "ring-2 ring-offset-1 ring-[rgb(var(--m-ink))]" : ""}`}
+                              style={{ background: cAcc }}
+                              aria-label={`Accent ${cAcc}`}
+                            />
+                          ))}
+                        </div>
+                      ) : null}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
 
             <div className="mt-8 flex flex-col items-center gap-4">
-              <button
-                type="button"
-                onClick={() => setShowAll((x) => !x)}
-                className="text-sm font-medium text-[rgb(var(--m-muted))] underline-offset-4 transition hover:text-[rgb(var(--m-ink))] hover:underline"
-              >
-                {showAll ? "← Revenir aux ambiances recommandées" : "Voir d'autres ambiances"}
-              </button>
+              {!chartesLoading && (
+                <button
+                  type="button"
+                  onClick={() => void loadChartes()}
+                  className="text-sm font-medium text-[rgb(var(--m-muted))] underline-offset-4 transition hover:text-[rgb(var(--m-ink))] hover:underline"
+                >
+                  ✦ Proposer trois autres directions
+                </button>
+              )}
               <div className="flex items-center gap-3">
                 <button
                   type="button"
@@ -382,7 +485,7 @@ export default function CreerClient() {
                 </button>
                 <button
                   type="button"
-                  disabled={!vibeId || busy}
+                  disabled={!selected || busy || chartesLoading}
                   onClick={onAssembleClick}
                   className="inline-flex h-12 items-center gap-2 rounded-full bg-[rgb(var(--m-accent))] px-6 text-[15px] font-semibold text-[rgb(var(--m-on-accent))] transition enabled:hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
                 >
@@ -475,8 +578,8 @@ export default function CreerClient() {
             <div className="mx-auto max-w-2xl text-center" style={{ animation: "sg-pop 0.5s ease both" }}>
               <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Voici {name.trim() || "votre site"}.</h1>
               <p className="mt-3 text-[15px] text-[rgb(var(--m-muted))]">
-                Assemblé sur mesure, dans votre ambiance. Chaque section se remplace ou s'échange
-                depuis votre tableau de bord — sans toucher au design.
+                Assemblé sur mesure, dans votre charte{selected ? ` « ${selected.vibe.label} »` : ""}. Chaque
+                section se remplace ou s'échange depuis votre tableau de bord — sans toucher au design.
               </p>
             </div>
 
@@ -509,7 +612,7 @@ export default function CreerClient() {
                 }}
                 className="inline-flex h-12 items-center rounded-full border border-[rgb(var(--m-line))] px-5 text-[15px] font-medium text-[rgb(var(--m-muted))] transition hover:text-[rgb(var(--m-ink))]"
               >
-                Essayer une autre ambiance
+                Essayer une autre charte
               </button>
             </div>
           </section>
