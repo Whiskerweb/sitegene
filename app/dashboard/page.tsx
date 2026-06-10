@@ -17,6 +17,8 @@ import TrialBanner from "@/components/dashboard/TrialBanner";
 import { PublishButton } from "@/components/dashboard/PublishButton";
 import { primarySiteForUser } from "@/lib/primary-site";
 import { loadOrCreateEditableSnapshot, loadPublishedSnapshot } from "@/lib/site-content-store";
+import FoundryHome from "@/components/dashboard/FoundryHome";
+import { FOUNDRY_TEMPLATE_ID } from "@/lib/foundry/server";
 
 export const dynamic = "force-dynamic";
 
@@ -66,6 +68,25 @@ export default async function MonSite({
           description="Notre équipe prépare votre portfolio. Vous recevrez un lien dès qu'il est prêt."
         />
       </>
+    );
+  }
+
+  // Site ASSEMBLÉ (fonderie) : accueil plug-and-play dédié (sections de la recette).
+  if (site.template_id === FOUNDRY_TEMPLATE_ID) {
+    return (
+      <FoundryHome
+        user={user}
+        site={{
+          id: site.id,
+          slug: site.slug,
+          status: site.status,
+          billing_status: site.billing_status,
+          trial_ends_at: site.trial_ends_at,
+        }}
+        balance={balance}
+        businessName={((ob?.intake as { brand?: string } | null)?.brand ?? firstName) || null}
+        paywallOpen={Boolean(sp.paywall) || Boolean(sp.fromChat)}
+      />
     );
   }
 

@@ -1,6 +1,7 @@
 import { requireUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getBalance } from "@/lib/credits-server";
+import { primarySiteForUser } from "@/lib/primary-site";
 import { AppShell } from "@/components/ui/AppShell";
 import type { NavItem } from "@/components/ui/NavItem";
 import {
@@ -32,23 +33,45 @@ export default async function DashboardLayout({
   const admin = createAdminClient();
   const balance = await getBalance(admin, user.id);
 
-  const nav: NavItem[] = [
-    { href: "/dashboard", label: "Mon site", icon: <IconCloud size={18} /> },
-    { href: "/dashboard/bibliotheque", label: "Bibliothèque", icon: <IconPhoto size={18} /> },
-    { href: "/dashboard/composants", label: "Composants", icon: <IconStar4 size={18} /> },
-    {
-      href: "/dashboard/marketplace",
-      label: "Formules",
-      icon: <IconStar4 size={18} />,
-    },
-    {
-      href: "/dashboard/credits",
-      label: "Crédits",
-      icon: <IconCredit size={18} />,
-      badge: balance,
-    },
-    { href: "/dashboard/settings", label: "Paramètres", icon: <IconSettings size={18} /> },
-  ];
+  // Dashboard BIMODAL : un site assemblé (fonderie) a une nav courte — l'ADN
+  // plug-and-play (Mon site, Composants, Crédits, Réglages). Les comptes
+  // templates historiques gardent Bibliothèque + Formules à l'identique.
+  const primary = await primarySiteForUser<{ template_id: string | null }>(
+    admin,
+    user.id,
+    "id, template_id",
+  );
+  const foundryMode = primary?.template_id === "foundry";
+
+  const nav: NavItem[] = foundryMode
+    ? [
+        { href: "/dashboard", label: "Mon site", icon: <IconCloud size={18} /> },
+        { href: "/dashboard/composants", label: "Composants", icon: <IconStar4 size={18} /> },
+        {
+          href: "/dashboard/credits",
+          label: "Crédits",
+          icon: <IconCredit size={18} />,
+          badge: balance,
+        },
+        { href: "/dashboard/settings", label: "Paramètres", icon: <IconSettings size={18} /> },
+      ]
+    : [
+        { href: "/dashboard", label: "Mon site", icon: <IconCloud size={18} /> },
+        { href: "/dashboard/bibliotheque", label: "Bibliothèque", icon: <IconPhoto size={18} /> },
+        { href: "/dashboard/composants", label: "Composants", icon: <IconStar4 size={18} /> },
+        {
+          href: "/dashboard/marketplace",
+          label: "Formules",
+          icon: <IconStar4 size={18} />,
+        },
+        {
+          href: "/dashboard/credits",
+          label: "Crédits",
+          icon: <IconCredit size={18} />,
+          badge: balance,
+        },
+        { href: "/dashboard/settings", label: "Paramètres", icon: <IconSettings size={18} /> },
+      ];
 
   const right = (
     <>

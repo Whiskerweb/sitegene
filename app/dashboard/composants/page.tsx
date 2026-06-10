@@ -1,6 +1,17 @@
+import { requireUser } from "@/lib/auth";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { getBalance } from "@/lib/credits-server";
+import { ownedItems } from "@/lib/marketplace-server";
+import { COMPONENT_PRICE_CREDITS } from "@/lib/marketplace";
+import { primarySiteForUser } from "@/lib/primary-site";
 import { listManifests } from "@/lib/foundry/manifests";
 import { listEffects } from "@/lib/effects";
-import CatalogBrowser, { type CatalogItem, type Rarity } from "@/components/foundry/CatalogBrowser";
+import { FOUNDRY_TEMPLATE_ID, loadRecipeDraft } from "@/lib/foundry/server";
+import CatalogBrowser, {
+  type CatalogItem,
+  type MarketContext,
+  type Rarity,
+} from "@/components/foundry/CatalogBrowser";
 
 export const dynamic = "force-dynamic";
 
@@ -71,7 +82,39 @@ function buildItems(): CatalogItem[] {
   return [...sections, ...effets];
 }
 
-export default function ComposantsPage() {
+export default async function ComposantsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ role?: string; swapIndex?: string }>;
+}) {
+  const user = await requireUser();
+  const admin = createAdminClient();
+  const sp = await searchParams;
+
+  // Contexte marketplace : site assemblé du compte (aperçus personnalisés),
+  // possession (achats + composants livrés dans la recette) et solde.
+  const [site, owned, balance] = await Promise.all([
+    primarySiteForUser<{ id: string; template_id: string | null }>(admin, user.id, "id, template_id"),
+    ownedItems(admin, user.id),
+    getBalance(admin, user.id),
+  ]);
+  const foundrySite = site?.template_id === FOUNDRY_TEMPLATE_ID ? site : null;
+  const delivered = foundrySite
+    ? ((await loadRecipeDraft(admin, foundrySite.id))?.recipe.sections.map((s) => s.component) ?? [])
+    : [];
+
+  const swapIndex = Number.parseInt(sp.swapIndex ?? "", 10);
+  const market: MarketContext = {
+    siteId: foundrySite?.id ?? null,
+    owned: Array.from(new Set([...owned.components, ...delivered])),
+    prices: COMPONENT_PRICE_CREDITS,
+    balance,
+    swap:
+      foundrySite && sp.role && Number.isInteger(swapIndex)
+        ? { index: swapIndex, role: sp.role }
+        : null,
+  };
+
   const all = buildItems();
   const counts = {
     common: all.filter((m) => m.rarity === "common").length,
@@ -88,10 +131,19 @@ export default function ComposantsPage() {
         <h1 className="text-2xl font-bold text-neutral-900">Composants</h1>
         <p className="mt-1 text-sm text-neutral-600">
           {all.length} pièces · {nSections} sections + {nEffets} effets · {nCats} catégories · {counts.common}{" "}
-          communs / {counts.rare} rares / {counts.epic} épiques. Filtre par section, rareté ou type ; aperçu réel sous la DA « warm-serif ».
+          communs / {counts.rare} rares / {counts.epic} épiques.
+          {foundrySite
+            ? " Les communs sont inclus ; débloquez les rares et épiques, et regardez chaque pièce sur VOTRE site avant de choisir."
+            : " Filtre par section, rareté ou type ; aperçu réel sous la DA « warm-serif »."}
         </p>
       </header>
-      <CatalogBrowser items={all} categoryOrder={CATEGORY_ORDER} categoryLabel={CATEGORY_LABEL} />
+      <CatalogBrowser
+        items={all}
+        categoryOrder={CATEGORY_ORDER}
+        categoryLabel={CATEGORY_LABEL}
+        market={market}
+        initialCat={sp.role && CATEGORY_ORDER.includes(sp.role) ? sp.role : "all"}
+      />
     </div>
   );
 }
