@@ -12,7 +12,6 @@ import { SitePreview } from "@/components/ui/SitePreview";
 import PaywallModal from "@/components/dashboard/PaywallModal";
 import TrialBanner from "@/components/dashboard/TrialBanner";
 import { PublishButton } from "@/components/dashboard/PublishButton";
-import FoundrySections, { type SectionItem } from "@/components/dashboard/FoundrySections";
 import { loadRecipeDraft, recipeCards } from "@/lib/foundry/server";
 import { loadPublishedSnapshot } from "@/lib/site-content-store";
 import { getVibe } from "@/lib/foundry/vibes";
@@ -43,17 +42,10 @@ export default async function FoundryHome({ site, balance, businessName, paywall
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
   const fullUrl = site.slug ? `${appUrl}/a/${site.slug}` : "";
 
-  const vibe = draft ? getVibe(draft.recipe.vibe) : undefined;
+  // Charte effective : preset connu OU charte sur mesure embarquée.
+  const vibe = draft ? (draft.recipe.customVibe ?? getVibe(draft.recipe.vibe)) : undefined;
   const cards = draft ? recipeCards(draft.recipe) : [];
   const rareCount = cards.filter((c) => c.rarity !== "common").length;
-  const items: SectionItem[] = cards.map((c, index) => ({
-    index,
-    component: c.component,
-    role: c.role,
-    roleLabel: c.roleLabel,
-    rarity: c.rarity,
-    locked: c.role === "hero" || c.role === "footer",
-  }));
 
   const statusBadge: { text: string; tone: "violet" | "amber" | "blue" | "gray" | "emerald" } =
     isLive && !hasUnpublished
@@ -95,8 +87,8 @@ export default async function FoundryHome({ site, balance, businessName, paywall
         }
       />
 
-      {/* Aperçu du brouillon (ce que le client prépare) */}
-      <div className="card-hover mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white">
+      {/* Aperçu cliquable → ouvre L'Atelier */}
+      <a href="/atelier" className="group relative mt-5 block overflow-hidden rounded-2xl border border-gray-200 bg-white">
         {draft ? (
           <SitePreview src={`/site-preview/${site.id}`} />
         ) : (
@@ -104,49 +96,58 @@ export default async function FoundryHome({ site, balance, businessName, paywall
             Votre site n'a pas encore de recette — repassez par la création.
           </div>
         )}
-      </div>
+        {draft && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/25">
+            <span className="translate-y-2 rounded-full bg-white px-5 py-2.5 text-[14px] font-semibold text-gray-900 opacity-0 shadow-lg transition-all group-hover:translate-y-0 group-hover:opacity-100">
+              ✏️ Modifier mon site
+            </span>
+          </div>
+        )}
+      </a>
 
-      {/* Actions de publication */}
+      {/* Actions principales */}
       <div className="mt-4 flex flex-wrap items-center gap-3">
+        {draft && <Button href="/atelier">Modifier mon site</Button>}
         {locked ? (
           <PaywallModal
             siteId={site.id}
             firstName={businessName}
             defaultOpen={paywallOpen}
-            trigger={<Button>Publier mon site</Button>}
+            trigger={<Button variant="subtle">Mettre en ligne</Button>}
           />
         ) : isLive && hasUnpublished ? (
           <PublishButton siteId={site.id} balance={balance} />
         ) : null}
-        {draft && (
-          <Button href={`/site-preview/${site.id}`} variant="subtle" target="_blank">
-            Visualiser en plein écran →
-          </Button>
-        )}
       </div>
 
       <div className="mt-6">
         <MetricsRow
           metrics={[
             { label: "Crédits disponibles", value: balance, tone: "violet" },
-            { label: "Sections du site", value: items.length, tone: "indigo" },
+            { label: "Sections du site", value: cards.length, tone: "indigo" },
             { label: "Pièces rares ✦", value: rareCount, tone: "sky" },
           ]}
         />
       </div>
 
-      {/* Les sections de la recette — le cœur plug-and-play */}
-      <div className="mt-8">
-        <div className="mb-3 flex items-center justify-between">
+      {/* Invitation à l'éditeur — tout se passe dans L'Atelier */}
+      <a
+        href="/atelier"
+        className="mt-8 flex items-center justify-between gap-4 rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-6 transition hover:border-violet-300 hover:shadow-md"
+      >
+        <div>
           <h2 className="text-lg font-semibold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
-            Les sections de votre site
+            L'Atelier — votre site, à votre main
           </h2>
-          <span className="text-sm text-gray-400">
-            Remplacez une section par une autre forme — le design reste accordé.
-          </span>
+          <p className="mt-1 max-w-lg text-sm text-gray-500">
+            Changez vos textes et vos photos, déplacez les blocs, remplacez une section par une autre,
+            ajustez vos couleurs. Tout en visuel, comme sur une feuille de design.
+          </p>
         </div>
-        {draft ? <FoundrySections siteId={site.id} items={items} /> : null}
-      </div>
+        <span className="shrink-0 rounded-full bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white">
+          Ouvrir →
+        </span>
+      </a>
     </>
   );
 }
