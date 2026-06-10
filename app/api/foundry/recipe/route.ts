@@ -172,5 +172,11 @@ export async function POST(request: Request) {
   }
 
   await saveRecipeDraft(admin, siteId, next);
-  return NextResponse.json({ ok: true, cards: recipeCards(next) });
+  // Renvoie aussi les sections (component + content effectif) pour que l'éditeur
+  // reste exactement aligné sur ce qui est persisté (swap reporte le contenu).
+  return NextResponse.json({
+    ok: true,
+    cards: recipeCards(next),
+    sections: next.sections.map((s) => ({ component: s.component, content: s.content })),
+  });
 }

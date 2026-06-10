@@ -94,17 +94,17 @@ export default function StudioEditor({ data }: { data: StudioData }) {
   }
 
   // --- Remplacer --------------------------------------------------------------
-  // Le serveur reporte le contenu compatible (mêmes clés) sur la nouvelle pièce ;
-  // côté client on repart du sample de la nouvelle pièce (forme garantie rendable).
+  // Le serveur reporte le contenu compatible et le renvoie : on s'y aligne.
   async function doReplace(index: number, componentId: string) {
     const res = await call({ op: "swap", index, componentId });
     if (!res) return;
     const entry = catalogById.get(componentId);
+    const serverContent = res.sections?.[index]?.content as Record<string, unknown> | undefined;
     setSections((prev) => prev.map((s, i) => (i === index ? {
       ...s,
       component: componentId,
       rarity: entry?.rarity ?? s.rarity,
-      content: entry?.sample ?? s.content,
+      content: serverContent ?? entry?.sample ?? s.content,
     } : s)));
     setReplaceAt(null);
     flash("Section remplacée.");
