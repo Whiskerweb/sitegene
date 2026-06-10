@@ -454,3 +454,102 @@ export async function generateRecipe(input: AgenceurInput, chatFn: ChatFn): Prom
     return { recipe: fallbackRecipe(input), source: "fallback" };
   }
 }
+
+// --- Sous-pages (création de page) -----------------------------------------------
+
+export interface SubPageInput {
+  title: string;
+  purpose: string;
+  businessName: string;
+}
+
+/**
+ * Sections d'une SOUS-PAGE (sans navbar ni footer — hérités de l'accueil) :
+ * composants connus uniquement, un seul par rôle, navbar/footer écartés,
+ * contenus normalisés. Minimum 2 sections (complétées si l'IA est trop maigre).
+ */
+export function repairSubPageSections(rawSections: unknown): RecipeSection[] {
+  const seen = new Set<string>();
+  const out: RecipeSection[] = [];
+  for (const raw of Array.isArray(rawSections) ? rawSections : []) {
+    if (!isPlainObject(raw) || typeof raw.component !== "string") continue;
+    const m = getManifest(raw.component);
+    if (!m || m.role === "navbar" || m.role === "footer") continue; // hérités
+    if (seen.has(m.role)) continue;
+    seen.add(m.role);
+    out.push({ component: m.id, content: normalizeSectionContent(m.id, raw.content) });
+  }
+  // Page trop maigre → complète avec des blocs de contenu pertinents.
+  const fillers = ["intro-split", "services-rows", "faq-accordion", "contact-block", "cta-banner"];
+  for (const id of fillers) {
+    if (out.length >= 3) break;
+    const role = getManifest(id)!.role;
+    if (seen.has(role)) continue;
+    seen.add(role);
+    out.push({ component: id, content: normalizeSectionContent(id, {}) });
+  }
+  return out;
+}
+
+function buildSubPageMessages(input: SubPageInput): Array<{ role: "system" | "user"; content: string }> {
+  const system = `Tu es l'ARCHITECTE-AGENCEUR d'Akyra. Tu composes une SOUS-PAGE d'un site vitrine existant (PAS une page d'accueil) à partir d'un CATALOGUE FERMÉ de composants. Tu choisis, ordonnes et rédiges les textes en français — tu ne crées jamais de composant ni de HTML.
+
+C'EST UNE SOUS-PAGE, PAS UNE LANDING :
+- NE mets NI navbar NI footer : ils sont hérités de la page d'accueil (cohérence garantie).
+- Compose 2 à 5 sections de CONTENU pertinentes pour CETTE page et son but précis.
+- Commence par un bloc d'introduction/en-tête de page (intro-split ou un hero sobre), puis le contenu utile.
+- Jamais deux composants du même rôle.
+- Reste cohérent avec un site existant : même niveau de langue, ton professionnel.
+
+RÈGLES DE CONTENU :
+- 100 % FRANÇAIS, écrit pour CE sujet précis. Zéro lorem ipsum.
+- Respecte EXACTEMENT la forme du "content" d'exemple (mêmes clés/types). Longueurs proches (±40 %).
+- NE MODIFIE PAS les clés d'images : recopie la valeur de l'exemple à l'identique.
+
+SORTIE : JSON STRICT : {"sections":[{"component":"<id>","content":{...}}]}
+
+CATALOGUE :
+${catalogForPrompt()}`;
+
+  const user = `SITE DE : « ${input.businessName.trim().slice(0, 80) || "(non précisé)"} »
+TITRE DE LA SOUS-PAGE : « ${input.title.trim().slice(0, 80)} »
+BUT / CONTENU DE LA PAGE : « ${input.purpose.trim().slice(0, 1000)} »
+
+Compose les sections de CONTENU de cette sous-page (sans navbar ni footer) et renvoie le JSON.`;
+
+  return [
+    { role: "system", content: system },
+    { role: "user", content: user },
+  ];
+}
+
+export interface SubPageResult {
+  sections: RecipeSection[];
+  source: "ai" | "fallback";
+}
+
+/** Sections de secours pour une sous-page (déterministes, valides). */
+export function fallbackSubPageSections(): RecipeSection[] {
+  return repairSubPageSections([{ component: "intro-split" }, { component: "services-rows" }, { component: "cta-banner" }]);
+}
+
+/**
+ * Génère les sections d'une sous-page. NE PEUT PAS ÉCHOUER : toute erreur
+ * retombe sur des sections de contenu déterministes.
+ */
+export async function generateSubPage(input: SubPageInput, chatFn: ChatFn): Promise<SubPageResult> {
+  try {
+    const raw = await Promise.race([
+      chatFn(buildSubPageMessages(input), { json: true, maxTokens: 4000 }),
+      new Promise<never>((_, reject) => setTimeout(() => reject(new Error("sous-page timeout")), AGENCEUR_TIMEOUT_MS)),
+    ]);
+    const parsed = parseAgenceurJson(raw);
+    if (!parsed) throw new Error("réponse illisible");
+    const sections = repairSubPageSections(parsed.sections);
+    if (sections.length < 2) throw new Error("sous-page trop maigre");
+    return { sections, source: "ai" };
+  } catch (e) {
+    console.error("[foundry/agenceur] sous-page → repli :", e instanceof Error ? e.message : e);
+    return { sections: fallbackSubPageSections(), source: "fallback" };
+  }
+}
