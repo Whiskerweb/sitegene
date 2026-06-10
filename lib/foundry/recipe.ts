@@ -1,7 +1,21 @@
 // lib/foundry/recipe.ts
 import { getVibe } from "./vibes";
 import { getManifest } from "./manifests";
-import type { Recipe, RecipeValidation, ResolvedSection, SkinKey } from "./types";
+import type { Recipe, RecipeSection, RecipeValidation, ResolvedSection, SkinKey } from "./types";
+
+/**
+ * Garantit les invariants de position : la navbar (si présente) toujours en
+ * PREMIER — elle n'a pas d'autre place logique —, le footer toujours en DERNIER.
+ * Idempotent : sûr à appeler après n'importe quelle opération d'édition.
+ */
+export function pinExtremes(sections: RecipeSection[]): RecipeSection[] {
+  const arr = [...sections];
+  const navIdx = arr.findIndex((s) => getManifest(s.component)?.role === "navbar");
+  if (navIdx > 0) arr.unshift(arr.splice(navIdx, 1)[0]);
+  const footIdx = arr.findIndex((s) => getManifest(s.component)?.role === "footer");
+  if (footIdx !== -1 && footIdx !== arr.length - 1) arr.push(arr.splice(footIdx, 1)[0]);
+  return arr;
+}
 
 export function validateRecipe(recipe: Recipe): RecipeValidation {
   const errors: string[] = [];

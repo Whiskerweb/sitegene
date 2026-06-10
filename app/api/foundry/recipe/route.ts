@@ -7,7 +7,7 @@ import { ownedItems } from "@/lib/marketplace-server";
 import { normalizeSectionContent, sanitizeUserContent } from "@/lib/foundry/agenceur";
 import { repairCharte } from "@/lib/foundry/charte";
 import { getVibe } from "@/lib/foundry/vibes";
-import { validateRecipe } from "@/lib/foundry/recipe";
+import { validateRecipe, pinExtremes } from "@/lib/foundry/recipe";
 import type { VibeId } from "@/lib/foundry/types";
 import {
   FOUNDRY_TEMPLATE_ID,
@@ -88,10 +88,15 @@ export async function POST(request: Request) {
       next = { ...next, vibe: getVibe(body.vibeId)!.id as VibeId, customVibe: undefined };
     }
     next = { ...next, brand: typeof body?.accent === "string" && HEX.test(body.accent.trim()) ? { primary: body.accent.trim() } : undefined };
+    next = { ...next, sections: pinExtremes(next.sections) };
     const v = validateRecipe(next);
     if (!v.ok) return NextResponse.json({ error: "État invalide." }, { status: 400 });
     await saveRecipeDraft(admin, siteId, next);
-    return NextResponse.json({ ok: true, cards: recipeCards(next) });
+    return NextResponse.json({
+      ok: true,
+      cards: recipeCards(next),
+      sections: next.sections.map((s: { component: string; content: Record<string, unknown> }) => ({ component: s.component, content: s.content })),
+    });
   }
 
   // --- Palette : change la DA sans toucher aux sections ----------------------
@@ -200,7 +205,8 @@ export async function POST(request: Request) {
     sections[index] = { ...target, content: sanitizeUserContent(target.component, body.content) };
   }
 
-  const next = { ...recipe, sections };
+  // Invariants de position (navbar en tête, footer en queue) après toute op.
+  const next = { ...recipe, sections: pinExtremes(sections) };
   const v = validateRecipe(next);
   if (!v.ok) {
     console.error("[foundry/recipe] recette invalide après op", op, v.errors);
@@ -209,7 +215,7 @@ export async function POST(request: Request) {
 
   await saveRecipeDraft(admin, siteId, next);
   // Renvoie aussi les sections (component + content effectif) pour que l'éditeur
-  // reste exactement aligné sur ce qui est persisté (swap reporte le contenu).
+  // reste exactement aligné sur ce qui est persisté (ordre épinglé + contenu).
   return NextResponse.json({
     ok: true,
     cards: recipeCards(next),

@@ -10,7 +10,7 @@ export default function PlumberEmergencyNavbar({ content, skin }: { content: any
   if (skin.accent) root["--c-accent" as keyof CSSProperties] = skin.accent as never;
   const links: string[] = Array.isArray(content?.links) && content.links.length ? content.links : LINKS_FALLBACK;
   return (
-    <nav className="penav sticky top-0 z-50" style={root}>
+    <nav className="penav relative z-10" style={root}>
       <style>{`
         .penav { background: var(--c-surface); border-bottom: 1px solid color-mix(in srgb, var(--c-ink) 10%, transparent); }
         .penav-link { position: relative; }

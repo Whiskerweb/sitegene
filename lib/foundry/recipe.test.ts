@@ -1,7 +1,28 @@
 // lib/foundry/recipe.test.ts
 import { describe, it, expect } from "vitest";
-import { validateRecipe } from "./recipe";
+import { validateRecipe, pinExtremes } from "./recipe";
 import type { Recipe } from "./types";
+
+describe("pinExtremes", () => {
+  const sec = (component: string) => ({ component, content: {} });
+  it("met la navbar en tête et le footer en queue", () => {
+    const ids = pinExtremes([
+      sec("services-rows"),
+      sec("footer-columns"),
+      sec("plumber-pro-navbar"),
+      sec("faq-accordion"),
+    ]).map((s) => s.component);
+    expect(ids[0]).toBe("plumber-pro-navbar");
+    expect(ids[ids.length - 1]).toBe("footer-columns");
+    expect(ids).toContain("services-rows");
+  });
+  it("idempotent ; sans navbar/footer, conserve l'ordre", () => {
+    const input = [sec("services-rows"), sec("faq-accordion")];
+    expect(pinExtremes(input).map((s) => s.component)).toEqual(["services-rows", "faq-accordion"]);
+    const once = pinExtremes([sec("footer-columns"), sec("hero-split-asym")]);
+    expect(pinExtremes(once)).toEqual(once);
+  });
+});
 
 const base: Recipe = {
   vibe: "warm-serif",

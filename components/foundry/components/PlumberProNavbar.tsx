@@ -38,8 +38,8 @@ export default function PlumberProNavbar({ content, skin }: { content: any; skin
         </div>
       </div>
 
-      {/* Nav sticky */}
-      <nav className="sticky top-0 z-50 border-b" style={{ background: "var(--c-surface)", borderColor: "color-mix(in srgb, var(--c-ink) 10%, transparent)" }}>
+      {/* Nav (en flux, défile avec la page) */}
+      <nav className="relative z-10 border-b" style={{ background: "var(--c-surface)", borderColor: "color-mix(in srgb, var(--c-ink) 10%, transparent)" }}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <a href="#" className="flex items-center gap-2">
             <span className="flex h-9 w-9 items-center justify-center rounded-lg" style={{ background: "var(--c-accent)" }}>

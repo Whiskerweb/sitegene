@@ -94,6 +94,17 @@ export default function StudioEditor({ data }: { data: StudioData }) {
   const setVibeS = (v: StudioVibe) => { vibeRef.current = v; setVibe(v); };
   const setBrandS = (b: string | null) => { brandRef.current = b; setBrandPrimary(b); };
 
+  /** Reconstruit des StudioSection depuis les sections renvoyées par le serveur
+   *  (source de vérité pour l'ORDRE — navbar épinglée en tête, footer en queue). */
+  const toStudioSections = useCallback(
+    (server: Array<{ component: string; content: Record<string, unknown> }>): StudioSection[] =>
+      server.map((s) => {
+        const e = catalogById.get(s.component);
+        return { component: s.component, role: e?.role ?? "section", roleLabel: e?.roleLabel ?? "Section", rarity: e?.rarity ?? "common", content: s.content };
+      }),
+    [catalogById],
+  );
+
   // --- Historique (annuler / rétablir) ----------------------------------------
   type Snap = { sections: StudioSection[]; vibe: StudioVibe; brandPrimary: string | null };
   const [hist, setHist] = useState<{ stack: Snap[]; i: number }>({
@@ -144,18 +155,11 @@ export default function StudioEditor({ data }: { data: StudioData }) {
   }
 
   // --- Remplacer --------------------------------------------------------------
-  // Le serveur reporte le contenu du client et le renvoie : on s'y aligne.
+  // Le serveur reporte le contenu du client : on adopte ce qu'il renvoie.
   async function doReplace(index: number, componentId: string) {
     const res = await call({ op: "swap", index, componentId });
     if (!res) return;
-    const entry = catalogById.get(componentId);
-    const serverContent = res.sections?.[index]?.content as Record<string, unknown> | undefined;
-    setSecs(secRef.current.map((s, i) => (i === index ? {
-      ...s,
-      component: componentId,
-      rarity: entry?.rarity ?? s.rarity,
-      content: serverContent ?? entry?.sample ?? s.content,
-    } : s)));
+    if (res.sections) setSecs(toStudioSections(res.sections));
     record();
     setReplaceAt(null);
     flash("Section remplacée.");
@@ -163,23 +167,21 @@ export default function StudioEditor({ data }: { data: StudioData }) {
 
   // --- Ajouter ----------------------------------------------------------------
   async function doAdd(entry: CatalogEntry) {
-    const at = Math.max(1, secRef.current.length - 1);
+    // Position indicative : une navbar se posera en tête (épinglage serveur).
+    const at = entry.role === "navbar" ? 0 : Math.max(1, secRef.current.length - 1);
     const res = await call({ op: "add", index: at, componentId: entry.id });
     if (!res) return;
-    const serverContent = res.sections?.[at]?.content as Record<string, unknown> | undefined;
-    const next = [...secRef.current];
-    next.splice(at, 0, { component: entry.id, role: entry.role, roleLabel: entry.roleLabel, rarity: entry.rarity, content: serverContent ?? entry.sample });
-    setSecs(next);
+    if (res.sections) setSecs(toStudioSections(res.sections));
     record();
     setAddOpen(false);
-    flash("Bloc ajouté.");
+    flash(entry.role === "navbar" ? "Barre de navigation ajoutée en haut." : "Bloc ajouté.");
   }
 
   // --- Supprimer --------------------------------------------------------------
   async function doRemove(index: number) {
     const res = await call({ op: "remove", index });
     if (!res) return;
-    setSecs(secRef.current.filter((_, i) => i !== index));
+    if (res.sections) setSecs(toStudioSections(res.sections));
     record();
     setSelected(null);
     setRight(null);
@@ -189,11 +191,11 @@ export default function StudioEditor({ data }: { data: StudioData }) {
   // --- Réordonner -------------------------------------------------------------
   async function move(from: number, to: number) {
     if (to < 0 || to >= secRef.current.length || from === to) return;
-    const n = [...secRef.current]; const [m] = n.splice(from, 1); n.splice(to, 0, m);
-    setSecs(n);
-    setSelected(to);
     const res = await call({ op: "reorder", index: from, to });
-    if (res) record();
+    if (!res) return;
+    if (res.sections) setSecs(toStudioSections(res.sections));
+    setSelected(null);
+    record();
   }
 
   // --- Achat ------------------------------------------------------------------
