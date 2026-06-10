@@ -11,7 +11,7 @@ import { CHARTE_FONTS } from "@/lib/foundry/charte";
 import { COMPONENT_PRICE_CREDITS } from "@/lib/marketplace";
 import { ownedItems } from "@/lib/marketplace-server";
 import { getBalance } from "@/lib/credits-server";
-import { loadRecipeDraft, recipeCards } from "@/lib/foundry/server";
+import { loadRecipeDraft, recipeCards, acquiredFromSnapshot } from "@/lib/foundry/server";
 import { loadPublishedSnapshot } from "@/lib/site-content-store";
 import { listSitePhotos } from "@/lib/site-photos";
 import { COMPONENTS } from "@/components/foundry/registry";
@@ -46,7 +46,8 @@ export async function loadStudioData(
   }));
 
   // Catalogue : uniquement les pièces RENDABLES (présentes dans le registre).
-  const deliveredIds = new Set(recipe.sections.map((s) => s.component));
+  // Acquis = dans la recette OU déjà acquis (livré/payé) pour ce site → gratuit.
+  const acquiredIds = new Set([...recipe.sections.map((s) => s.component), ...acquiredFromSnapshot(draft.row)]);
   const catalog: CatalogEntry[] = listManifests()
     .filter((m) => COMPONENTS[m.id])
     .map((m) => {
@@ -58,7 +59,7 @@ export async function loadStudioData(
         roleLabel: roleLabel(m.role),
         rarity: m.rarity,
         price,
-        owned: price === 0 || owned.components.has(m.id) || deliveredIds.has(m.id),
+        owned: price === 0 || owned.components.has(m.id) || acquiredIds.has(m.id),
         sample: getSample(m.id),
       };
     });

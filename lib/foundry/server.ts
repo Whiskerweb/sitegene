@@ -27,6 +27,19 @@ export interface FoundryContent {
   __recipe: Recipe;
   __brief?: string;
   __businessName?: string;
+  /**
+   * Composants déjà ACQUIS pour ce site (livrés à la génération OU achetés) :
+   * gratuits à vie, même après les avoir retirés puis remis. Accumulé à chaque
+   * sauvegarde — un composant n'entre dans la recette que s'il est légitime
+   * (inclus, livré ou payé), donc cette liste ne contient que des acquis.
+   */
+  __acquired?: string[];
+}
+
+/** Composants acquis (gratuits à vie) enregistrés dans un snapshot. */
+export function acquiredFromSnapshot(row: ContentRow | null): string[] {
+  const a = (row?.content_json as Partial<FoundryContent> | null)?.__acquired;
+  return Array.isArray(a) ? a.filter((x): x is string => typeof x === "string") : [];
 }
 
 /** Extrait la recette d'un snapshot (null si le snapshot n'est pas une recette). */
@@ -45,10 +58,14 @@ export async function saveRecipeDraft(
 ): Promise<number> {
   const existing = await loadEditableSnapshot(admin, siteId, FOUNDRY_TEMPLATE_ID);
   const prev = (existing?.content_json ?? {}) as Partial<FoundryContent>;
+  // Tout composant présent dans la recette est légitime (inclus/livré/payé) :
+  // on l'enregistre comme acquis à vie (gratuit même après l'avoir retiré).
+  const acquired = Array.from(new Set([...(prev.__acquired ?? []), ...recipe.sections.map((s) => s.component)]));
   const content: FoundryContent = {
     __recipe: recipe,
     __brief: meta.brief ?? prev.__brief,
     __businessName: meta.businessName ?? prev.__businessName,
+    __acquired: acquired,
   };
   return saveDraftSnapshot(admin, siteId, FOUNDRY_TEMPLATE_ID, content as unknown as Record<string, unknown>, "ai");
 }

@@ -11,6 +11,7 @@ import { validateRecipe } from "@/lib/foundry/recipe";
 import type { VibeId } from "@/lib/foundry/types";
 import {
   FOUNDRY_TEMPLATE_ID,
+  acquiredFromSnapshot,
   loadRecipeDraft,
   recipeCards,
   saveRecipeDraft,
@@ -18,7 +19,7 @@ import {
 
 const MIN_SECTIONS = 4;
 const HEX = /^#[0-9a-fA-F]{6}$/;
-const OPS = ["swap", "add", "remove", "reorder", "content", "palette"];
+const OPS = ["swap", "add", "remove", "reorder", "content", "palette", "set"];
 
 /**
  * Plug-and-play sur la recette du site assemblé (éditeur visuel « L'Atelier ») :
@@ -62,6 +63,37 @@ export async function POST(request: Request) {
   const recipe = draft.recipe;
   const sections = [...recipe.sections];
 
+  // --- Set : restaure un état complet (annuler / rétablir) -------------------
+  if (op === "set") {
+    const rawSections = Array.isArray(body?.sections) ? body.sections : null;
+    if (!rawSections) return NextResponse.json({ error: "État invalide." }, { status: 400 });
+    // N'autorise QUE des composants déjà acquis (un undo/redo ne traverse que des
+    // états déjà atteints) — un set ne peut pas introduire une pièce non payée.
+    const acquired = new Set([...sections.map((s) => s.component), ...acquiredFromSnapshot(draft.row)]);
+    const owned = await ownedItems(admin, user.id);
+    const rebuilt = rawSections
+      .filter((s: unknown) => s && typeof (s as { component?: unknown }).component === "string")
+      .map((s: { component: string; content?: unknown }) => ({ component: s.component, content: sanitizeUserContent(s.component, s.content) }));
+    for (const s of rebuilt) {
+      const m = getManifest(s.component);
+      if (!m) return NextResponse.json({ error: "Composant inconnu." }, { status: 400 });
+      if (componentPrice(m.rarity) > 0 && !acquired.has(s.component) && !owned.components.has(s.component)) {
+        return NextResponse.json({ error: "État non autorisé." }, { status: 402 });
+      }
+    }
+    let next = { ...recipe, sections: rebuilt };
+    if (body?.charteSpec && typeof body.charteSpec === "object") {
+      next = { ...next, vibe: "custom", customVibe: repairCharte(body.charteSpec) };
+    } else if (typeof body?.vibeId === "string" && getVibe(body.vibeId)) {
+      next = { ...next, vibe: getVibe(body.vibeId)!.id as VibeId, customVibe: undefined };
+    }
+    next = { ...next, brand: typeof body?.accent === "string" && HEX.test(body.accent.trim()) ? { primary: body.accent.trim() } : undefined };
+    const v = validateRecipe(next);
+    if (!v.ok) return NextResponse.json({ error: "État invalide." }, { status: 400 });
+    await saveRecipeDraft(admin, siteId, next);
+    return NextResponse.json({ ok: true, cards: recipeCards(next) });
+  }
+
   // --- Palette : change la DA sans toucher aux sections ----------------------
   if (op === "palette") {
     let next = recipe;
@@ -82,14 +114,17 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true, vibe: effective, brandPrimary: next.brand?.primary ?? null });
   }
 
-  // --- Gating d'achat (rare/epic non livrés avec le site) -------------------
+  // --- Gating d'achat (rare/epic jamais acquis pour ce site) ----------------
   if (op === "swap" || op === "add") {
     const manifest = getManifest(componentId);
     if (!manifest) return NextResponse.json({ error: "Composant inconnu." }, { status: 400 });
     const price = componentPrice(manifest.rarity);
     if (price > 0) {
-      const delivered = sections.some((s) => s.component === componentId);
-      if (!delivered) {
+      // Acquis = déjà dans la recette OU enregistré comme acquis (livré/payé un
+      // jour pour ce site) OU possédé sur le compte. Empêche de re-payer une
+      // pièce de base qu'on a retirée puis voulu remettre.
+      const acquired = new Set([...sections.map((s) => s.component), ...acquiredFromSnapshot(draft.row)]);
+      if (!acquired.has(componentId)) {
         const owned = await ownedItems(admin, user.id);
         if (!owned.components.has(componentId)) {
           return NextResponse.json(
@@ -115,8 +150,9 @@ export async function POST(request: Request) {
     if (newManifest.id === target.component) {
       return NextResponse.json({ ok: true, unchanged: true, cards: recipeCards(recipe) });
     }
-    // Le contenu compatible suit (mêmes clés/formes) ; le reste vient du sample.
-    sections[index] = { component: componentId, content: normalizeSectionContent(componentId, target.content) };
+    // Le contenu du client suit (textes ET images, clés compatibles) ; le reste
+    // vient du sample. La nouvelle pièce arrive donc avec les infos du site.
+    sections[index] = { component: componentId, content: sanitizeUserContent(componentId, target.content) };
   }
 
   if (op === "add") {

@@ -5,7 +5,7 @@
 // barre flottante sans jargon : Contenu (textes + images à la main), Remplacer
 // (comparatif filet rouge), monter/descendre, supprimer. À droite, un panneau
 // contextuel (contenu ou palette live). Tout s'enregistre tout seul.
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   ArrowLeftRight,
@@ -16,11 +16,14 @@ import {
   Palette,
   Pencil,
   Plus,
+  Redo2,
   Sparkles,
   Trash2,
+  Undo2,
   X,
 } from "lucide-react";
 import { COMPONENTS } from "@/components/foundry/registry";
+import { vibeToSpec } from "@/lib/foundry/charte";
 import type { StudioData, StudioSection, StudioVibe, CatalogEntry } from "./types";
 import {
   AddPanel,
@@ -29,6 +32,7 @@ import {
   ReplaceDrawer,
   Themed,
 } from "./panels";
+import ReorderOverlay from "./ReorderOverlay";
 
 type RightPanel = { kind: "content"; index: number } | { kind: "palette" } | null;
 
@@ -44,11 +48,10 @@ export default function StudioEditor({ data }: { data: StudioData }) {
   const [right, setRight] = useState<RightPanel>(null);
   const [replaceAt, setReplaceAt] = useState<number | null>(null);
   const [addOpen, setAddOpen] = useState(false);
+  const [reorderFrom, setReorderFrom] = useState<number | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [publishing, setPublishing] = useState(false);
-  const dragFrom = useRef<number | null>(null);
-  const [dragOver, setDragOver] = useState<number | null>(null);
 
   const catalogById = useMemo(() => {
     const m = new Map<string, CatalogEntry>();
@@ -85,41 +88,89 @@ export default function StudioEditor({ data }: { data: StudioData }) {
     [data.siteId, flash],
   );
 
+  // --- Refs synchrones (pour l'historique) + état mutateurs -------------------
+  const secRef = useRef(sections); const vibeRef = useRef(vibe); const brandRef = useRef(brandPrimary);
+  const setSecs = (next: StudioSection[]) => { secRef.current = next; setSections(next); };
+  const setVibeS = (v: StudioVibe) => { vibeRef.current = v; setVibe(v); };
+  const setBrandS = (b: string | null) => { brandRef.current = b; setBrandPrimary(b); };
+
+  // --- Historique (annuler / rétablir) ----------------------------------------
+  type Snap = { sections: StudioSection[]; vibe: StudioVibe; brandPrimary: string | null };
+  const [hist, setHist] = useState<{ stack: Snap[]; i: number }>({
+    stack: [{ sections: data.sections, vibe: data.vibe, brandPrimary: data.brandPrimary }],
+    i: 0,
+  });
+  const canUndo = hist.i > 0;
+  const canRedo = hist.i < hist.stack.length - 1;
+  /** Enregistre l'état courant (refs) comme nouveau point d'historique. */
+  function record() {
+    const snap: Snap = { sections: secRef.current, vibe: vibeRef.current, brandPrimary: brandRef.current };
+    setHist((h) => ({ stack: [...h.stack.slice(0, h.i + 1), snap], i: h.i + 1 }));
+  }
+  async function applySnap(s: Snap) {
+    setSecs(s.sections); setVibeS(s.vibe); setBrandS(s.brandPrimary);
+    setSelected(null); setRight(null);
+    const body: Record<string, unknown> = {
+      op: "set",
+      sections: s.sections.map((x) => ({ component: x.component, content: x.content })),
+      accent: s.brandPrimary ?? undefined,
+    };
+    if (s.vibe.id === "custom") body.charteSpec = vibeToSpec(s.vibe); else body.vibeId = s.vibe.id;
+    await call(body);
+  }
+  function undo() { if (!canUndo) return; const t = hist.stack[hist.i - 1]; setHist((h) => ({ ...h, i: h.i - 1 })); void applySnap(t); }
+  function redo() { if (!canRedo) return; const t = hist.stack[hist.i + 1]; setHist((h) => ({ ...h, i: h.i + 1 })); void applySnap(t); }
+
+  // Raccourcis clavier annuler/rétablir (hors champ de saisie).
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "z") {
+        e.preventDefault();
+        if (e.shiftKey) redo(); else undo();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  });
+
   // --- Contenu (édition manuelle, debounce) -----------------------------------
   const contentTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   function editContent(index: number, content: Record<string, unknown>) {
-    setSections((prev) => prev.map((s, i) => (i === index ? { ...s, content } : s)));
+    setSecs(secRef.current.map((s, i) => (i === index ? { ...s, content } : s)));
     if (contentTimer.current) clearTimeout(contentTimer.current);
-    contentTimer.current = setTimeout(() => { void call({ op: "content", index, content }); }, 650);
+    contentTimer.current = setTimeout(() => { void call({ op: "content", index, content }).then((r) => { if (r) record(); }); }, 650);
   }
 
   // --- Remplacer --------------------------------------------------------------
-  // Le serveur reporte le contenu compatible et le renvoie : on s'y aligne.
+  // Le serveur reporte le contenu du client et le renvoie : on s'y aligne.
   async function doReplace(index: number, componentId: string) {
     const res = await call({ op: "swap", index, componentId });
     if (!res) return;
     const entry = catalogById.get(componentId);
     const serverContent = res.sections?.[index]?.content as Record<string, unknown> | undefined;
-    setSections((prev) => prev.map((s, i) => (i === index ? {
+    setSecs(secRef.current.map((s, i) => (i === index ? {
       ...s,
       component: componentId,
       rarity: entry?.rarity ?? s.rarity,
       content: serverContent ?? entry?.sample ?? s.content,
     } : s)));
+    record();
     setReplaceAt(null);
     flash("Section remplacée.");
   }
 
   // --- Ajouter ----------------------------------------------------------------
   async function doAdd(entry: CatalogEntry) {
-    const at = Math.max(1, sections.length - 1);
+    const at = Math.max(1, secRef.current.length - 1);
     const res = await call({ op: "add", index: at, componentId: entry.id });
     if (!res) return;
-    setSections((prev) => {
-      const next = [...prev];
-      next.splice(at, 0, { component: entry.id, role: entry.role, roleLabel: entry.roleLabel, rarity: entry.rarity, content: entry.sample });
-      return next;
-    });
+    const serverContent = res.sections?.[at]?.content as Record<string, unknown> | undefined;
+    const next = [...secRef.current];
+    next.splice(at, 0, { component: entry.id, role: entry.role, roleLabel: entry.roleLabel, rarity: entry.rarity, content: serverContent ?? entry.sample });
+    setSecs(next);
+    record();
     setAddOpen(false);
     flash("Bloc ajouté.");
   }
@@ -128,7 +179,8 @@ export default function StudioEditor({ data }: { data: StudioData }) {
   async function doRemove(index: number) {
     const res = await call({ op: "remove", index });
     if (!res) return;
-    setSections((prev) => prev.filter((_, i) => i !== index));
+    setSecs(secRef.current.filter((_, i) => i !== index));
+    record();
     setSelected(null);
     setRight(null);
     flash("Section retirée.");
@@ -136,10 +188,12 @@ export default function StudioEditor({ data }: { data: StudioData }) {
 
   // --- Réordonner -------------------------------------------------------------
   async function move(from: number, to: number) {
-    if (to < 0 || to >= sections.length) return;
-    setSections((prev) => { const n = [...prev]; const [m] = n.splice(from, 1); n.splice(to, 0, m); return n; });
+    if (to < 0 || to >= secRef.current.length || from === to) return;
+    const n = [...secRef.current]; const [m] = n.splice(from, 1); n.splice(to, 0, m);
+    setSecs(n);
     setSelected(to);
-    await call({ op: "reorder", index: from, to });
+    const res = await call({ op: "reorder", index: from, to });
+    if (res) record();
   }
 
   // --- Achat ------------------------------------------------------------------
@@ -164,15 +218,16 @@ export default function StudioEditor({ data }: { data: StudioData }) {
 
   // --- Palette ----------------------------------------------------------------
   const paletteTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  function liveVibe(v: StudioVibe) { setVibe(v); }
+  function liveVibe(v: StudioVibe) { setVibeS(v); }
   function persistCharte(spec: any) {
     if (paletteTimer.current) clearTimeout(paletteTimer.current);
-    paletteTimer.current = setTimeout(() => { void call({ op: "palette", charteSpec: spec, accent: brandPrimary ?? undefined }); }, 500);
+    paletteTimer.current = setTimeout(() => { void call({ op: "palette", charteSpec: spec, accent: brandRef.current ?? undefined }).then((r) => { if (r) record(); }); }, 500);
   }
   async function persistPreset(vibeId: string) {
     const preset = data.presets.find((p) => p.id === vibeId);
-    if (preset) { setVibe(preset); setBrandPrimary(null); }
-    await call({ op: "palette", vibeId });
+    if (preset) { setVibeS(preset); setBrandS(null); }
+    const res = await call({ op: "palette", vibeId });
+    if (res) record();
   }
 
   // --- Publier ----------------------------------------------------------------
@@ -226,6 +281,10 @@ export default function StudioEditor({ data }: { data: StudioData }) {
             <p className="text-[14px] font-bold text-neutral-900">{data.businessName || "Mon site"}</p>
             <p className="text-[11.5px] text-neutral-400">{saving ? "Enregistrement…" : "Tout est enregistré"}</p>
           </div>
+          <div className="ml-1 flex items-center gap-0.5 rounded-full border border-neutral-200 p-0.5">
+            <button onClick={undo} disabled={!canUndo} className="grid h-8 w-8 place-items-center rounded-full text-neutral-500 transition hover:bg-neutral-100 disabled:opacity-30" title="Annuler" aria-label="Annuler"><Undo2 size={16} /></button>
+            <button onClick={redo} disabled={!canRedo} className="grid h-8 w-8 place-items-center rounded-full text-neutral-500 transition hover:bg-neutral-100 disabled:opacity-30" title="Rétablir" aria-label="Rétablir"><Redo2 size={16} /></button>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <button onClick={() => { setRight((r) => (r?.kind === "palette" ? null : { kind: "palette" })); setSelected(null); }} className={`inline-flex h-9 items-center gap-1.5 rounded-full px-3.5 text-[13px] font-semibold transition ${right?.kind === "palette" ? "bg-neutral-900 text-white" : "border border-neutral-200 text-neutral-700 hover:border-neutral-400"}`}>
@@ -256,9 +315,7 @@ export default function StudioEditor({ data }: { data: StudioData }) {
                     className="relative"
                     onMouseEnter={() => !addOpen && replaceAt === null && setSelected(i)}
                     onClick={(e) => { e.stopPropagation(); setSelected(i); }}
-                    onDragOver={(e) => { e.preventDefault(); setDragOver(i); }}
-                    onDrop={(e) => { e.preventDefault(); const from = dragFrom.current; if (from !== null && from !== i) void move(from, i); dragFrom.current = null; setDragOver(null); }}
-                    style={{ outline: isSel ? "2px solid var(--c-accent)" : dragOver === i ? "2px dashed #94a3b8" : "none", outlineOffset: -2 }}
+                    style={{ outline: isSel ? "2px solid var(--c-accent)" : "none", outlineOffset: -2 }}
                   >
                     {C ? <C content={s.content} skin={{}} /> : <div className="p-10 text-center text-sm text-red-500">Composant introuvable : {s.component}</div>}
 
@@ -267,15 +324,13 @@ export default function StudioEditor({ data }: { data: StudioData }) {
                       <>
                         <div className="pointer-events-none absolute inset-0" style={{ background: "rgba(15,23,42,0.04)" }} />
                         <div className="absolute left-1/2 top-3 z-10 flex -translate-x-1/2 items-center gap-1 rounded-full border border-neutral-200 bg-white/95 px-1.5 py-1 shadow-lg backdrop-blur" onClick={(e) => e.stopPropagation()}>
-                          <span
-                            draggable
-                            onDragStart={() => { dragFrom.current = i; }}
-                            onDragEnd={() => { dragFrom.current = null; setDragOver(null); }}
-                            className="grid h-8 w-8 cursor-grab place-items-center rounded-full text-neutral-400 hover:bg-neutral-100 active:cursor-grabbing"
-                            title="Déplacer"
+                          <button
+                            onClick={() => { setReorderFrom(i); setRight(null); }}
+                            className="grid h-8 w-8 cursor-grab place-items-center rounded-full text-neutral-400 hover:bg-neutral-100"
+                            title="Déplacer cette section"
                           >
                             <GripVertical size={15} />
-                          </span>
+                          </button>
                           <span className="px-1.5 text-[12px] font-bold text-neutral-700">{s.roleLabel}</span>
                           <button onClick={() => setRight({ kind: "content", index: i })} className="inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-[12.5px] font-semibold text-neutral-700 hover:bg-neutral-100"><Pencil size={13} /> Contenu</button>
                           <button onClick={() => setReplaceAt(i)} className="inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-[12.5px] font-semibold text-neutral-700 hover:bg-neutral-100"><ArrowLeftRight size={13} /> Remplacer</button>
@@ -326,6 +381,16 @@ export default function StudioEditor({ data }: { data: StudioData }) {
       )}
       {addOpen && (
         <AddPanel groups={addGroups} vibe={vibe} brandPrimary={brandPrimary} onAdd={doAdd} onBuy={buy} onClose={() => setAddOpen(false)} />
+      )}
+      {reorderFrom !== null && (
+        <ReorderOverlay
+          sections={sections}
+          vibe={vibe}
+          brandPrimary={brandPrimary}
+          initialHeld={reorderFrom}
+          onMove={(from, to) => void move(from, to)}
+          onClose={() => { setReorderFrom(null); setSelected(null); }}
+        />
       )}
 
       {/* ===== Toast ===== */}

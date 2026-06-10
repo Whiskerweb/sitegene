@@ -18,6 +18,7 @@ import {
 import { COMPONENTS } from "@/components/foundry/registry";
 import { vibeToCssVars } from "@/lib/foundry/vibes";
 import { vibeToSpec, fontHref } from "@/lib/foundry/charte";
+import { sanitizeUserContent } from "@/lib/foundry/agenceur";
 import { fieldsFor, type FieldType } from "@/lib/foundry/fields";
 import type { CatalogEntry, StudioSection, StudioVibe } from "./types";
 
@@ -357,11 +358,14 @@ export function ReplaceDrawer({
           <div className="grid grid-cols-1 gap-4">
             {others.map((c) => {
               const locked = !c.owned && c.price > 0;
+              // Aperçu AVEC le contenu du client (textes + images repris) sur la
+              // charte : on voit la pièce « sur son site » même avant l'achat.
+              const previewContent = sanitizeUserContent(c.id, section.content);
               return (
                 <div key={c.id} className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">
                   <div className="relative border-b border-neutral-100">
-                    <Preview id={c.id} content={c.sample} vibe={vibe} brandPrimary={brandPrimary} width={600} height={230} />
-                    {locked && <div className="absolute inset-0 grid place-items-center bg-white/55 backdrop-blur-[1px]"><Lock size={22} className="text-neutral-500" /></div>}
+                    <Preview id={c.id} content={previewContent} vibe={vibe} brandPrimary={brandPrimary} width={600} height={230} />
+                    {locked && <div className="absolute inset-0 grid place-items-center bg-white/35"><span className="flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-[12px] font-semibold text-neutral-700 shadow"><Lock size={13} /> Aperçu — {c.price} ✦ pour l'utiliser</span></div>}
                   </div>
                   <div className="flex items-center justify-between gap-2 p-3">
                     <div className="flex items-center gap-2">
