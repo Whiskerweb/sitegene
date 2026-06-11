@@ -31,6 +31,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Site non autorisé." }, { status: 403 });
   }
 
+  // Plafond : 20 photos par site (compte client).
+  const { data: existing } = await admin.storage.from("site-photos").list(siteId, { limit: 100 });
+  const count = (existing ?? []).filter((f) => f.id || f.name).length;
+  if (count >= 20) {
+    return NextResponse.json({ error: "Limite atteinte : 20 photos maximum." }, { status: 409 });
+  }
+
   if (!(file instanceof File) || file.size === 0) {
     return NextResponse.json({ error: "Fichier manquant." }, { status: 400 });
   }
