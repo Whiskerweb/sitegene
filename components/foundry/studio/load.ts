@@ -11,6 +11,7 @@ import { CHARTE_FONTS } from "@/lib/foundry/charte";
 import { COMPONENT_PRICE_CREDITS } from "@/lib/marketplace";
 import { ownedItems } from "@/lib/marketplace-server";
 import { getBalance } from "@/lib/credits-server";
+import { sanitizeUserContent } from "@/lib/foundry/agenceur";
 import { loadRecipeDraft, acquiredFromSnapshot, pagesFromSnapshot } from "@/lib/foundry/server";
 import { loadPublishedSnapshot } from "@/lib/site-content-store";
 import { listSitePhotos } from "@/lib/site-photos";
@@ -50,7 +51,10 @@ export async function loadStudioData(
       role: m?.role ?? "section",
       roleLabel: roleLabel(m?.role ?? "section"),
       rarity: m?.rarity ?? "common",
-      content: s.content as Record<string, unknown>,
+      // Backfill des clés du schéma courant (ex. ctaHref) en préservant les
+      // textes/images du client — symétrique de la sanitisation à la sauvegarde,
+      // pour que les nouveaux champs apparaissent aussi sur les sites existants.
+      content: m ? sanitizeUserContent(s.component, s.content) : (s.content as Record<string, unknown>),
     };
   });
 

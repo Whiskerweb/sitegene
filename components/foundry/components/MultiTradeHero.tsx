@@ -38,7 +38,7 @@ export default function MultiTradeHero({ content, skin }: { content: any; skin: 
         <div className="mthero-copy">
           <h1 className="mthero-h1">{title}</h1>
           <p className="mthero-tagline">{tagline}</p>
-          <a href="#contact" className="mthero-cta">
+          <a href={content.ctaHref || "#contact"} className="mthero-cta">
             {cta}
             <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <path d="M5 12h14M13 6l6 6-6 6"/>

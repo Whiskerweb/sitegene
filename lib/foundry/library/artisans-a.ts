@@ -29,7 +29,7 @@ export const manifests: Record<string, ComponentManifest> = {
     description:
       "(Plumber Pro) Hero plein écran sur panneau encre : photo en fond avec parallaxe au scroll et voile dégradé, eyebrow en pilule contour, titre XL, CTA + compteur d'avis.",
     whenToUse: ["métier de confiance/intervention", "première impression forte avec photo terrain"],
-    contentKeys: ["title", "tagline", "cta", "image"],
+    contentKeys: ["title", "tagline", "cta", "ctaHref", "image"],
   }),
   "plumber-pro-intro": M({
     id: "plumber-pro-intro",
@@ -121,7 +121,7 @@ export const manifests: Record<string, ComponentManifest> = {
     description:
       "(Plumber Modern) Hero bicolore sur fond accent : badge étoilé, titre en trois lignes, CTA clair, preuve sociale à avatars empilés, grande photo arrondie à droite.",
     whenToUse: ["marque de service moderne et chaleureuse", "preuve sociale forte (avis, clients)"],
-    contentKeys: ["titleA", "titleB", "titleC", "tagline", "cta", "image"],
+    contentKeys: ["titleA", "titleB", "titleC", "tagline", "cta", "ctaHref", "image"],
   }),
 
   // --- Plumber Emergency -----------------------------------------------------
@@ -141,7 +141,7 @@ export const manifests: Record<string, ComponentManifest> = {
     description:
       "(Plumber Emergency) Hero 2 colonnes : soulignement décoratif SVG accent2 sous le titre XL, CTA arrondi + mention de disponibilité, photo à droite avec carte client flottante.",
     whenToUse: ["urgences 24/7 à mettre en avant", "hero avec preuve client incarnée"],
-    contentKeys: ["title", "tagline", "cta", "image"],
+    contentKeys: ["title", "tagline", "cta", "ctaHref", "image"],
   }),
 };
 
@@ -161,6 +161,7 @@ export const samples: Record<string, Record<string, unknown>> = {
     tagline:
       "Une plomberie fiable, abordable et disponible 24/7 pour tous vos besoins, à la maison comme en entreprise.",
     cta: "Prendre rendez-vous",
+    ctaHref: "#contact",
     reviews: "8K+",
     reviewsLabel: "Avis clients",
     image: "/_templates/plumber-pro/img/hero.jpg",
@@ -260,6 +261,7 @@ export const samples: Record<string, Record<string, unknown>> = {
     tagline:
       "Nous couvrons tous vos besoins de plomberie pour garder votre maison sûre, confortable et sereine.",
     cta: "Réserver une consultation gratuite",
+    ctaHref: "#contact",
     proof: "Plus de 10 000 particuliers nous font confiance",
     avatars: [
       "/_templates/plumber-modern/img/team-1.jpg",
@@ -277,6 +279,7 @@ export const samples: Record<string, Record<string, unknown>> = {
     title: "Plombiers d'urgence, à votre porte en 30 minutes",
     tagline: "Fuites, ruptures, débordements : une équipe disponible jour et nuit, week-ends compris.",
     cta: "Appeler maintenant",
+    ctaHref: "#contact",
     availability: "Disponible 24h/24, 7j/7",
     customerName: "Camille Robert",
     customerRole: "Cliente depuis 2022",

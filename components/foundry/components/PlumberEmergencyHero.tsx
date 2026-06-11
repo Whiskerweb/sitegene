@@ -39,7 +39,7 @@ export default function PlumberEmergencyHero({ content, skin }: { content: any; 
           <p className="mb-8 max-w-md text-lg text-white/80">
             {content?.tagline ?? "Qu'il s'agisse d'un robinet qui fuit ou d'une urgence majeure, nos professionnels ne sont qu'à un appel de chez vous."}
           </p>
-          <a href="#contact" className="inline-flex items-center gap-3 rounded-[var(--r-card)] px-7 py-4 text-sm font-bold shadow-lg transition-all hover:brightness-105" style={{ background: "var(--c-accent2)", color: "var(--c-ink)" }}>
+          <a href={content?.ctaHref || "#contact"} className="inline-flex items-center gap-3 rounded-[var(--r-card)] px-7 py-4 text-sm font-bold shadow-lg transition-all hover:brightness-105" style={{ background: "var(--c-accent2)", color: "var(--c-ink)" }}>
             <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
             <span>{content?.cta ?? "Appeler : 01 86 95 99 43"}</span>
           </a>

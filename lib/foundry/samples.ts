@@ -20,6 +20,7 @@ const CORE_SAMPLES: Record<string, Record<string, unknown>> = {
     title: "Retrouvez votre équilibre, une séance à la fois.",
     subtitle: "Un accompagnement chaleureux et sur-mesure pour traverser le stress, les doutes et les transitions de vie.",
     cta: "Prendre rendez-vous",
+    ctaHref: "#tarifs",
     proofCount: "300+",
     proofLabel: "personnes déjà accompagnées",
     image: `${M}/hero.jpg`,

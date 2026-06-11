@@ -2,7 +2,7 @@
 import type { Skin } from "@/lib/foundry/types";
 
 interface HeroContent {
-  badge: string; title: string; subtitle: string; cta: string;
+  badge: string; title: string; subtitle: string; cta: string; ctaHref?: string;
   proofCount: string; proofLabel: string;
   image: string; image2: string; avatars: string[];
 }
@@ -20,7 +20,7 @@ export default function HeroSplitAsym({ content, skin }: { content: HeroContent;
           </div>
           <h1 className="mt-7 max-w-[560px] text-[2.6rem] leading-[1.12] md:text-[4rem]" style={{ fontFamily: "var(--font-heading)", color: "var(--c-ink)", letterSpacing: "-2px" }}>{content.title}</h1>
           <p className="mt-7 max-w-[400px] text-base leading-relaxed" style={{ color: "var(--c-accent)" }}>{content.subtitle}</p>
-          <a href="#tarifs" className="mt-8 inline-flex rounded-[var(--r-pill)] px-7 py-3.5 text-sm font-bold text-white transition hover:brightness-95" style={{ background: "var(--c-accent)" }}>{content.cta}</a>
+          <a href={content.ctaHref || "#tarifs"} className="mt-8 inline-flex rounded-[var(--r-pill)] px-7 py-3.5 text-sm font-bold text-white transition hover:brightness-95" style={{ background: "var(--c-accent)" }}>{content.cta}</a>
           <div className="mt-12 flex items-center gap-4">
             <div className="flex -space-x-3">
               {content.avatars.map((a, i) => (

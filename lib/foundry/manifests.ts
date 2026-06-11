@@ -16,7 +16,7 @@ const CORE_MANIFESTS: Record<string, ComponentManifest> = {
     description: "Hero 3 colonnes : accroche + preuve sociale (avatars) à gauche, grande photo au centre, mini-bloc + 2e photo à droite.",
     whenToUse: ["forte preuve sociale", "métier visuel/humain (coach, photographe, bien-être)", "hero riche premium"],
     vibes: ALL_VIBES,
-    contentKeys: ["badge", "title", "subtitle", "cta", "proofCount", "proofLabel", "image", "image2", "avatars"],
+    contentKeys: ["badge", "title", "subtitle", "cta", "ctaHref", "proofCount", "proofLabel", "image", "image2", "avatars"],
     allowedSkinKeys: ["accent", "surface"],
   },
   "services-rows": {

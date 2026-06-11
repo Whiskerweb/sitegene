@@ -262,6 +262,8 @@ export function ContentPanel({
             <NavLinksField value={f.value} pages={pages} onChange={(v) => patch(f.key, v)} />
           ) : isFooterColumns(f.key) && Array.isArray(f.value) ? (
             <FooterColumnsField value={f.value} pages={pages} titleKey={footerTitleKey} onChange={(v) => patch(f.key, v)} />
+          ) : f.key === "ctaHref" ? (
+            <CtaHrefField value={String(f.value ?? "")} pages={pages} onChange={(v) => patch(f.key, v)} />
           ) : (
             <>
           {(f.type === "text" || f.type === "textarea" || f.type === "number" || f.type === "boolean") && (
@@ -423,6 +425,55 @@ function writeLink(links: NavLinkValue[], i: number, label: string, target: stri
   const next = [...links];
   next[i] = target ? { label, target } : label;
   return next;
+}
+
+/**
+ * Destination d'un bouton CTA (heros) : section contact de la page, accueil,
+ * une page du site, ou un lien externe. Le LIBELLÉ du bouton reste le champ
+ * « Bouton » (cta) — ici on ne configure QUE la cible.
+ */
+function CtaHrefField({
+  value,
+  pages,
+  onChange,
+}: {
+  value: string;
+  pages: PageTab[];
+  onChange: (v: string) => void;
+}) {
+  const isExternal = /^https?:\/\//.test(value);
+  // "" → section contact (#…) ; "home"/slug → page ; "__ext" → externe.
+  const selectValue = isExternal ? "__ext" : !value || value.startsWith("#") ? "" : value;
+  return (
+    <div className="rounded-xl border border-neutral-200 bg-white p-2.5">
+      <div className="flex items-center gap-1.5">
+        <Link2 size={13} className="shrink-0 text-neutral-300" />
+        <select
+          value={selectValue}
+          onChange={(e) => {
+            const v = e.target.value;
+            onChange(v === "" ? "#contact" : v === "__ext" ? "https://" : v);
+          }}
+          className="h-8 w-full rounded-lg border border-neutral-200 bg-white px-2 text-[12.5px] text-neutral-700 outline-none focus:border-neutral-900"
+        >
+          <option value="">Section contact (bas de page)</option>
+          <option value="home">Accueil</option>
+          {pages.map((p) => (
+            <option key={p.id} value={p.slug}>Page « {p.title} »</option>
+          ))}
+          <option value="__ext">Lien externe…</option>
+        </select>
+      </div>
+      {isExternal && (
+        <input
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="https://…"
+          className={`${inputCls} mt-1.5`}
+        />
+      )}
+    </div>
+  );
 }
 
 /**

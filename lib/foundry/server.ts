@@ -257,14 +257,26 @@ export function renameNavLink(recipe: Recipe, oldTarget: string, label: string, 
   return { ...recipe, sections };
 }
 
-/** Retire les liens de navbar pointant vers une cible (suppression de page). */
+/** Retire les liens (navbar ET footer) pointant vers une cible (suppression de page). */
 export function removeNavLinks(recipe: Recipe, target: string): Recipe {
   const sections = recipe.sections.map((s) => {
-    if (getManifest(s.component)?.role !== "navbar") return s;
-    const links = (Array.isArray(s.content.links) ? s.content.links : [])
-      .map(normalizeNavLink)
-      .filter((l) => l.target !== target);
-    return { ...s, content: { ...s.content, links } };
+    const role = getManifest(s.component)?.role;
+    if (role === "navbar") {
+      const links = (Array.isArray(s.content.links) ? s.content.links : [])
+        .map(normalizeNavLink)
+        .filter((l) => l.target !== target);
+      return { ...s, content: { ...s.content, links } };
+    }
+    if (role === "footer") {
+      const columns = (Array.isArray(s.content.columns) ? s.content.columns : []).map((col) => {
+        if (!col || typeof col !== "object") return col;
+        const c = col as Record<string, unknown>;
+        const links = (Array.isArray(c.links) ? c.links : []).filter((l) => normalizeNavLink(l).target !== target);
+        return { ...c, links };
+      });
+      return { ...s, content: { ...s.content, columns } };
+    }
+    return s;
   });
   return { ...recipe, sections };
 }
@@ -277,17 +289,51 @@ export function resolveNavHref(target: string | undefined, siteSlug: string): st
 }
 
 /**
- * Injecte des `href` résolus dans les liens de la navbar (rendu public) — la
- * navbar peut alors naviguer entre les pages du site.
+ * Résout la cible d'un bouton CTA (heros) en href. Diffère de resolveNavHref :
+ * une cible vide ou une ancre (#contact) reste telle quelle (section de la page
+ * courante) ; "home"/page → URL du site ; http(s) → lien externe.
+ */
+export function resolveCtaHref(target: string | undefined, siteSlug: string): string {
+  const t = (target ?? "").trim();
+  if (!t || t.startsWith("#")) return t || "#contact";
+  if (/^https?:\/\//.test(t)) return t;
+  if (t === "home" || t === "/") return `/a/${siteSlug}`;
+  return `/a/${siteSlug}/${t}`;
+}
+
+/**
+ * Injecte des `href` résolus dans les liens de la navbar ET du footer (rendu
+ * public) — la navigation entre pages fonctionne depuis l'en-tête et le pied.
+ * Footer : un lien SANS cible reste une chaîne (texte brut, ex. une adresse) ;
+ * un lien AVEC cible devient {label, href}.
  */
 export function withResolvedNav(recipe: Recipe, siteSlug: string): Recipe {
   const sections = recipe.sections.map((s) => {
-    if (getManifest(s.component)?.role !== "navbar") return s;
-    const links = (Array.isArray(s.content.links) ? s.content.links : [])
-      .map(normalizeNavLink)
-      .filter((l) => l.label)
-      .map((l) => ({ label: l.label, href: resolveNavHref(l.target, siteSlug) }));
-    return { ...s, content: { ...s.content, links } };
+    const role = getManifest(s.component)?.role;
+    if (role === "navbar") {
+      const links = (Array.isArray(s.content.links) ? s.content.links : [])
+        .map(normalizeNavLink)
+        .filter((l) => l.label)
+        .map((l) => ({ label: l.label, href: resolveNavHref(l.target, siteSlug) }));
+      return { ...s, content: { ...s.content, links } };
+    }
+    if (role === "footer") {
+      const columns = (Array.isArray(s.content.columns) ? s.content.columns : []).map((col) => {
+        if (!col || typeof col !== "object") return col;
+        const c = col as Record<string, unknown>;
+        const links = (Array.isArray(c.links) ? c.links : [])
+          .map(normalizeNavLink)
+          .filter((l) => l.label)
+          .map((l) => (l.target ? { label: l.label, href: resolveNavHref(l.target, siteSlug) } : l.label));
+        return { ...c, links };
+      });
+      return { ...s, content: { ...s.content, columns } };
+    }
+    // Bouton CTA configurable (heros & sections) : cible → href public.
+    if (typeof s.content.ctaHref === "string") {
+      return { ...s, content: { ...s.content, ctaHref: resolveCtaHref(s.content.ctaHref, siteSlug) } };
+    }
+    return s;
   });
   return { ...recipe, sections };
 }

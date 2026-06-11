@@ -14,6 +14,7 @@ interface BoldStackContent {
   titleB: string;
   titleC: string;
   cta: string;
+  ctaHref?: string;
   cards: Card[];
 }
 
@@ -51,7 +52,7 @@ export default function BoldStackHero({ content, skin }: { content: BoldStackCon
         </div>
 
         {/* CTA unique : badge circulaire rotatif, centré sous le titre */}
-        <a href="#contact" className="relative mt-12 flex h-28 w-28 rotate-6 items-center justify-center rounded-full shadow-xl transition-transform hover:scale-105 md:h-32 md:w-32" style={{ background: "var(--c-accent2)" }}>
+        <a href={content?.ctaHref || "#contact"} className="relative mt-12 flex h-28 w-28 rotate-6 items-center justify-center rounded-full shadow-xl transition-transform hover:scale-105 md:h-32 md:w-32" style={{ background: "var(--c-accent2)" }}>
           <div className="bsh-badge-ring absolute inset-1">
             <svg viewBox="0 0 100 100" className="h-full w-full">
               <path id="bsh-cp" d="M 50,50 m -36,0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0" fill="none" />

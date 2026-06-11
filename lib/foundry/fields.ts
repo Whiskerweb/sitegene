@@ -38,6 +38,7 @@ const LABELS: Record<string, string> = {
   label: "Étiquette",
   badge: "Badge",
   cta: "Bouton",
+  ctaHref: "Lien du bouton",
   button: "Bouton",
   brand: "Nom de marque",
   name: "Nom",

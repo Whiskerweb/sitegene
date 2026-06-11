@@ -16,6 +16,7 @@ interface GooeyContent {
   text: string;
   description: string;
   cta: string;
+  ctaHref?: string;
   image: string;
 }
 
@@ -123,7 +124,7 @@ export default function GooeyPixelTrail({ content }: { content: GooeyContent; sk
         )}
         {content?.cta && (
           <a
-            href="#contact"
+            href={content?.ctaHref || "#contact"}
             className="mt-8 inline-block rounded-[var(--r-pill)] px-8 py-3.5 font-semibold text-white shadow-lg transition-transform hover:scale-[1.05]"
             style={{ background: "var(--c-accent)" }}
           >

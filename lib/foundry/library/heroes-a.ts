@@ -57,7 +57,7 @@ export const manifests: Record<string, ComponentManifest> = {
     description:
       "(Mariage) Hero plein écran photo, voile du bas, grand titre sérif sur deux lignes, tagline + CTA à contour en bas. Chaleureux.",
     whenToUse: ["photographe / mariage / famille", "hero photo plein écran avec appel à l'action", "ton chaleureux et naturel"],
-    contentKeys: ["title1", "title2", "tagline", "cta", "image"],
+    contentKeys: ["title1", "title2", "tagline", "cta", "ctaHref", "image"],
   }),
   "electrician-pro-hero": M({
     id: "electrician-pro-hero",
@@ -66,7 +66,7 @@ export const manifests: Record<string, ComponentManifest> = {
     description:
       "(Artisan) Hero centré : pastille d'avis étoilés, grand titre, CTA accent, puis grande image arrondie pleine largeur avec badge flottant.",
     whenToUse: ["artisan / service avec preuve sociale (avis)", "hero rassurant avec photo de chantier", "métier d'intervention (électricien, plombier…)"],
-    contentKeys: ["title", "tagline", "cta", "rating", "badge", "image"],
+    contentKeys: ["title", "tagline", "cta", "ctaHref", "rating", "badge", "image"],
   }),
   "multi-trade-hero": M({
     id: "multi-trade-hero",
@@ -75,7 +75,7 @@ export const manifests: Record<string, ComponentManifest> = {
     description:
       "(Artisan) Hero SOMBRE plein écran sur image, dégradé latéral, titre + CTA à gauche, pilules de preuves (garanties) à droite.",
     whenToUse: ["artisan multi-services / BTP", "hero sombre qui inspire le sérieux", "mettre en avant des garanties / preuves chiffrées"],
-    contentKeys: ["title", "tagline", "cta", "image", "pills"],
+    contentKeys: ["title", "tagline", "cta", "ctaHref", "image", "pills"],
   }),
 };
 
@@ -111,12 +111,14 @@ export const samples: Record<string, Record<string, unknown>> = {
     title2: "instants précieux",
     tagline: "Une photographie chaleureuse et naturelle, fidèle à vos émotions.",
     cta: "Voir les prestations",
+    ctaHref: "#services",
     image: `${T}/wedding-warm/img/hero.jpg`,
   },
   "electrician-pro-hero": {
     title: "Des solutions électriques fiables, partout chez vous",
     tagline: "Dépannage, mise aux normes, installation : une équipe certifiée et des délais tenus.",
     cta: "Prendre rendez-vous",
+    ctaHref: "#services",
     rating: "4,8+",
     badge: "Intervention sous 24 h",
     image: `${T}/electrician-pro/img/hero.jpg`,
@@ -125,6 +127,7 @@ export const samples: Record<string, Record<string, unknown>> = {
     title: "Tous vos travaux, un seul artisan de confiance",
     tagline: "Plomberie, électricité, rénovation : un interlocuteur unique, du devis à la livraison.",
     cta: "Demander un devis",
+    ctaHref: "#contact",
     image: `${T}/multi-trade/img/hero.jpg`,
     pills: ["Devis gratuit", "Artisans certifiés", "Garantie décennale"],
   },

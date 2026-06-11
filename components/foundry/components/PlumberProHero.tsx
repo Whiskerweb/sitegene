@@ -42,7 +42,7 @@ export default function PlumberProHero({ content, skin }: { content: any; skin: 
             {content?.tagline ?? "Une plomberie fiable, abordable et disponible 24/7 pour tous vos besoins, à la maison comme en entreprise."}
           </p>
           <div className="flex flex-wrap items-center gap-6">
-            <a href="#contact" className="inline-flex items-center gap-2 rounded-[var(--r-pill)] px-6 py-3.5 text-sm font-semibold transition-all hover:brightness-105" style={{ background: "var(--c-accent2)", color: "var(--c-ink)" }}>
+            <a href={content?.ctaHref || "#contact"} className="inline-flex items-center gap-2 rounded-[var(--r-pill)] px-6 py-3.5 text-sm font-semibold transition-all hover:brightness-105" style={{ background: "var(--c-accent2)", color: "var(--c-ink)" }}>
               {content?.cta ?? "Prendre rendez-vous"}
             </a>
             <div className="flex items-center gap-3">

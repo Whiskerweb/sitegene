@@ -32,7 +32,7 @@ export default function ElectricianProHero({ content, skin }: { content: any; sk
         </div>
         <h1 className="ephero-h1">{title}</h1>
         <p className="ephero-tagline">{tagline}</p>
-        <a href="#services" className="ephero-cta">{cta}</a>
+        <a href={content.ctaHref || "#services"} className="ephero-cta">{cta}</a>
       </div>
       {image && (
         <div className="ephero-imgwrap">

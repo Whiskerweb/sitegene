@@ -11,6 +11,7 @@ interface MarqueeHeroContent {
   title: string;
   description: string;
   cta: string;
+  ctaHref?: string;
   images: string[];
 }
 
@@ -55,7 +56,7 @@ export default function MarqueeHero({ content }: { content: MarqueeHeroContent; 
         </p>
 
         <a
-          href="#contact"
+          href={content?.ctaHref || "#contact"}
           className="sg-mh-fade mt-8 rounded-[var(--r-pill)] px-8 py-3 font-semibold text-white shadow-lg transition-transform hover:scale-[1.05]"
           style={{ background: "var(--c-accent)", animationDelay: "550ms" }}
         >

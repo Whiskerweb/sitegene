@@ -63,7 +63,7 @@ export default function WwHeroFullscreen({ content, skin }: { content: any; skin
       </div>
       <div className="wwherofs__bottom">
         <p className="wwherofs__tagline">{tagline}</p>
-        <a href="#services" className="wwherofs__cta">{cta}</a>
+        <a href={content.ctaHref || "#services"} className="wwherofs__cta">{cta}</a>
       </div>
     </header>
   );
