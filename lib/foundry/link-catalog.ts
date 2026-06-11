@@ -2,6 +2,8 @@
 // Registre des plateformes de liens + normalisation + construction d'href.
 // Pur, testé, sans réseau. Partagé par CollectStep, SocialIcon et l'injection.
 
+import type { TradeId } from "./da-personas";
+
 export type LinkKind = "social" | "contact" | "booking" | "link";
 
 export type Collected = {
@@ -97,4 +99,33 @@ export function toHref(platformKey: string, raw: string): string {
   const def = PLATFORMS[key];
   if (def?.base) return `${def.base}${v.replace(/^@/, "")}`;
   return `https://${v}`;
+}
+
+export interface LinkField {
+  platform: string;
+  label: string;
+  kind: LinkKind;
+  placeholder: string;
+}
+
+const BY_TRADE: Record<TradeId, string[]> = {
+  musicien:    ["spotify", "apple-music", "youtube", "instagram", "tiktok", "soundcloud", "deezer", "ticketing"],
+  photographe: ["instagram", "pinterest", "behance", "booking", "email", "phone"],
+  coach:       ["booking", "instagram", "linkedin", "whatsapp", "youtube", "email", "phone"],
+  "bien-etre": ["booking", "instagram", "linkedin", "whatsapp", "youtube", "email", "phone"],
+  artisan:     ["phone", "whatsapp", "email", "maps", "facebook", "instagram"],
+  restaurant:  ["booking", "menu", "instagram", "maps", "phone"],
+  beaute:      ["booking", "instagram", "phone", "maps"],
+  conseil:     ["linkedin", "booking", "email", "website", "phone"],
+  fitness:     ["instagram", "booking", "youtube", "whatsapp", "phone"],
+  autre:       ["instagram", "facebook", "linkedin", "email", "phone", "website"],
+};
+
+/** Champs de liens affichés par défaut pour un métier. */
+export function linkFieldsForTrade(trade: TradeId): LinkField[] {
+  const keys = BY_TRADE[trade] ?? BY_TRADE.autre;
+  return keys.map((platform) => {
+    const def = PLATFORMS[platform];
+    return { platform, label: def.label, kind: def.kind, placeholder: def.placeholder };
+  });
 }

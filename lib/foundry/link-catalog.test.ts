@@ -1,6 +1,6 @@
 // lib/foundry/link-catalog.test.ts
 import { describe, it, expect } from "vitest";
-import { PLATFORMS, normPlatform, toHref } from "./link-catalog";
+import { PLATFORMS, normPlatform, toHref, linkFieldsForTrade } from "./link-catalog";
 
 describe("normPlatform", () => {
   it("normalise les variantes saisies vers une clé connue", () => {
@@ -37,5 +37,34 @@ describe("toHref", () => {
     expect(toHref("phone", "")).toBe("");
     expect(toHref("phone", "+33 (0)6 12 34 56 78")).toBe("tel:+33612345678");
     expect(toHref("instagram", "@monpseudo")).toBe("https://instagram.com/monpseudo");
+  });
+});
+
+import type { TradeId } from "./da-personas";
+
+describe("linkFieldsForTrade", () => {
+  it("musicien → met en avant le streaming", () => {
+    const keys = linkFieldsForTrade("musicien").map((f) => f.platform);
+    expect(keys).toContain("spotify");
+    expect(keys).toContain("instagram");
+    expect(keys).toContain("youtube");
+  });
+  it("artisan → met en avant téléphone et devis", () => {
+    const keys = linkFieldsForTrade("artisan").map((f) => f.platform);
+    expect(keys).toContain("phone");
+    expect(keys).toContain("whatsapp");
+  });
+  it("métier inconnu → liste générique non vide", () => {
+    const keys = linkFieldsForTrade("autre" as TradeId).map((f) => f.platform);
+    expect(keys).toContain("instagram");
+    expect(keys.length).toBeGreaterThan(0);
+  });
+  it("chaque champ référence une plateforme connue", () => {
+    const all: TradeId[] = ["musicien", "photographe", "coach", "bien-etre", "artisan", "restaurant", "beaute", "conseil", "fitness", "autre"];
+    for (const t of all) {
+      for (const f of linkFieldsForTrade(t)) {
+        expect(PLATFORMS[f.platform], `${t}/${f.platform}`).toBeDefined();
+      }
+    }
   });
 });
