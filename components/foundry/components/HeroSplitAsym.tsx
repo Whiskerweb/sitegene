@@ -31,8 +31,8 @@ export default function HeroSplitAsym({ content, skin }: { content: HeroContent;
         @media (min-width:1024px) {
           [data-hero="fullscreen-photo"] .hsa-grid { grid-template-columns: minmax(0,1fr) 1fr; }
           [data-hero="fullscreen-photo"] .hsa-col-img2 { display: none; }
+          [data-hero="fullscreen-photo"] .hsa-col-img img { height: 640px; }
         }
-        [data-hero="fullscreen-photo"] .hsa-col-img img { height: 640px; }
       `}</style>
       <div className="hsa-grid mx-auto grid max-w-[1280px] items-start gap-10 lg:grid-cols-[minmax(0,1fr)_440px_320px]">
         {/* gauche */}
