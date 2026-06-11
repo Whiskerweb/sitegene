@@ -13,18 +13,36 @@ export default function HeroSplitAsym({ content, skin }: { content: HeroContent;
   return (
     <section className="hsa-root px-5 pt-28 pb-16 md:pt-36" style={{ background: "var(--c-surface)", ...root }}>
       <style>{`
+        /* ── type-giant ─────────────────────────────────────────── */
         [data-hero="type-giant"] .hsa-title { font-size: clamp(3rem, 9vw, 6.5rem) !important; letter-spacing: -3px; }
-        [data-hero="centered-glow"] .hsa-root { text-align: center; }
+        @media (min-width:1024px) {
+          [data-hero="type-giant"] .hsa-grid { grid-template-columns: minmax(0,1fr) 420px; }
+          [data-hero="type-giant"] .hsa-col-img2 { display: none; }
+        }
+
+        /* ── centered-glow ──────────────────────────────────────── */
+        [data-hero="centered-glow"] .hsa-grid { grid-template-columns: 1fr; max-width: 820px; }
+        [data-hero="centered-glow"] .hsa-col-text { text-align: center; }
+        [data-hero="centered-glow"] .hsa-col-text .flex { justify-content: center; }
+        [data-hero="centered-glow"] .hsa-col-img2 { display: none; }
+        [data-hero="centered-glow"] .hsa-col-img { max-width: 720px; margin: 2.5rem auto 0; }
+
+        /* ── fullscreen-photo ───────────────────────────────────── */
+        @media (min-width:1024px) {
+          [data-hero="fullscreen-photo"] .hsa-grid { grid-template-columns: minmax(0,1fr) 1fr; }
+          [data-hero="fullscreen-photo"] .hsa-col-img2 { display: none; }
+        }
+        [data-hero="fullscreen-photo"] .hsa-col-img img { height: 640px; }
       `}</style>
-      <div className="mx-auto grid max-w-[1280px] items-start gap-10 lg:grid-cols-[minmax(0,1fr)_440px_320px]">
+      <div className="hsa-grid mx-auto grid max-w-[1280px] items-start gap-10 lg:grid-cols-[minmax(0,1fr)_440px_320px]">
         {/* gauche */}
-        <div>
+        <div className="hsa-col-text">
           <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-1.5 rounded-[var(--r-pill)] px-3 py-1.5 text-sm font-bold text-white" style={{ background: "var(--c-accent)" }}>★ {content.badge}</span>
+            <span className="inline-flex items-center gap-1.5 rounded-[var(--r-pill)] px-3 py-1.5 text-sm font-bold" style={{ background: "var(--c-accent)", color: "var(--c-on-accent)" }}>★ {content.badge}</span>
           </div>
           <h1 className="hsa-title mt-7 max-w-[560px] text-[2.6rem] leading-[1.12] md:text-[4rem]" style={{ fontFamily: "var(--font-heading)", color: "var(--c-ink)", letterSpacing: "-2px" }}>{content.title}</h1>
           <p className="mt-7 max-w-[400px] text-base leading-relaxed" style={{ color: "var(--c-accent)" }}>{content.subtitle}</p>
-          <a href={content.ctaHref || "#tarifs"} className="mt-8 inline-flex rounded-[var(--r-pill)] px-7 py-3.5 text-sm font-bold text-white transition hover:brightness-95" style={{ background: "var(--c-accent)" }}>{content.cta}</a>
+          <a href={content.ctaHref || "#tarifs"} className="mt-8 inline-flex rounded-[var(--r-pill)] px-7 py-3.5 text-sm font-bold transition hover:brightness-95" style={{ background: "var(--c-accent)", color: "var(--c-on-accent)" }}>{content.cta}</a>
           <div className="mt-12 flex items-center gap-4">
             <div className="flex -space-x-3">
               {content.avatars.map((a, i) => (
@@ -37,11 +55,11 @@ export default function HeroSplitAsym({ content, skin }: { content: HeroContent;
           </div>
         </div>
         {/* centre */}
-        <div className="overflow-hidden rounded-[var(--r-xl)]">
+        <div className="hsa-col-img overflow-hidden rounded-[var(--r-xl)]">
           <img src={content.image} alt="" className="h-[440px] w-full object-cover object-top md:h-[560px]" />
         </div>
         {/* droite */}
-        <div className="overflow-hidden rounded-[var(--r-xl)]">
+        <div className="hsa-col-img2 overflow-hidden rounded-[var(--r-xl)]">
           <img src={content.image2} alt="" className="h-[300px] w-full object-cover md:h-[360px]" />
         </div>
       </div>
