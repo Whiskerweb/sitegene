@@ -11,7 +11,8 @@ export interface TradeDetection { trade: TradeId; sub?: string }
 const TRADE_KEYWORDS: Array<{ trade: TradeId; words: string[] }> = [
   { trade: "musicien", words: ["musicien", "musique", "chanteur", "chanteuse", "rappeur", "rappeuse", "rap", "rock", "groupe", "band", "concert", "album", "single", "dj", "beatmaker", "artiste", "tournée", "tournee", "scène", "scene"] },
   { trade: "fitness", words: ["salle de sport", "coach sportif", "coaching sportif", "fitness", "musculation", "crossfit", "personal trainer", "préparateur physique", "preparateur physique", "box", "studio de sport"] },
-  { trade: "coach", words: ["coach", "coaching", "développement personnel", "developpement personnel", "thérapeute", "therapeute", "thérapie", "therapie", "hypnose", "psy", "accompagnement"] },
+  // "coach" couvre déjà "coaching" (sous-chaîne) → pas de doublon qui gonflerait le score.
+  { trade: "coach", words: ["coach", "développement personnel", "developpement personnel", "thérapeute", "therapeute", "thérapie", "therapie", "hypnose", "psy", "accompagnement"] },
   { trade: "bien-etre", words: ["yoga", "bien-être", "bien etre", "massage", "sophrologie", "sophrologue", "naturopathe", "méditation", "meditation", "pilates", "reiki", "spa"] },
   { trade: "photographe", words: ["photographe", "photographie", "photo", "vidéaste", "videaste", "shooting", "mariage"] },
   { trade: "artisan", words: ["artisan", "plombier", "électricien", "electricien", "menuisier", "maçon", "macon", "peintre en bâtiment", "couvreur", "chauffagiste", "serrurier", "rénovation", "renovation", "btp", "paysagiste", "jardinier"] },

@@ -20,6 +20,10 @@ describe("detectTrade", () => {
     expect(detectTrade("Chanteuse, single intimiste acoustique").sub).toBe("contemporain");
     expect(detectTrade("Salle de sport et coaching sportif").trade).toBe("fitness");
   });
+  it("ne confond pas un métier proposant du « coaching » avec le métier coach", () => {
+    // "coach" ne doit pas gonfler le score via le doublon coach/coaching.
+    expect(detectTrade("Photographe de mariage qui propose du coaching photo").trade).toBe("photographe");
+  });
   it("retombe sur 'autre' sans signal", () => {
     expect(detectTrade("Je vends des choses sur internet").trade).toBe("autre");
     expect(detectTrade("").trade).toBe("autre");
