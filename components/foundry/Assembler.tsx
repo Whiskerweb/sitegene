@@ -4,6 +4,7 @@ import type { Recipe } from "@/lib/foundry/types";
 import { getVibe, vibeToCssVars } from "@/lib/foundry/vibes";
 import { validateRecipe } from "@/lib/foundry/recipe";
 import { COMPONENTS } from "./registry";
+import SmartNav from "./SmartNav";
 
 export default function Assembler({
   recipe,
@@ -45,6 +46,15 @@ export default function Assembler({
             >
               <C content={s.content} skin={s.skin} />
             </div>
+          );
+        }
+        // Navbar : défile avec la page mais revient dès que le visiteur
+        // remonte — accessible partout sans être collée en permanence.
+        if (s.manifest.role === "navbar") {
+          return (
+            <SmartNav key={i}>
+              <C content={s.content} skin={s.skin} />
+            </SmartNav>
           );
         }
         return <C key={i} content={s.content} skin={s.skin} />;
