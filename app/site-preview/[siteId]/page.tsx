@@ -6,13 +6,20 @@ import { getManifest } from "@/lib/foundry/manifests";
 import { getVibe } from "@/lib/foundry/vibes";
 import { normalizeSectionContent } from "@/lib/foundry/agenceur";
 import type { Recipe, VibeId } from "@/lib/foundry/types";
-import { FOUNDRY_TEMPLATE_ID, loadRecipeDraft } from "@/lib/foundry/server";
+import {
+  FOUNDRY_TEMPLATE_ID,
+  loadRecipeDraft,
+  pagesFromSnapshot,
+  composePageRecipe,
+} from "@/lib/foundry/server";
 
 export const dynamic = "force-dynamic";
 
 /**
  * Aperçu PROPRIÉTAIRE du site assemblé (brouillon) — servi dans les iframes du
- * reveal, du dashboard et de la marketplace. Paramètres :
+ * reveal, du dashboard, de la marketplace et de l'aperçu responsive de
+ * L'Atelier. Paramètres :
+ *   ?page=<pageId> : aperçu d'une SOUS-PAGE (navbar + footer de l'accueil).
  *   ?swap=<componentId> : voir un composant SUR SON SITE (remplace la section
  *     du même rôle, sinon insertion avant le footer) — section surlignée.
  *   ?vibe=<vibeId>&accent=<hex> : essayer une autre direction artistique.
@@ -22,11 +29,11 @@ export default async function SitePreviewPage({
   searchParams,
 }: {
   params: Promise<{ siteId: string }>;
-  searchParams: Promise<{ swap?: string; vibe?: string; accent?: string }>;
+  searchParams: Promise<{ swap?: string; vibe?: string; accent?: string; page?: string }>;
 }) {
   const user = await requireUser();
   const { siteId } = await params;
-  const { swap, vibe, accent } = await searchParams;
+  const { swap, vibe, accent, page } = await searchParams;
 
   const admin = createAdminClient();
   const { data: site } = await admin
@@ -45,6 +52,13 @@ export default async function SitePreviewPage({
 
   let recipe: Recipe = draft.recipe;
   let highlightIndex: number | undefined;
+
+  // Aperçu d'une sous-page : ses sections entre la navbar et le footer de
+  // l'accueil (page inconnue → on retombe sur l'accueil, jamais de 404).
+  if (page) {
+    const sub = pagesFromSnapshot(draft.row).find((p) => p.id === page);
+    if (sub) recipe = composePageRecipe(recipe, sub);
+  }
 
   // Essai d'une autre DA (sans toucher au brouillon).
   if (vibe && getVibe(vibe)) {

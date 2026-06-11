@@ -14,11 +14,14 @@ import {
   ChevronUp,
   ExternalLink,
   GripVertical,
+  Monitor,
   Palette,
   Pencil,
   Plus,
   Redo2,
+  Smartphone,
   Sparkles,
+  Tablet,
   Trash2,
   Undo2,
   X,
@@ -78,6 +81,8 @@ export default function StudioEditor({ data }: { data: StudioData }) {
   const [toast, setToast] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [publishing, setPublishing] = useState(false);
+  // Aperçu responsive : null = on édite (vue ordinateur), sinon taille d'appareil.
+  const [preview, setPreview] = useState<"mobile" | "tablet" | null>(null);
 
   const catalogById = useMemo(() => {
     const m = new Map<string, CatalogEntry>();
@@ -374,7 +379,7 @@ export default function StudioEditor({ data }: { data: StudioData }) {
   return (
     <div className="fixed inset-0 z-40 flex flex-col bg-neutral-100">
       {/* ===== Barre du haut ===== */}
-      <header className="flex h-14 shrink-0 items-center justify-between border-b border-neutral-200 bg-white/90 px-4 backdrop-blur">
+      <header className="relative flex h-14 shrink-0 items-center justify-between border-b border-neutral-200 bg-white/90 px-4 backdrop-blur">
         <div className="flex items-center gap-3">
           <button onClick={() => router.push("/dashboard")} className="grid h-9 w-9 place-items-center rounded-xl text-neutral-500 hover:bg-neutral-100" aria-label="Retour"><X size={18} /></button>
           <div className="leading-tight">
@@ -385,6 +390,30 @@ export default function StudioEditor({ data }: { data: StudioData }) {
             <button onClick={undo} disabled={!canUndo} className="grid h-8 w-8 place-items-center rounded-full text-neutral-500 transition hover:bg-neutral-100 disabled:opacity-30" title="Annuler" aria-label="Annuler"><Undo2 size={16} /></button>
             <button onClick={redo} disabled={!canRedo} className="grid h-8 w-8 place-items-center rounded-full text-neutral-500 transition hover:bg-neutral-100 disabled:opacity-30" title="Rétablir" aria-label="Rétablir"><Redo2 size={16} /></button>
           </div>
+        </div>
+        {/* Aperçu responsive — centré : ordinateur = le canvas, tablette/mobile = iframe fidèle. */}
+        <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-0.5 rounded-full border border-neutral-200 p-0.5 md:flex">
+          <button
+            onClick={() => setPreview(null)}
+            title="Vue ordinateur (édition)"
+            className={`grid h-8 w-8 place-items-center rounded-full transition ${preview === null ? "bg-neutral-900 text-white" : "text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700"}`}
+          >
+            <Monitor size={15} />
+          </button>
+          <button
+            onClick={() => setPreview("tablet")}
+            title="Aperçu sur tablette"
+            className={`grid h-8 w-8 place-items-center rounded-full transition ${preview === "tablet" ? "bg-neutral-900 text-white" : "text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700"}`}
+          >
+            <Tablet size={15} />
+          </button>
+          <button
+            onClick={() => setPreview("mobile")}
+            title="Aperçu sur mobile"
+            className={`grid h-8 w-8 place-items-center rounded-full transition ${preview === "mobile" ? "bg-neutral-900 text-white" : "text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700"}`}
+          >
+            <Smartphone size={15} />
+          </button>
         </div>
         <div className="flex items-center gap-2">
           <button onClick={() => { setRight((r) => (r?.kind === "palette" ? null : { kind: "palette" })); setSelected(null); }} className={`inline-flex h-9 items-center gap-1.5 rounded-full px-3.5 text-[13px] font-semibold transition ${right?.kind === "palette" ? "bg-neutral-900 text-white" : "border border-neutral-200 text-neutral-700 hover:border-neutral-400"}`}>
@@ -642,12 +671,88 @@ export default function StudioEditor({ data }: { data: StudioData }) {
         </div>
       )}
 
+      {/* ===== Aperçu responsive (iframe = rendu réel du site) ===== */}
+      {preview && (
+        <DevicePreviewOverlay
+          url={`/site-preview/${data.siteId}${data.pageId ? `?page=${data.pageId}` : ""}`}
+          device={preview}
+          pageTitle={data.pageTitle}
+          onDevice={setPreview}
+          onClose={() => setPreview(null)}
+        />
+      )}
+
       {/* ===== Toast ===== */}
       {toast && (
         <div className="pointer-events-none fixed bottom-6 left-1/2 z-[80] -translate-x-1/2 rounded-full bg-neutral-900 px-5 py-2.5 text-[13.5px] font-semibold text-white shadow-xl">{toast}</div>
       )}
       {/* Solde discret */}
       <div className="pointer-events-none fixed bottom-6 right-6 z-[80] rounded-full bg-white px-3.5 py-1.5 text-[12.5px] font-semibold text-neutral-500 shadow-md">{balance} ✦</div>
+    </div>
+  );
+}
+
+/** Tailles d'appareils : largeurs CSS réelles (les media queries du site réagissent). */
+const DEVICES = {
+  mobile: { w: 390, h: 844, label: "Mobile · 390 px" },
+  tablet: { w: 834, h: 1112, label: "Tablette · 834 px" },
+} as const;
+
+/**
+ * Aperçu responsive : le site (brouillon, page courante) rendu dans une iframe
+ * à la largeur de l'appareil — exactement ce que verra un visiteur.
+ */
+function DevicePreviewOverlay({
+  url,
+  device,
+  pageTitle,
+  onDevice,
+  onClose,
+}: {
+  url: string;
+  device: "mobile" | "tablet";
+  pageTitle: string | null;
+  onDevice: (d: "mobile" | "tablet") => void;
+  onClose: () => void;
+}) {
+  const d = DEVICES[device];
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  return (
+    <div className="fixed inset-0 z-[85] flex flex-col bg-neutral-950/85 backdrop-blur-sm">
+      <div className="flex h-14 shrink-0 items-center justify-between px-4">
+        <span className="hidden text-[13px] font-medium text-white/60 sm:block">
+          Aperçu {pageTitle ? `de « ${pageTitle} »` : "de l'Accueil"} — {d.label}
+        </span>
+        <div className="absolute left-1/2 flex -translate-x-1/2 items-center gap-0.5 rounded-full bg-white/10 p-0.5">
+          <button onClick={onClose} title="Revenir à l'édition" className="grid h-8 w-8 place-items-center rounded-full text-white/50 transition hover:bg-white/10 hover:text-white">
+            <Monitor size={15} />
+          </button>
+          <button onClick={() => onDevice("tablet")} title="Tablette" className={`grid h-8 w-8 place-items-center rounded-full transition ${device === "tablet" ? "bg-white text-neutral-900" : "text-white/50 hover:bg-white/10 hover:text-white"}`}>
+            <Tablet size={15} />
+          </button>
+          <button onClick={() => onDevice("mobile")} title="Mobile" className={`grid h-8 w-8 place-items-center rounded-full transition ${device === "mobile" ? "bg-white text-neutral-900" : "text-white/50 hover:bg-white/10 hover:text-white"}`}>
+            <Smartphone size={15} />
+          </button>
+        </div>
+        <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-full text-white/60 transition hover:bg-white/10 hover:text-white" aria-label="Fermer l'aperçu">
+          <X size={18} />
+        </button>
+      </div>
+      <div className="flex min-h-0 flex-1 items-center justify-center px-4 pb-5">
+        <div
+          className={`h-full overflow-hidden bg-white shadow-[0_24px_80px_rgba(0,0,0,0.5)] ${
+            device === "mobile" ? "rounded-[2.4rem] border-[7px] border-neutral-800" : "rounded-2xl border-[7px] border-neutral-800"
+          }`}
+          style={{ width: d.w + 14, maxHeight: d.h }}
+        >
+          <iframe src={url} title="Aperçu du site" className="h-full w-full" style={{ width: d.w }} />
+        </div>
+      </div>
     </div>
   );
 }
