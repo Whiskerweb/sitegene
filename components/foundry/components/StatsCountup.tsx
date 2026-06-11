@@ -29,10 +29,11 @@ function StatItem({ s, run }: { s: Stat; run: boolean }) {
   const v = useCountUp(s.value, run);
   return (
     <div className="text-center">
-      <div className="text-5xl md:text-6xl" style={{ fontFamily: "var(--font-heading)", color: "var(--c-accent2)" }}>
+      {/* Chiffre = contenu fort (--c-ink) ; légende = texte doux (--c-muted). */}
+      <div className="text-5xl md:text-6xl" style={{ fontFamily: "var(--font-heading)", color: "var(--c-ink)" }}>
         {v.toLocaleString("fr-FR")}{s.suffix ?? ""}
       </div>
-      <p className="mx-auto mt-2 max-w-[180px] text-sm" style={{ color: "var(--c-accent)" }}>{s.label}</p>
+      <p className="mx-auto mt-2 max-w-[180px] text-sm" style={{ color: "var(--c-muted)" }}>{s.label}</p>
     </div>
   );
 }

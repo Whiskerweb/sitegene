@@ -20,7 +20,7 @@ export default function TestimonialsCarousel({ content }: { content: TestiConten
               <blockquote className="text-xl leading-relaxed" style={{ color: "var(--c-ink)" }}>« {t.text} »</blockquote>
               <figcaption className="mt-6 flex items-center gap-3">
                 <img src={t.avatar} alt="" className="h-11 w-11 rounded-full object-cover" />
-                <span><span className="block font-bold" style={{ color: "var(--c-accent2)" }}>{t.name}</span><span className="text-sm" style={{ color: "var(--c-accent)" }}>{t.role}</span></span>
+                <span><span className="block font-bold" style={{ color: "var(--c-ink)" }}>{t.name}</span><span className="text-sm" style={{ color: "var(--c-muted)" }}>{t.role}</span></span>
               </figcaption>
             </figure>
           ))}

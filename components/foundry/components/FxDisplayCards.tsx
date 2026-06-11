@@ -29,8 +29,8 @@ export default function FxDisplayCards({ content }: { content: FxDisplayCardsCon
     <section className="overflow-hidden px-5 py-16 md:py-24" style={{ background: "var(--c-ink)" }}>
       <div className="mx-auto max-w-[1100px]">
         <div className="text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: "var(--c-accent2)" }}>{content.eyebrow}</p>
-          <h2 className="mx-auto mt-4 max-w-xl text-[2rem] text-white md:text-[2.6rem]" style={{ fontFamily: "var(--font-heading)", letterSpacing: "-1.2px", lineHeight: 1.1 }}>
+          <p className="text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: "var(--c-accent)" }}>{content.eyebrow}</p>
+          <h2 className="mx-auto mt-4 max-w-xl text-[2rem] md:text-[2.6rem]" style={{ fontFamily: "var(--font-heading)", color: "var(--c-surface)", letterSpacing: "-1.2px", lineHeight: 1.1 }}>
             {content.title}
           </h2>
         </div>
@@ -59,7 +59,7 @@ export default function FxDisplayCards({ content }: { content: FxDisplayCardsCon
         .sg-fx-dc:hover{border-color:rgba(255,255,255,.2)}
         .sg-fx-dc-icon{display:inline-grid;place-items:center;border-radius:9999px;width:1.7rem;height:1.7rem;flex:none;
           background:color-mix(in srgb,var(--c-accent) 30%,var(--c-ink));color:var(--c-accent2)}
-        .sg-fx-dc-title{font-size:1.05rem;font-weight:600;margin:0;color:var(--c-accent2)}
+        .sg-fx-dc-title{font-size:1.05rem;font-weight:600;margin:0;color:var(--c-surface)}
         .sg-fx-dc-desc{font-size:1.02rem;color:var(--c-surface);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;z-index:1;margin:0}
         .sg-fx-dc-meta{font-size:.92rem;color:rgba(231,233,240,.55);position:relative;z-index:1;margin:0}
         .sg-fx-dc-1,.sg-fx-dc-2{filter:grayscale(1)}

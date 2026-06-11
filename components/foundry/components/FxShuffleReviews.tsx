@@ -37,7 +37,7 @@ export default function FxShuffleReviews({ content }: { content: FxShuffleReview
   return (
     <section className="grid place-content-center overflow-hidden px-8 py-20" style={{ background: "var(--c-ink)", minHeight: "34rem" }}>
       <div className="mb-12 text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: "var(--c-accent2)" }}>{content.eyebrow}</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: "var(--c-accent)" }}>{content.eyebrow}</p>
         <h2 className="mx-auto mt-3 max-w-xl text-[1.9rem] text-white md:text-[2.4rem]" style={{ fontFamily: "var(--font-heading)", letterSpacing: "-1px", lineHeight: 1.1 }}>
           {content.title}
         </h2>
@@ -84,7 +84,7 @@ export default function FxShuffleReviews({ content }: { content: FxShuffleReview
                 {(it.author.trim()[0] ?? "•").toUpperCase()}
               </span>
               <blockquote className="m-0 text-center text-[1.08rem] italic" style={{ color: "rgba(255,255,255,.78)" }}>«&nbsp;{it.quote}&nbsp;»</blockquote>
-              <figcaption className="text-center text-sm font-medium not-italic" style={{ color: "var(--c-accent2)" }}>{it.author}</figcaption>
+              <figcaption className="text-center text-sm font-medium not-italic" style={{ color: "var(--c-surface)" }}>{it.author}</figcaption>
             </figure>
           );
         })}

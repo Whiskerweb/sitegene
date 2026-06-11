@@ -26,8 +26,8 @@ export default function GlassPillNavbar({ content, skin }: { content: any; skin:
       >
         <a href="#" className="flex items-center gap-2 pl-2">
           <span
-            className="grid h-7 w-7 place-items-center rounded-lg text-xs font-bold text-white"
-            style={{ background: "linear-gradient(135deg, var(--c-accent), var(--c-accent2))" }}
+            className="grid h-7 w-7 place-items-center rounded-lg text-xs font-bold"
+            style={{ background: "linear-gradient(135deg, var(--c-accent), var(--c-accent2))", color: "var(--c-on-accent)" }}
           >
             {brand.trim().charAt(0).toUpperCase() || "N"}
           </span>
@@ -40,8 +40,8 @@ export default function GlassPillNavbar({ content, skin }: { content: any; skin:
         </ul>
         <a
           href="#contact"
-          className="inline-flex items-center gap-2 rounded-[var(--r-pill)] px-4 py-2 text-sm font-semibold text-white transition-transform hover:scale-[1.03]"
-          style={{ background: "linear-gradient(135deg, var(--c-accent), var(--c-accent2))" }}
+          className="inline-flex items-center gap-2 rounded-[var(--r-pill)] px-4 py-2 text-sm font-semibold transition-transform hover:scale-[1.03]"
+          style={{ background: "linear-gradient(135deg, var(--c-accent), var(--c-accent2))", color: "var(--c-on-accent)" }}
         >
           {content?.cta ?? "Demander une démo"}
         </a>

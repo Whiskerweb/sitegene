@@ -23,7 +23,7 @@ export default function CtaBanner({ content }: { content: CtaContent; skin: Skin
           <a
             href="#tarifs"
             className="mt-8 inline-flex rounded-[var(--r-pill)] px-8 py-4 font-bold transition hover:brightness-95"
-            style={{ background: "var(--c-accent2)", color: "var(--c-ink)" }}
+            style={{ background: "var(--c-accent)", color: "var(--c-on-accent)" }}
           >
             {content.cta}
           </a>

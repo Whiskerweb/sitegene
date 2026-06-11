@@ -112,7 +112,7 @@ export default function GooeyPixelTrail({ content }: { content: GooeyContent; sk
       {/* Phrase manifeste + description + bouton */}
       <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center">
         {content?.eyebrow && (
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--c-accent2)" }}>{content.eyebrow}</p>
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--c-accent)" }}>{content.eyebrow}</p>
         )}
         <p className="text-4xl font-bold leading-[1.05] md:text-6xl" style={{ color: "var(--c-surface)", fontFamily: "var(--font-heading)", letterSpacing: "-1px" }}>
           {content?.text ?? "Donnez vie à vos idées"}

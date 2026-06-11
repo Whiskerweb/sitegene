@@ -62,8 +62,8 @@ export default function ReviewsPostitCarousel({ content }: { content: ReviewsCon
                 <figcaption className="mt-6 flex items-center gap-3">
                   <img src={r.avatar} alt="" className="h-11 w-11 rounded-full object-cover" />
                   <span>
-                    <span className="block font-bold" style={{ color: "var(--c-accent2)" }}>{r.name}</span>
-                    <span className="text-sm" style={{ color: "var(--c-accent)" }}>{r.role}</span>
+                    <span className="block font-bold" style={{ color: "var(--c-ink)" }}>{r.name}</span>
+                    <span className="text-sm" style={{ color: "var(--c-muted)" }}>{r.role}</span>
                   </span>
                 </figcaption>
               </figure>

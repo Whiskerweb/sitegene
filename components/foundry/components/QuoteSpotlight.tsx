@@ -30,8 +30,8 @@ export default function QuoteSpotlight({ content }: { content: QuoteSpotlightCon
           >
             {content.quote}
           </blockquote>
-          <p className="mt-8 text-sm font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--c-accent2)" }}>{content.author}</p>
-          <p className="mt-1 text-sm text-white/55">{content.role}</p>
+          <p className="mt-8 text-sm font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--c-accent)" }}>{content.author}</p>
+          <p className="mt-1 text-sm" style={{ color: "color-mix(in srgb, var(--c-surface) 55%, transparent)" }}>{content.role}</p>
         </Reveal>
       </div>
     </section>
