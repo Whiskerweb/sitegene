@@ -1,5 +1,22 @@
-import Link from "next/link";
 import { requireOperator } from "@/lib/auth";
+import { AppShell } from "@/components/ui/AppShell";
+import type { NavItem } from "@/components/ui/NavItem";
+import {
+  IconDesktop,
+  IconPhone,
+  IconStar4,
+  IconPlus,
+  IconEdit,
+  IconLogout,
+} from "@/components/ui/icons";
+
+const titleMap = {
+  "/admin": "Tableau de bord",
+  "/admin/prospects": "Prospects",
+  "/admin/crm": "CRM",
+  "/admin/new": "Nouveau site",
+  "/admin/notes": "Demandes",
+};
 
 export default async function AdminLayout({
   children,
@@ -8,48 +25,31 @@ export default async function AdminLayout({
 }) {
   const profile = await requireOperator();
 
+  const nav: NavItem[] = [
+    { href: "/admin", label: "Tableau de bord", icon: <IconDesktop size={18} /> },
+    { href: "/admin/prospects", label: "Prospects", icon: <IconPhone size={18} /> },
+    { href: "/admin/crm", label: "CRM", icon: <IconStar4 size={18} /> },
+    { href: "/admin/new", label: "Nouveau site", icon: <IconPlus size={18} /> },
+    { href: "/admin/notes", label: "Demandes", icon: <IconEdit size={18} /> },
+  ];
+
+  const right = (
+    <>
+      <span className="hidden text-sm text-gray-500 md:inline">{profile.email}</span>
+      <form action="/auth/signout" method="post">
+        <button
+          className="grid h-9 w-9 place-items-center rounded-xl text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900"
+          aria-label="Déconnexion"
+        >
+          <IconLogout size={18} />
+        </button>
+      </form>
+    </>
+  );
+
   return (
-    <div className="min-h-screen bg-ink-900">
-      <header className="sticky top-0 z-40 border-b border-line bg-ink-900/80 backdrop-blur">
-        <div className="mx-auto flex max-w-[1100px] items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-6">
-            <Link href="/admin" className="flex items-center gap-2">
-              <span className="grid h-7 w-7 place-items-center rounded-full btn-violet text-xs font-bold text-white">
-                A
-              </span>
-              <span className="font-display text-lg font-semibold tracking-tight">
-                Akyra
-              </span>
-              <span className="rounded-full border border-line bg-ink-700 px-2 py-0.5 text-[11px] uppercase tracking-wider text-faint">
-                Opérateur
-              </span>
-            </Link>
-            <nav className="hidden gap-4 text-sm text-muted md:flex">
-              <Link href="/admin" className="hover:text-paper">
-                Tableau de bord
-              </Link>
-              <Link href="/admin/prospects" className="hover:text-paper">
-                Prospects
-              </Link>
-              <Link href="/admin/new" className="hover:text-paper">
-                Nouveau site
-              </Link>
-              <Link href="/admin/notes" className="hover:text-paper">
-                Demandes
-              </Link>
-            </nav>
-          </div>
-          <div className="flex items-center gap-3 text-sm text-faint">
-            <span className="hidden sm:inline">{profile.email}</span>
-            <form action="/auth/signout" method="post">
-              <button className="rounded-full border border-line px-3 py-1.5 text-muted transition-colors hover:text-paper">
-                Déconnexion
-              </button>
-            </form>
-          </div>
-        </div>
-      </header>
-      <main className="mx-auto max-w-[1100px] px-6 py-10">{children}</main>
-    </div>
+    <AppShell nav={nav} titleMap={titleMap} right={right} roleLabel="Opérateur">
+      {children}
+    </AppShell>
   );
 }

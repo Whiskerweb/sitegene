@@ -6,6 +6,7 @@
 import type { AnyContent } from "./site-content";
 import { isSpaTemplate } from "./templates";
 import { buildEffectsInjection } from "./effects/render";
+import { smoothScrollScript } from "./smooth-scroll-runtime";
 
 /** JSON sûr inline (`<` échappé → pas de break-out </script>). */
 function safeJson(obj: unknown): string {
@@ -289,6 +290,9 @@ export async function buildSiteHtml(
     tail += sectionMaskScript();
   }
   tail += fx.bodyJs;
+  // Défilement fluide par défaut sur TOUS les sites rendus (no-op en
+  // reduced-motion / tactile, ne casse pas les navbars fixed/sticky).
+  tail += smoothScrollScript();
   if (tail) {
     html = html.includes("</body>") ? html.replace("</body>", () => `${tail}</body>`) : html + tail;
   }
