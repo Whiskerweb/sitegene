@@ -19,7 +19,7 @@ export default function MarqueeHero({ content }: { content: MarqueeHeroContent; 
   const loop = [...images, ...images];
   const words = (content?.title ?? "").split(/\s+/).filter(Boolean);
   return (
-    <section className="relative flex min-h-[82vh] w-full flex-col items-center overflow-hidden px-4 pt-[12vh] text-center md:pt-[14vh]" style={{ background: "var(--c-surface)" }}>
+    <section className="relative flex min-h-[88vh] w-full flex-col overflow-hidden" style={{ background: "var(--c-surface)" }}>
       <style>{`
         @keyframes sg-mh-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
         @keyframes sg-mh-marquee { to { transform: translateX(-50%); } }
@@ -32,7 +32,8 @@ export default function MarqueeHero({ content }: { content: MarqueeHeroContent; 
         }
       `}</style>
 
-      <div className="z-10 flex max-w-4xl flex-col items-center">
+      {/* Contenu : occupe l'espace au-dessus du marquee (flex-1) et reste en HAUT. */}
+      <div className="z-10 flex flex-1 flex-col items-center px-4 pt-[11vh] pb-12 text-center md:pt-[13vh]">
         <div
           className="sg-mh-fade mb-5 inline-block max-w-2xl truncate rounded-[var(--r-pill)] border px-4 py-1.5 text-sm font-medium backdrop-blur-sm"
           style={{ borderColor: "color-mix(in srgb, var(--c-ink) 12%, transparent)", background: "color-mix(in srgb, var(--c-card) 55%, transparent)", color: "var(--c-muted)" }}
@@ -40,7 +41,7 @@ export default function MarqueeHero({ content }: { content: MarqueeHeroContent; 
           {content?.tagline ?? "Rejoignez la communauté"}
         </div>
 
-        <h1 className="max-w-4xl text-6xl font-extrabold tracking-[-0.02em] md:text-8xl" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)", lineHeight: 0.98 }}>
+        <h1 className="max-w-4xl text-5xl font-extrabold tracking-[-0.02em] md:text-7xl" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)", lineHeight: 1.0 }}>
           {words.length
             ? words.map((w, i) => (
                 <span key={i} className="sg-mh-word" style={{ animationDelay: `${i * 70}ms` }}>{w}&nbsp;</span>
@@ -48,31 +49,32 @@ export default function MarqueeHero({ content }: { content: MarqueeHeroContent; 
             : "Votre titre ici"}
         </h1>
 
-        <p className="sg-mh-fade mt-5 max-w-xl text-lg" style={{ color: "var(--c-muted)", animationDelay: "450ms" }}>
+        <p className="sg-mh-fade mt-6 max-w-xl text-lg" style={{ color: "var(--c-muted)", animationDelay: "450ms" }}>
           {content?.description ?? ""}
         </p>
 
         <a
           href="#contact"
-          className="sg-mh-fade mt-7 rounded-[var(--r-pill)] px-8 py-3 font-semibold text-white shadow-lg transition-transform hover:scale-[1.05]"
+          className="sg-mh-fade mt-8 rounded-[var(--r-pill)] px-8 py-3 font-semibold text-white shadow-lg transition-transform hover:scale-[1.05]"
           style={{ background: "var(--c-accent)", animationDelay: "550ms" }}
         >
           {content?.cta ?? "Commencer"}
         </a>
       </div>
 
-      {/* Marquee d'images en bas, fondu en dégradé haut/bas */}
+      {/* Marquee d'images EN FLUX tout en bas (ne chevauche jamais le texte),
+          fondu en dégradé sur le haut pour se mêler à la section. */}
       {images.length > 0 && (
         <div
-          className="pointer-events-none absolute bottom-0 left-0 h-1/3 w-full md:h-2/5"
+          className="pointer-events-none w-full"
           style={{
-            WebkitMaskImage: "linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)",
-            maskImage: "linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 38%, black 100%)",
+            maskImage: "linear-gradient(to bottom, transparent 0%, black 38%, black 100%)",
           }}
         >
-          <div className="sg-mh-track flex w-max gap-4">
+          <div className="sg-mh-track flex w-max gap-4 px-2 pb-6 pt-8">
             {loop.map((src, i) => (
-              <div key={i} className="aspect-[3/4] h-48 flex-shrink-0 md:h-64" style={{ transform: `rotate(${i % 2 === 0 ? -2 : 5}deg)` }}>
+              <div key={i} className="aspect-[3/4] h-48 flex-shrink-0 md:h-60" style={{ transform: `rotate(${i % 2 === 0 ? -2 : 5}deg)` }}>
                 <img src={src} alt="" loading="lazy" className="h-full w-full rounded-2xl object-cover shadow-md" />
               </div>
             ))}
