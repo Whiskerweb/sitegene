@@ -68,6 +68,26 @@ describe("vibeToCssVars", () => {
   });
 });
 
+const LEGACY: VibeId[] = ["warm-serif","sage-nature","ocean-confiance","corail-studio","mineral-precis","encre-editoriale"];
+
+describe("non-régression vibes historiques", () => {
+  it("les 6 anciennes vibes produisent exactement leurs anciennes vars", () => {
+    for (const id of LEGACY) {
+      const v = getVibe(id)!;
+      const css = vibeToCssVars(v);
+      expect(css["--c-ink"]).toBe(v.palette.ink);
+      expect(css["--c-surface"]).toBe(v.palette.surface);
+      expect(css["--c-card"]).toBe(v.palette.card);
+      expect(css["--c-accent"]).toBe(v.palette.accent);
+      expect(css["--c-accent2"]).toBe(v.palette.accent2);
+      expect(css["--c-muted"]).toBe(v.palette.muted);
+      expect(css["--font-heading"]).toBe(v.fonts.heading);
+      expect(css["--font-body"]).toBe(v.fonts.body);
+      expect(css["--r-card"]).toBe(v.radius.card);
+    }
+  });
+});
+
 const NEW_DA: VibeId[] = [
   "mindful-moments","lexicon-creators","auralis-neural","nexus-transfers","neurosync",
   "rock-brutalist","rap-luxe","contemporain-editorial","photographe-galerie",
