@@ -126,6 +126,7 @@ export function linkFieldsForTrade(trade: TradeId): LinkField[] {
   const keys = BY_TRADE[trade] ?? BY_TRADE.autre;
   return keys.map((platform) => {
     const def = PLATFORMS[platform];
+    if (!def) throw new Error(`[link-catalog] plateforme inconnue dans BY_TRADE: ${platform}`);
     return { platform, label: def.label, kind: def.kind, placeholder: def.placeholder };
   });
 }
