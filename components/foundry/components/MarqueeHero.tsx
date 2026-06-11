@@ -19,7 +19,7 @@ export default function MarqueeHero({ content }: { content: MarqueeHeroContent; 
   const loop = [...images, ...images];
   const words = (content?.title ?? "").split(/\s+/).filter(Boolean);
   return (
-    <section className="relative flex min-h-[88vh] w-full flex-col overflow-hidden" style={{ background: "var(--c-surface)" }}>
+    <section className="relative w-full overflow-hidden" style={{ background: "var(--c-surface)" }}>
       <style>{`
         @keyframes sg-mh-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
         @keyframes sg-mh-marquee { to { transform: translateX(-50%); } }
@@ -32,10 +32,11 @@ export default function MarqueeHero({ content }: { content: MarqueeHeroContent; 
         }
       `}</style>
 
-      {/* Contenu : occupe l'espace au-dessus du marquee (flex-1) et reste en HAUT. */}
-      <div className="z-10 flex flex-1 flex-col items-center px-4 pt-[11vh] pb-12 text-center md:pt-[13vh]">
+      {/* Contenu : hauteur NATURELLE, posé en haut (pas d'étirement flex-1 qui
+          créait un vide énorme avant les images). */}
+      <div className="z-10 flex flex-col items-center px-4 pt-20 text-center md:pt-28">
         <div
-          className="sg-mh-fade mb-5 inline-block max-w-2xl truncate rounded-[var(--r-pill)] border px-4 py-1.5 text-sm font-medium backdrop-blur-sm"
+          className="sg-mh-fade mb-6 inline-block max-w-2xl truncate rounded-[var(--r-pill)] border px-4 py-1.5 text-sm font-medium backdrop-blur-sm"
           style={{ borderColor: "color-mix(in srgb, var(--c-ink) 12%, transparent)", background: "color-mix(in srgb, var(--c-card) 55%, transparent)", color: "var(--c-muted)" }}
         >
           {content?.tagline ?? "Rejoignez la communauté"}
@@ -62,17 +63,17 @@ export default function MarqueeHero({ content }: { content: MarqueeHeroContent; 
         </a>
       </div>
 
-      {/* Marquee d'images EN FLUX tout en bas (ne chevauche jamais le texte),
-          fondu en dégradé sur le haut pour se mêler à la section. */}
+      {/* Marquee d'images : écart CONTRÔLÉ sous le CTA (mt-14, rythme 8pt),
+          jamais étiré ; fondu en dégradé sur le haut pour se mêler au contenu. */}
       {images.length > 0 && (
         <div
-          className="pointer-events-none w-full"
+          className="pointer-events-none mt-14 w-full pb-2"
           style={{
-            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 38%, black 100%)",
-            maskImage: "linear-gradient(to bottom, transparent 0%, black 38%, black 100%)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 30%, black 100%)",
+            maskImage: "linear-gradient(to bottom, transparent 0%, black 30%, black 100%)",
           }}
         >
-          <div className="sg-mh-track flex w-max gap-4 px-2 pb-6 pt-8">
+          <div className="sg-mh-track flex w-max gap-4 px-2 pt-4">
             {loop.map((src, i) => (
               <div key={i} className="aspect-[3/4] h-48 flex-shrink-0 md:h-60" style={{ transform: `rotate(${i % 2 === 0 ? -2 : 5}deg)` }}>
                 <img src={src} alt="" loading="lazy" className="h-full w-full rounded-2xl object-cover shadow-md" />
