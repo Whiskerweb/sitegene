@@ -1,20 +1,18 @@
 /**
- * Accueil dashboard d'un site ASSEMBLÉ (fonderie) — plug-and-play :
- * aperçu du site, statut/mise en ligne (essai 3 j ou republication), et les
- * sections de la recette en cartes (remplacer / retirer / ajouter).
+ * Accueil dashboard d'un site ASSEMBLÉ (fonderie) — minimaliste et concret :
+ * 1. l'essentiel en tête (nom, statut, adresse du site cliquable),
+ * 2. UNE rangée d'actions (publier si besoin, ouvrir L'Atelier),
+ * 3. le site lui-même en objet central (cliquer = éditer),
+ * 4. une ligne de méta discrète. Une seule porte vers L'Atelier — pas trois.
  */
 import { createAdminClient } from "@/lib/supabase/admin";
-import { PageHeader } from "@/components/ui/PageHeader";
-import { HeroBanner } from "@/components/ui/HeroBanner";
-import { MetricsRow } from "@/components/ui/MetricsRow";
 import { Button } from "@/components/ui/Button";
 import { SitePreview } from "@/components/ui/SitePreview";
 import PaywallModal from "@/components/dashboard/PaywallModal";
 import TrialBanner from "@/components/dashboard/TrialBanner";
 import { PublishButton } from "@/components/dashboard/PublishButton";
-import { loadRecipeDraft, recipeCards } from "@/lib/foundry/server";
+import { loadRecipeDraft, recipeCards, pagesFromSnapshot } from "@/lib/foundry/server";
 import { loadPublishedSnapshot } from "@/lib/site-content-store";
-import { getVibe } from "@/lib/foundry/vibes";
 
 export interface FoundryHomeProps {
   user: { id: string };
@@ -41,54 +39,68 @@ export default async function FoundryHome({ site, balance, businessName, paywall
   const hasUnpublished = !!draft && (!published || published.id !== draft.row.id);
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
   const fullUrl = site.slug ? `${appUrl}/a/${site.slug}` : "";
+  const prettyUrl = fullUrl.replace(/^https?:\/\//, "");
 
-  // Charte effective : preset connu OU charte sur mesure embarquée.
-  const vibe = draft ? (draft.recipe.customVibe ?? getVibe(draft.recipe.vibe)) : undefined;
   const cards = draft ? recipeCards(draft.recipe) : [];
   const rareCount = cards.filter((c) => c.rarity !== "common").length;
+  const pageCount = draft ? pagesFromSnapshot(draft.row).length : 0;
 
-  const statusBadge: { text: string; tone: "violet" | "amber" | "blue" | "gray" | "emerald" } =
-    isLive && !hasUnpublished
-      ? { text: "En ligne", tone: "emerald" }
-      : isLive
-        ? { text: "Modifications à publier", tone: "amber" }
-        : { text: "Prêt à publier", tone: "violet" };
+  const status = isLive && !hasUnpublished
+    ? { dot: "bg-emerald-500", text: "En ligne" }
+    : isLive
+      ? { dot: "bg-amber-400", text: "Modifications non publiées" }
+      : { dot: "bg-gray-300", text: "Pas encore en ligne" };
+
+  // L'action de mise en ligne prime quand elle existe ; sinon L'Atelier est l'action.
+  const needsPublish = isLive && hasUnpublished;
 
   return (
     <>
-      <PageHeader title="Mon site" subtitle="Assemblé en composants — remplacez, ajoutez, publiez." />
-
       {billing === "trialing" && site.trial_ends_at && (
         <TrialBanner siteId={site.id} trialEndsAt={site.trial_ends_at} />
       )}
 
-      <HeroBanner
-        label={vibe ? `Ambiance · ${vibe.label}` : "Votre site"}
-        value={businessName || "Mon site"}
-        badge={statusBadge}
-        right={
-          <div className="flex flex-col items-start gap-2 sm:items-end">
-            {site.slug && (
-              <code className="rounded-lg bg-white/10 px-3 py-1.5 text-sm text-gray-200 ring-1 ring-inset ring-white/10">
-                /a/{site.slug}
-              </code>
-            )}
-            {isLive && fullUrl && (
-              <a
-                href={fullUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-lg bg-white px-4 py-2 text-xs font-semibold text-gray-900 shadow-[0_1px_2px_rgba(0,0,0,0.3)] transition-colors hover:bg-gray-100"
-              >
-                Voir le site →
-              </a>
-            )}
+      {/* ===== L'essentiel : qui, où, quoi faire ===== */}
+      <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
+        <div className="min-w-0">
+          <div className="flex items-center gap-3">
+            <h1 className="truncate text-2xl font-semibold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
+              {businessName || "Mon site"}
+            </h1>
+            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600">
+              <span className={`h-1.5 w-1.5 rounded-full ${status.dot}`} />
+              {status.text}
+            </span>
           </div>
-        }
-      />
+          {isLive && fullUrl ? (
+            <a href={fullUrl} target="_blank" rel="noreferrer" className="mt-1 inline-block text-sm text-gray-500 underline-offset-2 hover:text-gray-900 hover:underline">
+              {prettyUrl} ↗
+            </a>
+          ) : (
+            <p className="mt-1 text-sm text-gray-400">Vos visiteurs ne peuvent pas encore le voir.</p>
+          )}
+        </div>
 
-      {/* Aperçu cliquable → ouvre L'Atelier */}
-      <a href="/atelier" className="group relative mt-5 block overflow-hidden rounded-2xl border border-gray-200 bg-white">
+        <div className="flex shrink-0 items-center gap-2">
+          {locked && (
+            <PaywallModal
+              siteId={site.id}
+              firstName={businessName}
+              defaultOpen={paywallOpen}
+              trigger={<Button>Mettre en ligne</Button>}
+            />
+          )}
+          {needsPublish && <PublishButton siteId={site.id} balance={balance} />}
+          {draft && (
+            <Button href="/atelier" variant={locked || needsPublish ? "subtle" : "primary"}>
+              Ouvrir L'Atelier
+            </Button>
+          )}
+        </div>
+      </div>
+
+      {/* ===== Le site, en objet central — cliquer = éditer ===== */}
+      <a href="/atelier" className="group relative mt-6 block overflow-hidden rounded-2xl border border-gray-200 bg-white">
         {draft ? (
           <SitePreview src={`/site-preview/${site.id}`} />
         ) : (
@@ -97,57 +109,21 @@ export default async function FoundryHome({ site, balance, businessName, paywall
           </div>
         )}
         {draft && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/25">
+          <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/20">
             <span className="translate-y-2 rounded-full bg-white px-5 py-2.5 text-[14px] font-semibold text-gray-900 opacity-0 shadow-lg transition-all group-hover:translate-y-0 group-hover:opacity-100">
-              ✏️ Modifier mon site
+              Ouvrir L'Atelier
             </span>
           </div>
         )}
       </a>
 
-      {/* Actions principales */}
-      <div className="mt-4 flex flex-wrap items-center gap-3">
-        {draft && <Button href="/atelier">Modifier mon site</Button>}
-        {locked ? (
-          <PaywallModal
-            siteId={site.id}
-            firstName={businessName}
-            defaultOpen={paywallOpen}
-            trigger={<Button variant="subtle">Mettre en ligne</Button>}
-          />
-        ) : isLive && hasUnpublished ? (
-          <PublishButton siteId={site.id} balance={balance} />
-        ) : null}
-      </div>
-
-      <div className="mt-6">
-        <MetricsRow
-          metrics={[
-            { label: "Crédits disponibles", value: balance, tone: "violet" },
-            { label: "Sections du site", value: cards.length, tone: "indigo" },
-            { label: "Pièces rares ✦", value: rareCount, tone: "sky" },
-          ]}
-        />
-      </div>
-
-      {/* Invitation à l'éditeur — tout se passe dans L'Atelier */}
-      <a
-        href="/atelier"
-        className="mt-8 flex items-center justify-between gap-4 rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-6 transition hover:border-violet-300 hover:shadow-md"
-      >
-        <div>
-          <h2 className="text-lg font-semibold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
-            L'Atelier — votre site, à votre main
-          </h2>
-          <p className="mt-1 max-w-lg text-sm text-gray-500">
-            Changez vos textes et vos photos, déplacez les blocs, remplacez une section par une autre,
-            ajustez vos couleurs. Tout en visuel, comme sur une feuille de design.
-          </p>
-        </div>
-        <span className="shrink-0 rounded-full bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white">
-          Ouvrir →
-        </span>
-      </a>
+      {/* ===== Méta discrète ===== */}
+      {draft && (
+        <p className="mt-4 text-[13px] text-gray-400">
+          {cards.length} sections{pageCount > 0 ? ` · ${pageCount + 1} pages` : ""} · {rareCount} pièce{rareCount > 1 ? "s" : ""} rare{rareCount > 1 ? "s" : ""} ✦ ·{" "}
+          <a href="/dashboard/credits" className="underline-offset-2 hover:text-gray-700 hover:underline">{balance} crédits</a>
+        </p>
+      )}
     </>
   );
 }
