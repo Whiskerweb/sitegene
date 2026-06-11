@@ -66,7 +66,7 @@ Le composant hero lit `vibe.treatments?.hero` et adapte sa structure. Absence de
 ## 7. Les DA livrées
 
 - Les **6 vibes actuelles** ré-exprimées (mapping 1:1, aucun changement visuel attendu).
-- **9 nouvelles DA** validées visuellement (mockups full-page dans `.superpowers/brainstorm/.../content/`) :
+- **11 nouvelles DA** validées visuellement (mockups full-page dans `.superpowers/brainstorm/.../content/`) :
   - **SaaS/produit** (specs Neuform, fournies par l'utilisateur) : `mindful-moments` (wellness, vert/or, dark), `lexicon-creators` (créateur, noir/orange, dark, coins nets), `auralis-neural` (tech/IA, clair + panneau glow cyan/indigo), `nexus-transfers` (fintech, crème chaud, bento), `neurosync` (feature, clair net terracotta/slate).
   - **Musicien** : `rock-brutalist` (zine, noir/jaune acide, Anton), `rap-luxe` (chrome+or sur noir, Syne, streaming-first), `contemporain-editorial` (crème intime, Fraunces, paroles).
   - **Verticaux** : `photographe-galerie` (galerie froide image-first, Bricolage Grotesque), `coach-performance` (industriel kinetic, lime, Bebas Neue), `restaurant-nocturne` (braise/or, Cormorant).
