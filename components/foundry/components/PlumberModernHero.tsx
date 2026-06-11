@@ -39,7 +39,7 @@ export default function PlumberModernHero({ content, skin }: { content: any; ski
           <p className="mb-9 max-w-md text-base leading-relaxed text-white/80 md:text-lg">
             {content?.tagline ?? "Nous couvrons tous vos besoins de plomberie pour garder votre maison sûre, confortable et sereine."}
           </p>
-          <a href="#contact" className="inline-flex items-center gap-2 rounded-[var(--r-pill)] px-7 py-4 text-sm font-semibold shadow-lg shadow-black/10 transition-all hover:brightness-105" style={{ background: "var(--c-accent2)", color: "var(--c-ink)" }}>
+          <a href={content?.ctaHref || "#contact"} className="inline-flex items-center gap-2 rounded-[var(--r-pill)] px-7 py-4 text-sm font-semibold shadow-lg shadow-black/10 transition-all hover:brightness-105" style={{ background: "var(--c-accent2)", color: "var(--c-ink)" }}>
             {content?.cta ?? "Réserver une consultation gratuite"}
           </a>
           <div className="mt-9 flex items-center gap-3">
