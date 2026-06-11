@@ -9,13 +9,14 @@ import * as navbarsA from "./navbars-a";
 import * as importedA from "./imported-a";
 import * as heroesA from "./heroes-a";
 import * as footersA from "./footers-a";
+import * as sectionsA from "./sections-a";
 
 export interface LibraryModule {
   manifests: Record<string, ComponentManifest>;
   samples: Record<string, Record<string, unknown>>;
 }
 
-const MODULES: LibraryModule[] = [artisansA, navbarsA, importedA, heroesA, footersA];
+const MODULES: LibraryModule[] = [artisansA, navbarsA, importedA, heroesA, footersA, sectionsA];
 
 export const LIBRARY_MANIFESTS: Record<string, ComponentManifest> = Object.assign(
   {},

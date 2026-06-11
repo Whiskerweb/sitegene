@@ -8,10 +8,11 @@ import { COMPONENTS_NAVBARS_A } from "./navbars-a";
 import { COMPONENTS_IMPORTED_A } from "./imported-a";
 import { COMPONENTS_HEROES_A } from "./heroes-a";
 import { COMPONENTS_FOOTERS_A } from "./footers-a";
+import { COMPONENTS_SECTIONS_A } from "./sections-a";
 
 export type FoundryComponent = ComponentType<{ content: any; skin: Skin }>;
 
-const MODULES: Array<Record<string, FoundryComponent>> = [COMPONENTS_ARTISANS_A, COMPONENTS_NAVBARS_A, COMPONENTS_IMPORTED_A, COMPONENTS_HEROES_A, COMPONENTS_FOOTERS_A];
+const MODULES: Array<Record<string, FoundryComponent>> = [COMPONENTS_ARTISANS_A, COMPONENTS_NAVBARS_A, COMPONENTS_IMPORTED_A, COMPONENTS_HEROES_A, COMPONENTS_FOOTERS_A, COMPONENTS_SECTIONS_A];
 
 export const LIBRARY_COMPONENTS: Record<string, FoundryComponent> = Object.assign(
   {},
