@@ -48,7 +48,7 @@ export const manifests: Record<string, ComponentManifest> = {
 export const samples: Record<string, Record<string, unknown>> = {
   "marquee-hero": {
     tagline: "Rejoignez plus de 100 000 créateurs",
-    title: "Des visuels qui captivent votre audience",
+    title: "Des visuels qui captivent",
     description: "Donnez de l'élan à votre marque avec des contenus à fort impact, signés par notre équipe de créateurs.",
     cta: "Commencer",
     images: [`${IMG}/hero.jpg`, `${IMG}/sess2.jpg`, `${IMG}/int4.jpg`, `${IMG}/still1.jpg`, `${IMG}/hero2.jpg`, `${IMG}/sess3.jpg`, `${IMG}/still4.jpg`],

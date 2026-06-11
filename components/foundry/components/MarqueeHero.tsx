@@ -19,7 +19,7 @@ export default function MarqueeHero({ content }: { content: MarqueeHeroContent; 
   const loop = [...images, ...images];
   const words = (content?.title ?? "").split(/\s+/).filter(Boolean);
   return (
-    <section className="relative flex min-h-[88vh] w-full flex-col items-center justify-center overflow-hidden px-4 text-center" style={{ background: "var(--c-surface)" }}>
+    <section className="relative flex min-h-[82vh] w-full flex-col items-center overflow-hidden px-4 pt-[12vh] text-center md:pt-[14vh]" style={{ background: "var(--c-surface)" }}>
       <style>{`
         @keyframes sg-mh-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
         @keyframes sg-mh-marquee { to { transform: translateX(-50%); } }
@@ -32,30 +32,30 @@ export default function MarqueeHero({ content }: { content: MarqueeHeroContent; 
         }
       `}</style>
 
-      <div className="z-10 flex flex-col items-center">
+      <div className="z-10 flex max-w-4xl flex-col items-center">
         <div
-          className="sg-mh-fade mb-4 inline-block rounded-[var(--r-pill)] border px-4 py-1.5 text-sm font-medium backdrop-blur-sm"
+          className="sg-mh-fade mb-5 inline-block max-w-2xl truncate rounded-[var(--r-pill)] border px-4 py-1.5 text-sm font-medium backdrop-blur-sm"
           style={{ borderColor: "color-mix(in srgb, var(--c-ink) 12%, transparent)", background: "color-mix(in srgb, var(--c-card) 55%, transparent)", color: "var(--c-muted)" }}
         >
           {content?.tagline ?? "Rejoignez la communauté"}
         </div>
 
-        <h1 className="max-w-3xl text-5xl font-bold tracking-tight md:text-7xl" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)", lineHeight: 1.05 }}>
+        <h1 className="max-w-4xl text-6xl font-extrabold tracking-[-0.02em] md:text-8xl" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)", lineHeight: 0.98 }}>
           {words.length
             ? words.map((w, i) => (
-                <span key={i} className="sg-mh-word" style={{ animationDelay: `${i * 80}ms` }}>{w}&nbsp;</span>
+                <span key={i} className="sg-mh-word" style={{ animationDelay: `${i * 70}ms` }}>{w}&nbsp;</span>
               ))
             : "Votre titre ici"}
         </h1>
 
-        <p className="sg-mh-fade mt-6 max-w-xl text-lg" style={{ color: "var(--c-muted)", animationDelay: "500ms" }}>
+        <p className="sg-mh-fade mt-5 max-w-xl text-lg" style={{ color: "var(--c-muted)", animationDelay: "450ms" }}>
           {content?.description ?? ""}
         </p>
 
         <a
           href="#contact"
-          className="sg-mh-fade mt-8 rounded-[var(--r-pill)] px-8 py-3 font-semibold text-white shadow-lg transition-transform hover:scale-[1.05]"
-          style={{ background: "var(--c-accent)", animationDelay: "600ms" }}
+          className="sg-mh-fade mt-7 rounded-[var(--r-pill)] px-8 py-3 font-semibold text-white shadow-lg transition-transform hover:scale-[1.05]"
+          style={{ background: "var(--c-accent)", animationDelay: "550ms" }}
         >
           {content?.cta ?? "Commencer"}
         </a>
