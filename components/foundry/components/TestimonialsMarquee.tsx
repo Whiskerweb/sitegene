@@ -21,7 +21,11 @@ function Stars({ n = 5 }: { n?: number }) {
 }
 
 function Row({ data, reverse }: { data: Review[]; reverse?: boolean }) {
-  const loop = [...data, ...data];
+  // Un « set » assez large pour dépasser l'écran (sinon vide visible pendant la
+  // boucle) ; on le duplique une fois → translateX(-50%) reboucle sans couture.
+  const reps = data.length ? Math.max(2, Math.ceil(8 / data.length)) : 0;
+  const set = Array.from({ length: reps }).flatMap(() => data);
+  const loop = [...set, ...set];
   return (
     <div className="sg-tmq-wrap relative w-full overflow-hidden">
       <div className={`sg-tmq-track flex w-max gap-4 py-2 ${reverse ? "sg-tmq-rev" : ""}`}>
@@ -45,9 +49,10 @@ function Row({ data, reverse }: { data: Review[]; reverse?: boolean }) {
 
 export default function TestimonialsMarquee({ content }: { content: any; skin: Skin }) {
   const items: Review[] = Array.isArray(content?.items) ? content.items : [];
-  const half = Math.ceil(items.length / 2) || 1;
-  const row1 = items.slice(0, half);
-  const row2 = items.slice(half).length ? items.slice(half) : items;
+  // Les deux rangées affichent TOUS les avis (remplissage garanti) ; la 2e part
+  // décalée pour éviter l'effet miroir, et défile en sens inverse.
+  const row1 = items;
+  const row2 = items.length > 1 ? [...items.slice(1), items[0]] : items;
   return (
     <section className="overflow-hidden py-16 md:py-24" style={{ background: "var(--c-surface)" }}>
       <style>{`

@@ -30,6 +30,14 @@ export default function FxCircularReviews({ content }: { content: FxCircularRevi
   const rootRef = useRef<HTMLElement>(null);
   // Re-render des spans à chaque changement (l'animation mot à mot rejoue).
   const [tick, setTick] = useState(0);
+  // Décalage des portraits voisins : réduit sur mobile (sinon ils débordent).
+  const [g, setG] = useState(70);
+  useEffect(() => {
+    const apply = () => setG(window.innerWidth < 768 ? 40 : 70);
+    apply();
+    window.addEventListener("resize", apply);
+    return () => window.removeEventListener("resize", apply);
+  }, []);
 
   const go = useCallback(
     (dir: number, manual = false) => {
@@ -68,7 +76,6 @@ export default function FxCircularReviews({ content }: { content: FxCircularRevi
     const isActive = i === active;
     const isLeft = (active - 1 + n) % n === i;
     const isRight = (active + 1) % n === i;
-    const g = 70;
     const base: React.CSSProperties = {
       position: "absolute",
       inset: 0,
@@ -89,7 +96,7 @@ export default function FxCircularReviews({ content }: { content: FxCircularRevi
   };
 
   return (
-    <section ref={rootRef} className="px-5 py-16 md:py-24" style={{ background: "var(--c-surface)" }}>
+    <section ref={rootRef} className="px-5 py-16 md:py-24" style={{ background: "var(--c-surface)", overflowX: "clip" }}>
       <div className="mx-auto max-w-[1100px]">
         <div className="text-center">
           <Eyebrow>{content.eyebrow}</Eyebrow>
