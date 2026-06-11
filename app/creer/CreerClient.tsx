@@ -20,6 +20,7 @@ import { createClient } from "@/lib/supabase/client";
 import AuthGate from "@/components/auth/AuthGate";
 import { AkyraMark } from "@/components/ui/Logo";
 import CollectStep from "@/components/creer/CollectStep";
+import ImportCharte, { type ImportedCharte } from "@/components/creer/ImportCharte";
 import { detectTrade } from "@/lib/foundry/suggest";
 import type { Collected } from "@/lib/foundry/link-catalog";
 
@@ -75,6 +76,10 @@ export default function CreerClient() {
   const [chartesLoading, setChartesLoading] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [accent, setAccent] = useState<string | null>(null);
+  // Charte importée par le client (« j'ai déjà une identité ») — survit aux
+  // régénérations des 3 propositions IA (affichée en 4e carte).
+  const [importedCharte, setImportedCharte] = useState<Charte | null>(null);
+  const [importOpen, setImportOpen] = useState(false);
 
   const [authed, setAuthed] = useState(false);
   const [gateOpen, setGateOpen] = useState(false);
@@ -101,6 +106,7 @@ export default function CreerClient() {
           brief?: string;
           name?: string;
           chartes?: Charte[];
+          importedCharte?: Charte | null;
           selectedIdx?: number | null;
           accent?: string;
           collected?: Collected;
@@ -108,6 +114,7 @@ export default function CreerClient() {
         if (s.brief) setBrief(s.brief);
         if (s.name) setName(s.name);
         if (Array.isArray(s.chartes) && s.chartes.length > 0) setChartes(s.chartes);
+        if (s.importedCharte && typeof s.importedCharte === "object") setImportedCharte(s.importedCharte);
         if (typeof s.selectedIdx === "number") setSelectedIdx(s.selectedIdx);
         if (s.accent) setAccent(s.accent);
         if (s.collected && typeof s.collected === "object") setCollected(s.collected as Collected);
@@ -127,11 +134,11 @@ export default function CreerClient() {
 
   useEffect(() => {
     try {
-      sessionStorage.setItem(STATE_KEY, JSON.stringify({ brief, name, chartes, selectedIdx, accent, collected }));
+      sessionStorage.setItem(STATE_KEY, JSON.stringify({ brief, name, chartes, importedCharte, selectedIdx, accent, collected }));
     } catch {
       /* non bloquant */
     }
-  }, [brief, name, chartes, selectedIdx, accent, collected]);
+  }, [brief, name, chartes, importedCharte, selectedIdx, accent, collected]);
 
   const pitchReady = brief.trim().length >= 10 && name.trim().length >= 2;
 
@@ -227,7 +234,14 @@ export default function CreerClient() {
     })();
   }, [chartes, authed]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const selected = selectedIdx !== null ? (chartes?.[selectedIdx] ?? null) : null;
+  // Cartes affichées à l'étape charte : les 3 propositions IA + la charte
+  // importée par le client (toujours en dernière position).
+  const displayChartes = useMemo<Charte[] | null>(() => {
+    if (!chartes && !importedCharte) return null;
+    return [...(chartes ?? []), ...(importedCharte ? [importedCharte] : [])];
+  }, [chartes, importedCharte]);
+
+  const selected = selectedIdx !== null ? (displayChartes?.[selectedIdx] ?? null) : null;
   const rareCount = (cards ?? []).filter((c) => c.rarity !== "common").length;
 
   async function launchAssembly() {
@@ -303,6 +317,15 @@ export default function CreerClient() {
     }
   }
 
+  function applyImportedCharte(c: ImportedCharte) {
+    const charte: Charte = { vibe: c.vibe as unknown as VibeData, spec: { ...c.spec }, reason: c.reason };
+    setImportedCharte(charte);
+    setImportOpen(false);
+    // La charte importée vit en dernière position de displayChartes.
+    setSelectedIdx(chartes?.length ?? 0);
+    setAccent(charte.vibe.palette.accent);
+  }
+
   function finishCollect() {
     setPhase("vibe");
   }
@@ -334,8 +357,8 @@ export default function CreerClient() {
   return (
     <div className="akyra min-h-screen">
       {/* Fonts des chartes proposées (spécimens typographiques des cartes). */}
-      {(phase === "vibe" || phase === "reveal") && chartes
-        ? chartes.map((c, i) => <link key={i} rel="stylesheet" href={c.vibe.fontHref} precedence="foundry-fonts" />)
+      {(phase === "vibe" || phase === "reveal") && displayChartes
+        ? displayChartes.map((c, i) => <link key={i} rel="stylesheet" href={c.vibe.fontHref} precedence="foundry-fonts" />)
         : null}
       <style>{`
         @keyframes sg-card-in { 0% { opacity: 0; transform: translateY(26px) rotateX(40deg) scale(0.92); } 60% { opacity: 1; } 100% { opacity: 1; transform: none; } }
@@ -450,9 +473,9 @@ export default function CreerClient() {
             )}
 
             {/* Cartes de charte façon brand-kit */}
-            {!chartesLoading && chartes && (
+            {!chartesLoading && displayChartes && (
               <div className="mt-10 grid gap-5 md:grid-cols-3">
-                {chartes.map((c, idx) => {
+                {displayChartes.map((c, idx) => {
                   const v = c.vibe;
                   const isSel = selectedIdx === idx;
                   const a = isSel && accent ? accent : v.palette.accent;
@@ -497,7 +520,14 @@ export default function CreerClient() {
 
                       {/* Nom + ambiance */}
                       <div className="mt-4">
-                        <div className="text-[16px] font-bold tracking-tight">{v.label}</div>
+                        <div className="flex items-center gap-2">
+                          <div className="text-[16px] font-bold tracking-tight">{v.label}</div>
+                          {importedCharte && idx === (chartes?.length ?? 0) ? (
+                            <span className="rounded-full bg-[rgb(var(--m-accent))]/10 px-2 py-0.5 text-[10px] font-bold text-[rgb(var(--m-accent))]">
+                              Votre identité
+                            </span>
+                          ) : null}
+                        </div>
                         <div className="mt-0.5 text-[12px] text-[rgb(var(--m-muted))]">{v.mood.join(" · ")}</div>
                       </div>
 
@@ -566,13 +596,25 @@ export default function CreerClient() {
 
             <div className="mt-8 flex flex-col items-center gap-4">
               {!chartesLoading && (
-                <button
-                  type="button"
-                  onClick={() => { const next = attempt + 1; setAttempt(next); void loadChartes(next); }}
-                  className="text-sm font-medium text-[rgb(var(--m-muted))] underline-offset-4 transition hover:text-[rgb(var(--m-ink))] hover:underline"
-                >
-                  ✦ Proposer trois autres directions
-                </button>
+                <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+                  <button
+                    type="button"
+                    onClick={() => { const next = attempt + 1; setAttempt(next); void loadChartes(next); }}
+                    className="text-sm font-medium text-[rgb(var(--m-muted))] underline-offset-4 transition hover:text-[rgb(var(--m-ink))] hover:underline"
+                  >
+                    ✦ Proposer trois autres directions
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setImportOpen((o) => !o)}
+                    className="text-sm font-medium text-[rgb(var(--m-muted))] underline-offset-4 transition hover:text-[rgb(var(--m-ink))] hover:underline"
+                  >
+                    {importOpen ? "Fermer" : "J'ai déjà une identité visuelle →"}
+                  </button>
+                </div>
+              )}
+              {!chartesLoading && importOpen && (
+                <ImportCharte businessName={name} onApply={applyImportedCharte} />
               )}
               <div className="flex items-center gap-3">
                 <button

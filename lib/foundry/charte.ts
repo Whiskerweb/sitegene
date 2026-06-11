@@ -218,6 +218,8 @@ export function repairCharte(raw: unknown): Vibe {
 export interface CharteSpec {
   name: string;
   mood: string[];
+  /** Clair ou sombre — TOUJOURS transporté, sinon repairCharte ré-éclaircit une charte sombre. */
+  mode?: "light" | "dark";
   ink: string;
   surface: string;
   card: string;
@@ -236,6 +238,7 @@ export function vibeToSpec(vibe: Vibe): CharteSpec {
   return {
     name: vibe.label,
     mood: vibe.mood,
+    mode: vibe.mode ?? "light",
     ...vibe.palette,
     headingFont: family(vibe.fonts.heading),
     bodyFont: family(vibe.fonts.body),

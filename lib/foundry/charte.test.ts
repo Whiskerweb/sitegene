@@ -6,6 +6,7 @@ import {
   luminance,
   generateChartes,
   fallbackChartes,
+  vibeToSpec,
   CHARTE_FONTS,
 } from "./charte";
 
@@ -81,6 +82,15 @@ describe("repairCharte dark mode", () => {
   it("retourne mode='light' pour une charte normale (sans mode)", () => {
     const vibe = repairCharte({ surface: "#fafaf8", card: "#f0ede8", ink: "#191714", accent: "#3d5a80", accent2: "#8ba8c4", muted: "#6e6f72" });
     expect(vibe.mode).toBe("light");
+  });
+
+  it("le mode survit à l'aller-retour vibe → spec → repairCharte (tunnel + Atelier)", () => {
+    const dark = repairCharte({ mode: "dark", surface: "#0a0a0a", card: "#1a1a1a", ink: "#ffffff", accent: "#E7FF1A", accent2: "#f4f4f4", muted: "#888888" });
+    const spec = vibeToSpec(dark);
+    expect(spec.mode).toBe("dark");
+    const again = repairCharte(spec);
+    expect(again.mode).toBe("dark");
+    expect(luminance(again.palette.surface)).toBeLessThan(0.12);
   });
 });
 
