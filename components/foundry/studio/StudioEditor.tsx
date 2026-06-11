@@ -179,11 +179,27 @@ export default function StudioEditor({ data }: { data: StudioData }) {
   });
 
   // --- Contenu (édition manuelle, debounce) -----------------------------------
+  // Sauvegarde différée mais « vidable » : publier doit ATTENDRE que la dernière
+  // saisie soit écrite côté serveur, sinon on publie l'état précédent (course
+  // entre le debounce et le clic « Publier »).
   const contentTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pendingContent = useRef<{ index: number; content: Record<string, unknown> } | null>(null);
+  const contentInFlight = useRef<Promise<unknown> | null>(null);
   function editContent(index: number, content: Record<string, unknown>) {
     setSecs(secRef.current.map((s, i) => (i === index ? { ...s, content } : s)));
+    pendingContent.current = { index, content };
     if (contentTimer.current) clearTimeout(contentTimer.current);
-    contentTimer.current = setTimeout(() => { void call({ op: "content", index, content }).then((r) => { if (r) record(); }); }, 650);
+    contentTimer.current = setTimeout(() => { void flushContent(); }, 650);
+  }
+  /** Écrit immédiatement la saisie en attente et attend la sauvegarde en vol. */
+  async function flushContent() {
+    if (contentTimer.current) { clearTimeout(contentTimer.current); contentTimer.current = null; }
+    const p = pendingContent.current;
+    if (p) {
+      pendingContent.current = null;
+      contentInFlight.current = call({ op: "content", index: p.index, content: p.content }).then((r) => { if (r) record(); });
+    }
+    if (contentInFlight.current) { await contentInFlight.current; contentInFlight.current = null; }
   }
 
   // --- Remplacer --------------------------------------------------------------
@@ -252,11 +268,26 @@ export default function StudioEditor({ data }: { data: StudioData }) {
   }
 
   // --- Palette ----------------------------------------------------------------
+  // Même principe que le contenu : la charte est sauvegardée en différé, mais on
+  // peut la « vider » immédiatement avant de publier (cf. flushPalette).
   const paletteTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pendingPalette = useRef<ReturnType<typeof vibeToSpec> | null>(null);
+  const paletteInFlight = useRef<Promise<unknown> | null>(null);
   function liveVibe(v: StudioVibe) { setVibeS(v); }
-  function persistCharte(spec: any) {
+  function persistCharte(spec: ReturnType<typeof vibeToSpec>) {
+    pendingPalette.current = spec;
     if (paletteTimer.current) clearTimeout(paletteTimer.current);
-    paletteTimer.current = setTimeout(() => { void call({ op: "palette", charteSpec: spec, accent: brandRef.current ?? undefined }).then((r) => { if (r) record(); }); }, 500);
+    paletteTimer.current = setTimeout(() => { void flushPalette(); }, 500);
+  }
+  /** Écrit immédiatement la charte en attente et attend la sauvegarde en vol. */
+  async function flushPalette() {
+    if (paletteTimer.current) { clearTimeout(paletteTimer.current); paletteTimer.current = null; }
+    const spec = pendingPalette.current;
+    if (spec != null) {
+      pendingPalette.current = null;
+      paletteInFlight.current = call({ op: "palette", charteSpec: spec, accent: brandRef.current ?? undefined }).then((r) => { if (r) record(); });
+    }
+    if (paletteInFlight.current) { await paletteInFlight.current; paletteInFlight.current = null; }
   }
   async function persistPreset(vibeId: string) {
     const preset = data.presets.find((p) => p.id === vibeId);
@@ -270,6 +301,11 @@ export default function StudioEditor({ data }: { data: StudioData }) {
     if (data.locked) { router.push("/dashboard?paywall=1"); return; }
     setPublishing(true);
     try {
+      // Vide les sauvegardes en attente (contenu + charte) AVANT de publier :
+      // sinon le brouillon serveur n'a pas encore la dernière modif et on
+      // publierait l'ancienne version (charte « pas à jour » en ligne).
+      await flushContent();
+      await flushPalette();
       const res = await fetch("/api/site/publish", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -517,7 +553,7 @@ export default function StudioEditor({ data }: { data: StudioData }) {
                     key={`${s.component}-${i}`}
                     className="relative"
                     onMouseEnter={() => !addOpen && replaceAt === null && setSelected(i)}
-                    onClick={(e) => { e.stopPropagation(); setSelected(i); }}
+                    onClick={(e) => { e.stopPropagation(); setSelected(i); setRight({ kind: "content", index: i }); }}
                     style={{ outline: isSel ? "2px solid var(--c-accent)" : "none", outlineOffset: -2 }}
                   >
                     {C ? <C content={s.content} skin={{}} /> : <div className="p-10 text-center text-sm text-red-500">Composant introuvable : {s.component}</div>}

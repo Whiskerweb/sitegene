@@ -1,7 +1,11 @@
 // components/foundry/components/FooterColumns.tsx
+import { navLabel, navHref } from "@/lib/foundry/nav";
 import type { Skin } from "@/lib/foundry/types";
 
-interface FooterCol { title: string; links: string[] }
+// Un lien de colonne : chaîne simple (texte brut, ex. une adresse) ou objet
+// {label,target} (stocké) / {label,href} (résolu au rendu public).
+type FooterLink = string | { label?: string; target?: string; href?: string };
+interface FooterCol { title: string; links: FooterLink[] }
 interface FooterContent { brand: string; tagline: string; columns: FooterCol[]; copyright: string }
 
 export default function FooterColumns({ content }: { content: FooterContent; skin: Skin }) {
@@ -16,7 +20,19 @@ export default function FooterColumns({ content }: { content: FooterContent; ski
           <div key={i}>
             <p className="text-lg font-bold" style={{ color: "var(--c-ink)" }}>{c.title}</p>
             <ul className="mt-5 flex flex-col gap-3" style={{ color: "var(--c-accent)" }}>
-              {c.links.map((l, j) => (<li key={j}>{l}</li>))}
+              {c.links.map((l, j) => {
+                const label = navLabel(l);
+                const href = navHref(l);
+                return (
+                  <li key={j}>
+                    {href && href !== "#" ? (
+                      <a href={href} className="transition-opacity hover:opacity-70" style={{ color: "inherit" }}>{label}</a>
+                    ) : (
+                      label
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         ))}

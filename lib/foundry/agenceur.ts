@@ -53,7 +53,7 @@ function mergedItemRef(sampleItems: Record<string, unknown>[]): Record<string, u
 
 /** Options de normalisation. `userImages` : accepte une URL d'image fournie par
  * l'utilisateur (édition manuelle) au lieu de forcer la banque (cas agenceur). */
-type NormOpts = { userImages?: boolean };
+type NormOpts = { userImages?: boolean; keepEmpty?: boolean };
 
 /** Une chaîne d'image est acceptée si non vide (URL uploadée ou chemin /_templates). */
 function acceptedImage(rawVal: unknown, fallback: unknown): unknown {
@@ -83,7 +83,10 @@ function normalizeValue(sampleVal: unknown, rawVal: unknown, key: string, opts: 
     return typeof rawVal === "boolean" ? rawVal : sampleVal;
   }
   if (Array.isArray(sampleVal)) {
-    if (!Array.isArray(rawVal) || rawVal.length === 0) return sampleVal;
+    if (!Array.isArray(rawVal)) return sampleVal;
+    // Édition manuelle : une liste vidée par le client est PRÉSERVÉE (il a le
+    // droit de tout supprimer). Sortie IA : on retombe sur le sample (rendable).
+    if (rawVal.length === 0) return opts.keepEmpty ? [] : sampleVal;
     // Liens de navigation : mélange accepté de chaînes et d'objets {label,target}
     // ({target} = page du site, posé par addNavLink — à PRÉSERVER, undo compris).
     if (key === "links") {
@@ -182,7 +185,7 @@ export function sanitizeUserContent(
   const keys = new Set<string>([...Object.keys(sample), ...(manifest?.contentKeys ?? [])]);
   const out: Record<string, unknown> = {};
   for (const key of keys) {
-    out[key] = normalizeValue(sample[key], rawObj[key], key, { userImages: true });
+    out[key] = normalizeValue(sample[key], rawObj[key], key, { userImages: true, keepEmpty: true });
   }
   return out;
 }

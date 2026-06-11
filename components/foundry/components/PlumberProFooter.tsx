@@ -1,9 +1,12 @@
 // (Plumber Pro) Footer sombre (var(--c-ink)) : marque + tagline à gauche,
 // 3 colonnes de liens, copyright centré.
 import type { CSSProperties } from "react";
+import { navLabel, navHref } from "@/lib/foundry/nav";
 import type { Skin } from "@/lib/foundry/types";
 
-interface FooterColumn { heading: string; links: string[] }
+// Un lien de colonne : chaîne simple ou objet {label,target}/{label,href}.
+type FooterLink = string | { label?: string; target?: string; href?: string };
+interface FooterColumn { heading: string; links: FooterLink[] }
 
 export default function PlumberProFooter({ content, skin }: { content: any; skin: Skin }) {
   const root: CSSProperties = {};
@@ -36,7 +39,7 @@ export default function PlumberProFooter({ content, skin }: { content: any; skin
               <h4 className="mb-4 text-sm font-bold text-white/80">{col.heading}</h4>
               <ul className="space-y-2">
                 {col.links.map((l, li) => (
-                  <li key={li}><a href="#" className="text-sm text-white/50 transition-colors hover:text-white">{l}</a></li>
+                  <li key={li}><a href={navHref(l)} className="text-sm text-white/50 transition-colors hover:text-white">{navLabel(l)}</a></li>
                 ))}
               </ul>
             </div>

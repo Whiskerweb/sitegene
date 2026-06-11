@@ -151,9 +151,10 @@ export async function POST(request: Request) {
     } else {
       return NextResponse.json({ error: "Charte invalide." }, { status: 400 });
     }
-    if (typeof body?.accent === "string") {
-      next = { ...next, brand: HEX.test(body.accent.trim()) ? { primary: body.accent.trim() } : undefined };
-    }
+    // L'accent de marque est TOUJOURS réinitialisé d'après `accent` (comme l'op
+    // `set`) : choisir un preset SANS accent efface l'ancienne surcharge, sinon
+    // l'accent figé masquerait la couleur du nouveau preset (« aucune différence »).
+    next = { ...next, brand: typeof body?.accent === "string" && HEX.test(body.accent.trim()) ? { primary: body.accent.trim() } : undefined };
     await saveRecipeDraft(admin, siteId, next);
     const effective = next.customVibe ?? getVibe(next.vibe)!;
     return NextResponse.json({ ok: true, vibe: effective, brandPrimary: next.brand?.primary ?? null });
