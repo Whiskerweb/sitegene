@@ -25,16 +25,16 @@ export default function PricingCards({ content }: { content: PricingContent; ski
                 key={i}
                 className="flex max-w-[420px] flex-1 basis-[300px] flex-col rounded-[var(--r-card)] p-8"
                 style={f
-                  ? { background: "var(--c-ink)", color: "#fbf9f5", boxShadow: "0 30px 70px -30px rgba(13,5,3,.55)" }
+                  ? { background: "var(--c-ink)", color: "var(--c-surface)", boxShadow: "0 30px 70px -30px rgba(13,5,3,.55)" }
                   : { background: "var(--c-card)", border: "1px solid color-mix(in srgb, var(--c-accent) 14%, transparent)" }}
               >
                 <span className="text-sm font-bold uppercase tracking-wide" style={{ color: f ? "var(--c-accent2)" : "var(--c-accent)" }}>{p.name}</span>
                 <div className="mt-4 flex items-end gap-1">
-                  <span className="text-5xl" style={{ fontFamily: "var(--font-heading)", color: f ? "#fbf9f5" : "var(--c-ink)" }}>{p.price}</span>
-                  <span className="mb-1 text-sm" style={{ color: f ? "rgba(251,249,245,.6)" : "var(--c-accent)" }}>{p.period}</span>
+                  <span className="text-5xl" style={{ fontFamily: "var(--font-heading)", color: f ? "var(--c-surface)" : "var(--c-ink)" }}>{p.price}</span>
+                  <span className="mb-1 text-sm" style={{ color: f ? "color-mix(in srgb, var(--c-surface) 60%, transparent)" : "var(--c-accent)" }}>{p.period}</span>
                 </div>
-                {p.desc && <p className="mt-3 text-sm leading-relaxed" style={{ color: f ? "rgba(251,249,245,.7)" : "var(--c-accent)" }}>{p.desc}</p>}
-                <ul className="mt-6 flex flex-1 flex-col gap-2.5 text-sm" style={{ color: f ? "rgba(251,249,245,.85)" : "var(--c-ink)" }}>
+                {p.desc && <p className="mt-3 text-sm leading-relaxed" style={{ color: f ? "color-mix(in srgb, var(--c-surface) 70%, transparent)" : "var(--c-accent)" }}>{p.desc}</p>}
+                <ul className="mt-6 flex flex-1 flex-col gap-2.5 text-sm" style={{ color: f ? "color-mix(in srgb, var(--c-surface) 85%, transparent)" : "var(--c-ink)" }}>
                   {p.features.map((ft) => (
                     <li key={ft} className="flex items-start gap-2">
                       <span className="mt-0.5 shrink-0 font-bold" style={{ color: f ? "var(--c-accent2)" : "var(--c-accent)" }}>✓</span>

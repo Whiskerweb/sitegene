@@ -16,7 +16,7 @@ export default function CtaBanner({ content }: { content: CtaContent; skin: Skin
         <div className="relative z-10 mx-auto max-w-2xl px-6 py-20 text-center md:py-28">
           <h2
             className="mx-auto max-w-xl text-[2rem] md:text-[2.75rem]"
-            style={{ fontFamily: "var(--font-heading)", color: "#fbf9f5", letterSpacing: "-1px", lineHeight: 1.15 }}
+            style={{ fontFamily: "var(--font-heading)", color: "var(--c-surface)", letterSpacing: "-1px", lineHeight: 1.15 }}
           >
             {content.title}
           </h2>
