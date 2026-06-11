@@ -7,7 +7,7 @@ import type { Vibe, VibeId } from "./types";
 
 const GF = "https://fonts.googleapis.com/css2";
 
-export const VIBES: Record<VibeId, Vibe> = {
+export const VIBES: Record<VibeId, Vibe> = /* cast : 11 DA ajoutées en Task 3 */ ({
   "warm-serif": {
     id: "warm-serif",
     label: "Atelier chaleureux",
@@ -62,7 +62,7 @@ export const VIBES: Record<VibeId, Vibe> = {
     fonts: { heading: "'Playfair Display', Georgia, serif", body: "'Source Sans 3', system-ui, sans-serif" },
     radius: { card: "6px", xl: "12px", pill: "999px" },
   },
-};
+} as Record<VibeId, Vibe>);
 
 /** Tous les ids de vibe (ordre stable d'affichage). */
 export const VIBE_IDS = Object.keys(VIBES) as VibeId[];

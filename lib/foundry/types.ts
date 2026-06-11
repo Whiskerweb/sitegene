@@ -5,20 +5,47 @@ export type VibeId =
   | "ocean-confiance"
   | "corail-studio"
   | "mineral-precis"
-  | "encre-editoriale";
+  | "encre-editoriale"
+  // --- Lot 1 : 11 DA enrichies ---
+  | "mindful-moments"
+  | "lexicon-creators"
+  | "auralis-neural"
+  | "nexus-transfers"
+  | "neurosync"
+  | "rock-brutalist"
+  | "rap-luxe"
+  | "contemporain-editorial"
+  | "photographe-galerie"
+  | "coach-performance"
+  | "restaurant-nocturne";
+
+export type HeroTreatment = "default" | "split-editorial" | "fullscreen-photo" | "type-giant" | "centered-glow";
+export type Texture = "none" | "grain" | "grid" | "glow" | "gradient-mesh";
 
 export interface Vibe {
-  /** Id d'une vibe curée, ou "custom" pour une charte générée sur mesure. */
   id: VibeId | "custom";
-  /** Nom de palette montré au client (carte DA de l'onboarding). */
   label: string;
-  /** 3 mots d'ambiance (carte DA). */
   mood: string[];
-  /** Feuille Google Fonts chargée par l'Assembler (heading + body de la vibe). */
   fontHref: string;
-  palette: { ink: string; surface: string; card: string; accent: string; accent2: string; muted: string };
-  fonts: { heading: string; body: string };
-  radius: { card: string; xl: string; pill: string };
+  palette: {
+    ink: string; surface: string; card: string; accent: string; accent2: string; muted: string;
+    /** Rôles supplémentaires (optionnels — dérivés si absents). */
+    accent3?: string; border?: string;
+  };
+  fonts: { heading: string; body: string; /** face mono pour labels/métadonnées */ label?: string };
+  radius: { card: string; xl: string; pill: string; /** rayon des contrôles (champs/boutons) */ control?: string };
+  /** Clair (texte sombre/fond clair) ou sombre (texte clair/fond sombre). Défaut: "light". */
+  mode?: "light" | "dark";
+  /** Densité (dial). Défaut: medium. */
+  density?: { base: string; gap: string; cardPadding: string; sectionPadding: string };
+  /** Forme/relief. */
+  shape?: { shadowCard?: string; buttonStyle?: "solid" | "outline" | "ghost" };
+  /** Atmosphère de fond (CSS-only en Lot 1). */
+  texture?: Texture;
+  /** Dials taste-skill (1..10). */
+  dials?: { variance: number; motion: number; density: number };
+  /** Traitements de section imposés par la DA. */
+  treatments?: { hero?: HeroTreatment };
 }
 
 export type SkinKey = "accent" | "surface" | "card" | "headingFont";

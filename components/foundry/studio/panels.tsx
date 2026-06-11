@@ -237,15 +237,31 @@ export function ContentPanel({
   const patch = (key: string, value: unknown) => onChange({ ...section.content, [key]: value });
   // Les liens du menu (navbar) ont leur éditeur dédié : libellé + destination.
   const isNavLinks = (key: string) => section.role === "navbar" && key === "links";
+  // Les colonnes du footer : menus déroulants (titre + liens avec destination).
+  const isFooterColumns = (key: string) => section.role === "footer" && key === "columns";
+  // Clé du titre de colonne selon le composant ("heading" pour Plumber Pro, sinon "title").
+  const footerTitleKey = (() => {
+    const cols = section.content.columns;
+    if (Array.isArray(cols)) {
+      const first = cols.find((c) => c && typeof c === "object") as Record<string, unknown> | undefined;
+      if (first && "heading" in first && !("title" in first)) return "heading";
+    }
+    return "title";
+  })();
+
+  const fieldLabel = (key: string, fallback: string) =>
+    isNavLinks(key) ? "Boutons du menu" : isFooterColumns(key) ? "Colonnes & liens" : fallback;
 
   return (
     <div className="flex flex-col gap-5">
       {fields.map((f) => (
         <div key={f.key} className="flex flex-col gap-1.5">
-          <label className="text-[12px] font-semibold uppercase tracking-wide text-neutral-400">{isNavLinks(f.key) ? "Boutons du menu" : f.label}</label>
+          <label className="text-[12px] font-semibold uppercase tracking-wide text-neutral-400">{fieldLabel(f.key, f.label)}</label>
 
           {isNavLinks(f.key) && Array.isArray(f.value) ? (
             <NavLinksField value={f.value} pages={pages} onChange={(v) => patch(f.key, v)} />
+          ) : isFooterColumns(f.key) && Array.isArray(f.value) ? (
+            <FooterColumnsField value={f.value} pages={pages} titleKey={footerTitleKey} onChange={(v) => patch(f.key, v)} />
           ) : (
             <>
           {(f.type === "text" || f.type === "textarea" || f.type === "number" || f.type === "boolean") && (
@@ -334,9 +350,83 @@ function navLabelOf(l: NavLinkValue): string {
 }
 
 /**
- * Éditeur des boutons du menu : libellé + destination (Accueil, une page du
- * site, ou un lien externe). Stocke une chaîne simple sans destination, sinon
+ * Une ligne d'édition de lien : libellé + destination (Accueil, une page du
+ * site, ou un lien externe). Partagée par le menu (navbar) et les colonnes du
+ * footer. Le parent stocke une chaîne simple sans destination, sinon
  * {label, target} — le format que le site publié sait résoudre.
+ */
+function LinkRow({
+  label,
+  target,
+  pages,
+  onChange,
+  onRemove,
+}: {
+  label: string;
+  target: string;
+  pages: PageTab[];
+  onChange: (label: string, target: string) => void;
+  onRemove: () => void;
+}) {
+  const isExternal = (t: string) => /^https?:\/\//.test(t);
+  // Valeur du sélecteur : "" (aucune), "home", slug de page, "__ext" (externe).
+  const selectValue = isExternal(target) ? "__ext" : target;
+  return (
+    <div className="rounded-xl border border-neutral-200 bg-white p-2.5">
+      <div className="flex items-center gap-1.5">
+        <input
+          value={label}
+          onChange={(e) => onChange(e.target.value, target)}
+          placeholder="Libellé"
+          className={inputCls}
+        />
+        <button
+          onClick={onRemove}
+          className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-neutral-300 hover:bg-red-50 hover:text-red-500"
+          title="Retirer ce lien"
+        >
+          <Trash2 size={14} />
+        </button>
+      </div>
+      <div className="mt-1.5 flex items-center gap-1.5">
+        <Link2 size={13} className="shrink-0 text-neutral-300" />
+        <select
+          value={selectValue}
+          onChange={(e) => {
+            const v = e.target.value;
+            onChange(label, v === "__ext" ? "https://" : v);
+          }}
+          className="h-8 w-full rounded-lg border border-neutral-200 bg-white px-2 text-[12.5px] text-neutral-700 outline-none focus:border-neutral-900"
+        >
+          <option value="">Sans lien</option>
+          <option value="home">Accueil</option>
+          {pages.map((p) => (
+            <option key={p.id} value={p.slug}>Page « {p.title} »</option>
+          ))}
+          <option value="__ext">Lien externe…</option>
+        </select>
+      </div>
+      {isExternal(target) && (
+        <input
+          value={target}
+          onChange={(e) => onChange(label, e.target.value)}
+          placeholder="https://…"
+          className={`${inputCls} mt-1.5`}
+        />
+      )}
+    </div>
+  );
+}
+
+/** Réécrit l'entrée i d'une liste de liens (chaîne si pas de cible, sinon objet). */
+function writeLink(links: NavLinkValue[], i: number, label: string, target: string): NavLinkValue[] {
+  const next = [...links];
+  next[i] = target ? { label, target } : label;
+  return next;
+}
+
+/**
+ * Éditeur des boutons du menu : une ligne par lien (libellé + destination).
  */
 function NavLinksField({
   value,
@@ -348,70 +438,121 @@ function NavLinksField({
   onChange: (v: unknown[]) => void;
 }) {
   const links = value as NavLinkValue[];
-  const set = (i: number, label: string, target: string) => {
-    const next = [...links];
-    next[i] = target ? { label, target } : label;
-    onChange(next);
-  };
-  const isExternal = (t: string) => /^https?:\/\//.test(t);
   return (
     <div className="flex flex-col gap-2">
-      {links.map((l, i) => {
-        const label = navLabelOf(l);
-        const target = navTargetOf(l);
-        // Valeur du sélecteur : "" (aucune), "home", slug de page, "__ext" (externe).
-        const selectValue = isExternal(target) ? "__ext" : target;
-        return (
-          <div key={i} className="rounded-xl border border-neutral-200 bg-neutral-50/60 p-2.5">
-            <div className="flex items-center gap-1.5">
-              <input
-                value={label}
-                onChange={(e) => set(i, e.target.value, target)}
-                placeholder="Libellé"
-                className={inputCls}
-              />
-              <button
-                onClick={() => onChange(links.filter((_, j) => j !== i))}
-                className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-neutral-300 hover:bg-red-50 hover:text-red-500"
-                title="Retirer ce bouton"
-              >
-                <Trash2 size={14} />
-              </button>
-            </div>
-            <div className="mt-1.5 flex items-center gap-1.5">
-              <Link2 size={13} className="shrink-0 text-neutral-300" />
-              <select
-                value={selectValue}
-                onChange={(e) => {
-                  const v = e.target.value;
-                  set(i, label, v === "__ext" ? "https://" : v);
-                }}
-                className="h-8 w-full rounded-lg border border-neutral-200 bg-white px-2 text-[12.5px] text-neutral-700 outline-none focus:border-neutral-900"
-              >
-                <option value="">Sans lien</option>
-                <option value="home">Accueil</option>
-                {pages.map((p) => (
-                  <option key={p.id} value={p.slug}>Page « {p.title} »</option>
-                ))}
-                <option value="__ext">Lien externe…</option>
-              </select>
-            </div>
-            {isExternal(target) && (
-              <input
-                value={target}
-                onChange={(e) => set(i, label, e.target.value)}
-                placeholder="https://…"
-                className={`${inputCls} mt-1.5`}
-              />
-            )}
-          </div>
-        );
-      })}
+      {links.map((l, i) => (
+        <LinkRow
+          key={i}
+          label={navLabelOf(l)}
+          target={navTargetOf(l)}
+          pages={pages}
+          onChange={(label, target) => onChange(writeLink(links, i, label, target))}
+          onRemove={() => onChange(links.filter((_, j) => j !== i))}
+        />
+      ))}
       <button
         onClick={() => onChange([...links, "Nouveau"])}
         className="self-start text-[12.5px] font-semibold text-neutral-500 hover:text-neutral-900"
       >
         + Ajouter un bouton
+      </button>
+    </div>
+  );
+}
+
+/* ===================== Colonnes du footer (menus + liens) ===================== */
+
+type FooterColumnValue = Record<string, unknown> & { links?: NavLinkValue[] };
+
+/**
+ * Éditeur des colonnes du footer : chaque colonne est un menu déroulant
+ * (titre + ses liens). Chaque lien a un libellé et une destination, et se
+ * supprime individuellement ; on ajoute / supprime aussi des colonnes entières.
+ * `titleKey` = clé du titre selon le composant ("title" ou "heading").
+ */
+function FooterColumnsField({
+  value,
+  pages,
+  titleKey,
+  onChange,
+}: {
+  value: unknown[];
+  pages: PageTab[];
+  titleKey: string;
+  onChange: (v: unknown[]) => void;
+}) {
+  const columns = value as FooterColumnValue[];
+  const [open, setOpen] = useState<number | null>(0);
+
+  const patchCol = (i: number, col: FooterColumnValue) => {
+    const next = [...columns];
+    next[i] = col;
+    onChange(next);
+  };
+  const setLinks = (i: number, links: NavLinkValue[]) => patchCol(i, { ...columns[i], links });
+  const titleOf = (col: FooterColumnValue) => (typeof col[titleKey] === "string" ? (col[titleKey] as string) : "");
+
+  return (
+    <div className="flex flex-col gap-2">
+      {columns.map((col, i) => {
+        const links = Array.isArray(col.links) ? (col.links as NavLinkValue[]) : [];
+        const isOpen = open === i;
+        return (
+          <div key={i} className="overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50/60">
+            <div className="flex items-center gap-1">
+              <button onClick={() => setOpen(isOpen ? null : i)} className="flex flex-1 items-center gap-2 px-3 py-2.5 text-left">
+                <ChevronDown size={15} className={`shrink-0 text-neutral-400 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+                <span className="truncate text-[13px] font-semibold text-neutral-800">{titleOf(col).trim() || `Colonne ${i + 1}`}</span>
+                <span className="shrink-0 text-[11px] text-neutral-400">· {links.length} lien{links.length > 1 ? "s" : ""}</span>
+              </button>
+              <button
+                onClick={() => onChange(columns.filter((_, j) => j !== i))}
+                className="mr-1.5 grid h-7 w-7 shrink-0 place-items-center rounded-lg text-neutral-300 hover:bg-red-50 hover:text-red-500"
+                title="Supprimer cette colonne"
+              >
+                <Trash2 size={13} />
+              </button>
+            </div>
+            {isOpen && (
+              <div className="flex flex-col gap-3 border-t border-neutral-200 p-3">
+                <div className="flex flex-col gap-1">
+                  <span className="text-[11px] font-medium text-neutral-400">Titre de la colonne</span>
+                  <input
+                    value={titleOf(col)}
+                    onChange={(e) => patchCol(i, { ...col, [titleKey]: e.target.value })}
+                    placeholder="Ex. Liens, Écouter…"
+                    className={inputCls}
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <span className="text-[11px] font-medium text-neutral-400">Liens</span>
+                  {links.map((l, j) => (
+                    <LinkRow
+                      key={j}
+                      label={navLabelOf(l)}
+                      target={navTargetOf(l)}
+                      pages={pages}
+                      onChange={(label, target) => setLinks(i, writeLink(links, j, label, target))}
+                      onRemove={() => setLinks(i, links.filter((_, k) => k !== j))}
+                    />
+                  ))}
+                  <button
+                    onClick={() => setLinks(i, [...links, "Nouveau lien"])}
+                    className="self-start text-[12.5px] font-semibold text-neutral-500 hover:text-neutral-900"
+                  >
+                    + Ajouter un lien
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
+      <button
+        onClick={() => { onChange([...columns, { [titleKey]: "Nouvelle colonne", links: [] }]); setOpen(columns.length); }}
+        className="self-start text-[12.5px] font-semibold text-neutral-500 hover:text-neutral-900"
+      >
+        + Ajouter une colonne
       </button>
     </div>
   );
@@ -869,7 +1010,7 @@ export function PalettePanel({
         <p className="mb-2 text-[12px] font-semibold uppercase tracking-wide text-neutral-400">Couleurs</p>
         <div className="flex flex-col gap-2">
           {COLOR_FIELDS.map(({ key, label, hint }) => (
-            <ColorField key={key} label={label} hint={hint} value={vibe.palette[key]} onChange={(v) => setColor(key, v)} />
+            <ColorField key={key} label={label} hint={hint} value={vibe.palette[key]!} onChange={(v) => setColor(key, v)} />
           ))}
         </div>
       </div>
