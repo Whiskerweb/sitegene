@@ -7,6 +7,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import {
   ArrowLeftRight,
   Check,
+  ChevronDown,
   Eye,
   ImageIcon,
   Link2,
@@ -18,7 +19,7 @@ import {
 } from "lucide-react";
 import { COMPONENTS } from "@/components/foundry/registry";
 import { vibeToCssVars } from "@/lib/foundry/vibes";
-import { vibeToSpec, fontHref } from "@/lib/foundry/charte";
+import { vibeToSpec, fontHref, fontCss, allFontsHref } from "@/lib/foundry/charte";
 import { adaptContent } from "@/lib/foundry/agenceur";
 import { fieldsFor, type FieldType } from "@/lib/foundry/fields";
 import type { CatalogEntry, PageTab, StudioSection, StudioVibe } from "./types";
@@ -645,6 +646,65 @@ function TryOnOverlay({
   );
 }
 
+/* ====================== Sélecteur de typo (façon Canva) ====================== */
+
+/**
+ * Chaque police est montrée DANS sa propre fonte : grand spécimen « Ag » +
+ * nom rendu dans la typo — on choisit à l'œil, pas sur un nom. Les fontes de
+ * la liste ne sont chargées (Google Fonts) que quand le sélecteur est ouvert.
+ */
+function FontPicker({
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  options: string[];
+  onChange: (family: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setOpen((o) => !o)}
+        className="flex w-full items-center gap-3 rounded-xl border border-neutral-200 bg-white px-3 py-2.5 text-left transition hover:border-neutral-400"
+      >
+        <span className="w-12 shrink-0 text-[11px] font-semibold uppercase tracking-wide text-neutral-400">{label}</span>
+        <span className="min-w-0 flex-1 truncate text-[16px] leading-none text-neutral-900" style={{ fontFamily: fontCss(value) }}>
+          {value}
+        </span>
+        <ChevronDown size={15} className={`shrink-0 text-neutral-400 transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+
+      {open && (
+        <>
+          {/* Toutes les fontes de la liste, pour rendre chaque option dans sa typo. */}
+          <link rel="stylesheet" href={allFontsHref()} precedence="foundry-fonts" />
+          <div className="fixed inset-0 z-20" onClick={() => setOpen(false)} />
+          <div className="absolute left-0 right-0 z-30 mt-1.5 max-h-72 overflow-y-auto rounded-xl border border-neutral-200 bg-white py-1.5 shadow-2xl">
+            {options.map((f) => {
+              const active = f === value;
+              return (
+                <button
+                  key={f}
+                  onClick={() => { onChange(f); setOpen(false); }}
+                  className={`flex w-full items-center gap-3 px-3.5 py-2 text-left transition hover:bg-neutral-50 ${active ? "bg-neutral-50" : ""}`}
+                >
+                  <span className="w-10 shrink-0 text-[22px] leading-none text-neutral-900" style={{ fontFamily: fontCss(f) }}>Ag</span>
+                  <span className="min-w-0 flex-1 truncate text-[14.5px] text-neutral-700" style={{ fontFamily: fontCss(f) }}>{f}</span>
+                  {active && <Check size={15} className="shrink-0 text-neutral-900" />}
+                </button>
+              );
+            })}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 /* =========================== Palette live (Stitch) =========================== */
 
 const RADIUS_PRESETS: Record<string, { card: string; xl: string }> = {
@@ -779,8 +839,6 @@ export function PalettePanel({
     edit({ ...vibe, fonts: { ...vibe.fonts, [which]: family }, fontHref: which === "heading" ? fontHref(family, bodyFamily) : fontHref(headingFamily, family) });
   const setRadius = (name: keyof typeof RADIUS_PRESETS) => edit({ ...vibe, radius: { ...vibe.radius, ...RADIUS_PRESETS[name] } });
 
-  const selectCls = "w-full rounded-xl border border-neutral-200 bg-white px-3 py-2 text-[13px] text-neutral-800 outline-none focus:border-neutral-900";
-
   return (
     <div className="flex flex-col gap-6">
       <div>
@@ -816,19 +874,12 @@ export function PalettePanel({
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
-        <label className="flex flex-col gap-1">
-          <span className="text-[12px] font-semibold uppercase tracking-wide text-neutral-400">Titres</span>
-          <select value={headingFamily} onChange={(e) => setFont("heading", e.target.value)} className={selectCls}>
-            {fonts.heading.map((f) => <option key={f} value={f}>{f}</option>)}
-          </select>
-        </label>
-        <label className="flex flex-col gap-1">
-          <span className="text-[12px] font-semibold uppercase tracking-wide text-neutral-400">Texte</span>
-          <select value={bodyFamily} onChange={(e) => setFont("body", e.target.value)} className={selectCls}>
-            {fonts.body.map((f) => <option key={f} value={f}>{f}</option>)}
-          </select>
-        </label>
+      <div>
+        <p className="mb-2 text-[12px] font-semibold uppercase tracking-wide text-neutral-400">Typographies</p>
+        <div className="flex flex-col gap-2">
+          <FontPicker label="Titres" value={headingFamily} options={fonts.heading} onChange={(f) => setFont("heading", f)} />
+          <FontPicker label="Texte" value={bodyFamily} options={fonts.body} onChange={(f) => setFont("body", f)} />
+        </div>
       </div>
 
       <div>

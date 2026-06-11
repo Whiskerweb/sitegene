@@ -60,6 +60,13 @@ export function fontCss(family: string): string {
   return CHARTE_FONTS.find((f) => f.family === family)?.css ?? family;
 }
 
+/** Feuille Google Fonts de TOUTES les fontes autorisées — pour le sélecteur
+ *  de typo (chaque option rendue dans sa propre fonte, façon Canva). Chargée
+ *  uniquement quand le sélecteur est ouvert. */
+export function allFontsHref(): string {
+  return `${GF_BASE}?${CHARTE_FONTS.map((f) => `family=${f.gf}`).join("&")}&display=swap`;
+}
+
 /** Feuille Google Fonts pour une paire (heading, body) — aperçu live. */
 export function fontHref(headingFamily: string, bodyFamily: string): string {
   const h = CHARTE_FONTS.find((f) => f.family === headingFamily) ?? CHARTE_FONTS.find((f) => f.roles.includes("heading"))!;
