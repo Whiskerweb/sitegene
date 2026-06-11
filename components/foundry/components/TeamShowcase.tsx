@@ -44,23 +44,29 @@ export default function TeamShowcase({ content }: { content: any; skin: Skin }) 
         )}
 
         <div className="flex select-none flex-col items-start gap-8 md:flex-row md:gap-12">
-          {/* Grille de photos décalées */}
-          <div className="flex flex-shrink-0 gap-2 overflow-x-auto pb-1 md:gap-3">
+          {/* Grille de photos décalées (scroll horizontal si trop large) */}
+          <div className="flex max-w-full flex-shrink-0 justify-center gap-2 overflow-x-auto pb-1 md:justify-start md:gap-3">
             {cols.map((col, c) => (
               <div key={c} className={`flex flex-col gap-2 md:gap-3 ${OFFSETS[c]}`}>
                 {col.map(({ m, i }) => {
                   const active = hover === i;
                   const dimmed = hover !== null && !active;
+                  // Par défaut (rien de survolé/tapé) TOUT est en couleur ;
+                  // le gris ne touche que les AUTRES quand une est mise en avant.
+                  const colored = active || hover === null;
                   return (
-                    <div
+                    <button
+                      type="button"
                       key={i}
                       className={`flex-shrink-0 overflow-hidden rounded-xl transition-opacity duration-300 ${SIZES[c]}`}
                       style={{ opacity: dimmed ? 0.6 : 1 }}
                       onMouseEnter={() => setHover(i)}
                       onMouseLeave={() => setHover(null)}
+                      onClick={() => setHover((h) => (h === i ? null : i))}
+                      aria-label={m.name}
                     >
-                      <img src={m.avatar} alt={m.name} loading="lazy" className="h-full w-full object-cover transition-[filter] duration-500" style={{ filter: active ? "grayscale(0) brightness(1)" : "grayscale(1) brightness(.78)" }} />
-                    </div>
+                      <img src={m.avatar} alt={m.name} loading="lazy" className="h-full w-full object-cover transition-[filter] duration-500" style={{ filter: colored ? "grayscale(0) brightness(1)" : "grayscale(1) brightness(.78)" }} />
+                    </button>
                   );
                 })}
               </div>
@@ -75,14 +81,14 @@ export default function TeamShowcase({ content }: { content: any; skin: Skin }) 
               const socials: Array<[string, string | undefined]> = [["x", m.x], ["linkedin", m.linkedin], ["instagram", m.instagram]];
               const has = socials.some(([, v]) => v);
               return (
-                <div key={i} className="transition-opacity duration-300" style={{ opacity: dimmed ? 0.5 : 1 }} onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)}>
+                <div key={i} className="cursor-pointer transition-opacity duration-300" style={{ opacity: dimmed ? 0.5 : 1 }} onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)} onClick={() => setHover((h) => (h === i ? null : i))}>
                   <div className="flex items-center gap-2.5">
                     <span className="h-3 flex-shrink-0 rounded-[5px] transition-all duration-300" style={{ width: active ? 20 : 16, background: active ? "var(--c-ink)" : "color-mix(in srgb, var(--c-ink) 25%, transparent)" }} />
                     <span className="text-base font-semibold leading-none tracking-tight transition-colors duration-300 md:text-[18px]" style={{ color: active ? "var(--c-ink)" : "color-mix(in srgb, var(--c-ink) 80%, transparent)" }}>{m.name}</span>
                     {has && (
                       <div className="ml-0.5 flex items-center gap-1.5 transition-all duration-200" style={{ opacity: active ? 1 : 0, transform: active ? "translateX(0)" : "translateX(-8px)", pointerEvents: active ? "auto" : "none" }}>
                         {socials.map(([plat, href]) => href ? (
-                          <a key={plat} href={href} target="_blank" rel="noopener noreferrer" className="rounded p-1 transition-transform hover:scale-110" style={{ color: "var(--c-muted)" }} aria-label={plat}>
+                          <a key={plat} href={href} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="rounded p-1 transition-transform hover:scale-110" style={{ color: "var(--c-muted)" }} aria-label={plat}>
                             <SocialIcon platform={plat} className="h-3 w-3" />
                           </a>
                         ) : null)}
