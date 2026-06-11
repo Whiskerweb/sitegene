@@ -26,7 +26,7 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
         .lwgal {
           padding: 6rem 0;
           overflow: hidden;
-          color: #fff;
+          color: var(--c-surface);
         }
         .lwgal-inner {
           max-width: 100rem;
@@ -54,7 +54,7 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
           font-weight: 300;
           letter-spacing: -0.04em;
           line-height: 0.95;
-          color: #fff;
+          color: var(--c-surface);
         }
         .lwgal-h1 em { font-style: italic; }
         .lwgal-subh {
@@ -63,7 +63,7 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
           font-weight: 300;
           letter-spacing: -0.04em;
           line-height: 0.95;
-          color: #fff;
+          color: var(--c-surface);
         }
         .lwgal-intro {
           font-family: var(--font-body);
@@ -78,12 +78,12 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
           display: grid;
           grid-template-columns: repeat(2, 1fr);
           gap: 2px;
-          background: #000;
+          background: var(--c-ink);
         }
         @media (min-width: 1024px) { .lwgal-grid { grid-template-columns: repeat(4, 1fr); } }
         .lwgal-cell {
           aspect-ratio: 1 / 1;
-          background: #18181b;
+          background: var(--c-card);
           overflow: hidden;
           position: relative;
         }
@@ -98,7 +98,7 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
           grid-row: span 2;
           position: relative;
           overflow: hidden;
-          background: #18181b;
+          background: var(--c-card);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -127,7 +127,7 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
         .lwgal-featured:hover .lwgal-featured-sharp { transform: scale(1.1); }
         .lwgal-caption {
           aspect-ratio: 1 / 1;
-          background: #000;
+          background: var(--c-ink);
           border: 1px solid rgba(255,255,255,0.05);
           padding: 1.5rem;
           display: flex;
@@ -139,7 +139,7 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
           font-family: var(--font-heading);
           font-size: clamp(1.8rem, 4vw, 3rem);
           letter-spacing: -0.03em;
-          color: #fff;
+          color: var(--c-surface);
           font-weight: 300;
           line-height: 1;
         }

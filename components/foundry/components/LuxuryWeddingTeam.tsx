@@ -64,7 +64,7 @@ export default function LuxuryWeddingTeam({ content, skin }: { content: any; ski
           font-weight: 300;
           letter-spacing: -0.04em;
           line-height: 1.1;
-          color: #fff;
+          color: var(--c-surface);
         }
         .lwteam-hint {
           max-width: 32rem;
@@ -116,7 +116,7 @@ export default function LuxuryWeddingTeam({ content, skin }: { content: any; ski
           font-family: var(--font-heading);
           font-weight: 300;
           letter-spacing: -0.04em;
-          color: #fff;
+          color: var(--c-surface);
         }
         .lwteam-role {
           font-family: var(--font-body);

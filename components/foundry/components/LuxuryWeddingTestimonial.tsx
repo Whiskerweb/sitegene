@@ -11,7 +11,7 @@ export default function LuxuryWeddingTestimonial({ content, skin }: { content: a
       <style>{`
         .lwtesti {
           padding: 8rem 1.5rem;
-          color: #fff;
+          color: var(--c-surface);
           text-align: center;
         }
         .lwtesti-glyph {
@@ -29,7 +29,7 @@ export default function LuxuryWeddingTestimonial({ content, skin }: { content: a
           font-weight: 300;
           letter-spacing: -0.03em;
           line-height: 1.3;
-          color: #fff;
+          color: var(--c-surface);
           max-width: 60rem;
           margin: 0 auto 3rem auto;
         }
@@ -38,7 +38,7 @@ export default function LuxuryWeddingTestimonial({ content, skin }: { content: a
           font-size: 0.85rem;
           text-transform: uppercase;
           letter-spacing: 0.2em;
-          color: #fff;
+          color: var(--c-surface);
           font-weight: 300;
           margin-bottom: 0.5rem;
         }

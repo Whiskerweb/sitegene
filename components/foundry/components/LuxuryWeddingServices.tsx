@@ -93,7 +93,7 @@ export default function LuxuryWeddingServices({ content, skin }: { content: any;
           border-radius: var(--r-card);
           overflow: hidden;
           box-shadow: 0 24px 80px -20px rgba(0,0,0,0.35);
-          background: #18181b;
+          background: var(--c-card);
         }
         .lwsvc-preview-img img { width: 100%; height: 100%; object-fit: cover; }
         .lwsvc-body {

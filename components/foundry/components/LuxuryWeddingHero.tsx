@@ -70,7 +70,7 @@ export default function LuxuryWeddingHero({ content, skin }: { content: any; ski
           line-height: 0.9;
           font-size: clamp(3.5rem, 10vw, 7rem);
           font-family: var(--font-heading);
-          color: #fff;
+          color: var(--c-surface);
           font-weight: 300;
           letter-spacing: -0.04em;
           text-shadow: 0 2px 20px rgba(0,0,0,0.4);
