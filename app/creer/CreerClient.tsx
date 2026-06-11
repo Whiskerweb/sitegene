@@ -18,8 +18,11 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import AuthGate from "@/components/auth/AuthGate";
 import { AkyraMark } from "@/components/ui/Logo";
+import CollectStep from "@/components/creer/CollectStep";
+import { detectTrade } from "@/lib/foundry/suggest";
+import type { Collected } from "@/lib/foundry/link-catalog";
 
-type Phase = "pitch" | "vibe" | "pack" | "reveal";
+type Phase = "pitch" | "vibe" | "collect" | "pack" | "reveal";
 
 type Card = { component: string; role: string; roleLabel: string; rarity: "common" | "rare" | "epic" };
 
@@ -82,6 +85,9 @@ export default function CreerClient() {
   const [siteId, setSiteId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const launchedRef = useRef(false);
+  const [collected, setCollected] = useState<Collected>({ socials: [], contact: {}, photos: [] });
+  const [assemblyReady, setAssemblyReady] = useState(false);
+  const trade = useMemo(() => detectTrade(brief).trade, [brief]);
 
   // --- Restauration (retour d'OAuth ou arrivée depuis la landing) --------------
   useEffect(() => {
@@ -94,12 +100,14 @@ export default function CreerClient() {
           chartes?: Charte[];
           selectedIdx?: number | null;
           accent?: string;
+          collected?: Collected;
         };
         if (s.brief) setBrief(s.brief);
         if (s.name) setName(s.name);
         if (Array.isArray(s.chartes) && s.chartes.length > 0) setChartes(s.chartes);
         if (typeof s.selectedIdx === "number") setSelectedIdx(s.selectedIdx);
         if (s.accent) setAccent(s.accent);
+        if (s.collected && typeof s.collected === "object") setCollected(s.collected as Collected);
         if (s.brief && Array.isArray(s.chartes) && s.chartes.length > 0) setPhase("vibe");
       } else {
         // Brief tapé dans la bulle de la landing (clé partagée avec AuthGate).
@@ -116,11 +124,11 @@ export default function CreerClient() {
 
   useEffect(() => {
     try {
-      sessionStorage.setItem(STATE_KEY, JSON.stringify({ brief, name, chartes, selectedIdx, accent }));
+      sessionStorage.setItem(STATE_KEY, JSON.stringify({ brief, name, chartes, selectedIdx, accent, collected }));
     } catch {
       /* non bloquant */
     }
-  }, [brief, name, chartes, selectedIdx, accent]);
+  }, [brief, name, chartes, selectedIdx, accent, collected]);
 
   // --- Chartes sur mesure -------------------------------------------------------
   async function loadChartes() {
@@ -174,13 +182,15 @@ export default function CreerClient() {
   const rareCount = (cards ?? []).filter((c) => c.rarity !== "common").length;
   const pitchReady = brief.trim().length >= 10 && name.trim().length >= 2;
 
+  // Lance la génération EN TÂCHE DE FOND et bascule sur l'écran de collecte.
   async function launchAssembly() {
     if (launchedRef.current || !selected) return;
     launchedRef.current = true;
-    setPhase("pack");
     setCards(null);
     setRevealed(0);
     setError(null);
+    setAssemblyReady(false);
+    setPhase("collect"); // l'utilisateur remplit pendant que ça génère
     setBusy(true);
     try {
       const res = await fetch("/api/foundry/generate", {
@@ -191,18 +201,15 @@ export default function CreerClient() {
           businessName: name.trim(),
           vibeId: selected.vibe.id,
           accent: accent ?? undefined,
-          // Charte sur mesure : on renvoie la spec d'échange (re-réparée serveur).
           charteSpec: selected.vibe.id === "custom" ? selected.spec : undefined,
         }),
       });
       const data = await res.json().catch(() => null);
-      if (data?.redirect) {
-        router.push(data.redirect);
-        return;
-      }
+      if (data?.redirect) { router.push(data.redirect); return; }
       if (!res.ok || !data?.ok) throw new Error(data?.error ?? "Assemblage impossible. Réessayez.");
       setSiteId(data.siteId);
       setCards(data.cards as Card[]);
+      setAssemblyReady(true);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Assemblage impossible. Réessayez.");
       setPhase("vibe");
@@ -210,6 +217,24 @@ export default function CreerClient() {
       setBusy(false);
       launchedRef.current = false;
     }
+  }
+
+  // Valide la collecte : injecte les liens/photos puis joue l'anim booster → reveal.
+  async function finishCollect() {
+    if (siteId) {
+      try {
+        await fetch("/api/foundry/links", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ siteId, collected }),
+        });
+      } catch { /* injection best-effort : on révèle quand même */ }
+    }
+    setPhase("pack"); // joue l'animation des cartes déjà chargées, puis reveal
+  }
+
+  function skipCollect() {
+    setPhase("pack");
   }
 
   function onAssembleClick() {
@@ -253,8 +278,8 @@ export default function CreerClient() {
           <span className="text-[15px] font-semibold tracking-tight">Akyra</span>
         </a>
         <div className="flex items-center gap-1.5" aria-label="Progression">
-          {(["pitch", "vibe", "pack"] as Phase[]).map((p, i) => {
-            const order: Phase[] = ["pitch", "vibe", "pack", "reveal"];
+          {(["pitch", "vibe", "collect", "pack"] as Phase[]).map((p, i) => {
+            const order: Phase[] = ["pitch", "vibe", "collect", "pack", "reveal"];
             const active = order.indexOf(phase) >= i;
             return <span key={p} className={`h-1.5 rounded-full transition-all ${active ? "w-8 bg-[rgb(var(--m-accent))]" : "w-4 bg-[rgb(var(--m-line))]"}`} />;
           })}
@@ -494,6 +519,19 @@ export default function CreerClient() {
               </div>
             </div>
           </section>
+        )}
+
+        {/* ===================== 2.5 COLLECT (liens & photos) ===================== */}
+        {phase === "collect" && (
+          <CollectStep
+            trade={trade}
+            siteId={siteId}
+            assemblyReady={assemblyReady}
+            collected={collected}
+            onChange={setCollected}
+            onFinish={finishCollect}
+            onSkip={skipCollect}
+          />
         )}
 
         {/* ===================== 3. PACK (assemblage + booster) ===================== */}
