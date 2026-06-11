@@ -5,10 +5,11 @@ import type { ComponentType } from "react";
 import type { Skin } from "@/lib/foundry/types";
 import { COMPONENTS_ARTISANS_A } from "./artisans-a";
 import { COMPONENTS_NAVBARS_A } from "./navbars-a";
+import { COMPONENTS_IMPORTED_A } from "./imported-a";
 
 export type FoundryComponent = ComponentType<{ content: any; skin: Skin }>;
 
-const MODULES: Array<Record<string, FoundryComponent>> = [COMPONENTS_ARTISANS_A, COMPONENTS_NAVBARS_A];
+const MODULES: Array<Record<string, FoundryComponent>> = [COMPONENTS_ARTISANS_A, COMPONENTS_NAVBARS_A, COMPONENTS_IMPORTED_A];
 
 export const LIBRARY_COMPONENTS: Record<string, FoundryComponent> = Object.assign(
   {},

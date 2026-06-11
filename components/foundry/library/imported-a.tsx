@@ -1,0 +1,13 @@
+// components/foundry/library/imported-a.tsx
+// Composants du LOT « imported-a » (briefs externes adaptés à la fonderie).
+import type { ComponentType } from "react";
+import type { Skin } from "@/lib/foundry/types";
+import MarqueeHero from "../components/MarqueeHero";
+import GooeyPixelTrail from "../components/GooeyPixelTrail";
+
+type C = ComponentType<{ content: any; skin: Skin }>;
+
+export const COMPONENTS_IMPORTED_A: Record<string, C> = {
+  "marquee-hero": MarqueeHero as C,
+  "fx-gooey-pixel-trail": GooeyPixelTrail as C,
+};
