@@ -6,7 +6,7 @@ import type { TradeId } from "./da-personas";
 
 /** Heroes disponibles par métier (ordre : recommandé en premier). */
 const TRADE_HERO_OPTIONS: Record<TradeId, string[]> = {
-  musicien:    ["jazz-vocalist-hero", "creative-portfolio-hero", "bold-stack-hero"],
+  musicien:    ["jazz-vocalist-hero", "creative-portfolio-hero", "bold-stack-hero", "studio-portfolio-hero"],
   photographe: ["studio-portfolio-hero", "luxury-wedding-hero", "marquee-hero"],
   artisan:     ["electrician-pro-hero", "multi-trade-hero", "plumber-pro-hero"],
   coach:       ["hero-split-asym"],
@@ -54,7 +54,7 @@ const PLUMBER_ONLY = new Set([
 
 /** Heroes hors-contexte par métier. */
 const HERO_BLACKLIST: Record<TradeId, Set<string>> = {
-  musicien:    new Set(["studio-portfolio-hero", "luxury-wedding-hero", "wedding-warm-hero", "electrician-pro-hero", "multi-trade-hero", "plumber-pro-hero", "plumber-modern-hero", "plumber-emergency-hero"]),
+  musicien:    new Set(["luxury-wedding-hero", "wedding-warm-hero", "electrician-pro-hero", "multi-trade-hero", "plumber-pro-hero", "plumber-modern-hero", "plumber-emergency-hero"]),
   photographe: new Set(["jazz-vocalist-hero", "creative-portfolio-hero", "bold-stack-hero", "electrician-pro-hero", "multi-trade-hero", "plumber-pro-hero", "plumber-modern-hero", "plumber-emergency-hero"]),
   artisan:     new Set(["jazz-vocalist-hero", "creative-portfolio-hero", "bold-stack-hero", "studio-portfolio-hero", "luxury-wedding-hero", "wedding-warm-hero", "marquee-hero"]),
   coach:       new Set(["jazz-vocalist-hero", "creative-portfolio-hero", "bold-stack-hero", "studio-portfolio-hero", "luxury-wedding-hero", "wedding-warm-hero", "electrician-pro-hero", "multi-trade-hero", "plumber-pro-hero", "plumber-modern-hero", "plumber-emergency-hero"]),

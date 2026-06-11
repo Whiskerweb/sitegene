@@ -449,6 +449,9 @@ export default function CreerClient() {
                   ? `Le directeur artistique compose trois directions pour « ${name.trim() || "votre activité"} »…`
                   : `Trois directions composées sur mesure pour « ${name.trim() || "votre activité"} ». Tout votre site en découlera.`}
               </p>
+              <p className="mt-2 text-[13px] text-[rgb(var(--m-faint))]">
+                Rien de définitif : vous pourrez changer de direction plus tard et visualiser le résultat en direct, en un clic.
+              </p>
               {error ? (
                 <p className="mt-4 rounded-xl bg-red-50 px-4 py-2.5 text-sm font-medium text-red-600">{error}</p>
               ) : null}
@@ -571,9 +574,9 @@ export default function CreerClient() {
                       {isSel ? (
                         <div className="mt-3 flex items-center gap-2 border-t border-[rgb(var(--m-line))] pt-3">
                           <span className="text-[11px] font-semibold text-[rgb(var(--m-muted))]">Couleur d'accent</span>
-                          {[v.palette.accent, v.palette.accent2, v.palette.ink].map((cAcc) => (
+                          {[v.palette.accent, v.palette.accent2, v.palette.ink].map((cAcc, j) => (
                             <span
-                              key={cAcc}
+                              key={`${j}-${cAcc}`}
                               role="button"
                               tabIndex={0}
                               onClick={(e) => {

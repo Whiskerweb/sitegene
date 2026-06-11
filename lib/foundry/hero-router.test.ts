@@ -52,6 +52,11 @@ describe("isExcludedForTrade", () => {
     expect(isExcludedForTrade("jazz-vocalist-hero", "hero", "musicien")).toBe(false);
   });
 
+  it("studio-portfolio-hero est disponible pour les musiciens (alternative)", () => {
+    expect(isExcludedForTrade("studio-portfolio-hero", "hero", "musicien")).toBe(false);
+    expect(heroOptionsForTrade("musicien", "")).toContain("studio-portfolio-hero");
+  });
+
   it("hero-split-asym (généraliste) reste disponible pour tous", () => {
     for (const trade of TRADES) {
       expect(isExcludedForTrade("hero-split-asym", "hero", trade)).toBe(false);

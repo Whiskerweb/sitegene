@@ -70,7 +70,8 @@ export default function LuxuryWeddingHero({ content, skin }: { content: any; ski
           line-height: 0.9;
           font-size: clamp(3.5rem, 10vw, 7rem);
           font-family: var(--font-heading);
-          color: var(--c-surface);
+          /* Posé sur le dégradé photo sombre (fixe) : reste clair sur toute charte. */
+          color: rgba(255,255,255,0.95);
           font-weight: 300;
           letter-spacing: -0.04em;
           text-shadow: 0 2px 20px rgba(0,0,0,0.4);

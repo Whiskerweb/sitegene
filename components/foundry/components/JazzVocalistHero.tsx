@@ -31,20 +31,22 @@ export default function JazzVocalistHero({ content, skin }: { content: JVHeroCon
           background: linear-gradient(to bottom, rgba(0,0,0,.70) 0%, rgba(0,0,0,.30) 50%, rgba(0,0,0,1) 100%);
         }
         .jvhero-body { position: relative; z-index: 10; text-align: center; padding: 0 1.5rem; }
+        /* Les textes reposent sur le voile photo NOIR (fixe) : ils doivent rester
+           clairs quelle que soit la charte — jamais de vars sémantiques ici. */
         .jvhero-eyebrow {
           font-family: var(--font-body, 'DM Mono', monospace);
           font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
-          color: var(--c-muted); margin-bottom: 1.5rem;
+          color: rgba(255,255,255,0.68); margin-bottom: 1.5rem;
         }
         .jvhero-title {
           font-family: var(--font-heading, 'EB Garamond', serif);
           font-size: clamp(4rem, 12vw, 9rem); font-weight: 500;
-          line-height: 1; color: var(--c-surface);
+          line-height: 1; color: rgba(255,255,255,0.97);
           margin: 0;
         }
         .jvhero-tagline {
           font-family: var(--font-body, 'DM Sans', sans-serif);
-          font-size: 1rem; color: var(--c-muted);
+          font-size: 1rem; color: rgba(255,255,255,0.78);
           max-width: 38ch; margin: 2rem auto 0;
           line-height: 1.6;
         }
@@ -54,7 +56,7 @@ export default function JazzVocalistHero({ content, skin }: { content: JVHeroCon
           padding: 0 1.5rem;
           font-family: var(--font-body, 'DM Mono', monospace);
           font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
-          color: color-mix(in srgb, var(--c-muted) 70%, transparent);
+          color: rgba(255,255,255,0.5);
         }
       `}</style>
       <img className="jvhero-img" src={img} alt="" />
