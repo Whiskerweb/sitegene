@@ -112,3 +112,17 @@ describe("DA curées (Lot 1)", () => {
     }
   });
 });
+
+describe("vibeToCssVars — texte sur accent (--c-on-accent)", () => {
+  it("choisit un texte lisible selon la luminance de l'accent", () => {
+    // accent vif/clair (lime coach, acide rock, or rap) → texte sombre
+    expect(vibeToCssVars(getVibe("coach-performance")!)["--c-on-accent"]).toBe("#111111");
+    expect(vibeToCssVars(getVibe("rock-brutalist")!)["--c-on-accent"]).toBe("#111111");
+    // accent sombre/saturé (bleu ocean) → texte blanc
+    expect(vibeToCssVars(getVibe("ocean-confiance")!)["--c-on-accent"]).toBe("#ffffff");
+  });
+  it("suit la couleur de marque surchargée", () => {
+    expect(vibeToCssVars(getVibe("warm-serif")!, { primary: "#ffe600" })["--c-on-accent"]).toBe("#111111");
+    expect(vibeToCssVars(getVibe("warm-serif")!, { primary: "#1a1a2e" })["--c-on-accent"]).toBe("#ffffff");
+  });
+});

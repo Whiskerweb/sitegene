@@ -247,6 +247,15 @@ function deriveBorder(vibe: Vibe): string {
 const DEFAULT_DENSITY = { base: "8px", gap: "16px", cardPadding: "24px", sectionPadding: "80px" };
 const MONO_FALLBACK = "'JetBrains Mono', ui-monospace, monospace";
 
+/** Couleur de texte lisible SUR une couleur donnée (noir ou blanc selon la
+ *  luminance perçue). Sert à `--c-on-accent` : un texte posé sur le fond accent
+ *  reste lisible même quand l'accent est vif/clair (lime, or, acide…). */
+function readableOn(hex: string): string {
+  if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return "#ffffff";
+  const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+  return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255 > 0.55 ? "#111111" : "#ffffff";
+}
+
 export function vibeToCssVars(vibe: Vibe, brand?: { primary?: string }): Record<string, string> {
   const brandPrimary = brand?.primary?.trim();
   const primary = brandPrimary ? brandPrimary : vibe.palette.accent;
@@ -268,6 +277,7 @@ export function vibeToCssVars(vibe: Vibe, brand?: { primary?: string }): Record<
     "--c-primary": primary,
     "--c-secondary": vibe.palette.accent2,
     "--c-accent3": vibe.palette.accent3 ?? vibe.palette.accent2,
+    "--c-on-accent": readableOn(primary),
     "--c-bg": vibe.palette.surface,
     "--c-text": vibe.palette.ink,
     "--c-text-2": vibe.palette.muted,
