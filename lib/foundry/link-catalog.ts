@@ -46,13 +46,13 @@ export const PLATFORMS: Record<string, PlatformDef> = {
 
 const ALIASES: Array<[RegExp, string]> = [
   [/insta/i,                                        "instagram"],
-  [/face/i,                                         "facebook"],
+  [/facebook/i,                                      "facebook"],
   [/linked/i,                                       "linkedin"],
   [/(^x$)|twitter/i,                                "x"],
   [/youtube|^yt$/i,                                 "youtube"],
-  [/tiktok|tik/i,                                   "tiktok"],
+  [/tiktok/i,                                        "tiktok"],
   [/spotify/i,                                      "spotify"],
-  [/apple/i,                                        "apple-music"],
+  [/apple.?music/i,                                  "apple-music"],
   [/deezer/i,                                       "deezer"],
   [/soundcloud/i,                                   "soundcloud"],
   [/bandcamp/i,                                     "bandcamp"],
@@ -61,8 +61,8 @@ const ALIASES: Array<[RegExp, string]> = [
   [/whats?app/i,                                    "whatsapp"],
   [/t[ée]l[ée]phone|phone|appel/i,                  "phone"],
   [/mail|email|courriel/i,                          "email"],
-  [/maps|plan|itin[ée]raire/i,                      "maps"],
   [/rendez|rdv|calendly|planity|treatwell|r[ée]serv/i, "booking"],
+  [/(^maps$|google.?maps)|itin[ée]raire/i,          "maps"],
   [/billet|ticket/i,                                "ticketing"],
   [/menu|carte/i,                                   "menu"],
   [/site|web/i,                                     "website"],
@@ -78,7 +78,8 @@ export function normPlatform(input: string): string {
 
 /** Numéro FR → format e.164 simplifié (chiffres, 0 initial → 33). */
 function frPhone(raw: string): string {
-  const digits = raw.replace(/\D/g, "");
+  const cleaned = raw.replace(/\(0\)/g, "");
+  const digits = cleaned.replace(/\D/g, "");
   if (digits.startsWith("33")) return `+${digits}`;
   if (digits.startsWith("0")) return `+33${digits.slice(1)}`;
   return `+${digits}`;
@@ -87,6 +88,7 @@ function frPhone(raw: string): string {
 /** Construit l'href final pour une plateforme + saisie utilisateur. */
 export function toHref(platformKey: string, raw: string): string {
   const v = raw.trim();
+  if (!v) return "";
   const key = PLATFORMS[platformKey] ? platformKey : normPlatform(platformKey);
   if (key === "phone") return `tel:${frPhone(v)}`;
   if (key === "whatsapp") return `https://wa.me/${frPhone(v).replace("+", "")}`;

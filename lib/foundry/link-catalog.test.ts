@@ -10,6 +10,8 @@ describe("normPlatform", () => {
     expect(normPlatform("WhatsApp")).toBe("whatsapp");
     expect(normPlatform("Apple Music")).toBe("apple-music");
     expect(normPlatform("Google Maps")).toBe("maps");
+    expect(normPlatform("planity")).toBe("booking");
+    expect(normPlatform("Calendly")).toBe("booking");
     expect(normPlatform("un truc inconnu")).toBe("link");
   });
 });
@@ -32,5 +34,8 @@ describe("toHref", () => {
     expect(toHref("instagram", "https://instagram.com/x")).toBe("https://instagram.com/x");
     expect(toHref("instagram", "monpseudo")).toBe("https://instagram.com/monpseudo");
     expect(toHref("link", "exemple.fr")).toBe("https://exemple.fr");
+    expect(toHref("phone", "")).toBe("");
+    expect(toHref("phone", "+33 (0)6 12 34 56 78")).toBe("tel:+33612345678");
+    expect(toHref("instagram", "@monpseudo")).toBe("https://instagram.com/monpseudo");
   });
 });
