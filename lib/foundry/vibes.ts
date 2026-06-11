@@ -81,14 +81,28 @@ export function listVibes(): Vibe[] {
   return VIBE_IDS.map((id) => VIBES[id]);
 }
 
+/** Border dérivée si non fournie : encre fondue à 82 % dans la surface. */
+function deriveBorder(vibe: Vibe): string {
+  if (vibe.palette.border) return vibe.palette.border;
+  const hx = (h: string) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)] as const;
+  const to = (n: number) => Math.max(0, Math.min(255, Math.round(n))).toString(16).padStart(2, "0");
+  const a = hx(vibe.palette.ink), b = hx(vibe.palette.surface), t = 0.82;
+  return `#${to(a[0] + (b[0] - a[0]) * t)}${to(a[1] + (b[1] - a[1]) * t)}${to(a[2] + (b[2] - a[2]) * t)}`;
+}
+
+const DEFAULT_DENSITY = { base: "8px", gap: "16px", cardPadding: "24px", sectionPadding: "80px" };
+const MONO_FALLBACK = "'JetBrains Mono', ui-monospace, monospace";
+
 export function vibeToCssVars(vibe: Vibe, brand?: { primary?: string }): Record<string, string> {
-  // Une couleur de marque vide/blanche n'est pas une surcharge : on retombe sur la vibe.
   const brandPrimary = brand?.primary?.trim();
+  const primary = brandPrimary ? brandPrimary : vibe.palette.accent;
+  const d = vibe.density ?? DEFAULT_DENSITY;
   return {
+    // --- Anciennes vars (INCHANGÉES) ---
     "--c-ink": vibe.palette.ink,
     "--c-surface": vibe.palette.surface,
     "--c-card": vibe.palette.card,
-    "--c-accent": brandPrimary ? brandPrimary : vibe.palette.accent,
+    "--c-accent": primary,
     "--c-accent2": vibe.palette.accent2,
     "--c-muted": vibe.palette.muted,
     "--font-heading": vibe.fonts.heading,
@@ -96,5 +110,21 @@ export function vibeToCssVars(vibe: Vibe, brand?: { primary?: string }): Record<
     "--r-card": vibe.radius.card,
     "--r-xl": vibe.radius.xl,
     "--r-pill": vibe.radius.pill,
+    // --- Nouvelles vars sémantiques ---
+    "--c-primary": primary,
+    "--c-secondary": vibe.palette.accent2,
+    "--c-accent3": vibe.palette.accent3 ?? vibe.palette.accent2,
+    "--c-bg": vibe.palette.surface,
+    "--c-text": vibe.palette.ink,
+    "--c-text-2": vibe.palette.muted,
+    "--c-border": deriveBorder(vibe),
+    "--font-label": vibe.fonts.label ?? MONO_FALLBACK,
+    "--space-base": d.base,
+    "--space-gap": d.gap,
+    "--space-card": d.cardPadding,
+    "--space-section": d.sectionPadding,
+    "--r-control": vibe.radius.control ?? vibe.radius.card,
+    "--shadow-card": vibe.shape?.shadowCard ?? "0 1px 2px rgba(0,0,0,.06)",
+    "--btn-radius": vibe.radius.control ?? vibe.radius.pill,
   };
 }

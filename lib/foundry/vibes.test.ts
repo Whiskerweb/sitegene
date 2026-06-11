@@ -35,3 +35,34 @@ describe("modèle Vibe enrichi", () => {
     }
   });
 });
+
+describe("vibeToCssVars", () => {
+  const warm = getVibe("warm-serif")!;
+  it("conserve les anciennes vars à l'identique (non-régression)", () => {
+    const v = vibeToCssVars(warm);
+    expect(v["--c-ink"]).toBe(warm.palette.ink);
+    expect(v["--c-surface"]).toBe(warm.palette.surface);
+    expect(v["--c-card"]).toBe(warm.palette.card);
+    expect(v["--c-accent"]).toBe(warm.palette.accent);
+    expect(v["--c-accent2"]).toBe(warm.palette.accent2);
+    expect(v["--c-muted"]).toBe(warm.palette.muted);
+    expect(v["--font-heading"]).toBe(warm.fonts.heading);
+    expect(v["--font-body"]).toBe(warm.fonts.body);
+  });
+  it("émet les nouvelles vars sémantiques", () => {
+    const v = vibeToCssVars(warm);
+    expect(v["--c-primary"]).toBe(warm.palette.accent);
+    expect(v["--c-bg"]).toBe(warm.palette.surface);
+    expect(v["--c-text"]).toBe(warm.palette.ink);
+    expect(v["--c-text-2"]).toBe(warm.palette.muted);
+    expect(v["--c-border"]).toMatch(/^#[0-9a-f]{6}$/i);
+    expect(v["--font-label"]).toBeTruthy();
+    expect(v["--space-section"]).toBeTruthy();
+    expect(v["--r-control"]).toBeTruthy();
+  });
+  it("brand.primary surcharge --c-accent ET --c-primary", () => {
+    const v = vibeToCssVars(warm, { primary: "#123456" });
+    expect(v["--c-accent"]).toBe("#123456");
+    expect(v["--c-primary"]).toBe("#123456");
+  });
+});
