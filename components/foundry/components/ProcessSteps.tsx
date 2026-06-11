@@ -15,9 +15,9 @@ export default function ProcessSteps({ content }: { content: ProcessContent; ski
             {content.title}
           </h2>
         </div>
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="mt-12 flex flex-wrap justify-center gap-6">
           {content.steps.map((s, i) => (
-            <div key={i} className="rounded-[var(--r-card)] p-7" style={{ background: "var(--c-surface)", border: "1px solid color-mix(in srgb, var(--c-accent) 12%, transparent)" }}>
+            <div key={i} className="max-w-[420px] flex-1 basis-[280px] rounded-[var(--r-card)] p-7" style={{ background: "var(--c-surface)", border: "1px solid color-mix(in srgb, var(--c-accent) 12%, transparent)" }}>
               <span className="flex h-11 w-11 items-center justify-center rounded-full text-lg text-white" style={{ background: "var(--c-accent)", fontFamily: "var(--font-heading)" }}>{s.n}</span>
               <h3 className="mt-5 text-xl" style={{ fontFamily: "var(--font-heading)", color: "var(--c-ink)" }}>{s.title}</h3>
               <p className="mt-2 text-sm leading-relaxed" style={{ color: "var(--c-accent)" }}>{s.desc}</p>

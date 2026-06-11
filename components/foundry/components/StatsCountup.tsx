@@ -64,9 +64,11 @@ export default function StatsCountup({ content }: { content: StatsContent; skin:
             {content.title}
           </h2>
         </div>
-        <div className="mt-12 grid grid-cols-2 gap-8 md:grid-cols-4">
+        <div className="mt-12 flex flex-wrap justify-center gap-8">
           {content.items.map((s, i) => (
-            <StatItem key={i} s={s} run={run} />
+            <div key={i} className="max-w-[300px] flex-1 basis-[180px]">
+              <StatItem s={s} run={run} />
+            </div>
           ))}
         </div>
       </div>

@@ -30,9 +30,9 @@ export default function TeamCards({ content }: { content: TeamCardsContent; skin
             {content.title}
           </h2>
         </Reveal>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 flex flex-wrap justify-center gap-6">
           {items.map((m, i) => (
-            <Reveal key={`${m.name}-${i}`} delay={i * 120}>
+            <Reveal key={`${m.name}-${i}`} delay={i * 120} className="w-full max-w-[400px] flex-1 basis-[280px]">
               <article className="group overflow-hidden rounded-[var(--r-card)]" style={{ background: "var(--c-surface)", boxShadow: "0 10px 36px color-mix(in srgb, var(--c-ink) 7%, transparent)" }}>
                 <div className="overflow-hidden">
                   <img src={m.avatar} alt={m.name} loading="lazy" className="h-[300px] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]" />

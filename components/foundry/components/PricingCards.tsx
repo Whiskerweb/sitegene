@@ -15,13 +15,15 @@ export default function PricingCards({ content }: { content: PricingContent; ski
             {content.title}
           </h2>
         </div>
-        <div className="mt-12 grid items-stretch gap-6 lg:grid-cols-3">
+        {/* Flex centré (pas une grille à colonnes fixes) : 1 ou 2 formules
+            restent au CENTRE, 3 remplissent le cadre. */}
+        <div className="mt-12 flex flex-wrap items-stretch justify-center gap-6">
           {content.plans.map((p, i) => {
             const f = !!p.featured;
             return (
               <div
                 key={i}
-                className="flex flex-col rounded-[var(--r-card)] p-8"
+                className="flex max-w-[420px] flex-1 basis-[300px] flex-col rounded-[var(--r-card)] p-8"
                 style={f
                   ? { background: "var(--c-ink)", color: "#fbf9f5", boxShadow: "0 30px 70px -30px rgba(13,5,3,.55)" }
                   : { background: "var(--c-card)", border: "1px solid color-mix(in srgb, var(--c-accent) 14%, transparent)" }}
