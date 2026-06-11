@@ -318,16 +318,26 @@ export function withResolvedNav(recipe: Recipe, siteSlug: string): Recipe {
       return { ...s, content: { ...s.content, links } };
     }
     if (role === "footer") {
-      const columns = (Array.isArray(s.content.columns) ? s.content.columns : []).map((col) => {
-        if (!col || typeof col !== "object") return col;
-        const c = col as Record<string, unknown>;
-        const links = (Array.isArray(c.links) ? c.links : [])
+      const out: Record<string, unknown> = { ...s.content };
+      if (Array.isArray(s.content.columns)) {
+        out.columns = s.content.columns.map((col) => {
+          if (!col || typeof col !== "object") return col;
+          const c = col as Record<string, unknown>;
+          const links = (Array.isArray(c.links) ? c.links : [])
+            .map(normalizeNavLink)
+            .filter((l) => l.label)
+            .map((l) => (l.target ? { label: l.label, href: resolveNavHref(l.target, siteSlug) } : l.label));
+          return { ...c, links };
+        });
+      }
+      // Footers à rangée de liens plate (footer-giant-brand, footer-cinematic).
+      if (Array.isArray(s.content.links)) {
+        out.links = s.content.links
           .map(normalizeNavLink)
           .filter((l) => l.label)
           .map((l) => (l.target ? { label: l.label, href: resolveNavHref(l.target, siteSlug) } : l.label));
-        return { ...c, links };
-      });
-      return { ...s, content: { ...s.content, columns } };
+      }
+      return { ...s, content: out };
     }
     // Bouton CTA configurable (heros & sections) : cible → href public.
     if (typeof s.content.ctaHref === "string") {

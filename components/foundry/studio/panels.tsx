@@ -235,8 +235,9 @@ export function ContentPanel({
 }) {
   const fields = fieldsFor(section.content);
   const patch = (key: string, value: unknown) => onChange({ ...section.content, [key]: value });
-  // Les liens du menu (navbar) ont leur éditeur dédié : libellé + destination.
-  const isNavLinks = (key: string) => section.role === "navbar" && key === "links";
+  // Les liens du menu (navbar) — et la rangée de liens plate de certains footers —
+  // ont leur éditeur dédié : libellé + destination.
+  const isNavLinks = (key: string) => (section.role === "navbar" || section.role === "footer") && key === "links";
   // Les colonnes du footer : menus déroulants (titre + liens avec destination).
   const isFooterColumns = (key: string) => section.role === "footer" && key === "columns";
   // Clé du titre de colonne selon le composant ("heading" pour Plumber Pro, sinon "title").
@@ -250,7 +251,7 @@ export function ContentPanel({
   })();
 
   const fieldLabel = (key: string, fallback: string) =>
-    isNavLinks(key) ? "Boutons du menu" : isFooterColumns(key) ? "Colonnes & liens" : fallback;
+    isNavLinks(key) ? (section.role === "footer" ? "Liens du pied de page" : "Boutons du menu") : isFooterColumns(key) ? "Colonnes & liens" : fallback;
 
   return (
     <div className="flex flex-col gap-5">
