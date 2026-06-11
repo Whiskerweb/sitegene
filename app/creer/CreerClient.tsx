@@ -85,6 +85,8 @@ export default function CreerClient() {
   const [siteId, setSiteId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const launchedRef = useRef(false);
+  const speculativeRef = useRef<{ siteId: string; cards: Card[] } | null>(null);
+  const chartesAutoRef = useRef(false); // debounce chartes : déjà déclenché ?
   const [collected, setCollected] = useState<Collected>({ socials: [], contact: {}, photos: [] });
   const [attempt, setAttempt] = useState(0);
   const trade = useMemo(() => detectTrade(brief).trade, [brief]);
@@ -130,12 +132,25 @@ export default function CreerClient() {
     }
   }, [brief, name, chartes, selectedIdx, accent, collected]);
 
+  const pitchReady = brief.trim().length >= 10 && name.trim().length >= 2;
+
+  // Auto-charge les chartes dès que le pitch est assez long (sans clic "Continuer").
+  useEffect(() => {
+    if (!pitchReady || chartesAutoRef.current || chartes) return;
+    const t = setTimeout(() => {
+      chartesAutoRef.current = true;
+      void loadChartes(0);
+    }, 700);
+    return () => clearTimeout(t);
+  }, [pitchReady, brief, name]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // --- Chartes sur mesure -------------------------------------------------------
   async function loadChartes(overrideAttempt?: number) {
     setChartesLoading(true);
     setError(null);
     setSelectedIdx(null);
     setAccent(null);
+    speculativeRef.current = null; // reset la génération spéculative
     const currentAttempt = overrideAttempt ?? attempt;
     try {
       const res = await fetch("/api/foundry/charte", {
@@ -153,12 +168,24 @@ export default function CreerClient() {
     }
   }
 
+  // Pré-alloue un siteId (pour l'upload de photos en phase collect).
+  async function reserveSiteId() {
+    if (!authed || siteId) return;
+    try {
+      const res = await fetch("/api/site/reserve", { method: "POST" });
+      const data = await res.json().catch(() => null);
+      if (data?.siteId) setSiteId(data.siteId as string);
+    } catch { /* non bloquant */ }
+  }
+
   function openCollectPhase() {
     setPhase("collect");
     // Lance le chargement des chartes en arrière-plan dès le pitch validé
     setAttempt(0);
     setChartes(null);
+    chartesAutoRef.current = false; // reset pour forcer un nouveau chargement
     void loadChartes(0);
+    void reserveSiteId();
   }
 
   // --- Étapes animées pendant l'assemblage ------------------------------------
@@ -182,17 +209,75 @@ export default function CreerClient() {
     }
   }, [cards, revealed]);
 
+  // Génération spéculative : dès que chartes[0] est disponible, on génère déjà
+  // le site avec la première direction. Si l'utilisateur la choisit → reveal quasi-instantané.
+  useEffect(() => {
+    if (!chartes || !authed || speculativeRef.current) return;
+    const c0 = chartes[0];
+    if (!c0) return;
+    void (async () => {
+      try {
+        const res = await fetch("/api/foundry/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            brief: brief.trim(),
+            businessName: name.trim(),
+            vibeId: "custom",
+            charteSpec: c0.spec,
+          }),
+        });
+        const data = await res.json().catch(() => null);
+        if (data?.ok && data.siteId) {
+          speculativeRef.current = { siteId: data.siteId as string, cards: data.cards as Card[] };
+          // Met à jour siteId si pas encore défini (permet l'upload de photos)
+          setSiteId((prev) => prev ?? (data.siteId as string));
+        }
+      } catch { /* best-effort, pas d'erreur visible */ }
+    })();
+  }, [chartes, authed]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const selected = selectedIdx !== null ? (chartes?.[selectedIdx] ?? null) : null;
   const rareCount = (cards ?? []).filter((c) => c.rarity !== "common").length;
-  const pitchReady = brief.trim().length >= 10 && name.trim().length >= 2;
 
   async function launchAssembly() {
     if (launchedRef.current || !selected) return;
     launchedRef.current = true;
+
+    // Cas rapide : l'utilisateur a choisi la charte[0] et la génération spéculative
+    // est déjà terminée → pas de nouveau fetch, reveal quasi-instantané.
+    if (selectedIdx === 0 && speculativeRef.current) {
+      const spec = speculativeRef.current;
+      setCards(null);
+      setRevealed(0);
+      setError(null);
+      setPhase("pack");
+      setBusy(true);
+      try {
+        setSiteId(spec.siteId);
+        try {
+          await fetch("/api/foundry/links", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ siteId: spec.siteId, collected }),
+          });
+        } catch { /* best-effort */ }
+        setCards(spec.cards);
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "Assemblage impossible. Réessayez.");
+        setPhase("vibe");
+      } finally {
+        setBusy(false);
+        launchedRef.current = false;
+      }
+      return;
+    }
+
+    // Cas normal : générer avec la charte sélectionnée.
     setCards(null);
     setRevealed(0);
     setError(null);
-    setPhase("pack"); // animation immédiate, génération en arrière-plan
+    setPhase("pack");
     setBusy(true);
     try {
       const res = await fetch("/api/foundry/generate", {
@@ -211,7 +296,6 @@ export default function CreerClient() {
       if (!res.ok || !data?.ok) throw new Error(data?.error ?? "Assemblage impossible. Réessayez.");
       const newSiteId = data.siteId as string;
       setSiteId(newSiteId);
-      // Injection déterministe des liens & photos
       try {
         await fetch("/api/foundry/links", {
           method: "POST",
@@ -220,7 +304,6 @@ export default function CreerClient() {
         });
       } catch { /* best-effort */ }
       setCards(data.cards as Card[]);
-      // cards set → useEffect existant déclenche la révélation
     } catch (e) {
       setError(e instanceof Error ? e.message : "Assemblage impossible. Réessayez.");
       setPhase("vibe");
@@ -504,7 +587,7 @@ export default function CreerClient() {
               <div className="flex items-center gap-3">
                 <button
                   type="button"
-                  onClick={() => setPhase("pitch")}
+                  onClick={() => { setPhase("pitch"); chartesAutoRef.current = false; setChartes(null); }}
                   className="inline-flex h-12 items-center rounded-full border border-[rgb(var(--m-line))] px-5 text-[15px] font-medium text-[rgb(var(--m-muted))] transition hover:text-[rgb(var(--m-ink))]"
                 >
                   ← Modifier mon pitch
