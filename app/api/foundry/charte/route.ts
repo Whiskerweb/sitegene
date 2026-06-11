@@ -40,7 +40,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Décrivez votre activité en quelques phrases." }, { status: 400 });
   }
 
-  const { trade } = detectTrade(brief);
-  const { chartes, source } = await generateChartes({ brief, businessName, trade, attempt }, chat);
+  const { trade, sub } = detectTrade(brief);
+  const { chartes, source } = await generateChartes({ brief, businessName, trade, sub, attempt }, chat);
   return NextResponse.json({ ok: true, source, chartes });
 }

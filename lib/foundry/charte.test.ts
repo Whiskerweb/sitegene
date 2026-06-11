@@ -45,9 +45,13 @@ describe("repairCharte", () => {
     expect(contrast(v.palette.muted, v.palette.surface)).toBeGreaterThanOrEqual(3);
   });
 
-  it("plafonne la saturation et garantit un bouton accent lisible", () => {
-    const v = repairCharte({ ...GOOD, accent: "#00ff00" });
-    expect(contrast("#ffffff", v.palette.accent)).toBeGreaterThanOrEqual(2.5);
+  it("mode light : saturation extrême tempérée ; mode dark : accent vif PRÉSERVÉ", () => {
+    const light = repairCharte({ ...GOOD, accent: "#00ff00" });
+    expect(light.palette.accent).not.toBe("#00ff00"); // tempéré (goût, mode clair)
+    // En sombre, un accent acide est un parti pris légitime (rock, fitness…) :
+    // il ne doit être ni désaturé ni assombri (le texte = --c-on-accent).
+    const dark = repairCharte({ mode: "dark", surface: "#0a0a0a", card: "#161616", ink: "#f5f5f2", accent: "#e7ff1a", accent2: "#cccccc", muted: "#9a9a9a" });
+    expect(dark.palette.accent).toBe("#e7ff1a");
   });
 
   it("remplace les fonts hors liste blanche et survit au n'importe quoi", () => {

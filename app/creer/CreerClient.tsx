@@ -21,6 +21,7 @@ import AuthGate from "@/components/auth/AuthGate";
 import { AkyraMark } from "@/components/ui/Logo";
 import CollectStep from "@/components/creer/CollectStep";
 import ImportCharte, { type ImportedCharte } from "@/components/creer/ImportCharte";
+import { ramp, readableOn } from "@/lib/client/color-preview";
 import { detectTrade } from "@/lib/foundry/suggest";
 import type { Collected } from "@/lib/foundry/link-catalog";
 
@@ -475,20 +476,16 @@ export default function CreerClient() {
               </div>
             )}
 
-            {/* Cartes de charte façon brand-kit */}
+            {/* Cartes de charte : chaque carte EST la charte (sa surface, ses
+                lettres, ses couleurs) — planche de design system miniature. */}
             {!chartesLoading && displayChartes && (
               <div className="mt-10 grid gap-5 md:grid-cols-3">
                 {displayChartes.map((c, idx) => {
                   const v = c.vibe;
                   const isSel = selectedIdx === idx;
                   const a = isSel && accent ? accent : v.palette.accent;
-                  const swatches: Array<[string, string]> = [
-                    ["Encre", v.palette.ink],
-                    ["Fond", v.palette.surface],
-                    ["Carte", v.palette.card],
-                    ["Accent", a],
-                    ["Accent 2", v.palette.accent2],
-                  ];
+                  const onA = readableOn(a);
+                  const line = `color-mix(in srgb, ${v.palette.ink} 14%, transparent)`;
                   return (
                     <button
                       key={idx}
@@ -497,83 +494,89 @@ export default function CreerClient() {
                         setSelectedIdx(idx);
                         setAccent(v.palette.accent);
                       }}
-                      className={`group relative flex flex-col rounded-3xl border bg-[rgb(var(--m-surface))] p-5 text-left shadow-cloud-sm transition hover:-translate-y-0.5 hover:shadow-cloud ${
-                        isSel ? "border-[rgb(var(--m-accent))] ring-2 ring-[rgb(var(--m-accent))]/30" : "border-[rgb(var(--m-line))]"
-                      }`}
+                      className="group relative flex flex-col overflow-hidden rounded-3xl p-5 text-left shadow-cloud-sm transition hover:-translate-y-0.5 hover:shadow-cloud"
+                      style={{
+                        background: v.palette.surface,
+                        border: `1px solid ${line}`,
+                        boxShadow: isSel ? `0 0 0 2.5px ${a}, 0 18px 40px -18px ${a}66` : undefined,
+                      }}
                     >
-                      {/* Mini-aperçu hero coloré par la charte */}
-                      <div className="overflow-hidden rounded-2xl border border-black/5" style={{ background: v.palette.surface }}>
-                        <div className="flex items-center justify-between px-3 py-2" style={{ background: v.palette.card }}>
-                          <span className="text-[11px] font-bold" style={{ color: v.palette.ink, fontFamily: v.fonts.heading }}>
-                            {(name.trim() || "Studio").slice(0, 16)}
-                          </span>
-                          <span className="px-2 py-0.5 text-[9px] font-semibold text-white" style={{ background: a, borderRadius: v.radius.pill }}>
-                            Contact
-                          </span>
-                        </div>
-                        <div className="px-3 py-3">
-                          <div className="text-[15px] leading-snug" style={{ color: v.palette.ink, fontFamily: v.fonts.heading }}>
-                            Un site qui vous ressemble
-                          </div>
-                          <div className="mt-1 text-[10px] leading-relaxed" style={{ color: v.palette.muted, fontFamily: v.fonts.body }}>
-                            Chaque section reprendra ces couleurs et ces lettres.
-                          </div>
-                        </div>
+                      {/* Mini barre de site (carte + pilule contact) */}
+                      <div className="flex items-center justify-between rounded-xl px-3 py-2" style={{ background: v.palette.card }}>
+                        <span className="text-[11px] font-bold" style={{ color: v.palette.ink, fontFamily: v.fonts.heading }}>
+                          {(name.trim() || "Studio").slice(0, 16)}
+                        </span>
+                        <span className="px-2 py-0.5 text-[9px] font-semibold" style={{ background: a, color: onA, borderRadius: v.radius.pill }}>
+                          Contact
+                        </span>
                       </div>
 
-                      {/* Nom + ambiance */}
-                      <div className="mt-4">
-                        <div className="flex items-center gap-2">
-                          <div className="text-[16px] font-bold tracking-tight">{v.label}</div>
-                          {importedCharte && idx === (chartes?.length ?? 0) ? (
-                            <span className="rounded-full bg-[rgb(var(--m-accent))]/10 px-2 py-0.5 text-[10px] font-bold text-[rgb(var(--m-accent))]">
-                              Votre identité
-                            </span>
-                          ) : null}
+                      {/* Nom de la direction — dans SES lettres */}
+                      <div className="mt-4 flex items-start justify-between gap-2">
+                        <div className="text-[24px] leading-tight" style={{ fontFamily: v.fonts.heading, color: v.palette.ink }}>
+                          {v.label}
                         </div>
-                        <div className="mt-0.5 text-[12px] text-[rgb(var(--m-muted))]">{v.mood.join(" · ")}</div>
+                        {importedCharte && idx === (chartes?.length ?? 0) ? (
+                          <span className="mt-1 shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold" style={{ background: a, color: onA }}>
+                            Votre identité
+                          </span>
+                        ) : null}
                       </div>
-
-                      {/* Palette : swatches + hex (façon brand-kit) */}
-                      <div className="mt-3 grid grid-cols-5 gap-1.5">
-                        {swatches.map(([label, hex]) => (
-                          <div key={label} className="flex flex-col items-center gap-1">
-                            <span className="h-7 w-full rounded-lg border border-black/10" style={{ background: hex }} />
-                            <span className="font-mono text-[8.5px] uppercase text-[rgb(var(--m-faint))]">{hex.replace("#", "")}</span>
-                          </div>
+                      <div className="mt-1 flex flex-wrap gap-1.5">
+                        {v.mood.map((m) => (
+                          <span key={m} className="rounded-full px-2 py-0.5 text-[10.5px] font-medium" style={{ background: v.palette.card, color: v.palette.muted, fontFamily: v.fonts.body }}>
+                            {m}
+                          </span>
                         ))}
                       </div>
 
-                      {/* Typographies : spécimens Aa */}
-                      <div className="mt-3 grid grid-cols-2 gap-2">
-                        <div className="rounded-xl border border-[rgb(var(--m-line))] px-3 py-2">
-                          <div className="text-[22px] leading-none" style={{ fontFamily: v.fonts.heading, color: v.palette.ink }}>Aa</div>
-                          <div className="mt-1 text-[10px] font-semibold text-[rgb(var(--m-muted))]">{fontFamilyName(v.fonts.heading)}</div>
-                          <div className="text-[9px] text-[rgb(var(--m-faint))]">Titres</div>
+                      {/* Rampe de l'accent + pastilles de la palette */}
+                      <div className="mt-4">
+                        <div className="flex h-9 overflow-hidden rounded-xl border" style={{ borderColor: line }}>
+                          {ramp(a).map((shade, j) => (
+                            <span key={j} className="flex-1" style={{ background: shade }} />
+                          ))}
                         </div>
-                        <div className="rounded-xl border border-[rgb(var(--m-line))] px-3 py-2">
-                          <div className="text-[22px] leading-none" style={{ fontFamily: v.fonts.body, color: v.palette.ink }}>Aa</div>
-                          <div className="mt-1 text-[10px] font-semibold text-[rgb(var(--m-muted))]">{fontFamilyName(v.fonts.body)}</div>
-                          <div className="text-[9px] text-[rgb(var(--m-faint))]">Texte</div>
+                        <div className="mt-1.5 flex items-center justify-between font-mono text-[8.5px] uppercase" style={{ color: v.palette.muted }}>
+                          <span>{a.replace("#", "#").toUpperCase()}</span>
+                          <span className="flex items-center gap-1.5">
+                            {[v.palette.ink, v.palette.card, v.palette.accent2, v.palette.muted].map((hex, j) => (
+                              <span key={j} className="h-3.5 w-3.5 rounded-full border border-black/15" style={{ background: hex }} />
+                            ))}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Spécimens typographiques */}
+                      <div className="mt-3 grid grid-cols-2 gap-2">
+                        <div className="rounded-xl px-3 py-2" style={{ background: v.palette.card }}>
+                          <div className="font-mono text-[8px] uppercase" style={{ color: v.palette.muted }}>Display</div>
+                          <div className="text-[26px] leading-none" style={{ fontFamily: v.fonts.heading, color: v.palette.ink }}>Aa</div>
+                          <div className="mt-1 truncate text-[10px] font-semibold" style={{ color: v.palette.muted, fontFamily: v.fonts.body }}>{fontFamilyName(v.fonts.heading)}</div>
+                        </div>
+                        <div className="rounded-xl px-3 py-2" style={{ background: v.palette.card }}>
+                          <div className="font-mono text-[8px] uppercase" style={{ color: v.palette.muted }}>Texte</div>
+                          <div className="text-[26px] leading-none" style={{ fontFamily: v.fonts.body, color: v.palette.ink }}>Aa</div>
+                          <div className="mt-1 truncate text-[10px] font-semibold" style={{ color: v.palette.muted, fontFamily: v.fonts.body }}>{fontFamilyName(v.fonts.body)}</div>
                         </div>
                       </div>
 
                       {/* Boutons de la charte */}
                       <div className="mt-3 flex items-center gap-2">
-                        <span className="px-3.5 py-1.5 text-[11px] font-semibold text-white" style={{ background: a, borderRadius: v.radius.pill }}>
+                        <span className="px-3.5 py-1.5 text-[11px] font-semibold" style={{ background: a, color: onA, borderRadius: v.radius.pill }}>
                           Bouton principal
                         </span>
-                        <span className="px-3.5 py-1.5 text-[11px] font-semibold" style={{ color: v.palette.ink, border: `1px solid ${v.palette.muted}55`, borderRadius: v.radius.pill }}>
+                        <span className="px-3.5 py-1.5 text-[11px] font-semibold" style={{ color: v.palette.ink, border: `1px solid ${v.palette.muted}66`, borderRadius: v.radius.pill }}>
                           Secondaire
                         </span>
                       </div>
 
-                      <p className="mt-3 text-[12.5px] leading-relaxed text-[rgb(var(--m-muted))]">{c.reason}</p>
+                      <p className="mt-3 text-[12.5px] leading-relaxed" style={{ color: v.palette.muted, fontFamily: v.fonts.body }}>{c.reason}</p>
 
                       {/* Accent personnalisable une fois la carte choisie */}
                       {isSel ? (
-                        <div className="mt-3 flex items-center gap-2 border-t border-[rgb(var(--m-line))] pt-3">
-                          <span className="text-[11px] font-semibold text-[rgb(var(--m-muted))]">Couleur d'accent</span>
+                        <div className="mt-3 flex items-center gap-2 border-t pt-3" style={{ borderColor: line }}>
+                          <span className="text-[11px] font-semibold" style={{ color: v.palette.muted }}>Couleur d'accent</span>
                           {[v.palette.accent, v.palette.accent2, v.palette.ink].map((cAcc, j) => (
                             <span
                               key={`${j}-${cAcc}`}
@@ -584,8 +587,8 @@ export default function CreerClient() {
                                 setAccent(cAcc);
                               }}
                               onKeyDown={(e) => e.key === "Enter" && setAccent(cAcc)}
-                              className={`h-5 w-5 cursor-pointer rounded-full border border-black/10 transition ${accent === cAcc ? "ring-2 ring-offset-1 ring-[rgb(var(--m-ink))]" : ""}`}
-                              style={{ background: cAcc }}
+                              className="h-5 w-5 cursor-pointer rounded-full border border-black/15 transition"
+                              style={{ background: cAcc, boxShadow: accent === cAcc ? `0 0 0 2px ${v.palette.surface}, 0 0 0 3.5px ${v.palette.ink}` : undefined }}
                               aria-label={`Accent ${cAcc}`}
                             />
                           ))}

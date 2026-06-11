@@ -12,6 +12,7 @@
 import { useMemo, useRef, useState } from "react";
 import { CHARTE_FONTS, repairCharte, vibeToSpec, type CharteSpec } from "@/lib/foundry/charte";
 import { compressImage } from "@/lib/client/compress-image";
+import { mixHex, ramp, readableOn } from "@/lib/client/color-preview";
 import type { Vibe } from "@/lib/foundry/types";
 
 export type ImportedCharte = { vibe: Vibe; spec: CharteSpec; reason: string };
@@ -38,22 +39,6 @@ const CORNER_OPTIONS = [
 ];
 
 const HEX_RE = /^#?[0-9a-f]{6}$/i;
-
-function mixHex(a: string, b: string, t: number): string {
-  const pa = a.replace("#", "");
-  const pb = b.replace("#", "");
-  const c = [0, 2, 4].map((i) => {
-    const va = parseInt(pa.slice(i, i + 2), 16);
-    const vb = parseInt(pb.slice(i, i + 2), 16);
-    return Math.round(va + (vb - va) * t);
-  });
-  return `#${c.map((v) => v.toString(16).padStart(2, "0")).join("")}`;
-}
-
-/** Rampe de 4 teintes (clair → foncé) autour d'une couleur, façon planche DS. */
-function ramp(hex: string): string[] {
-  return [mixHex(hex, "#ffffff", 0.62), mixHex(hex, "#ffffff", 0.3), hex, mixHex(hex, "#000000", 0.28)];
-}
 
 const HEADING_FAMILIES = CHARTE_FONTS.filter((f) => f.roles.includes("heading")).map((f) => f.family);
 const BODY_FAMILIES = CHARTE_FONTS.filter((f) => f.roles.includes("body")).map((f) => f.family);
@@ -318,7 +303,7 @@ export default function ImportCharte({ businessName, onApply }: Props) {
                     </div>
                   </div>
                   <div className="flex flex-wrap items-center gap-2 rounded-xl border border-black/10 px-3 py-2.5" style={{ background: preview.palette.card }}>
-                    <span className="px-3.5 py-1.5 text-[11px] font-semibold text-white" style={{ background: preview.palette.accent, borderRadius: preview.radius.pill }}>
+                    <span className="px-3.5 py-1.5 text-[11px] font-semibold" style={{ background: preview.palette.accent, color: readableOn(preview.palette.accent), borderRadius: preview.radius.pill }}>
                       Bouton principal
                     </span>
                     <span className="px-3.5 py-1.5 text-[11px] font-semibold" style={{ color: preview.palette.ink, border: `1px solid ${preview.palette.muted}66`, borderRadius: preview.radius.pill }}>

@@ -180,9 +180,11 @@ export function repairCharte(raw: unknown): Vibe {
   }
 
   let accent = hex(r.accent, "#3d5a80");
-  if (saturation(accent) > 0.8) accent = desaturate(accent, 0.35); // pas de néon
-  // L'accent porte des boutons à texte blanc : on l'assombrit jusqu'à lisibilité.
-  for (let i = 0; i < 6 && contrast("#ffffff", accent) < 2.7; i++) accent = mix(accent, "#000000", 0.14);
+  // Saturation : plafonnée en mode clair (goût), LIBRE en mode sombre — un
+  // accent franc (acide, sang, chrome) sur fond sombre est un parti pris
+  // légitime, pas une faute. Le texte posé sur l'accent est géré par le token
+  // --c-on-accent (clair ou foncé selon la luminance) : on n'assombrit plus.
+  if (!isDark && saturation(accent) > 0.9) accent = desaturate(accent, 0.25);
 
   const accent2 = hex(r.accent2, mix(accent, "#ffffff", 0.45));
 
@@ -260,14 +262,27 @@ export type ChartesResult = { chartes: CharteProposal[]; source: "ai" | "fallbac
 
 type ChatFn = (
   messages: Array<{ role: "system" | "user" | "assistant"; content: string }>,
-  opts?: { json?: boolean; maxTokens?: number },
+  opts?: { json?: boolean; maxTokens?: number; temperature?: number },
 ) => Promise<string>;
 
 function fontsForPrompt(role: "heading" | "body"): string {
   return CHARTE_FONTS.filter((f) => f.roles.includes(role)).map((f) => f.family).join(", ");
 }
 
-export function buildCharteMessages(input: { brief: string; businessName: string; trade?: string; attempt?: number }) {
+/** Métiers au registre EXPRESSIF : l'audace y est une qualité, pas un risque. */
+const EXPRESSIVE_TRADES = new Set(["musicien", "fitness", "restaurant"]);
+
+/** Directives par sous-persona (prime sur la directive métier). */
+const SUB_GUIDANCE: Record<string, string> = {
+  "musicien:rock":
+    "Sous-genre ROCK/METAL : les 3 chartes DOIVENT cogner. Surfaces noires ou charbon (mode dark), accents TRANCHANTS au choix : jaune acide, rouge sang, blanc brut, vert toxique, chrome. Typographies condensées ou brutales. INTERDIT ABSOLU : terracotta, cuivre vieilli, beige, bleu doux, tout ce qui est « chaleureux » — rien de mou, rien de décoratif.",
+  "musicien:rap":
+    "Sous-genre RAP/URBAIN : luxe-street assumé. Noir profond, or, chrome, violet nuit ; contrastes maximaux, typographies massives. Pas de pastels, pas de tons terreux.",
+  "musicien:contemporain":
+    "Sous-genre CONTEMPORAIN/FOLK : éditorial intime, sérifs sensibles, palettes feutrées MAIS avec un parti pris (encre profonde, un accent inattendu) — pas de fadeur.",
+};
+
+export function buildCharteMessages(input: { brief: string; businessName: string; trade?: string; sub?: string; attempt?: number }) {
   const TRADE_GUIDANCE: Record<string, string> = {
     musicien: "Ce client est un MUSICIEN. Les 3 chartes DOIVENT respirer l'univers musical : artwork d'album, contraste fort, typographies expressives (condensée, display), ambiance de scène live ou de streaming. Pour un musicien rock ou rap, au moins 2 des 3 chartes DOIVENT avoir mode: \"dark\" — surface sombre (#0a0a0a à #1a1a1a), ink clair (#f0f0f0 à #ffffff). INTERDIT : look générique d'entreprise, pastels ternes, 3 chartes claires pour un rockeur.",
     photographe: "Ce client est un PHOTOGRAPHE. Les chartes doivent laisser l'image respirer : beaucoup d'air, surfaces quasi-blanches, typographie sobre et élégante, palette froide ou neutre qui ne concurrence pas les photos.",
@@ -279,14 +294,24 @@ export function buildCharteMessages(input: { brief: string; businessName: string
     beaute: "Ce client est dans la BEAUTÉ (coiffeur, esthétique…). Les chartes doivent être raffinées et actuelles : noir élégant ou nude, typographies fines, touches de couleur précises et sophistiquées.",
     conseil: "Ce client est dans le CONSEIL ou la TECH. Les chartes doivent projeter professionnalisme et clarté : tons bleus froids ou neutres structurés, typographies géométriques nettes, design orienté lisibilité et conversion.",
   };
-  const tradeNote = input.trade && TRADE_GUIDANCE[input.trade] ? `\nDIRECTIVE MÉTIER : ${TRADE_GUIDANCE[input.trade]}` : "";
+  const subKey = input.trade && input.sub ? `${input.trade}:${input.sub}` : "";
+  const tradeNote = [
+    input.trade && TRADE_GUIDANCE[input.trade] ? `\nDIRECTIVE MÉTIER : ${TRADE_GUIDANCE[input.trade]}` : "",
+    subKey && SUB_GUIDANCE[subKey] ? `\nDIRECTIVE SOUS-GENRE (prioritaire) : ${SUB_GUIDANCE[subKey]}` : "",
+  ].join("");
+  const expressive = !!input.trade && EXPRESSIVE_TRADES.has(input.trade);
+  const registre = expressive
+    ? "- Registre EXPRESSIF : ce métier vit de son identité. Accents FRANCS et assumés (saturés, acides, métalliques) bienvenus, surtout sur surface sombre. La tiédeur est la seule faute de goût."
+    : "- Registre CALME : saturation modérée (jamais néon, jamais violet/bleu fluo « IA »), surfaces apaisées.";
 
   const system = `Tu es le DIRECTEUR ARTISTIQUE d'Akyra. Tu composes des chartes graphiques SUR MESURE pour des sites vitrines d'indépendants français. Tu produis 3 directions distinctes et tranchées — pas trois variations de la même.
 
 RÈGLES DE GOÛT (strictes, non négociables) :
-- UN SEUL accent par charte, saturation MODÉRÉE (jamais néon, jamais violet/bleu fluo « IA »).
+- Les 3 directions doivent être RADICALEMENT différentes ENTRE ELLES : familles de couleurs différentes, températures différentes, personnalités différentes — au moins une inattendue. INTERDIT : deux chartes de la même famille (deux brunes/cuivrées, deux marines, deux beiges).
+- UN SEUL accent dominant par charte.
+${registre}
 - Jamais de noir pur (#000000) : encres profondes teintées (charbon, brun, bleu nuit).
-- Surfaces CLAIRES et calmes (blanc cassé teinté par le métier : crème, lin, brume…). La carte (card) = la surface légèrement teintée, même famille.
+- En mode light : surfaces claires teintées par le métier (crème, lin, brume…). En mode dark : surfaces profondes (charbon, encre, nuit). La carte (card) = la surface légèrement décalée, même famille.
 - Couleurs nommées par leur rôle, calibrées pour le métier du client (un plombier n'a pas la palette d'un fleuriste).
 - muted = texte secondaire, lisible sur la surface.
 - Typographies à CARACTÈRE : la hiérarchie vient de la graisse et de la couleur, pas de la taille criarde.
@@ -348,12 +373,14 @@ const CHARTE_TIMEOUT_MS = 45_000;
  * charte par charte, complétée par les vibes curées si l'IA en rend moins de 3.
  */
 export async function generateChartes(
-  input: { brief: string; businessName: string; trade?: string; attempt?: number },
+  input: { brief: string; businessName: string; trade?: string; sub?: string; attempt?: number },
   chatFn: ChatFn,
 ): Promise<ChartesResult> {
   try {
     const raw = await Promise.race([
-      chatFn(buildCharteMessages(input), { json: true, maxTokens: 2200 }),
+      // Température haute : 3 directions tranchées ET différentes d'un client à
+      // l'autre — à 0.2 le modèle resservait toujours les mêmes palettes.
+      chatFn(buildCharteMessages(input), { json: true, maxTokens: 2200, temperature: 0.9 }),
       new Promise<never>((_, reject) => setTimeout(() => reject(new Error("charte timeout")), CHARTE_TIMEOUT_MS)),
     ]);
     const list = parseChartes(raw);

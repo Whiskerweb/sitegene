@@ -397,7 +397,7 @@ export default function CollectStep({ trade, chartesReady, collected, onChange, 
 
       {/* Fiche technique — musiciens uniquement */}
       {trade === "musicien" && (
-        <div className="mt-8 rounded-2xl border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] p-4">
+        <div className="mt-8 rounded-2xl border border-[rgb(var(--m-accent))]/30 bg-gradient-to-br from-[rgb(var(--m-accent))]/5 to-transparent p-4">
           <div className="flex items-start gap-3">
             <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[rgb(var(--m-accent))]/10 text-[rgb(var(--m-accent))]">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
