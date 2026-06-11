@@ -86,7 +86,7 @@ export default function CreerClient() {
   const [error, setError] = useState<string | null>(null);
   const launchedRef = useRef(false);
   const [collected, setCollected] = useState<Collected>({ socials: [], contact: {}, photos: [] });
-  const [assemblyReady, setAssemblyReady] = useState(false);
+  const [attempt, setAttempt] = useState(0);
   const trade = useMemo(() => detectTrade(brief).trade, [brief]);
 
   // --- Restauration (retour d'OAuth ou arrivée depuis la landing) --------------
@@ -131,16 +131,17 @@ export default function CreerClient() {
   }, [brief, name, chartes, selectedIdx, accent, collected]);
 
   // --- Chartes sur mesure -------------------------------------------------------
-  async function loadChartes() {
+  async function loadChartes(overrideAttempt?: number) {
     setChartesLoading(true);
     setError(null);
     setSelectedIdx(null);
     setAccent(null);
+    const currentAttempt = overrideAttempt ?? attempt;
     try {
       const res = await fetch("/api/foundry/charte", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ brief: brief.trim(), businessName: name.trim() }),
+        body: JSON.stringify({ brief: brief.trim(), businessName: name.trim(), attempt: currentAttempt }),
       });
       const data = await res.json().catch(() => null);
       if (!res.ok || !data?.ok) throw new Error(data?.error ?? "Impossible de composer vos chartes. Réessayez.");
@@ -152,9 +153,12 @@ export default function CreerClient() {
     }
   }
 
-  function openVibePhase() {
-    setPhase("vibe");
-    if (!chartes && !chartesLoading) void loadChartes();
+  function openCollectPhase() {
+    setPhase("collect");
+    // Lance le chargement des chartes en arrière-plan dès le pitch validé
+    setAttempt(0);
+    setChartes(null);
+    void loadChartes(0);
   }
 
   // --- Étapes animées pendant l'assemblage ------------------------------------
@@ -182,15 +186,13 @@ export default function CreerClient() {
   const rareCount = (cards ?? []).filter((c) => c.rarity !== "common").length;
   const pitchReady = brief.trim().length >= 10 && name.trim().length >= 2;
 
-  // Lance la génération EN TÂCHE DE FOND et bascule sur l'écran de collecte.
   async function launchAssembly() {
     if (launchedRef.current || !selected) return;
     launchedRef.current = true;
     setCards(null);
     setRevealed(0);
     setError(null);
-    setAssemblyReady(false);
-    setPhase("collect"); // l'utilisateur remplit pendant que ça génère
+    setPhase("pack"); // animation immédiate, génération en arrière-plan
     setBusy(true);
     try {
       const res = await fetch("/api/foundry/generate", {
@@ -207,9 +209,18 @@ export default function CreerClient() {
       const data = await res.json().catch(() => null);
       if (data?.redirect) { router.push(data.redirect); return; }
       if (!res.ok || !data?.ok) throw new Error(data?.error ?? "Assemblage impossible. Réessayez.");
-      setSiteId(data.siteId);
+      const newSiteId = data.siteId as string;
+      setSiteId(newSiteId);
+      // Injection déterministe des liens & photos
+      try {
+        await fetch("/api/foundry/links", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ siteId: newSiteId, collected }),
+        });
+      } catch { /* best-effort */ }
       setCards(data.cards as Card[]);
-      setAssemblyReady(true);
+      // cards set → useEffect existant déclenche la révélation
     } catch (e) {
       setError(e instanceof Error ? e.message : "Assemblage impossible. Réessayez.");
       setPhase("vibe");
@@ -219,22 +230,12 @@ export default function CreerClient() {
     }
   }
 
-  // Valide la collecte : injecte les liens/photos puis joue l'anim booster → reveal.
-  async function finishCollect() {
-    if (siteId) {
-      try {
-        await fetch("/api/foundry/links", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ siteId, collected }),
-        });
-      } catch { /* injection best-effort : on révèle quand même */ }
-    }
-    setPhase("pack"); // joue l'animation des cartes déjà chargées, puis reveal
+  function finishCollect() {
+    setPhase("vibe");
   }
 
   function skipCollect() {
-    setPhase("pack");
+    setPhase("vibe");
   }
 
   function onAssembleClick() {
@@ -278,8 +279,8 @@ export default function CreerClient() {
           <span className="text-[15px] font-semibold tracking-tight">Akyra</span>
         </a>
         <div className="flex items-center gap-1.5" aria-label="Progression">
-          {(["pitch", "vibe", "collect", "pack"] as Phase[]).map((p, i) => {
-            const order: Phase[] = ["pitch", "vibe", "collect", "pack", "reveal"];
+          {(["pitch", "collect", "vibe", "pack"] as Phase[]).map((p, i) => {
+            const order: Phase[] = ["pitch", "collect", "vibe", "pack", "reveal"];
             const active = order.indexOf(phase) >= i;
             return <span key={p} className={`h-1.5 rounded-full transition-all ${active ? "w-8 bg-[rgb(var(--m-accent))]" : "w-4 bg-[rgb(var(--m-line))]"}`} />;
           })}
@@ -334,10 +335,10 @@ export default function CreerClient() {
             <button
               type="button"
               disabled={!pitchReady}
-              onClick={openVibePhase}
+              onClick={openCollectPhase}
               className="mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-[rgb(var(--m-accent))] px-6 text-[15px] font-semibold text-[rgb(var(--m-on-accent))] transition enabled:hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
             >
-              Composer ma charte graphique →
+              Continuer →
             </button>
           </section>
         )}
@@ -494,7 +495,7 @@ export default function CreerClient() {
               {!chartesLoading && (
                 <button
                   type="button"
-                  onClick={() => void loadChartes()}
+                  onClick={() => { const next = attempt + 1; setAttempt(next); void loadChartes(next); }}
                   className="text-sm font-medium text-[rgb(var(--m-muted))] underline-offset-4 transition hover:text-[rgb(var(--m-ink))] hover:underline"
                 >
                   ✦ Proposer trois autres directions
@@ -526,7 +527,7 @@ export default function CreerClient() {
           <CollectStep
             trade={trade}
             siteId={siteId}
-            assemblyReady={assemblyReady}
+            chartesReady={!chartesLoading && Array.isArray(chartes) && chartes.length > 0}
             collected={collected}
             onChange={setCollected}
             onFinish={finishCollect}
