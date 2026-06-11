@@ -522,16 +522,18 @@ export function repairSubPageSections(rawSections: unknown): RecipeSection[] {
   return out;
 }
 
-/** Intentions de page reconnues : titre, plan de secours et intro dédiée. */
+/** Intentions de page reconnues : titre, plan de secours et intro dédiée.
+ *  Chaque plan a sa STRUCTURE propre (sections design comprises) — deux pages
+ *  d'intentions différentes ne doivent jamais se ressembler. */
 const SUBPAGE_INTENTS: Array<{ match: RegExp; title: string; plan: string[]; intro: string }> = [
-  { match: /tarif|prix|formule|forfait|abonnement/i, title: "Tarifs", plan: ["intro-split", "pricing-cards", "faq-accordion", "cta-banner"], intro: "Des prix clairs, sans surprise : choisissez la formule qui vous correspond." },
+  { match: /tarif|prix|formule|forfait|abonnement/i, title: "Tarifs", plan: ["intro-split", "pricing-cards", "marquee-words", "faq-accordion", "cta-banner"], intro: "Des prix clairs, sans surprise : choisissez la formule qui vous correspond." },
   { match: /contact|rendez-vous|rdv|joindre|appel/i, title: "Contact", plan: ["intro-split", "contact-block", "faq-accordion"], intro: "Une question, un projet ? Voici comment nous joindre — réponse rapide garantie." },
-  { match: /faq|question/i, title: "Questions fréquentes", plan: ["intro-split", "faq-accordion", "contact-block"], intro: "Les réponses aux questions qu'on nous pose le plus souvent." },
-  { match: /avis|t[ée]moignage|r[ée]f[ée]rence/i, title: "Avis clients", plan: ["intro-split", "testimonials-carousel", "stats-countup", "cta-banner"], intro: "Ce que nos clients disent de nous, en toute transparence." },
-  { match: /r[ée]alisation|galerie|portfolio|projet|chantier/i, title: "Réalisations", plan: ["intro-split", "process-steps", "testimonials-carousel", "cta-banner"], intro: "Un aperçu concret de notre savoir-faire à travers nos derniers projets." },
-  { match: /propos|histoire|[ée]quipe|qui (suis|sommes)|valeur/i, title: "À propos", plan: ["intro-split", "stats-countup", "testimonials-carousel", "cta-banner"], intro: "Notre histoire, nos valeurs et ce qui guide notre travail au quotidien." },
+  { match: /faq|question/i, title: "Questions fréquentes", plan: ["intro-split", "faq-accordion", "quote-spotlight", "contact-block"], intro: "Les réponses aux questions qu'on nous pose le plus souvent." },
+  { match: /avis|t[ée]moignage|r[ée]f[ée]rence/i, title: "Avis clients", plan: ["intro-split", "testimonials-carousel", "stats-countup", "quote-spotlight", "cta-banner"], intro: "Ce que nos clients disent de nous, en toute transparence." },
+  { match: /r[ée]alisation|galerie|portfolio|projet|chantier/i, title: "Réalisations", plan: ["intro-split", "gallery-mosaic", "parallax-strip", "testimonials-carousel", "cta-banner"], intro: "Un aperçu concret de notre savoir-faire à travers nos derniers projets." },
+  { match: /propos|histoire|[ée]quipe|qui (suis|sommes)|valeur/i, title: "À propos", plan: ["intro-split", "story-timeline", "team-cards", "quote-spotlight", "cta-banner"], intro: "Notre histoire, nos valeurs et ce qui guide notre travail au quotidien." },
   { match: /devis|estimation/i, title: "Devis", plan: ["intro-split", "process-steps", "contact-block"], intro: "Décrivez votre besoin : nous chiffrons vite, et sans engagement." },
-  { match: /service|prestation|offre|expertise/i, title: "Nos services", plan: ["intro-split", "services-rows", "process-steps", "cta-banner"], intro: "Le détail de nos prestations, pour savoir exactement ce que nous pouvons faire pour vous." },
+  { match: /service|prestation|offre|expertise/i, title: "Nos services", plan: ["intro-split", "services-rows", "parallax-strip", "process-steps", "cta-banner"], intro: "Le détail de nos prestations, pour savoir exactement ce que nous pouvons faire pour vous." },
 ];
 
 const SUBPAGE_DEFAULT = { plan: ["intro-split", "services-rows", "faq-accordion", "cta-banner"], intro: "Tout ce qu'il faut savoir, simplement." };
@@ -587,9 +589,14 @@ function buildSubPageMessages(input: SubPageInput): Array<{ role: "system" | "us
 
 UNE SOUS-PAGE N'EST PAS UNE LANDING :
 - PAS de navbar, PAS de footer (hérités de l'accueil), PAS de hero (réservé à l'accueil).
-- 3 à 5 sections : d'abord un EN-TÊTE DE PAGE (ex. "intro-split" : titre de la page + texte d'introduction), puis le contenu UTILE au sujet, et termine par un appel à l'action ou un bloc contact.
+- 3 à 6 sections : d'abord un EN-TÊTE DE PAGE (ex. "intro-split" : titre de la page + texte d'introduction), puis le contenu UTILE au sujet, et termine par un appel à l'action ou un bloc contact.
 - L'accueil contient déjà : ${home}. Ta page APPROFONDIT UN SUJET : chaque section doit dire quelque chose que l'accueil ne dit pas. Quand un autre composant du même rôle convient, préfère-le à celui déjà utilisé sur l'accueil.
 - Jamais deux composants du même rôle.
+
+CHAQUE PAGE A SA STRUCTURE PROPRE (règle d'or) :
+- La STRUCTURE découle du SUJET — une page réalisations est une galerie ("gallery-mosaic", "parallax-strip"), une page à propos raconte ("story-timeline", "team-cards", "quote-spotlight"), une page tarifs compare ("pricing-cards"). Deux pages de sujets différents ne doivent JAMAIS avoir le même squelette.
+- Utilise les sections DESIGN pour rythmer ("parallax-strip", "marquee-words", "quote-spotlight") : une page n'est pas une pile de blocs de texte.
+- N'utilise PAS systématiquement les mêmes blocs génériques (services-rows, faq-accordion) : seulement s'ils servent VRAIMENT le sujet de la page.
 
 RÈGLES DE CONTENU (strictes) :
 - 100 % FRANÇAIS, écrit pour LE SUJET DE LA PAGE et pour CE client (activité ci-dessous). RÉÉCRIS TOUS les textes — ne recopie JAMAIS les textes d'exemple du catalogue.

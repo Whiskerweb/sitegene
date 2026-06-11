@@ -16,6 +16,12 @@ import IntroSplit from "./components/IntroSplit";
 import ProcessSteps from "./components/ProcessSteps";
 import ContactBlock from "./components/ContactBlock";
 import FooterColumns from "./components/FooterColumns";
+import ParallaxStrip from "./components/ParallaxStrip";
+import GalleryMosaic from "./components/GalleryMosaic";
+import TeamCards from "./components/TeamCards";
+import StoryTimeline from "./components/StoryTimeline";
+import QuoteSpotlight from "./components/QuoteSpotlight";
+import MarqueeWords from "./components/MarqueeWords";
 
 type FoundryComponent = ComponentType<{ content: any; skin: Skin }>;
 
@@ -34,6 +40,12 @@ const CORE_COMPONENTS: Record<string, FoundryComponent> = {
   "process-steps": ProcessSteps as FoundryComponent,
   "contact-block": ContactBlock as FoundryComponent,
   "footer-columns": FooterColumns as FoundryComponent,
+  "parallax-strip": ParallaxStrip as FoundryComponent,
+  "gallery-mosaic": GalleryMosaic as FoundryComponent,
+  "team-cards": TeamCards as FoundryComponent,
+  "story-timeline": StoryTimeline as FoundryComponent,
+  "quote-spotlight": QuoteSpotlight as FoundryComponent,
+  "marquee-words": MarqueeWords as FoundryComponent,
 };
 
 /** Registre complet : socle + library extraite des sites. */

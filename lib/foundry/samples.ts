@@ -108,6 +108,45 @@ const CORE_SAMPLES: Record<string, Record<string, unknown>> = {
     address: "12 rue des Tilleuls, 75011 Paris",
     cta: "Prendre rendez-vous",
   },
+  // --- Sections DESIGN -------------------------------------------------------
+  "parallax-strip": {
+    eyebrow: "Notre univers",
+    title: "Un travail qui se voit, des résultats qui se vivent",
+    cta: "Découvrir nos réalisations",
+    image: `${M}/hero.jpg`,
+  },
+  "gallery-mosaic": {
+    eyebrow: "Réalisations",
+    title: "Nos derniers projets en images",
+    images: [`${M}/hero.jpg`, `${M}/sess2.jpg`, `${M}/int4.jpg`, `${M}/still1.jpg`, `${M}/hero2.jpg`, `${M}/sess3.jpg`],
+  },
+  "team-cards": {
+    eyebrow: "L'équipe",
+    title: "Les visages derrière le travail bien fait",
+    items: [
+      { name: "Camille Aubert", role: "Fondatrice", bio: "Quinze ans de métier et toujours la même exigence : un travail propre, expliqué, garanti.", avatar: `${M}/coach.jpg` },
+      { name: "Julien Mercier", role: "Responsable projets", bio: "Votre interlocuteur du devis à la livraison — un suivi clair, sans surprise.", avatar: `${M}/av2.jpg` },
+      { name: "Léa Fontan", role: "Relation clients", bio: "Réponse en moins de 24 h et un seul objectif : que tout soit simple pour vous.", avatar: `${M}/av1.jpg` },
+    ],
+  },
+  "story-timeline": {
+    eyebrow: "Notre parcours",
+    title: "Une histoire qui se construit avec vous",
+    items: [
+      { year: "2015", title: "Les débuts", text: "Une personne, un savoir-faire, et les premiers clients qui nous font confiance." },
+      { year: "2019", title: "L'équipe s'agrandit", text: "Trois collaborateurs nous rejoignent pour répondre à une demande qui grandit." },
+      { year: "2022", title: "La reconnaissance", text: "Certification du métier et plus de 200 projets livrés sans accroc." },
+      { year: "Aujourd'hui", title: "À vos côtés", text: "La même exigence du premier jour, au service de chaque nouveau projet." },
+    ],
+  },
+  "quote-spotlight": {
+    quote: "Le travail bien fait ne se raconte pas : il se constate, projet après projet.",
+    author: "Camille Aubert",
+    role: "Fondatrice",
+  },
+  "marquee-words": {
+    words: ["Savoir-faire", "Confiance", "Proximité", "Qualité", "Engagement"],
+  },
 };
 
 /** Échantillons complets : socle + library extraite des sites. */

@@ -89,6 +89,9 @@ const LABELS: Record<string, string> = {
   topbarPhone: "Téléphone (barre du haut)",
   topbarHours: "Horaires",
   topbarArea: "Zone d'intervention",
+  words: "Mots du bandeau",
+  year: "Année / étape",
+  bio: "Quelques mots",
 };
 
 function prettify(key: string): string {
