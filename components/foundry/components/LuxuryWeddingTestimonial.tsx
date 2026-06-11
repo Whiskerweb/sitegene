@@ -16,7 +16,7 @@ export default function LuxuryWeddingTestimonial({ content, skin }: { content: a
         }
         .lwtesti-glyph {
           font-size: 6rem;
-          color: rgba(255,255,255,0.06);
+          color: color-mix(in srgb, var(--c-surface) 6%, transparent);
           display: block;
           margin-bottom: 1.5rem;
           line-height: 1;
@@ -47,7 +47,7 @@ export default function LuxuryWeddingTestimonial({ content, skin }: { content: a
           font-size: 0.75rem;
           text-transform: uppercase;
           letter-spacing: 0.2em;
-          color: rgba(255,255,255,0.4);
+          color: color-mix(in srgb, var(--c-surface) 40%, transparent);
           font-weight: 200;
         }
       `}</style>

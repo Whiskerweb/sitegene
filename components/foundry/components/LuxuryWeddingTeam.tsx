@@ -53,7 +53,7 @@ export default function LuxuryWeddingTeam({ content, skin }: { content: any; ski
           font-size: 0.75rem;
           text-transform: uppercase;
           letter-spacing: 0.2em;
-          color: rgba(255,255,255,0.4);
+          color: color-mix(in srgb, var(--c-surface) 40%, transparent);
           font-weight: 200;
           margin-bottom: 1.5rem;
           display: block;
@@ -71,7 +71,7 @@ export default function LuxuryWeddingTeam({ content, skin }: { content: any; ski
           font-family: var(--font-body);
           font-size: 1.1rem;
           line-height: 1.7;
-          color: rgba(255,255,255,0.5);
+          color: color-mix(in srgb, var(--c-surface) 50%, transparent);
           font-weight: 300;
         }
         .lwteam-grid {
@@ -123,14 +123,14 @@ export default function LuxuryWeddingTeam({ content, skin }: { content: any; ski
           font-size: 0.7rem;
           text-transform: uppercase;
           letter-spacing: 0.2em;
-          color: rgba(255,255,255,0.4);
+          color: color-mix(in srgb, var(--c-surface) 40%, transparent);
           font-weight: 200;
         }
         .lwteam-bio {
           font-family: var(--font-body);
           font-size: 1rem;
           line-height: 1.7;
-          color: rgba(255,255,255,0.5);
+          color: color-mix(in srgb, var(--c-surface) 50%, transparent);
           font-weight: 300;
         }
       `}</style>

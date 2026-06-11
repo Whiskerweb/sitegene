@@ -69,7 +69,7 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
           font-family: var(--font-body);
           font-size: 1.1rem;
           line-height: 1.7;
-          color: rgba(255,255,255,0.55);
+          color: color-mix(in srgb, var(--c-surface) 55%, transparent);
           font-weight: 300;
           max-width: 28rem;
           padding-bottom: 0.25rem;
@@ -117,7 +117,7 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
           width: 60%; aspect-ratio: 1/1;
           overflow: hidden;
           box-shadow: 0 24px 80px -20px rgba(0,0,0,0.85);
-          border: 1px solid rgba(255,255,255,0.05);
+          border: 1px solid color-mix(in srgb, var(--c-surface) 5%, transparent);
         }
         .lwgal-featured-sharp {
           width: 100%; height: 100%;
@@ -128,7 +128,7 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
         .lwgal-caption {
           aspect-ratio: 1 / 1;
           background: var(--c-ink);
-          border: 1px solid rgba(255,255,255,0.05);
+          border: 1px solid color-mix(in srgb, var(--c-surface) 5%, transparent);
           padding: 1.5rem;
           display: flex;
           flex-direction: column;
@@ -147,7 +147,7 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
         .lwgal-cap-body {
           font-family: var(--font-body);
           font-size: 0.875rem;
-          color: rgba(255,255,255,0.5);
+          color: color-mix(in srgb, var(--c-surface) 50%, transparent);
           font-weight: 200;
           line-height: 1.6;
           max-width: 200px;
@@ -157,9 +157,9 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
       <div className="lwgal-inner">
         <div className="lwgal-header">
           <div>
-            <div style={{ borderBottom: "1px solid rgba(255,255,255,0.1)", marginBottom: "2.5rem", paddingBottom: "0" }}>
+            <div style={{ borderBottom: "1px solid color-mix(in srgb, var(--c-surface) 10%, transparent)", marginBottom: "2.5rem", paddingBottom: "0" }}>
               <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "0.5rem" }}>
-                <p style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.15em", color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-body)", fontWeight: 300 }}>{heading1}</p>
+                <p style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.15em", color: "color-mix(in srgb, var(--c-surface) 50%, transparent)", fontFamily: "var(--font-body)", fontWeight: 300 }}>{heading1}</p>
               </div>
             </div>
             <h2 className="lwgal-subh">{subheading}</h2>

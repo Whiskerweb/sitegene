@@ -16,7 +16,7 @@ export default function WwTestimonialOverlay({ content, skin }: { content: any; 
           font-family: var(--font-heading); font-size: clamp(3rem, 8vw, 6rem);
           margin-bottom: 1.5rem; color: var(--c-surface);
         }
-        .wwtesti__intro { color: rgba(255,255,255,0.6); font-size: 0.875rem; line-height: 1.7; max-width: 28rem; margin: 0 auto; }
+        .wwtesti__intro { color: color-mix(in srgb, var(--c-surface) 60%, transparent); font-size: 0.875rem; line-height: 1.7; max-width: 28rem; margin: 0 auto; }
         .wwtesti__card {
           position: relative; max-width: 62.5rem; margin: 0 auto;
           height: 480px; border-radius: var(--r-card); overflow: hidden;

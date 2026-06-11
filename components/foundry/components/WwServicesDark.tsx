@@ -24,10 +24,10 @@ export default function WwServicesDark({ content, skin }: { content: any; skin: 
         }
         .wwsvc__intro {
           font-family: var(--font-heading); font-size: clamp(1.25rem, 2.5vw, 1.875rem);
-          color: rgba(255,255,255,0.8); line-height: 1.3; margin-bottom: 2rem;
+          color: color-mix(in srgb, var(--c-surface) 80%, transparent); line-height: 1.3; margin-bottom: 2rem;
         }
         .wwsvc__headerCta {
-          display: inline-block; border: 1px solid rgba(255,255,255,0.4);
+          display: inline-block; border: 1px solid color-mix(in srgb, var(--c-surface) 40%, transparent);
           font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase;
           padding: 1rem 1.75rem; color: var(--c-surface); text-decoration: none;
           transition: background-color 0.4s ease, color 0.4s ease;
@@ -46,9 +46,9 @@ export default function WwServicesDark({ content, skin }: { content: any; skin: 
           color: var(--c-surface);
         }
         .wwsvc__itemRight { max-width: 28rem; text-align: right; }
-        .wwsvc__itemDesc { color: rgba(255,255,255,0.6); font-size: 0.875rem; line-height: 1.7; margin-bottom: 1rem; }
+        .wwsvc__itemDesc { color: color-mix(in srgb, var(--c-surface) 60%, transparent); font-size: 0.875rem; line-height: 1.7; margin-bottom: 1rem; }
         .wwsvc__itemCta {
-          display: inline-block; border: 1px solid rgba(255,255,255,0.3);
+          display: inline-block; border: 1px solid color-mix(in srgb, var(--c-surface) 30%, transparent);
           font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase;
           padding: 0.75rem 1.5rem; color: var(--c-surface); text-decoration: none;
           transition: background-color 0.4s ease, color 0.4s ease;
