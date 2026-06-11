@@ -150,16 +150,34 @@ const GF_BASE = "https://fonts.googleapis.com/css2";
 export function repairCharte(raw: unknown): Vibe {
   const r = (typeof raw === "object" && raw !== null ? raw : {}) as Record<string, unknown>;
 
-  // Surface toujours CLAIRE (le mélange sRGB n'étant pas linéaire en luminance,
-  // on éclaircit par itérations jusqu'au seuil).
-  let surface = hex(r.surface, "#fafaf8");
-  for (let i = 0; i < 8 && luminance(surface) < 0.82; i++) surface = mix(surface, "#ffffff", 0.5);
-  let card = hex(r.card, mix(surface, "#888888", 0.07));
-  for (let i = 0; i < 8 && luminance(card) < 0.74; i++) card = mix(card, surface, 0.5);
+  const isDark = r.mode === "dark";
 
-  let ink = hex(r.ink, "#191714");
-  if (ink === "#000000") ink = "#161412"; // jamais de noir pur
-  if (contrast(ink, surface) < 7) ink = mix(ink, "#141210", 0.85);
+  // Surface — claire en mode light, sombre en mode dark.
+  let surface = hex(r.surface, isDark ? "#111111" : "#fafaf8");
+  if (isDark) {
+    for (let i = 0; i < 8 && luminance(surface) > 0.12; i++) surface = mix(surface, "#000000", 0.5);
+  } else {
+    for (let i = 0; i < 8 && luminance(surface) < 0.82; i++) surface = mix(surface, "#ffffff", 0.5);
+  }
+
+  // Card
+  let card = hex(r.card, isDark ? mix(surface, "#ffffff", 0.1) : mix(surface, "#888888", 0.07));
+  if (isDark) {
+    for (let i = 0; i < 8 && luminance(card) > 0.2; i++) card = mix(card, "#000000", 0.5);
+    for (let i = 0; i < 6 && luminance(card) < luminance(surface) * 1.05; i++) card = mix(card, "#ffffff", 0.15);
+  } else {
+    for (let i = 0; i < 8 && luminance(card) < 0.74; i++) card = mix(card, surface, 0.5);
+  }
+
+  // Ink
+  let ink = hex(r.ink, isDark ? "#F5F5F2" : "#191714");
+  if (isDark && ink === "#000000") ink = "#F5F5F2";
+  if (!isDark && ink === "#000000") ink = "#161412";
+  if (isDark) {
+    for (let i = 0; i < 6 && contrast(ink, surface) < 7; i++) ink = mix(ink, "#FFFFFF", 0.85);
+  } else {
+    if (contrast(ink, surface) < 7) ink = mix(ink, "#141210", 0.85);
+  }
 
   let accent = hex(r.accent, "#3d5a80");
   if (saturation(accent) > 0.8) accent = desaturate(accent, 0.35); // pas de néon
@@ -184,6 +202,7 @@ export function repairCharte(raw: unknown): Vibe {
     id: "custom",
     label: typeof r.name === "string" && r.name.trim() ? r.name.trim().slice(0, 40) : "Charte sur mesure",
     mood: mood.length === 3 ? mood : ["sur mesure", "équilibré", "professionnel"],
+    mode: isDark ? ("dark" as const) : ("light" as const),
     fontHref: `${GF_BASE}?family=${heading.gf}&family=${body.gf}&display=swap`,
     palette: { ink, surface, card, accent, accent2, muted },
     fonts: { heading: heading.css, body: body.css },
@@ -247,7 +266,7 @@ function fontsForPrompt(role: "heading" | "body"): string {
 
 export function buildCharteMessages(input: { brief: string; businessName: string; trade?: string; attempt?: number }) {
   const TRADE_GUIDANCE: Record<string, string> = {
-    musicien: "Ce client est un MUSICIEN. Les 3 chartes DOIVENT respirer l'univers musical : artwork d'album, contraste fort, typographies expressives (condensée, display), tons sombres + accent saturé, ambiance de scène live ou de streaming. INTERDIT : look générique d'entreprise, pastels ternes, surfaces beige/lin sans intention.",
+    musicien: "Ce client est un MUSICIEN. Les 3 chartes DOIVENT respirer l'univers musical : artwork d'album, contraste fort, typographies expressives (condensée, display), ambiance de scène live ou de streaming. Pour un musicien rock ou rap, au moins 2 des 3 chartes DOIVENT avoir mode: \"dark\" — surface sombre (#0a0a0a à #1a1a1a), ink clair (#f0f0f0 à #ffffff). INTERDIT : look générique d'entreprise, pastels ternes, 3 chartes claires pour un rockeur.",
     photographe: "Ce client est un PHOTOGRAPHE. Les chartes doivent laisser l'image respirer : beaucoup d'air, surfaces quasi-blanches, typographie sobre et élégante, palette froide ou neutre qui ne concurrence pas les photos.",
     restaurant: "Ce client est un RESTAURATEUR. Les chartes doivent évoquer la gastronomie : matières chaudes (ardoise, braise, bois), typographies à caractère, accents dorés ou profonds, ambiance de salle à la lueur des bougies ou de bistrot de quartier.",
     fitness: "Ce client est dans le FITNESS. Les chartes doivent dégager de l'énergie : industriel, contraste maximal, typographies condensées, couleurs vives électriques (lime, orange, rouge), lignes nettes.",
@@ -274,8 +293,10 @@ RÈGLES DE GOÛT (strictes, non négociables) :
 - name : nom de charte évocateur en français (2-3 mots, ex. « Terre d'atelier »). mood : 3 adjectifs français.
 - reason : 1 phrase française qui relie la charte AU MÉTIER du client (jamais générique).${tradeNote}
 
+- mode : "light" (surface claire) ou "dark" (surface sombre) — OBLIGATOIRE, dicté par le métier.
+
 SORTIE : JSON STRICT, rien d'autre :
-{"chartes":[{"name":"…","mood":["…","…","…"],"ink":"#xxxxxx","surface":"#xxxxxx","card":"#xxxxxx","accent":"#xxxxxx","accent2":"#xxxxxx","muted":"#xxxxxx","headingFont":"…","bodyFont":"…","corners":"soft","reason":"…"}, …3 chartes…]}`;
+{"chartes":[{"name":"…","mood":["…","…","…"],"mode":"light","ink":"#xxxxxx","surface":"#xxxxxx","card":"#xxxxxx","accent":"#xxxxxx","accent2":"#xxxxxx","muted":"#xxxxxx","headingFont":"…","bodyFont":"…","corners":"soft","reason":"…"}, …3 chartes…]}`;
 
   const varietyNote = (input.attempt ?? 0) > 0
     ? `\nATTENTION : le client a déjà vu une première série de chartes. Propose 3 directions ENTIÈREMENT DIFFÉRENTES — autre palette, autres fonts, autre ambiance. Ne répète pas les mêmes noms de charte ni les mêmes couleurs dominantes.`

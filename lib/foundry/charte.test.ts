@@ -66,6 +66,24 @@ describe("repairCharte", () => {
   });
 });
 
+describe("repairCharte dark mode", () => {
+  it("preserve une surface sombre quand mode='dark'", () => {
+    const vibe = repairCharte({ mode: "dark", surface: "#0a0a0a", card: "#1a1a1a", ink: "#ffffff", accent: "#E7FF1A", accent2: "#f4f4f4", muted: "#888888" });
+    expect(luminance(vibe.palette.surface)).toBeLessThan(0.12);
+  });
+
+  it("ink reste clair en mode dark", () => {
+    const vibe = repairCharte({ mode: "dark", surface: "#0b0b0b", card: "#181818", ink: "#f4f1ea", accent: "#D4AF37", accent2: "#c9c9c9", muted: "#9a9a9a" });
+    expect(luminance(vibe.palette.ink)).toBeGreaterThan(0.5);
+    expect(contrast(vibe.palette.ink, vibe.palette.surface)).toBeGreaterThan(7);
+  });
+
+  it("retourne mode='light' pour une charte normale (sans mode)", () => {
+    const vibe = repairCharte({ surface: "#fafaf8", card: "#f0ede8", ink: "#191714", accent: "#3d5a80", accent2: "#8ba8c4", muted: "#6e6f72" });
+    expect(vibe.mode).toBe("light");
+  });
+});
+
 describe("generateChartes", () => {
   const INPUT = { brief: "Plombier chauffagiste à Rennes", businessName: "Breizh Plomberie" };
 
