@@ -245,7 +245,20 @@ function fontsForPrompt(role: "heading" | "body"): string {
   return CHARTE_FONTS.filter((f) => f.roles.includes(role)).map((f) => f.family).join(", ");
 }
 
-export function buildCharteMessages(input: { brief: string; businessName: string }) {
+export function buildCharteMessages(input: { brief: string; businessName: string; trade?: string; attempt?: number }) {
+  const TRADE_GUIDANCE: Record<string, string> = {
+    musicien: "Ce client est un MUSICIEN. Les 3 chartes DOIVENT respirer l'univers musical : artwork d'album, contraste fort, typographies expressives (condensée, display), tons sombres + accent saturé, ambiance de scène live ou de streaming. INTERDIT : look générique d'entreprise, pastels ternes, surfaces beige/lin sans intention.",
+    photographe: "Ce client est un PHOTOGRAPHE. Les chartes doivent laisser l'image respirer : beaucoup d'air, surfaces quasi-blanches, typographie sobre et élégante, palette froide ou neutre qui ne concurrence pas les photos.",
+    restaurant: "Ce client est un RESTAURATEUR. Les chartes doivent évoquer la gastronomie : matières chaudes (ardoise, braise, bois), typographies à caractère, accents dorés ou profonds, ambiance de salle à la lueur des bougies ou de bistrot de quartier.",
+    fitness: "Ce client est dans le FITNESS. Les chartes doivent dégager de l'énergie : industriel, contraste maximal, typographies condensées, couleurs vives électriques (lime, orange, rouge), lignes nettes.",
+    coach: "Ce client est un COACH. Les chartes doivent inspirer confiance et apaisement : surfaces claires lumineuses, typographies arrondies ou serif chauds, accents discrets mais chaleureux, tons terreux ou végétaux premium.",
+    "bien-etre": "Ce client est dans le BIEN-ÊTRE. Les chartes doivent inspirer calme et soin : tons naturels (vert profond, lin, ivoire), typographies organiques, beaucoup d'espace, pas de couleurs criardes.",
+    artisan: "Ce client est un ARTISAN. Les chartes doivent projeter fiabilité et savoir-faire : tons sérieux (marine, ardoise, brun chaud), typographies lisibles et directes, matière et texture dans les couleurs.",
+    beaute: "Ce client est dans la BEAUTÉ (coiffeur, esthétique…). Les chartes doivent être raffinées et actuelles : noir élégant ou nude, typographies fines, touches de couleur précises et sophistiquées.",
+    conseil: "Ce client est dans le CONSEIL ou la TECH. Les chartes doivent projeter professionnalisme et clarté : tons bleus froids ou neutres structurés, typographies géométriques nettes, design orienté lisibilité et conversion.",
+  };
+  const tradeNote = input.trade && TRADE_GUIDANCE[input.trade] ? `\nDIRECTIVE MÉTIER : ${TRADE_GUIDANCE[input.trade]}` : "";
+
   const system = `Tu es le DIRECTEUR ARTISTIQUE d'Akyra. Tu composes des chartes graphiques SUR MESURE pour des sites vitrines d'indépendants français. Tu produis 3 directions distinctes et tranchées — pas trois variations de la même.
 
 RÈGLES DE GOÛT (strictes, non négociables) :
@@ -259,13 +272,17 @@ RÈGLES DE GOÛT (strictes, non négociables) :
 - bodyFont à choisir UNIQUEMENT parmi : ${fontsForPrompt("body")}.
 - corners : "sharp" (éditorial, précis), "soft" (équilibré) ou "round" (chaleureux, organique) — accordé à la personnalité.
 - name : nom de charte évocateur en français (2-3 mots, ex. « Terre d'atelier »). mood : 3 adjectifs français.
-- reason : 1 phrase française qui relie la charte AU MÉTIER du client (jamais générique).
+- reason : 1 phrase française qui relie la charte AU MÉTIER du client (jamais générique).${tradeNote}
 
 SORTIE : JSON STRICT, rien d'autre :
 {"chartes":[{"name":"…","mood":["…","…","…"],"ink":"#xxxxxx","surface":"#xxxxxx","card":"#xxxxxx","accent":"#xxxxxx","accent2":"#xxxxxx","muted":"#xxxxxx","headingFont":"…","bodyFont":"…","corners":"soft","reason":"…"}, …3 chartes…]}`;
 
+  const varietyNote = (input.attempt ?? 0) > 0
+    ? `\nATTENTION : le client a déjà vu une première série de chartes. Propose 3 directions ENTIÈREMENT DIFFÉRENTES — autre palette, autres fonts, autre ambiance. Ne répète pas les mêmes noms de charte ni les mêmes couleurs dominantes.`
+    : "";
+
   const user = `CLIENT : « ${input.businessName.trim().slice(0, 80)} »
-PITCH : « ${input.brief.trim().slice(0, 1200)} »
+PITCH : « ${input.brief.trim().slice(0, 1200)} »${varietyNote}
 
 Compose 3 chartes sur mesure pour ce client et renvoie le JSON.`;
 
@@ -307,7 +324,7 @@ const CHARTE_TIMEOUT_MS = 45_000;
  * charte par charte, complétée par les vibes curées si l'IA en rend moins de 3.
  */
 export async function generateChartes(
-  input: { brief: string; businessName: string },
+  input: { brief: string; businessName: string; trade?: string; attempt?: number },
   chatFn: ChatFn,
 ): Promise<ChartesResult> {
   try {

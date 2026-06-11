@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { chat } from "@/lib/mistral";
 import { generateChartes } from "@/lib/foundry/charte";
+import { detectTrade } from "@/lib/foundry/suggest";
 
 export const maxDuration = 60;
 
@@ -34,10 +35,12 @@ export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   const brief = typeof body?.brief === "string" ? body.brief.trim() : "";
   const businessName = typeof body?.businessName === "string" ? body.businessName.trim().slice(0, 80) : "";
+  const attempt = typeof body?.attempt === "number" ? body.attempt : 0;
   if (brief.length < 10 || brief.length > 2000) {
     return NextResponse.json({ error: "Décrivez votre activité en quelques phrases." }, { status: 400 });
   }
 
-  const { chartes, source } = await generateChartes({ brief, businessName }, chat);
+  const { trade } = detectTrade(brief);
+  const { chartes, source } = await generateChartes({ brief, businessName, trade, attempt }, chat);
   return NextResponse.json({ ok: true, source, chartes });
 }
