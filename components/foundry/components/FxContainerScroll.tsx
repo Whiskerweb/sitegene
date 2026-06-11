@@ -58,14 +58,14 @@ export default function FxContainerScroll({ content }: { content: FxContainerScr
         <div
           className="mx-auto -mt-12 h-[30rem] w-full max-w-4xl rounded-[30px] border-4 p-2 md:h-[40rem] md:p-6"
           style={{
-            borderColor: "#6c6c6c",
-            background: "#222",
+            borderColor: "var(--c-border)",
+            background: "var(--c-card)",
             boxShadow: "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a",
             transform: `rotateX(${rot.toFixed(2)}deg) scale(${sc.toFixed(3)})`,
             willChange: "transform",
           }}
         >
-          <div className="h-full w-full overflow-hidden rounded-2xl md:p-4" style={{ background: "#18181b" }}>
+          <div className="h-full w-full overflow-hidden rounded-2xl md:p-4" style={{ background: "var(--c-card)" }}>
             <img src={content.image} alt="" draggable={false} className="h-full w-full rounded-xl object-cover object-left-top" />
           </div>
         </div>

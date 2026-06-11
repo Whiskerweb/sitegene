@@ -60,7 +60,7 @@ export default function FxDisplayCards({ content }: { content: FxDisplayCardsCon
         .sg-fx-dc-icon{display:inline-grid;place-items:center;border-radius:9999px;width:1.7rem;height:1.7rem;flex:none;
           background:color-mix(in srgb,var(--c-accent) 30%,var(--c-ink));color:var(--c-accent2)}
         .sg-fx-dc-title{font-size:1.05rem;font-weight:600;margin:0;color:var(--c-accent2)}
-        .sg-fx-dc-desc{font-size:1.02rem;color:#e7e9f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;z-index:1;margin:0}
+        .sg-fx-dc-desc{font-size:1.02rem;color:var(--c-surface);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;z-index:1;margin:0}
         .sg-fx-dc-meta{font-size:.92rem;color:rgba(231,233,240,.55);position:relative;z-index:1;margin:0}
         .sg-fx-dc-1,.sg-fx-dc-2{filter:grayscale(1)}
         .sg-fx-dc-1::before,.sg-fx-dc-2::before{content:'';position:absolute;inset:0;border-radius:inherit;

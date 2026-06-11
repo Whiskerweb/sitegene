@@ -75,7 +75,7 @@ export default function FxStaggerReviews({ content }: { content: FxStaggerReview
               zIndex: isCenter ? 10 : 5 - Math.min(4, Math.abs(position)),
               border: `2px solid ${isCenter ? "var(--c-accent)" : "color-mix(in srgb, var(--c-ink) 18%, transparent)"}`,
               background: isCenter ? "var(--c-accent)" : "var(--c-card)",
-              color: isCenter ? "#fff" : "var(--c-ink)",
+              color: isCenter ? "var(--c-on-accent)" : "var(--c-ink)",
               boxShadow: isCenter ? "0 8px 0 4px color-mix(in srgb, var(--c-ink) 18%, transparent)" : "none",
               transition: wrapped ? "none" : "all .5s ease-in-out",
               willChange: "transform",
@@ -93,7 +93,7 @@ export default function FxStaggerReviews({ content }: { content: FxStaggerReview
               className="mb-4 grid h-14 w-12 place-items-center text-xl font-bold"
               style={{
                 background: isCenter ? "rgba(255,255,255,.2)" : "color-mix(in srgb, var(--c-accent) 16%, transparent)",
-                color: isCenter ? "#fff" : "var(--c-accent)",
+                color: isCenter ? "var(--c-on-accent)" : "var(--c-accent)",
                 boxShadow: "3px 3px 0 color-mix(in srgb, var(--c-ink) 14%, transparent)",
               }}
             >
@@ -108,7 +108,7 @@ export default function FxStaggerReviews({ content }: { content: FxStaggerReview
         <StgArrow dir={-1} onClick={() => move(-1)} label="Témoignage précédent" />
         <StgArrow dir={1} onClick={() => move(1)} label="Témoignage suivant" />
       </div>
-      <style>{`.sg-fx-stg-btn:hover{background:var(--c-accent)!important;color:#fff!important;border-color:var(--c-accent)!important}`}</style>
+      <style>{`.sg-fx-stg-btn:hover{background:var(--c-accent)!important;color:var(--c-on-accent)!important;border-color:var(--c-accent)!important}`}</style>
     </section>
   );
 }

@@ -79,7 +79,7 @@ export default function FxShuffleReviews({ content }: { content: FxShuffleReview
             >
               <span
                 className="pointer-events-none mx-auto grid h-28 w-28 place-items-center rounded-full text-4xl font-bold sm:h-32 sm:w-32"
-                style={{ border: "2px solid rgba(255,255,255,.16)", background: "color-mix(in srgb, var(--c-accent) 30%, transparent)", color: "#fff" }}
+                style={{ border: "2px solid rgba(255,255,255,.16)", background: "color-mix(in srgb, var(--c-accent) 30%, transparent)", color: "var(--c-on-accent)" }}
               >
                 {(it.author.trim()[0] ?? "•").toUpperCase()}
               </span>
