@@ -230,8 +230,8 @@ export default function StudioEditor({ data }: { data: StudioData }) {
     record();
   }
 
-  // --- Achat ------------------------------------------------------------------
-  async function buy(entry: CatalogEntry) {
+  // --- Achat (renvoie true si le composant est débloqué) -----------------------
+  async function buy(entry: CatalogEntry): Promise<boolean> {
     setSaving(true);
     try {
       const res = await fetch("/api/marketplace/purchase", {
@@ -240,11 +240,12 @@ export default function StudioEditor({ data }: { data: StudioData }) {
         body: JSON.stringify({ itemType: "component", itemId: entry.id }),
       });
       const json = await res.json().catch(() => null);
-      if (res.status === 409) { flash(`Solde insuffisant (${json?.balance ?? 0} ✦).`); return; }
-      if (!res.ok || !json?.ok) { flash(json?.error ?? "Achat impossible."); return; }
+      if (res.status === 409) { flash(`Solde insuffisant (${json?.balance ?? 0} ✦).`); return false; }
+      if (!res.ok || !json?.ok) { flash(json?.error ?? "Achat impossible."); return false; }
       setOwned((o) => new Set(o).add(entry.id));
       if (typeof json.balance === "number") setBalance(json.balance);
       flash(`« ${entry.label} » débloqué ✓`);
+      return true;
     } finally {
       setSaving(false);
     }
@@ -572,6 +573,7 @@ export default function StudioEditor({ data }: { data: StudioData }) {
       {replaceAt !== null && sections[replaceAt] && (
         <ReplaceDrawer
           section={sections[replaceAt]}
+          allSections={sections}
           index={replaceAt}
           candidates={replaceCandidates(replaceAt)}
           vibe={vibe}

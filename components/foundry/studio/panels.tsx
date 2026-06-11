@@ -7,6 +7,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import {
   ArrowLeftRight,
   Check,
+  Eye,
   ImageIcon,
   Link2,
   Lock,
@@ -419,6 +420,7 @@ function NavLinksField({
 
 export function ReplaceDrawer({
   section,
+  allSections,
   index,
   candidates,
   vibe,
@@ -428,15 +430,32 @@ export function ReplaceDrawer({
   onClose,
 }: {
   section: StudioSection;
+  /** Toutes les sections de la page — pour l'essai « sur votre site ». */
+  allSections: StudioSection[];
   index: number;
   candidates: CatalogEntry[];
   vibe: StudioVibe;
   brandPrimary: string | null;
   onChoose: (id: string) => void;
-  onBuy: (entry: CatalogEntry) => void;
+  onBuy: (entry: CatalogEntry) => Promise<boolean>;
   onClose: () => void;
 }) {
   const others = candidates.filter((c) => c.id !== section.component);
+  const [tryOn, setTryOn] = useState<CatalogEntry | null>(null);
+  if (tryOn) {
+    return (
+      <TryOnOverlay
+        candidate={tryOn}
+        sections={allSections}
+        index={index}
+        vibe={vibe}
+        brandPrimary={brandPrimary}
+        onBack={() => setTryOn(null)}
+        onBuy={onBuy}
+        onConfirm={() => onChoose(tryOn.id)}
+      />
+    );
+  }
   return (
     <div className="fixed inset-0 z-[60] flex justify-end bg-black/40" onClick={onClose}>
       <div className="flex h-full w-full max-w-2xl flex-col bg-neutral-50 shadow-2xl" onClick={(e) => e.stopPropagation()}>
@@ -479,17 +498,147 @@ export function ReplaceDrawer({
                       <span className="text-[13.5px] font-semibold text-neutral-800">{c.label}</span>
                       <RarityChip rarity={c.rarity} />
                     </div>
-                    {locked ? (
-                      <button onClick={() => onBuy(c)} className="rounded-full bg-amber-500 px-3.5 py-1.5 text-[12.5px] font-semibold text-white hover:bg-amber-600">Débloquer · {c.price} ✦</button>
-                    ) : (
-                      <button onClick={() => onChoose(c.id)} className="inline-flex items-center gap-1.5 rounded-full bg-neutral-900 px-3.5 py-1.5 text-[12.5px] font-semibold text-white hover:bg-neutral-700"><ArrowLeftRight size={13} /> Choisir</button>
-                    )}
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        onClick={() => setTryOn(c)}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-neutral-300 px-3.5 py-1.5 text-[12.5px] font-semibold text-neutral-700 transition hover:border-neutral-900 hover:text-neutral-900"
+                      >
+                        <Eye size={13} /> Aperçu
+                      </button>
+                      {locked ? (
+                        <button onClick={() => void onBuy(c)} className="rounded-full bg-amber-500 px-3.5 py-1.5 text-[12.5px] font-semibold text-white hover:bg-amber-600">Débloquer · {c.price} ✦</button>
+                      ) : (
+                        <button onClick={() => onChoose(c.id)} className="inline-flex items-center gap-1.5 rounded-full bg-neutral-900 px-3.5 py-1.5 text-[12.5px] font-semibold text-white hover:bg-neutral-700"><ArrowLeftRight size={13} /> Choisir</button>
+                      )}
+                    </div>
                   </div>
                 </div>
               );
             })}
             {others.length === 0 && <p className="py-8 text-center text-sm text-neutral-400">Pas encore d'autre forme pour ce type de section.</p>}
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ===================== Essai « sur votre site » (try-on) ===================== */
+
+/**
+ * Aperçu plein écran du site COMPLET avec la candidate posée à la place de la
+ * section remplacée (contenu du client reporté). Le client juge en contexte,
+ * puis revient en arrière ou valide — l'achat est chaîné si la pièce est
+ * verrouillée (rien n'est payé avant la validation).
+ */
+function TryOnOverlay({
+  candidate,
+  sections,
+  index,
+  vibe,
+  brandPrimary,
+  onBack,
+  onBuy,
+  onConfirm,
+}: {
+  candidate: CatalogEntry;
+  sections: StudioSection[];
+  index: number;
+  vibe: StudioVibe;
+  brandPrimary: string | null;
+  onBack: () => void;
+  onBuy: (entry: CatalogEntry) => Promise<boolean>;
+  onConfirm: () => void;
+}) {
+  const [paying, setPaying] = useState(false);
+  const targetRef = useRef<HTMLDivElement>(null);
+  const locked = !candidate.owned && candidate.price > 0;
+
+  useEffect(() => {
+    const t = setTimeout(() => targetRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 250);
+    return () => clearTimeout(t);
+  }, []);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onBack(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onBack]);
+
+  async function confirm() {
+    if (locked) {
+      setPaying(true);
+      const ok = await onBuy(candidate);
+      setPaying(false);
+      if (!ok) return; // solde insuffisant / erreur : on reste sur l'essai
+    }
+    onConfirm();
+  }
+
+  return (
+    <div className="fixed inset-0 z-[70] flex flex-col bg-neutral-100">
+      {/* Bandeau d'essai */}
+      <div className="flex h-12 shrink-0 items-center justify-center gap-2 border-b border-neutral-200 bg-white/95 px-4 text-[13px] backdrop-blur">
+        <Eye size={14} className="text-neutral-400" />
+        <span className="font-semibold text-neutral-800">Essai sur votre site</span>
+        <span className="text-neutral-400">— « {candidate.label} » à la place de votre section. Rien n'est encore changé.</span>
+      </div>
+
+      {/* Le site entier, candidate en place */}
+      <div className="flex-1 overflow-y-auto">
+        <div className="mx-auto my-6 max-w-[1180px] overflow-hidden rounded-2xl bg-white shadow-[0_8px_40px_rgba(0,0,0,0.08)]">
+          <Themed vibe={vibe} brandPrimary={brandPrimary}>
+            {sections.map((s, i) => {
+              const isSwap = i === index;
+              const id = isSwap ? candidate.id : s.component;
+              const content = isSwap ? adaptContent(candidate.id, s.content) : s.content;
+              const C = COMPONENTS[id];
+              if (!C) return null;
+              return (
+                <div key={`${id}-${i}`} ref={isSwap ? targetRef : undefined} className="relative">
+                  <C content={content} skin={{}} />
+                  {isSwap && (
+                    <>
+                      <div className="pointer-events-none absolute inset-0" style={{ outline: "3px solid var(--c-accent)", outlineOffset: -3 }} />
+                      <span className="absolute right-4 top-4 rounded-full px-3 py-1.5 text-[11.5px] font-bold text-white shadow-lg" style={{ background: "var(--c-accent)" }}>
+                        Nouvelle section
+                      </span>
+                    </>
+                  )}
+                </div>
+              );
+            })}
+          </Themed>
+        </div>
+        <div className="h-24" />
+      </div>
+
+      {/* Barre de décision */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-6 flex justify-center px-4">
+        <div className="pointer-events-auto flex items-center gap-2 rounded-full border border-neutral-200 bg-white/95 p-2 pl-4 shadow-[0_16px_50px_rgba(0,0,0,0.18)] backdrop-blur">
+          <span className="hidden items-center gap-2 pr-2 sm:flex">
+            <span className="text-[13px] font-semibold text-neutral-800">{candidate.label}</span>
+            <RarityChip rarity={candidate.rarity} />
+          </span>
+          <button
+            onClick={onBack}
+            disabled={paying}
+            className="rounded-full px-4 py-2.5 text-[13px] font-semibold text-neutral-500 transition hover:text-neutral-900 disabled:opacity-50"
+          >
+            ← Revenir
+          </button>
+          <button
+            onClick={() => void confirm()}
+            disabled={paying}
+            className={`inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-[13px] font-semibold text-white transition disabled:opacity-60 ${locked ? "bg-amber-500 hover:bg-amber-600" : "bg-neutral-900 hover:bg-neutral-700"}`}
+          >
+            {paying ? (
+              "Déblocage…"
+            ) : locked ? (
+              <><Lock size={13} /> Valider et débloquer · {candidate.price} ✦</>
+            ) : (
+              <><Check size={14} /> Valider ce remplacement</>
+            )}
+          </button>
         </div>
       </div>
     </div>
