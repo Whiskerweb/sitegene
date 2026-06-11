@@ -22,4 +22,10 @@ describe("rankVibesForTrade", () => {
     expect(r[3].recommended).toBe(false);
     expect(r[0].reason.length).toBeGreaterThan(8);
   });
+  it("donne au moins 3 recommandations aux métiers principaux", () => {
+    for (const trade of ["fitness","coach","bien-etre","photographe","restaurant","musicien","conseil","artisan","beaute"] as const) {
+      const rec = rankVibesForTrade(trade).filter((x) => x.recommended);
+      expect(rec.length).toBeGreaterThanOrEqual(3);
+    }
+  });
 });

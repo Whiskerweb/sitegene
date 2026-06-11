@@ -31,11 +31,14 @@ export const DA_PERSONAS: Affinity[] = [
   // Fitness / coach sportif
   { vibeId: "coach-performance", trade: "fitness", weight: 95, reason: "Industriel kinetic, lime électrique, preuve par les chiffres." },
   { vibeId: "lexicon-creators", trade: "fitness", weight: 55, reason: "Sombre et net, orienté conversion." },
+  { vibeId: "mineral-precis", trade: "fitness", weight: 48, reason: "Premium et précis, pour un studio haut de gamme." },
   // Coach / bien-être
   { vibeId: "mindful-moments", trade: "bien-etre", weight: 90, reason: "Vert profond et or : la langue du bien-être premium." },
   { vibeId: "sage-nature", trade: "bien-etre", weight: 80, reason: "Végétal et lin, apaisant dès le premier écran." },
+  { vibeId: "warm-serif", trade: "bien-etre", weight: 72, reason: "Chaleureuse et humaine, pour un lieu qui prend soin." },
   { vibeId: "mindful-moments", trade: "coach", weight: 80, reason: "Calme premium, autorité douce." },
   { vibeId: "warm-serif", trade: "coach", weight: 75, reason: "Chaleur humaine pour un métier de confiance." },
+  { vibeId: "sage-nature", trade: "coach", weight: 70, reason: "Apaisant et naturel, pour un accompagnement en douceur." },
   // Conseil / SaaS / tech
   { vibeId: "auralis-neural", trade: "conseil", weight: 85, reason: "Tech clair, panneau glow : crédibilité produit." },
   { vibeId: "neurosync", trade: "conseil", weight: 80, reason: "Feature clair et net, bento maîtrisé." },
