@@ -30,7 +30,7 @@ export default function CreativePortfolioWorks({ content, skin }: { content: any
         }
         .cpworks-card {
           position: relative; overflow: hidden; cursor: pointer;
-          background: #111; aspect-ratio: 4/3;
+          background: var(--c-card); aspect-ratio: 4/3;
         }
         .cpworks-card img {
           width: 100%; height: 100%; object-fit: cover;

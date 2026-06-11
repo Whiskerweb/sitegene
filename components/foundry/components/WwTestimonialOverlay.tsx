@@ -8,13 +8,13 @@ export default function WwTestimonialOverlay({ content, skin }: { content: any; 
   const items: Array<{ quote: string; name: string }> = Array.isArray(content.items) ? content.items : [];
   const first = items[0] ?? { quote: "", name: "" };
   return (
-    <section className="wwtesti" style={{ background: "#000", color: "#fff" }}>
+    <section className="wwtesti" style={{ background: "var(--c-ink)", color: "var(--c-surface)" }}>
       <style>{`
         .wwtesti { position: relative; padding: 6rem 3rem 9rem; overflow: hidden; }
         .wwtesti__header { text-align: center; max-width: 42rem; margin: 0 auto 4rem; position: relative; z-index: 10; }
         .wwtesti__heading {
           font-family: var(--font-heading); font-size: clamp(3rem, 8vw, 6rem);
-          margin-bottom: 1.5rem; color: #fff;
+          margin-bottom: 1.5rem; color: var(--c-surface);
         }
         .wwtesti__intro { color: rgba(255,255,255,0.6); font-size: 0.875rem; line-height: 1.7; max-width: 28rem; margin: 0 auto; }
         .wwtesti__card {
@@ -30,7 +30,7 @@ export default function WwTestimonialOverlay({ content, skin }: { content: any; 
         }
         .wwtesti__quote {
           font-family: var(--font-heading); font-size: clamp(1.25rem, 3vw, 2.25rem);
-          color: #fff; line-height: 1.35; max-width: 48rem; margin-bottom: 1.5rem;
+          color: var(--c-surface); line-height: 1.35; max-width: 48rem; margin-bottom: 1.5rem;
         }
         .wwtesti__name {
           font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.2em;

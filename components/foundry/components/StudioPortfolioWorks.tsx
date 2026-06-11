@@ -55,7 +55,7 @@ export default function StudioPortfolioWorks({ content, skin }: { content: any; 
           margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px;
         }
         .spworks-card { cursor: pointer; }
-        .spworks-card-img { overflow: hidden; background: #222; }
+        .spworks-card-img { overflow: hidden; background: var(--c-card); }
         .spworks-card-img img {
           width: 100%; height: 100%; object-fit: cover;
           filter: grayscale(0.1);

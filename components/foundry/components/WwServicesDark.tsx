@@ -29,7 +29,7 @@ export default function WwServicesDark({ content, skin }: { content: any; skin: 
         .wwsvc__headerCta {
           display: inline-block; border: 1px solid rgba(255,255,255,0.4);
           font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase;
-          padding: 1rem 1.75rem; color: #fff; text-decoration: none;
+          padding: 1rem 1.75rem; color: var(--c-surface); text-decoration: none;
           transition: background-color 0.4s ease, color 0.4s ease;
         }
         .wwsvc__headerCta:hover { background: var(--c-surface); color: var(--c-ink); }
@@ -50,7 +50,7 @@ export default function WwServicesDark({ content, skin }: { content: any; skin: 
         .wwsvc__itemCta {
           display: inline-block; border: 1px solid rgba(255,255,255,0.3);
           font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase;
-          padding: 0.75rem 1.5rem; color: #fff; text-decoration: none;
+          padding: 0.75rem 1.5rem; color: var(--c-surface); text-decoration: none;
           transition: background-color 0.4s ease, color 0.4s ease;
         }
         .wwsvc__itemCta:hover { background: var(--c-surface); color: var(--c-ink); }
