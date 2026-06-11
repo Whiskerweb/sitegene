@@ -29,7 +29,9 @@ export default function BoldStackHero({ content, skin }: { content: BoldStackCon
     <section className="relative flex min-h-[88vh] w-full items-center justify-center overflow-hidden px-6 py-24" style={root}>
       <style>{`
         .bsh-grid { background-image: linear-gradient(to right, #ffffff14 1px, transparent 1px), linear-gradient(to bottom, #ffffff14 1px, transparent 1px); background-size: 4rem 4rem; }
-        .bsh-word { font-family: "Arial Black", Impact, var(--font-heading), sans-serif; font-weight: 900; line-height: .92; letter-spacing: -.03em; text-transform: uppercase; overflow-wrap: anywhere; text-shadow: 1px 1px 0 var(--sg-bsh-sh),2px 2px 0 var(--sg-bsh-sh),3px 3px 0 var(--sg-bsh-sh),4px 4px 0 var(--sg-bsh-sh),5px 5px 0 var(--sg-bsh-sh),6px 6px 0 var(--sg-bsh-sh); }
+        /* Typo pilotée par la DA : la police du heading de la vibe d'abord,
+           Arial Black/Impact seulement en repli si elle ne charge pas. */
+        .bsh-word { font-family: var(--font-heading), "Arial Black", Impact, sans-serif; font-weight: 900; line-height: .92; letter-spacing: -.03em; text-transform: uppercase; overflow-wrap: anywhere; text-shadow: 1px 1px 0 var(--sg-bsh-sh),2px 2px 0 var(--sg-bsh-sh),3px 3px 0 var(--sg-bsh-sh),4px 4px 0 var(--sg-bsh-sh),5px 5px 0 var(--sg-bsh-sh),6px 6px 0 var(--sg-bsh-sh); }
         @keyframes sg-bsh-float { 0%,100% { transform: translateY(0) rotate(var(--r)); } 50% { transform: translateY(-14px) rotate(var(--r)); } }
         @keyframes sg-bsh-spin { to { transform: rotate(360deg); } }
         .bsh-card { animation: sg-bsh-float 6s ease-in-out infinite; }
