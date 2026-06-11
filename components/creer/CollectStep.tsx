@@ -146,11 +146,11 @@ export default function CollectStep({ trade, siteId, assemblyReady, collected, o
         </button>
         {pickerOpen && (
           <div className="mt-2 flex flex-wrap gap-1.5 rounded-2xl border border-[rgb(var(--m-line))] p-3">
-            {allPlatformKeys.map((k) => (
+            {allPlatformKeys.filter((k) => !shownKeys.includes(k)).map((k) => (
               <button
                 key={k}
                 type="button"
-                onClick={() => { setExtra((e) => [...e, k]); setPickerOpen(false); }}
+                onClick={() => { setExtra((e) => e.includes(k) ? e : [...e, k]); setPickerOpen(false); }}
                 className="rounded-full border border-[rgb(var(--m-line))] px-3 py-1.5 text-[12px] transition hover:border-[rgb(var(--m-accent))]"
               >
                 {PLATFORMS[k].label}
