@@ -107,6 +107,11 @@ export default function CollectStep({ trade, chartesReady, collected, onChange, 
   const [pending, setPending] = useState<PendingPhoto[]>([]);
   const [dragOver, setDragOver] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+
+  // Fiche technique (musiciens uniquement)
+  const [riderUploading, setRiderUploading] = useState(false);
+  const [riderError, setRiderError] = useState<string | null>(null);
+  const riderRef = useRef<HTMLInputElement>(null);
   const collectedRef = useRef(collected);
   useEffect(() => {
     collectedRef.current = collected;
@@ -233,6 +238,28 @@ export default function CollectStep({ trade, chartesReady, collected, onChange, 
         for (let next = queue.shift(); next; next = queue.shift()) await uploadOne(next);
       }),
     );
+  }
+
+  // --- Fiche technique (musiciens) -------------------------------------------------
+  async function onRiderFile(file: File | null | undefined) {
+    if (!file) return;
+    if (!draftIdRef.current) draftIdRef.current = getDraftId();
+    setRiderError(null);
+    setRiderUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("draftId", draftIdRef.current);
+      fd.append("file", file);
+      const res = await fetch("/api/foundry/document", { method: "POST", body: fd });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data?.url) throw new Error(data?.error ?? "Envoi impossible.");
+      onChange({ ...collectedRef.current, techRider: { href: data.url as string, name: (data.name as string) ?? file.name } });
+    } catch (e) {
+      setRiderError(e instanceof Error ? e.message : "Envoi impossible.");
+    } finally {
+      setRiderUploading(false);
+      if (riderRef.current) riderRef.current.value = "";
+    }
   }
 
   function retryUpload(key: string) {
@@ -368,25 +395,83 @@ export default function CollectStep({ trade, chartesReady, collected, onChange, 
         )}
       </div>
 
+      {/* Fiche technique — musiciens uniquement */}
+      {trade === "musicien" && (
+        <div className="mt-8 rounded-2xl border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] p-4">
+          <div className="flex items-start gap-3">
+            <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[rgb(var(--m-accent))]/10 text-[rgb(var(--m-accent))]">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 18V5l11-2v12" /><circle cx="6" cy="18" r="3" /><circle cx="17" cy="15" r="3" />
+              </svg>
+            </span>
+            <div className="min-w-0 flex-1">
+              <span className="text-[13px] font-semibold">Votre fiche technique</span>
+              <p className="mt-0.5 text-[12.5px] leading-relaxed text-[rgb(var(--m-muted))]">
+                Les organisateurs pourront la télécharger en un clic depuis votre site — le bouton
+                principal s'en chargera.
+              </p>
+              {collected.techRider?.href ? (
+                <div className="mt-2.5 flex items-center gap-2 rounded-xl border border-[rgb(var(--m-line))] px-3 py-2">
+                  <span className="truncate text-[13px] font-medium">{collected.techRider.name ?? "fiche-technique.pdf"}</span>
+                  <span className="text-[13px] text-emerald-600">✓</span>
+                  <button
+                    type="button"
+                    onClick={() => onChange({ ...collected, techRider: undefined })}
+                    aria-label="Retirer la fiche technique"
+                    className="ml-auto shrink-0 rounded-full p-1 text-[rgb(var(--m-faint))] transition hover:text-[rgb(var(--m-ink))]"
+                  >
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><path d="M2 2l8 8M10 2l-8 8"/></svg>
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  disabled={riderUploading}
+                  onClick={() => riderRef.current?.click()}
+                  className="mt-2.5 rounded-full border border-dashed border-[rgb(var(--m-line))] px-4 py-2 text-[13px] font-medium text-[rgb(var(--m-muted))] transition hover:border-[rgb(var(--m-accent))] hover:text-[rgb(var(--m-ink))] disabled:opacity-40"
+                >
+                  {riderUploading ? "Envoi…" : "+ Déposer le PDF"}
+                </button>
+              )}
+              {riderError ? <p className="mt-1.5 text-[12px] text-red-600">{riderError}</p> : null}
+            </div>
+          </div>
+          <input ref={riderRef} type="file" accept="application/pdf" hidden onChange={(e) => { void onRiderFile(e.target.files?.[0]); }} />
+        </div>
+      )}
+
       {/* Photos */}
       <div className="mt-8">
         <div className="flex items-center justify-between">
           <span className="text-[13px] font-semibold">Vos photos</span>
           <span className="text-[12px] text-[rgb(var(--m-faint))]">{photoCount}/{MAX_PHOTOS}</span>
         </div>
-        <p className="mt-1 text-[12px] text-[rgb(var(--m-faint))]">
-          La première photo devient l'image principale de votre site. Glissez-déposez pour ajouter.
-        </p>
         <div
           onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
           onDragLeave={() => setDragOver(false)}
           onDrop={(e) => { e.preventDefault(); setDragOver(false); void onFiles(e.dataTransfer.files); }}
-          className={`mt-2 rounded-2xl border p-2 transition ${
-            dragOver
-              ? "border-[rgb(var(--m-accent))] bg-[rgb(var(--m-accent))]/5"
-              : "border-transparent"
-          }`}
+          className={`mt-2 rounded-3xl transition ${dragOver ? "ring-2 ring-[rgb(var(--m-accent))] ring-offset-2" : ""}`}
         >
+          {photoCount === 0 ? (
+            /* Dropzone vide premium : un seul grand geste, pas un petit carré perdu */
+            <button
+              type="button"
+              onClick={() => fileRef.current?.click()}
+              className="group flex w-full flex-col items-center justify-center gap-3 rounded-3xl border border-dashed border-[rgb(var(--m-line))] bg-gradient-to-b from-[rgb(var(--m-elevated))]/60 to-transparent px-6 py-12 text-center transition hover:border-[rgb(var(--m-accent))]"
+            >
+              <span className="grid h-14 w-14 place-items-center rounded-2xl bg-[rgb(var(--m-accent))]/10 text-[rgb(var(--m-accent))] shadow-cloud-sm transition group-hover:scale-105">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <rect width="18" height="18" x="3" y="3" rx="4" /><circle cx="9" cy="9" r="2" /><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21" />
+                </svg>
+              </span>
+              <span className="text-[15px] font-semibold text-[rgb(var(--m-ink))]">Glissez vos photos ici</span>
+              <span className="text-[12.5px] leading-relaxed text-[rgb(var(--m-muted))]">
+                ou cliquez pour parcourir · JPG, PNG, WebP
+                <br />
+                La première devient l'image principale de votre site.
+              </span>
+            </button>
+          ) : (
           <div className="grid grid-cols-4 gap-2 sm:grid-cols-5">
             {collected.photos.map((url, i) => (
               <div key={url} className="group relative aspect-square overflow-hidden rounded-xl border border-[rgb(var(--m-line))]">
@@ -449,13 +534,14 @@ export default function CollectStep({ trade, chartesReady, collected, onChange, 
               <button
                 type="button"
                 onClick={() => fileRef.current?.click()}
-                className="flex aspect-square flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-[rgb(var(--m-line))] text-[12px] text-[rgb(var(--m-muted))] transition hover:border-[rgb(var(--m-accent))]"
+                className="group flex aspect-square flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-[rgb(var(--m-line))] bg-[rgb(var(--m-elevated))]/50 text-[11.5px] font-medium text-[rgb(var(--m-muted))] transition hover:-translate-y-0.5 hover:border-[rgb(var(--m-accent))] hover:shadow-cloud-sm"
               >
-                <span className="text-[18px] leading-none">+</span>
+                <span className="grid h-7 w-7 place-items-center rounded-full bg-[rgb(var(--m-accent))]/10 text-[15px] leading-none text-[rgb(var(--m-accent))] transition group-hover:scale-110">+</span>
                 <span>Ajouter</span>
               </button>
             )}
           </div>
+          )}
         </div>
         <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onChange={(e) => { void onFiles(e.target.files); e.target.value = ""; }} />
       </div>

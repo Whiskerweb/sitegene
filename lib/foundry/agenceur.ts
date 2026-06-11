@@ -443,6 +443,7 @@ RÈGLES D'ASSEMBLAGE (strictes) :
 - Un composant de rôle "navbar" peut figurer AVANT le hero (facultatif, selon le métier — utilise "quand l'utiliser").
 - Jamais deux composants du même rôle.
 - Toujours une preuve sociale (reviews, stats ou logos) et toujours "contact-block" ou "cta-banner" avant le footer.
+- Au moins UNE section signature à fort caractère visuel (rareté rare ou épique : fx-*, parallax-strip, marquee-words, quote-spotlight, scroll-velocity-gallery, liquid-reviews-marquee…) choisie pour CE métier et CETTE DA — c'est elle qui crée l'effet « waouh » du site. Deux si la DA est très expressive (dark, brutalist, luxe).
 - "pricing-cards" uniquement si le métier vend des formules/forfaits lisibles.
 - Choisis les composants les plus pertinents pour CE client (sers-toi de "quand l'utiliser").
 
