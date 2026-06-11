@@ -105,6 +105,22 @@ function normalizeValue(sampleVal: unknown, rawVal: unknown, key: string, opts: 
         .slice(0, 8);
       return links.length > 0 ? links : sampleVal;
     }
+    // Liens sociaux : objets {platform?, href, label?} posés par l'injection du
+    // tunnel /creer (ou édités) — l'href EST la donnée, on la préserve telle
+    // quelle (le sample peut être vide : ne jamais y retomber).
+    if (key === "socials") {
+      return rawVal
+        .filter(isPlainObject)
+        .map((x) => {
+          const href = typeof x.href === "string" ? x.href.trim().slice(0, 300) : "";
+          if (!href) return null;
+          const platform = typeof x.platform === "string" && x.platform.trim() ? x.platform.trim().slice(0, 24) : undefined;
+          const label = typeof x.label === "string" && x.label.trim() ? x.label.trim().slice(0, 40) : undefined;
+          return { ...(platform ? { platform } : {}), href, ...(label ? { label } : {}) };
+        })
+        .filter((x): x is NonNullable<typeof x> => x !== null)
+        .slice(0, 12);
+    }
     const first = sampleVal[0];
     if (typeof first === "string") {
       // Tableau de chaînes (images intercepté plus haut, ou texte pur).

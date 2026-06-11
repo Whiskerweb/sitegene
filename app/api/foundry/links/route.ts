@@ -7,6 +7,31 @@ import type { Collected } from "@/lib/foundry/link-catalog";
 
 export const maxDuration = 30;
 
+type Admin = ReturnType<typeof createAdminClient>;
+
+const STAGING_RE = /\/storage\/v1\/object\/public\/site-photos\/(staging\/[^?#]+)$/i;
+
+/**
+ * Adopte un fichier du dépôt anonyme (staging/<draftId>/…) dans le dossier du
+ * site : copie Storage + URL réécrite. Indispensable pour que la bibliothèque
+ * de l'Atelier (site-photos/<siteId>/) liste les photos de l'onboarding, et
+ * pour que isAllowedPhotoUrl accepte ces URLs à l'édition. Idempotent.
+ */
+async function adoptStagingUrl(admin: Admin, siteId: string, url: string): Promise<string> {
+  const m = url.match(STAGING_RE);
+  if (!m) return url;
+  const from = decodeURIComponent(m[1]);
+  const name = from.split("/").pop();
+  if (!name) return url;
+  const to = `${siteId}/${name}`;
+  const { error } = await admin.storage.from("site-photos").copy(from, to);
+  if (error && !/exists|duplicate/i.test(error.message)) {
+    console.error("[foundry/links] adoption staging échouée :", error.message);
+    return url; // l'URL staging reste fonctionnelle (publique)
+  }
+  return admin.storage.from("site-photos").getPublicUrl(to).data.publicUrl;
+}
+
 /**
  * Fusionne les liens & photos collectés (tunnel /creer) dans la recette draft.
  * Déterministe (aucun appel Mistral). Idempotent.
@@ -42,8 +67,20 @@ export async function POST(request: Request) {
     socials: Array.isArray(collected.socials) ? collected.socials.filter((s) => s?.href) : [],
     contact: collected.contact ?? {},
     booking: collected.booking?.href ? collected.booking : undefined,
-    photos: Array.isArray(collected.photos) ? collected.photos.slice(0, 20) : [],
+    photos: Array.isArray(collected.photos)
+      ? collected.photos.filter((p): p is string => typeof p === "string" && !!p).slice(0, 20)
+      : [],
+    techRider:
+      typeof collected.techRider?.href === "string" && collected.techRider.href
+        ? { href: collected.techRider.href, name: collected.techRider.name }
+        : undefined,
   };
+
+  // Adoption des fichiers staging → dossier du site (photos + fiche technique).
+  safe.photos = await Promise.all(safe.photos.map((url) => adoptStagingUrl(admin, siteId, url)));
+  if (safe.techRider) {
+    safe.techRider = { ...safe.techRider, href: await adoptStagingUrl(admin, siteId, safe.techRider.href) };
+  }
 
   const merged = injectContacts(loaded.recipe, safe);
   await saveRecipeDraft(admin, siteId, merged, {});

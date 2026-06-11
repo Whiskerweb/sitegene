@@ -51,6 +51,7 @@ const CORE_SAMPLES: Record<string, Record<string, unknown>> = {
   "cta-banner": {
     title: "Votre cheminement commence par un premier pas : celui de tendre la main.",
     cta: "Prendre rendez-vous",
+    ctaHref: "#contact",
     image: `${M}/int4.jpg`,
   },
   "footer-columns": {
@@ -60,6 +61,7 @@ const CORE_SAMPLES: Record<string, Record<string, unknown>> = {
       { title: "Liens rapides", links: ["Accueil", "À propos", "Services", "Tarifs"] },
       { title: "Me contacter", links: ["bonjour@sereenity.fr", "+33 1 23 45 67 89", "12 rue des Tilleuls, Paris"] },
     ],
+    socials: [],
     copyright: "© Sereenity. Tous droits réservés.",
   },
   "logo-marquee": {
@@ -108,6 +110,7 @@ const CORE_SAMPLES: Record<string, Record<string, unknown>> = {
     phone: "+33 1 23 45 67 89",
     address: "12 rue des Tilleuls, 75011 Paris",
     cta: "Prendre rendez-vous",
+    ctaHref: "#top",
   },
   // --- Sections DESIGN -------------------------------------------------------
   "parallax-strip": {

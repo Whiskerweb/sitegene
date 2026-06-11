@@ -1,7 +1,7 @@
 // components/foundry/components/CtaBanner.tsx
 import type { Skin } from "@/lib/foundry/types";
 
-interface CtaContent { title: string; cta: string; image?: string }
+interface CtaContent { title: string; cta: string; ctaHref?: string; image?: string }
 
 export default function CtaBanner({ content }: { content: CtaContent; skin: Skin }) {
   return (
@@ -21,7 +21,7 @@ export default function CtaBanner({ content }: { content: CtaContent; skin: Skin
             {content.title}
           </h2>
           <a
-            href="#tarifs"
+            href={content.ctaHref?.trim() || "#contact"}
             className="mt-8 inline-flex rounded-[var(--r-pill)] px-8 py-4 font-bold transition hover:brightness-95"
             style={{ background: "var(--c-accent)", color: "var(--c-on-accent)" }}
           >

@@ -11,6 +11,8 @@ export type Collected = {
   contact: { phone?: string; whatsapp?: string; email?: string; address?: string; mapsUrl?: string };
   booking?: { label: string; href: string };
   photos: string[];
+  /** Fiche technique (musiciens) : PDF envoyé au collect, branché sur le CTA du site. */
+  techRider?: { href: string; name?: string };
 };
 
 export interface PlatformDef {

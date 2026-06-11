@@ -46,6 +46,8 @@ const CORE_MANIFESTS: Record<string, ComponentManifest> = {
     description: "Footer en colonnes : marque + tagline, liens, contact ; barre basse copyright.",
     whenToUse: ["clôture de page (toujours)"],
     vibes: ALL_VIBES,
+    // "socials" volontairement ABSENT des clés requises : présent via le sample
+    // (normalisation) mais optionnel pour les recettes antérieures en base.
     contentKeys: ["brand", "tagline", "columns", "copyright"],
     allowedSkinKeys: ["surface"],
   },
