@@ -8,8 +8,9 @@ const FILES = [
   "PlumberProFooter","FooterColumns",
 ];
 // #fff/#000 etc. tolérés UNIQUEMENT dans rgba()/gradient/shadow. On interdit
-// les `color:#xxx` / `background:#xxx` solides hors var().
-const SOLID = /(background|background-color|color)\s*:\s*#[0-9a-fA-F]{3,6}\b/g;
+// les couleurs solides en dur hors var() — en CSS-in-JS (`color:#xxx`) ET en
+// style objet JSX (`color: "#xxx"`). Le guillemet optionnel couvre les deux.
+const SOLID = /(background|background-color|color|border-color)\s*:\s*["']?#[0-9a-fA-F]{3,6}\b/g;
 
 describe("pas de couleur solide en dur (hero/navbar/footer catalogue)", () => {
   for (const f of FILES) {
