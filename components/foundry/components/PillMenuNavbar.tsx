@@ -17,7 +17,7 @@ export default function PillMenuNavbar({ content, skin }: { content: any; skin: 
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-5 md:px-8">
         <a href="#" className="flex items-center gap-2" style={{ color: "var(--c-ink)" }}>
           <span className="flex h-7 w-7 items-center justify-center rounded-full" style={{ background: "var(--c-accent)" }}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2"><path d="M22 10L12 5 2 10l10 5 10-5z" /><path d="M6 12v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5" /></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--c-on-accent)" strokeWidth="2"><path d="M22 10L12 5 2 10l10 5 10-5z" /><path d="M6 12v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5" /></svg>
           </span>
           <span className="text-xl font-bold tracking-tight" style={{ fontFamily: "var(--font-heading)" }}>{content?.brand ?? "Elearni"}</span>
         </a>

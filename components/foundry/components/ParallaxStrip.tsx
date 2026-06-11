@@ -35,7 +35,7 @@ export default function ParallaxStrip({ content }: { content: ParallaxStripConte
               <a
                 href="#contact"
                 className="mt-8 inline-flex items-center gap-2 rounded-[var(--r-pill)] px-6 py-3 text-sm font-semibold transition-all hover:brightness-110"
-                style={{ background: "var(--c-accent)", color: "#fff" }}
+                style={{ background: "var(--c-accent)", color: "var(--c-on-accent)" }}
               >
                 {content.cta}
                 <span aria-hidden>→</span>

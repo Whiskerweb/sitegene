@@ -31,7 +31,7 @@ export default function PricingImageCards({ content, skin }: { content: any; ski
         .pricingic-feature { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: var(--c-ink); }
         .pricingic-check { color: var(--c-accent); flex-shrink: 0; }
         .pricingic-custom-name { font-family: var(--font-heading); font-weight: 800; font-size: 3rem; letter-spacing: -0.04em; color: var(--c-ink); margin-bottom: 1.25rem; }
-        .pricingic-cta { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--c-accent); color: #fff; font-weight: 600; font-size: 0.875rem; padding: 0.75rem 1.5rem; border-radius: var(--r-pill); text-decoration: none; transition: filter .2s; }
+        .pricingic-cta { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--c-accent); color: var(--c-on-accent); font-weight: 600; font-size: 0.875rem; padding: 0.75rem 1.5rem; border-radius: var(--r-pill); text-decoration: none; transition: filter .2s; }
         .pricingic-cta:hover { filter: brightness(.95); }
         .pricingic-custom-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem; }
         .pricingic-custom-feats { display: flex; flex-direction: column; gap: 0.625rem; }

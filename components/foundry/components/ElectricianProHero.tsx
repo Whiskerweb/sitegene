@@ -18,7 +18,7 @@ export default function ElectricianProHero({ content, skin }: { content: any; sk
         .ephero-ratingtext { font-size: 0.875rem; font-weight: 500; color: var(--c-muted); }
         .ephero-h1 { font-family: var(--font-heading); font-weight: 800; font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.05; letter-spacing: -0.03em; color: var(--c-ink); max-width: 44rem; margin: 0 auto 1.5rem; }
         .ephero-tagline { font-size: 1rem; color: var(--c-muted); max-width: 32rem; margin: 0 auto 2rem; line-height: 1.6; }
-        .ephero-cta { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--c-accent); color: #fff; font-weight: 600; font-size: 0.875rem; padding: 0.875rem 1.75rem; border-radius: var(--r-pill); text-decoration: none; transition: filter .2s; }
+        .ephero-cta { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--c-accent); color: var(--c-on-accent); font-weight: 600; font-size: 0.875rem; padding: 0.875rem 1.75rem; border-radius: var(--r-pill); text-decoration: none; transition: filter .2s; }
         .ephero-cta:hover { filter: brightness(.95); }
         .ephero-imgwrap { max-width: 80rem; margin: 0 auto; padding: 0 1.5rem 4rem; position: relative; }
         .ephero-img { width: 100%; height: clamp(260px, 40vw, 520px); object-fit: cover; border-radius: var(--r-xl); display: block; }

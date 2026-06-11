@@ -45,7 +45,7 @@ export default function PricingCards({ content }: { content: PricingContent; ski
                 <a
                   href="#top"
                   className="mt-8 rounded-[var(--r-pill)] px-6 py-3.5 text-center font-bold transition hover:brightness-95"
-                  style={f ? { background: "var(--c-accent2)", color: "var(--c-ink)" } : { background: "var(--c-accent)", color: "#fff" }}
+                  style={f ? { background: "var(--c-accent2)", color: "var(--c-ink)" } : { background: "var(--c-accent)", color: "var(--c-on-accent)" }}
                 >
                   {p.cta}
                 </a>

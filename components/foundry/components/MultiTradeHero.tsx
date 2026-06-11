@@ -18,16 +18,16 @@ export default function MultiTradeHero({ content, skin }: { content: any; skin: 
         .mthero-inner { position: relative; width: 100%; max-width: 90rem; margin: 0 auto; padding: 10rem 1.5rem 4rem; display: grid; gap: 2.5rem; align-items: flex-end; }
         @media(min-width: 1024px) { .mthero-inner { grid-template-columns: 1fr 1fr; } }
         .mthero-copy { }
-        .mthero-h1 { font-family: var(--font-heading); font-weight: 800; font-size: clamp(2rem, 5vw, 3.75rem); line-height: 1.05; letter-spacing: -0.03em; color: #fff; max-width: 32rem; margin-bottom: 1.5rem; }
+        .mthero-h1 { font-family: var(--font-heading); font-weight: 800; font-size: clamp(2rem, 5vw, 3.75rem); line-height: 1.05; letter-spacing: -0.03em; color: var(--c-surface); max-width: 32rem; margin-bottom: 1.5rem; }
         .mthero-tagline { color: rgba(255,255,255,.7); font-size: 1.125rem; max-width: 28rem; margin-bottom: 2rem; line-height: 1.6; }
-        .mthero-cta { display: inline-flex; align-items: center; gap: 0.75rem; background: var(--c-accent); color: #fff; font-weight: 600; font-size: 0.875rem; padding: 0.875rem 1.5rem; border-radius: var(--r-pill); text-decoration: none; transition: filter .2s; }
+        .mthero-cta { display: inline-flex; align-items: center; gap: 0.75rem; background: var(--c-accent); color: var(--c-on-accent); font-weight: 600; font-size: 0.875rem; padding: 0.875rem 1.5rem; border-radius: var(--r-pill); text-decoration: none; transition: filter .2s; }
         .mthero-cta:hover { filter: brightness(1.1); }
         .mthero-cta svg { flex-shrink: 0; }
         .mthero-pills { display: none; flex-direction: column; align-items: flex-end; gap: 0.75rem; }
         @media(min-width: 1024px) { .mthero-pills { display: flex; } }
         .mthero-pill { display: inline-flex; align-items: center; gap: 0.625rem; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); border-radius: var(--r-pill); padding: 0.625rem 1.25rem; }
         .mthero-pill-dot { width: 1.25rem; height: 1.25rem; background: var(--c-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .mthero-pill-text { color: #fff; font-size: 0.875rem; font-weight: 500; }
+        .mthero-pill-text { color: var(--c-surface); font-size: 0.875rem; font-weight: 500; }
       `}</style>
       <div className="mthero-bg">
         {image && <img src={image} alt="" />}
@@ -50,7 +50,7 @@ export default function MultiTradeHero({ content, skin }: { content: any; skin: 
             {pills.map((p, i) => (
               <div key={i} className="mthero-pill">
                 <span className="mthero-pill-dot">
-                  <svg width="12" height="12" fill="#fff" viewBox="0 0 20 20">
+                  <svg width="12" height="12" fill="var(--c-on-accent)" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                   </svg>
                 </span>

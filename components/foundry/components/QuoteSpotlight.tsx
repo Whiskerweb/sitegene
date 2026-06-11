@@ -26,7 +26,7 @@ export default function QuoteSpotlight({ content }: { content: QuoteSpotlightCon
         <Reveal>
           <blockquote
             className="text-[1.7rem] leading-[1.3] md:text-[2.6rem]"
-            style={{ fontFamily: "var(--font-heading)", color: "#fff", letterSpacing: "-0.8px" }}
+            style={{ fontFamily: "var(--font-heading)", color: "var(--c-surface)", letterSpacing: "-0.8px" }}
           >
             {content.quote}
           </blockquote>

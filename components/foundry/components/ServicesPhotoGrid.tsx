@@ -40,7 +40,7 @@ export default function ServicesPhotoGrid({ content, skin }: { content: any; ski
               <div className="spgrid-pill">
                 <span className="spgrid-pill-label">{item.title}</span>
                 <span className="spgrid-pill-icon">
-                  <svg width="14" height="14" fill="none" stroke="#fff" strokeWidth="2.5" viewBox="0 0 24 24">
+                  <svg width="14" height="14" fill="none" stroke="var(--c-on-accent)" strokeWidth="2.5" viewBox="0 0 24 24">
                     <path d="M7 17 17 7M9 7h8v8" />
                   </svg>
                 </span>

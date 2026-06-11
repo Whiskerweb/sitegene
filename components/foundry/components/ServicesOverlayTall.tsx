@@ -26,7 +26,7 @@ export default function ServicesOverlayTall({ content, skin }: { content: any; s
         .sovtall-card:hover img { transform: scale(1.05); }
         .sovtall-overlay { position: absolute; inset: 0; background: linear-gradient(to top, color-mix(in srgb, var(--c-ink) 90%, transparent) 0%, color-mix(in srgb, var(--c-ink) 30%, transparent) 50%, transparent 100%); }
         .sovtall-body { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem; }
-        .sovtall-cardtitle { color: #fff; font-family: var(--font-heading); font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem; }
+        .sovtall-cardtitle { color: var(--c-surface); font-family: var(--font-heading); font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem; }
         .sovtall-carddesc { color: rgba(255,255,255,.7); font-size: 0.875rem; line-height: 1.55; max-width: 20rem; }
       `}</style>
       <div className="sovtall-inner">
