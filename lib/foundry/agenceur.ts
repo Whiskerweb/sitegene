@@ -362,12 +362,14 @@ const FALLBACK_PLANS: Record<TradeId, string[]> = {
   restaurant: ["hero-split-asym", "intro-split", "services-rows", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
   beaute: ["hero-split-asym", "intro-split", "services-rows", "pricing-cards", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
   conseil: ["hero-split-asym", "logo-marquee", "intro-split", "services-rows", "process-steps", "stats-countup", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
+  musicien: ["hero-split-asym", "intro-split", "services-rows", "stats-countup", "testimonials-carousel", "contact-block", "cta-banner", "footer-columns"],
+  fitness: ["hero-split-asym", "intro-split", "services-rows", "process-steps", "stats-countup", "pricing-cards", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
   autre: ["hero-split-asym", "intro-split", "services-rows", "process-steps", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
 };
 
 /** Recette de secours, valide par construction. */
 export function fallbackRecipe(input: AgenceurInput): Recipe {
-  const trade = detectTrade(input.brief);
+  const trade = detectTrade(input.brief).trade;
   const plan = FALLBACK_PLANS[trade];
   const sections = plan.map((id) => ({ component: id, content: normalizeSectionContent(id, {}) }));
   return repairRecipe(sections, input);
@@ -392,7 +394,7 @@ function catalogForPrompt(): string {
 
 export function buildAgenceurMessages(input: AgenceurInput): Array<{ role: "system" | "user"; content: string }> {
   const vibe = input.customVibe ?? getVibe(input.vibeId);
-  const trade = detectTrade(input.brief);
+  const trade = detectTrade(input.brief).trade;
   const system = `Tu es l'ARCHITECTE-AGENCEUR d'Akyra. Tu assembles des sites vitrines en français à partir d'un CATALOGUE FERMÉ de composants. Tu ne crées JAMAIS de composant ni de HTML : tu choisis, tu ordonnes, tu rédiges les textes. Tu penses comme un architecte : utilité de chaque section, rythme visuel, conversion.
 
 RÈGLES D'ASSEMBLAGE (strictes) :
