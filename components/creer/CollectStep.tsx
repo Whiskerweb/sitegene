@@ -2,8 +2,11 @@
 "use client";
 
 // Écran unique de collecte (tunnel /creer), affiché PENDANT la génération des chartes.
-// Liens proposés par métier + bouton « Ajouter un lien » + upload photos (max 20).
-import { useMemo, useRef, useState } from "react";
+// - Import « magique » : collez votre site / Instagram → liens & contacts pré-remplis.
+// - Liens proposés par métier + « Ajouter un lien ».
+// - Photos : drag & drop, aperçu instantané, compression navigateur, uploads
+//   parallèles SANS compte (staging par draftId), réordonnancement (1re = hero).
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   PLATFORMS,
   linkFieldsForTrade,
@@ -11,18 +14,38 @@ import {
   type Collected,
   type LinkKind,
 } from "@/lib/foundry/link-catalog";
+import { classifyImportUrl, mergeScrapedIntoCollected } from "@/lib/foundry/collect-import";
+import { compressImage } from "@/lib/client/compress-image";
+import type { ScrapedSite } from "@/lib/scrape-site";
 import type { TradeId } from "@/lib/foundry/da-personas";
 import SocialIcon from "@/components/foundry/components/SocialIcon";
 
 type Props = {
   trade: TradeId;
-  siteId: string | null;          // dispo dès que la génération a renvoyé l'id
   chartesReady: boolean;          // génération des chartes terminée ?
   collected: Collected;
   onChange: (next: Collected) => void;
   onFinish: () => void;           // → va à la phase vibe (choisir la charte)
   onSkip: () => void;
 };
+
+const MAX_PHOTOS = 20;
+const UPLOAD_CONCURRENCY = 3;
+
+type PendingPhoto = { key: string; preview: string; status: "uploading" | "error"; file: File };
+
+/** draftId stable du tunnel (sessionStorage) — clé du dépôt photos anonyme. */
+function getDraftId(): string {
+  try {
+    const existing = sessionStorage.getItem("akyra_draft_id");
+    if (existing) return existing;
+    const id = crypto.randomUUID();
+    sessionStorage.setItem("akyra_draft_id", id);
+    return id;
+  } catch {
+    return crypto.randomUUID();
+  }
+}
 
 /** Range une valeur saisie dans le bon seau de Collected selon le kind. */
 function setValue(c: Collected, platform: string, kind: LinkKind, raw: string): Collected {
@@ -57,19 +80,44 @@ function rawValue(c: Collected, platform: string, kind: LinkKind): string {
   return c.socials.find((s) => s.platform === platform)?.href ?? "";
 }
 
-export default function CollectStep({ trade, siteId, chartesReady, collected, onChange, onFinish, onSkip }: Props) {
+/** Plateformes qui portent une valeur dans Collected (pour les rendre visibles). */
+function platformsWithValue(c: Collected): string[] {
+  const keys = c.socials.map((s) => s.platform);
+  if (c.contact.phone) keys.push("phone");
+  if (c.contact.whatsapp) keys.push("whatsapp");
+  if (c.contact.email) keys.push("email");
+  if (c.contact.mapsUrl) keys.push("maps");
+  if (c.booking?.href) keys.push("booking");
+  return keys.filter((k) => PLATFORMS[k]);
+}
+
+export default function CollectStep({ trade, chartesReady, collected, onChange, onFinish, onSkip }: Props) {
   const defaults = useMemo(() => linkFieldsForTrade(trade), [trade]);
-  const [extra, setExtra] = useState<string[]>([]);   // plateformes ajoutées via « + »
+  const [extra, setExtra] = useState<string[]>([]);   // plateformes ajoutées via « + » ou l'import
   const [dismissed, setDismissed] = useState<string[]>([]);
   const [pickerOpen, setPickerOpen] = useState(false);
-  const [uploading, setUploading] = useState(false);
-  const [uploadError, setUploadError] = useState<string | null>(null);
+
+  // Import magique
+  const [importUrl, setImportUrl] = useState("");
+  const [importing, setImporting] = useState(false);
+  const [importMsg, setImportMsg] = useState<{ tone: "ok" | "err"; text: string } | null>(null);
+
+  // Photos
+  const draftIdRef = useRef<string | null>(null);
+  const [pending, setPending] = useState<PendingPhoto[]>([]);
+  const [dragOver, setDragOver] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  const collectedRef = useRef(collected);
+  useEffect(() => {
+    collectedRef.current = collected;
+  }, [collected]);
 
   const shownKeys = useMemo(() => {
+    const withValue = platformsWithValue(collected);
     const base = defaults.map((d) => d.platform).filter((k) => !dismissed.includes(k));
-    return [...base, ...extra.filter((k) => !base.includes(k) && !dismissed.includes(k))];
-  }, [defaults, extra, dismissed]);
+    const adds = [...extra, ...withValue].filter((k) => !base.includes(k) && !dismissed.includes(k));
+    return [...base, ...Array.from(new Set(adds))];
+  }, [defaults, extra, dismissed, collected]);
 
   const fields = shownKeys.map((platform) => {
     const def = PLATFORMS[platform] ?? PLATFORMS.link;
@@ -77,47 +125,140 @@ export default function CollectStep({ trade, siteId, chartesReady, collected, on
   });
 
   function dismissField(platform: string) {
-    if (defaults.some((d) => d.platform === platform)) {
-      setDismissed((d) => [...d, platform]);
-    } else {
-      setExtra((e) => e.filter((k) => k !== platform));
+    setDismissed((d) => (d.includes(platform) ? d : [...d, platform]));
+    setExtra((e) => e.filter((k) => k !== platform));
+    // Vide aussi la valeur, sinon le champ réapparaîtrait (plateforme avec valeur).
+    const def = PLATFORMS[platform];
+    if (def) onChange(setValue(collectedRef.current, platform, def.kind, ""));
+  }
+
+  // --- Import magique -----------------------------------------------------------
+  async function runImport() {
+    const target = classifyImportUrl(importUrl);
+    setImportMsg(null);
+    if (!target) {
+      setImportMsg({ tone: "err", text: "Collez une adresse valide (site, Instagram, Facebook…)." });
+      return;
+    }
+    // Profil social / réservation : rangé directement, sans scrape.
+    if (target.kind === "social") {
+      const def = PLATFORMS[target.platform];
+      onChange(setValue(collectedRef.current, target.platform, def?.kind ?? "social", target.href));
+      setExtra((e) => (e.includes(target.platform) ? e : [...e, target.platform]));
+      setDismissed((d) => d.filter((k) => k !== target.platform));
+      setImportMsg({ tone: "ok", text: `${def?.label ?? "Lien"} ajouté ✓` });
+      setImportUrl("");
+      return;
+    }
+    // Site web : scrape serveur puis fusion (jamais d'écrasement de saisie).
+    setImporting(true);
+    try {
+      const res = await fetch("/api/foundry/scrape", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: target.url }),
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data?.ok || !data?.data) {
+        throw new Error(data?.error ?? "Site inaccessible — vérifiez l'adresse.");
+      }
+      const { collected: merged, summary } = mergeScrapedIntoCollected(
+        collectedRef.current,
+        data.data as ScrapedSite,
+        target.url,
+      );
+      onChange(merged);
+      const found = summary.links + summary.contacts;
+      setImportMsg(
+        found > 0
+          ? { tone: "ok", text: `${summary.links} lien${summary.links > 1 ? "s" : ""} et ${summary.contacts} contact${summary.contacts > 1 ? "s" : ""} importés ✓ — vérifiez ci-dessous.` }
+          : { tone: "ok", text: "Site lisible, mais rien à importer — complétez à la main." },
+      );
+      setImportUrl("");
+    } catch (e) {
+      setImportMsg({ tone: "err", text: e instanceof Error ? e.message : "Import impossible." });
+    } finally {
+      setImporting(false);
     }
   }
 
-  async function onFiles(files: FileList | null) {
-    if (!files || !siteId) return;
-    setUploadError(null);
-    setUploading(true);
+  // --- Photos ---------------------------------------------------------------------
+  // Ajout synchronisé via la ref : deux uploads parallèles qui aboutissent en
+  // même temps ne s'écrasent pas (l'état React seul perdrait une photo).
+  function appendPhoto(url: string) {
+    const current = collectedRef.current;
+    const next = { ...current, photos: [...current.photos, url].slice(0, MAX_PHOTOS) };
+    collectedRef.current = next;
+    onChange(next);
+  }
+
+  async function uploadOne(item: PendingPhoto): Promise<void> {
+    if (!draftIdRef.current) draftIdRef.current = getDraftId();
     try {
-      const remaining = 20 - collected.photos.length;
-      const toSend = Array.from(files).slice(0, Math.max(0, remaining));
-      const urls: string[] = [];
-      for (const file of toSend) {
-        const fd = new FormData();
-        fd.append("siteId", siteId);
-        fd.append("file", file);
-        const res = await fetch("/api/site/photo", { method: "POST", body: fd });
-        const data = await res.json().catch(() => null);
-        if (!res.ok || !data?.url) throw new Error(data?.error ?? "Upload impossible.");
-        urls.push(data.url as string);
-      }
-      onChange({ ...collected, photos: [...collected.photos, ...urls].slice(0, 20) });
-    } catch (e) {
-      setUploadError(e instanceof Error ? e.message : "Upload impossible.");
-    } finally {
-      setUploading(false);
-      if (fileRef.current) fileRef.current.value = "";
+      const compressed = await compressImage(item.file);
+      const fd = new FormData();
+      fd.append("draftId", draftIdRef.current);
+      fd.append("file", compressed);
+      const res = await fetch("/api/foundry/photo", { method: "POST", body: fd });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data?.url) throw new Error(data?.error ?? "Upload impossible.");
+      appendPhoto(data.url as string);
+      setPending((p) => p.filter((x) => x.key !== item.key));
+      URL.revokeObjectURL(item.preview);
+    } catch {
+      setPending((p) => p.map((x) => (x.key === item.key ? { ...x, status: "error" } : x)));
     }
+  }
+
+  async function onFiles(files: FileList | File[] | null) {
+    if (!files) return;
+    const room = MAX_PHOTOS - collectedRef.current.photos.length - pending.length;
+    const accepted = Array.from(files)
+      .filter((f) => /^image\/(jpeg|png|webp)$/.test(f.type))
+      .slice(0, Math.max(0, room));
+    if (accepted.length === 0) return;
+
+    const items: PendingPhoto[] = accepted.map((file) => ({
+      key: crypto.randomUUID(),
+      preview: URL.createObjectURL(file),
+      status: "uploading",
+      file,
+    }));
+    setPending((p) => [...p, ...items]);
+
+    // Pool d'uploads parallèles (3 max) — chaque succès apparaît dès qu'il aboutit.
+    const queue = [...items];
+    await Promise.all(
+      Array.from({ length: Math.min(UPLOAD_CONCURRENCY, queue.length) }, async () => {
+        for (let next = queue.shift(); next; next = queue.shift()) await uploadOne(next);
+      }),
+    );
+  }
+
+  function retryUpload(key: string) {
+    const item = pending.find((x) => x.key === key);
+    if (!item) return;
+    setPending((p) => p.map((x) => (x.key === key ? { ...x, status: "uploading" } : x)));
+    void uploadOne({ ...item, status: "uploading" });
+  }
+
+  function movePhoto(i: number, dir: -1 | 1) {
+    const photos = [...collected.photos];
+    const j = i + dir;
+    if (j < 0 || j >= photos.length) return;
+    [photos[i], photos[j]] = [photos[j], photos[i]];
+    onChange({ ...collected, photos });
   }
 
   const allPlatformKeys = Object.keys(PLATFORMS);
+  const photoCount = collected.photos.length + pending.length;
 
   return (
     <section className="mx-auto max-w-2xl pt-8 sm:pt-12">
       <div className="text-center">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Personnalisez votre site</h1>
         <p className="mt-3 text-[15px] text-[rgb(var(--m-muted))]">
-          Ajoutez vos liens et vos photos — on les injecte dans votre site. Tout est optionnel.
+          Vos liens et vos photos — on les injecte dans votre site. Tout est optionnel.
         </p>
         <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[rgb(var(--m-line))] px-3 py-1 text-[13px]">
           {chartesReady ? (
@@ -130,37 +271,71 @@ export default function CollectStep({ trade, siteId, chartesReady, collected, on
         </div>
       </div>
 
-      {/* Liens */}
-      <div className="mt-6 overflow-hidden rounded-2xl border border-[rgb(var(--m-line))]">
-        {fields.map((f, i) => (
-          <div
-            key={f.platform}
-            className={`flex items-center gap-3 px-4 py-3 ${i !== fields.length - 1 ? "border-b border-[rgb(var(--m-line))]" : ""}`}
+      {/* Import magique : un lien → tout se pré-remplit */}
+      <div className="mt-6 rounded-2xl border border-[rgb(var(--m-accent))]/30 bg-[rgb(var(--m-accent))]/5 p-4">
+        <label className="text-[13px] font-semibold">
+          Vous êtes déjà quelque part en ligne ? <span className="font-normal text-[rgb(var(--m-muted))]">Collez un lien, on remplit pour vous.</span>
+        </label>
+        <div className="mt-2 flex gap-2">
+          <input
+            value={importUrl}
+            onChange={(e) => setImportUrl(e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); void runImport(); } }}
+            placeholder="votre-site.fr, instagram.com/vous, calendly.com/vous…"
+            inputMode="url"
+            className="h-11 min-w-0 flex-1 rounded-xl border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] px-3.5 text-[14px] outline-none transition focus:border-[rgb(var(--m-accent))]"
+          />
+          <button
+            type="button"
+            disabled={importing || importUrl.trim().length < 4}
+            onClick={() => void runImport()}
+            className="h-11 shrink-0 rounded-xl bg-[rgb(var(--m-accent))] px-4 text-[14px] font-semibold text-[rgb(var(--m-on-accent))] transition enabled:hover:opacity-90 disabled:opacity-40"
           >
-            <SocialIcon platform={f.platform} className="h-5 w-5 shrink-0 text-[rgb(var(--m-muted))]" />
-            <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-              <span className="text-[11px] font-semibold uppercase tracking-wide text-[rgb(var(--m-faint))]">
-                {f.label}
-              </span>
-              <input
-                value={rawValue(collected, f.platform, f.kind)}
-                onChange={(e) => onChange(setValue(collected, f.platform, f.kind, e.target.value))}
-                placeholder={f.placeholder}
-                className="w-full bg-transparent text-[14px] text-[rgb(var(--m-ink))] outline-none placeholder:text-[rgb(var(--m-faint))]"
-              />
-            </div>
-            <button
-              type="button"
-              onClick={() => dismissField(f.platform)}
-              aria-label={`Retirer ${f.label}`}
-              className="ml-1 shrink-0 rounded-full p-1 text-[rgb(var(--m-faint))] transition hover:text-[rgb(var(--m-ink))]"
+            {importing ? "Lecture…" : "Importer"}
+          </button>
+        </div>
+        {importMsg ? (
+          <p className={`mt-2 text-[12.5px] font-medium ${importMsg.tone === "ok" ? "text-emerald-600" : "text-red-600"}`}>
+            {importMsg.text}
+          </p>
+        ) : null}
+      </div>
+
+      {/* Liens */}
+      <div className="mt-5 overflow-hidden rounded-2xl border border-[rgb(var(--m-line))]">
+        {fields.map((f, i) => {
+          const value = rawValue(collected, f.platform, f.kind);
+          return (
+            <div
+              key={f.platform}
+              className={`flex items-center gap-3 px-4 py-3 ${i !== fields.length - 1 ? "border-b border-[rgb(var(--m-line))]" : ""}`}
             >
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
-                <path d="M2 2l8 8M10 2l-8 8"/>
-              </svg>
-            </button>
-          </div>
-        ))}
+              <SocialIcon platform={f.platform} className="h-5 w-5 shrink-0 text-[rgb(var(--m-muted))]" />
+              <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+                <span className="text-[11px] font-semibold uppercase tracking-wide text-[rgb(var(--m-faint))]">
+                  {f.label}
+                </span>
+                <input
+                  value={value}
+                  onChange={(e) => onChange(setValue(collected, f.platform, f.kind, e.target.value))}
+                  placeholder={f.placeholder}
+                  className="w-full bg-transparent text-[14px] text-[rgb(var(--m-ink))] outline-none placeholder:text-[rgb(var(--m-faint))]"
+                />
+              </div>
+              {value ? <span className="shrink-0 text-[13px] text-emerald-600">✓</span> : null}
+              <button
+                type="button"
+                onClick={() => dismissField(f.platform)}
+                aria-label={`Retirer ${f.label}`}
+                className="ml-1 shrink-0 rounded-full p-1 text-[rgb(var(--m-faint))] transition hover:text-[rgb(var(--m-ink))]"
+              >
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                  <path d="M2 2l8 8M10 2l-8 8"/>
+                </svg>
+              </button>
+            </div>
+          );
+        })}
       </div>
 
       {/* Ajouter un lien */}
@@ -174,11 +349,15 @@ export default function CollectStep({ trade, siteId, chartesReady, collected, on
         </button>
         {pickerOpen && (
           <div className="mt-2 grid grid-cols-3 gap-1.5 rounded-2xl border border-[rgb(var(--m-line))] p-3 sm:grid-cols-4">
-            {allPlatformKeys.filter((k) => !shownKeys.includes(k) && !dismissed.includes(k)).map((k) => (
+            {allPlatformKeys.filter((k) => !shownKeys.includes(k)).map((k) => (
               <button
                 key={k}
                 type="button"
-                onClick={() => { setExtra((e) => e.includes(k) ? e : [...e, k]); setPickerOpen(false); }}
+                onClick={() => {
+                  setExtra((e) => e.includes(k) ? e : [...e, k]);
+                  setDismissed((d) => d.filter((x) => x !== k));
+                  setPickerOpen(false);
+                }}
                 className="flex flex-col items-center gap-1.5 rounded-xl border border-[rgb(var(--m-line))] p-2.5 text-center transition hover:border-[rgb(var(--m-accent))]"
               >
                 <SocialIcon platform={k} className="h-5 w-5 text-[rgb(var(--m-muted))]" />
@@ -193,36 +372,92 @@ export default function CollectStep({ trade, siteId, chartesReady, collected, on
       <div className="mt-8">
         <div className="flex items-center justify-between">
           <span className="text-[13px] font-semibold">Vos photos</span>
-          <span className="text-[12px] text-[rgb(var(--m-faint))]">{collected.photos.length}/20</span>
+          <span className="text-[12px] text-[rgb(var(--m-faint))]">{photoCount}/{MAX_PHOTOS}</span>
         </div>
-        <div className="mt-2 grid grid-cols-4 gap-2 sm:grid-cols-5">
-          {collected.photos.map((url, i) => (
-            <div key={i} className="group relative aspect-square overflow-hidden rounded-xl border border-[rgb(var(--m-line))]">
-              <img src={url} alt="" className="h-full w-full object-cover" />
+        <p className="mt-1 text-[12px] text-[rgb(var(--m-faint))]">
+          La première photo devient l'image principale de votre site. Glissez-déposez pour ajouter.
+        </p>
+        <div
+          onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+          onDragLeave={() => setDragOver(false)}
+          onDrop={(e) => { e.preventDefault(); setDragOver(false); void onFiles(e.dataTransfer.files); }}
+          className={`mt-2 rounded-2xl border p-2 transition ${
+            dragOver
+              ? "border-[rgb(var(--m-accent))] bg-[rgb(var(--m-accent))]/5"
+              : "border-transparent"
+          }`}
+        >
+          <div className="grid grid-cols-4 gap-2 sm:grid-cols-5">
+            {collected.photos.map((url, i) => (
+              <div key={url} className="group relative aspect-square overflow-hidden rounded-xl border border-[rgb(var(--m-line))]">
+                <img src={url} alt="" className="h-full w-full object-cover" />
+                {i === 0 ? (
+                  <span className="absolute left-1 top-1 rounded-full bg-[rgb(var(--m-accent))] px-1.5 py-0.5 text-[9px] font-bold text-[rgb(var(--m-on-accent))]">
+                    Principale
+                  </span>
+                ) : null}
+                <div className="absolute inset-x-0 bottom-0 hidden items-center justify-center gap-1 bg-gradient-to-t from-black/60 to-transparent pb-1 pt-3 group-hover:flex">
+                  <button
+                    type="button"
+                    onClick={() => movePhoto(i, -1)}
+                    disabled={i === 0}
+                    aria-label="Avancer la photo"
+                    className="rounded-full bg-white/90 px-1.5 text-[11px] font-bold text-neutral-800 disabled:opacity-30"
+                  >
+                    ←
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => movePhoto(i, 1)}
+                    disabled={i === collected.photos.length - 1}
+                    aria-label="Reculer la photo"
+                    className="rounded-full bg-white/90 px-1.5 text-[11px] font-bold text-neutral-800 disabled:opacity-30"
+                  >
+                    →
+                  </button>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => onChange({ ...collected, photos: collected.photos.filter((_, j) => j !== i) })}
+                  className="absolute right-1 top-1 hidden rounded-full bg-black/60 px-1.5 text-[11px] text-white group-hover:block"
+                  aria-label="Retirer"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+            {pending.map((p) => (
+              <div key={p.key} className="relative aspect-square overflow-hidden rounded-xl border border-[rgb(var(--m-line))]">
+                <img src={p.preview} alt="" className={`h-full w-full object-cover ${p.status === "uploading" ? "opacity-50" : "opacity-30"}`} />
+                {p.status === "uploading" ? (
+                  <span className="absolute inset-0 flex items-center justify-center">
+                    <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent drop-shadow" />
+                  </span>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => retryUpload(p.key)}
+                    className="absolute inset-0 flex flex-col items-center justify-center gap-0.5 text-[11px] font-semibold text-red-600"
+                  >
+                    <span>Échec</span>
+                    <span className="rounded-full bg-white/90 px-2 py-0.5">↻ Réessayer</span>
+                  </button>
+                )}
+              </div>
+            ))}
+            {photoCount < MAX_PHOTOS && (
               <button
                 type="button"
-                onClick={() => onChange({ ...collected, photos: collected.photos.filter((_, j) => j !== i) })}
-                className="absolute right-1 top-1 hidden rounded-full bg-black/60 px-1.5 text-[11px] text-white group-hover:block"
-                aria-label="Retirer"
+                onClick={() => fileRef.current?.click()}
+                className="flex aspect-square flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-[rgb(var(--m-line))] text-[12px] text-[rgb(var(--m-muted))] transition hover:border-[rgb(var(--m-accent))]"
               >
-                ✕
+                <span className="text-[18px] leading-none">+</span>
+                <span>Ajouter</span>
               </button>
-            </div>
-          ))}
-          {collected.photos.length < 20 && (
-            <button
-              type="button"
-              disabled={!siteId || uploading}
-              onClick={() => fileRef.current?.click()}
-              className="flex aspect-square items-center justify-center rounded-xl border border-dashed border-[rgb(var(--m-line))] text-[12px] text-[rgb(var(--m-muted))] transition hover:border-[rgb(var(--m-accent))] disabled:opacity-40"
-            >
-              {uploading ? "…" : "+ Ajouter"}
-            </button>
-          )}
+            )}
+          </div>
         </div>
-        <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onChange={(e) => onFiles(e.target.files)} />
-        {uploadError ? <p className="mt-2 text-[12px] text-red-600">{uploadError}</p> : null}
-        {!siteId ? <p className="mt-2 text-[12px] text-[rgb(var(--m-faint))]">Préparation du dépôt photos…</p> : null}
+        <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onChange={(e) => { void onFiles(e.target.files); e.target.value = ""; }} />
       </div>
 
       {/* Actions */}

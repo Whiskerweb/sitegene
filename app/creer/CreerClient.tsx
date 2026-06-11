@@ -14,6 +14,7 @@
  * survit au redirect OAuth via sessionStorage.
  */
 import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import AuthGate from "@/components/auth/AuthGate";
@@ -168,16 +169,6 @@ export default function CreerClient() {
     }
   }
 
-  // Pré-alloue un siteId (pour l'upload de photos en phase collect).
-  async function reserveSiteId() {
-    if (!authed || siteId) return;
-    try {
-      const res = await fetch("/api/site/reserve", { method: "POST" });
-      const data = await res.json().catch(() => null);
-      if (data?.siteId) setSiteId(data.siteId as string);
-    } catch { /* non bloquant */ }
-  }
-
   function openCollectPhase() {
     setPhase("collect");
     // Lance le chargement des chartes en arrière-plan dès le pitch validé
@@ -185,7 +176,6 @@ export default function CreerClient() {
     setChartes(null);
     chartesAutoRef.current = false; // reset pour forcer un nouveau chargement
     void loadChartes(0);
-    void reserveSiteId();
   }
 
   // --- Étapes animées pendant l'assemblage ------------------------------------
@@ -357,10 +347,10 @@ export default function CreerClient() {
 
       {/* Top bar minimaliste */}
       <header className="mx-auto flex w-full max-w-5xl items-center justify-between px-5 py-5">
-        <a href="/" aria-label="Akyra" className="flex items-center gap-2">
+        <Link href="/" aria-label="Akyra" className="flex items-center gap-2">
           <AkyraMark size={26} />
           <span className="text-[15px] font-semibold tracking-tight">Akyra</span>
-        </a>
+        </Link>
         <div className="flex items-center gap-1.5" aria-label="Progression">
           {(["pitch", "collect", "vibe", "pack"] as Phase[]).map((p, i) => {
             const order: Phase[] = ["pitch", "collect", "vibe", "pack", "reveal"];
@@ -609,7 +599,6 @@ export default function CreerClient() {
         {phase === "collect" && (
           <CollectStep
             trade={trade}
-            siteId={siteId}
             chartesReady={!chartesLoading && Array.isArray(chartes) && chartes.length > 0}
             collected={collected}
             onChange={setCollected}
