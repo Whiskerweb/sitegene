@@ -23,13 +23,24 @@ export const manifests: Record<string, ComponentManifest> = {
     whenToUse: ["métier très visuel avec beaucoup d'images (photographe, créateur de contenu, agence, studio)", "hero spectaculaire qui montre une galerie dès l'ouverture", "marque qui veut un effet vitrine animé"],
     contentKeys: ["tagline", "title", "description", "cta", "images"],
   }),
+  // Effet gooey en HERO (plein écran, en tête de page).
   "fx-gooey-pixel-trail": M({
     id: "fx-gooey-pixel-trail",
-    role: "statement",
+    role: "hero",
     rarity: "epic",
     description:
-      "Phrase manifeste posée sur une image assombrie, avec une TRAÎNÉE DE PIXELS qui suit le curseur et se fond en blobs organiques (filtre « gooey »). Effet d'attention interactif et mémorable.",
-    whenToUse: ["moment d'attention fort au milieu d'une page", "affirmer une phrase manifeste sur une image", "site créatif/audacieux qui veut un effet curseur signature"],
+      "Hero d'attention : grande phrase posée sur une image assombrie, avec une TRAÎNÉE DE PIXELS qui suit le curseur et se fond en blobs organiques (filtre « gooey »). Spectaculaire et interactif.",
+    whenToUse: ["hero spectaculaire et interactif", "site créatif/audacieux qui veut un effet curseur signature dès l'ouverture", "accroche forte sur une image"],
+    contentKeys: ["eyebrow", "text", "image"],
+  }),
+  // Même effet en SECTION (milieu de page) — « et à d'autres endroits ».
+  "fx-gooey-banner": M({
+    id: "fx-gooey-banner",
+    role: "media",
+    rarity: "epic",
+    description:
+      "Bandeau d'attention au MILIEU de la page : même effet « gooey » (traînée de pixels qui suit le curseur sur une image assombrie) avec une phrase manifeste. Respiration interactive entre deux sections.",
+    whenToUse: ["moment d'attention fort au milieu d'une page", "affirmer une phrase sur une image, de façon interactive", "rythmer une page avec un effet curseur mémorable"],
     contentKeys: ["eyebrow", "text", "image"],
   }),
 };
@@ -46,5 +57,10 @@ export const samples: Record<string, Record<string, unknown>> = {
     eyebrow: "Notre vision",
     text: "Donnez vie à vos idées",
     image: `${IMG}/hero.jpg`,
+  },
+  "fx-gooey-banner": {
+    eyebrow: "Ce qui nous anime",
+    text: "Créer des expériences dont on se souvient",
+    image: `${IMG}/hero2.jpg`,
   },
 };

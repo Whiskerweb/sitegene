@@ -10,4 +10,6 @@ type C = ComponentType<{ content: any; skin: Skin }>;
 export const COMPONENTS_IMPORTED_A: Record<string, C> = {
   "marquee-hero": MarqueeHero as C,
   "fx-gooey-pixel-trail": GooeyPixelTrail as C,
+  // Même composant, exposé aussi en section milieu de page (rôle media).
+  "fx-gooey-banner": GooeyPixelTrail as C,
 };

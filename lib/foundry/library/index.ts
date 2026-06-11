@@ -7,13 +7,14 @@ import type { ComponentManifest } from "../types";
 import * as artisansA from "./artisans-a";
 import * as navbarsA from "./navbars-a";
 import * as importedA from "./imported-a";
+import * as heroesA from "./heroes-a";
 
 export interface LibraryModule {
   manifests: Record<string, ComponentManifest>;
   samples: Record<string, Record<string, unknown>>;
 }
 
-const MODULES: LibraryModule[] = [artisansA, navbarsA, importedA];
+const MODULES: LibraryModule[] = [artisansA, navbarsA, importedA, heroesA];
 
 export const LIBRARY_MANIFESTS: Record<string, ComponentManifest> = Object.assign(
   {},
