@@ -36,7 +36,7 @@ export default function MarqueeHero({ content }: { content: MarqueeHeroContent; 
           créait un vide énorme avant les images). */}
       <div className="z-10 flex flex-col items-center px-4 pt-20 text-center md:pt-28">
         <div
-          className="sg-mh-fade mb-6 inline-block max-w-2xl truncate rounded-[var(--r-pill)] border px-4 py-1.5 text-sm font-medium backdrop-blur-sm"
+          className="sg-mh-fade mb-6 inline-block max-w-full truncate rounded-[var(--r-pill)] border px-4 py-1.5 text-xs font-medium backdrop-blur-sm sm:max-w-2xl sm:text-sm"
           style={{ borderColor: "color-mix(in srgb, var(--c-ink) 12%, transparent)", background: "color-mix(in srgb, var(--c-card) 55%, transparent)", color: "var(--c-muted)" }}
         >
           {content?.tagline ?? "Rejoignez la communauté"}
