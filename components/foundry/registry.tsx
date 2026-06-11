@@ -22,6 +22,12 @@ import TeamCards from "./components/TeamCards";
 import StoryTimeline from "./components/StoryTimeline";
 import QuoteSpotlight from "./components/QuoteSpotlight";
 import MarqueeWords from "./components/MarqueeWords";
+import FxCircularReviews from "./components/FxCircularReviews";
+import FxContainerScroll from "./components/FxContainerScroll";
+import FxDisplayCards from "./components/FxDisplayCards";
+import FxStaggerReviews from "./components/FxStaggerReviews";
+import FxShuffleReviews from "./components/FxShuffleReviews";
+import FxFloatingTags from "./components/FxFloatingTags";
 
 type FoundryComponent = ComponentType<{ content: any; skin: Skin }>;
 
@@ -46,6 +52,12 @@ const CORE_COMPONENTS: Record<string, FoundryComponent> = {
   "story-timeline": StoryTimeline as FoundryComponent,
   "quote-spotlight": QuoteSpotlight as FoundryComponent,
   "marquee-words": MarqueeWords as FoundryComponent,
+  "fx-circular-reviews": FxCircularReviews as FoundryComponent,
+  "fx-container-scroll": FxContainerScroll as FoundryComponent,
+  "fx-display-cards": FxDisplayCards as FoundryComponent,
+  "fx-stagger-reviews": FxStaggerReviews as FoundryComponent,
+  "fx-shuffle-reviews": FxShuffleReviews as FoundryComponent,
+  "fx-floating-tags": FxFloatingTags as FoundryComponent,
 };
 
 /** Registre complet : socle + library extraite des sites. */

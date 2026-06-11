@@ -147,6 +147,53 @@ const CORE_SAMPLES: Record<string, Record<string, unknown>> = {
   "marquee-words": {
     words: ["Savoir-faire", "Confiance", "Proximité", "Qualité", "Engagement"],
   },
+  // --- Effets portés en sections ----------------------------------------------
+  "fx-circular-reviews": {
+    eyebrow: "Témoignages",
+    title: "Ils nous ont fait confiance",
+    items: [
+      { quote: "Un accompagnement d'une justesse rare — chaque détail compte, et ça se voit dans le résultat.", name: "Tamar M.", role: "Cliente depuis 2023", avatar: `${M}/trio1.jpg` },
+      { quote: "Une expérience au-delà de nos attentes, une équipe attentive du début à la fin.", name: "Joe C.", role: "Projet sur mesure", avatar: `${M}/trio2.jpg` },
+      { quote: "Le sérieux et l'attention portée aux détails ont rendu cette collaboration inoubliable.", name: "Martina E.", role: "Accompagnement complet", avatar: `${M}/trio3.jpg` },
+    ],
+  },
+  "fx-container-scroll": {
+    eyebrow: "Découvrez",
+    title: "Notre univers",
+    image: `${M}/hero.jpg`,
+  },
+  "fx-display-cards": {
+    eyebrow: "Temps forts",
+    title: "Ce qui fait la différence",
+    items: [
+      { title: "À l'affiche", desc: "Une sélection signature", meta: "À l'instant" },
+      { title: "Populaire", desc: "Les coups de cœur du moment", meta: "Cette semaine" },
+      { title: "Nouveau", desc: "Les dernières créations", meta: "Aujourd'hui" },
+    ],
+  },
+  "fx-stagger-reviews": {
+    items: [
+      { quote: "Un travail d'une précision rare, livré plus vite que prévu.", by: "Alex, chef d'entreprise" },
+      { quote: "On s'est sentis écoutés du premier rendez-vous à la livraison.", by: "Dana, cliente 2025" },
+      { quote: "Le résultat dépasse tout ce qu'on avait imaginé.", by: "Stéphanie, directrice com" },
+      { quote: "Réactif, créatif, professionnel : je recommande les yeux fermés.", by: "Marie, organisatrice" },
+      { quote: "Si je pouvais mettre 11 étoiles, j'en mettrais 12.", by: "André, restaurateur" },
+      { quote: "Un suivi impeccable et un résultat qu'on admire chaque jour.", by: "Jérémy & Lou" },
+    ],
+  },
+  "fx-shuffle-reviews": {
+    eyebrow: "Ils en parlent",
+    title: "La parole à nos clients",
+    items: [
+      { quote: "Un résultat qui nous ressemble — on en profite chaque jour.", author: "Camille R. — Particulier" },
+      { quote: "Un regard unique, une équipe discrète : le résultat est superbe.", author: "Julien M. — Professionnel" },
+      { quote: "Réactif, créatif, et un rendu plus beau qu'espéré.", author: "Sarah L. — Entreprise" },
+    ],
+  },
+  "fx-floating-tags": {
+    text: "Notre approche est bien plus que professionnelle — elle est profondément humaine. Nos valeurs guident chaque projet.",
+    tags: ["Confiance", "Écoute", "Exigence", "Proximité", "Transparence"],
+  },
 };
 
 /** Échantillons complets : socle + library extraite des sites. */

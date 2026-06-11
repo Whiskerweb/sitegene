@@ -77,10 +77,12 @@ export function useParallax(strength = 60) {
       if (!raf) raf = requestAnimationFrame(update);
     };
     update();
-    window.addEventListener("scroll", onScroll, { passive: true });
+    // capture:true : attrape aussi le scroll des conteneurs internes
+    // (canvas de L'Atelier) — pas seulement celui de la fenêtre.
+    window.addEventListener("scroll", onScroll, { passive: true, capture: true });
     window.addEventListener("resize", onScroll, { passive: true });
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scroll", onScroll, { capture: true });
       window.removeEventListener("resize", onScroll);
       if (raf) cancelAnimationFrame(raf);
     };

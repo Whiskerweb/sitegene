@@ -361,7 +361,7 @@ export default function StudioEditor({ data }: { data: StudioData }) {
   const onPage = !!data.pageId;
   const addGroups = useMemo(() => {
     const present = new Set(sections.map((s) => s.role));
-    const recommended = new Set(["about", "services", "reviews", "stats", "faq", "pricing", "gallery", "process", "cta", "media", "team", "story", "statement", "decor"]);
+    const recommended = new Set(["about", "services", "reviews", "stats", "highlights", "faq", "pricing", "gallery", "process", "cta", "media", "team", "story", "statement", "decor"]);
     const byRole = new Map<string, CatalogEntry[]>();
     for (const c of catalogById.values()) {
       if (present.has(c.role)) continue; // un seul bloc par type → « Remplacer » sinon

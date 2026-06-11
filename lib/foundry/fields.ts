@@ -92,6 +92,9 @@ const LABELS: Record<string, string> = {
   words: "Mots du bandeau",
   year: "Année / étape",
   bio: "Quelques mots",
+  by: "Auteur",
+  meta: "Mention",
+  tags: "Valeurs (pastilles)",
 };
 
 function prettify(key: string): string {
