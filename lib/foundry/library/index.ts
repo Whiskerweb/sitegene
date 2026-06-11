@@ -5,13 +5,14 @@
 // MAIN après chaque vague d'extraction — les agents d'extraction n'y touchent pas.
 import type { ComponentManifest } from "../types";
 import * as artisansA from "./artisans-a";
+import * as navbarsA from "./navbars-a";
 
 export interface LibraryModule {
   manifests: Record<string, ComponentManifest>;
   samples: Record<string, Record<string, unknown>>;
 }
 
-const MODULES: LibraryModule[] = [artisansA];
+const MODULES: LibraryModule[] = [artisansA, navbarsA];
 
 export const LIBRARY_MANIFESTS: Record<string, ComponentManifest> = Object.assign(
   {},
