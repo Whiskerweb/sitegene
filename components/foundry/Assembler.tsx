@@ -4,6 +4,7 @@ import type { Recipe } from "@/lib/foundry/types";
 import { getVibe, vibeToCssVars } from "@/lib/foundry/vibes";
 import { validateRecipe } from "@/lib/foundry/recipe";
 import { heroTreatmentOf } from "@/lib/foundry/treatment";
+import { textureLayerStyle } from "@/lib/foundry/texture";
 import { COMPONENTS } from "./registry";
 import SmartNav from "./SmartNav";
 
@@ -29,12 +30,18 @@ export default function Assembler({
   }
 
   const vars = vibeToCssVars(vibe, recipe.brand) as unknown as CSSProperties;
+  const tex = textureLayerStyle(vibe.texture);
 
   return (
-    <div style={{ ...vars, fontFamily: "var(--font-body)", background: "var(--c-surface)", color: "var(--c-ink)", minHeight: "100vh" }}>
+    <div style={{ ...vars, fontFamily: "var(--font-body)", background: "var(--c-surface)", color: "var(--c-ink)", minHeight: "100vh", position: "relative", isolation: "isolate" }}>
+      {/* Atmosphère de fond pilotée par la DA (grain/grille/halo/mesh) — derrière le contenu. */}
+      {tex ? (
+        <div aria-hidden style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none", ...tex }} />
+      ) : null}
       {/* Fonts de la vibe — React hisse et déduplique ces <link> dans le <head>. */}
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link rel="stylesheet" href={vibe.fontHref} precedence="foundry-fonts" />
+      <div style={{ position: "relative", zIndex: 1 }}>
       {v.resolved.map((s, i) => {
         const C = COMPONENTS[s.manifest.id];
         if (!C) return null;
@@ -69,6 +76,7 @@ export default function Assembler({
         }
         return <C key={i} content={s.content} skin={s.skin} />;
       })}
+      </div>
       {highlightIndex !== undefined ? (
         <script
           dangerouslySetInnerHTML={{

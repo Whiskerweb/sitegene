@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { COMPONENTS } from "@/components/foundry/registry";
 import { vibeToCssVars } from "@/lib/foundry/vibes";
+import { textureLayerStyle } from "@/lib/foundry/texture";
 import { vibeToSpec, fontHref, fontCss, allFontsHref } from "@/lib/foundry/charte";
 import { adaptContent } from "@/lib/foundry/agenceur";
 import { fieldsFor, type FieldType } from "@/lib/foundry/fields";
@@ -38,10 +39,12 @@ export function Themed({
   style?: CSSProperties;
 }) {
   const vars = vibeToCssVars(vibe, brandPrimary ? { primary: brandPrimary } : undefined) as unknown as CSSProperties;
+  const tex = textureLayerStyle(vibe.texture);
   return (
-    <div style={{ ...vars, fontFamily: "var(--font-body)", background: "var(--c-surface)", color: "var(--c-ink)", ...style }}>
+    <div style={{ ...vars, fontFamily: "var(--font-body)", background: "var(--c-surface)", color: "var(--c-ink)", position: "relative", isolation: "isolate", ...style }}>
+      {tex ? <div aria-hidden style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none", ...tex }} /> : null}
       <link rel="stylesheet" href={vibe.fontHref} precedence="foundry-fonts" />
-      {children}
+      <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
     </div>
   );
 }
