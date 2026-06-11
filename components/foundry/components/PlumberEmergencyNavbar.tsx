@@ -17,7 +17,7 @@ export default function PlumberEmergencyNavbar({ content, skin }: { content: any
         .penav-link { position: relative; }
         .penav-link::after { content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px; background: var(--c-accent2); transition: width .25s; }
         .penav-link:hover::after { width: 100%; }
-        .penav-cta:hover { background: var(--c-ink); color: #fff; }
+        .penav-cta:hover { background: var(--c-ink); color: var(--c-bg); }
       `}</style>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <a href="#" className="flex items-center gap-2">

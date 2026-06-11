@@ -294,7 +294,7 @@ function parseChartes(rawText: string): unknown[] {
 
 /** Repli : les 3 vibes curées suggérées pour le métier. */
 export function fallbackChartes(brief: string): CharteProposal[] {
-  return suggestVibes(brief).map((s) => {
+  return suggestVibes(brief).slice(0, 3).map((s) => {
     const vibe = getVibe(s.vibeId)!;
     return { vibe, spec: vibeToSpec(vibe), reason: s.reason };
   });

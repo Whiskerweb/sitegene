@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import { COMPONENTS } from "@/components/foundry/registry";
 import { vibeToSpec } from "@/lib/foundry/charte";
+import { heroTreatmentOf } from "@/lib/foundry/treatment";
 import type { StudioData, StudioSection, StudioVibe, CatalogEntry } from "./types";
 import {
   AddPanel,
@@ -555,6 +556,7 @@ export default function StudioEditor({ data }: { data: StudioData }) {
                     onMouseEnter={() => !addOpen && replaceAt === null && setSelected(i)}
                     onClick={(e) => { e.stopPropagation(); setSelected(i); setRight({ kind: "content", index: i }); }}
                     style={{ outline: isSel ? "2px solid var(--c-accent)" : "none", outlineOffset: -2 }}
+                    {...(s.role === "hero" ? { "data-hero": heroTreatmentOf(vibe) } : {})}
                   >
                     {C ? <C content={s.content} skin={{}} /> : <div className="p-10 text-center text-sm text-red-500">Composant introuvable : {s.component}</div>}
 

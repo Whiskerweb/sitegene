@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import type { Recipe } from "@/lib/foundry/types";
 import { getVibe, vibeToCssVars } from "@/lib/foundry/vibes";
 import { validateRecipe } from "@/lib/foundry/recipe";
+import { heroTreatmentOf } from "@/lib/foundry/treatment";
 import { COMPONENTS } from "./registry";
 import SmartNav from "./SmartNav";
 
@@ -37,12 +38,14 @@ export default function Assembler({
       {v.resolved.map((s, i) => {
         const C = COMPONENTS[s.manifest.id];
         if (!C) return null;
+        const heroAttr = s.manifest.role === "hero" ? { "data-hero": heroTreatmentOf(vibe) } : {};
         if (i === highlightIndex) {
           return (
             <div
               key={i}
               id="sg-preview-target"
               style={{ outline: "3px solid var(--c-accent)", outlineOffset: "-3px", scrollMarginTop: "24px" }}
+              {...heroAttr}
             >
               <C content={s.content} skin={s.skin} />
             </div>
@@ -55,6 +58,13 @@ export default function Assembler({
             <SmartNav key={i}>
               <C content={s.content} skin={s.skin} />
             </SmartNav>
+          );
+        }
+        if (s.manifest.role === "hero") {
+          return (
+            <div key={i} {...heroAttr}>
+              <C content={s.content} skin={s.skin} />
+            </div>
           );
         }
         return <C key={i} content={s.content} skin={s.skin} />;
