@@ -11,6 +11,7 @@ import { getSample } from "./samples";
 import { getVibe } from "./vibes";
 import { validateRecipe } from "./recipe";
 import { detectTrade, type TradeId } from "./suggest";
+import { resolveHero, heroOptionsForTrade, isExcludedForTrade } from "./hero-router";
 
 export interface AgenceurInput {
   brief: string;
@@ -323,7 +324,10 @@ export function repairRecipe(
   const heroIdx = sections.findIndex((s) => getManifest(s.component)?.role === "hero");
   if (heroIdx > 0) sections.unshift(sections.splice(heroIdx, 1)[0]);
   if (heroIdx === -1) {
-    sections.unshift({ component: "hero-split-asym", content: normalizeSectionContent("hero-split-asym", {}) });
+    const trade = detectTrade(input.brief).trade;
+    const vibeId = input.customVibe ? "custom" : (input.vibeId || "");
+    const defaultHero = resolveHero(trade, vibeId);
+    sections.unshift({ component: defaultHero, content: normalizeSectionContent(defaultHero, {}) });
   }
 
   // Navbar (optionnelle) toujours TOUT en haut, avant le hero.
@@ -358,16 +362,16 @@ export function repairRecipe(
 
 /** Plans de page par métier (repli si l'IA est indisponible — textes des samples). */
 const FALLBACK_PLANS: Record<TradeId, string[]> = {
-  coach: ["hero-split-asym", "logo-marquee", "intro-split", "services-rows", "process-steps", "stats-countup", "reviews-postit-carousel", "pricing-cards", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
-  "bien-etre": ["hero-split-asym", "intro-split", "services-rows", "process-steps", "reviews-postit-carousel", "pricing-cards", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
-  photographe: ["hero-split-asym", "intro-split", "services-rows", "stats-countup", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
-  artisan: ["hero-split-asym", "intro-split", "services-rows", "process-steps", "stats-countup", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
-  restaurant: ["hero-split-asym", "intro-split", "services-rows", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
-  beaute: ["hero-split-asym", "intro-split", "services-rows", "pricing-cards", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
-  conseil: ["hero-split-asym", "logo-marquee", "intro-split", "services-rows", "process-steps", "stats-countup", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
-  musicien: ["hero-split-asym", "intro-split", "services-rows", "stats-countup", "testimonials-carousel", "contact-block", "cta-banner", "footer-columns"],
-  fitness: ["hero-split-asym", "intro-split", "services-rows", "process-steps", "stats-countup", "pricing-cards", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
-  autre: ["hero-split-asym", "intro-split", "services-rows", "process-steps", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
+  coach:       ["hero-split-asym",        "logo-marquee",    "intro-split", "services-rows", "process-steps", "stats-countup", "reviews-postit-carousel", "pricing-cards", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
+  "bien-etre": ["hero-split-asym",        "intro-split",     "services-rows", "process-steps", "reviews-postit-carousel", "pricing-cards", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
+  photographe: ["studio-portfolio-hero",  "gallery-mosaic",  "intro-split", "stats-countup", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
+  artisan:     ["electrician-pro-hero",   "intro-split",     "services-rows", "process-steps", "stats-countup", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
+  restaurant:  ["hero-split-asym",        "intro-split",     "services-rows", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
+  beaute:      ["hero-split-asym",        "intro-split",     "services-rows", "pricing-cards", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
+  conseil:     ["hero-split-asym",        "logo-marquee",    "intro-split", "services-rows", "process-steps", "stats-countup", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
+  musicien:    ["jazz-vocalist-hero",     "intro-split",     "services-rows", "stats-countup", "testimonials-carousel", "contact-block", "cta-banner", "footer-columns"],
+  fitness:     ["hero-split-asym",        "intro-split",     "services-rows", "process-steps", "stats-countup", "pricing-cards", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
+  autre:       ["hero-split-asym",        "intro-split",     "services-rows", "process-steps", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
 };
 
 /** Recette de secours, valide par construction. */
@@ -380,12 +384,21 @@ export function fallbackRecipe(input: AgenceurInput): Recipe {
 
 // --- Prompt & génération ----------------------------------------------------------
 
-function catalogForPrompt(): string {
+function catalogForPrompt(trade: TradeId, vibeId: string): string {
+  const heroOptions = heroOptionsForTrade(trade, vibeId);
+  const recommendedHero = heroOptions[0];
+
   return listManifests()
+    .filter((m) => !isExcludedForTrade(m.id, m.role, trade))
     .map((m) => {
       const sample = JSON.stringify(getSample(m.id));
+      const heroTag = m.role === "hero"
+        ? m.id === recommendedHero
+          ? " ← HERO RECOMMANDÉ POUR CE CONTEXTE"
+          : " ← HERO ALTERNATIF (si mieux adapté)"
+        : "";
       return [
-        `### ${m.id}`,
+        `### ${m.id}${heroTag}`,
         `rôle: ${m.role} · rareté: ${m.rarity}`,
         `description: ${m.description}`,
         `quand l'utiliser: ${m.whenToUse.join(" ; ")}`,
@@ -398,11 +411,20 @@ function catalogForPrompt(): string {
 export function buildAgenceurMessages(input: AgenceurInput): Array<{ role: "system" | "user"; content: string }> {
   const vibe = input.customVibe ?? getVibe(input.vibeId);
   const trade = detectTrade(input.brief).trade;
+  const vibeId = input.customVibe ? "custom" : (input.vibeId || "");
+
+  // Traitement hero imposé par la DA (si défini sur la vibe).
+  const treatment = vibe?.treatments?.hero;
+  const treatmentNote = treatment
+    ? `Le traitement visuel du hero imposé par cette DA est "${treatment}" — choisis le hero marqué "← HERO RECOMMANDÉ" ou celui dont la description correspond le mieux à ce traitement.`
+    : "Choisis le hero marqué \"← HERO RECOMMANDÉ\" (il a été sélectionné pour ce métier + cette DA).";
+
   const system = `Tu es l'ARCHITECTE-AGENCEUR d'Akyra. Tu assembles des sites vitrines en français à partir d'un CATALOGUE FERMÉ de composants. Tu ne crées JAMAIS de composant ni de HTML : tu choisis, tu ordonnes, tu rédiges les textes. Tu penses comme un architecte : utilité de chaque section, rythme visuel, conversion.
 
 RÈGLES D'ASSEMBLAGE (strictes) :
 - Entre 6 et 9 sections + le footer.
-- "hero-split-asym" toujours en PREMIER. "footer-columns" toujours en DERNIER.
+- Un composant de rôle "hero" TOUJOURS EN PREMIER — choisis celui marqué "← HERO" dans le catalogue (voir la directive DA dans le message utilisateur). "footer-columns" toujours en DERNIER.
+- Un composant de rôle "navbar" peut figurer AVANT le hero (facultatif, selon le métier — utilise "quand l'utiliser").
 - Jamais deux composants du même rôle.
 - Toujours une preuve sociale (reviews, stats ou logos) et toujours "contact-block" ou "cta-banner" avant le footer.
 - "pricing-cards" uniquement si le métier vend des formules/forfaits lisibles.
@@ -418,12 +440,14 @@ SORTIE : JSON STRICT, rien d'autre :
 {"sections":[{"component":"<id du catalogue>","content":{...}}]}
 
 CATALOGUE :
-${catalogForPrompt()}`;
+${catalogForPrompt(trade, vibeId)}`;
 
   const user = `PITCH DU CLIENT : « ${input.brief.trim().slice(0, 1200)} »
 NOM DE L'ACTIVITÉ : ${input.businessName.trim().slice(0, 80) || "(non précisé)"}
 MÉTIER DÉTECTÉ : ${trade}
-DIRECTION ARTISTIQUE CHOISIE : ${vibe ? `${vibe.label} (${vibe.mood.join(", ")})` : input.vibeId} — adapte le TON des textes à cette ambiance, pas la structure.
+DIRECTION ARTISTIQUE CHOISIE : ${vibe ? `${vibe.label} (${vibe.mood.join(", ")})` : input.vibeId}
+${treatmentNote}
+La DA pilote à la fois le TON des textes ET le choix du hero — respecte les marqueurs "← HERO" du catalogue.
 
 Assemble le site et renvoie le JSON.`;
 
@@ -590,6 +614,7 @@ export function fallbackSubPageSections(input: SubPageInput, title: string): Rec
 function buildSubPageMessages(input: SubPageInput): Array<{ role: "system" | "user"; content: string }> {
   const home = (input.homeComponents ?? []).join(", ") || "(composition inconnue)";
   const titles = (input.existingTitles ?? []).join(" · ") || "(aucune)";
+  const subTrade = detectTrade(input.brief ?? input.request).trade;
   const system = `Tu es l'ARCHITECTE-AGENCEUR d'Akyra. Le client possède DÉJÀ un site une-page (l'accueil). Tu composes UNE NOUVELLE SOUS-PAGE de ce site à partir d'un CATALOGUE FERMÉ de composants : tu choisis, tu ordonnes, tu rédiges les textes en français — tu ne crées jamais de composant ni de HTML.
 
 UNE SOUS-PAGE N'EST PAS UNE LANDING :
@@ -612,7 +637,7 @@ RÈGLES DE CONTENU (strictes) :
 SORTIE : JSON STRICT : {"title":"<nom de la page>","sections":[{"component":"<id>","content":{...}}]}
 
 CATALOGUE :
-${catalogForPrompt()}`;
+${catalogForPrompt(subTrade, "")}`;
 
   const user = `ACTIVITÉ DU CLIENT : « ${(input.brief ?? "").trim().slice(0, 600) || "(non précisée)"} »
 NOM DE L'ACTIVITÉ : ${input.businessName.trim().slice(0, 80) || "(non précisé)"}

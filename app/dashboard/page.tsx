@@ -5,11 +5,9 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { StatusPill } from "@/components/ui/StatusPill";
 import { Button } from "@/components/ui/Button";
-import { EmptyState } from "@/components/ui/EmptyState";
 import { Spinner } from "@/components/ui/Spinner";
 import GenerationWatcher from "@/components/dashboard/GenerationWatcher";
 import { SitePreview } from "@/components/ui/SitePreview";
-import { IconCloud } from "@/components/ui/icons";
 import { HeroBanner } from "@/components/ui/HeroBanner";
 import { MetricsRow } from "@/components/ui/MetricsRow";
 import PaywallModal from "@/components/dashboard/PaywallModal";
@@ -19,6 +17,7 @@ import { primarySiteForUser } from "@/lib/primary-site";
 import { loadOrCreateEditableSnapshot, loadPublishedSnapshot } from "@/lib/site-content-store";
 import FoundryHome from "@/components/dashboard/FoundryHome";
 import { FOUNDRY_TEMPLATE_ID } from "@/lib/foundry/server";
+import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -59,16 +58,7 @@ export default async function MonSite({
     ((ob?.intake as { brand?: string } | null)?.brand ?? "").split(" ")[0] || null;
 
   if (!site) {
-    return (
-      <>
-        <PageHeader title="Mon site" subtitle="Votre portfolio, en un coup d'œil." />
-        <EmptyState
-          icon={<IconCloud />}
-          title="Votre site arrive bientôt"
-          description="Notre équipe prépare votre portfolio. Vous recevrez un lien dès qu'il est prêt."
-        />
-      </>
-    );
+    redirect("/creer");
   }
 
   // Site ASSEMBLÉ (fonderie) : accueil plug-and-play dédié (sections de la recette).
