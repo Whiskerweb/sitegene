@@ -1,6 +1,8 @@
 // lib/foundry/vibes.test.ts
 import { describe, it, expect } from "vitest";
 import { getVibe, vibeToCssVars, VIBES, VIBE_IDS } from "./vibes";
+import type { VibeId } from "./types";
+import { contrast } from "./charte";
 
 describe("vibes", () => {
   it("expose la vibe warm-serif", () => {
@@ -24,8 +26,7 @@ describe("vibes", () => {
 });
 
 describe("modèle Vibe enrichi", () => {
-  // TODO(Task 3) : réactiver quand les 11 DA sont ajoutées à VIBES.
-  it.skip("expose les 6 vibes historiques + les 11 nouvelles", () => {
+  it("expose les 6 vibes historiques + les 11 nouvelles", () => {
     expect(VIBE_IDS.length).toBe(17);
     for (const id of VIBE_IDS) expect(getVibe(id)).toBeDefined();
   });
@@ -64,5 +65,30 @@ describe("vibeToCssVars", () => {
     const v = vibeToCssVars(warm, { primary: "#123456" });
     expect(v["--c-accent"]).toBe("#123456");
     expect(v["--c-primary"]).toBe("#123456");
+  });
+});
+
+const NEW_DA: VibeId[] = [
+  "mindful-moments","lexicon-creators","auralis-neural","nexus-transfers","neurosync",
+  "rock-brutalist","rap-luxe","contemporain-editorial","photographe-galerie",
+  "coach-performance","restaurant-nocturne",
+];
+
+describe("DA curées (Lot 1)", () => {
+  it("les 11 DA existent et sont rendables", () => {
+    for (const id of NEW_DA) {
+      const v = getVibe(id)!;
+      expect(v).toBeDefined();
+      expect(v.fontHref).toContain("JetBrains+Mono");
+      expect(v.fonts.label).toBeTruthy();
+      expect(v.treatments?.hero).toBeTruthy();
+    }
+  });
+  it("contraste texte/fond WCAG AA (≥ 4.5) sur chaque DA, fond ET panneau", () => {
+    for (const id of NEW_DA) {
+      const v = getVibe(id)!;
+      expect(contrast(v.palette.ink, v.palette.surface)).toBeGreaterThanOrEqual(4.5);
+      expect(contrast(v.palette.ink, v.palette.card)).toBeGreaterThanOrEqual(4.5);
+    }
   });
 });
