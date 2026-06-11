@@ -1,7 +1,7 @@
 // components/creer/CollectStep.tsx
 "use client";
 
-// Écran unique de collecte (tunnel /creer), affiché PENDANT l'assemblage.
+// Écran unique de collecte (tunnel /creer), affiché PENDANT la génération des chartes.
 // Liens proposés par métier + bouton « Ajouter un lien » + upload photos (max 20).
 import { useMemo, useRef, useState } from "react";
 import {
@@ -12,14 +12,15 @@ import {
   type LinkKind,
 } from "@/lib/foundry/link-catalog";
 import type { TradeId } from "@/lib/foundry/da-personas";
+import SocialIcon from "@/components/foundry/components/SocialIcon";
 
 type Props = {
   trade: TradeId;
   siteId: string | null;          // dispo dès que la génération a renvoyé l'id
-  assemblyReady: boolean;          // génération terminée ?
+  chartesReady: boolean;          // génération des chartes terminée ?
   collected: Collected;
   onChange: (next: Collected) => void;
-  onFinish: () => void;            // « Voir mon site »
+  onFinish: () => void;           // → va à la phase vibe (choisir la charte)
   onSkip: () => void;
 };
 
@@ -56,23 +57,32 @@ function rawValue(c: Collected, platform: string, kind: LinkKind): string {
   return c.socials.find((s) => s.platform === platform)?.href ?? "";
 }
 
-export default function CollectStep({ trade, siteId, assemblyReady, collected, onChange, onFinish, onSkip }: Props) {
+export default function CollectStep({ trade, siteId, chartesReady, collected, onChange, onFinish, onSkip }: Props) {
   const defaults = useMemo(() => linkFieldsForTrade(trade), [trade]);
   const [extra, setExtra] = useState<string[]>([]);   // plateformes ajoutées via « + »
+  const [dismissed, setDismissed] = useState<string[]>([]);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const shownKeys = useMemo(() => {
-    const base = defaults.map((d) => d.platform);
-    return [...base, ...extra.filter((k) => !base.includes(k))];
-  }, [defaults, extra]);
+    const base = defaults.map((d) => d.platform).filter((k) => !dismissed.includes(k));
+    return [...base, ...extra.filter((k) => !base.includes(k) && !dismissed.includes(k))];
+  }, [defaults, extra, dismissed]);
 
   const fields = shownKeys.map((platform) => {
     const def = PLATFORMS[platform] ?? PLATFORMS.link;
     return { platform, label: def.label, kind: def.kind, placeholder: def.placeholder };
   });
+
+  function dismissField(platform: string) {
+    if (defaults.some((d) => d.platform === platform)) {
+      setDismissed((d) => [...d, platform]);
+    } else {
+      setExtra((e) => e.filter((k) => k !== platform));
+    }
+  }
 
   async function onFiles(files: FileList | null) {
     if (!files || !siteId) return;
@@ -105,33 +115,51 @@ export default function CollectStep({ trade, siteId, assemblyReady, collected, o
   return (
     <section className="mx-auto max-w-2xl pt-8 sm:pt-12">
       <div className="text-center">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Pendant qu&apos;on assemble votre site…</h1>
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Personnalisez votre site</h1>
         <p className="mt-3 text-[15px] text-[rgb(var(--m-muted))]">
-          Ajoutez vos liens et vos photos — tout est optionnel. On ne met sur le site que ce que vous nous donnez.
+          Ajoutez vos liens et vos photos — on les injecte dans votre site. Tout est optionnel.
         </p>
         <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[rgb(var(--m-line))] px-3 py-1 text-[13px]">
-          {assemblyReady ? (
-            <span className="font-semibold text-emerald-600">✓ Votre site est prêt</span>
+          {chartesReady ? (
+            <span className="font-semibold text-emerald-600">✓ Chartes prêtes</span>
           ) : (
             <span className="text-[rgb(var(--m-muted))]" style={{ animation: "sg-pulse 2s ease-in-out infinite" }}>
-              Assemblage en cours…
+              On compose vos chartes…
             </span>
           )}
         </div>
       </div>
 
       {/* Liens */}
-      <div className="mt-8 space-y-3">
-        {fields.map((f) => (
-          <label key={f.platform} className="flex flex-col gap-1">
-            <span className="text-[13px] font-semibold">{f.label}</span>
-            <input
-              value={rawValue(collected, f.platform, f.kind)}
-              onChange={(e) => onChange(setValue(collected, f.platform, f.kind, e.target.value))}
-              placeholder={f.placeholder}
-              className="w-full rounded-xl border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] px-3.5 py-2.5 text-[14px] outline-none transition focus:border-[rgb(var(--m-accent))]"
-            />
-          </label>
+      <div className="mt-6 overflow-hidden rounded-2xl border border-[rgb(var(--m-line))]">
+        {fields.map((f, i) => (
+          <div
+            key={f.platform}
+            className={`flex items-center gap-3 px-4 py-3 ${i !== fields.length - 1 ? "border-b border-[rgb(var(--m-line))]" : ""}`}
+          >
+            <SocialIcon platform={f.platform} className="h-5 w-5 shrink-0 text-[rgb(var(--m-muted))]" />
+            <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+              <span className="text-[11px] font-semibold uppercase tracking-wide text-[rgb(var(--m-faint))]">
+                {f.label}
+              </span>
+              <input
+                value={rawValue(collected, f.platform, f.kind)}
+                onChange={(e) => onChange(setValue(collected, f.platform, f.kind, e.target.value))}
+                placeholder={f.placeholder}
+                className="w-full bg-transparent text-[14px] text-[rgb(var(--m-ink))] outline-none placeholder:text-[rgb(var(--m-faint))]"
+              />
+            </div>
+            <button
+              type="button"
+              onClick={() => dismissField(f.platform)}
+              aria-label={`Retirer ${f.label}`}
+              className="ml-1 shrink-0 rounded-full p-1 text-[rgb(var(--m-faint))] transition hover:text-[rgb(var(--m-ink))]"
+            >
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                <path d="M2 2l8 8M10 2l-8 8"/>
+              </svg>
+            </button>
+          </div>
         ))}
       </div>
 
@@ -145,15 +173,16 @@ export default function CollectStep({ trade, siteId, assemblyReady, collected, o
           + Ajouter un lien
         </button>
         {pickerOpen && (
-          <div className="mt-2 flex flex-wrap gap-1.5 rounded-2xl border border-[rgb(var(--m-line))] p-3">
-            {allPlatformKeys.filter((k) => !shownKeys.includes(k)).map((k) => (
+          <div className="mt-2 grid grid-cols-3 gap-1.5 rounded-2xl border border-[rgb(var(--m-line))] p-3 sm:grid-cols-4">
+            {allPlatformKeys.filter((k) => !shownKeys.includes(k) && !dismissed.includes(k)).map((k) => (
               <button
                 key={k}
                 type="button"
                 onClick={() => { setExtra((e) => e.includes(k) ? e : [...e, k]); setPickerOpen(false); }}
-                className="rounded-full border border-[rgb(var(--m-line))] px-3 py-1.5 text-[12px] transition hover:border-[rgb(var(--m-accent))]"
+                className="flex flex-col items-center gap-1.5 rounded-xl border border-[rgb(var(--m-line))] p-2.5 text-center transition hover:border-[rgb(var(--m-accent))]"
               >
-                {PLATFORMS[k].label}
+                <SocialIcon platform={k} className="h-5 w-5 text-[rgb(var(--m-muted))]" />
+                <span className="text-[11px] leading-tight text-[rgb(var(--m-ink))]">{PLATFORMS[k].label}</span>
               </button>
             ))}
           </div>
@@ -208,9 +237,9 @@ export default function CollectStep({ trade, siteId, assemblyReady, collected, o
         <button
           type="button"
           onClick={onFinish}
-          className="inline-flex h-12 items-center gap-2 rounded-full bg-[rgb(var(--m-accent))] px-6 text-[15px] font-semibold text-[rgb(var(--m-on-accent))] transition enabled:hover:opacity-90 disabled:opacity-40"
+          className="inline-flex h-12 items-center gap-2 rounded-full bg-[rgb(var(--m-accent))] px-6 text-[15px] font-semibold text-[rgb(var(--m-on-accent))] transition hover:opacity-90"
         >
-          {assemblyReady ? "Voir mon site →" : "On termine l'assemblage…"}
+          {chartesReady ? "Choisir ma charte →" : "Voir mes chartes →"}
         </button>
       </div>
     </section>
