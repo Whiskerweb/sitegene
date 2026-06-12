@@ -1160,3 +1160,22 @@ body {
 .foundry-marquee:hover { animation-play-state: paused }
 @media (prefers-reduced-motion: reduce) { .foundry-marquee { animation: none } }
 
+/* Bloc fraîchement ajouté : apparition douce + halo qui s'estompe.
+   --c-accent est posé par <Themed> (charte du site). */
+@keyframes foundry-block-in {
+  0%   { opacity: 0; transform: translateY(14px) scale(0.985); }
+  100% { opacity: 1; transform: translateY(0)    scale(1); }
+}
+@keyframes foundry-block-glow {
+  0%   { box-shadow: inset 0 0 0 2px var(--c-accent, #d97706), 0 0 0 0 color-mix(in srgb, var(--c-accent, #d97706) 55%, transparent); }
+  60%  { box-shadow: inset 0 0 0 2px var(--c-accent, #d97706), 0 0 0 16px color-mix(in srgb, var(--c-accent, #d97706) 0%, transparent); }
+  100% { box-shadow: inset 0 0 0 0 transparent, 0 0 0 0 transparent; }
+}
+.foundry-block-added {
+  animation: foundry-block-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both,
+             foundry-block-glow 1.9s ease-out 0.1s both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .foundry-block-added { animation: none; }
+}
+

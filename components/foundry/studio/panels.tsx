@@ -737,6 +737,7 @@ function TryOnOverlay({
   onBack,
   onBuy,
   onConfirm,
+  insert = false,
 }: {
   candidate: CatalogEntry;
   sections: StudioSection[];
@@ -746,10 +747,27 @@ function TryOnOverlay({
   onBack: () => void;
   onBuy: (entry: CatalogEntry) => Promise<boolean>;
   onConfirm: () => void;
+  /** true = on INSÈRE la candidate à `index` (ajout) ; false = on la SUBSTITUE (remplacement). */
+  insert?: boolean;
 }) {
   const [paying, setPaying] = useState(false);
   const targetRef = useRef<HTMLDivElement>(null);
   const locked = !candidate.owned && candidate.price > 0;
+
+  // Liste rendue : pour un ajout on glisse la candidate (contenu d'exemple) à
+  // `index` ; pour un remplacement on substitue la section en place (contenu
+  // reporté). `isTarget` = la section mise en évidence.
+  const renderList: Array<{ id: string; content: Record<string, unknown>; isTarget: boolean }> = insert
+    ? [
+        ...sections.slice(0, index).map((s) => ({ id: s.component, content: s.content, isTarget: false })),
+        { id: candidate.id, content: candidate.sample ?? {}, isTarget: true },
+        ...sections.slice(index).map((s) => ({ id: s.component, content: s.content, isTarget: false })),
+      ]
+    : sections.map((s, i) => ({
+        id: i === index ? candidate.id : s.component,
+        content: i === index ? adaptContent(candidate.id, s.content) : s.content,
+        isTarget: i === index,
+      }));
 
   useEffect(() => {
     const t = setTimeout(() => targetRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 250);
@@ -777,23 +795,24 @@ function TryOnOverlay({
       <div className="flex h-12 shrink-0 items-center justify-center gap-2 border-b border-neutral-200 bg-white/95 px-4 text-[13px] backdrop-blur">
         <Eye size={14} className="text-neutral-400" />
         <span className="font-semibold text-neutral-800">Essai sur votre site</span>
-        <span className="text-neutral-400">— « {candidate.label} » à la place de votre section. Rien n'est encore changé.</span>
+        <span className="text-neutral-400">
+          {insert
+            ? `— « ${candidate.label} » à l'endroit où elle se posera. Rien n'est encore ajouté.`
+            : `— « ${candidate.label} » à la place de votre section. Rien n'est encore changé.`}
+        </span>
       </div>
 
       {/* Le site entier, candidate en place */}
       <div className="flex-1 overflow-y-auto">
         <div className="mx-auto my-6 max-w-[1180px] overflow-hidden rounded-2xl bg-white shadow-[0_8px_40px_rgba(0,0,0,0.08)]">
           <Themed vibe={vibe} brandPrimary={brandPrimary}>
-            {sections.map((s, i) => {
-              const isSwap = i === index;
-              const id = isSwap ? candidate.id : s.component;
-              const content = isSwap ? adaptContent(candidate.id, s.content) : s.content;
-              const C = COMPONENTS[id];
+            {renderList.map((r, i) => {
+              const C = COMPONENTS[r.id];
               if (!C) return null;
               return (
-                <div key={`${id}-${i}`} ref={isSwap ? targetRef : undefined} className="relative">
-                  <C content={content} skin={{}} />
-                  {isSwap && (
+                <div key={`${r.id}-${i}`} ref={r.isTarget ? targetRef : undefined} className="relative">
+                  <C content={r.content} skin={{}} />
+                  {r.isTarget && (
                     <>
                       <div className="pointer-events-none absolute inset-0" style={{ outline: "3px solid var(--c-accent)", outlineOffset: -3 }} />
                       <span className="absolute right-4 top-4 rounded-full px-3 py-1.5 text-[11.5px] font-bold text-white shadow-lg" style={{ background: "var(--c-accent)" }}>
@@ -831,7 +850,9 @@ function TryOnOverlay({
             {paying ? (
               "Déblocage…"
             ) : locked ? (
-              <><Lock size={13} /> Valider et débloquer · {candidate.price} ✦</>
+              <><Lock size={13} /> {insert ? "Ajouter et débloquer" : "Valider et débloquer"} · {candidate.price} ✦</>
+            ) : insert ? (
+              <><Plus size={14} /> Ajouter cette section</>
             ) : (
               <><Check size={14} /> Valider ce remplacement</>
             )}
@@ -1098,6 +1119,8 @@ export function PalettePanel({
 
 export function AddPanel({
   groups,
+  allSections,
+  insertIndexFor,
   vibe,
   brandPrimary,
   onAdd,
@@ -1105,16 +1128,36 @@ export function AddPanel({
   onClose,
 }: {
   groups: Array<{ role: string; roleLabel: string; recommended: boolean; entries: CatalogEntry[] }>;
+  /** Page courante — pour l'essai « sur votre site » avant ajout. */
+  allSections: StudioSection[];
+  /** Où la candidate se posera (placement canonique calculé côté éditeur). */
+  insertIndexFor: (entry: CatalogEntry) => number;
   vibe: StudioVibe;
   brandPrimary: string | null;
   onAdd: (entry: CatalogEntry) => void;
-  onBuy: (entry: CatalogEntry) => void;
+  onBuy: (entry: CatalogEntry) => Promise<boolean>;
   onClose: () => void;
 }) {
   const [openRole, setOpenRole] = useState<string | null>(groups.find((g) => g.recommended)?.role ?? groups[0]?.role ?? null);
+  const [tryOn, setTryOn] = useState<CatalogEntry | null>(null);
+  if (tryOn) {
+    return (
+      <TryOnOverlay
+        insert
+        candidate={tryOn}
+        sections={allSections}
+        index={insertIndexFor(tryOn)}
+        vibe={vibe}
+        brandPrimary={brandPrimary}
+        onBack={() => setTryOn(null)}
+        onBuy={onBuy}
+        onConfirm={() => onAdd(tryOn)}
+      />
+    );
+  }
   return (
     <div className="fixed inset-0 z-[60] flex justify-end bg-black/40" onClick={onClose}>
-      <div className="flex h-full w-full max-w-2xl flex-col bg-neutral-50 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+      <div data-tour="studio-add-panel" className="flex h-full w-full max-w-2xl flex-col bg-neutral-50 shadow-2xl" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between border-b border-neutral-200 bg-white px-5 py-4">
           <div>
             <h2 className="text-[15px] font-bold text-neutral-900">Ajouter un bloc</h2>
@@ -1148,11 +1191,19 @@ export function AddPanel({
                             </div>
                             <div className="flex items-center justify-between gap-2 p-2.5">
                               <RarityChip rarity={c.rarity} />
-                              {locked ? (
-                                <button onClick={() => onBuy(c)} className="rounded-full bg-amber-500 px-3 py-1.5 text-[12px] font-semibold text-white hover:bg-amber-600">Débloquer · {c.price} ✦</button>
-                              ) : (
-                                <button onClick={() => onAdd(c)} className="inline-flex items-center gap-1.5 rounded-full bg-neutral-900 px-3 py-1.5 text-[12px] font-semibold text-white hover:bg-neutral-700"><Plus size={13} /> Ajouter</button>
-                              )}
+                              <div className="flex items-center gap-1.5">
+                                <button
+                                  onClick={() => setTryOn(c)}
+                                  className="inline-flex items-center gap-1.5 rounded-full border border-neutral-300 px-3 py-1.5 text-[12px] font-semibold text-neutral-700 transition hover:border-neutral-900 hover:text-neutral-900"
+                                >
+                                  <Eye size={13} /> Aperçu
+                                </button>
+                                {locked ? (
+                                  <button onClick={() => void onBuy(c)} className="rounded-full bg-amber-500 px-3 py-1.5 text-[12px] font-semibold text-white hover:bg-amber-600">Débloquer · {c.price} ✦</button>
+                                ) : (
+                                  <button onClick={() => onAdd(c)} className="inline-flex items-center gap-1.5 rounded-full bg-neutral-900 px-3 py-1.5 text-[12px] font-semibold text-white hover:bg-neutral-700"><Plus size={13} /> Ajouter</button>
+                                )}
+                              </div>
                             </div>
                           </div>
                         );

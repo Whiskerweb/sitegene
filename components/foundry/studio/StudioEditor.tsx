@@ -29,6 +29,7 @@ import {
 import { COMPONENTS } from "@/components/foundry/registry";
 import { vibeToSpec } from "@/lib/foundry/charte";
 import { heroTreatmentOf } from "@/lib/foundry/treatment";
+import { ROLE_ORDER } from "@/lib/foundry/roles";
 import type { StudioData, StudioSection, StudioVibe, CatalogEntry } from "./types";
 import {
   AddPanel,
@@ -60,6 +61,22 @@ const PAGE_IDEAS = [
   { label: "FAQ", ask: "Une page qui répond aux questions que mes clients me posent le plus souvent." },
 ];
 
+/** Rang d'un rôle dans l'ordre canonique d'une page (navbar → … → footer). */
+const roleRank = (role: string) => {
+  const i = ROLE_ORDER.indexOf(role);
+  return i === -1 ? ROLE_ORDER.length : i;
+};
+
+/** Où insérer un bloc de `role` pour respecter l'ordre canonique de la page :
+ *  juste avant le premier bloc dont le rôle vient plus bas (ex. un « Services »
+ *  se pose après le hero, avant la galerie/footer). Le serveur ré-épingle ensuite
+ *  navbar en tête et footer en queue, donc cet index n'a qu'à viser le bon milieu. */
+function canonicalInsertIndex(secs: StudioSection[], role: string): number {
+  const r = roleRank(role);
+  const at = secs.findIndex((s) => roleRank(s.role) > r);
+  return at === -1 ? secs.length : at;
+}
+
 export default function StudioEditor({ data }: { data: StudioData }) {
   const router = useRouter();
   const [sections, setSections] = useState<StudioSection[]>(data.sections);
@@ -84,6 +101,10 @@ export default function StudioEditor({ data }: { data: StudioData }) {
   const [publishing, setPublishing] = useState(false);
   // Aperçu responsive : null = on édite (vue ordinateur), sinon taille d'appareil.
   const [preview, setPreview] = useState<"mobile" | "tablet" | null>(null);
+  // Bloc qu'on vient d'ajouter : on défile jusqu'à lui (smooth) et on l'illumine.
+  const [justAdded, setJustAdded] = useState<number | null>(null);
+  const canvasRef = useRef<HTMLDivElement | null>(null);
+  const secEls = useRef<(HTMLDivElement | null)[]>([]);
 
   const catalogById = useMemo(() => {
     const m = new Map<string, CatalogEntry>();
@@ -216,13 +237,22 @@ export default function StudioEditor({ data }: { data: StudioData }) {
 
   // --- Ajouter ----------------------------------------------------------------
   async function doAdd(entry: CatalogEntry) {
-    // Position indicative : une navbar se posera en tête (épinglage serveur).
-    const at = entry.role === "navbar" ? 0 : Math.max(1, secRef.current.length - 1);
+    // Placement intelligent : on vise la bonne position dans l'ordre canonique
+    // de la page (pas systématiquement en bas). Le serveur ré-épingle ensuite
+    // navbar/footer aux extrêmes.
+    const at = canonicalInsertIndex(secRef.current, entry.role);
+    setAddOpen(false);
     const res = await call({ op: "add", index: at, componentId: entry.id });
     if (!res) return;
-    if (res.sections) setSecs(toStudioSections(res.sections));
+    if (res.sections) {
+      const next = toStudioSections(res.sections);
+      setSecs(next);
+      // L'ajout interdit les doublons de rôle → le composant inséré est unique :
+      // on retrouve sa position réelle (post-épinglage serveur) pour y défiler.
+      const addedAt = next.findIndex((s) => s.component === entry.id);
+      setJustAdded(addedAt >= 0 ? addedAt : null);
+    }
     record();
-    setAddOpen(false);
     flash(entry.role === "navbar" ? "Barre de navigation ajoutée en haut." : "Bloc ajouté.");
   }
 
@@ -334,6 +364,21 @@ export default function StudioEditor({ data }: { data: StudioData }) {
       if (msg) { sessionStorage.removeItem("atelier:flash"); flash(msg); }
     } catch { /* stockage indisponible : pas de toast, rien de cassé */ }
   }, [flash]);
+  // Après un ajout : on défile en douceur jusqu'au nouveau bloc, on le met en
+  // évidence (halo via la classe), on le sélectionne, puis on retire l'éclat.
+  useEffect(() => {
+    if (justAdded === null) return;
+    let raf2 = 0;
+    // Deux frames : laisse React monter le bloc et le navigateur calculer sa hauteur.
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        secEls.current[justAdded]?.scrollIntoView({ behavior: "smooth", block: "center" });
+        setSelected(justAdded);
+      });
+    });
+    const clear = window.setTimeout(() => setJustAdded(null), 2100);
+    return () => { cancelAnimationFrame(raf1); cancelAnimationFrame(raf2); clearTimeout(clear); };
+  }, [justAdded]);
   // Fait avancer les étapes affichées pendant la composition.
   useEffect(() => {
     if (!creating) { setGenStep(0); return; }
@@ -454,14 +499,14 @@ export default function StudioEditor({ data }: { data: StudioData }) {
           </button>
         </div>
         <div className="flex items-center gap-2">
-          <button onClick={() => { setRight((r) => (r?.kind === "palette" ? null : { kind: "palette" })); setSelected(null); }} className={`inline-flex h-9 items-center gap-1.5 rounded-full px-3.5 text-[13px] font-semibold transition ${right?.kind === "palette" ? "bg-neutral-900 text-white" : "border border-neutral-200 text-neutral-700 hover:border-neutral-400"}`}>
+          <button data-tour="studio-palette" onClick={() => { setRight((r) => (r?.kind === "palette" ? null : { kind: "palette" })); setSelected(null); }} className={`inline-flex h-9 items-center gap-1.5 rounded-full px-3.5 text-[13px] font-semibold transition ${right?.kind === "palette" ? "bg-neutral-900 text-white" : "border border-neutral-200 text-neutral-700 hover:border-neutral-400"}`}>
             <Palette size={15} /> Couleurs
           </button>
-          <button onClick={() => setAddOpen(true)} className="inline-flex h-9 items-center gap-1.5 rounded-full border border-neutral-200 px-3.5 text-[13px] font-semibold text-neutral-700 transition hover:border-neutral-400"><Plus size={15} /> Ajouter</button>
+          <button data-tour="studio-add" onClick={() => setAddOpen(true)} className="inline-flex h-9 items-center gap-1.5 rounded-full border border-neutral-200 px-3.5 text-[13px] font-semibold text-neutral-700 transition hover:border-neutral-400"><Plus size={15} /> Ajouter</button>
           {data.slug && data.isLive && (
             <a href={`/a/${data.slug}`} target="_blank" rel="noreferrer" className="hidden h-9 items-center gap-1.5 rounded-full border border-neutral-200 px-3.5 text-[13px] font-semibold text-neutral-700 transition hover:border-neutral-400 sm:inline-flex"><ExternalLink size={14} /> Voir</a>
           )}
-          <button onClick={publish} disabled={publishing} className="inline-flex h-9 items-center gap-1.5 rounded-full bg-neutral-900 px-4 text-[13px] font-semibold text-white transition hover:bg-neutral-700 disabled:opacity-50">
+          <button data-tour="studio-publish" onClick={publish} disabled={publishing} className="inline-flex h-9 items-center gap-1.5 rounded-full bg-neutral-900 px-4 text-[13px] font-semibold text-white transition hover:bg-neutral-700 disabled:opacity-50">
             <Sparkles size={14} /> {publishing ? "Publication…" : data.locked ? "Mettre en ligne" : data.hasUnpublished ? "Publier" : "En ligne"}
           </button>
         </div>
@@ -541,7 +586,7 @@ export default function StudioEditor({ data }: { data: StudioData }) {
 
       <div className="flex min-h-0 flex-1">
         {/* ===== Canvas central ===== */}
-        <div className="flex-1 overflow-y-auto" onClick={() => setSelected(null)}>
+        <div ref={canvasRef} data-tour="studio-canvas" className="flex-1 overflow-y-auto" onClick={() => setSelected(null)}>
           <div className="mx-auto my-6 max-w-[1180px] overflow-hidden rounded-2xl bg-white shadow-[0_8px_40px_rgba(0,0,0,0.08)]">
             <Themed vibe={vibe} brandPrimary={brandPrimary}>
               {sections.map((s, i) => {
@@ -552,7 +597,9 @@ export default function StudioEditor({ data }: { data: StudioData }) {
                 return (
                   <div
                     key={`${s.component}-${i}`}
-                    className="relative"
+                    ref={(el) => { secEls.current[i] = el; }}
+                    data-tour={i === 0 ? "studio-section0" : undefined}
+                    className={`relative${justAdded === i ? " foundry-block-added" : ""}`}
                     onMouseEnter={() => !addOpen && replaceAt === null && setSelected(i)}
                     onClick={(e) => { e.stopPropagation(); setSelected(i); setRight({ kind: "content", index: i }); }}
                     style={{ outline: isSel ? "2px solid var(--c-accent)" : "none", outlineOffset: -2 }}
@@ -591,7 +638,7 @@ export default function StudioEditor({ data }: { data: StudioData }) {
 
         {/* ===== Panneau droit contextuel ===== */}
         {right && (
-          <aside className="flex w-[380px] shrink-0 flex-col border-l border-neutral-200 bg-white">
+          <aside data-tour="studio-right" className="flex w-[380px] shrink-0 flex-col border-l border-neutral-200 bg-white">
             <div className="flex items-center justify-between border-b border-neutral-100 px-5 py-3.5">
               <h2 className="text-[14px] font-bold text-neutral-900">{right.kind === "palette" ? "Couleurs & style" : rightSection?.roleLabel}</h2>
               <button onClick={() => setRight(null)} className="grid h-8 w-8 place-items-center rounded-full text-neutral-400 hover:bg-neutral-100"><X size={16} /></button>
@@ -622,7 +669,16 @@ export default function StudioEditor({ data }: { data: StudioData }) {
         />
       )}
       {addOpen && (
-        <AddPanel groups={addGroups} vibe={vibe} brandPrimary={brandPrimary} onAdd={doAdd} onBuy={buy} onClose={() => setAddOpen(false)} />
+        <AddPanel
+          groups={addGroups}
+          allSections={sections}
+          insertIndexFor={(entry) => canonicalInsertIndex(secRef.current, entry.role)}
+          vibe={vibe}
+          brandPrimary={brandPrimary}
+          onAdd={doAdd}
+          onBuy={buy}
+          onClose={() => setAddOpen(false)}
+        />
       )}
       {reorderFrom !== null && (
         <ReorderOverlay
