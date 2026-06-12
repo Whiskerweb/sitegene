@@ -1,11 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Sparkles, ArrowRight, Image as ImageIcon } from "lucide-react";
+import { Sparkles, ArrowRight } from "lucide-react";
 import RotatingText from "@/components/ui/RotatingText";
-import { setIntake } from "@/lib/intake-store";
-import { DEFAULT_CATEGORY } from "@/lib/categories";
 import { createClient } from "@/lib/supabase/client";
 import AuthGate from "@/components/auth/AuthGate";
 
@@ -21,20 +19,13 @@ const ROTATING = [
 export default function Hero() {
   const router = useRouter();
   const [prompt, setPrompt] = useState("");
-  const [photos, setPhotos] = useState<File[]>([]);
   const [gateOpen, setGateOpen] = useState(false);
-  const fileRef = useRef<HTMLInputElement | null>(null);
-
-  function addPhotos(list: FileList | null) {
-    if (!list) return;
-    const imgs = Array.from(list).filter((f) => f.type.startsWith("image/"));
-    setPhotos((prev) => [...prev, ...imgs].slice(0, 12));
-  }
 
   // Bulle → gate compte → onboarding gamifié. Si déjà connecté, on file droit.
+  // Les photos se déposent à l'étape collect de /creer (drag & drop, compression) —
+  // pas ici, où elles étaient perdues en route.
   async function submit() {
     const brief = prompt.trim();
-    setIntake({ categoryId: DEFAULT_CATEGORY.id, brief, photos, company: "" });
     try {
       sessionStorage.setItem("akyra_brief", brief);
     } catch {
@@ -102,40 +93,9 @@ export default function Hero() {
           />
 
           <div className="flex items-center justify-between gap-2 border-t border-[rgb(var(--m-line))] px-3 py-2">
-            <div className="flex min-w-0 items-center gap-2">
-              <input
-                ref={fileRef}
-                type="file"
-                accept="image/*"
-                multiple
-                className="hidden"
-                onChange={(e) => addPhotos(e.target.files)}
-              />
-              <button
-                type="button"
-                onClick={() => fileRef.current?.click()}
-                className="flex h-8 shrink-0 items-center gap-1.5 rounded-md border border-[rgb(var(--m-line))] bg-[rgb(var(--m-overlay)/0.03)] px-2.5 text-[12px] font-medium text-[rgb(var(--m-ink)/0.8)] transition-colors hover:bg-[rgb(var(--m-overlay)/0.06)] sm:px-3"
-              >
-                <ImageIcon size={14} className="text-[rgb(var(--m-muted))]" />
-                {photos.length > 0 ? (
-                  `${photos.length} photo${photos.length > 1 ? "s" : ""}`
-                ) : (
-                  <>
-                    <span className="hidden sm:inline">Ajouter des photos</span>
-                    <span className="sm:hidden">Photos</span>
-                  </>
-                )}
-              </button>
-              {photos.length > 0 && (
-                <button
-                  type="button"
-                  onClick={() => setPhotos([])}
-                  className="text-[12px] font-medium text-[rgb(var(--m-faint))] transition-colors hover:text-[rgb(var(--m-muted))]"
-                >
-                  retirer
-                </button>
-              )}
-            </div>
+            <span className="px-1 text-[12px] font-medium text-[rgb(var(--m-faint))]">
+              Vos photos et vos liens viendront juste après.
+            </span>
 
             <button
               type="submit"
