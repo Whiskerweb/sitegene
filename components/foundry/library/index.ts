@@ -10,10 +10,12 @@ import { COMPONENTS_HEROES_A } from "./heroes-a";
 import { COMPONENTS_FOOTERS_A } from "./footers-a";
 import { COMPONENTS_SECTIONS_A } from "./sections-a";
 import { COMPONENTS_SECTIONS_B } from "./sections-b";
+import { COMPONENTS_AGENCY_A } from "./agency-a";
+import { COMPONENTS_MUSIC_A } from "./music-a";
 
 export type FoundryComponent = ComponentType<{ content: any; skin: Skin }>;
 
-const MODULES: Array<Record<string, FoundryComponent>> = [COMPONENTS_ARTISANS_A, COMPONENTS_NAVBARS_A, COMPONENTS_IMPORTED_A, COMPONENTS_HEROES_A, COMPONENTS_FOOTERS_A, COMPONENTS_SECTIONS_A, COMPONENTS_SECTIONS_B];
+const MODULES: Array<Record<string, FoundryComponent>> = [COMPONENTS_ARTISANS_A, COMPONENTS_NAVBARS_A, COMPONENTS_IMPORTED_A, COMPONENTS_HEROES_A, COMPONENTS_FOOTERS_A, COMPONENTS_SECTIONS_A, COMPONENTS_SECTIONS_B, COMPONENTS_AGENCY_A, COMPONENTS_MUSIC_A];
 
 export const LIBRARY_COMPONENTS: Record<string, FoundryComponent> = Object.assign(
   {},

@@ -11,13 +11,15 @@ import * as heroesA from "./heroes-a";
 import * as footersA from "./footers-a";
 import * as sectionsA from "./sections-a";
 import * as sectionsB from "./sections-b";
+import * as agencyA from "./agency-a";
+import * as musicA from "./music-a";
 
 export interface LibraryModule {
   manifests: Record<string, ComponentManifest>;
   samples: Record<string, Record<string, unknown>>;
 }
 
-const MODULES: LibraryModule[] = [artisansA, navbarsA, importedA, heroesA, footersA, sectionsA, sectionsB];
+const MODULES: LibraryModule[] = [artisansA, navbarsA, importedA, heroesA, footersA, sectionsA, sectionsB, agencyA, musicA];
 
 export const LIBRARY_MANIFESTS: Record<string, ComponentManifest> = Object.assign(
   {},

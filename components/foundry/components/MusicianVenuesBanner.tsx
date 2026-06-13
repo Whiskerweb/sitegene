@@ -6,7 +6,7 @@ interface VenuesContent { items: string[] }
 export default function MusicianVenuesBanner({ content, skin }: { content: VenuesContent; skin: Skin }) {
   const items: string[] = Array.isArray(content.items) ? content.items : [];
   return (
-    <div className="mvb" style={{ borderTop: "1px solid rgba(255,255,255,.08)", borderBottom: "1px solid rgba(255,255,255,.08)", background: "var(--c-ink)" }}>
+    <div className="mvb" style={{ borderTop: "1px solid rgba(255,255,255,.08)", borderBottom: "1px solid rgba(255,255,255,.08)", background: "var(--c-panel)" }}>
       <style>{`
         .mvb { padding: 1.25rem 1.5rem; overflow: hidden; }
         .mvb-inner {

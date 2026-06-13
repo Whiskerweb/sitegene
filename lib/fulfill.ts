@@ -1,7 +1,6 @@
 import type Stripe from "stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { grantCredits } from "@/lib/credits-server";
-import { SIGNUP_CREDITS } from "@/lib/stripe";
 import { sendReceipt } from "@/lib/email/send";
 import { generationPending } from "@/lib/generation-status";
 import { isValidSlug, normalizeSlug } from "@/lib/templates";
@@ -117,24 +116,19 @@ export async function fulfillPayment(
     return { email, token, siteId, userId, selfServe, slug };
   }
 
-  const { data: payment } = await admin
-    .from("payments")
-    .insert({
-      user_id: userId,
-      prospect_code_id: code?.id ?? null,
-      stripe_session_id: session.id,
-      stripe_payment_intent: (session.payment_intent as string) ?? null,
-      amount_cents: session.amount_total ?? 5000,
-      currency: session.currency ?? "eur",
-      kind: "initial_50",
-      status: "paid",
-    })
-    .select("id")
-    .single();
-
-  await grantCredits(admin, userId, SIGNUP_CREDITS, "signup_grant", {
-    payment_id: payment?.id,
+  await admin.from("payments").insert({
+    user_id: userId,
+    prospect_code_id: code?.id ?? null,
+    stripe_session_id: session.id,
+    stripe_payment_intent: (session.payment_intent as string) ?? null,
+    amount_cents: session.amount_total ?? 5000,
+    currency: session.currency ?? "eur",
+    kind: "initial_50",
+    status: "paid",
   });
+
+  // Crédits de bienvenue : désormais attribués via la roue de la fortune au
+  // 1er accès au dashboard (révélation gamifiée) — voir /api/wheel/spin.
 
   // Reçu / bienvenue — best-effort, ne doit JAMAIS bloquer le fulfillment.
   try {

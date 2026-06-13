@@ -4,11 +4,13 @@ import {
   repairCharte,
   contrast,
   luminance,
-  generateChartes,
+  selectChartes,
   fallbackChartes,
   vibeToSpec,
   CHARTE_FONTS,
 } from "./charte";
+import { VIBE_IDS } from "./vibes";
+import { rankVibesForTrade, type TradeId } from "./da-personas";
 
 const GOOD = {
   name: "Terre d'atelier",
@@ -98,34 +100,69 @@ describe("repairCharte dark mode", () => {
   });
 });
 
-describe("generateChartes", () => {
-  const INPUT = { brief: "Plombier chauffagiste à Rennes", businessName: "Breizh Plomberie" };
+describe("selectChartes", () => {
+  const INPUT = { brief: "Coach en développement personnel à Brest", businessName: "Élan Coaching" };
+  const BANK = new Set<string>(VIBE_IDS as string[]);
 
-  it("source ai : 3 chartes réparées depuis la réponse Mistral", async () => {
-    const { chartes, source } = await generateChartes(INPUT, async () =>
-      JSON.stringify({ chartes: [GOOD, { ...GOOD, name: "Bleu d'eau" }, { ...GOOD, name: "Cuivre net" }] }),
+  it("source ai : pioche EXACTEMENT les ids choisis par Mistral (jamais 'custom')", async () => {
+    const { chartes, source } = await selectChartes(INPUT, async () =>
+      JSON.stringify({
+        selection: [
+          { id: "brume-marine", reason: "Bleus apaisants." },
+          { id: "terre-eglantier", reason: "Chaleur bienveillante." },
+          { id: "serre-lumineuse", reason: "Croissance." },
+        ],
+      }),
     );
     expect(source).toBe("ai");
     expect(chartes).toHaveLength(3);
-    expect(chartes.map((c) => c.vibe.label)).toContain("Bleu d'eau");
-    for (const c of chartes) expect(c.vibe.id).toBe("custom");
+    expect(chartes.map((c) => c.vibe.id)).toEqual(["brume-marine", "terre-eglantier", "serre-lumineuse"]);
+    for (const c of chartes) expect(c.vibe.id).not.toBe("custom");
   });
 
-  it("complète avec les vibes curées si l'IA en rend moins de 3", async () => {
-    const { chartes, source } = await generateChartes(INPUT, async () =>
-      JSON.stringify({ chartes: [GOOD] }),
+  it("ignore les ids inconnus et complète par le classement métier", async () => {
+    const { chartes, source } = await selectChartes(INPUT, async () =>
+      JSON.stringify({ selection: [{ id: "brume-marine", reason: "ok" }, { id: "n-existe-pas", reason: "x" }] }),
     );
     expect(source).toBe("ai");
     expect(chartes).toHaveLength(3);
-    expect(chartes[1].vibe.id).not.toBe("custom"); // complété par une curée
+    expect(chartes.map((c) => c.vibe.id)).not.toContain("n-existe-pas");
+    for (const c of chartes) expect(BANK.has(c.vibe.id)).toBe(true);
   });
 
-  it("repli complet si le chat échoue", async () => {
-    const { chartes, source } = await generateChartes(INPUT, async () => {
+  it("respecte exclude : ni l'IA ni le repli ne re-proposent une charte déjà vue", async () => {
+    const exclude = ["mindful-moments", "warm-serif", "sage-nature"];
+    const { chartes } = await selectChartes(
+      { ...INPUT, exclude },
+      // l'IA tente de resservir une exclue + une nouvelle
+      async () => JSON.stringify({ selection: [{ id: "mindful-moments", reason: "x" }, { id: "brume-marine", reason: "y" }] }),
+    );
+    expect(chartes).toHaveLength(3);
+    for (const c of chartes) expect(exclude).not.toContain(c.vibe.id);
+    expect(chartes.map((c) => c.vibe.id)).toContain("brume-marine");
+  });
+
+  it("repli classement métier si le chat échoue — uniquement des ids de la banque", async () => {
+    const { chartes, source } = await selectChartes(INPUT, async () => {
       throw new Error("réseau");
     });
     expect(source).toBe("fallback");
     expect(chartes).toHaveLength(3);
     expect(chartes.map((c) => c.vibe.id)).toEqual(fallbackChartes(INPUT.brief).map((c) => c.vibe.id));
+    for (const c of chartes) expect(BANK.has(c.vibe.id)).toBe(true);
+  });
+});
+
+describe("banque de chartes : profondeur par métier", () => {
+  const TRADES: TradeId[] = [
+    "coach", "bien-etre", "photographe", "artisan", "restaurant",
+    "beaute", "conseil", "musicien", "fitness",
+  ];
+
+  it("chaque métier a ≥6 chartes pertinentes (weight > 0) pour la rotation", () => {
+    for (const trade of TRADES) {
+      const relevant = rankVibesForTrade(trade).filter((r) => r.weight > 0);
+      expect(relevant.length, `métier ${trade}`).toBeGreaterThanOrEqual(6);
+    }
   });
 });

@@ -53,6 +53,49 @@ export const DA_PERSONAS: Affinity[] = [
   { vibeId: "encre-editoriale", trade: "beaute", weight: 80, reason: "Raffiné comme un salon haut de gamme." },
   { vibeId: "contemporain-editorial", trade: "beaute", weight: 72, reason: "Doux et éditorial." },
   { vibeId: "corail-studio", trade: "beaute", weight: 68, reason: "Pop et lumineux." },
+
+  // --- Lot 2 : affinités des 15 DA curées (≥6 options par métier) ----------
+  // Coach
+  { vibeId: "brume-marine", trade: "coach", weight: 78, reason: "Bleus profonds, l'autorité douce d'un accompagnement." },
+  { vibeId: "terre-eglantier", trade: "coach", weight: 74, reason: "Terracotta chaleureux, bienveillance pour des sujets intimes." },
+  { vibeId: "serre-lumineuse", trade: "coach", weight: 72, reason: "Verts tendres, un espace de croissance et de confiance." },
+  { vibeId: "lin-poudre", trade: "coach", weight: 66, reason: "Nude feutré, la douceur premium d'un cabinet." },
+  // Bien-être
+  { vibeId: "serre-lumineuse", trade: "bien-etre", weight: 82, reason: "Lumière de serre, fraîcheur vivifiante du soin." },
+  { vibeId: "brume-marine", trade: "bien-etre", weight: 76, reason: "Apaisant et profond, comme une respiration." },
+  { vibeId: "lin-poudre", trade: "bien-etre", weight: 70, reason: "Tons lin et nude, un cocon sensoriel." },
+  { vibeId: "olive-table", trade: "bien-etre", weight: 60, reason: "Naturel méditerranéen, matières vivantes." },
+  // Photographe
+  { vibeId: "galerie-ivoire", trade: "photographe", weight: 90, reason: "Ivoire de galerie, l'image d'abord, beaucoup d'air." },
+  { vibeId: "noir-argentique", trade: "photographe", weight: 85, reason: "Charbon argentique, vos tirages en pleine lumière." },
+  { vibeId: "sable-mineral", trade: "photographe", weight: 60, reason: "Neutre minéral, sobre, ne concurrence pas l'image." },
+  // Restaurant
+  { vibeId: "braise-cuivre", trade: "restaurant", weight: 90, reason: "Braise et cuivre, table à la lueur des bougies." },
+  { vibeId: "bistrot-creme", trade: "restaurant", weight: 82, reason: "Crème et bordeaux, esprit bistrot de quartier." },
+  { vibeId: "olive-table", trade: "restaurant", weight: 78, reason: "Olive et terre cuite, cuisine du marché." },
+  // Fitness
+  { vibeId: "volt-graphite", trade: "fitness", weight: 88, reason: "Graphite et orange volt, l'énergie d'une salle." },
+  { vibeId: "arena-rouge", trade: "fitness", weight: 80, reason: "Noir et rouge sang, l'intensité de l'effort." },
+  { vibeId: "rock-brutalist", trade: "fitness", weight: 50, reason: "Brutalist acide, percussion visuelle." },
+  // Conseil / tech
+  { vibeId: "ardoise-azur", trade: "conseil", weight: 82, reason: "Ardoise et azur, le bleu de la crédibilité." },
+  { vibeId: "sable-mineral", trade: "conseil", weight: 64, reason: "Neutre minéral, rapport clair et premium." },
+  { vibeId: "brume-marine", trade: "conseil", weight: 60, reason: "Marine posée, confiance et sérieux." },
+  { vibeId: "volt-graphite", trade: "conseil", weight: 55, reason: "Sombre énergique, un produit qui s'affirme." },
+  // Artisan
+  { vibeId: "acier-brique", trade: "artisan", weight: 84, reason: "Acier et brique, le sérieux d'un homme de métier." },
+  { vibeId: "sable-mineral", trade: "artisan", weight: 66, reason: "Minéral précis, devis carrés et lisibles." },
+  { vibeId: "ardoise-azur", trade: "artisan", weight: 62, reason: "Bleu net, première impression d'un pro fiable." },
+  // Beauté
+  { vibeId: "galerie-ivoire", trade: "beaute", weight: 76, reason: "Ivoire épuré, le raffinement d'un salon haut de gamme." },
+  { vibeId: "lin-poudre", trade: "beaute", weight: 74, reason: "Nude poudré, douceur et soin." },
+  { vibeId: "terre-eglantier", trade: "beaute", weight: 70, reason: "Rosé chaleureux, féminin et délicat." },
+  { vibeId: "rose-chrome", trade: "beaute", weight: 66, reason: "Noir et rose chromé, une beauté actuelle et pointue." },
+  // Musicien
+  { vibeId: "noir-argentique", trade: "musicien", weight: 70, reason: "Charbon dramatique, façon artwork d'album." },
+  { vibeId: "arena-rouge", trade: "musicien", sub: "rock", weight: 90, reason: "Noir et rouge, le mur du son d'une scène rock." },
+  { vibeId: "arena-rouge", trade: "musicien", weight: 65, reason: "Rouge sang brutal, énergie de scène." },
+  { vibeId: "rose-chrome", trade: "musicien", weight: 58, reason: "Noir et rose chromé, une pop affirmée." },
 ];
 
 export interface RankedVibe { vibeId: VibeId; weight: number; recommended: boolean; reason: string }

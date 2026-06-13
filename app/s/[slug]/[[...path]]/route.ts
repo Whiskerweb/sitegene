@@ -1,7 +1,9 @@
 import { createPublicClient } from "@/lib/supabase/public";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { buildSiteHtml, fetchDefaultContent } from "@/lib/site-server";
 import { contentForTemplate, metaForTemplate, type AnyContent } from "@/lib/site-content";
 import { isTemplateId } from "@/lib/templates";
+import { hasActiveSubscription } from "@/lib/subscription";
 
 /**
  * Serveur de sites clients multi-pages : /s/<slug>/<...path>.
@@ -25,7 +27,7 @@ export async function GET(
 
   const { data: site } = await supabase
     .from("sites")
-    .select("id, template_id, status")
+    .select("id, template_id, status, owner_user_id")
     .eq("slug", slug)
     .eq("status", "live")
     .maybeSingle();
@@ -71,10 +73,16 @@ export async function GET(
     ? (rawContent as AnyContent)
     : contentForTemplate(rawContent, templateId);
   const meta = metaForTemplate(content, templateId, pagePath);
+  // Badge « Propulsé par Akyra » sauf si le propriétaire est abonné « tout compris ».
+  const ownerId = (site as { owner_user_id?: string | null } | null)?.owner_user_id ?? null;
+  const isSubscribed = ownerId
+    ? await hasActiveSubscription(createAdminClient(), ownerId)
+    : false;
   const html = await buildSiteHtml(origin, templateId, content, meta, {
     pagePath,
     basePath: `/s/${slug}`,
     shellHtml: generatedHtml,
+    showBranding: !isSubscribed,
   });
   if (!html) return new Response("Template indisponible.", { status: 500 });
 

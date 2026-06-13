@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { chat } from "@/lib/mistral";
-import { generateChartes } from "@/lib/foundry/charte";
-import { detectTrade } from "@/lib/foundry/suggest";
+import { selectChartes } from "@/lib/foundry/charte";
 
 export const maxDuration = 60;
 
@@ -22,9 +21,10 @@ function allowed(ip: string): boolean {
 }
 
 /**
- * 3 chartes graphiques SUR MESURE pour un pitch (étape DA de /creer).
- * Sortie IA réparée serveur (contrastes/saturation/fonts) — ne peut pas
- * échouer : repli sur les vibes curées du métier.
+ * 3 chartes graphiques piochées dans la banque curée pour un pitch (étape DA de
+ * /creer). Mistral CHOISIT les plus adaptées (il ne crée rien) ; `exclude` = ids
+ * déjà montrés (bouton « 3 autres ») → rotation sans répétition. Ne peut pas
+ * échouer : repli sur le classement métier déterministe.
  */
 export async function POST(request: Request) {
   const ip = (request.headers.get("x-forwarded-for") ?? "local").split(",")[0].trim();
@@ -35,12 +35,13 @@ export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   const brief = typeof body?.brief === "string" ? body.brief.trim() : "";
   const businessName = typeof body?.businessName === "string" ? body.businessName.trim().slice(0, 80) : "";
-  const attempt = typeof body?.attempt === "number" ? body.attempt : 0;
+  const exclude = Array.isArray(body?.exclude)
+    ? body.exclude.filter((x: unknown): x is string => typeof x === "string").slice(0, 64)
+    : [];
   if (brief.length < 10 || brief.length > 2000) {
     return NextResponse.json({ error: "Décrivez votre activité en quelques phrases." }, { status: 400 });
   }
 
-  const { trade, sub } = detectTrade(brief);
-  const { chartes, source } = await generateChartes({ brief, businessName, trade, sub, attempt }, chat);
+  const { chartes, source } = await selectChartes({ brief, businessName, exclude }, chat);
   return NextResponse.json({ ok: true, source, chartes });
 }

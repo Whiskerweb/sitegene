@@ -1,6 +1,9 @@
 // components/foundry/studio/types.ts
 // Types d'échange serveur → éditeur « L'Atelier » (tout est sérialisable JSON).
 import type { Vibe, Rarity } from "@/lib/foundry/types";
+import type { SavedCharte } from "@/lib/foundry/user-chartes";
+
+export type { SavedCharte };
 
 /** Vibe sérialisée (preset ou charte sur mesure) — même forme que lib Vibe. */
 export type StudioVibe = Vibe;
@@ -47,6 +50,10 @@ export interface StudioData {
   brandPrimary: string | null;
   catalog: CatalogEntry[];
   presets: StudioVibe[];
+  /** Chartes graphiques personnelles enregistrées sur le compte (réutilisables). */
+  userChartes: SavedCharte[];
+  /** Id de la charte personnelle active (si la charte custom en vient), sinon null. */
+  activeUserCharteId: string | null;
   fonts: { heading: string[]; body: string[] };
   mediaBank: string[];
   /** Sous-pages du site (onglets). */

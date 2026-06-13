@@ -1,0 +1,714 @@
+{
+  "id": "creative-agency",
+  "name": "Creative Agency — Forge (noir, typo XXL & bleu électrique)",
+  "schema": 2,
+  "pageTypes": [
+    "home",
+    "about",
+    "service",
+    "pricing",
+    "contact",
+    "generic"
+  ],
+  "sections": {
+    "home": [
+      "hero",
+      "about",
+      "services",
+      "work",
+      "whyChoose",
+      "testimonials",
+      "pricing",
+      "blog",
+      "finalCta"
+    ],
+    "about": [
+      "about",
+      "whyChoose",
+      "testimonials"
+    ],
+    "service": [
+      "services",
+      "work",
+      "pricing",
+      "finalCta"
+    ],
+    "pricing": [
+      "pricing",
+      "testimonials",
+      "finalCta"
+    ],
+    "contact": [
+      "finalCta",
+      "testimonials"
+    ],
+    "generic": [
+      "blocks"
+    ]
+  },
+  "photoSlots": 23,
+  "photos": [
+    {
+      "slot": "hero",
+      "role": "hero",
+      "required": true,
+      "note": "Photo d'ambiance du hero (urbain, nocturne ou foule) — affichée en noir & blanc contrasté par le CSS."
+    },
+    {
+      "slot": "showreel",
+      "role": "scene",
+      "required": true,
+      "note": "Vignette showreel insérée dans la typo du hero (scène de ville, plateau, backstage)."
+    },
+    {
+      "slot": "about",
+      "role": "portrait",
+      "required": true,
+      "note": "Portrait d'équipe ou de groupe au centre de la section À propos (format 4/5)."
+    },
+    {
+      "slot": "team1",
+      "role": "avatar",
+      "required": false,
+      "note": "Membre d'équipe 1 (rangée d'avatars, affichés en grisaille)."
+    },
+    {
+      "slot": "team2",
+      "role": "avatar",
+      "required": false,
+      "note": "Membre d'équipe 2."
+    },
+    {
+      "slot": "team3",
+      "role": "avatar",
+      "required": false,
+      "note": "Membre d'équipe 3."
+    },
+    {
+      "slot": "team4",
+      "role": "avatar",
+      "required": false,
+      "note": "Membre d'équipe 4."
+    },
+    {
+      "slot": "team5",
+      "role": "avatar",
+      "required": false,
+      "note": "Membre d'équipe 5."
+    },
+    {
+      "slot": "team6",
+      "role": "avatar",
+      "required": false,
+      "note": "Membre d'équipe 6."
+    },
+    {
+      "slot": "team7",
+      "role": "avatar",
+      "required": false,
+      "note": "Membre d'équipe 7."
+    },
+    {
+      "slot": "team8",
+      "role": "avatar",
+      "required": false,
+      "note": "Membre d'équipe 8."
+    },
+    {
+      "slot": "svc1",
+      "role": "service",
+      "required": true,
+      "note": "Service 01 — image du panneau latéral (stratégie de marque)."
+    },
+    {
+      "slot": "svc2",
+      "role": "service",
+      "required": true,
+      "note": "Service 02 — identité visuelle (packaging, objet de marque)."
+    },
+    {
+      "slot": "svc3",
+      "role": "service",
+      "required": true,
+      "note": "Service 03 — site & expérience (espace de travail, écran)."
+    },
+    {
+      "slot": "svc4",
+      "role": "service",
+      "required": true,
+      "note": "Service 04 — lancement & croissance (ville, mouvement)."
+    },
+    {
+      "slot": "work1",
+      "role": "project",
+      "required": true,
+      "note": "Projet 1 de la pile sticky (visuel fort, format 4/3)."
+    },
+    {
+      "slot": "work2",
+      "role": "project",
+      "required": true,
+      "note": "Projet 2 de la pile sticky."
+    },
+    {
+      "slot": "work3",
+      "role": "project",
+      "required": true,
+      "note": "Projet 3 de la pile sticky."
+    },
+    {
+      "slot": "why1",
+      "role": "ambiance",
+      "required": true,
+      "note": "Fond de la carte statistique (matière créative : nuancier, atelier) — assombri à 50 %."
+    },
+    {
+      "slot": "why2",
+      "role": "ambiance",
+      "required": true,
+      "note": "Carte « vision globale » (globe, carte, horizon)."
+    },
+    {
+      "slot": "av1",
+      "role": "avatar",
+      "required": true,
+      "note": "Avatar témoignage 1 (réutilisé dans la carte cluster)."
+    },
+    {
+      "slot": "av2",
+      "role": "avatar",
+      "required": true,
+      "note": "Avatar témoignage 2."
+    },
+    {
+      "slot": "av3",
+      "role": "avatar",
+      "required": true,
+      "note": "Avatar témoignage 3."
+    },
+    {
+      "slot": "av4",
+      "role": "avatar",
+      "required": true,
+      "note": "Avatar témoignage 4."
+    },
+    {
+      "slot": "blog1",
+      "role": "scene",
+      "required": false,
+      "note": "Visuel article 1 du journal."
+    },
+    {
+      "slot": "blog2",
+      "role": "scene",
+      "required": false,
+      "note": "Visuel article 2 du journal."
+    },
+    {
+      "slot": "blog3",
+      "role": "scene",
+      "required": false,
+      "note": "Visuel article 3 du journal."
+    },
+    {
+      "slot": "cta",
+      "role": "ambiance",
+      "required": true,
+      "note": "Portrait cinématique en fond du CTA final (voilé chaud par le CSS)."
+    },
+    {
+      "slot": "tile",
+      "role": "texture",
+      "required": false,
+      "note": "Mini-vignette remplaçant une lettre du titre du CTA final (clap, pellicule, détail créatif)."
+    },
+    {
+      "slot": "footer",
+      "role": "texture",
+      "required": false,
+      "note": "Texture sombre du panneau newsletter du footer."
+    }
+  ],
+  "fields": {
+    "editable": [
+      {
+        "path": "brand",
+        "label": "Nom de marque (wordmark navbar + footer ; un O devient un carré)",
+        "type": "text",
+        "maxLen": 12
+      },
+      {
+        "path": "hero.metaLeft",
+        "label": "Hero — méta gauche (baseline studio)",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "hero.metaRight",
+        "label": "Hero — méta droite (promesse)",
+        "type": "text",
+        "maxLen": 48
+      },
+      {
+        "path": "hero.titleLines[]",
+        "label": "Hero — ligne du titre géant (CAPITALES)",
+        "type": "text",
+        "maxLen": 16
+      },
+      {
+        "path": "hero.showreel.playLabel",
+        "label": "Hero — libellé de la vignette showreel",
+        "type": "text",
+        "maxLen": 24
+      },
+      {
+        "path": "hero.showreel.duration",
+        "label": "Hero — durée affichée (mm:ss)",
+        "type": "text",
+        "maxLen": 6
+      },
+      {
+        "path": "dividers.about.label",
+        "label": "Divider — label « À propos »",
+        "type": "text",
+        "maxLen": 32
+      },
+      {
+        "path": "dividers.services.label",
+        "label": "Divider — label « Services »",
+        "type": "text",
+        "maxLen": 32
+      },
+      {
+        "path": "dividers.work.label",
+        "label": "Divider — label « Projets »",
+        "type": "text",
+        "maxLen": 32
+      },
+      {
+        "path": "dividers.why.label",
+        "label": "Divider — label « Pourquoi nous »",
+        "type": "text",
+        "maxLen": 32
+      },
+      {
+        "path": "dividers.testimonials.label",
+        "label": "Divider — label « Témoignages »",
+        "type": "text",
+        "maxLen": 32
+      },
+      {
+        "path": "dividers.pricing.label",
+        "label": "Divider — label « Tarifs »",
+        "type": "text",
+        "maxLen": 32
+      },
+      {
+        "path": "dividers.blog.label",
+        "label": "Divider — label « Journal »",
+        "type": "text",
+        "maxLen": 32
+      },
+      {
+        "path": "about.wordLeft",
+        "label": "À propos — mot géant gauche",
+        "type": "text",
+        "maxLen": 10
+      },
+      {
+        "path": "about.wordRight",
+        "label": "À propos — mot géant droite",
+        "type": "text",
+        "maxLen": 10
+      },
+      {
+        "path": "about.body",
+        "label": "À propos — paragraphe",
+        "type": "textarea",
+        "maxLen": 420
+      },
+      {
+        "path": "about.socials[]",
+        "label": "À propos — réseau (entre crochets)",
+        "type": "text",
+        "maxLen": 14
+      },
+      {
+        "path": "about.team.label",
+        "label": "Équipe — label",
+        "type": "text",
+        "maxLen": 24
+      },
+      {
+        "path": "about.team.cta",
+        "label": "Équipe — libellé du bouton",
+        "type": "text",
+        "maxLen": 28
+      },
+      {
+        "path": "services[].name",
+        "label": "Service — nom (typo géante)",
+        "type": "text",
+        "maxLen": 28
+      },
+      {
+        "path": "services[].included[]",
+        "label": "Service — ligne d'inclusion",
+        "type": "text",
+        "maxLen": 48
+      },
+      {
+        "path": "servicesCta",
+        "label": "Services — libellé du bouton tarifs",
+        "type": "text",
+        "maxLen": 24
+      },
+      {
+        "path": "work.title",
+        "label": "Projets — titre de section",
+        "type": "text",
+        "maxLen": 24
+      },
+      {
+        "path": "work.bgWordLeft",
+        "label": "Projets — mot contour gauche (fond sticky)",
+        "type": "text",
+        "maxLen": 10
+      },
+      {
+        "path": "work.bgWordRight",
+        "label": "Projets — mot contour droite",
+        "type": "text",
+        "maxLen": 10
+      },
+      {
+        "path": "work.items[].name",
+        "label": "Projet — nom",
+        "type": "text",
+        "maxLen": 24
+      },
+      {
+        "path": "work.items[].year",
+        "label": "Projet — année",
+        "type": "text",
+        "maxLen": 6
+      },
+      {
+        "path": "work.items[].category",
+        "label": "Projet — catégorie",
+        "type": "text",
+        "maxLen": 32
+      },
+      {
+        "path": "work.partners[]",
+        "label": "Partenaire — nom affiché",
+        "type": "text",
+        "maxLen": 18
+      },
+      {
+        "path": "whyChoose.title",
+        "label": "Pourquoi nous — titre",
+        "type": "text",
+        "maxLen": 24
+      },
+      {
+        "path": "whyChoose.stat.value",
+        "label": "Pourquoi nous — chiffre clé",
+        "type": "text",
+        "maxLen": 6
+      },
+      {
+        "path": "whyChoose.stat.label",
+        "label": "Pourquoi nous — libellé du chiffre",
+        "type": "text",
+        "maxLen": 48
+      },
+      {
+        "path": "whyChoose.items[].title",
+        "label": "Atout — titre",
+        "type": "text",
+        "maxLen": 40
+      },
+      {
+        "path": "whyChoose.items[].desc",
+        "label": "Atout — description",
+        "type": "textarea",
+        "maxLen": 160
+      },
+      {
+        "path": "testimonials.title",
+        "label": "Témoignages — titre",
+        "type": "text",
+        "maxLen": 32
+      },
+      {
+        "path": "testimonials.ratings[].score",
+        "label": "Note — score",
+        "type": "text",
+        "maxLen": 4
+      },
+      {
+        "path": "testimonials.ratings[].source",
+        "label": "Note — source",
+        "type": "text",
+        "maxLen": 20
+      },
+      {
+        "path": "testimonials.clusterCount",
+        "label": "Cluster — compteur (+40)",
+        "type": "text",
+        "maxLen": 5
+      },
+      {
+        "path": "testimonials.clusterLabel",
+        "label": "Cluster — libellé",
+        "type": "text",
+        "maxLen": 32
+      },
+      {
+        "path": "testimonials.items[].text",
+        "label": "Témoignage — citation",
+        "type": "textarea",
+        "maxLen": 320
+      },
+      {
+        "path": "testimonials.items[].name",
+        "label": "Témoignage — auteur",
+        "type": "text",
+        "maxLen": 28
+      },
+      {
+        "path": "testimonials.items[].role",
+        "label": "Témoignage — rôle, entreprise",
+        "type": "text",
+        "maxLen": 36
+      },
+      {
+        "path": "pricing.plans[].tag",
+        "label": "Formule — étiquette",
+        "type": "text",
+        "maxLen": 20
+      },
+      {
+        "path": "pricing.plans[].name",
+        "label": "Formule — nom",
+        "type": "text",
+        "maxLen": 26
+      },
+      {
+        "path": "pricing.plans[].included[]",
+        "label": "Formule — ligne d'inclusion",
+        "type": "text",
+        "maxLen": 44
+      },
+      {
+        "path": "pricing.plans[].price",
+        "label": "Formule — prix affiché",
+        "type": "text",
+        "maxLen": 16
+      },
+      {
+        "path": "pricing.plans[].cta",
+        "label": "Formule — libellé du bouton",
+        "type": "text",
+        "maxLen": 22
+      },
+      {
+        "path": "pricing.note",
+        "label": "Tarifs — note légale sous les cartes",
+        "type": "textarea",
+        "maxLen": 280
+      },
+      {
+        "path": "blog.title",
+        "label": "Journal — titre",
+        "type": "text",
+        "maxLen": 26
+      },
+      {
+        "path": "blog.items[].date",
+        "label": "Article — date",
+        "type": "text",
+        "maxLen": 16
+      },
+      {
+        "path": "blog.items[].title",
+        "label": "Article — titre",
+        "type": "text",
+        "maxLen": 70
+      },
+      {
+        "path": "finalCta.lines[]",
+        "label": "CTA final — ligne (un « * » dans la 2ᵉ = vignette)",
+        "type": "text",
+        "maxLen": 18
+      },
+      {
+        "path": "finalCta.cta",
+        "label": "CTA final — libellé du bouton",
+        "type": "text",
+        "maxLen": 20
+      },
+      {
+        "path": "contact.email",
+        "label": "Email de contact (mailto)",
+        "type": "text",
+        "maxLen": 60
+      },
+      {
+        "path": "contact.phone",
+        "label": "Téléphone (tel)",
+        "type": "text",
+        "maxLen": 24
+      },
+      {
+        "path": "contact.address",
+        "label": "Adresse",
+        "type": "text",
+        "maxLen": 70
+      },
+      {
+        "path": "footer.mission",
+        "label": "Footer — phrase de mission",
+        "type": "textarea",
+        "maxLen": 160
+      },
+      {
+        "path": "footer.socials[]",
+        "label": "Footer — réseau (libellé inerte)",
+        "type": "text",
+        "maxLen": 14
+      },
+      {
+        "path": "footer.legal",
+        "label": "Footer — mention légale",
+        "type": "text",
+        "maxLen": 60
+      },
+      {
+        "path": "services[].includedLabel",
+        "label": "Service — label des inclusions",
+        "type": "text",
+        "maxLen": 24
+      },
+      {
+        "path": "pricing.plans[].includedLabel",
+        "label": "Formule — label des inclusions",
+        "type": "text",
+        "maxLen": 16
+      },
+      {
+        "path": "pricing.plans[].option",
+        "label": "Formule — option additionnelle",
+        "type": "text",
+        "maxLen": 44
+      },
+      {
+        "path": "work.items[].cta",
+        "label": "Projet — libellé du bouton",
+        "type": "text",
+        "maxLen": 22
+      },
+      {
+        "path": "footer.pagesLabel",
+        "label": "Footer — label de la colonne pages",
+        "type": "text",
+        "maxLen": 16
+      },
+      {
+        "path": "footer.pages[].label",
+        "label": "Footer — libellé de page",
+        "type": "text",
+        "maxLen": 18
+      },
+      {
+        "path": "footer.newsletterLabel",
+        "label": "Footer — label newsletter",
+        "type": "text",
+        "maxLen": 28
+      },
+      {
+        "path": "footer.communityLabel",
+        "label": "Footer — label réseaux",
+        "type": "text",
+        "maxLen": 24
+      },
+      {
+        "path": "footer.contactLabel",
+        "label": "Footer — label contact",
+        "type": "text",
+        "maxLen": 16
+      }
+    ],
+    "locked": [
+      {
+        "path": "hero.image",
+        "reason": "Lié au slot photo 'hero' (traitement N&B structurel)."
+      },
+      {
+        "path": "hero.showreel.image",
+        "reason": "Lié au slot photo 'showreel'."
+      },
+      {
+        "path": "hero.stars",
+        "reason": "DA : rangée de 5 étoiles accent, structurelle."
+      },
+      {
+        "path": "about.image",
+        "reason": "Lié au slot photo 'about'."
+      },
+      {
+        "path": "about.team.avatars",
+        "reason": "Liés aux slots team1..team8."
+      },
+      {
+        "path": "services[].image",
+        "reason": "Liés aux slots svc1..svc4."
+      },
+      {
+        "path": "services[].n",
+        "reason": "Numérotation (01)..(04) structurelle."
+      },
+      {
+        "path": "work.items[].image",
+        "reason": "Liés aux slots work1..work3."
+      },
+      {
+        "path": "whyChoose.imageA",
+        "reason": "Lié au slot photo 'why1'."
+      },
+      {
+        "path": "whyChoose.imageB",
+        "reason": "Lié au slot photo 'why2'."
+      },
+      {
+        "path": "testimonials.items[].avatar",
+        "reason": "Liés aux slots av1..av4."
+      },
+      {
+        "path": "blog.items[].image",
+        "reason": "Liés aux slots blog1..blog3."
+      },
+      {
+        "path": "finalCta.image",
+        "reason": "Lié au slot photo 'cta' (voile chaud structurel)."
+      },
+      {
+        "path": "finalCta.tile",
+        "reason": "Lié au slot photo 'tile' (vignette-lettre)."
+      },
+      {
+        "path": "footer.image",
+        "reason": "Lié au slot photo 'footer'."
+      },
+      {
+        "path": "pricing.plans[].featured",
+        "reason": "DA : une seule carte vedette (panneau coal). Structurel."
+      },
+      {
+        "path": "dividers.*.n",
+        "reason": "Numérotation [01]..[07] structurelle."
+      }
+    ]
+  }
+}

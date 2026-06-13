@@ -42,7 +42,7 @@ export default function WwAboutSplit({ content, skin }: { content: any; skin: Sk
           transition: background-color 0.4s ease, color 0.4s ease;
           margin-top: 2rem;
         }
-        .wwabout__cta:hover { background: var(--c-ink); color: var(--c-surface); }
+        .wwabout__cta:hover { background: var(--c-panel); color: var(--c-on-panel); }
         .wwabout__detail { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
         @media (max-width: 640px) { .wwabout { padding: 4rem 1.25rem 6rem; } }
       `}</style>

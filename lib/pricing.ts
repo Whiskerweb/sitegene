@@ -4,11 +4,29 @@
  * identifiant de pack, et le serveur résout le prix ici.
  */
 
-/** Abonnement « tout illimité » : 9,99 €/mois. */
-export const SUBSCRIPTION_PRICE_CENTS = 999;
+/** Abonnement « tout compris » : 14,99 €/mois. */
+export const SUBSCRIPTION_PRICE_CENTS = 1499;
 
-/** Price récurrent Stripe (à créer dans le dashboard Stripe). */
+/** Abonnement annuel : 149 € (≈ 2 mois offerts vs mensuel). */
+export const SUBSCRIPTION_ANNUAL_PRICE_CENTS = 14900;
+
+/** Price récurrent Stripe MENSUEL (à créer dans le dashboard Stripe). */
 export const STRIPE_SUBSCRIPTION_PRICE_ID = process.env.STRIPE_SUBSCRIPTION_PRICE_ID;
+
+/** Price récurrent Stripe ANNUEL (à créer dans le dashboard Stripe). */
+export const STRIPE_SUBSCRIPTION_ANNUAL_PRICE_ID =
+  process.env.STRIPE_SUBSCRIPTION_ANNUAL_PRICE_ID;
+
+export type SubscriptionInterval = "month" | "year";
+
+/** Résout le price Stripe selon la cadence demandée. */
+export function subscriptionPriceId(
+  interval: SubscriptionInterval,
+): string | undefined {
+  return interval === "year"
+    ? STRIPE_SUBSCRIPTION_ANNUAL_PRICE_ID
+    : STRIPE_SUBSCRIPTION_PRICE_ID;
+}
 
 /**
  * Allocation mensuelle stockée pour l'affichage uniquement.

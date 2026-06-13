@@ -27,10 +27,11 @@ import {
   X,
 } from "lucide-react";
 import { COMPONENTS } from "@/components/foundry/registry";
-import { vibeToSpec } from "@/lib/foundry/charte";
+import { repairCharte, vibeToSpec } from "@/lib/foundry/charte";
 import { heroTreatmentOf } from "@/lib/foundry/treatment";
 import { ROLE_ORDER } from "@/lib/foundry/roles";
-import type { StudioData, StudioSection, StudioVibe, CatalogEntry } from "./types";
+import ImportCharte, { type ImportedCharte } from "@/components/creer/ImportCharte";
+import type { StudioData, StudioSection, StudioVibe, CatalogEntry, SavedCharte } from "./types";
 import {
   AddPanel,
   ContentPanel,
@@ -84,6 +85,12 @@ export default function StudioEditor({ data }: { data: StudioData }) {
   const [brandPrimary, setBrandPrimary] = useState<string | null>(data.brandPrimary);
   const [balance, setBalance] = useState(data.balance);
   const [owned, setOwned] = useState<Set<string>>(new Set(data.catalog.filter((c) => c.owned).map((c) => c.id)));
+  // Chartes graphiques personnelles (compte) + charte active (si la charte custom
+  // en cours en provient) + modale d'import.
+  const [userChartes, setUserChartes] = useState<SavedCharte[]>(data.userChartes);
+  const [activeCharteId, setActiveCharteId] = useState<string | null>(data.activeUserCharteId);
+  const [importOpen, setImportOpen] = useState(false);
+  const [charteBusy, setCharteBusy] = useState(false);
 
   const [selected, setSelected] = useState<number | null>(null);
   const [right, setRight] = useState<RightPanel>(null);
@@ -144,9 +151,11 @@ export default function StudioEditor({ data }: { data: StudioData }) {
 
   // --- Refs synchrones (pour l'historique) + état mutateurs -------------------
   const secRef = useRef(sections); const vibeRef = useRef(vibe); const brandRef = useRef(brandPrimary);
+  const activeCharteRef = useRef<string | null>(data.activeUserCharteId);
   const setSecs = (next: StudioSection[]) => { secRef.current = next; setSections(next); };
   const setVibeS = (v: StudioVibe) => { vibeRef.current = v; setVibe(v); };
   const setBrandS = (b: string | null) => { brandRef.current = b; setBrandPrimary(b); };
+  const setActiveCharte = (id: string | null) => { activeCharteRef.current = id; setActiveCharteId(id); };
 
   /** Reconstruit des StudioSection depuis les sections renvoyées par le serveur
    *  (source de vérité pour l'ORDRE — navbar épinglée en tête, footer en queue). */
@@ -316,15 +325,97 @@ export default function StudioEditor({ data }: { data: StudioData }) {
     const spec = pendingPalette.current;
     if (spec != null) {
       pendingPalette.current = null;
-      paletteInFlight.current = call({ op: "palette", charteSpec: spec, accent: brandRef.current ?? undefined }).then((r) => { if (r) record(); });
+      // userCharteId : si la charte custom en cours vient d'une charte ENREGISTRÉE,
+      // on garde le lien (→ « enregistrer » mettra à jour, pas un doublon).
+      paletteInFlight.current = call({ op: "palette", charteSpec: spec, accent: brandRef.current ?? undefined, userCharteId: activeCharteRef.current ?? undefined }).then((r) => { if (r) record(); });
     }
     if (paletteInFlight.current) { await paletteInFlight.current; paletteInFlight.current = null; }
   }
   async function persistPreset(vibeId: string) {
     const preset = data.presets.find((p) => p.id === vibeId);
     if (preset) { setVibeS(preset); setBrandS(null); }
+    setActiveCharte(null); // un preset de base rompt le lien avec une charte enregistrée
     const res = await call({ op: "palette", vibeId });
     if (res) record();
+  }
+
+  // --- Chartes personnelles (compte) -----------------------------------------
+  /** Applique une charte enregistrée du compte (devient la charte active). */
+  async function applyUserCharte(id: string) {
+    const c = userChartes.find((x) => x.id === id);
+    if (!c) return;
+    setActiveCharte(id);
+    setVibeS(repairCharte(c.spec));
+    setBrandS(null);
+    const res = await call({ op: "palette", charteSpec: c.spec, userCharteId: id });
+    if (res) record();
+  }
+  /** Enregistre la charte en cours comme NOUVELLE charte du compte (nom donné). */
+  async function saveAsCharte(name: string) {
+    const trimmed = name.trim();
+    if (!trimmed || charteBusy) return;
+    setCharteBusy(true);
+    try {
+      await flushPalette(); // le brouillon serveur doit refléter la charte courante
+      const spec = vibeToSpec(vibeRef.current);
+      const res = await fetch("/api/foundry/chartes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: trimmed, spec }),
+      });
+      const json = await res.json().catch(() => null);
+      if (!res.ok || !json?.charte) { flash(json?.error ?? "Enregistrement impossible."); return; }
+      const charte = json.charte as SavedCharte;
+      setUserChartes((list) => [charte, ...list]);
+      setActiveCharte(charte.id);
+      // Réécrit la recette avec le lien (la charte custom devient « la sienne »).
+      await call({ op: "palette", charteSpec: charte.spec, userCharteId: charte.id });
+      flash(`Charte « ${charte.name} » enregistrée ✓`);
+    } finally {
+      setCharteBusy(false);
+    }
+  }
+  /** Met à jour la charte personnelle ACTIVE avec la charte en cours (pas de doublon). */
+  async function updateActiveCharte() {
+    const id = activeCharteRef.current;
+    if (!id || charteBusy) return;
+    setCharteBusy(true);
+    try {
+      await flushPalette();
+      const spec = vibeToSpec(vibeRef.current);
+      const res = await fetch(`/api/foundry/chartes/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ spec }),
+      });
+      const json = await res.json().catch(() => null);
+      if (!res.ok || !json?.charte) { flash(json?.error ?? "Mise à jour impossible."); return; }
+      const charte = json.charte as SavedCharte;
+      setUserChartes((list) => list.map((x) => (x.id === id ? charte : x)));
+      flash(`Charte « ${charte.name} » mise à jour ✓`);
+    } finally {
+      setCharteBusy(false);
+    }
+  }
+  /** Supprime une charte du compte (le site garde son look, mais le lien tombe). */
+  async function deleteUserCharte(id: string) {
+    const res = await fetch(`/api/foundry/chartes/${id}`, { method: "DELETE" });
+    if (!res.ok) { flash("Suppression impossible."); return; }
+    setUserChartes((list) => list.filter((x) => x.id !== id));
+    if (activeCharteRef.current === id) {
+      setActiveCharte(null);
+      await call({ op: "palette", charteSpec: vibeToSpec(vibeRef.current) });
+    }
+    flash("Charte supprimée.");
+  }
+  /** Applique une charte importée/composée (nouvelle, non enregistrée). */
+  async function applyImportedCharte(charte: ImportedCharte) {
+    setImportOpen(false);
+    setActiveCharte(null);
+    setVibeS(charte.vibe);
+    setBrandS(null);
+    const res = await call({ op: "palette", charteSpec: charte.spec });
+    if (res) { record(); flash("Charte importée ✓"); }
   }
 
   // --- Publier ----------------------------------------------------------------
@@ -645,7 +736,22 @@ export default function StudioEditor({ data }: { data: StudioData }) {
             </div>
             <div className="min-h-0 flex-1 overflow-y-auto p-5">
               {right.kind === "palette" ? (
-                <PalettePanel vibe={vibe} presets={data.presets} fonts={data.fonts} onLive={liveVibe} onPersistCharte={persistCharte} onPersistPreset={persistPreset} />
+                <PalettePanel
+                  vibe={vibe}
+                  presets={data.presets}
+                  fonts={data.fonts}
+                  userChartes={userChartes}
+                  activeCharteId={activeCharteId}
+                  charteBusy={charteBusy}
+                  onLive={liveVibe}
+                  onPersistCharte={persistCharte}
+                  onPersistPreset={persistPreset}
+                  onApplyUserCharte={applyUserCharte}
+                  onDeleteUserCharte={deleteUserCharte}
+                  onSaveAsCharte={saveAsCharte}
+                  onUpdateActiveCharte={updateActiveCharte}
+                  onOpenImport={() => setImportOpen(true)}
+                />
               ) : rightSection ? (
                 <ContentPanel section={rightSection} siteId={data.siteId} mediaBank={data.mediaBank} pages={data.pages} onChange={(c) => editContent(right.index, c)} />
               ) : null}
@@ -776,6 +882,19 @@ export default function StudioEditor({ data }: { data: StudioData }) {
           onDevice={setPreview}
           onClose={() => setPreview(null)}
         />
+      )}
+
+      {/* ===== Importer / composer une charte graphique ===== */}
+      {importOpen && (
+        <div className="fixed inset-0 z-[75] flex items-start justify-center overflow-y-auto bg-neutral-950/45 p-4 backdrop-blur-[2px]" onClick={() => setImportOpen(false)}>
+          <div className="my-auto w-full max-w-3xl" onClick={(e) => e.stopPropagation()}>
+            <div className="mb-3 flex items-center justify-between px-1">
+              <h2 className="text-[15px] font-bold text-white">Importer une charte graphique</h2>
+              <button onClick={() => setImportOpen(false)} className="grid h-8 w-8 place-items-center rounded-full bg-white/10 text-white hover:bg-white/20"><X size={16} /></button>
+            </div>
+            <ImportCharte businessName={data.businessName} onApply={applyImportedCharte} />
+          </div>
+        </div>
       )}
 
       {/* ===== Toast ===== */}

@@ -30,7 +30,7 @@ export default function FooterCinematic({ content, skin }: { content: any; skin:
   );
 
   return (
-    <footer className="relative overflow-hidden px-6 pt-10 pb-8" style={{ ...root, background: "var(--c-ink)", color: "var(--c-surface)" }}>
+    <footer className="relative overflow-hidden px-6 pt-10 pb-8" style={{ ...root, background: "var(--c-panel)", color: "var(--c-on-panel)" }}>
       <style>{`
         @keyframes sgcf-marquee { to { transform: translateX(-50%); } }
         @keyframes sgcf-breathe { 0% { transform: translate(-50%, -50%) scale(1); opacity: .5; } 100% { transform: translate(-50%, -50%) scale(1.12); opacity: .9; } }
@@ -38,8 +38,8 @@ export default function FooterCinematic({ content, skin }: { content: any; skin:
         .sgcf-marquee-track { animation: sgcf-marquee 40s linear infinite; }
         .sgcf-aurora { animation: sgcf-breathe 8s ease-in-out infinite alternate; }
         .sgcf-beat { animation: sgcf-beat 1.8s ease-in-out infinite; }
-        .sgcf-pill { background: color-mix(in srgb, var(--c-surface) 7%, transparent); border: 1px solid color-mix(in srgb, var(--c-surface) 16%, transparent); backdrop-filter: blur(12px); transition: background .3s, border-color .3s, transform .3s; }
-        .sgcf-pill:hover { background: color-mix(in srgb, var(--c-surface) 14%, transparent); border-color: color-mix(in srgb, var(--c-surface) 32%, transparent); transform: translateY(-2px); }
+        .sgcf-pill { background: color-mix(in srgb, var(--c-on-panel) 7%, transparent); border: 1px solid color-mix(in srgb, var(--c-on-panel) 16%, transparent); backdrop-filter: blur(12px); transition: background .3s, border-color .3s, transform .3s; }
+        .sgcf-pill:hover { background: color-mix(in srgb, var(--c-on-panel) 14%, transparent); border-color: color-mix(in srgb, var(--c-on-panel) 32%, transparent); transform: translateY(-2px); }
         @media (prefers-reduced-motion: reduce) { .sgcf-marquee-track, .sgcf-aurora, .sgcf-beat { animation: none; } }
       `}</style>
 
@@ -47,38 +47,38 @@ export default function FooterCinematic({ content, skin }: { content: any; skin:
       <div className="sgcf-aurora pointer-events-none absolute left-1/2 top-1/2 z-0 h-[55vh] w-[80%] rounded-[50%] blur-[80px]" style={{ background: "radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--c-accent) 28%, transparent) 0%, color-mix(in srgb, var(--c-accent2) 20%, transparent) 45%, transparent 70%)" }} aria-hidden />
 
       {/* Texte géant de la marque en filigrane */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 z-0 select-none text-center font-black leading-[0.7] tracking-tighter" style={{ fontSize: "clamp(4rem, 22vw, 18rem)", color: "transparent", WebkitTextStroke: "1px color-mix(in srgb, var(--c-surface) 8%, transparent)", transform: "translateY(28%)" }}>
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 z-0 select-none text-center font-black leading-[0.7] tracking-tighter" style={{ fontSize: "clamp(4rem, 22vw, 18rem)", color: "transparent", WebkitTextStroke: "1px color-mix(in srgb, var(--c-on-panel) 8%, transparent)", transform: "translateY(28%)" }}>
         {brand.toUpperCase()}
       </div>
 
       {/* Bandeau marquee incliné */}
-      <div className="absolute left-0 top-6 z-10 w-full -rotate-2 overflow-hidden border-y py-3 backdrop-blur-md" style={{ borderColor: "color-mix(in srgb, var(--c-surface) 14%, transparent)", background: "color-mix(in srgb, var(--c-ink) 40%, transparent)" }}>
-        <div className="sgcf-marquee-track flex w-max whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.25em] md:text-xs" style={{ color: "color-mix(in srgb, var(--c-surface) 55%, transparent)" }}>
+      <div className="absolute left-0 top-6 z-10 w-full -rotate-2 overflow-hidden border-y py-3 backdrop-blur-md" style={{ borderColor: "color-mix(in srgb, var(--c-on-panel) 14%, transparent)", background: "color-mix(in srgb, var(--c-panel) 40%, transparent)" }}>
+        <div className="sgcf-marquee-track flex w-max whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.25em] md:text-xs" style={{ color: "color-mix(in srgb, var(--c-on-panel) 55%, transparent)" }}>
           {seq}{seq}
         </div>
       </div>
 
       {/* Contenu central */}
       <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center pt-28 text-center">
-        <h2 className="text-4xl font-black tracking-tight md:text-7xl" style={{ fontFamily: "var(--font-heading)", color: "var(--c-surface)" }}>{heading}</h2>
+        <h2 className="text-4xl font-black tracking-tight md:text-7xl" style={{ fontFamily: "var(--font-heading)", color: "var(--c-on-panel)" }}>{heading}</h2>
         {links.length > 0 && (
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             {links.map((l, i) => (
-              <a key={i} href={navHref(l)} className="sgcf-pill rounded-[var(--r-pill)] px-7 py-3.5 text-sm font-semibold" style={{ color: "var(--c-surface)" }}>{navLabel(l)}</a>
+              <a key={i} href={navHref(l)} className="sgcf-pill rounded-[var(--r-pill)] px-7 py-3.5 text-sm font-semibold" style={{ color: "var(--c-on-panel)" }}>{navLabel(l)}</a>
             ))}
           </div>
         )}
       </div>
 
       {/* Barre basse */}
-      <div className="relative z-10 mt-16 flex flex-col items-center justify-between gap-4 md:flex-row" style={{ color: "color-mix(in srgb, var(--c-surface) 55%, transparent)" }}>
+      <div className="relative z-10 mt-16 flex flex-col items-center justify-between gap-4 md:flex-row" style={{ color: "color-mix(in srgb, var(--c-on-panel) 55%, transparent)" }}>
         <p className="order-2 text-[10px] font-semibold uppercase tracking-widest md:order-1">{content?.copyright ?? `© ${brand}. Tous droits réservés.`}</p>
         <div className="sgcf-pill order-1 flex items-center gap-2 rounded-[var(--r-pill)] px-5 py-2.5 md:order-2">
           <span className="text-[10px] font-bold uppercase tracking-widest">Créé avec</span>
           <span className="sgcf-beat text-sm" style={{ color: "var(--c-accent2)" }}>❤</span>
-          <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: "var(--c-surface)" }}>{brand}</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: "var(--c-on-panel)" }}>{brand}</span>
         </div>
-        <a href="#top" aria-label="Retour en haut" className="sgcf-pill order-3 flex h-11 w-11 items-center justify-center rounded-full" style={{ color: "var(--c-surface)" }}>
+        <a href="#top" aria-label="Retour en haut" className="sgcf-pill order-3 flex h-11 w-11 items-center justify-center rounded-full" style={{ color: "var(--c-on-panel)" }}>
           <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
         </a>
       </div>

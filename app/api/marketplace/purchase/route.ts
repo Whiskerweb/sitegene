@@ -3,6 +3,7 @@ import { getUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { isMarketplaceItemType } from "@/lib/marketplace";
 import { purchaseItem } from "@/lib/marketplace-server";
+import { hasActiveSubscription } from "@/lib/subscription";
 import { primarySiteForUser } from "@/lib/primary-site";
 import { fetchDefaultContent } from "@/lib/site-server";
 import { ensureSnapshot } from "@/lib/site-content-store";
@@ -29,7 +30,9 @@ export async function POST(request: Request) {
   }
 
   const admin = createAdminClient();
-  const result = await purchaseItem(admin, user.id, itemType, itemId);
+  // Abonné « tout compris » → marketplace gratuite (0 crédit).
+  const isSubscribed = await hasActiveSubscription(admin, user.id);
+  const result = await purchaseItem(admin, user.id, itemType, itemId, isSubscribed);
 
   if (result.ok) {
     // Achat d'un template → crée une PEAU (snapshot par défaut) sous le site unique.

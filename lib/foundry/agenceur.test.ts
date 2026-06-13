@@ -7,6 +7,7 @@ import {
   repairRecipe,
   fallbackRecipe,
   parseAgenceurJson,
+  buildAgenceurMessages,
   generateRecipe,
   repairSubPageSections,
   fallbackSubPageSections,
@@ -170,6 +171,7 @@ describe("fallbackRecipe", () => {
       "restaurant à Lyon",
       "salon de coiffure",
       "consultant en stratégie",
+      "chanteuse de jazz, concerts et album",
       "autre chose",
     ]) {
       const recipe = fallbackRecipe({ ...INPUT, brief });
@@ -178,6 +180,33 @@ describe("fallbackRecipe", () => {
       expect(getManifest(recipe.sections[0].component)?.role).toBe("hero");
       expect(getManifest(recipe.sections.at(-1)!.component)?.role).toBe("footer");
     }
+  });
+  it("le plan musicien est une vitrine (musique/scène) sans avis ni FAQ", () => {
+    const recipe = fallbackRecipe({ ...INPUT, brief: "chanteuse de jazz, concerts et album" });
+    const roles = recipe.sections.map((s) => getManifest(s.component)?.role);
+    expect(roles).not.toContain("reviews");
+    expect(roles).not.toContain("faq");
+    expect(roles).not.toContain("pricing");
+    expect(recipe.sections.map((s) => s.component)).toContain("social-clip-links");
+  });
+});
+
+describe("buildAgenceurMessages (catalogue adapté au métier)", () => {
+  it("musicien : catalogue sans avis/FAQ, avec indices d'usage et note de structure", () => {
+    const [system, user] = buildAgenceurMessages({ ...INPUT, brief: "chanteuse de jazz à Paris, concerts et album", vibeId: "contemporain-editorial" });
+    // Sections de prestataire absentes du catalogue.
+    expect(system.content).not.toContain("### testimonials-carousel");
+    expect(system.content).not.toContain("### faq-accordion");
+    // Indice d'usage musicien injecté dans le catalogue.
+    expect(system.content).toContain("→ ADAPTÉ À CE MÉTIER");
+    // La note de structure musicien guide l'assemblage.
+    expect(user.content).toContain("STRUCTURE ATTENDUE (MUSICIEN");
+    expect(user.content).toMatch(/PAS d'avis clients/i);
+  });
+  it("artisan : les avis et la FAQ restent disponibles dans le catalogue", () => {
+    const [system] = buildAgenceurMessages({ ...INPUT, brief: "plombier à Rennes" });
+    expect(system.content).toContain("### testimonials-carousel");
+    expect(system.content).toContain("### faq-accordion");
   });
 });
 

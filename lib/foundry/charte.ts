@@ -5,9 +5,10 @@
 // fonts à caractère (liste blanche Google Fonts vérifiée). Toute sortie IA est
 // RÉPARÉE (contrastes WCAG, fonts inconnues) ; repli = vibes curées. Zéro import
 // réseau ici (chatFn injectée) — testable sans réseau.
-import type { Vibe } from "./types";
-import { getVibe } from "./vibes";
+import type { Vibe, VibeId } from "./types";
+import { getVibe, VIBE_IDS } from "./vibes";
 import { suggestVibes } from "./suggest";
+import { CHARTE_META } from "./charte-catalog";
 
 // --- Liste blanche de fonts (vérifiées sur Google Fonts) -----------------------
 
@@ -248,7 +249,7 @@ export function vibeToSpec(vibe: Vibe): CharteSpec {
   };
 }
 
-// --- Génération Mistral ------------------------------------------------------------
+// --- Sélecteur Mistral (pioche dans la banque, ne crée rien) ----------------------
 
 export interface CharteProposal {
   vibe: Vibe;
@@ -265,75 +266,40 @@ type ChatFn = (
   opts?: { json?: boolean; maxTokens?: number; temperature?: number },
 ) => Promise<string>;
 
-function fontsForPrompt(role: "heading" | "body"): string {
-  return CHARTE_FONTS.filter((f) => f.roles.includes(role)).map((f) => f.family).join(", ");
+/** Ligne de catalogue d'une charte pour le sélecteur (id + identité lisible). */
+function catalogLine(id: VibeId): string {
+  const v = getVibe(id)!;
+  const m = CHARTE_META[id];
+  return `- ${id} · « ${v.label} » · ${v.mode ?? "light"} · ${v.mood.join(", ")} · ${m.ambiance} (idéal : ${m.idealFor})`;
 }
 
-/** Métiers au registre EXPRESSIF : l'audace y est une qualité, pas un risque. */
-const EXPRESSIVE_TRADES = new Set(["musicien", "fitness", "restaurant"]);
+/**
+ * Messages du SÉLECTEUR : Mistral ne crée rien, il choisit `count` IDs parmi la
+ * bibliothèque disponible (hors déjà-vu), classés par pertinence pour le client.
+ */
+export function buildSelectMessages(
+  input: { brief: string; businessName: string },
+  availableIds: VibeId[],
+  count: number,
+) {
+  const system = `Tu es le DIRECTEUR ARTISTIQUE d'Akyra. Tu NE CRÉES PAS de charte : tu CHOISIS, dans notre bibliothèque de chartes DÉJÀ conçues, les ${count} qui correspondent le mieux à ce client.
 
-/** Directives par sous-persona (prime sur la directive métier). */
-const SUB_GUIDANCE: Record<string, string> = {
-  "musicien:rock":
-    "Sous-genre ROCK/METAL : les 3 chartes DOIVENT cogner. Surfaces noires ou charbon (mode dark), accents TRANCHANTS au choix : jaune acide, rouge sang, blanc brut, vert toxique, chrome. Typographies condensées ou brutales. INTERDIT ABSOLU : terracotta, cuivre vieilli, beige, bleu doux, tout ce qui est « chaleureux » — rien de mou, rien de décoratif.",
-  "musicien:rap":
-    "Sous-genre RAP/URBAIN : luxe-street assumé. Noir profond, or, chrome, violet nuit ; contrastes maximaux, typographies massives. Pas de pastels, pas de tons terreux.",
-  "musicien:contemporain":
-    "Sous-genre CONTEMPORAIN/FOLK : éditorial intime, sérifs sensibles, palettes feutrées MAIS avec un parti pris (encre profonde, un accent inattendu) — pas de fadeur.",
-};
-
-export function buildCharteMessages(input: { brief: string; businessName: string; trade?: string; sub?: string; attempt?: number }) {
-  const TRADE_GUIDANCE: Record<string, string> = {
-    musicien: "Ce client est un MUSICIEN. Les 3 chartes DOIVENT respirer l'univers musical : artwork d'album, contraste fort, typographies expressives (condensée, display), ambiance de scène live ou de streaming. Pour un musicien rock ou rap, au moins 2 des 3 chartes DOIVENT avoir mode: \"dark\" — surface sombre (#0a0a0a à #1a1a1a), ink clair (#f0f0f0 à #ffffff). INTERDIT : look générique d'entreprise, pastels ternes, 3 chartes claires pour un rockeur.",
-    photographe: "Ce client est un PHOTOGRAPHE. Les chartes doivent laisser l'image respirer : beaucoup d'air, surfaces quasi-blanches, typographie sobre et élégante, palette froide ou neutre qui ne concurrence pas les photos.",
-    restaurant: "Ce client est un RESTAURATEUR. Les chartes doivent évoquer la gastronomie : matières chaudes (ardoise, braise, bois), typographies à caractère, accents dorés ou profonds, ambiance de salle à la lueur des bougies ou de bistrot de quartier.",
-    fitness: "Ce client est dans le FITNESS. Les chartes doivent dégager de l'énergie : industriel, contraste maximal, typographies condensées, couleurs vives électriques (lime, orange, rouge), lignes nettes.",
-    coach: "Ce client est un COACH. Les chartes doivent inspirer confiance et apaisement : surfaces claires lumineuses, typographies arrondies ou serif chauds, accents discrets mais chaleureux, tons terreux ou végétaux premium.",
-    "bien-etre": "Ce client est dans le BIEN-ÊTRE. Les chartes doivent inspirer calme et soin : tons naturels (vert profond, lin, ivoire), typographies organiques, beaucoup d'espace, pas de couleurs criardes.",
-    artisan: "Ce client est un ARTISAN. Les chartes doivent projeter fiabilité et savoir-faire : tons sérieux (marine, ardoise, brun chaud), typographies lisibles et directes, matière et texture dans les couleurs.",
-    beaute: "Ce client est dans la BEAUTÉ (coiffeur, esthétique…). Les chartes doivent être raffinées et actuelles : noir élégant ou nude, typographies fines, touches de couleur précises et sophistiquées.",
-    conseil: "Ce client est dans le CONSEIL ou la TECH. Les chartes doivent projeter professionnalisme et clarté : tons bleus froids ou neutres structurés, typographies géométriques nettes, design orienté lisibilité et conversion.",
-  };
-  const subKey = input.trade && input.sub ? `${input.trade}:${input.sub}` : "";
-  const tradeNote = [
-    input.trade && TRADE_GUIDANCE[input.trade] ? `\nDIRECTIVE MÉTIER : ${TRADE_GUIDANCE[input.trade]}` : "",
-    subKey && SUB_GUIDANCE[subKey] ? `\nDIRECTIVE SOUS-GENRE (prioritaire) : ${SUB_GUIDANCE[subKey]}` : "",
-  ].join("");
-  const expressive = !!input.trade && EXPRESSIVE_TRADES.has(input.trade);
-  const registre = expressive
-    ? "- Registre EXPRESSIF : ce métier vit de son identité. Accents FRANCS et assumés (saturés, acides, métalliques) bienvenus, surtout sur surface sombre. La tiédeur est la seule faute de goût."
-    : "- Registre CALME : saturation modérée (jamais néon, jamais violet/bleu fluo « IA »), surfaces apaisées.";
-
-  const system = `Tu es le DIRECTEUR ARTISTIQUE d'Akyra. Tu composes des chartes graphiques SUR MESURE pour des sites vitrines d'indépendants français. Tu produis 3 directions distinctes et tranchées — pas trois variations de la même.
-
-RÈGLES DE GOÛT (strictes, non négociables) :
-- Les 3 directions doivent être RADICALEMENT différentes ENTRE ELLES : familles de couleurs différentes, températures différentes, personnalités différentes — au moins une inattendue. INTERDIT : deux chartes de la même famille (deux brunes/cuivrées, deux marines, deux beiges).
-- UN SEUL accent dominant par charte.
-${registre}
-- Jamais de noir pur (#000000) : encres profondes teintées (charbon, brun, bleu nuit).
-- En mode light : surfaces claires teintées par le métier (crème, lin, brume…). En mode dark : surfaces profondes (charbon, encre, nuit). La carte (card) = la surface légèrement décalée, même famille.
-- Couleurs nommées par leur rôle, calibrées pour le métier du client (un plombier n'a pas la palette d'un fleuriste).
-- muted = texte secondaire, lisible sur la surface.
-- Typographies à CARACTÈRE : la hiérarchie vient de la graisse et de la couleur, pas de la taille criarde.
-- headingFont à choisir UNIQUEMENT parmi : ${fontsForPrompt("heading")}.
-- bodyFont à choisir UNIQUEMENT parmi : ${fontsForPrompt("body")}.
-- corners : "sharp" (éditorial, précis), "soft" (équilibré) ou "round" (chaleureux, organique) — accordé à la personnalité.
-- name : nom de charte évocateur en français (2-3 mots, ex. « Terre d'atelier »). mood : 3 adjectifs français.
-- reason : 1 phrase française qui relie la charte AU MÉTIER du client (jamais générique).${tradeNote}
-
-- mode : "light" (surface claire) ou "dark" (surface sombre) — OBLIGATOIRE, dicté par le métier.
+RÈGLES :
+- Choisis EXACTEMENT ${count} chartes, par leur identifiant "id", UNIQUEMENT dans la liste fournie. N'invente aucun id, recopie-le exactement.
+- Priorité 1 : la PERTINENCE — métier, ton et univers du client (sers-toi de l'ambiance et du "idéal" de chaque charte). Ne propose jamais une charte hors-sujet (ex. une charte rock pour un coach bien-être).
+- Priorité 2 : la VARIÉTÉ entre les ${count} — familles de couleurs différentes, et si pertinent un mélange clair/sombre.
+- reason : 1 phrase FR qui relie la charte AU client (jamais générique).
 
 SORTIE : JSON STRICT, rien d'autre :
-{"chartes":[{"name":"…","mood":["…","…","…"],"mode":"light","ink":"#xxxxxx","surface":"#xxxxxx","card":"#xxxxxx","accent":"#xxxxxx","accent2":"#xxxxxx","muted":"#xxxxxx","headingFont":"…","bodyFont":"…","corners":"soft","reason":"…"}, …3 chartes…]}`;
-
-  const varietyNote = (input.attempt ?? 0) > 0
-    ? `\nATTENTION : le client a déjà vu une première série de chartes. Propose 3 directions ENTIÈREMENT DIFFÉRENTES — autre palette, autres fonts, autre ambiance. Ne répète pas les mêmes noms de charte ni les mêmes couleurs dominantes.`
-    : "";
+{"selection":[{"id":"...","reason":"..."}${count > 1 ? ", …" : ""}]}`;
 
   const user = `CLIENT : « ${input.businessName.trim().slice(0, 80)} »
-PITCH : « ${input.brief.trim().slice(0, 1200)} »${varietyNote}
+PITCH : « ${input.brief.trim().slice(0, 1200)} »
 
-Compose 3 chartes sur mesure pour ce client et renvoie le JSON.`;
+BIBLIOTHÈQUE DISPONIBLE (${availableIds.length} chartes) :
+${availableIds.map(catalogLine).join("\n")}
+
+Choisis les ${count} meilleures pour CE client et renvoie le JSON.`;
 
   return [
     { role: "system" as const, content: system },
@@ -341,11 +307,13 @@ Compose 3 chartes sur mesure pour ce client et renvoie le JSON.`;
   ];
 }
 
-function parseChartes(rawText: string): unknown[] {
-  const tryParse = (s: string): unknown[] | null => {
+interface RawSelection { id?: unknown; reason?: unknown }
+
+function parseSelection(rawText: string): RawSelection[] {
+  const tryParse = (s: string): RawSelection[] | null => {
     try {
-      const parsed = JSON.parse(s) as { chartes?: unknown };
-      return Array.isArray(parsed?.chartes) ? parsed.chartes : null;
+      const parsed = JSON.parse(s) as { selection?: unknown };
+      return Array.isArray(parsed?.selection) ? (parsed.selection as RawSelection[]) : null;
     } catch {
       return null;
     }
@@ -366,44 +334,71 @@ export function fallbackChartes(brief: string): CharteProposal[] {
   });
 }
 
-const CHARTE_TIMEOUT_MS = 45_000;
+const SELECT_TIMEOUT_MS = 20_000;
+
+/** Proposal depuis un id de la banque (vibe réelle + spec d'échange + raison). */
+function proposalFromId(vibeId: VibeId, reason: string): CharteProposal {
+  const vibe = getVibe(vibeId)!;
+  return { vibe, spec: vibeToSpec(vibe), reason };
+}
 
 /**
- * 3 chartes sur mesure pour un pitch. NE PEUT PAS ÉCHOUER : sortie réparée
- * charte par charte, complétée par les vibes curées si l'IA en rend moins de 3.
+ * `count` chartes piochées dans la banque curée pour un pitch — Mistral CHOISIT
+ * (il ne crée rien), on ne sert QUE des chartes existantes. NE PEUT PAS ÉCHOUER :
+ * repli sur le classement métier déterministe (rankVibesForTrade via suggestVibes).
+ * `exclude` = ids déjà montrés (bouton « 3 autres ») → jamais re-proposés.
  */
-export async function generateChartes(
-  input: { brief: string; businessName: string; trade?: string; sub?: string; attempt?: number },
+export async function selectChartes(
+  input: { brief: string; businessName: string; exclude?: string[]; count?: number },
   chatFn: ChatFn,
 ): Promise<ChartesResult> {
+  const count = input.count ?? 3;
+  const exclude = new Set((input.exclude ?? []).filter((x): x is string => typeof x === "string"));
+  const available = VIBE_IDS.filter((id) => !exclude.has(id));
+
+  // Classement métier déterministe, hors déjà-vu — repli ET source des raisons.
+  const ranked = suggestVibes(input.brief).filter((r) => !exclude.has(r.vibeId));
+  const rankedReason = (id: VibeId) =>
+    ranked.find((r) => r.vibeId === id)?.reason ?? "Une base élégante, adaptée à votre activité.";
+  const fromRanking = (): CharteProposal[] =>
+    ranked.slice(0, count).map((r) => proposalFromId(r.vibeId, r.reason));
+
+  // Plus assez de chartes pour qu'un choix ait du sens → on sert le classement.
+  if (available.length <= count) {
+    return { chartes: fromRanking(), source: "fallback" };
+  }
+
   try {
     const raw = await Promise.race([
-      // Température haute : 3 directions tranchées ET différentes d'un client à
-      // l'autre — à 0.2 le modèle resservait toujours les mêmes palettes.
-      chatFn(buildCharteMessages(input), { json: true, maxTokens: 2200, temperature: 0.9 }),
-      new Promise<never>((_, reject) => setTimeout(() => reject(new Error("charte timeout")), CHARTE_TIMEOUT_MS)),
+      chatFn(buildSelectMessages(input, available, count), { json: true, maxTokens: 700, temperature: 0.4 }),
+      new Promise<never>((_, reject) => setTimeout(() => reject(new Error("select timeout")), SELECT_TIMEOUT_MS)),
     ]);
-    const list = parseChartes(raw);
-    const repaired: CharteProposal[] = list.slice(0, 3).map((c) => {
-      const vibe = repairCharte(c);
-      return {
-        vibe,
-        spec: vibeToSpec(vibe),
-        reason:
-          typeof (c as Record<string, unknown>)?.reason === "string"
-            ? String((c as Record<string, unknown>).reason).trim().slice(0, 180)
-            : "Composée sur mesure pour votre activité.",
-      };
-    });
-    if (repaired.length === 0) throw new Error("aucune charte exploitable");
-    // Moins de 3 → on complète avec les vibes curées du métier.
-    for (const fb of fallbackChartes(input.brief)) {
-      if (repaired.length >= 3) break;
-      repaired.push(fb);
+    const valid = new Set<string>(available);
+    const seen = new Set<string>();
+    const chartes: CharteProposal[] = [];
+    for (const p of parseSelection(raw)) {
+      if (chartes.length >= count) break;
+      const id = typeof p?.id === "string" ? p.id.trim() : "";
+      if (!valid.has(id) || seen.has(id)) continue; // id inconnu / exclu / doublon → ignoré
+      seen.add(id);
+      const reason =
+        typeof p?.reason === "string" && p.reason.trim()
+          ? p.reason.trim().slice(0, 180)
+          : rankedReason(id as VibeId);
+      chartes.push(proposalFromId(id as VibeId, reason));
     }
-    return { chartes: repaired, source: "ai" };
+    if (chartes.length === 0) throw new Error("aucun id exploitable");
+    // L'IA en a renvoyé moins de `count` → on complète par le classement métier.
+    for (const r of ranked) {
+      if (chartes.length >= count) break;
+      if (!seen.has(r.vibeId)) {
+        seen.add(r.vibeId);
+        chartes.push(proposalFromId(r.vibeId, r.reason));
+      }
+    }
+    return { chartes, source: "ai" };
   } catch (e) {
-    console.error("[foundry/charte] repli vibes curées :", e instanceof Error ? e.message : e);
-    return { chartes: fallbackChartes(input.brief), source: "fallback" };
+    console.error("[foundry/charte] sélection — repli classement métier :", e instanceof Error ? e.message : e);
+    return { chartes: fromRanking(), source: "fallback" };
   }
 }

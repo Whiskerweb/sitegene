@@ -34,8 +34,8 @@ export default function WhyUsBento({ content, skin }: { content: any; skin: Skin
         .wubento-stars { color: var(--c-accent); font-size: 0.875rem; margin-bottom: 0.75rem; }
         .wubento-statval { font-family: var(--font-heading); font-weight: 800; font-size: 3rem; letter-spacing: -0.04em; color: var(--c-ink); }
         .wubento-statlbl { color: var(--c-muted); font-size: 0.875rem; margin-top: 0.25rem; }
-        .wubento-dark { background: var(--c-ink); border-radius: var(--r-card); padding: 2rem; min-height: 200px; display: flex; flex-direction: column; justify-content: flex-end; }
-        .wubento-dark-title { color: var(--c-surface); font-family: var(--font-heading); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; }
+        .wubento-dark { background: var(--c-panel); border-radius: var(--r-card); padding: 2rem; min-height: 200px; display: flex; flex-direction: column; justify-content: flex-end; }
+        .wubento-dark-title { color: var(--c-on-panel); font-family: var(--font-heading); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; }
         .wubento-imgcard { position: relative; border-radius: var(--r-card); overflow: hidden; min-height: 200px; }
         .wubento-imgcard img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
         .wubento-imgcard-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.65), transparent); }

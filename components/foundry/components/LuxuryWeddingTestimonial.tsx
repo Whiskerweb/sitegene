@@ -7,16 +7,16 @@ export default function LuxuryWeddingTestimonial({ content, skin }: { content: a
   const venue = typeof content.venue === "string" ? content.venue : "";
 
   return (
-    <section className="lwtesti" style={{ background: "var(--c-ink)" }}>
+    <section className="lwtesti" style={{ background: "var(--c-panel)" }}>
       <style>{`
         .lwtesti {
           padding: 8rem 1.5rem;
-          color: var(--c-surface);
+          color: var(--c-on-panel);
           text-align: center;
         }
         .lwtesti-glyph {
           font-size: 6rem;
-          color: color-mix(in srgb, var(--c-surface) 6%, transparent);
+          color: color-mix(in srgb, var(--c-on-panel) 6%, transparent);
           display: block;
           margin-bottom: 1.5rem;
           line-height: 1;
@@ -29,7 +29,7 @@ export default function LuxuryWeddingTestimonial({ content, skin }: { content: a
           font-weight: 300;
           letter-spacing: -0.03em;
           line-height: 1.3;
-          color: var(--c-surface);
+          color: var(--c-on-panel);
           max-width: 60rem;
           margin: 0 auto 3rem auto;
         }
@@ -38,7 +38,7 @@ export default function LuxuryWeddingTestimonial({ content, skin }: { content: a
           font-size: 0.85rem;
           text-transform: uppercase;
           letter-spacing: 0.2em;
-          color: var(--c-surface);
+          color: var(--c-on-panel);
           font-weight: 300;
           margin-bottom: 0.5rem;
         }
@@ -47,7 +47,7 @@ export default function LuxuryWeddingTestimonial({ content, skin }: { content: a
           font-size: 0.75rem;
           text-transform: uppercase;
           letter-spacing: 0.2em;
-          color: color-mix(in srgb, var(--c-surface) 40%, transparent);
+          color: color-mix(in srgb, var(--c-on-panel) 40%, transparent);
           font-weight: 200;
         }
       `}</style>

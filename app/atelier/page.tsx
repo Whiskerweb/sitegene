@@ -5,6 +5,7 @@ import { primarySiteForUser } from "@/lib/primary-site";
 import { FOUNDRY_TEMPLATE_ID } from "@/lib/foundry/server";
 import { loadStudioData } from "@/components/foundry/studio/load";
 import StudioEditor from "@/components/foundry/studio/StudioEditor";
+import OnboardingTour from "@/components/tour/OnboardingTour";
 
 export const dynamic = "force-dynamic";
 
@@ -47,5 +48,10 @@ export default async function AtelierPage({
   // de page, ou qu'une page est créée/renommée/supprimée (liens navbar) —
   // sinon le canvas garderait l'ancienne page affichée.
   const editorKey = [data.pageId ?? "home", ...data.pages.map((p) => `${p.id}:${p.slug}`)].join("|");
-  return <StudioEditor key={editorKey} data={data} />;
+  return (
+    <>
+      <OnboardingTour />
+      <StudioEditor key={editorKey} data={data} />
+    </>
+  );
 }

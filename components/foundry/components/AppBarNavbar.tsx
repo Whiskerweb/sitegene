@@ -21,8 +21,8 @@ export default function AppBarNavbar({ content, skin }: { content: any; skin: Sk
     <header style={{ ...root, background: "color-mix(in srgb, var(--c-surface) 90%, transparent)", borderBottom: "1px solid color-mix(in srgb, var(--c-ink) 8%, transparent)", backdropFilter: "blur(8px)" }}>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
         <a href="#" className="flex items-center gap-2 text-xl font-bold" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)" }}>
-          <span className="flex h-8 w-8 items-center justify-center rounded-full" style={{ background: "var(--c-ink)" }}>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5" stroke="var(--c-surface)" strokeWidth="2" /><circle cx="8" cy="8" r="2" fill="var(--c-surface)" /></svg>
+          <span className="flex h-8 w-8 items-center justify-center rounded-full" style={{ background: "var(--c-panel)" }}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5" stroke="var(--c-on-panel)" strokeWidth="2" /><circle cx="8" cy="8" r="2" fill="var(--c-on-panel)" /></svg>
           </span>
           {content?.brand ?? "Healix"}
         </a>
@@ -33,7 +33,7 @@ export default function AppBarNavbar({ content, skin }: { content: any; skin: Sk
           ))}
         </nav>
 
-        <a href="#contact" className="hidden rounded-[var(--r-pill)] px-5 py-2.5 text-sm font-semibold transition-transform hover:scale-[1.03] md:inline-block" style={{ background: "var(--c-ink)", color: "var(--c-surface)" }}>{cta}</a>
+        <a href="#contact" className="hidden rounded-[var(--r-pill)] px-5 py-2.5 text-sm font-semibold transition-transform hover:scale-[1.03] md:inline-block" style={{ background: "var(--c-panel)", color: "var(--c-on-panel)" }}>{cta}</a>
 
         <button type="button" aria-label="Menu" onClick={() => setOpen((v) => !v)} className="p-2 md:hidden" style={{ color: "var(--c-ink)" }}>
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect y="4" width="22" height="2" rx="1" fill="currentColor" /><rect y="10" width="22" height="2" rx="1" fill="currentColor" /><rect y="16" width="22" height="2" rx="1" fill="currentColor" /></svg>
@@ -45,7 +45,7 @@ export default function AppBarNavbar({ content, skin }: { content: any; skin: Sk
           {links.map((l, i) => (
             <a key={i} href={navHref(l)} onClick={() => setOpen(false)} className="text-sm font-medium" style={{ color: "var(--c-ink)" }}>{navLabel(l)}</a>
           ))}
-          <a href="#contact" onClick={() => setOpen(false)} className="rounded-[var(--r-pill)] px-5 py-2.5 text-center text-sm font-semibold" style={{ background: "var(--c-ink)", color: "var(--c-surface)" }}>{cta}</a>
+          <a href="#contact" onClick={() => setOpen(false)} className="rounded-[var(--r-pill)] px-5 py-2.5 text-center text-sm font-semibold" style={{ background: "var(--c-panel)", color: "var(--c-on-panel)" }}>{cta}</a>
         </div>
       )}
     </header>

@@ -71,7 +71,7 @@ export default function GooeyPixelTrail({ content }: { content: GooeyContent; sk
     <section
       ref={wrapRef}
       className="relative flex min-h-[80vh] w-full items-center justify-center overflow-hidden px-6 text-center"
-      style={{ background: "var(--c-ink)" }}
+      style={{ background: "var(--c-panel)" }}
     >
       <style>{`@keyframes sg-goopx-fade { 0% { opacity: 1; } 100% { opacity: 0; } }`}</style>
 
@@ -88,7 +88,7 @@ export default function GooeyPixelTrail({ content }: { content: GooeyContent; sk
 
       {/* Image de fond assombrie */}
       {content?.image && <img src={content.image} alt="" className="absolute inset-0 h-full w-full object-cover" style={{ opacity: 0.55 }} />}
-      <div className="absolute inset-0" style={{ background: "color-mix(in srgb, var(--c-ink) 45%, transparent)" }} />
+      <div className="absolute inset-0" style={{ background: "color-mix(in srgb, var(--c-panel) 45%, transparent)" }} />
 
       {/* Couche de pixels (curseur) — fondue par le filtre gooey */}
       <div
@@ -104,7 +104,7 @@ export default function GooeyPixelTrail({ content }: { content: GooeyContent; sk
           <span
             key={i}
             ref={(n) => { cellsRef.current[i] = n; }}
-            style={{ background: "var(--c-surface)", opacity: 0 }}
+            style={{ background: "var(--c-on-panel)", opacity: 0 }}
           />
         ))}
       </div>
@@ -114,11 +114,11 @@ export default function GooeyPixelTrail({ content }: { content: GooeyContent; sk
         {content?.eyebrow && (
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--c-accent)" }}>{content.eyebrow}</p>
         )}
-        <p className="text-4xl font-bold leading-[1.05] md:text-6xl" style={{ color: "var(--c-surface)", fontFamily: "var(--font-heading)", letterSpacing: "-1px" }}>
+        <p className="text-4xl font-bold leading-[1.05] md:text-6xl" style={{ color: "var(--c-on-panel)", fontFamily: "var(--font-heading)", letterSpacing: "-1px" }}>
           {content?.text ?? "Donnez vie à vos idées"}
         </p>
         {content?.description && (
-          <p className="mt-6 max-w-xl text-base md:text-lg" style={{ color: "color-mix(in srgb, var(--c-surface) 75%, transparent)", lineHeight: 1.6 }}>
+          <p className="mt-6 max-w-xl text-base md:text-lg" style={{ color: "color-mix(in srgb, var(--c-on-panel) 75%, transparent)", lineHeight: 1.6 }}>
             {content.description}
           </p>
         )}

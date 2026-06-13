@@ -1,5 +1,5 @@
 /** Identifiants des templates disponibles (photographes pour l'instant). */
-export const TEMPLATE_IDS = ["alice-r", "potozon", "target", "cleaning-services", "eco-garden-care", "creative-portfolio", "health-saas", "luxury-wedding", "wedding-fine-art", "jazz-vocalist", "hiphop-producer", "electronic-collective", "indie-band", "music-festival", "podcast-audio", "dj-electro", "studio-portfolio", "analytics-saas", "plumber-pro", "plumber-emergency", "multi-trade", "plumber-modern", "electrician-pro", "photographer-freelance", "wedding-warm", "landscape-prints", "photo-vintage", "portrait-fineart", "portrait-lifestyle", "eloctix", "sereenity"] as const;
+export const TEMPLATE_IDS = ["alice-r", "potozon", "target", "cleaning-services", "eco-garden-care", "creative-portfolio", "health-saas", "luxury-wedding", "wedding-fine-art", "jazz-vocalist", "hiphop-producer", "electronic-collective", "indie-band", "music-festival", "podcast-audio", "dj-electro", "studio-portfolio", "analytics-saas", "plumber-pro", "plumber-emergency", "multi-trade", "plumber-modern", "electrician-pro", "photographer-freelance", "wedding-warm", "landscape-prints", "photo-vintage", "portrait-fineart", "portrait-lifestyle", "eloctix", "sereenity", "creative-agency"] as const;
 export type TemplateId = (typeof TEMPLATE_IDS)[number];
 
 export function isTemplateId(x: string): x is TemplateId {
@@ -12,7 +12,7 @@ export function isTemplateId(x: string): x is TemplateId {
  * data-sg-path/data-sg-img dont l'hydratation lit window.__SITE_CONTENT__
  * À PLAT — ne jamais leur servir un contenu enveloppé v2.
  */
-export const SPA_TEMPLATE_IDS: readonly string[] = ["alice-r", "potozon", "target", "eloctix"];
+export const SPA_TEMPLATE_IDS: readonly string[] = ["alice-r", "potozon", "target", "eloctix", "creative-agency"];
 
 export function isSpaTemplate(id: string): boolean {
   return SPA_TEMPLATE_IDS.includes(id);
@@ -51,6 +51,7 @@ export const TEMPLATE_META: Partial<Record<TemplateId, { name: string; style: st
   "health-saas": { name: "Santé", style: "Doux, innovant" },
   "analytics-saas": { name: "Analytics", style: "Data, moderne" },
   sereenity: { name: "Coach Bien-être", style: "Chaleureux, terracotta & serif" },
+  "creative-agency": { name: "Agence Créative", style: "Noir, typo XXL & bleu électrique" },
 };
 
 /** Méta d'affichage avec repli sûr (templates sans entrée dédiée). */

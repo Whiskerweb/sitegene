@@ -23,7 +23,7 @@ import { textureLayerStyle } from "@/lib/foundry/texture";
 import { vibeToSpec, fontHref, fontCss, allFontsHref } from "@/lib/foundry/charte";
 import { adaptContent } from "@/lib/foundry/agenceur";
 import { fieldsFor, type FieldType } from "@/lib/foundry/fields";
-import type { CatalogEntry, PageTab, StudioSection, StudioVibe } from "./types";
+import type { CatalogEntry, PageTab, SavedCharte, StudioSection, StudioVibe } from "./types";
 
 /* ============================== Aperçu thémé ============================== */
 
@@ -1031,19 +1031,61 @@ export function PalettePanel({
   vibe,
   presets,
   fonts,
+  userChartes,
+  activeCharteId,
+  charteBusy,
   onLive,
   onPersistCharte,
   onPersistPreset,
+  onApplyUserCharte,
+  onDeleteUserCharte,
+  onSaveAsCharte,
+  onUpdateActiveCharte,
+  onOpenImport,
 }: {
   vibe: StudioVibe;
   presets: StudioVibe[];
   fonts: { heading: string[]; body: string[] };
+  userChartes: SavedCharte[];
+  activeCharteId: string | null;
+  charteBusy: boolean;
   onLive: (v: StudioVibe) => void;
   onPersistCharte: (spec: ReturnType<typeof vibeToSpec>) => void;
   onPersistPreset: (vibeId: string) => void;
+  onApplyUserCharte: (id: string) => void;
+  onDeleteUserCharte: (id: string) => void;
+  onSaveAsCharte: (name: string) => void;
+  onUpdateActiveCharte: () => void;
+  onOpenImport: () => void;
 }) {
+  // Saisie du nom lors de l'enregistrement d'une nouvelle charte (charte de base
+  // modifiée ou charte importée → on crée une charte de compte nommée).
+  const [naming, setNaming] = useState(false);
+  const [charteName, setCharteName] = useState("");
+  const activeCharte = activeCharteId ? userChartes.find((c) => c.id === activeCharteId) ?? null : null;
+  // « Dirty » : on a une charte custom non liée à une charte enregistrée → on peut
+  // l'enregistrer comme nouvelle. (id === "custom" sans activeCharteId.)
+  const isUnsavedCustom = vibe.id === "custom" && !activeCharte;
   const headingFamily = vibe.fonts.heading.split(",")[0].replace(/['"]/g, "").trim();
   const bodyFamily = vibe.fonts.body.split(",")[0].replace(/['"]/g, "").trim();
+
+  // Sélecteur de charte en menu déroulant (borné + scrollable : il y a beaucoup
+  // de chartes, le menu ne doit jamais s'étirer jusqu'en bas de la page).
+  const [charteOpen, setCharteOpen] = useState(false);
+  const charteRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!charteOpen) return;
+    const onDown = (e: MouseEvent) => {
+      if (charteRef.current && !charteRef.current.contains(e.target as Node)) setCharteOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [charteOpen]);
+  // Couleurs principales d'une charte, en carrés (accent → secondaire → encre → fonds).
+  const swatchesOf = (p: StudioVibe) => [p.palette.accent, p.palette.accent2, p.palette.ink, p.palette.card, p.palette.surface];
+  // Carrés de couleur d'une charte enregistrée (depuis sa spec).
+  const swatchesOfSpec = (s: SavedCharte["spec"]) => [s.accent, s.accent2, s.ink, s.card, s.surface];
+  const currentLabel = activeCharte ? activeCharte.name : vibe.id === "custom" ? (vibe.label || "Charte personnalisée") : vibe.label;
 
   // Toute édition manuelle → charte « custom » (live + persistée, re-réparée serveur).
   function edit(next: StudioVibe) {
@@ -1059,26 +1101,87 @@ export function PalettePanel({
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <p className="mb-2 text-[12px] font-semibold uppercase tracking-wide text-neutral-400">Ambiances</p>
-        <div className="flex flex-wrap gap-2">
-          {presets.map((p) => {
-            const active = vibe.id === p.id;
-            return (
-              <button
-                key={p.id}
-                onClick={() => onPersistPreset(p.id)}
-                title={p.label}
-                className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1.5 transition ${active ? "border-neutral-900 ring-1 ring-neutral-900" : "border-neutral-200 hover:border-neutral-400"}`}
-              >
-                <span className="flex">
-                  {[p.palette.accent, p.palette.accent2, p.palette.ink].map((c, i) => (
-                    <span key={i} className="h-3.5 w-3.5 rounded-full border border-white" style={{ background: c, marginLeft: i ? -5 : 0 }} />
-                  ))}
-                </span>
-                <span className="text-[12px] font-semibold text-neutral-700">{p.label}</span>
-              </button>
-            );
-          })}
+        <p className="mb-2 text-[12px] font-semibold uppercase tracking-wide text-neutral-400">Charte graphique</p>
+        <div ref={charteRef} className="relative">
+          {/* Déclencheur : carrés de couleur de la charte actuelle + son nom */}
+          <button
+            type="button"
+            onClick={() => setCharteOpen((o) => !o)}
+            className={`flex w-full items-center gap-3 rounded-xl border bg-white px-2 py-2 text-left transition ${charteOpen ? "border-blue-500 ring-1 ring-blue-500" : "border-neutral-200 hover:border-neutral-400"}`}
+          >
+            <span className="flex h-9 shrink-0 overflow-hidden rounded-lg border border-neutral-200">
+              {swatchesOf(vibe).map((c, i) => (
+                <span key={i} className="h-full w-5" style={{ background: c }} />
+              ))}
+            </span>
+            <span className="flex-1 truncate text-[13px] font-semibold text-neutral-800">{currentLabel}</span>
+            <ChevronDown size={16} className={`shrink-0 text-neutral-400 transition ${charteOpen ? "rotate-180" : ""}`} />
+          </button>
+
+          {/* Menu déroulant : borné en hauteur + scroll interne (beaucoup de chartes) */}
+          {charteOpen && (
+            <div className="absolute left-0 right-0 top-full z-30 mt-2 max-h-[320px] overflow-y-auto rounded-xl border border-neutral-200 bg-white p-1.5 shadow-[0_16px_48px_rgba(0,0,0,0.18)]">
+              {/* Mes chartes (compte) — réutilisables, supprimables */}
+              {userChartes.length > 0 && (
+                <>
+                  <p className="px-2 pb-1 pt-1.5 text-[11px] font-semibold uppercase tracking-wide text-neutral-400">Mes chartes</p>
+                  {userChartes.map((c) => {
+                    const active = activeCharteId === c.id;
+                    return (
+                      <div
+                        key={c.id}
+                        className={`group flex items-center gap-2 rounded-lg border px-2 py-1.5 transition ${active ? "border-blue-500 bg-blue-50 ring-1 ring-blue-500" : "border-transparent hover:bg-neutral-50"}`}
+                      >
+                        <button
+                          type="button"
+                          onClick={() => { onApplyUserCharte(c.id); setCharteOpen(false); }}
+                          title={c.name}
+                          className="flex min-w-0 flex-1 items-center gap-3 text-left"
+                        >
+                          <span className="flex h-8 shrink-0 overflow-hidden rounded-md border border-neutral-200">
+                            {swatchesOfSpec(c.spec).map((col, i) => (
+                              <span key={i} className="h-full w-4" style={{ background: col }} />
+                            ))}
+                          </span>
+                          <span className={`flex-1 truncate text-[13px] font-semibold ${active ? "text-blue-700" : "text-neutral-700"}`}>{c.name}</span>
+                          {active && <Check size={15} className="shrink-0 text-blue-600" />}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => onDeleteUserCharte(c.id)}
+                          title="Supprimer cette charte"
+                          className="grid h-7 w-7 shrink-0 place-items-center rounded-md text-neutral-300 opacity-0 transition hover:bg-red-50 hover:text-red-500 group-hover:opacity-100"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
+                    );
+                  })}
+                  <p className="px-2 pb-1 pt-2.5 text-[11px] font-semibold uppercase tracking-wide text-neutral-400">Chartes Akyra</p>
+                </>
+              )}
+              {presets.map((p) => {
+                const active = vibe.id === p.id;
+                return (
+                  <button
+                    key={p.id}
+                    type="button"
+                    onClick={() => { onPersistPreset(p.id); setCharteOpen(false); }}
+                    title={p.label}
+                    className={`flex w-full items-center gap-3 rounded-lg border px-2 py-1.5 text-left transition ${active ? "border-blue-500 bg-blue-50 ring-1 ring-blue-500" : "border-transparent hover:bg-neutral-50"}`}
+                  >
+                    <span className="flex h-8 shrink-0 overflow-hidden rounded-md border border-neutral-200">
+                      {swatchesOf(p).map((c, i) => (
+                        <span key={i} className="h-full w-4" style={{ background: c }} />
+                      ))}
+                    </span>
+                    <span className={`flex-1 truncate text-[13px] font-semibold ${active ? "text-blue-700" : "text-neutral-700"}`}>{p.label}</span>
+                    {active && <Check size={15} className="shrink-0 text-blue-600" />}
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
 
@@ -1110,7 +1213,69 @@ export function PalettePanel({
           })}
         </div>
       </div>
-      <p className="text-[11.5px] leading-relaxed text-neutral-400">Vos couleurs s'appliquent à tout le site en direct. Les contrastes illisibles sont corrigés automatiquement.</p>
+      {/* ===== Enregistrer / importer une charte (compte) ===== */}
+      <div className="border-t border-neutral-100 pt-4">
+        {naming ? (
+          // Nommer la nouvelle charte (charte de base modifiée ou importée).
+          <div className="flex flex-col gap-2">
+            <p className="text-[12px] font-semibold text-neutral-600">Nommez votre charte</p>
+            <input
+              autoFocus
+              value={charteName}
+              onChange={(e) => setCharteName(e.target.value)}
+              onKeyDown={(e) => { if (e.key === "Enter" && charteName.trim()) { onSaveAsCharte(charteName); setNaming(false); setCharteName(""); } if (e.key === "Escape") { setNaming(false); setCharteName(""); } }}
+              maxLength={40}
+              placeholder="Ex. Ma charte studio"
+              className="h-10 rounded-xl border border-neutral-200 bg-white px-3 text-[13px] outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            />
+            <div className="flex gap-2">
+              <button
+                type="button"
+                disabled={!charteName.trim() || charteBusy}
+                onClick={() => { onSaveAsCharte(charteName); setNaming(false); setCharteName(""); }}
+                className="flex-1 rounded-xl bg-neutral-900 px-3 py-2 text-[13px] font-semibold text-white transition hover:bg-neutral-800 disabled:opacity-40"
+              >
+                Enregistrer
+              </button>
+              <button type="button" onClick={() => { setNaming(false); setCharteName(""); }} className="rounded-xl border border-neutral-200 px-3 py-2 text-[13px] font-semibold text-neutral-500 transition hover:border-neutral-400">Annuler</button>
+            </div>
+          </div>
+        ) : activeCharte ? (
+          // Charte personnelle active → enregistrer met à jour (pas de doublon).
+          <div className="flex flex-col gap-1.5">
+            <button
+              type="button"
+              disabled={charteBusy}
+              onClick={onUpdateActiveCharte}
+              className="rounded-xl bg-neutral-900 px-3 py-2.5 text-[13px] font-semibold text-white transition hover:bg-neutral-800 disabled:opacity-40"
+            >
+              Mettre à jour « {activeCharte.name} »
+            </button>
+            <button type="button" onClick={() => { setCharteName(""); setNaming(true); }} className="text-[12px] font-medium text-neutral-400 underline-offset-2 hover:text-neutral-600 hover:underline">Enregistrer comme nouvelle charte</button>
+          </div>
+        ) : (
+          // Charte de base (ou custom non enregistrée) → enregistrer crée une charte.
+          <button
+            type="button"
+            disabled={charteBusy}
+            onClick={() => { setCharteName(""); setNaming(true); }}
+            className="w-full rounded-xl border border-neutral-300 px-3 py-2.5 text-[13px] font-semibold text-neutral-700 transition hover:border-neutral-900 hover:bg-neutral-50 disabled:opacity-40"
+          >
+            {isUnsavedCustom ? "Enregistrer cette charte" : "Enregistrer comme charte"}
+          </button>
+        )}
+
+        {/* Ligne discrète : importer une charte (image/PDF ou composer) */}
+        <button
+          type="button"
+          onClick={onOpenImport}
+          className="mt-3 flex w-full items-center justify-center gap-1.5 text-[12.5px] font-medium text-neutral-400 transition hover:text-neutral-700"
+        >
+          <Upload size={13} /> Importer une charte graphique
+        </button>
+      </div>
+
+      <p className="text-[11.5px] leading-relaxed text-neutral-400">Vos couleurs s'appliquent à tout le site en direct. Les contrastes illisibles sont corrigés automatiquement. Vos chartes enregistrées restent sur votre compte.</p>
     </div>
   );
 }

@@ -145,6 +145,29 @@ export interface BuildSiteOpts {
    *  quel à la place du index.html statique du template ; l'injection runtime
    *  (__SITE_CONTENT__, masques) et l'hydratation data-sg-* restent identiques. */
   shellHtml?: string | null;
+  /** Affiche le badge « Propulsé par Akyra » (sites non abonnés). Les abonnés
+   *  « tout compris » passent `false` → badge retiré. */
+  showBranding?: boolean;
+}
+
+/**
+ * Badge discret « Propulsé par Akyra » injecté en bas de page pour les sites
+ * non abonnés. Retiré dès que le client s'abonne (showBranding=false). C'est un
+ * levier d'upgrade : voir le badge = vouloir le retirer.
+ */
+function brandingBadge(): string {
+  return (
+    `<a href="https://akyra.io?utm_source=badge" target="_blank" rel="noopener" ` +
+    `style="position:fixed;right:14px;bottom:14px;z-index:2147483000;` +
+    `display:inline-flex;align-items:center;gap:6px;padding:7px 12px;` +
+    `font:600 12px/1 system-ui,-apple-system,Segoe UI,sans-serif;` +
+    `color:#0f172a;text-decoration:none;background:rgba(255,255,255,.86);` +
+    `border:1px solid rgba(15,23,42,.10);border-radius:999px;` +
+    `box-shadow:0 4px 16px rgba(15,23,42,.12);backdrop-filter:blur(8px);">` +
+    `<span style="width:7px;height:7px;border-radius:999px;` +
+    `background:linear-gradient(135deg,#2563eb,#22d3ee)"></span>` +
+    `Propulsé par Akyra</a>`
+  );
 }
 
 /** Script léger : câble les <a data-sg-page="…"> sur le préfixe public du site. */
@@ -293,6 +316,10 @@ export async function buildSiteHtml(
   // Défilement fluide par défaut sur TOUS les sites rendus (no-op en
   // reduced-motion / tactile, ne casse pas les navbars fixed/sticky).
   tail += smoothScrollScript();
+  // Badge « Propulsé par Akyra » — sites non abonnés uniquement.
+  if (opts?.showBranding) {
+    tail += brandingBadge();
+  }
   if (tail) {
     html = html.includes("</body>") ? html.replace("</body>", () => `${tail}</body>`) : html + tail;
   }

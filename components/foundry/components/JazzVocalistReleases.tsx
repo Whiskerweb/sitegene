@@ -8,7 +8,7 @@ export default function JazzVocalistReleases({ content, skin }: { content: JVRel
   const items: Release[] = Array.isArray(content.items) ? content.items : [];
   const label = typeof content.label === "string" ? content.label : "Sorties";
   return (
-    <section className="jvrel" style={{ background: "var(--c-ink)" }}>
+    <section className="jvrel" style={{ background: "var(--c-panel)" }}>
       <style>{`
         .jvrel {
           padding: 7rem 1.5rem;
@@ -38,7 +38,7 @@ export default function JazzVocalistReleases({ content, skin }: { content: JVRel
         .jvrel-meta { flex: 1; min-width: 0; }
         .jvrel-title {
           font-family: var(--font-heading, 'EB Garamond', serif);
-          font-size: 1.25rem; color: var(--c-surface);
+          font-size: 1.25rem; color: var(--c-on-panel);
           display: block;
         }
         .jvrel-artist {

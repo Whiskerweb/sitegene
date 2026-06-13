@@ -24,7 +24,7 @@ export default function WwWorksGrid({ content, skin }: { content: any; skin: Ski
           padding: 1rem 1.75rem; color: var(--c-ink); text-decoration: none;
           transition: background-color 0.4s ease, color 0.4s ease;
         }
-        .wwworks__headerCta:hover { background: var(--c-ink); color: var(--c-surface); }
+        .wwworks__headerCta:hover { background: var(--c-panel); color: var(--c-on-panel); }
         .wwworks__grid {
           max-width: 87.5rem; margin: 0 auto;
           display: grid; grid-template-columns: 1fr;

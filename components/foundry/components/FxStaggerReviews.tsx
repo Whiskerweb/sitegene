@@ -22,11 +22,11 @@ export default function FxStaggerReviews({ content }: { content: FxStaggerReview
   // order[k] = index de la carte posée au cran k (rotation de liste).
   const [order, setOrder] = useState<number[]>(() => items.map((_, i) => i));
   const prevPos = useRef<Record<number, number>>({});
-  const [size, setSize] = useState(365);
+  const [size, setSize] = useState(410);
   const noTransition = useRef<Set<number>>(new Set());
 
   useEffect(() => {
-    const onResize = () => setSize(window.matchMedia("(min-width:640px)").matches ? 365 : 290);
+    const onResize = () => setSize(window.matchMedia("(min-width:640px)").matches ? 410 : 300);
     onResize();
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
@@ -35,7 +35,12 @@ export default function FxStaggerReviews({ content }: { content: FxStaggerReview
 
   if (n < 3) return null;
 
-  const posOf = (k: number) => (n % 2 ? k - (n + 1) / 2 : k - n / 2);
+  // Position du cran k autour du centre. floor(n/2) garde le fan symétrique
+  // (impair = autant de cartes de chaque côté). Pour un nombre PAIR, il reste
+  // une carte excédentaire : on la repère (`backOf`) pour la ranger derrière la
+  // centrale plutôt que de la laisser dépasser d'un seul côté.
+  const posOf = (k: number) => k - Math.floor(n / 2);
+  const backOf = (position: number) => n % 2 === 0 && position === -(n / 2);
 
   function move(steps: number) {
     if (!steps) return;
@@ -56,6 +61,7 @@ export default function FxStaggerReviews({ content }: { content: FxStaggerReview
       {order.map((idx, k) => {
         const position = posOf(k);
         const isCenter = position === 0;
+        const back = backOf(position); // carte excédentaire (n pair) : cachée derrière le centre
         const prev = prevPos.current[idx];
         const wrapped = prev !== undefined && Math.abs(prev - position) > n / 2;
         prevPos.current[idx] = position;
@@ -72,7 +78,8 @@ export default function FxStaggerReviews({ content }: { content: FxStaggerReview
             style={{
               width: size,
               height: size,
-              zIndex: isCenter ? 10 : 5 - Math.min(4, Math.abs(position)),
+              zIndex: back ? 0 : isCenter ? 10 : 5 - Math.min(4, Math.abs(position)),
+              opacity: back ? 0 : 1,
               border: `2px solid ${isCenter ? "var(--c-accent)" : "color-mix(in srgb, var(--c-ink) 18%, transparent)"}`,
               background: isCenter ? "var(--c-accent)" : "var(--c-card)",
               color: isCenter ? "var(--c-on-accent)" : "var(--c-ink)",
@@ -80,7 +87,9 @@ export default function FxStaggerReviews({ content }: { content: FxStaggerReview
               transition: wrapped ? "none" : "all .5s ease-in-out",
               willChange: "transform",
               clipPath: "polygon(50px 0%, calc(100% - 50px) 0%, 100% 50px, 100% 100%, calc(100% - 50px) 100%, 50px 100%, 0 100%, 0 0)",
-              transform: `translate(-50%,-50%) translateX(${((size / 1.5) * position).toFixed(1)}px) translateY(${isCenter ? -65 : position % 2 ? 15 : -15}px) rotate(${isCenter ? 0 : position % 2 ? 2.5 : -2.5}deg)`,
+              transform: back
+                ? "translate(-50%,-50%) translateY(20px) scale(.9)"
+                : `translate(-50%,-50%) translateX(${((size / 1.5) * position).toFixed(1)}px) translateY(${isCenter ? -65 : position % 2 ? 15 : -15}px) rotate(${isCenter ? 0 : position % 2 ? 2.5 : -2.5}deg)`,
             }}
           >
             {/* Trait diagonal du coin coupé */}

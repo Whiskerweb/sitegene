@@ -26,8 +26,8 @@ describe("vibes", () => {
 });
 
 describe("modèle Vibe enrichi", () => {
-  it("expose les 6 vibes historiques + les 11 nouvelles", () => {
-    expect(VIBE_IDS.length).toBe(17);
+  it("expose les 6 vibes historiques + 11 (Lot 1) + 15 (Lot 2)", () => {
+    expect(VIBE_IDS.length).toBe(32);
     for (const id of VIBE_IDS) expect(getVibe(id)).toBeDefined();
   });
   it("chaque vibe a un mode clair ou sombre", () => {
@@ -109,6 +109,32 @@ describe("DA curées (Lot 1)", () => {
       const v = getVibe(id)!;
       expect(contrast(v.palette.ink, v.palette.surface)).toBeGreaterThanOrEqual(4.5);
       expect(contrast(v.palette.ink, v.palette.card)).toBeGreaterThanOrEqual(4.5);
+    }
+  });
+});
+
+const LOT2_DA: VibeId[] = [
+  "brume-marine","terre-eglantier","serre-lumineuse","lin-poudre","galerie-ivoire",
+  "noir-argentique","sable-mineral","braise-cuivre","bistrot-creme","olive-table",
+  "volt-graphite","arena-rouge","ardoise-azur","rose-chrome","acier-brique",
+];
+
+describe("DA curées (Lot 2)", () => {
+  it("les 15 DA existent, ont un mode et une paire de fontes chargée", () => {
+    for (const id of LOT2_DA) {
+      const v = getVibe(id)!;
+      expect(v).toBeDefined();
+      expect(v.mode === "light" || v.mode === "dark").toBe(true);
+      expect(v.fontHref).toContain("fonts.googleapis.com");
+      expect(v.fonts.heading).toBeTruthy();
+      expect(v.fonts.body).toBeTruthy();
+    }
+  });
+  it("contraste texte/fond WCAG AA (≥ 4.5) sur fond ET panneau", () => {
+    for (const id of LOT2_DA) {
+      const v = getVibe(id)!;
+      expect(contrast(v.palette.ink, v.palette.surface), `${id} ink/surface`).toBeGreaterThanOrEqual(4.5);
+      expect(contrast(v.palette.ink, v.palette.card), `${id} ink/card`).toBeGreaterThanOrEqual(4.5);
     }
   });
 });

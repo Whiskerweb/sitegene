@@ -31,9 +31,9 @@ export default function FxCircularReviews({ content }: { content: FxCircularRevi
   // Re-render des spans à chaque changement (l'animation mot à mot rejoue).
   const [tick, setTick] = useState(0);
   // Décalage des portraits voisins : réduit sur mobile (sinon ils débordent).
-  const [g, setG] = useState(70);
+  const [g, setG] = useState(56);
   useEffect(() => {
-    const apply = () => setG(window.innerWidth < 768 ? 40 : 70);
+    const apply = () => setG(window.innerWidth < 768 ? 34 : 56);
     apply();
     window.addEventListener("resize", apply);
     return () => window.removeEventListener("resize", apply);
@@ -105,7 +105,7 @@ export default function FxCircularReviews({ content }: { content: FxCircularRevi
           </h2>
         </div>
         <div className="mt-12 grid items-center gap-12 md:grid-cols-2 md:gap-20">
-          <div ref={wrapRef} className="relative h-[20rem] md:h-[24rem]" style={{ perspective: 1000 }}>
+          <div ref={wrapRef} className="relative mx-auto h-[15rem] w-full max-w-[17rem] sm:h-[17rem] sm:max-w-[19rem] md:h-[20rem] md:max-w-[21rem]" style={{ perspective: 1000 }}>
             {items.map((m, i) => (
               <img key={`${m.name}-${i}`} src={m.avatar} alt={m.name} draggable={false} style={styleFor(i)} />
             ))}
@@ -150,7 +150,7 @@ function CtArrow({ dir, onClick, label }: { dir: number; onClick: () => void; la
       onClick={onClick}
       aria-label={label}
       className="sg-fx-ct-arrow grid h-11 w-11 place-items-center rounded-full transition-colors"
-      style={{ background: "var(--c-ink)", color: "var(--c-surface)" }}
+      style={{ background: "var(--c-panel)", color: "var(--c-on-panel)" }}
     >
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-[1.45rem] w-[1.45rem]" aria-hidden>
         {dir < 0 ? <><path d="M19 12H5" /><path d="m12 19-7-7 7-7" /></> : <><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></>}

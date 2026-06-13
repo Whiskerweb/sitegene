@@ -1,0 +1,405 @@
+{
+  "version": 2,
+  "site": {
+    "brand": "FORGE",
+    "nav": [
+      {
+        "label": "À propos",
+        "to": "#apropos"
+      },
+      {
+        "label": "Services",
+        "to": "#services"
+      },
+      {
+        "label": "Projets",
+        "to": "#projets"
+      },
+      {
+        "label": "Tarifs",
+        "to": "#tarifs"
+      },
+      {
+        "label": "Journal",
+        "to": "#journal"
+      }
+    ],
+    "contact": {
+      "email": "hello@studioforge.fr",
+      "phone": "+33 1 84 60 12 34",
+      "address": "28 rue du Faubourg, 75010 Paris"
+    },
+    "footer": {
+      "mission": "Nous concevons avec clarté, culture et précision — des marques et des expériences qui durent.",
+      "socials": [
+        "Instagram",
+        "Behance",
+        "LinkedIn",
+        "X"
+      ],
+      "legal": "© Forge Studio. Tous droits réservés."
+    },
+    "theme": {}
+  },
+  "pages": [
+    {
+      "slug": "/",
+      "type": "home",
+      "title": "Forge — Studio créatif",
+      "meta": {
+        "description": "Studio créatif indépendant : stratégie de marque, identité visuelle, sites et campagnes. Des marques qui marquent."
+      },
+      "content": {
+        "hero": {
+          "metaLeft": "Studio créatif — Paris",
+          "metaRight": "Des histoires qui laissent une trace",
+          "stars": 5,
+          "titleLines": [
+            "DES MARQUES",
+            "QUI",
+            "MARQUENT"
+          ],
+          "showreel": {
+            "image": "img/showreel.jpg",
+            "playLabel": "VOIR LE SHOWREEL",
+            "duration": "01:42"
+          },
+          "image": "img/hero.jpg"
+        },
+        "dividers": {
+          "about": {
+            "n": "[01]",
+            "label": "PORTÉS PAR LA VISION"
+          },
+          "services": {
+            "n": "[02]",
+            "label": "CE QUE NOUS FAISONS"
+          },
+          "work": {
+            "n": "[03]",
+            "label": "NOS RÉALISATIONS"
+          },
+          "why": {
+            "n": "[04]",
+            "label": "CE QUI NOUS DISTINGUE"
+          },
+          "testimonials": {
+            "n": "[05]",
+            "label": "PAROLES DE CLIENTS"
+          },
+          "pricing": {
+            "n": "[06]",
+            "label": "NOS FORMULES"
+          },
+          "blog": {
+            "n": "[07]",
+            "label": "IDÉES & COULISSES"
+          }
+        },
+        "about": {
+          "wordLeft": "STUDIO",
+          "wordRight": "FORGE",
+          "image": "img/about.jpg",
+          "body": "Forge est un studio créatif né de la rencontre entre le design, la culture et la stratégie. Nous travaillons main dans la main avec des équipes ambitieuses pour façonner des identités, des récits et des expériences qui comptent. Notre conviction : une marque forte se forge dans la clarté stratégique et s'affine dans le détail créatif.",
+          "socials": [
+            "INSTAGRAM",
+            "BEHANCE",
+            "LINKEDIN"
+          ],
+          "team": {
+            "label": "NOTRE ÉQUIPE",
+            "cta": "RENCONTRER L'ÉQUIPE",
+            "avatars": [
+              "img/team1.jpg",
+              "img/team2.jpg",
+              "img/team3.jpg",
+              "img/team4.jpg",
+              "img/team5.jpg",
+              "img/team6.jpg",
+              "img/team7.jpg",
+              "img/team8.jpg"
+            ]
+          }
+        },
+        "services": [
+          {
+            "n": "(01)",
+            "name": "STRATÉGIE DE MARQUE",
+            "image": "img/svc1.jpg",
+            "includedLabel": "CE QUI EST INCLUS",
+            "included": [
+              "Positionnement & architecture de marque",
+              "Plateforme de marque & ton de voix",
+              "Étude des publics & insights",
+              "Cadres de messages clés"
+            ]
+          },
+          {
+            "n": "(02)",
+            "name": "IDENTITÉ VISUELLE",
+            "image": "img/svc2.jpg",
+            "includedLabel": "CE QUI EST INCLUS",
+            "included": [
+              "Logotype & système graphique",
+              "Palette, typographies & iconographie",
+              "Guidelines complètes d'usage",
+              "Déclinaisons print & digital"
+            ]
+          },
+          {
+            "n": "(03)",
+            "name": "SITE & EXPÉRIENCE",
+            "image": "img/svc3.jpg",
+            "includedLabel": "CE QUI EST INCLUS",
+            "included": [
+              "Direction artistique web",
+              "UX, maquettes & prototypes",
+              "Développement sur-mesure",
+              "Animations & micro-interactions"
+            ]
+          },
+          {
+            "n": "(04)",
+            "name": "LANCEMENT & CROISSANCE",
+            "image": "img/svc4.jpg",
+            "includedLabel": "CE QUI EST INCLUS",
+            "included": [
+              "Campagne de lancement",
+              "Contenus & assets sociaux",
+              "SEO & performance",
+              "Accompagnement continu"
+            ]
+          }
+        ],
+        "servicesCta": "VOIR LES TARIFS",
+        "work": {
+          "title": "NOS PROJETS",
+          "bgWordLeft": "NOS",
+          "bgWordRight": "PROJETS",
+          "items": [
+            {
+              "name": "BOTANICA",
+              "image": "img/work1.jpg",
+              "year": "2026",
+              "category": "Identité & packaging",
+              "cta": "VOIR LE PROJET"
+            },
+            {
+              "name": "MAISON VERDIER",
+              "image": "img/work2.jpg",
+              "year": "2025",
+              "category": "Architecture d'intérieur",
+              "cta": "VOIR LE PROJET"
+            },
+            {
+              "name": "ATELIER NORD",
+              "image": "img/work3.jpg",
+              "year": "2025",
+              "category": "Portfolio créatif",
+              "cta": "VOIR LE PROJET"
+            }
+          ],
+          "partnersLabel": "ILS NOUS FONT CONFIANCE",
+          "partners": [
+            "Lumen",
+            "Okta Café",
+            "Verdier",
+            "Studio Nord",
+            "Botanica"
+          ],
+          "ctaAll": "TOUS LES PROJETS",
+          "ctaContact": "NOUS CONTACTER"
+        },
+        "whyChoose": {
+          "title": "POURQUOI NOUS",
+          "stat": {
+            "value": "93%",
+            "label": "de nos clients nous recommandent"
+          },
+          "imageA": "img/why1.jpg",
+          "imageB": "img/why2.jpg",
+          "items": [
+            {
+              "title": "La stratégie d'abord",
+              "desc": "Chaque décision créative découle d'une intention claire. Pas de beau pour le beau : du sens, puis du style."
+            },
+            {
+              "title": "Une vision large, un ancrage local",
+              "desc": "Des références internationales, une exécution pensée pour votre marché et votre culture."
+            },
+            {
+              "title": "Rapide et bien référencé",
+              "desc": "Des sites légers, optimisés SEO, pensés pour la performance dès la première maquette."
+            },
+            {
+              "title": "Un design qui performe",
+              "desc": "Des visuels conçus pour inspirer, convertir et élever votre marque sur tous les canaux."
+            },
+            {
+              "title": "Un partenaire de bout en bout",
+              "desc": "De la première idée au lancement, une seule équipe, un seul interlocuteur, zéro perte en ligne."
+            }
+          ]
+        },
+        "testimonials": {
+          "title": "CE QUE DISENT NOS CLIENTS",
+          "ratings": [
+            {
+              "score": "4,9",
+              "source": "sur Google"
+            },
+            {
+              "score": "4,8",
+              "source": "sur Malt"
+            }
+          ],
+          "clusterCount": "+40",
+          "clusterLabel": "marques accompagnées",
+          "clusterAvatars": [
+            "img/av1.jpg",
+            "img/av2.jpg",
+            "img/av3.jpg"
+          ],
+          "items": [
+            {
+              "text": "Nous sommes arrivés avec une activité solide et une image qui ne nous ressemblait plus. Forge a repris la marque de zéro : positionnement, identité, site. Six mois plus tard, nos prospects nous citent le site comme raison de leur premier appel.",
+              "name": "Nathan Roches",
+              "role": "Fondateur, Lumen",
+              "avatar": "img/av1.jpg"
+            },
+            {
+              "text": "L'équipe est réactive, précise, et ne lâche rien sur le détail. Le calendrier annoncé a été tenu à la semaine près, et chaque étape était limpide. C'est rare.",
+              "name": "Diane Évrard",
+              "role": "Directrice marketing, Verdier",
+              "avatar": "img/av2.jpg"
+            },
+            {
+              "text": "En tant que jeune marque, il nous fallait une identité crédible tout de suite. Forge a su traduire notre univers en un système visuel cohérent, du packaging au site. Le résultat dépasse ce qu'on imaginait.",
+              "name": "Elena Parc",
+              "role": "Cofondatrice, Botanica",
+              "avatar": "img/av3.jpg"
+            },
+            {
+              "text": "Collaboration fluide du brief au lancement. Ils posent les bonnes questions, challengent quand il faut, et livrent un travail d'une propreté remarquable.",
+              "name": "Karim Delcourt",
+              "role": "CEO, Atelier Nord",
+              "avatar": "img/av4.jpg"
+            }
+          ]
+        },
+        "pricing": {
+          "note": "Le studio gère stratégie, design et production. Les coûts tiers (licences, hébergement) sont facturés séparément. Chaque mission démarre par un cadrage offert.",
+          "plans": [
+            {
+              "tag": "ACCÈS ESSENTIEL",
+              "name": "SITE & IDENTITÉ",
+              "includedLabel": "INCLUS",
+              "included": [
+                "Un duo designer + développeur dédié",
+                "Une mission design active à la fois",
+                "Points hebdo & suivi d'avancement",
+                "Itérations rapides et illimitées",
+                "Échanges via Slack & visio",
+                "Pause ou arrêt à tout moment"
+              ],
+              "option": "Ajouter le développement sur-mesure",
+              "cta": "DÉMARRER",
+              "price": "2 900 €/mois",
+              "featured": false
+            },
+            {
+              "tag": "AU FORFAIT",
+              "name": "MARQUES EN CROISSANCE",
+              "includedLabel": "INCLUS",
+              "included": [
+                "Wireframes clairs et validés ensemble",
+                "UI sur-mesure alignée à votre marque",
+                "Design responsive tous écrans",
+                "Couleurs & typographies de marque",
+                "Fichiers sources Figma livrés",
+                "Réponse garantie sous 48 h"
+              ],
+              "option": null,
+              "cta": "RÉSERVER UN APPEL",
+              "price": "dès 1 900 €",
+              "featured": true
+            }
+          ]
+        },
+        "blog": {
+          "title": "LE JOURNAL DU STUDIO",
+          "items": [
+            {
+              "date": "21 mai 2026",
+              "title": "Pourquoi votre marque mérite mieux qu'un logo",
+              "image": "img/blog1.jpg"
+            },
+            {
+              "date": "14 avril 2026",
+              "title": "Un design qui convertit : ce qui fonctionne vraiment en 2026",
+              "image": "img/blog2.jpg"
+            },
+            {
+              "date": "02 mars 2026",
+              "title": "Les erreurs de branding que tout le monde commet (sans le savoir)",
+              "image": "img/blog3.jpg"
+            }
+          ]
+        },
+        "finalCta": {
+          "lines": [
+            "BÂTISSONS",
+            "QUELQUE CH*SE",
+            "D'ICONIQUE"
+          ],
+          "tile": "img/tile.jpg",
+          "image": "img/cta.jpg",
+          "cta": "PARLONS-EN"
+        },
+        "footer": {
+          "pagesLabel": "PAGES",
+          "pages": [
+            {
+              "label": "Accueil",
+              "to": "#top"
+            },
+            {
+              "label": "À propos",
+              "to": "#apropos"
+            },
+            {
+              "label": "Projets",
+              "to": "#projets"
+            },
+            {
+              "label": "Contact",
+              "to": "#contact"
+            },
+            {
+              "label": "Journal",
+              "to": "#journal"
+            }
+          ],
+          "newsletterLabel": "RESTEZ DANS LA BOUCLE",
+          "newsletterPlaceholder": "Votre email",
+          "communityLabel": "SUIVEZ LE STUDIO",
+          "socials": [
+            "Instagram",
+            "Behance",
+            "LinkedIn",
+            "X"
+          ],
+          "image": "img/footer.jpg",
+          "mission": "Nous concevons avec clarté, culture et précision — des marques et des expériences qui durent.",
+          "contactLabel": "CONTACT",
+          "legal": "© Forge Studio. Tous droits réservés."
+        },
+        "contact": {
+          "email": "hello@studioforge.fr",
+          "phone": "+33 1 84 60 12 34",
+          "address": "28 rue du Faubourg, 75010 Paris"
+        }
+      }
+    }
+  ]
+}

@@ -27,6 +27,7 @@ import {
   IconSpark,
   IconStar4,
 } from "@/components/ui/icons";
+import { SUBSCRIPTION_PRICE_CENTS, formatEuros } from "@/lib/pricing";
 
 type TplCard = {
   id: string;
@@ -177,6 +178,7 @@ function Carousel({ ariaLabel, children }: { ariaLabel: string; children: ReactN
 
 export function MarketplaceClient({
   hasSite,
+  isSubscribed,
   balance: initialBalance,
   categoryLabel,
   templatePrice,
@@ -186,6 +188,7 @@ export function MarketplaceClient({
   effects,
 }: {
   hasSite: boolean;
+  isSubscribed: boolean;
   balance: number;
   categoryLabel: string;
   templatePrice: number;
@@ -728,13 +731,48 @@ export function MarketplaceClient({
                 <h3 className="font-archivo text-lg font-semibold text-night">
                   Débloquer « {modal.name} »
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate">
-                  {modal.price} crédits seront débités (solde après achat :{" "}
-                  <span className="font-semibold text-night">{balance - modal.price}</span>).{" "}
-                  {modal.itemType === "template"
-                    ? "Le template est à vous pour toujours — vous pourrez l'appliquer et en changer gratuitement."
-                    : "L'effet est à vous pour toujours, avec un code licence unique — intégration et repositionnement inclus."}
-                </p>
+
+                {isSubscribed ? (
+                  <p className="mt-2 text-sm leading-relaxed text-slate">
+                    <span className="font-semibold text-success">Inclus dans votre abonnement</span>{" "}
+                    — débloqué gratuitement, 0 crédit débité.{" "}
+                    {modal.itemType === "template"
+                      ? "Le template est à vous : appliquez-le et changez-en quand vous voulez."
+                      : "L'effet est à vous, avec un code licence — intégration et repositionnement inclus."}
+                  </p>
+                ) : (
+                  <>
+                    <p className="mt-2 text-sm leading-relaxed text-slate">
+                      {modal.price} crédits seront débités (solde après achat :{" "}
+                      <span className="font-semibold text-night">{balance - modal.price}</span>).{" "}
+                      {modal.itemType === "template"
+                        ? "Le template est à vous pour toujours — vous pourrez l'appliquer et en changer gratuitement."
+                        : "L'effet est à vous pour toujours, avec un code licence unique — intégration et repositionnement inclus."}
+                    </p>
+
+                    {/* Paywall comparatif — pousse vers l'abonnement au pic d'intention. */}
+                    <div className="mt-4 rounded-2xl border border-brand/30 bg-gradient-to-br from-blue via-surface to-lav p-4">
+                      <div className="flex items-center gap-1.5 text-sm font-semibold text-brand">
+                        <IconSpark size={15} /> Ou débloquez TOUT
+                      </div>
+                      <p className="mt-1 text-[13px] leading-relaxed text-slate">
+                        Ce {modal.itemType === "template" ? "template" : "effet"} : {modal.price} ✦.
+                        Pour {formatEuros(SUBSCRIPTION_PRICE_CENTS)}/mois, l'abonnement débloque{" "}
+                        <span className="font-semibold text-night">
+                          toute la boutique gratuitement
+                        </span>{" "}
+                        + votre nom de domaine + le retrait du badge Akyra.
+                      </p>
+                      <Link
+                        href="/dashboard/credits"
+                        className={`${btnPrimary} mt-3 w-full`}
+                      >
+                        <IconSpark size={15} /> Passer à l'abonnement
+                      </Link>
+                    </div>
+                  </>
+                )}
+
                 <div className="mt-5 flex justify-end gap-2">
                   <button type="button" className={btnSubtle} onClick={() => setModal(null)}>
                     Annuler
@@ -745,7 +783,8 @@ export function MarketplaceClient({
                     disabled={busy}
                     onClick={() => purchase(modal.itemType, modal.id, modal.name)}
                   >
-                    {busy ? <Spinner size={15} /> : <IconCredit size={15} />} Confirmer · {modal.price} ✦
+                    {busy ? <Spinner size={15} /> : <IconCredit size={15} />}{" "}
+                    {isSubscribed ? "Débloquer gratuitement" : `Confirmer · ${modal.price} ✦`}
                   </button>
                 </div>
               </>

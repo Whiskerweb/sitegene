@@ -16,14 +16,14 @@ interface ParallaxStripContent {
 export default function ParallaxStrip({ content }: { content: ParallaxStripContent; skin: Skin }) {
   const { ref, style } = useParallax(70);
   return (
-    <section ref={ref} className="relative overflow-hidden" style={{ height: "min(72vh, 560px)", background: "var(--c-ink)" }}>
+    <section ref={ref} className="relative overflow-hidden" style={{ height: "min(72vh, 560px)", background: "var(--c-panel)" }}>
       <img
         src={content.image}
         alt=""
         className="absolute left-0 w-full object-cover"
         style={{ ...style, top: "-12%", height: "124%" }}
       />
-      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, color-mix(in srgb, var(--c-ink) 30%, transparent), color-mix(in srgb, var(--c-ink) 72%, transparent))" }} />
+      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, color-mix(in srgb, var(--c-panel) 30%, transparent), color-mix(in srgb, var(--c-panel) 72%, transparent))" }} />
       <div className="absolute inset-0 flex items-center px-5">
         <div className="mx-auto w-full max-w-[1280px]">
           <Reveal>

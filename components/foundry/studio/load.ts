@@ -13,6 +13,7 @@ import { ownedItems } from "@/lib/marketplace-server";
 import { getBalance } from "@/lib/credits-server";
 import { sanitizeUserContent } from "@/lib/foundry/agenceur";
 import { loadRecipeDraft, acquiredFromSnapshot, pagesFromSnapshot } from "@/lib/foundry/server";
+import { listUserChartes } from "@/lib/foundry/user-chartes";
 import { loadPublishedSnapshot } from "@/lib/site-content-store";
 import { listSitePhotos } from "@/lib/site-photos";
 import { COMPONENTS } from "@/components/foundry/registry";
@@ -35,11 +36,12 @@ export async function loadStudioData(
   const currentPage = pageId ? allPages.find((p) => p.id === pageId) ?? null : null;
   if (pageId && !currentPage) return null; // page demandée introuvable
 
-  const [owned, balance, published, photos] = await Promise.all([
+  const [owned, balance, published, photos, userChartes] = await Promise.all([
     ownedItems(admin, userId),
     getBalance(admin, userId),
     loadPublishedSnapshot(admin, site.id),
     listSitePhotos(admin, site.id),
+    listUserChartes(admin, userId),
   ]);
 
   // Sections éditées : celles de la sous-page, sinon celles de l'accueil.
@@ -97,6 +99,8 @@ export async function loadStudioData(
     brandPrimary: recipe.brand?.primary ?? null,
     catalog,
     presets: listVibes(),
+    userChartes,
+    activeUserCharteId: recipe.customVibe ? recipe.userCharteId ?? null : null,
     fonts: {
       heading: CHARTE_FONTS.filter((f) => f.roles.includes("heading")).map((f) => f.family),
       body: CHARTE_FONTS.filter((f) => f.roles.includes("body")).map((f) => f.family),

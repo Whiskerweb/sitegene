@@ -8,7 +8,7 @@ export default function JazzVocalistTestimonials({ content, skin }: { content: J
   const items: Quote[] = Array.isArray(content.items) ? content.items : [];
   const label = typeof content.label === "string" ? content.label : "Témoignages";
   return (
-    <section className="jvtm" style={{ background: "var(--c-ink)" }}>
+    <section className="jvtm" style={{ background: "var(--c-panel)" }}>
       <style>{`
         .jvtm {
           padding: 7rem 1.5rem;
@@ -31,7 +31,7 @@ export default function JazzVocalistTestimonials({ content, skin }: { content: J
         .jvtm-quote {
           font-family: var(--font-heading, 'EB Garamond', serif);
           font-style: italic; font-size: 1.35rem;
-          line-height: 1.4; color: var(--c-surface);
+          line-height: 1.4; color: var(--c-on-panel);
           margin: 0 0 1rem;
         }
         .jvtm-author {

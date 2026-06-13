@@ -8,7 +8,7 @@ export default function MusicianDatesTable({ content, skin }: { content: DatesCo
   const items: DateItem[] = Array.isArray(content.items) ? content.items : [];
   const label = typeof content.label === "string" ? content.label : "Dates";
   return (
-    <section className="mdt" style={{ background: "var(--c-ink)" }}>
+    <section className="mdt" style={{ background: "var(--c-panel)" }}>
       <style>{`
         .mdt {
           padding: 7rem 1.5rem;
@@ -46,7 +46,7 @@ export default function MusicianDatesTable({ content, skin }: { content: DatesCo
         }
         .mdt-title {
           font-family: var(--font-heading, 'EB Garamond', serif);
-          font-size: 1.2rem; color: var(--c-surface); display: block;
+          font-size: 1.2rem; color: var(--c-on-panel); display: block;
         }
         .mdt-venue {
           font-family: var(--font-body, 'DM Mono', monospace);
@@ -70,7 +70,7 @@ export default function MusicianDatesTable({ content, skin }: { content: DatesCo
           color: var(--c-accent);
           text-decoration: none;
         }
-        .mdt-more:hover { color: var(--c-surface); }
+        .mdt-more:hover { color: var(--c-on-panel); }
       `}</style>
       <div className="mdt-inner">
         <p className="mdt-label">{label}</p>

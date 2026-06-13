@@ -22,7 +22,7 @@ export default function PlumberProNavbar({ content, skin }: { content: any; skin
       `}</style>
 
       {/* Topbar infos pratiques */}
-      <div className="text-xs text-white md:text-sm" style={{ background: "var(--c-ink)" }}>
+      <div className="text-xs text-white md:text-sm" style={{ background: "var(--c-panel)" }}>
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-6 px-6 py-2.5">
           <span className="flex items-center gap-2">
             <svg className="h-4 w-4" style={{ color: "var(--c-accent2)" }} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11 19.79 19.79 0 010 2.18 2 2 0 012 0h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 14.92z"/></svg>

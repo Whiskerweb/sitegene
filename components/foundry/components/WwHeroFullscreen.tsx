@@ -12,7 +12,7 @@ export default function WwHeroFullscreen({ content, skin }: { content: any; skin
       <style>{`
         .wwherofs {
           position: relative; width: 100%; height: 100vh; min-height: 640px;
-          overflow: hidden; background: var(--c-ink);
+          overflow: hidden; background: var(--c-panel);
         }
         .wwherofs__img {
           position: absolute; inset: 0; width: 100%; height: 100%;
@@ -29,7 +29,7 @@ export default function WwHeroFullscreen({ content, skin }: { content: any; skin
           max-width: 1400px;
         }
         .wwherofs__title {
-          font-family: var(--font-heading); color: var(--c-surface);
+          font-family: var(--font-heading); color: var(--c-on-panel);
           line-height: 0.95; font-size: clamp(3rem, 9vw, 7rem);
         }
         .wwherofs__bottom {
@@ -45,12 +45,12 @@ export default function WwHeroFullscreen({ content, skin }: { content: any; skin
         }
         .wwherofs__cta {
           display: inline-block; border: 1px solid rgba(255,255,255,0.6);
-          color: var(--c-surface); font-size: 0.6875rem; letter-spacing: 0.2em;
+          color: var(--c-on-panel); font-size: 0.6875rem; letter-spacing: 0.2em;
           text-transform: uppercase; padding: 1rem 1.75rem;
           text-decoration: none;
           transition: background-color 0.4s ease, color 0.4s ease;
         }
-        .wwherofs__cta:hover { background: var(--c-surface); color: var(--c-ink); }
+        .wwherofs__cta:hover { background: var(--c-on-panel); color: var(--c-panel); }
         @media (max-width: 640px) { .wwherofs__content, .wwherofs__bottom { padding-left: 1.25rem; padding-right: 1.25rem; } }
       `}</style>
       {image && <img src={image} alt="" className="wwherofs__img" />}

@@ -7,9 +7,8 @@
  * (ligne `trial_50` créée `pending` ici, passée `paid` par le worker).
  */
 import type Stripe from "stripe";
-import { stripe, SIGNUP_CREDITS } from "@/lib/stripe";
+import { stripe } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { grantCredits } from "@/lib/credits-server";
 import { goLive, slugBaseForSite } from "@/lib/fulfill";
 
 type Admin = ReturnType<typeof createAdminClient>;
@@ -141,10 +140,8 @@ export async function fulfillTrialStart(session: Stripe.Checkout.Session): Promi
     return { siteId, slug: await ensureFulfilled(admin, siteId) };
   }
 
-  // Crédits de bienvenue : le client peut faire ses premières modifs pendant
-  // l'essai. UNIQUEMENT sur le chemin nominal (jamais en réparation) — on ne
-  // veut pas risquer un double crédit en rejouant le fulfillment.
-  await grantCredits(admin, userId, SIGNUP_CREDITS, "signup_grant", {});
+  // Crédits de bienvenue : désormais attribués via la roue de la fortune au
+  // 1er accès au dashboard (révélation gamifiée) — voir /api/wheel/spin.
 
   // Publication immédiate + démarrage de l'essai.
   const slug = await publishAndStartTrial(admin, siteId);

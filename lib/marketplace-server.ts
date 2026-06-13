@@ -78,15 +78,17 @@ function resolvePrice(itemType: MarketplaceItemType, itemId: string): number {
 }
 
 /**
- * Achat d'un item en crédits. Tout le monde paie (y compris les abonnés
- * illimité — décision produit) : l'abonnement couvre les modifications,
- * pas les items de la boutique.
+ * Achat d'un item. L'abonnement « tout compris » débloque TOUTE la marketplace
+ * gratuitement (isSubscribed = true → ownership enregistré sans débit de
+ * crédits). Les non-abonnés paient en crédits (template 15 ✦, effet 5 ✦, etc.)
+ * — c'est l'anti-tier qui pousse vers l'abonnement.
  */
 export async function purchaseItem(
   admin: SupabaseClient,
   userId: string,
   itemType: MarketplaceItemType,
   itemId: string,
+  isSubscribed = false,
 ): Promise<PurchaseResult> {
   const valid =
     itemType === "template"
@@ -111,9 +113,11 @@ export async function purchaseItem(
   }
 
   const price = resolvePrice(itemType, itemId);
-  if (balance < price) {
+  // Abonné : l'item est inclus (0 crédit). Non-abonné : il faut le solde.
+  if (!isSubscribed && balance < price) {
     return { ok: false, code: "insufficient", balance, needed: price };
   }
+  const chargedCredits = isSubscribed ? 0 : price;
 
   const licenseCode = genLicenseCode(itemType);
   const { error } = await admin.from("marketplace_items").insert({
@@ -121,7 +125,7 @@ export async function purchaseItem(
     item_type: itemType,
     item_id: itemId,
     license_code: licenseCode,
-    credits_spent: price,
+    credits_spent: chargedCredits,
   });
   if (error) {
     // Course sur unique(user_id,item_type,item_id) → déjà possédé, pas de débit.
@@ -138,6 +142,10 @@ export async function purchaseItem(
     throw new Error(`[marketplace] insert: ${error.message}`);
   }
 
+  if (isSubscribed) {
+    // Abonné : ownership gratuit, aucun mouvement de crédits (solde inchangé).
+    return { ok: true, licenseCode, balance };
+  }
   const newBalance = await grantCredits(admin, userId, -price, "item_purchase", {});
   return { ok: true, licenseCode, balance: newBalance };
 }

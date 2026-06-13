@@ -12,6 +12,7 @@ import {
 import { TEMPLATE_IDS, isSpaTemplate, templateMeta } from "@/lib/templates";
 import { EFFECT_PRICE_CREDITS, TEMPLATE_PRICE_CREDITS } from "@/lib/marketplace";
 import { primarySiteForUser } from "@/lib/primary-site";
+import { hasActiveSubscription } from "@/lib/subscription";
 import { MarketplaceClient } from "./MarketplaceClient";
 
 export const dynamic = "force-dynamic";
@@ -26,7 +27,7 @@ export default async function MarketplacePage() {
   const user = await requireUser();
   const admin = createAdminClient();
 
-  const [site, owned, balance] = await Promise.all([
+  const [site, owned, balance, isSubscribed] = await Promise.all([
     primarySiteForUser<{ id: string; template_id: string | null }>(
       admin,
       user.id,
@@ -34,6 +35,7 @@ export default async function MarketplacePage() {
     ),
     ownedItems(admin, user.id),
     getBalance(admin, user.id),
+    hasActiveSubscription(admin, user.id),
   ]);
 
   // Catégorie du client : intake d'onboarding, sinon déduite du template actuel.
@@ -90,6 +92,7 @@ export default async function MarketplacePage() {
   return (
     <MarketplaceClient
       hasSite={!!site}
+      isSubscribed={isSubscribed}
       balance={balance}
       categoryLabel={category.label}
       templatePrice={TEMPLATE_PRICE_CREDITS}

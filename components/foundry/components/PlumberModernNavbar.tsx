@@ -31,7 +31,7 @@ export default function PlumberModernNavbar({ content, skin }: { content: any; s
             <a key={i} href={navHref(l)} className="pmnav-link text-sm font-medium text-white/85 hover:text-white">{navLabel(l)}</a>
           ))}
         </nav>
-        <a href="#contact" className="hidden items-center gap-2 rounded-[var(--r-pill)] px-5 py-2.5 text-sm font-medium text-white transition-all hover:brightness-110 sm:inline-flex" style={{ background: "var(--c-ink)" }}>
+        <a href="#contact" className="hidden items-center gap-2 rounded-[var(--r-pill)] px-5 py-2.5 text-sm font-medium text-white transition-all hover:brightness-110 sm:inline-flex" style={{ background: "var(--c-panel)" }}>
           <span className="h-2 w-2 rounded-full" style={{ background: "var(--c-accent2)" }} />
           <span>{content?.cta ?? "Appelez-nous : 01 86 95 99 43"}</span>
         </a>

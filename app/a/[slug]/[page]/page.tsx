@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { createPublicClient } from "@/lib/supabase/public";
+import { createAdminClient } from "@/lib/supabase/admin";
 import Assembler from "@/components/foundry/Assembler";
 import {
   FOUNDRY_TEMPLATE_ID,
@@ -10,6 +11,7 @@ import {
   withResolvedNav,
   type FoundryContent,
 } from "@/lib/foundry/server";
+import { hasActiveSubscription } from "@/lib/subscription";
 import type { ContentRow } from "@/lib/site-content-store";
 
 export const dynamic = "force-dynamic";
@@ -23,7 +25,7 @@ async function loadPage(slug: string, pageSlug: string) {
   const supabase = createPublicClient();
   const { data: site } = await supabase
     .from("sites")
-    .select("id, template_id, status")
+    .select("id, template_id, status, owner_user_id")
     .eq("slug", slug)
     .eq("status", "live")
     .maybeSingle();
@@ -43,7 +45,16 @@ async function loadPage(slug: string, pageSlug: string) {
   const page = pagesFromSnapshot(row).find((p) => p.slug === pageSlug);
   if (!page) return null;
   const meta = (sc?.content_json ?? {}) as Partial<FoundryContent>;
-  return { recipe: composePageRecipe(home, page), title: page.title, businessName: meta.__businessName };
+  const ownerId = (site as { owner_user_id?: string | null }).owner_user_id ?? null;
+  const isSubscribed = ownerId
+    ? await hasActiveSubscription(createAdminClient(), ownerId)
+    : false;
+  return {
+    recipe: composePageRecipe(home, page),
+    title: page.title,
+    businessName: meta.__businessName,
+    isSubscribed,
+  };
 }
 
 export async function generateMetadata({
@@ -65,5 +76,5 @@ export default async function FoundrySubPage({
   const { slug, page } = await params;
   const data = await loadPage(slug, page);
   if (!data) notFound();
-  return <Assembler recipe={withResolvedNav(data.recipe, slug)} />;
+  return <Assembler recipe={withResolvedNav(data.recipe, slug)} showBranding={!data.isSubscribed} />;
 }

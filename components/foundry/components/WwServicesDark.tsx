@@ -14,25 +14,25 @@ export default function WwServicesDark({ content, skin }: { content: any; skin: 
   const cta = typeof content.cta === "string" ? content.cta : "Voir les services";
   const items: ServiceItem[] = Array.isArray(content.items) ? content.items : [];
   return (
-    <section id="services" className="wwsvc" style={{ background: "var(--c-ink)", color: "var(--c-surface)" }}>
+    <section id="services" className="wwsvc" style={{ background: "var(--c-panel)", color: "var(--c-on-panel)" }}>
       <style>{`
         .wwsvc { padding: 6rem 3rem 9rem; }
         .wwsvc__header { text-align: center; max-width: 42rem; margin: 0 auto 5rem; }
         .wwsvc__title {
           font-family: var(--font-heading); font-size: clamp(3rem, 8vw, 6rem);
-          margin-bottom: 1.5rem; color: var(--c-surface);
+          margin-bottom: 1.5rem; color: var(--c-on-panel);
         }
         .wwsvc__intro {
           font-family: var(--font-heading); font-size: clamp(1.25rem, 2.5vw, 1.875rem);
-          color: color-mix(in srgb, var(--c-surface) 80%, transparent); line-height: 1.3; margin-bottom: 2rem;
+          color: color-mix(in srgb, var(--c-on-panel) 80%, transparent); line-height: 1.3; margin-bottom: 2rem;
         }
         .wwsvc__headerCta {
-          display: inline-block; border: 1px solid color-mix(in srgb, var(--c-surface) 40%, transparent);
+          display: inline-block; border: 1px solid color-mix(in srgb, var(--c-on-panel) 40%, transparent);
           font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase;
-          padding: 1rem 1.75rem; color: var(--c-surface); text-decoration: none;
+          padding: 1rem 1.75rem; color: var(--c-on-panel); text-decoration: none;
           transition: background-color 0.4s ease, color 0.4s ease;
         }
-        .wwsvc__headerCta:hover { background: var(--c-surface); color: var(--c-ink); }
+        .wwsvc__headerCta:hover { background: var(--c-on-panel); color: var(--c-panel); }
         .wwsvc__item { max-width: 87.5rem; margin: 0 auto 5rem; }
         .wwsvc__itemHeader {
           display: flex; flex-direction: column; gap: 1.5rem;
@@ -43,17 +43,17 @@ export default function WwServicesDark({ content, skin }: { content: any; skin: 
         }
         .wwsvc__itemTitle {
           font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3.5rem);
-          color: var(--c-surface);
+          color: var(--c-on-panel);
         }
         .wwsvc__itemRight { max-width: 28rem; text-align: right; }
-        .wwsvc__itemDesc { color: color-mix(in srgb, var(--c-surface) 60%, transparent); font-size: 0.875rem; line-height: 1.7; margin-bottom: 1rem; }
+        .wwsvc__itemDesc { color: color-mix(in srgb, var(--c-on-panel) 60%, transparent); font-size: 0.875rem; line-height: 1.7; margin-bottom: 1rem; }
         .wwsvc__itemCta {
-          display: inline-block; border: 1px solid color-mix(in srgb, var(--c-surface) 30%, transparent);
+          display: inline-block; border: 1px solid color-mix(in srgb, var(--c-on-panel) 30%, transparent);
           font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase;
-          padding: 0.75rem 1.5rem; color: var(--c-surface); text-decoration: none;
+          padding: 0.75rem 1.5rem; color: var(--c-on-panel); text-decoration: none;
           transition: background-color 0.4s ease, color 0.4s ease;
         }
-        .wwsvc__itemCta:hover { background: var(--c-surface); color: var(--c-ink); }
+        .wwsvc__itemCta:hover { background: var(--c-on-panel); color: var(--c-panel); }
         .wwsvc__strip {
           display: grid; gap: 0.75rem;
           grid-template-columns: repeat(2, 1fr);

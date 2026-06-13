@@ -7,7 +7,7 @@ import type { CSSProperties } from "react";
 import type { Skin } from "@/lib/foundry/types";
 
 export default function PlumberProHero({ content, skin }: { content: any; skin: Skin }) {
-  const root: CSSProperties = { minHeight: 560, background: "var(--c-ink)" };
+  const root: CSSProperties = { minHeight: 560, background: "var(--c-panel)" };
   if (skin.accent) root["--c-accent" as keyof CSSProperties] = skin.accent as never;
   return (
     <section className="relative overflow-hidden" style={root}>
@@ -26,7 +26,7 @@ export default function PlumberProHero({ content, skin }: { content: any; skin: 
         <img src={content?.image ?? "/_templates/plumber-pro/img/hero.jpg"} alt="" className="h-full w-full object-cover opacity-60" />
         <div
           className="absolute inset-0"
-          style={{ background: "linear-gradient(90deg, var(--c-ink) 0%, color-mix(in srgb, var(--c-ink) 80%, transparent) 50%, color-mix(in srgb, var(--c-ink) 20%, transparent) 100%)" }}
+          style={{ background: "linear-gradient(90deg, var(--c-panel) 0%, color-mix(in srgb, var(--c-panel) 80%, transparent) 50%, color-mix(in srgb, var(--c-panel) 20%, transparent) 100%)" }}
         />
       </div>
 

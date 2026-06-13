@@ -21,12 +21,12 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
   const g = (i: number) => gallery[i] ?? {};
 
   return (
-    <section className="lwgal" style={{ background: "var(--c-ink)" }}>
+    <section className="lwgal" style={{ background: "var(--c-panel)" }}>
       <style>{`
         .lwgal {
           padding: 6rem 0;
           overflow: hidden;
-          color: var(--c-surface);
+          color: var(--c-on-panel);
         }
         .lwgal-inner {
           max-width: 100rem;
@@ -54,7 +54,7 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
           font-weight: 300;
           letter-spacing: -0.04em;
           line-height: 0.95;
-          color: var(--c-surface);
+          color: var(--c-on-panel);
         }
         .lwgal-h1 em { font-style: italic; }
         .lwgal-subh {
@@ -63,13 +63,13 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
           font-weight: 300;
           letter-spacing: -0.04em;
           line-height: 0.95;
-          color: var(--c-surface);
+          color: var(--c-on-panel);
         }
         .lwgal-intro {
           font-family: var(--font-body);
           font-size: 1.1rem;
           line-height: 1.7;
-          color: color-mix(in srgb, var(--c-surface) 55%, transparent);
+          color: color-mix(in srgb, var(--c-on-panel) 55%, transparent);
           font-weight: 300;
           max-width: 28rem;
           padding-bottom: 0.25rem;
@@ -78,7 +78,7 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
           display: grid;
           grid-template-columns: repeat(2, 1fr);
           gap: 2px;
-          background: var(--c-ink);
+          background: var(--c-panel);
         }
         @media (min-width: 1024px) { .lwgal-grid { grid-template-columns: repeat(4, 1fr); } }
         .lwgal-cell {
@@ -117,7 +117,7 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
           width: 60%; aspect-ratio: 1/1;
           overflow: hidden;
           box-shadow: 0 24px 80px -20px rgba(0,0,0,0.85);
-          border: 1px solid color-mix(in srgb, var(--c-surface) 5%, transparent);
+          border: 1px solid color-mix(in srgb, var(--c-on-panel) 5%, transparent);
         }
         .lwgal-featured-sharp {
           width: 100%; height: 100%;
@@ -127,8 +127,8 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
         .lwgal-featured:hover .lwgal-featured-sharp { transform: scale(1.1); }
         .lwgal-caption {
           aspect-ratio: 1 / 1;
-          background: var(--c-ink);
-          border: 1px solid color-mix(in srgb, var(--c-surface) 5%, transparent);
+          background: var(--c-panel);
+          border: 1px solid color-mix(in srgb, var(--c-on-panel) 5%, transparent);
           padding: 1.5rem;
           display: flex;
           flex-direction: column;
@@ -139,7 +139,7 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
           font-family: var(--font-heading);
           font-size: clamp(1.8rem, 4vw, 3rem);
           letter-spacing: -0.03em;
-          color: var(--c-surface);
+          color: var(--c-on-panel);
           font-weight: 300;
           line-height: 1;
         }
@@ -147,7 +147,7 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
         .lwgal-cap-body {
           font-family: var(--font-body);
           font-size: 0.875rem;
-          color: color-mix(in srgb, var(--c-surface) 50%, transparent);
+          color: color-mix(in srgb, var(--c-on-panel) 50%, transparent);
           font-weight: 200;
           line-height: 1.6;
           max-width: 200px;
@@ -157,9 +157,9 @@ export default function LuxuryWeddingGallery({ content, skin }: { content: any; 
       <div className="lwgal-inner">
         <div className="lwgal-header">
           <div>
-            <div style={{ borderBottom: "1px solid color-mix(in srgb, var(--c-surface) 10%, transparent)", marginBottom: "2.5rem", paddingBottom: "0" }}>
+            <div style={{ borderBottom: "1px solid color-mix(in srgb, var(--c-on-panel) 10%, transparent)", marginBottom: "2.5rem", paddingBottom: "0" }}>
               <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "0.5rem" }}>
-                <p style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.15em", color: "color-mix(in srgb, var(--c-surface) 50%, transparent)", fontFamily: "var(--font-body)", fontWeight: 300 }}>{heading1}</p>
+                <p style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.15em", color: "color-mix(in srgb, var(--c-on-panel) 50%, transparent)", fontFamily: "var(--font-body)", fontWeight: 300 }}>{heading1}</p>
               </div>
             </div>
             <h2 className="lwgal-subh">{subheading}</h2>

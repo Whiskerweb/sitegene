@@ -19,7 +19,7 @@ export default function JazzVocalistHero({ content, skin }: { content: JVHeroCon
   return (
     <section
       className="jvhero"
-      style={{ background: "var(--c-ink)", position: "relative", minHeight: "100svh", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}
+      style={{ background: "var(--c-panel)", position: "relative", minHeight: "100svh", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}
     >
       <style>{`
         .jvhero-img {

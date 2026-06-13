@@ -40,13 +40,17 @@ export default function ReviewsPostitCarousel({ content }: { content: ReviewsCon
         </h2>
       </div>
 
-      {/* Cadre « tableau d'épingles » : voile jaune doux + bordure douce. Le
-          défilement est masqué À CE cadre (overflow-hidden + coins arrondis),
-          donc les notes naissent et disparaissent À SES bords — elles ne fuient
-          plus jusqu'aux deux côtés du site. */}
+      {/* Cadre « tableau d'épingles » : panneau teinté DÉRIVÉ DE LA CHARTE
+          (fond-carte nuancé d'accent secondaire) — il suit donc la DA au lieu
+          d'un jaune figé. Le défilement est masqué À CE cadre (overflow-hidden
+          + coins arrondis), donc les notes naissent et disparaissent À SES bords
+          — elles ne fuient plus jusqu'aux deux côtés du site. */}
       <div
         className="relative z-10 mx-4 overflow-hidden rounded-[40px] md:mx-8"
-        style={{ background: "rgba(243,222,138,0.4)", border: "1px solid rgba(13,5,3,.10)" }}
+        style={{
+          background: "color-mix(in srgb, var(--c-accent2) 24%, var(--c-card))",
+          border: "1px solid color-mix(in srgb, var(--c-ink) 12%, transparent)",
+        }}
       >
         <div className="foundry-marquee flex w-max gap-8 px-8 py-14">
           {loop.map((r, i) => {

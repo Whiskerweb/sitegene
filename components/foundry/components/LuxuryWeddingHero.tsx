@@ -25,7 +25,7 @@ export default function LuxuryWeddingHero({ content, skin }: { content: any; ski
           flex-direction: column;
           justify-content: flex-end;
           padding-bottom: 4rem;
-          background: var(--c-ink);
+          background: var(--c-panel);
           overflow: hidden;
         }
         .lwhero-bg {

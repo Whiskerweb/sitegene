@@ -17,7 +17,7 @@ export default function PlumberProFooter({ content, skin }: { content: any; skin
     { heading: "Légal", links: ["Politique de confidentialité", "Conditions générales"] },
   ];
   return (
-    <footer className="ppfoot px-6 pb-8 pt-16" style={{ background: "var(--c-ink)", ...root }}>
+    <footer className="ppfoot px-6 pb-8 pt-16" style={{ background: "var(--c-panel)", ...root }}>
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 grid gap-12 md:grid-cols-4">
           {/* Marque */}

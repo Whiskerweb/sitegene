@@ -12,6 +12,8 @@ import { HeroBanner } from "@/components/ui/HeroBanner";
 import { MetricsRow } from "@/components/ui/MetricsRow";
 import PaywallModal from "@/components/dashboard/PaywallModal";
 import TrialBanner from "@/components/dashboard/TrialBanner";
+import WheelModal from "@/components/dashboard/WheelModal";
+import OnboardingTour from "@/components/tour/OnboardingTour";
 import { PublishButton } from "@/components/dashboard/PublishButton";
 import { primarySiteForUser } from "@/lib/primary-site";
 import { loadOrCreateEditableSnapshot, loadPublishedSnapshot } from "@/lib/site-content-store";
@@ -47,6 +49,14 @@ export default async function MonSite({
   }>(admin, user.id, "id, slug, template_id, published_at, created_at, trial_ends_at");
   const balance = await getBalance(admin, user.id);
 
+  // Roue de bienvenue : un seul spin par compte (flag profiles.wheel_spun_at).
+  const { data: profile } = await admin
+    .from("profiles")
+    .select("wheel_spun_at")
+    .eq("id", user.id)
+    .maybeSingle();
+  const showWheel = !profile?.wheel_spun_at;
+
   const { data: ob } = site
     ? await admin
         .from("site_onboarding")
@@ -64,19 +74,23 @@ export default async function MonSite({
   // Site ASSEMBLÉ (fonderie) : accueil plug-and-play dédié (sections de la recette).
   if (site.template_id === FOUNDRY_TEMPLATE_ID) {
     return (
-      <FoundryHome
-        user={user}
-        site={{
-          id: site.id,
-          slug: site.slug,
-          status: site.status,
-          billing_status: site.billing_status,
-          trial_ends_at: site.trial_ends_at,
-        }}
-        balance={balance}
-        businessName={((ob?.intake as { brand?: string } | null)?.brand ?? firstName) || null}
-        paywallOpen={Boolean(sp.paywall) || Boolean(sp.fromChat)}
-      />
+      <>
+        {showWheel && <WheelModal />}
+        <OnboardingTour />
+        <FoundryHome
+          user={user}
+          site={{
+            id: site.id,
+            slug: site.slug,
+            status: site.status,
+            billing_status: site.billing_status,
+            trial_ends_at: site.trial_ends_at,
+          }}
+          balance={balance}
+          businessName={((ob?.intake as { brand?: string } | null)?.brand ?? firstName) || null}
+          paywallOpen={Boolean(sp.paywall) || Boolean(sp.fromChat)}
+        />
+      </>
     );
   }
 
@@ -151,6 +165,8 @@ export default async function MonSite({
 
   return (
     <>
+      {showWheel && <WheelModal />}
+      <OnboardingTour />
       <PageHeader
         title="Mon site"
         subtitle="Votre portfolio, en un coup d'œil."

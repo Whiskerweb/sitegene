@@ -14,15 +14,15 @@ export default function InkBarNavbar({ content, skin }: { content: any; skin: Sk
   if (skin.accent) root["--c-accent" as keyof CSSProperties] = skin.accent as never;
   const links: unknown[] = Array.isArray(content?.links) && content.links.length ? content.links : LINKS_FALLBACK;
   return (
-    <header style={{ ...root, background: "var(--c-ink)" }}>
+    <header style={{ ...root, background: "var(--c-panel)" }}>
       <style>{`
-        .inknav-link { color: color-mix(in srgb, var(--c-surface) 65%, transparent); transition: color .2s; }
-        .inknav-link:hover { color: var(--c-surface); }
-        .inknav-cta { border: 1px solid color-mix(in srgb, var(--c-surface) 40%, transparent); color: var(--c-surface); transition: background .25s, color .25s; }
-        .inknav-cta:hover { background: var(--c-surface); color: var(--c-ink); }
+        .inknav-link { color: color-mix(in srgb, var(--c-on-panel) 65%, transparent); transition: color .2s; }
+        .inknav-link:hover { color: var(--c-on-panel); }
+        .inknav-cta { border: 1px solid color-mix(in srgb, var(--c-on-panel) 40%, transparent); color: var(--c-on-panel); transition: background .25s, color .25s; }
+        .inknav-cta:hover { background: var(--c-on-panel); color: var(--c-panel); }
       `}</style>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        <a href="#" className="text-lg font-bold tracking-tight" style={{ color: "var(--c-surface)", fontFamily: "var(--font-heading)" }}>{content?.brand ?? "Marina Cole"}</a>
+        <a href="#" className="text-lg font-bold tracking-tight" style={{ color: "var(--c-on-panel)", fontFamily: "var(--font-heading)" }}>{content?.brand ?? "Marina Cole"}</a>
 
         <nav className="hidden items-center gap-8 text-[14px] md:flex">
           {links.map((l, i) => (

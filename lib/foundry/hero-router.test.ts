@@ -1,6 +1,6 @@
 // lib/foundry/hero-router.test.ts
 import { describe, expect, it } from "vitest";
-import { resolveHero, heroOptionsForTrade, isExcludedForTrade } from "./hero-router";
+import { resolveHero, heroOptionsForTrade, isExcludedForTrade, tradeSectionHint } from "./hero-router";
 import { getManifest } from "./manifests";
 import type { TradeId } from "./da-personas";
 
@@ -68,9 +68,37 @@ describe("isExcludedForTrade", () => {
     expect(isExcludedForTrade("plumber-pro-services", "services", "artisan")).toBe(false);
   });
 
-  it("les sections génériques ne sont jamais exclues", () => {
-    expect(isExcludedForTrade("faq-accordion", "faq", "musicien")).toBe(false);
+  it("les sections génériques ne sont pas exclues hors métier ciblé", () => {
+    // faq-accordion reste dispo partout SAUF pour un musicien (cf. test dédié plus bas).
+    expect(isExcludedForTrade("faq-accordion", "faq", "artisan")).toBe(false);
     expect(isExcludedForTrade("gallery-mosaic", "gallery", "artisan")).toBe(false);
+    expect(isExcludedForTrade("gallery-mosaic", "gallery", "musicien")).toBe(false);
+  });
+
+  it("musicien : avis clients, FAQ, process et forfaits sont exclus du catalogue", () => {
+    for (const id of [
+      "testimonials-carousel", "reviews-postit-carousel", "testimonials-marquee",
+      "liquid-reviews-marquee", "fx-circular-reviews", "fx-stagger-reviews", "fx-shuffle-reviews",
+    ]) {
+      expect(isExcludedForTrade(id, "reviews", "musicien"), `${id} exclu pour musicien`).toBe(true);
+      // …mais disponible pour un métier de prestataire.
+      expect(isExcludedForTrade(id, "reviews", "coach"), `${id} dispo pour coach`).toBe(false);
+    }
+    expect(isExcludedForTrade("faq-accordion", "faq", "musicien")).toBe(true);
+    expect(isExcludedForTrade("process-steps", "process", "musicien")).toBe(true);
+    expect(isExcludedForTrade("pricing-cards", "pricing", "musicien")).toBe(true);
+  });
+});
+
+describe("tradeSectionHint", () => {
+  it("donne un indice d'usage musicien pour les sections clés", () => {
+    expect(tradeSectionHint("social-clip-links", "musicien")).toMatch(/écoute|Spotify/i);
+    expect(tradeSectionHint("story-timeline", "musicien")).toMatch(/concert|tournée/i);
+    expect(tradeSectionHint("intro-split", "musicien")).toMatch(/bio|groupe/i);
+  });
+  it("aucun indice pour un métier sans affinité déclarée", () => {
+    expect(tradeSectionHint("story-timeline", "artisan")).toBe("");
+    expect(tradeSectionHint("intro-split", "coach")).toBe("");
   });
 
   it("chaque métier garde au moins un hero et une navbar non exclus", () => {

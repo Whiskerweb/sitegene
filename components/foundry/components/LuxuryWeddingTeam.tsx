@@ -14,7 +14,7 @@ export default function LuxuryWeddingTeam({ content, skin }: { content: any; ski
   ];
 
   return (
-    <section className="lwteam" style={{ background: "var(--c-ink)" }}>
+    <section className="lwteam" style={{ background: "var(--c-panel)" }}>
       <style>{`
         .lwteam {
           padding: 6rem 0;
@@ -53,7 +53,7 @@ export default function LuxuryWeddingTeam({ content, skin }: { content: any; ski
           font-size: 0.75rem;
           text-transform: uppercase;
           letter-spacing: 0.2em;
-          color: color-mix(in srgb, var(--c-surface) 40%, transparent);
+          color: color-mix(in srgb, var(--c-on-panel) 40%, transparent);
           font-weight: 200;
           margin-bottom: 1.5rem;
           display: block;
@@ -64,14 +64,14 @@ export default function LuxuryWeddingTeam({ content, skin }: { content: any; ski
           font-weight: 300;
           letter-spacing: -0.04em;
           line-height: 1.1;
-          color: var(--c-surface);
+          color: var(--c-on-panel);
         }
         .lwteam-hint {
           max-width: 32rem;
           font-family: var(--font-body);
           font-size: 1.1rem;
           line-height: 1.7;
-          color: color-mix(in srgb, var(--c-surface) 50%, transparent);
+          color: color-mix(in srgb, var(--c-on-panel) 50%, transparent);
           font-weight: 300;
         }
         .lwteam-grid {
@@ -116,21 +116,21 @@ export default function LuxuryWeddingTeam({ content, skin }: { content: any; ski
           font-family: var(--font-heading);
           font-weight: 300;
           letter-spacing: -0.04em;
-          color: var(--c-surface);
+          color: var(--c-on-panel);
         }
         .lwteam-role {
           font-family: var(--font-body);
           font-size: 0.7rem;
           text-transform: uppercase;
           letter-spacing: 0.2em;
-          color: color-mix(in srgb, var(--c-surface) 40%, transparent);
+          color: color-mix(in srgb, var(--c-on-panel) 40%, transparent);
           font-weight: 200;
         }
         .lwteam-bio {
           font-family: var(--font-body);
           font-size: 1rem;
           line-height: 1.7;
-          color: color-mix(in srgb, var(--c-surface) 50%, transparent);
+          color: color-mix(in srgb, var(--c-on-panel) 50%, transparent);
           font-weight: 300;
         }
       `}</style>

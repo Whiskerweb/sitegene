@@ -22,9 +22,9 @@ export default function PillMenuNavbar({ content, skin }: { content: any; skin: 
           <span className="text-xl font-bold tracking-tight" style={{ fontFamily: "var(--font-heading)" }}>{content?.brand ?? "Elearni"}</span>
         </a>
 
-        <ul className="hidden items-center gap-7 rounded-[var(--r-pill)] px-7 py-3 text-[13px] font-medium md:flex" style={{ background: "var(--c-ink)" }}>
+        <ul className="hidden items-center gap-7 rounded-[var(--r-pill)] px-7 py-3 text-[13px] font-medium md:flex" style={{ background: "var(--c-panel)" }}>
           {links.map((l, i) => (
-            <li key={i}><a href={navHref(l)} className="transition-opacity hover:opacity-100" style={{ color: "color-mix(in srgb, var(--c-surface) 85%, transparent)" }}>{navLabel(l)}</a></li>
+            <li key={i}><a href={navHref(l)} className="transition-opacity hover:opacity-100" style={{ color: "color-mix(in srgb, var(--c-on-panel) 85%, transparent)" }}>{navLabel(l)}</a></li>
           ))}
         </ul>
 

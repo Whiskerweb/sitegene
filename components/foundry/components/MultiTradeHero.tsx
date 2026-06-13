@@ -8,17 +8,17 @@ export default function MultiTradeHero({ content, skin }: { content: any; skin: 
   const image = typeof content.image === "string" ? content.image : "";
   const pills: string[] = Array.isArray(content.pills) ? content.pills : [];
   return (
-    <section className="mthero" style={{ background: "var(--c-ink)" }}>
+    <section className="mthero" style={{ background: "var(--c-panel)" }}>
       <style>{`
         .mthero { position: relative; overflow: hidden; min-height: 640px; display: flex; align-items: flex-end; }
         .mthero-bg { position: absolute; inset: 0; }
         .mthero-bg img { width: 100%; height: 100%; object-fit: cover; }
-        .mthero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, var(--c-ink) 0%, color-mix(in srgb, var(--c-ink) 85%, transparent) 55%, color-mix(in srgb, var(--c-ink) 30%, transparent) 100%); }
-        .mthero-overlay2 { position: absolute; inset: 0; background: linear-gradient(to top, var(--c-ink) 0%, transparent 45%, color-mix(in srgb, var(--c-ink) 40%, transparent) 100%); }
+        .mthero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, var(--c-panel) 0%, color-mix(in srgb, var(--c-panel) 85%, transparent) 55%, color-mix(in srgb, var(--c-panel) 30%, transparent) 100%); }
+        .mthero-overlay2 { position: absolute; inset: 0; background: linear-gradient(to top, var(--c-panel) 0%, transparent 45%, color-mix(in srgb, var(--c-panel) 40%, transparent) 100%); }
         .mthero-inner { position: relative; width: 100%; max-width: 90rem; margin: 0 auto; padding: 10rem 1.5rem 4rem; display: grid; gap: 2.5rem; align-items: flex-end; }
         @media(min-width: 1024px) { .mthero-inner { grid-template-columns: 1fr 1fr; } }
         .mthero-copy { }
-        .mthero-h1 { font-family: var(--font-heading); font-weight: 800; font-size: clamp(2rem, 5vw, 3.75rem); line-height: 1.05; letter-spacing: -0.03em; color: var(--c-surface); max-width: 32rem; margin-bottom: 1.5rem; }
+        .mthero-h1 { font-family: var(--font-heading); font-weight: 800; font-size: clamp(2rem, 5vw, 3.75rem); line-height: 1.05; letter-spacing: -0.03em; color: var(--c-on-panel); max-width: 32rem; margin-bottom: 1.5rem; }
         .mthero-tagline { color: color-mix(in srgb, var(--c-on-accent) 70%, transparent); font-size: 1.125rem; max-width: 28rem; margin-bottom: 2rem; line-height: 1.6; }
         .mthero-cta { display: inline-flex; align-items: center; gap: 0.75rem; background: var(--c-accent); color: var(--c-on-accent); font-weight: 600; font-size: 0.875rem; padding: 0.875rem 1.5rem; border-radius: var(--r-pill); text-decoration: none; transition: filter .2s; }
         .mthero-cta:hover { filter: brightness(1.1); }
@@ -27,7 +27,7 @@ export default function MultiTradeHero({ content, skin }: { content: any; skin: 
         @media(min-width: 1024px) { .mthero-pills { display: flex; } }
         .mthero-pill { display: inline-flex; align-items: center; gap: 0.625rem; background: color-mix(in srgb, var(--c-on-accent) 10%, transparent); border: 1px solid color-mix(in srgb, var(--c-on-accent) 15%, transparent); border-radius: var(--r-pill); padding: 0.625rem 1.25rem; }
         .mthero-pill-dot { width: 1.25rem; height: 1.25rem; background: var(--c-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .mthero-pill-text { color: var(--c-surface); font-size: 0.875rem; font-weight: 500; }
+        .mthero-pill-text { color: var(--c-on-panel); font-size: 0.875rem; font-weight: 500; }
       `}</style>
       <div className="mthero-bg">
         {image && <img src={image} alt="" />}
