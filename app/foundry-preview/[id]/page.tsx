@@ -13,5 +13,7 @@ export function generateStaticParams() {
 export default async function FoundryPreviewPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   if (!MANIFESTS[id]) notFound();
-  return <Assembler recipe={previewRecipe(id)} />;
+  // `fit` : hauteur naturelle du composant — la vignette du catalogue la mesure
+  // et s'y ajuste (plus de grand vide sous une navbar ou un footer).
+  return <Assembler recipe={previewRecipe(id)} fit />;
 }

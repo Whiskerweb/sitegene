@@ -3,6 +3,7 @@ import { getUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { chat } from "@/lib/mistral";
 import { generateRecipe, type AgenceurInput } from "@/lib/foundry/agenceur";
+import { markPlaceholders } from "@/lib/foundry/placeholders";
 import { repairCharte } from "@/lib/foundry/charte";
 import {
   FOUNDRY_TEMPLATE_ID,
@@ -28,6 +29,8 @@ export async function POST(request: Request) {
   const businessName = typeof body?.businessName === "string" ? body.businessName.trim() : "";
   const vibeId = typeof body?.vibeId === "string" ? body.vibeId : "";
   const accent = typeof body?.accent === "string" ? body.accent : undefined;
+  // Avis clients : false = le client n'en a pas → aucune section avis.
+  const hasReviews = typeof body?.hasReviews === "boolean" ? body.hasReviews : undefined;
   // Charte sur mesure (spec d'échange du tunnel) : JAMAIS prise telle quelle —
   // re-réparée serveur (contrastes, saturation, fonts en liste blanche).
   const customVibe =
@@ -53,8 +56,11 @@ export async function POST(request: Request) {
     .maybeSingle();
   if (liveSite?.id) return NextResponse.json({ redirect: "/dashboard" });
 
-  const input: AgenceurInput = { brief, businessName, vibeId, accent, customVibe };
-  const { recipe, source } = await generateRecipe(input, chat);
+  const input: AgenceurInput = { brief, businessName, vibeId, accent, customVibe, hasReviews };
+  const { recipe: generated, source } = await generateRecipe(input, chat);
+  // Marque d'emblée les sections « à personnaliser » (avis/chiffres/galerie) —
+  // l'aperçu du reveal les entoure. La passe links/ les raffine avec le collecté.
+  const recipe = markPlaceholders(generated);
 
   try {
     await ensureFoundryTemplateRow(admin);

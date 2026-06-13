@@ -2,8 +2,99 @@
 // components/foundry/CatalogBrowser.tsx — catalogue filtrable (sections + effets)
 // + couche marketplace : prix par rareté, possession, « Voir sur mon site »
 // (aperçu du composant DANS le site du client) et mode « Remplacer » (swap).
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+
+// Largeur de rendu « design » de l'aperçu (desktop) : la vignette le scale pour
+// remplir la carte, et mesure la hauteur réelle du composant pour s'y ajuster.
+const DESIGN_W = 1266;
+const THUMB_MIN_H = 64;
+const THUMB_MAX_H = 320;
+
+/**
+ * Vignette d'aperçu d'un composant : iframe rendu à `DESIGN_W` puis mis à
+ * l'échelle pour remplir la largeur de la carte. On lit la hauteur naturelle du
+ * contenu (même origine) pour dimensionner la carte au composant.
+ *
+ * PERF SCROLL : l'iframe n'est MONTÉE que lorsque la carte approche du viewport
+ * (IntersectionObserver) et DÉMONTÉE quand elle s'en éloigne — sans ça, ~100
+ * mini-sites complets (dont certains animés en continu) tournent et repeignent
+ * en permanence, ce qui fait ramer le défilement. La hauteur mesurée est
+ * conservée : pas de saut de mise en page quand l'iframe se démonte.
+ */
+function Thumb({ src, title }: { src: string; title: string }) {
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(0.3);
+  const [naturalH, setNaturalH] = useState(900);
+  const [boxH, setBoxH] = useState(220);
+  const [near, setNear] = useState(false);
+
+  function recompute(width: number, nat: number) {
+    const s = width > 0 ? width / DESIGN_W : 0.3;
+    setScale(s);
+    setBoxH(Math.min(THUMB_MAX_H, Math.max(THUMB_MIN_H, nat * s)));
+  }
+
+  useEffect(() => {
+    const el = boxRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => recompute(el.clientWidth, naturalH));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [naturalH]);
+
+  // Montage paresseux : iframe vivante seulement près du viewport (±600px).
+  useEffect(() => {
+    const el = boxRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => setNear(entries[0]?.isIntersecting ?? false),
+      { rootMargin: "600px 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  function onLoad(e: React.SyntheticEvent<HTMLIFrameElement>) {
+    try {
+      const doc = e.currentTarget.contentDocument;
+      // Hauteur RÉELLE des sections (repère `sg-fit-root`) — pas celle de la page,
+      // dont le <body> garde souvent un min-height plein écran (zone blanche).
+      const root = doc?.getElementById("sg-fit-root");
+      const nat = root?.scrollHeight || doc?.body?.scrollHeight || 0;
+      if (nat > 0) {
+        setNaturalH(nat);
+        recompute(boxRef.current?.clientWidth ?? 0, nat);
+      }
+    } catch {
+      /* cross-origin improbable (même origine) — on garde la hauteur par défaut */
+    }
+  }
+
+  return (
+    <div ref={boxRef} className="relative w-full overflow-hidden bg-[#fcfaf7]" style={{ height: boxH }}>
+      {near && (
+        <iframe
+          src={src}
+          title={title}
+          loading="lazy"
+          scrolling="no"
+          tabIndex={-1}
+          aria-hidden
+          onLoad={onLoad}
+          style={{
+            width: DESIGN_W,
+            height: naturalH,
+            border: 0,
+            transform: `scale(${scale})`,
+            transformOrigin: "top left",
+            pointerEvents: "none",
+          }}
+        />
+      )}
+    </div>
+  );
+}
 
 export type Rarity = "common" | "rare" | "epic";
 export type ItemType = "section" | "effet";
@@ -32,10 +123,6 @@ const RARITY: Record<Rarity, { label: string; bg: string; fg: string; dot: strin
   common: { label: "Commun", bg: "#eef1e7", fg: "#5d6b3f", dot: "#8e9867" },
   rare: { label: "Rare", bg: "#f8e3da", fg: "#b15c3c", dot: "#e1937d" },
   epic: { label: "Épique", bg: "#f3e6c6", fg: "#8a5a14", dot: "#d8a23a" },
-};
-const TYPE_CHIP: Record<ItemType, { label: string; bg: string; fg: string }> = {
-  section: { label: "Section", bg: "#eef0f4", fg: "#475569" },
-  effet: { label: "Effet", bg: "#ece9fb", fg: "#6d4aff" },
 };
 
 function Chip({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
@@ -83,28 +170,14 @@ function Card({
   busy: boolean;
 }) {
   const r = RARITY[it.rarity];
-  const t = TYPE_CHIP[it.type];
   const owned = !!market && (market.owned.includes(it.id) || market.prices[it.rarity] === 0);
   const swapMatch = !!market?.swap && it.type === "section" && it.role === market.swap.role;
   const showMarket = !!market && it.type === "section";
 
   return (
     <article className="flex flex-col overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm">
-      <div className="relative h-[260px] w-full overflow-hidden border-b border-black/10 bg-[#fcfaf7]">
-        <iframe
-          src={it.previewSrc}
-          title={it.id}
-          loading="lazy"
-          scrolling="no"
-          tabIndex={-1}
-          aria-hidden
-          style={{ width: "1266px", height: "866px", border: 0, transform: "scale(0.30)", transformOrigin: "top left", pointerEvents: "none" }}
-        />
-        <span className="absolute left-3 top-3 rounded-full px-2.5 py-1 text-xs font-semibold" style={{ background: t.bg, color: t.fg }}>{t.label}</span>
-        <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold" style={{ background: r.bg, color: r.fg }}>
-          <span className="h-1.5 w-1.5 rounded-full" style={{ background: r.dot }} />
-          {r.label}
-        </span>
+      <div className="w-full border-b border-black/10">
+        <Thumb src={it.previewSrc} title={it.id} />
       </div>
       <div className="flex flex-1 flex-col p-4">
         <div className="flex items-center justify-between gap-2">
@@ -113,40 +186,45 @@ function Card({
         </div>
         <p className="mt-1.5 line-clamp-2 text-[13px] leading-relaxed text-neutral-500">{it.description}</p>
 
-        {/* Couche marketplace */}
-        {showMarket && (
-          <div className="mt-4 flex items-center gap-2 border-t border-neutral-100 pt-3">
-            {market!.siteId && (
-              <button
-                type="button"
-                onClick={() => onPreview(it)}
-                className="rounded-lg border border-neutral-200 px-3 py-1.5 text-[12.5px] font-semibold text-neutral-700 transition hover:border-neutral-400"
-              >
-                Voir sur mon site
-              </button>
-            )}
-            {swapMatch && owned && (
-              <button
-                type="button"
-                disabled={busy}
-                onClick={() => onUse(it)}
-                className="rounded-lg bg-neutral-900 px-3 py-1.5 text-[12.5px] font-semibold text-white transition hover:bg-neutral-700 disabled:opacity-50"
-              >
-                {busy ? "…" : "Utiliser cette section"}
-              </button>
-            )}
-            {!owned && (
-              <button
-                type="button"
-                disabled={busy}
-                onClick={() => onBuy(it)}
-                className="rounded-lg bg-amber-500 px-3 py-1.5 text-[12.5px] font-semibold text-white transition hover:bg-amber-600 disabled:opacity-50"
-              >
-                {busy ? "…" : `Débloquer · ${market!.prices[it.rarity]} ✦`}
-              </button>
-            )}
-          </div>
-        )}
+        {/* Pied de carte : actions (à gauche) + rareté (à droite) sur la même ligne */}
+        <div className="mt-4 flex items-center gap-2 border-t border-neutral-100 pt-3">
+          {showMarket && market!.siteId && (
+            <button
+              type="button"
+              onClick={() => onPreview(it)}
+              className="rounded-lg border border-neutral-200 px-3 py-1.5 text-[12.5px] font-semibold text-neutral-700 transition hover:border-neutral-400"
+            >
+              Voir sur mon site
+            </button>
+          )}
+          {showMarket && swapMatch && owned && (
+            <button
+              type="button"
+              disabled={busy}
+              onClick={() => onUse(it)}
+              className="rounded-lg bg-neutral-900 px-3 py-1.5 text-[12.5px] font-semibold text-white transition hover:bg-neutral-700 disabled:opacity-50"
+            >
+              {busy ? "…" : "Utiliser cette section"}
+            </button>
+          )}
+          {showMarket && !owned && (
+            <button
+              type="button"
+              disabled={busy}
+              onClick={() => onBuy(it)}
+              className="rounded-lg bg-amber-500 px-3 py-1.5 text-[12.5px] font-semibold text-white transition hover:bg-amber-600 disabled:opacity-50"
+            >
+              {busy ? "…" : `Débloquer · ${market!.prices[it.rarity]} ✦`}
+            </button>
+          )}
+          <span
+            className="ml-auto inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold"
+            style={{ background: r.bg, color: r.fg }}
+          >
+            <span className="h-1.5 w-1.5 rounded-full" style={{ background: r.dot }} />
+            {r.label}
+          </span>
+        </div>
       </div>
     </article>
   );
@@ -292,17 +370,30 @@ export default function CatalogBrowser({
           </div>
           {ctx ? <span className="text-xs font-medium text-neutral-400">Solde {balance} ✦</span> : null}
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <Chip active={cat === "all"} onClick={() => setCat("all")}>Tout</Chip>
-          {cats.map((c) => (
-            <Chip key={c} active={cat === c} onClick={() => setCat(c)}>{categoryLabel[c] ?? c}</Chip>
-          ))}
-          <span className="mx-2 h-5 w-px bg-black/10" />
-          {(["common", "rare", "epic"] as Rarity[]).map((k) => (
-            <Chip key={k} active={rarity === k} onClick={() => setRarity(rarity === k ? "all" : k)}>
-              {RARITY[k].label}
-            </Chip>
-          ))}
+        {/* Toolbar : catégories en bande défilable (1 ligne) + rareté en contrôle segmenté */}
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <div className="-mx-1 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:min-w-0 lg:flex-1">
+            <div className="flex w-max gap-2">
+              <Chip active={cat === "all"} onClick={() => setCat("all")}>Tout</Chip>
+              {cats.map((c) => (
+                <Chip key={c} active={cat === c} onClick={() => setCat(c)}>{categoryLabel[c] ?? c}</Chip>
+              ))}
+            </div>
+          </div>
+          <div className="inline-flex shrink-0 self-start rounded-full bg-neutral-100 p-1 lg:self-auto">
+            {([["all", "Tout"], ["common", "Commun"], ["rare", "Rare"], ["epic", "Épique"]] as Array<[Rarity | "all", string]>).map(([k, label]) => (
+              <button
+                key={k}
+                type="button"
+                onClick={() => setRarity(k)}
+                className={`rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-colors ${
+                  rarity === k ? "bg-white text-neutral-900 shadow-sm" : "text-neutral-500 hover:text-neutral-800"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -333,14 +424,11 @@ export default function CatalogBrowser({
         );
       })}
 
-      {/* Modale « Voir sur mon site » : le composant DANS le site du client */}
+      {/* Aperçu « Voir sur mon site » en PLEIN ÉCRAN : couvre toute l'interface
+          (sidebar du dashboard comprise) pour voir le site sans rien autour. */}
       {preview && market?.siteId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 sm:p-8" onClick={() => setPreview(null)}>
-          <div
-            className="flex h-full w-full max-w-6xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between border-b border-neutral-200 px-5 py-3">
+        <div className="fixed inset-0 z-[60] flex flex-col bg-white">
+          <div className="flex items-center justify-between border-b border-neutral-200 px-5 py-3">
               <div>
                 <h3 className="text-[15px] font-semibold text-neutral-900">{preview.name} — sur votre site</h3>
                 <p className="text-[12px] text-neutral-500">La section mise en avant est celle que vous regardez.</p>
@@ -365,8 +453,7 @@ export default function CatalogBrowser({
                 </button>
               </div>
             </div>
-            <iframe src={`/site-preview/${market.siteId}?swap=${preview.id}`} title={`${preview.name} sur votre site`} className="h-full w-full flex-1" />
-          </div>
+          <iframe src={`/site-preview/${market.siteId}?swap=${preview.id}`} title={`${preview.name} sur votre site`} className="w-full flex-1" />
         </div>
       )}
     </div>

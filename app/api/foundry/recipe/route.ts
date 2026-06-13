@@ -144,10 +144,14 @@ export async function POST(request: Request) {
     let next = recipe;
     if (body?.charteSpec && typeof body.charteSpec === "object") {
       // Charte sur mesure : TOUJOURS re-réparée serveur (contraste, fonts).
+      // `userCharteId` (optionnel) garde le lien vers une charte ENREGISTRÉE du
+      // compte → l'éditeur saura qu'« enregistrer » met à jour (pas un doublon).
       const vibe = repairCharte(body.charteSpec);
-      next = { ...recipe, vibe: "custom", customVibe: vibe };
+      const userCharteId = typeof body?.userCharteId === "string" && body.userCharteId ? body.userCharteId : undefined;
+      next = { ...recipe, vibe: "custom", customVibe: vibe, userCharteId };
     } else if (typeof body?.vibeId === "string" && getVibe(body.vibeId)) {
-      next = { ...recipe, vibe: getVibe(body.vibeId)!.id as VibeId, customVibe: undefined };
+      // Preset de base → on rompt le lien avec une éventuelle charte enregistrée.
+      next = { ...recipe, vibe: getVibe(body.vibeId)!.id as VibeId, customVibe: undefined, userCharteId: undefined };
     } else {
       return NextResponse.json({ error: "Charte invalide." }, { status: 400 });
     }
@@ -251,7 +255,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Contenu invalide." }, { status: 400 });
     }
     // Édition manuelle : on PRÉSERVE textes ET images du client (pas la banque).
-    sections[index] = { ...target, content: sanitizeUserContent(target.component, body.content) };
+    // Le client personnalise la section → on retire le badge « données d'exemple ».
+    const { meta: _wasPlaceholder, ...kept } = target;
+    void _wasPlaceholder;
+    sections[index] = { ...kept, content: sanitizeUserContent(target.component, body.content) };
   }
 
   // Persiste (sous-page ou accueil) avec invariants de position + renvoie les

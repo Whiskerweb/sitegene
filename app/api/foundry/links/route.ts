@@ -2,8 +2,26 @@ import { NextResponse } from "next/server";
 import { getUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { injectContacts } from "@/lib/foundry/inject";
+import { applyReviewsPolicy } from "@/lib/foundry/reviews";
+import { markPlaceholders } from "@/lib/foundry/placeholders";
 import { loadRecipeDraft, saveRecipeDraft } from "@/lib/foundry/server";
-import type { Collected } from "@/lib/foundry/link-catalog";
+import type { Collected, ReviewItem } from "@/lib/foundry/link-catalog";
+
+/** Avis importés : nettoyés et cappés avant injection. */
+function sanitizeReviews(raw: unknown): ReviewItem[] | undefined {
+  if (!Array.isArray(raw)) return undefined;
+  const items = raw
+    .filter((r): r is Record<string, unknown> => typeof r === "object" && r !== null)
+    .map((r) => ({
+      text: typeof r.text === "string" ? r.text.trim().slice(0, 600) : "",
+      name: typeof r.name === "string" ? r.name.trim().slice(0, 60) : "",
+      role: typeof r.role === "string" ? r.role.trim().slice(0, 80) : undefined,
+      rating: typeof r.rating === "number" && Number.isFinite(r.rating) ? r.rating : undefined,
+    }))
+    .filter((r) => r.text.length > 0)
+    .slice(0, 24);
+  return items.length ? items : undefined;
+}
 
 export const maxDuration = 30;
 
@@ -74,6 +92,8 @@ export async function POST(request: Request) {
       typeof collected.techRider?.href === "string" && collected.techRider.href
         ? { href: collected.techRider.href, name: collected.techRider.name }
         : undefined,
+    reviews: sanitizeReviews(collected.reviews),
+    hasReviews: typeof collected.hasReviews === "boolean" ? collected.hasReviews : undefined,
   };
 
   // Adoption des fichiers staging → dossier du site (photos + fiche technique).
@@ -82,7 +102,11 @@ export async function POST(request: Request) {
     safe.techRider = { ...safe.techRider, href: await adoptStagingUrl(admin, siteId, safe.techRider.href) };
   }
 
-  const merged = injectContacts(loaded.recipe, safe);
+  // Liens & photos → puis politique d'avis (retrait si « pas d'avis », sinon
+  // remplissage) → puis marquage des sections d'exemple restantes (badge aperçu).
+  let merged = injectContacts(loaded.recipe, safe);
+  merged = applyReviewsPolicy(merged, safe);
+  merged = markPlaceholders(merged, safe);
   await saveRecipeDraft(admin, siteId, merged, {});
 
   return NextResponse.json({ ok: true });

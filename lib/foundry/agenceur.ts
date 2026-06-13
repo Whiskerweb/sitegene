@@ -11,7 +11,7 @@ import { getSample } from "./samples";
 import { getVibe } from "./vibes";
 import { validateRecipe } from "./recipe";
 import { detectTrade, type TradeId } from "./suggest";
-import { resolveHero, heroOptionsForTrade, isExcludedForTrade } from "./hero-router";
+import { resolveHero, heroOptionsForTrade, isExcludedForTrade, tradeSectionHint } from "./hero-router";
 
 export interface AgenceurInput {
   brief: string;
@@ -21,6 +21,12 @@ export interface AgenceurInput {
   accent?: string;
   /** Charte sur mesure (déjà RÉPARÉE via repairCharte) — prime sur vibeId. */
   customVibe?: Vibe;
+  /**
+   * Le client a-t-il des avis clients ? `false` → AUCUNE section de rôle
+   * "reviews" (ni dans le prompt, ni en repli, ni en remplissage). undefined =
+   * comportement par défaut (preuve sociale autorisée).
+   */
+  hasReviews?: boolean;
 }
 
 export type ChatFn = (
@@ -328,6 +334,9 @@ export function repairRecipe(
     if (!isPlainObject(raw) || typeof raw.component !== "string") continue;
     const manifest = getManifest(raw.component);
     if (!manifest) continue;
+    // Client sans avis : on refuse toute section de rôle "reviews" (même si l'IA
+    // en a glissé une malgré la consigne).
+    if (input.hasReviews === false && manifest.role === "reviews") continue;
     if (seenRoles.has(manifest.role)) continue; // un seul composant par rôle
     seenRoles.add(manifest.role);
     sections.push({
@@ -363,6 +372,7 @@ export function repairRecipe(
     for (const id of fillers) {
       if (sections.length >= 6) break;
       const role = getManifest(id)!.role;
+      if (input.hasReviews === false && role === "reviews") continue; // client sans avis
       if (seenRoles.has(role)) continue;
       seenRoles.add(role);
       sections.splice(sections.length - 1, 0, { component: id, content: normalizeSectionContent(id, {}) });
@@ -385,7 +395,7 @@ const FALLBACK_PLANS: Record<TradeId, string[]> = {
   restaurant:  ["hero-split-asym",        "intro-split",     "services-rows", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
   beaute:      ["hero-split-asym",        "intro-split",     "services-rows", "pricing-cards", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
   conseil:     ["hero-split-asym",        "logo-marquee",    "intro-split", "services-rows", "process-steps", "stats-countup", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
-  musicien:    ["jazz-vocalist-hero",     "intro-split",     "services-rows", "stats-countup", "testimonials-carousel", "contact-block", "cta-banner", "footer-columns"],
+  musicien:    ["jazz-vocalist-hero",     "intro-split",     "social-clip-links", "image-marquee", "story-timeline", "stats-countup", "marquee-words", "cta-banner", "footer-columns"],
   fitness:     ["hero-split-asym",        "intro-split",     "services-rows", "process-steps", "stats-countup", "pricing-cards", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
   autre:       ["hero-split-asym",        "intro-split",     "services-rows", "process-steps", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
 };
@@ -393,7 +403,10 @@ const FALLBACK_PLANS: Record<TradeId, string[]> = {
 /** Recette de secours, valide par construction. */
 export function fallbackRecipe(input: AgenceurInput): Recipe {
   const trade = detectTrade(input.brief).trade;
-  const plan = FALLBACK_PLANS[trade];
+  // Client sans avis : on retire du plan tout composant de rôle "reviews".
+  const plan = FALLBACK_PLANS[trade].filter(
+    (id) => !(input.hasReviews === false && getManifest(id)?.role === "reviews"),
+  );
   const sections = plan.map((id) => ({ component: id, content: normalizeSectionContent(id, {}) }));
   return repairRecipe(sections, input);
 }
@@ -413,11 +426,16 @@ function catalogForPrompt(trade: TradeId, vibeId: string): string {
           ? " ← HERO RECOMMANDÉ POUR CE CONTEXTE"
           : " ← HERO ALTERNATIF (si mieux adapté)"
         : "";
+      // Indice d'usage propre au métier (ex. pour un musicien : cette galerie =
+      // pochettes, cette timeline = dates de concerts…). Marque la section comme
+      // adaptée à CE métier pour que Mistral la privilégie.
+      const hint = m.role === "hero" ? "" : tradeSectionHint(m.id, trade);
+      const fitLine = hint ? `\n→ ADAPTÉ À CE MÉTIER — ${hint}` : "";
       return [
         `### ${m.id}${heroTag}`,
         `rôle: ${m.role} · rareté: ${m.rarity}`,
         `description: ${m.description}`,
-        `quand l'utiliser: ${m.whenToUse.join(" ; ")}`,
+        `quand l'utiliser: ${m.whenToUse.join(" ; ")}${fitLine}`,
         `exemple de "content" (LA FORME À RESPECTER, clés et types identiques) : ${sample}`,
       ].join("\n");
     })
@@ -435,6 +453,18 @@ export function buildAgenceurMessages(input: AgenceurInput): Array<{ role: "syst
     ? `Le traitement visuel du hero imposé par cette DA est "${treatment}" — choisis le hero marqué "← HERO RECOMMANDÉ" ou celui dont la description correspond le mieux à ce traitement.`
     : "Choisis le hero marqué \"← HERO RECOMMANDÉ\" (il a été sélectionné pour ce métier + cette DA).";
 
+  // Squelette attendu par métier (guide la sélection). Pour un musicien, le site
+  // est une VITRINE centrée musique + scène — surtout pas un site de prestataire.
+  const tradeNote = trade === "musicien"
+    ? `\nSTRUCTURE ATTENDUE (MUSICIEN / ARTISTE) : un site vitrine centré sur la MUSIQUE et la SCÈNE. Privilégie les sections marquées "→ ADAPTÉ À CE MÉTIER" : la bio (qui il est / le groupe), les liens d'écoute & réseaux, la discographie, les dates de concerts, des photos de scène/presse, et éventuellement des chiffres d'écoute ou les salles & festivals. PAS d'avis clients, PAS de FAQ, PAS de forfaits : un musicien n'en a pas besoin. N'ajoute une billetterie (CTA "réserver des places") QUE si le client la mentionne.`
+    : "";
+
+  // Le client a déclaré ne PAS avoir d'avis : on interdit explicitement toute
+  // section de témoignages (la preuve sociale passe par stats ou logos).
+  const reviewsNote = input.hasReviews === false
+    ? `\nIMPORTANT — AVIS CLIENTS : le client n'a PAS d'avis à afficher. N'inclus AUCUNE section de témoignages/avis. Pour la preuve sociale, utilise plutôt des statistiques ("stats-countup") ou des logos de partenaires ("logo-marquee").`
+    : "";
+
   const system = `Tu es l'ARCHITECTE-AGENCEUR d'Akyra. Tu assembles des sites vitrines en français à partir d'un CATALOGUE FERMÉ de composants. Tu ne crées JAMAIS de composant ni de HTML : tu choisis, tu ordonnes, tu rédiges les textes. Tu penses comme un architecte : utilité de chaque section, rythme visuel, conversion.
 
 RÈGLES D'ASSEMBLAGE (strictes) :
@@ -442,7 +472,7 @@ RÈGLES D'ASSEMBLAGE (strictes) :
 - Un composant de rôle "hero" TOUJOURS EN PREMIER — choisis celui marqué "← HERO" dans le catalogue (voir la directive DA dans le message utilisateur). "footer-columns" toujours en DERNIER.
 - Un composant de rôle "navbar" peut figurer AVANT le hero (facultatif, selon le métier — utilise "quand l'utiliser").
 - Jamais deux composants du même rôle.
-- Toujours une preuve sociale (reviews, stats ou logos) et toujours "contact-block" ou "cta-banner" avant le footer.
+- Toujours une preuve de crédibilité ADAPTÉE AU MÉTIER (avis, stats, ou logos de partenaires — et pour un artiste/musicien : plateformes d'écoute, salles & festivals, ou chiffres d'écoute, JAMAIS d'avis clients) et toujours "contact-block" ou "cta-banner" avant le footer.
 - Au moins UNE section signature à fort caractère visuel (rareté rare ou épique : fx-*, parallax-strip, marquee-words, quote-spotlight, scroll-velocity-gallery, liquid-reviews-marquee…) choisie pour CE métier et CETTE DA — c'est elle qui crée l'effet « waouh » du site. Deux si la DA est très expressive (dark, brutalist, luxe).
 - "pricing-cards" uniquement si le métier vend des formules/forfaits lisibles.
 - Choisis les composants les plus pertinents pour CE client (sers-toi de "quand l'utiliser").
@@ -463,7 +493,7 @@ ${catalogForPrompt(trade, vibeId)}`;
 NOM DE L'ACTIVITÉ : ${input.businessName.trim().slice(0, 80) || "(non précisé)"}
 MÉTIER DÉTECTÉ : ${trade}
 DIRECTION ARTISTIQUE CHOISIE : ${vibe ? `${vibe.label} (${vibe.mood.join(", ")})` : input.vibeId}
-${treatmentNote}
+${treatmentNote}${tradeNote}${reviewsNote}
 La DA pilote à la fois le TON des textes ET le choix du hero — respecte les marqueurs "← HERO" du catalogue.
 
 Assemble le site et renvoie le JSON.`;

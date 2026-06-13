@@ -75,6 +75,12 @@ export default function CreerClient() {
   // Chartes sur mesure (étape DA)
   const [chartes, setChartes] = useState<Charte[] | null>(null);
   const [chartesLoading, setChartesLoading] = useState(false);
+  // Historique des SÉRIES de chartes parcourues (navigation gauche/droite) :
+  // chaque page = un trio. `chartes` reflète toujours `pages[pageIdx]`. Aller à
+  // droite à la frontière déclenche une nouvelle série ; à gauche on revient aux
+  // séries déjà vues (« je change d'avis, je reviens à l'ancienne »).
+  const [pages, setPages] = useState<Charte[][]>([]);
+  const [pageIdx, setPageIdx] = useState(0);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [accent, setAccent] = useState<string | null>(null);
   // Charte importée par le client (« j'ai déjà une identité ») — survit aux
@@ -95,7 +101,9 @@ export default function CreerClient() {
   const speculativeRef = useRef<{ siteId: string; cards: Card[] } | null>(null);
   const chartesAutoRef = useRef(false); // debounce chartes : déjà déclenché ?
   const [collected, setCollected] = useState<Collected>({ socials: [], contact: {}, photos: [] });
-  const [attempt, setAttempt] = useState(0);
+  // Ids des chartes déjà montrées → exclus du prochain « 3 autres » (rotation
+  // sans répétition). Ref : lu dans loadChartes (async), pas besoin de re-render.
+  const shownIdsRef = useRef<string[]>([]);
   const trade = useMemo(() => detectTrade(brief).trade, [brief]);
 
   // --- Restauration (retour d'OAuth ou arrivée depuis la landing) --------------
@@ -114,7 +122,7 @@ export default function CreerClient() {
         };
         if (s.brief) setBrief(s.brief);
         if (s.name) setName(s.name);
-        if (Array.isArray(s.chartes) && s.chartes.length > 0) setChartes(s.chartes);
+        if (Array.isArray(s.chartes) && s.chartes.length > 0) { setChartes(s.chartes); setPages([s.chartes]); setPageIdx(0); }
         if (s.importedCharte && typeof s.importedCharte === "object") setImportedCharte(s.importedCharte);
         if (typeof s.selectedIdx === "number") setSelectedIdx(s.selectedIdx);
         if (s.accent) setAccent(s.accent);
@@ -148,28 +156,38 @@ export default function CreerClient() {
     if (!pitchReady || chartesAutoRef.current || chartes) return;
     const t = setTimeout(() => {
       chartesAutoRef.current = true;
-      void loadChartes(0);
+      void loadChartes({ reset: true });
     }, 700);
     return () => clearTimeout(t);
   }, [pitchReady, brief, name]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // --- Chartes sur mesure -------------------------------------------------------
-  async function loadChartes(overrideAttempt?: number) {
+  // --- Chartes piochées dans la banque ------------------------------------------
+  // reset = nouvelle série (exclude vide) ; sinon « 3 autres » (exclut le déjà-vu).
+  async function loadChartes(opts?: { reset?: boolean }) {
     setChartesLoading(true);
     setError(null);
     setSelectedIdx(null);
     setAccent(null);
     speculativeRef.current = null; // reset la génération spéculative
-    const currentAttempt = overrideAttempt ?? attempt;
+    if (opts?.reset) shownIdsRef.current = [];
+    const exclude = shownIdsRef.current;
     try {
       const res = await fetch("/api/foundry/charte", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ brief: brief.trim(), businessName: name.trim(), attempt: currentAttempt }),
+        body: JSON.stringify({ brief: brief.trim(), businessName: name.trim(), exclude }),
       });
       const data = await res.json().catch(() => null);
       if (!res.ok || !data?.ok) throw new Error(data?.error ?? "Impossible de composer vos chartes. Réessayez.");
-      setChartes(data.chartes as Charte[]);
+      const next = data.chartes as Charte[];
+      setChartes(next);
+      // Historique des séries : reset = repart d'une page ; sinon nouvelle série
+      // ajoutée à la frontière (on s'y positionne).
+      if (opts?.reset) { setPages([next]); setPageIdx(0); }
+      else { setPages((prev) => [...prev, next]); setPageIdx((prev) => prev + 1); }
+      // Mémorise les ids servis pour ne pas les re-proposer à la série suivante.
+      const ids = next.map((c) => c.vibe.id).filter((id): id is string => !!id && id !== "custom");
+      shownIdsRef.current = [...shownIdsRef.current, ...ids];
     } catch (e) {
       setError(e instanceof Error ? e.message : "Impossible de composer vos chartes. Réessayez.");
     } finally {
@@ -177,13 +195,33 @@ export default function CreerClient() {
     }
   }
 
+  // Navigation entre séries déjà vues (gauche) ou vers la suivante (droite).
+  function goToPage(i: number) {
+    setPageIdx(i);
+    setChartes(pages[i]);
+    setSelectedIdx(null);
+    setAccent(null);
+    // La pré-génération spéculative est couplée à la carte 0 de la série courante :
+    // on l'invalide pour qu'elle se recale (sinon le raccourci d'assemblage pourrait
+    // servir le site d'une autre série).
+    speculativeRef.current = null;
+  }
+  function prevSeries() {
+    if (chartesLoading || pageIdx <= 0) return;
+    goToPage(pageIdx - 1);
+  }
+  function nextSeries() {
+    if (chartesLoading) return;
+    if (pageIdx < pages.length - 1) goToPage(pageIdx + 1); // série déjà vue
+    else void loadChartes(); // frontière → on en compose une nouvelle
+  }
+
   function openCollectPhase() {
     setPhase("collect");
     // Lance le chargement des chartes en arrière-plan dès le pitch validé
-    setAttempt(0);
     setChartes(null);
     chartesAutoRef.current = false; // reset pour forcer un nouveau chargement
-    void loadChartes(0);
+    void loadChartes({ reset: true });
   }
 
   // --- Étapes animées pendant l'assemblage ------------------------------------
@@ -223,6 +261,7 @@ export default function CreerClient() {
             businessName: name.trim(),
             vibeId: "custom",
             charteSpec: c0.spec,
+            hasReviews: collected.hasReviews,
           }),
         });
         const data = await res.json().catch(() => null);
@@ -294,6 +333,7 @@ export default function CreerClient() {
           vibeId: selected.vibe.id,
           accent: accent ?? undefined,
           charteSpec: selected.vibe.id === "custom" ? selected.spec : undefined,
+          hasReviews: collected.hasReviews,
         }),
       });
       const data = await res.json().catch(() => null);
@@ -601,15 +641,31 @@ export default function CreerClient() {
             )}
 
             <div className="mt-8 flex flex-col items-center gap-4">
-              {!chartesLoading && (
-                <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-                  <button
-                    type="button"
-                    onClick={() => { const next = attempt + 1; setAttempt(next); void loadChartes(next); }}
-                    className="text-sm font-medium text-[rgb(var(--m-muted))] underline-offset-4 transition hover:text-[rgb(var(--m-ink))] hover:underline"
-                  >
-                    ✦ Proposer trois autres directions
-                  </button>
+              {!chartesLoading && displayChartes && (
+                <div className="flex flex-col items-center gap-3">
+                  {/* Navigation entre séries : ← séries déjà vues · série suivante → */}
+                  <div className="flex items-center justify-center gap-3">
+                    <button
+                      type="button"
+                      onClick={prevSeries}
+                      disabled={pageIdx <= 0}
+                      aria-label="Série précédente"
+                      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[rgb(var(--m-line))] text-[rgb(var(--m-muted))] transition enabled:hover:border-[rgb(var(--m-ink))] enabled:hover:text-[rgb(var(--m-ink))] disabled:cursor-not-allowed disabled:opacity-30"
+                    >
+                      ←
+                    </button>
+                    <span className="min-w-[120px] text-center text-[13px] font-medium text-[rgb(var(--m-muted))]">
+                      Série {pageIdx + 1}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={nextSeries}
+                      aria-label="Série suivante"
+                      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[rgb(var(--m-line))] text-[rgb(var(--m-muted))] transition hover:border-[rgb(var(--m-ink))] hover:text-[rgb(var(--m-ink))]"
+                    >
+                      →
+                    </button>
+                  </div>
                   <button
                     type="button"
                     onClick={() => setImportOpen((o) => !o)}
@@ -625,7 +681,7 @@ export default function CreerClient() {
               <div className="flex items-center gap-3">
                 <button
                   type="button"
-                  onClick={() => { setPhase("pitch"); chartesAutoRef.current = false; setChartes(null); }}
+                  onClick={() => { setPhase("pitch"); chartesAutoRef.current = false; setChartes(null); setPages([]); setPageIdx(0); shownIdsRef.current = []; }}
                   className="inline-flex h-12 items-center rounded-full border border-[rgb(var(--m-line))] px-5 text-[15px] font-medium text-[rgb(var(--m-muted))] transition hover:text-[rgb(var(--m-ink))]"
                 >
                   ← Modifier mon pitch
@@ -737,8 +793,9 @@ export default function CreerClient() {
             <div className="mx-auto max-w-2xl text-center" style={{ animation: "sg-pop 0.5s ease both" }}>
               <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Voici {name.trim() || "votre site"}.</h1>
               <p className="mt-3 text-[15px] text-[rgb(var(--m-muted))]">
-                Assemblé sur mesure, dans votre charte{selected ? ` « ${selected.vibe.label} »` : ""}. Chaque
-                section se remplace ou s'échange depuis votre tableau de bord — sans toucher au design.
+                Voici la première version de votre site{selected ? `, dans votre charte « ${selected.vibe.label} »` : ""}.
+                Vous pourrez changer les textes, les images et les sections en deux clics — en appuyant sur
+                le bouton <span className="font-medium text-[rgb(var(--m-ink))]">Continuer</span> juste en dessous.
               </p>
             </div>
 
@@ -760,7 +817,7 @@ export default function CreerClient() {
                 onClick={() => router.push("/dashboard?from=creer")}
                 className="inline-flex h-12 items-center gap-2 rounded-full bg-[rgb(var(--m-accent))] px-6 text-[15px] font-semibold text-[rgb(var(--m-on-accent))] transition hover:opacity-90"
               >
-                Ouvrir mon tableau de bord →
+                Continuer →
               </button>
               <button
                 type="button"

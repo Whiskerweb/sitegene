@@ -20,6 +20,8 @@ const CATEGORY_LABEL: Record<string, string> = {
   hero: "En-tête / Hero",
   logos: "Logos / Confiance",
   about: "À propos",
+  story: "Histoire",
+  team: "Équipe",
   services: "Services",
   process: "Étapes / Process",
   stats: "Chiffres clés",
@@ -27,6 +29,7 @@ const CATEGORY_LABEL: Record<string, string> = {
   gallery: "Galerie / Cartes",
   media: "Image / Média",
   statement: "Slogan / Valeurs",
+  highlights: "Points forts",
   pricing: "Tarifs",
   faq: "FAQ",
   contact: "Contact",
@@ -36,8 +39,9 @@ const CATEGORY_LABEL: Record<string, string> = {
   effets: "Effets divers",
 };
 const CATEGORY_ORDER = [
-  "navbar", "hero", "logos", "about", "services", "process", "stats", "reviews", "gallery",
-  "media", "statement", "pricing", "faq", "contact", "cta", "decor", "footer", "effets",
+  "navbar", "hero", "logos", "about", "story", "team", "services", "process", "stats",
+  "reviews", "gallery", "media", "statement", "highlights", "pricing", "faq", "contact",
+  "cta", "decor", "footer", "effets",
 ];
 
 // Rareté + catégorie des effets lib/effects (jugement humain), fondus au catalogue.

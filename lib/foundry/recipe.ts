@@ -48,7 +48,7 @@ export function validateRecipe(recipe: Recipe): RecipeValidation {
     }
     errors.push(...sectionErrors);
     // `resolved` ne contient QUE des sections valides → sûr à consommer même si ok === false.
-    if (sectionErrors.length === 0) resolved.push({ manifest: m, content: s.content, skin });
+    if (sectionErrors.length === 0) resolved.push({ manifest: m, content: s.content, skin, meta: s.meta });
   });
 
   return { ok: errors.length === 0, errors, resolved };

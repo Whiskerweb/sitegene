@@ -13,6 +13,7 @@ import {
   toHref,
   type Collected,
   type LinkKind,
+  type ReviewItem,
 } from "@/lib/foundry/link-catalog";
 import { classifyImportUrl, mergeScrapedIntoCollected } from "@/lib/foundry/collect-import";
 import { compressImage } from "@/lib/client/compress-image";
@@ -112,6 +113,18 @@ export default function CollectStep({ trade, chartesReady, collected, onChange, 
   const [riderUploading, setRiderUploading] = useState(false);
   const [riderError, setRiderError] = useState<string | null>(null);
   const riderRef = useRef<HTMLInputElement>(null);
+
+  // Avis clients — case à cocher (cochée par défaut) + import optionnel replié.
+  // Réservé aux métiers à clientèle directe (un musicien n'affiche pas d'avis).
+  const reviewsRelevant = trade !== "musicien";
+  const reviewsOn = collected.hasReviews !== false; // décochée seulement si « non »
+  const [importOpen, setImportOpen] = useState(false);
+  const [reviewsImporting, setReviewsImporting] = useState(false);
+  const [reviewsMsg, setReviewsMsg] = useState<{ tone: "ok" | "err"; text: string } | null>(null);
+  const [reviewsText, setReviewsText] = useState("");
+  const [wipeReviews, setWipeReviews] = useState(true);
+  const reviewsFileRef = useRef<HTMLInputElement>(null);
+
   const collectedRef = useRef(collected);
   useEffect(() => {
     collectedRef.current = collected;
@@ -262,6 +275,44 @@ export default function CollectStep({ trade, chartesReady, collected, onChange, 
     }
   }
 
+  // --- Avis clients ----------------------------------------------------------------
+  function toggleReviews(on: boolean) {
+    setReviewsMsg(null);
+    onChange({ ...collectedRef.current, hasReviews: on });
+    if (!on) setImportOpen(false);
+  }
+
+  async function importReviews(opts: { file?: File; text?: string }) {
+    setReviewsMsg(null);
+    setReviewsImporting(true);
+    try {
+      const fd = new FormData();
+      if (opts.file) fd.append("file", opts.file);
+      if (opts.text) fd.append("text", opts.text);
+      const res = await fetch("/api/foundry/reviews/extract", { method: "POST", body: fd });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data?.ok || !Array.isArray(data.reviews)) {
+        throw new Error(data?.error ?? "Import impossible.");
+      }
+      const incoming = data.reviews as ReviewItem[];
+      const existing = collectedRef.current.reviews ?? [];
+      const next = (wipeReviews ? incoming : [...existing, ...incoming]).slice(0, 24);
+      onChange({ ...collectedRef.current, hasReviews: true, reviews: next });
+      setReviewsText("");
+      setReviewsMsg({ tone: "ok", text: `${incoming.length} avis importé${incoming.length > 1 ? "s" : ""} ✓` });
+    } catch (e) {
+      setReviewsMsg({ tone: "err", text: e instanceof Error ? e.message : "Import impossible." });
+    } finally {
+      setReviewsImporting(false);
+      if (reviewsFileRef.current) reviewsFileRef.current.value = "";
+    }
+  }
+
+  function clearReviews() {
+    onChange({ ...collectedRef.current, reviews: undefined });
+    setReviewsMsg(null);
+  }
+
   function retryUpload(key: string) {
     const item = pending.find((x) => x.key === key);
     if (!item) return;
@@ -394,6 +445,93 @@ export default function CollectStep({ trade, chartesReady, collected, onChange, 
           </div>
         )}
       </div>
+
+      {/* Avis clients — case à cocher discrète (métiers à clientèle uniquement) */}
+      {reviewsRelevant && (
+        <div className="mt-5">
+          <label className="flex cursor-pointer items-start gap-2.5">
+            <input
+              type="checkbox"
+              checked={reviewsOn}
+              onChange={(e) => toggleReviews(e.target.checked)}
+              className="mt-0.5 h-4 w-4 shrink-0 accent-[rgb(var(--m-accent))]"
+            />
+            <span className="text-[13px] leading-snug">
+              <span className="font-medium text-[rgb(var(--m-ink))]">J'ai des avis clients à afficher</span>
+              <span className="block text-[12px] text-[rgb(var(--m-faint))]">
+                Décochez si vous n'en avez pas — aucune section avis ne sera alors ajoutée.
+              </span>
+            </span>
+          </label>
+
+          {reviewsOn && (
+            <div className="mt-2 pl-[26px] text-[12.5px]">
+              {(collected.reviews?.length ?? 0) > 0 ? (
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-medium text-emerald-600">{collected.reviews!.length} avis importés ✓</span>
+                  <button type="button" onClick={() => setImportOpen((o) => !o)} className="text-[rgb(var(--m-accent))] hover:underline">
+                    Modifier
+                  </button>
+                  <button type="button" onClick={clearReviews} className="text-[rgb(var(--m-faint))] transition hover:text-[rgb(var(--m-ink))]">
+                    Retirer
+                  </button>
+                </div>
+              ) : (
+                <button type="button" onClick={() => setImportOpen((o) => !o)} className="text-[rgb(var(--m-accent))] hover:underline">
+                  + Importer ou coller mes avis <span className="text-[rgb(var(--m-faint))]">(optionnel)</span>
+                </button>
+              )}
+
+              {importOpen && (
+                <div className="mt-2 space-y-2 rounded-xl border border-[rgb(var(--m-line))] p-2.5">
+                  <textarea
+                    value={reviewsText}
+                    onChange={(e) => setReviewsText(e.target.value)}
+                    rows={3}
+                    placeholder="Collez vos avis ici (un par ligne, avec le nom si possible)…"
+                    className="w-full resize-none rounded-lg border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] px-2.5 py-1.5 text-[12.5px] outline-none transition focus:border-[rgb(var(--m-accent))]"
+                  />
+                  <div className="flex flex-wrap items-center gap-2">
+                    <button
+                      type="button"
+                      disabled={reviewsImporting}
+                      onClick={() => reviewsFileRef.current?.click()}
+                      className="rounded-full border border-dashed border-[rgb(var(--m-line))] px-3 py-1.5 font-medium text-[rgb(var(--m-muted))] transition hover:border-[rgb(var(--m-accent))] hover:text-[rgb(var(--m-ink))] disabled:opacity-40"
+                    >
+                      {reviewsImporting ? "Lecture…" : "Importer un fichier"}
+                    </button>
+                    <button
+                      type="button"
+                      disabled={reviewsImporting || reviewsText.trim().length < 12}
+                      onClick={() => void importReviews({ text: reviewsText.trim() })}
+                      className="rounded-full bg-[rgb(var(--m-accent))] px-3 py-1.5 font-semibold text-[rgb(var(--m-on-accent))] transition enabled:hover:opacity-90 disabled:opacity-40"
+                    >
+                      Lire le texte collé
+                    </button>
+                    {(collected.reviews?.length ?? 0) > 0 && (
+                      <label className="flex cursor-pointer items-center gap-1.5 text-[11.5px] text-[rgb(var(--m-muted))]">
+                        <input type="checkbox" checked={wipeReviews} onChange={(e) => setWipeReviews(e.target.checked)} />
+                        Remplacer les avis existants
+                      </label>
+                    )}
+                  </div>
+                  {reviewsMsg ? (
+                    <p className={`font-medium ${reviewsMsg.tone === "ok" ? "text-emerald-600" : "text-red-600"}`}>{reviewsMsg.text}</p>
+                  ) : null}
+                  <p className="text-[11px] text-[rgb(var(--m-faint))]">Excel, CSV, PDF, Word, captures — Mistral lit et trie. Modifiable plus tard.</p>
+                </div>
+              )}
+            </div>
+          )}
+          <input
+            ref={reviewsFileRef}
+            type="file"
+            accept=".xlsx,.xls,.csv,.pdf,.docx,image/jpeg,image/png,image/webp"
+            hidden
+            onChange={(e) => { const f = e.target.files?.[0]; if (f) void importReviews({ file: f }); }}
+          />
+        </div>
+      )}
 
       {/* Fiche technique — musiciens uniquement */}
       {trade === "musicien" && (

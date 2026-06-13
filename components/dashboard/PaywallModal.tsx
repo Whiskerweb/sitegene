@@ -45,11 +45,15 @@ export default function PaywallModal({
           role="dialog"
           aria-modal="true"
           aria-label="Essayer Akyra gratuitement"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-night/30 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-night/60 p-4 backdrop-blur-md"
           onClick={() => setOpen(false)}
         >
           <div
-            className="liquid-glass relative w-full max-w-md rounded-3xl border border-sky-300 bg-white/80 p-8 text-center shadow-2xl"
+            // On garde le liseré + l'ombre « liquid-glass » (l'effet sympa), mais le
+            // fond est rendu quasi opaque (style inline > classe) pour rester lisible :
+            // le verre à 42 % d'opacité se fondait dans l'arrière-plan flouté.
+            className="liquid-glass relative w-full max-w-md rounded-3xl border border-sky-300 p-8 text-center shadow-2xl"
+            style={{ background: "rgba(255,255,255,0.97)" }}
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -80,7 +84,7 @@ export default function PaywallModal({
             </form>
             <button
               type="button"
-              className="mt-3 text-sm text-mist hover:text-night"
+              className="mt-3 text-sm font-medium text-night/55 hover:text-night"
               onClick={() => setOpen(false)}
             >
               Plus tard

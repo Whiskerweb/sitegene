@@ -78,12 +78,19 @@ export default async function SitePreviewPage({
       };
       highlightIndex = i;
     } else {
-      const at = Math.max(1, sections.length - 1);
+      // Insertion selon le rôle : une navbar va TOUJOURS tout en haut, un footer
+      // tout en bas, le reste juste avant le footer.
+      const at =
+        candidate.role === "navbar" ? 0
+        : candidate.role === "footer" ? sections.length
+        : Math.max(1, sections.length - 1);
       sections.splice(at, 0, { component: candidate.id, content: normalizeSectionContent(candidate.id, {}) });
       highlightIndex = at;
     }
     recipe = { ...recipe, sections };
   }
 
-  return <Assembler recipe={recipe} highlightIndex={highlightIndex} />;
+  // Aperçu PROPRIÉTAIRE : on entoure les sections d'exemple (avis/chiffres/
+  // galerie) d'un badge « personnalisable en 30 s ». Jamais sur le site publié.
+  return <Assembler recipe={recipe} highlightIndex={highlightIndex} placeholderMode />;
 }

@@ -13,6 +13,26 @@ export type Collected = {
   photos: string[];
   /** Fiche technique (musiciens) : PDF envoyé au collect, branché sur le CTA du site. */
   techRider?: { href: string; name?: string };
+  /**
+   * Avis clients importés (fichier ou texte → structurés par Mistral). Injectés
+   * dans la section avis du site ; vide/absent → la section reste en exemple.
+   */
+  reviews?: ReviewItem[];
+  /**
+   * L'utilisateur a-t-il des avis clients ?
+   *  - true  : en a / en aura → on garde une section avis.
+   *  - false : n'en a pas → AUCUNE section avis générée.
+   *  - undefined : non renseigné (comportement par défaut).
+   */
+  hasReviews?: boolean;
+};
+
+/** Un avis client (forme commune import + injection). */
+export type ReviewItem = {
+  text: string;
+  name: string;
+  role?: string;
+  rating?: number;
 };
 
 export interface PlatformDef {
