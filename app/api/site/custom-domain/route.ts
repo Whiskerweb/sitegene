@@ -79,6 +79,14 @@ export async function POST(request: Request) {
     .update({ custom_domain: domain || null })
     .eq("id", site.id);
   if (error) {
+    // 23505 = violation de l'index unique sites_custom_domain_unique : le domaine
+    // est déjà branché sur un autre site (migration 0027).
+    if ((error as { code?: string }).code === "23505") {
+      return NextResponse.json(
+        { error: "Ce domaine est déjà branché sur un autre site." },
+        { status: 409 },
+      );
+    }
     return NextResponse.json({ error: "Échec de l'enregistrement." }, { status: 500 });
   }
 

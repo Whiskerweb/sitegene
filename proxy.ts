@@ -14,6 +14,8 @@ export async function proxy(request: NextRequest) {
   //    Garde : on ne re-réécrit jamais un chemin déjà routé (/a/ ou /s/) — évite la
   //    boucle /s/<slug>/a/<slug> qui cassait les sous-domaines fonderie.
   const path = request.nextUrl.pathname;
+  // NB : `/s/` est déjà exclu par le matcher ci-dessous, mais PAS `/a/`. La garde
+  // `/a/` est donc load-bearing : ne pas la retirer en pensant qu'elle est redondante.
   const alreadyRouted = path.startsWith("/a/") || path.startsWith("/s/");
   if (!alreadyRouted) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
