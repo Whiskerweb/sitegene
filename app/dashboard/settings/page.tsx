@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { IconSettings } from "@/components/ui/icons";
 import { CustomDomainCard } from "@/components/settings/CustomDomainCard";
 import { SiteNameCard } from "@/components/settings/SiteNameCard";
+import { ChangeEmailCard } from "@/components/settings/ChangeEmailCard";
 
 export const dynamic = "force-dynamic";
 
@@ -32,8 +33,11 @@ export default async function Settings() {
   if (!site) {
     return (
       <>
-        <PageHeader title="Paramètres" />
-        <EmptyState icon={<IconSettings />} title="Aucun site pour l'instant" />
+        <PageHeader title="Paramètres" subtitle="Les réglages de votre compte." />
+        <div className="space-y-5">
+          <ChangeEmailCard currentEmail={user.email ?? ""} />
+          <EmptyState icon={<IconSettings />} title="Aucun site pour l'instant" />
+        </div>
       </>
     );
   }
@@ -42,9 +46,11 @@ export default async function Settings() {
 
   return (
     <>
-      <PageHeader title="Paramètres" subtitle="Les réglages de votre site." />
+      <PageHeader title="Paramètres" subtitle="Les réglages de votre compte et de votre site." />
 
       <div className="space-y-5">
+        <ChangeEmailCard currentEmail={user.email ?? ""} />
+
         {site.status === "live" && site.slug ? (
           <SiteNameCard slug={site.slug} slugChangedAt={site.slug_changed_at} />
         ) : (

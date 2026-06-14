@@ -1,5 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { receiptEmail, outreachEmail, customOutreachEmail } from "./templates";
+import {
+  receiptEmail,
+  outreachEmail,
+  customOutreachEmail,
+  emailChangeRequestEmail,
+  emailChangedNoticeEmail,
+} from "./templates";
 
 describe("customOutreachEmail", () => {
   const msg =
@@ -45,6 +51,48 @@ describe("receiptEmail", () => {
   it("sans prénom → salutation générique", () => {
     const m = receiptEmail({ firstName: null, dashboardUrl: "https://akyra.io/dashboard" });
     expect(m.html).toContain("Bonjour,");
+  });
+});
+
+describe("emailChangeRequestEmail", () => {
+  const m = emailChangeRequestEmail({
+    newEmail: "nouvelle@exemple.fr",
+    confirmUrl: "https://akyra.io/account/confirm-email?token=abc123",
+  });
+
+  it("est brandé (logo + bouton) et transactionnel", () => {
+    expect(m.html).toContain("<html");
+    expect(m.html).toContain("akyra-light.png");
+    expect(m.html.toLowerCase()).not.toContain("désinscrire");
+  });
+  it("injecte la nouvelle adresse et le lien de confirmation", () => {
+    expect(m.html).toContain("nouvelle@exemple.fr");
+    expect(m.html).toContain("https://akyra.io/account/confirm-email?token=abc123");
+    expect(m.text).toContain("https://akyra.io/account/confirm-email?token=abc123");
+  });
+  it("mentionne l'expiration et l'usage unique", () => {
+    expect(m.text.toLowerCase()).toContain("1 heure");
+  });
+  it("échappe l'adresse (anti-injection HTML)", () => {
+    const x = emailChangeRequestEmail({
+      newEmail: "<b>x</b>@x.fr",
+      confirmUrl: "https://akyra.io/account/confirm-email?token=t",
+    });
+    expect(x.html).not.toContain("<b>x</b>@");
+    expect(x.html).toContain("&lt;b&gt;");
+  });
+});
+
+describe("emailChangedNoticeEmail", () => {
+  const m = emailChangedNoticeEmail({
+    newEmail: "nouvelle@exemple.fr",
+    supportUrl: "https://akyra.io/dashboard/settings",
+  });
+
+  it("alerte le titulaire et nomme la nouvelle adresse", () => {
+    expect(m.html).toContain("nouvelle@exemple.fr");
+    expect(m.subject.toLowerCase()).toContain("sécurité");
+    expect(m.text).toContain("https://akyra.io/dashboard/settings");
   });
 });
 

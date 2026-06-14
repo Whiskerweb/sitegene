@@ -139,6 +139,85 @@ export function trialChargeFailedEmail(opts: {
 }
 
 /**
+ * Confirmation d'un changement d'adresse email — envoyée à la NOUVELLE adresse.
+ * Le clic sur le bouton (lien à usage unique) déclenche la bascule effective.
+ */
+export function emailChangeRequestEmail(opts: {
+  newEmail: string;
+  confirmUrl: string;
+}): EmailParts {
+  const bodyHtml = [
+    p("<strong>Confirmez votre nouvelle adresse</strong>"),
+    p(
+      `Vous avez demandé à utiliser <strong>${esc(opts.newEmail)}</strong> pour vous connecter à votre compte Akyra. Confirmez ci-dessous pour activer cette adresse.`,
+    ),
+    button("Confirmer mon adresse", opts.confirmUrl),
+    p(
+      `<span style="font-size:13px;color:#6b6878;">Ce lien expire dans 1 heure et ne peut servir qu'une fois. Vous n'êtes pas à l'origine de cette demande ? Ignorez cet email, rien ne change.</span>`,
+    ),
+  ].join("\n");
+
+  const text = [
+    "Confirmez votre nouvelle adresse",
+    "",
+    `Vous avez demandé à utiliser ${opts.newEmail} pour vous connecter à votre compte Akyra.`,
+    "Confirmez ce changement en ouvrant ce lien (valable 1 heure, usage unique) :",
+    opts.confirmUrl,
+    "",
+    "Vous n'êtes pas à l'origine de cette demande ? Ignorez cet email, rien ne change.",
+    "Akyra · akyra.io",
+  ].join("\n");
+
+  return wrap({
+    subject: "Confirmez votre nouvelle adresse email",
+    preheader: "Un clic pour activer votre nouvelle adresse de connexion.",
+    bodyHtml,
+    text,
+    footerKind: "transactional",
+  });
+}
+
+/**
+ * Alerte de sécurité — envoyée à l'ANCIENNE adresse quand un changement est
+ * demandé. Permet au titulaire légitime de réagir si la demande n'est pas de lui.
+ */
+export function emailChangedNoticeEmail(opts: {
+  newEmail: string;
+  supportUrl: string;
+}): EmailParts {
+  const bodyHtml = [
+    p("<strong>Une demande de changement d'adresse a été reçue</strong>"),
+    p(
+      `Quelqu'un a demandé à remplacer l'adresse de connexion de votre compte Akyra par <strong>${esc(opts.newEmail)}</strong>.`,
+    ),
+    p(
+      "Si c'est bien vous, aucune action n'est nécessaire ici : confirmez simplement depuis l'email envoyé à la nouvelle adresse.",
+    ),
+    p(
+      `<span style="font-size:13px;color:#6b6878;">Ce n'est pas vous ? Votre adresse actuelle reste active tant que rien n'est confirmé — sécurisez votre compte et <a href="${esc(opts.supportUrl)}" style="color:#3b5bdb;">contactez-nous</a> immédiatement.</span>`,
+    ),
+  ].join("\n");
+
+  const text = [
+    "Une demande de changement d'adresse a été reçue",
+    "",
+    `Quelqu'un a demandé à remplacer l'adresse de connexion de votre compte Akyra par ${opts.newEmail}.`,
+    "Si c'est bien vous, confirmez depuis l'email envoyé à la nouvelle adresse.",
+    "",
+    `Ce n'est pas vous ? Votre adresse actuelle reste active tant que rien n'est confirmé. Contactez-nous : ${opts.supportUrl}`,
+    "Akyra · akyra.io",
+  ].join("\n");
+
+  return wrap({
+    subject: "Sécurité — demande de changement d'adresse sur votre compte",
+    preheader: "Une nouvelle adresse a été demandée pour votre compte Akyra.",
+    bodyHtml,
+    text,
+    footerKind: "transactional",
+  });
+}
+
+/**
  * Email de prospection à froid. `step` : 0 = initial, 1 = relance J+3,
  * 2 = relance finale J+7. Chaque variante pointe vers le reveal /r/{token}.
  */
