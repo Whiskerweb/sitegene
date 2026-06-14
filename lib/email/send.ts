@@ -6,6 +6,8 @@ import {
   outreachEmail,
   customOutreachEmail,
   trialChargeFailedEmail,
+  emailChangeRequestEmail,
+  emailChangedNoticeEmail,
 } from "./templates";
 
 /**
@@ -126,6 +128,61 @@ export async function sendTrialChargeFailed(
   await logEvent(admin, {
     to_email: opts.to,
     kind: "trial_charge_failed",
+    provider_id: res.id,
+    event: "sent",
+  });
+  return res.id;
+}
+
+/**
+ * Confirmation de changement d'adresse → envoyée à la NOUVELLE adresse.
+ * `token` = token en clair à usage unique (la base ne stocke que son hash).
+ * Renvoie l'id Resend (ou null en dry-run).
+ */
+export async function sendEmailChangeRequest(
+  admin: SupabaseClient,
+  opts: { to: string; token: string },
+): Promise<string | null> {
+  const confirmUrl = `${appUrl()}/account/confirm-email?token=${encodeURIComponent(opts.token)}`;
+  const mail = emailChangeRequestEmail({ newEmail: opts.to, confirmUrl });
+  const res = await sendRaw({
+    from: fromTransactional(),
+    to: opts.to,
+    subject: mail.subject,
+    html: mail.html,
+    text: mail.text,
+  });
+  await logEvent(admin, {
+    to_email: opts.to,
+    kind: "email_change_request",
+    provider_id: res.id,
+    event: "sent",
+  });
+  return res.id;
+}
+
+/**
+ * Alerte de sécurité → envoyée à l'ANCIENNE adresse quand un changement est
+ * demandé. Renvoie l'id Resend (ou null en dry-run).
+ */
+export async function sendEmailChangedNotice(
+  admin: SupabaseClient,
+  opts: { to: string; newEmail: string },
+): Promise<string | null> {
+  const mail = emailChangedNoticeEmail({
+    newEmail: opts.newEmail,
+    supportUrl: `${appUrl()}/dashboard/settings`,
+  });
+  const res = await sendRaw({
+    from: fromTransactional(),
+    to: opts.to,
+    subject: mail.subject,
+    html: mail.html,
+    text: mail.text,
+  });
+  await logEvent(admin, {
+    to_email: opts.to,
+    kind: "email_change_notice",
     provider_id: res.id,
     event: "sent",
   });
