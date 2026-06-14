@@ -6,7 +6,7 @@
 import type { CSSProperties } from "react";
 import type { Skin } from "@/lib/foundry/types";
 import { navLabel, navHref } from "@/lib/foundry/nav";
-import { BrandLogo, useBrandLogo } from "@/components/foundry/BrandLogo";
+import { BrandLogo } from "@/components/foundry/BrandLogo";
 
 const LINKS_FALLBACK = ["Concerts", "Sorties", "Booking"];
 
@@ -15,9 +15,6 @@ export default function TickerNavbar({ content, skin }: { content: any; skin: Sk
   if (skin.accent) root["--c-accent" as keyof CSSProperties] = skin.accent as never;
   const links: unknown[] = Array.isArray(content?.links) && content.links.length ? content.links : LINKS_FALLBACK;
   const brand: string = content?.brand ?? "Halcyon";
-  // Avec un logo, on l'ancre en lockup fixe à gauche ; le ticker continue à droite.
-  // Sans logo, le bandeau défilant reste pur (le nom défile dans la séquence).
-  const logo = useBrandLogo();
 
   // Une séquence = marque (non cliquable) + liens ; on la duplique pour la boucle.
   const seq = (
@@ -40,13 +37,17 @@ export default function TickerNavbar({ content, skin }: { content: any; skin: Sk
         .sgnav-ticker-track { animation: sg-nav-ticker 24s linear infinite; }
         .sgnav-ticker-track:hover { animation-play-state: paused; }
         @media (prefers-reduced-motion: reduce) { .sgnav-ticker-track { animation: none; } }
+        /* Lockup logo fixe à gauche : masqué tant que BrandLogo rend vide (pas de logo). */
+        .sgnav-ticker-lock:empty { display: none; }
       `}</style>
       <div className="flex h-10 items-center overflow-hidden">
-        {logo && (
-          <a href="#" className="flex shrink-0 items-center pl-5 pr-4" style={{ borderRight: "1px solid color-mix(in srgb, var(--c-ink) 12%, transparent)" }}>
-            <BrandLogo alt={brand} height={22} fallback={null} />
-          </a>
-        )}
+        {/* Avec un logo : lockup fixe à gauche, le ticker continue à droite. Sans
+            logo : <a> vide → masqué par :empty (le nom défile dans la séquence).
+            On rend <BrandLogo> en COMPOSANT (jamais le hook useBrandLogo) : appeler
+            un hook client ici casse le prérendu statique de /foundry-preview. */}
+        <a href="#" className="sgnav-ticker-lock flex shrink-0 items-center pl-5 pr-4" style={{ borderRight: "1px solid color-mix(in srgb, var(--c-ink) 12%, transparent)" }}>
+          <BrandLogo alt={brand} height={22} fallback={null} />
+        </a>
         <div className="sgnav-ticker-track flex items-center whitespace-nowrap text-[11px] font-medium">
           {seq}
           <span aria-hidden>{seq}</span>
