@@ -82,18 +82,34 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Impossible d'enregistrer la demande." }, { status: 500 });
   }
 
+  // Email de confirmation vers la NOUVELLE adresse : indispensable. S'il
+  // échoue, on retire la demande pour permettre un nouvel essai immédiat
+  // (sans buter sur l'anti-spam).
   try {
     await sendEmailChangeRequest(admin, { to: newEmail, token: raw });
-    if (current) await sendEmailChangedNotice(admin, { to: current, newEmail });
   } catch (e) {
-    console.error("[change-email] envoi échoué:", e instanceof Error ? e.message : e);
-    // La demande existe mais l'email n'est pas parti : on la retire pour
-    // permettre une nouvelle tentative immédiate (sans buter sur l'anti-spam).
+    console.error(
+      "[change-email] envoi confirmation échoué:",
+      e instanceof Error ? e.message : e,
+    );
     await admin.from("email_change_requests").delete().eq("token_hash", hash);
     return NextResponse.json(
       { error: "L'email de confirmation n'a pas pu être envoyé. Réessayez." },
       { status: 502 },
     );
+  }
+
+  // Alerte de sécurité vers l'ANCIENNE adresse : best-effort. Elle ne doit
+  // JAMAIS bloquer ni invalider une confirmation déjà partie.
+  if (current) {
+    try {
+      await sendEmailChangedNotice(admin, { to: current, newEmail });
+    } catch (e) {
+      console.error(
+        "[change-email] alerte ancienne adresse échouée:",
+        e instanceof Error ? e.message : e,
+      );
+    }
   }
 
   return NextResponse.json({ ok: true, email: newEmail });
