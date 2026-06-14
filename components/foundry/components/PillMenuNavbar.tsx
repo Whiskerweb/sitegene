@@ -5,6 +5,7 @@
 import type { CSSProperties } from "react";
 import type { Skin } from "@/lib/foundry/types";
 import { navLabel, navHref } from "@/lib/foundry/nav";
+import { BrandLogo } from "@/components/foundry/BrandLogo";
 
 const LINKS_FALLBACK = ["Accueil", "Cours", "Méthode", "Tarifs"];
 
@@ -16,10 +17,18 @@ export default function PillMenuNavbar({ content, skin }: { content: any; skin: 
     <header style={{ ...root, background: "var(--c-surface)" }}>
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-5 md:px-8">
         <a href="#" className="flex items-center gap-2" style={{ color: "var(--c-ink)" }}>
-          <span className="flex h-7 w-7 items-center justify-center rounded-full" style={{ background: "var(--c-accent)" }}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--c-on-accent)" strokeWidth="2"><path d="M22 10L12 5 2 10l10 5 10-5z" /><path d="M6 12v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5" /></svg>
-          </span>
-          <span className="text-xl font-bold tracking-tight" style={{ fontFamily: "var(--font-heading)" }}>{content?.brand ?? "Elearni"}</span>
+          <BrandLogo
+            alt={content?.brand}
+            height={28}
+            fallback={
+              <>
+                <span className="flex h-7 w-7 items-center justify-center rounded-full" style={{ background: "var(--c-accent)" }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--c-on-accent)" strokeWidth="2"><path d="M22 10L12 5 2 10l10 5 10-5z" /><path d="M6 12v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5" /></svg>
+                </span>
+                <span className="text-xl font-bold tracking-tight" style={{ fontFamily: "var(--font-heading)" }}>{content?.brand ?? "Elearni"}</span>
+              </>
+            }
+          />
         </a>
 
         <ul className="hidden items-center gap-7 rounded-[var(--r-pill)] px-7 py-3 text-[13px] font-medium md:flex" style={{ background: "var(--c-panel)" }}>

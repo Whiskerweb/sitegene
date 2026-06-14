@@ -118,7 +118,12 @@ export interface Recipe {
    * dès qu'un preset de base est choisi.
    */
   userCharteId?: string;
-  brand?: { primary?: string; logo?: string };
+  brand?: {
+    primary?: string;
+    logo?: string;
+    /** Échelle du logo (multiplie la hauteur de base navbar/footer). 0.5–2.5, défaut 1. */
+    logoScale?: number;
+  };
   sections: RecipeSection[];
 }
 

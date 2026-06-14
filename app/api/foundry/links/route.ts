@@ -94,12 +94,16 @@ export async function POST(request: Request) {
         : undefined,
     reviews: sanitizeReviews(collected.reviews),
     hasReviews: typeof collected.hasReviews === "boolean" ? collected.hasReviews : undefined,
+    brandLogo: typeof collected.brandLogo === "string" && collected.brandLogo ? collected.brandLogo : undefined,
   };
 
-  // Adoption des fichiers staging → dossier du site (photos + fiche technique).
+  // Adoption des fichiers staging → dossier du site (photos + fiche technique + logo).
   safe.photos = await Promise.all(safe.photos.map((url) => adoptStagingUrl(admin, siteId, url)));
   if (safe.techRider) {
     safe.techRider = { ...safe.techRider, href: await adoptStagingUrl(admin, siteId, safe.techRider.href) };
+  }
+  if (safe.brandLogo) {
+    safe.brandLogo = await adoptStagingUrl(admin, siteId, safe.brandLogo);
   }
 
   // Liens & photos → puis politique d'avis (retrait si « pas d'avis », sinon
@@ -107,6 +111,10 @@ export async function POST(request: Request) {
   let merged = injectContacts(loaded.recipe, safe);
   merged = applyReviewsPolicy(merged, safe);
   merged = markPlaceholders(merged, safe);
+  // Logo de marque → recipe.brand.logo (affiché dans navbar/footer du site).
+  if (safe.brandLogo) {
+    merged = { ...merged, brand: { ...merged.brand, logo: safe.brandLogo } };
+  }
   await saveRecipeDraft(admin, siteId, merged, {});
 
   return NextResponse.json({ ok: true });

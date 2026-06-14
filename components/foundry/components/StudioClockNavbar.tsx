@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 import type { Skin } from "@/lib/foundry/types";
 import { navLabel, navHref } from "@/lib/foundry/nav";
+import { BrandLogo } from "@/components/foundry/BrandLogo";
 
 const LINKS_FALLBACK = ["Projets", "Studio", "Contact"];
 const pad = (n: number) => (n < 10 ? `0${n}` : `${n}`);
@@ -33,7 +34,13 @@ export default function StudioClockNavbar({ content, skin }: { content: any; ski
     <header style={{ ...root, background: "var(--c-surface)" }}>
       <style>{`.scnav-link { transition: opacity .2s; } .scnav-link:hover { opacity: .5; }`}</style>
       <div className="flex items-center justify-between px-6 py-6 md:px-10" style={{ color: "var(--c-ink)" }}>
-        <a href="#" className="text-[13px] font-bold uppercase tracking-[0.14em]">{content?.brand ?? "Mörk Studio"}</a>
+        <a href="#" className="text-[13px] font-bold uppercase tracking-[0.14em]">
+          <BrandLogo
+            alt={content?.brand}
+            height={24}
+            fallback={<>{content?.brand ?? "Mörk Studio"}</>}
+          />
+        </a>
         <ul className="hidden gap-8 text-[13px] uppercase tracking-[0.04em] md:flex">
           {links.map((l, i) => (
             <li key={i}><a href={navHref(l)} className="scnav-link">{navLabel(l)}</a></li>

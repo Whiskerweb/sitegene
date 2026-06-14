@@ -20,7 +20,31 @@ import {
 
 const MIN_SECTIONS = 4;
 const HEX = /^#[0-9a-fA-F]{6}$/;
-const OPS = ["swap", "add", "remove", "reorder", "content", "palette", "set"];
+const OPS = ["swap", "add", "remove", "reorder", "content", "palette", "set", "brand"];
+
+/** brand = {primary?, logo?, logoScale?} compact (undefined si vide) — réutilisé par palette/set/brand.
+ *  logoScale n'est stocké que s'il y a un logo ET qu'il diffère de 1 (recette propre). */
+function makeBrand(
+  primary?: string,
+  logo?: string,
+  logoScale?: number,
+): { primary?: string; logo?: string; logoScale?: number } | undefined {
+  const b: { primary?: string; logo?: string; logoScale?: number } = {};
+  if (primary) b.primary = primary;
+  if (logo) b.logo = logo;
+  if (logo && typeof logoScale === "number" && Number.isFinite(logoScale) && logoScale !== 1) b.logoScale = logoScale;
+  return Object.keys(b).length ? b : undefined;
+}
+
+/** URL de logo acceptée : un objet public de NOTRE bucket, dans le dossier du site
+ *  (atelier) ou en staging (onboarding adopté). Empêche d'injecter une URL tierce. */
+function isAllowedLogoUrl(url: unknown, siteId: string): url is string {
+  if (typeof url !== "string" || url.length > 600) return false;
+  const m = url.match(/\/storage\/v1\/object\/public\/site-photos\/([^?#]+)$/i);
+  if (!m) return false;
+  const path = decodeURIComponent(m[1]);
+  return path.startsWith(`${siteId}/`) || path.startsWith("staging/");
+}
 
 /**
  * Plug-and-play sur la recette du site assemblé (éditeur visuel « L'Atelier ») :
@@ -128,7 +152,9 @@ export async function POST(request: Request) {
     } else if (typeof body?.vibeId === "string" && getVibe(body.vibeId)) {
       next = { ...next, vibe: getVibe(body.vibeId)!.id as VibeId, customVibe: undefined };
     }
-    next = { ...next, brand: typeof body?.accent === "string" && HEX.test(body.accent.trim()) ? { primary: body.accent.trim() } : undefined };
+    // Préserve le logo de marque (recipe.brand.logo + échelle) à travers undo/redo :
+    // seul l'accent change ici, le logo ne fait pas partie de l'historique couleur.
+    next = { ...next, brand: makeBrand(typeof body?.accent === "string" && HEX.test(body.accent.trim()) ? body.accent.trim() : undefined, recipe.brand?.logo, recipe.brand?.logoScale) };
     next = { ...next, sections: pinExtremes(next.sections) };
     const v = validateRecipe(next);
     if (!v.ok) return NextResponse.json({ error: "État invalide." }, { status: 400 });
@@ -158,10 +184,34 @@ export async function POST(request: Request) {
     // L'accent de marque est TOUJOURS réinitialisé d'après `accent` (comme l'op
     // `set`) : choisir un preset SANS accent efface l'ancienne surcharge, sinon
     // l'accent figé masquerait la couleur du nouveau preset (« aucune différence »).
-    next = { ...next, brand: typeof body?.accent === "string" && HEX.test(body.accent.trim()) ? { primary: body.accent.trim() } : undefined };
+    // Le LOGO (et son échelle), lui, est conservé : il survit aux changements de charte.
+    next = { ...next, brand: makeBrand(typeof body?.accent === "string" && HEX.test(body.accent.trim()) ? body.accent.trim() : undefined, recipe.brand?.logo, recipe.brand?.logoScale) };
     await saveRecipeDraft(admin, siteId, next);
     const effective = next.customVibe ?? getVibe(next.vibe)!;
     return NextResponse.json({ ok: true, vibe: effective, brandPrimary: next.brand?.primary ?? null });
+  }
+
+  // --- Brand : ajoute / remplace / retire le LOGO + règle sa taille ----------
+  if (op === "brand") {
+    const cur = recipe.brand ?? {};
+    // logo : présent dans le body → on le change (ou on le retire si null/""), sinon inchangé.
+    let logo = cur.logo;
+    if ("logo" in body) {
+      const raw = body.logo;
+      if (raw === null || raw === "") logo = undefined;
+      else if (isAllowedLogoUrl(raw, siteId)) logo = raw.trim();
+      else return NextResponse.json({ error: "Logo invalide." }, { status: 400 });
+    }
+    // scale : présent dans le body → on le règle (borné 0.5–2.5), sinon inchangé.
+    let scale = cur.logoScale;
+    if (body?.scale !== undefined) {
+      const n = Number(body.scale);
+      if (!Number.isFinite(n)) return NextResponse.json({ error: "Taille invalide." }, { status: 400 });
+      scale = Math.max(0.5, Math.min(2.5, n));
+    }
+    const next = { ...recipe, brand: makeBrand(cur.primary, logo, logo ? scale : undefined) };
+    await saveRecipeDraft(admin, siteId, next);
+    return NextResponse.json({ ok: true, logo: logo ?? null, scale: logo ? scale ?? 1 : 1 });
   }
 
   // --- Gating d'achat (rare/epic jamais acquis pour ce site) ----------------

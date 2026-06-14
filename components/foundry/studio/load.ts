@@ -97,6 +97,8 @@ export async function loadStudioData(
     sections,
     vibe,
     brandPrimary: recipe.brand?.primary ?? null,
+    brandLogo: recipe.brand?.logo ?? null,
+    brandLogoScale: recipe.brand?.logoScale ?? 1,
     catalog,
     presets: listVibes(),
     userChartes,

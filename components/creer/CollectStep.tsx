@@ -114,6 +114,11 @@ export default function CollectStep({ trade, chartesReady, collected, onChange, 
   const [riderError, setRiderError] = useState<string | null>(null);
   const riderRef = useRef<HTMLInputElement>(null);
 
+  // Logo de marque (optionnel) — affiché en haut à gauche du site + dans le footer.
+  const [logoUploading, setLogoUploading] = useState(false);
+  const [logoError, setLogoError] = useState<string | null>(null);
+  const logoRef = useRef<HTMLInputElement>(null);
+
   // Avis clients — case à cocher (cochée par défaut) + import optionnel replié.
   // Réservé aux métiers à clientèle directe (un musicien n'affiche pas d'avis).
   const reviewsRelevant = trade !== "musicien";
@@ -272,6 +277,28 @@ export default function CollectStep({ trade, chartesReady, collected, onChange, 
     } finally {
       setRiderUploading(false);
       if (riderRef.current) riderRef.current.value = "";
+    }
+  }
+
+  // --- Logo de marque --------------------------------------------------------------
+  async function onLogoFile(file: File | null | undefined) {
+    if (!file) return;
+    if (!draftIdRef.current) draftIdRef.current = getDraftId();
+    setLogoError(null);
+    setLogoUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("draftId", draftIdRef.current);
+      fd.append("file", file);
+      const res = await fetch("/api/foundry/logo", { method: "POST", body: fd });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data?.url) throw new Error(data?.error ?? "Envoi impossible.");
+      onChange({ ...collectedRef.current, brandLogo: data.url as string });
+    } catch (e) {
+      setLogoError(e instanceof Error ? e.message : "Envoi impossible.");
+    } finally {
+      setLogoUploading(false);
+      if (logoRef.current) logoRef.current.value = "";
     }
   }
 
@@ -577,6 +604,55 @@ export default function CollectStep({ trade, chartesReady, collected, onChange, 
           <input ref={riderRef} type="file" accept="application/pdf" hidden onChange={(e) => { void onRiderFile(e.target.files?.[0]); }} />
         </div>
       )}
+
+      {/* Logo de marque (optionnel) */}
+      <div className="mt-8">
+        <div className="flex items-center justify-between">
+          <span className="text-[13px] font-semibold">Votre logo</span>
+          <span className="text-[12px] text-[rgb(var(--m-faint))]">facultatif</span>
+        </div>
+        {collected.brandLogo ? (
+          <div className="mt-2 flex items-center gap-3 rounded-2xl border border-[rgb(var(--m-line))] p-2.5">
+            <span
+              className="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-xl border border-[rgb(var(--m-line))]"
+              style={{
+                backgroundColor: "#fff",
+                backgroundImage:
+                  "linear-gradient(45deg,#eee 25%,transparent 25%,transparent 75%,#eee 75%,#eee),linear-gradient(45deg,#eee 25%,transparent 25%,transparent 75%,#eee 75%,#eee)",
+                backgroundSize: "10px 10px",
+                backgroundPosition: "0 0,5px 5px",
+              }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={collected.brandLogo} alt="Logo" style={{ maxHeight: 40, maxWidth: 40, objectFit: "contain" }} />
+            </span>
+            <div className="flex min-w-0 flex-1 items-center gap-3">
+              <span className="text-[13px] font-medium text-emerald-600">Logo ajouté ✓</span>
+              <button type="button" disabled={logoUploading} onClick={() => logoRef.current?.click()} className="text-[12.5px] font-medium text-[rgb(var(--m-muted))] underline-offset-2 hover:text-[rgb(var(--m-ink))] hover:underline disabled:opacity-40">Remplacer</button>
+              <button type="button" onClick={() => onChange({ ...collected, brandLogo: undefined })} className="text-[12.5px] font-medium text-[rgb(var(--m-faint))] underline-offset-2 hover:text-red-600 hover:underline">Retirer</button>
+            </div>
+          </div>
+        ) : (
+          <button
+            type="button"
+            disabled={logoUploading}
+            onClick={() => logoRef.current?.click()}
+            className="mt-2 flex w-full items-center gap-3 rounded-2xl border border-dashed border-[rgb(var(--m-line))] px-4 py-3 text-left transition hover:border-[rgb(var(--m-accent))] disabled:opacity-40"
+          >
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[rgb(var(--m-accent))]/10 text-[rgb(var(--m-accent))]">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <rect width="18" height="18" x="3" y="3" rx="4" /><circle cx="9" cy="9" r="2" /><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21" />
+              </svg>
+            </span>
+            <span className="min-w-0">
+              <span className="block text-[13px] font-medium">{logoUploading ? "Envoi…" : "Ajouter votre logo"}</span>
+              <span className="block text-[12px] text-[rgb(var(--m-faint))]">PNG transparent conseillé — il s'affichera en haut du site</span>
+            </span>
+          </button>
+        )}
+        {logoError ? <p className="mt-1.5 text-[12px] text-red-600">{logoError}</p> : null}
+        <input ref={logoRef} type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" hidden onChange={(e) => { void onLogoFile(e.target.files?.[0]); }} />
+      </div>
 
       {/* Photos */}
       <div className="mt-8">

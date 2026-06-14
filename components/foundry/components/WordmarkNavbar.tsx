@@ -8,6 +8,7 @@ import { useState } from "react";
 import type { CSSProperties } from "react";
 import type { Skin } from "@/lib/foundry/types";
 import { navLabel, navHref } from "@/lib/foundry/nav";
+import { BrandLogo } from "@/components/foundry/BrandLogo";
 
 const LINKS_FALLBACK = ["Accueil", "Galerie", "À propos", "Contact"];
 
@@ -21,10 +22,18 @@ export default function WordmarkNavbar({ content, skin }: { content: any; skin: 
     <nav className="relative" style={{ ...root, background: "var(--c-surface)" }}>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <a href="#" className="flex items-center gap-1.5">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M5 5l6 7-6 7M19 5l-6 7 6 7" stroke="var(--c-ink)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <span className="text-2xl font-extrabold tracking-tight" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)" }}>{content?.brand ?? "Potozon"}</span>
+          <BrandLogo
+            alt={content?.brand}
+            height={32}
+            fallback={
+              <>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M5 5l6 7-6 7M19 5l-6 7 6 7" stroke="var(--c-ink)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <span className="text-2xl font-extrabold tracking-tight" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)" }}>{content?.brand ?? "Potozon"}</span>
+              </>
+            }
+          />
         </a>
 
         <div className="hidden items-center gap-8 md:flex">

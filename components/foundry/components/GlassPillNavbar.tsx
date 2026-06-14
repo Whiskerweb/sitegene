@@ -6,6 +6,7 @@
 import type { CSSProperties } from "react";
 import type { Skin } from "@/lib/foundry/types";
 import { navLabel, navHref } from "@/lib/foundry/nav";
+import { BrandLogo } from "@/components/foundry/BrandLogo";
 
 const LINKS_FALLBACK = ["Fonctionnalités", "Tarifs", "FAQ"];
 
@@ -25,13 +26,21 @@ export default function GlassPillNavbar({ content, skin }: { content: any; skin:
         }}
       >
         <a href="#" className="flex items-center gap-2 pl-2">
-          <span
-            className="grid h-7 w-7 place-items-center rounded-lg text-xs font-bold"
-            style={{ background: "linear-gradient(135deg, var(--c-accent), var(--c-accent2))", color: "var(--c-on-accent)" }}
-          >
-            {brand.trim().charAt(0).toUpperCase() || "N"}
-          </span>
-          <span className="text-lg font-bold tracking-tight" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)" }}>{brand}</span>
+          <BrandLogo
+            alt={brand}
+            height={28}
+            fallback={
+              <>
+                <span
+                  className="grid h-7 w-7 place-items-center rounded-lg text-xs font-bold"
+                  style={{ background: "linear-gradient(135deg, var(--c-accent), var(--c-accent2))", color: "var(--c-on-accent)" }}
+                >
+                  {brand.trim().charAt(0).toUpperCase() || "N"}
+                </span>
+                <span className="text-lg font-bold tracking-tight" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)" }}>{brand}</span>
+              </>
+            }
+          />
         </a>
         <ul className="hidden items-center gap-6 text-sm font-medium md:flex" style={{ color: "var(--c-muted)" }}>
           {links.map((l, i) => (

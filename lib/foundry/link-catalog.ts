@@ -11,6 +11,8 @@ export type Collected = {
   contact: { phone?: string; whatsapp?: string; email?: string; address?: string; mapsUrl?: string };
   booking?: { label: string; href: string };
   photos: string[];
+  /** Logo de marque (URL staging) — adopté puis posé dans recipe.brand.logo. */
+  brandLogo?: string;
   /** Fiche technique (musiciens) : PDF envoyé au collect, branché sur le CTA du site. */
   techRider?: { href: string; name?: string };
   /**

@@ -18,6 +18,7 @@ import {
   X,
 } from "lucide-react";
 import { COMPONENTS } from "@/components/foundry/registry";
+import { BrandProvider } from "@/components/foundry/BrandLogo";
 import { vibeToCssVars } from "@/lib/foundry/vibes";
 import { textureLayerStyle } from "@/lib/foundry/texture";
 import { vibeToSpec, fontHref, fontCss, allFontsHref } from "@/lib/foundry/charte";
@@ -30,11 +31,17 @@ import type { CatalogEntry, PageTab, SavedCharte, StudioSection, StudioVibe } fr
 export function Themed({
   vibe,
   brandPrimary,
+  brandLogo,
+  brandLogoScale,
   children,
   style,
 }: {
   vibe: StudioVibe;
   brandPrimary: string | null;
+  /** Logo du site → rendu dans les navbars/footers de l'aperçu (sinon fallback). */
+  brandLogo?: string | null;
+  /** Échelle du logo (multiplicateur de taille). */
+  brandLogoScale?: number | null;
   children: React.ReactNode;
   style?: CSSProperties;
 }) {
@@ -44,7 +51,7 @@ export function Themed({
     <div style={{ ...vars, fontFamily: "var(--font-body)", background: "var(--c-surface)", color: "var(--c-ink)", position: "relative", isolation: "isolate", ...style }}>
       {tex ? <div aria-hidden style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none", ...tex }} /> : null}
       <link rel="stylesheet" href={vibe.fontHref} precedence="foundry-fonts" />
-      <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
+      <BrandProvider logo={brandLogo} scale={brandLogoScale}><div style={{ position: "relative", zIndex: 1 }}>{children}</div></BrandProvider>
     </div>
   );
 }
@@ -55,6 +62,8 @@ export function Preview({
   content,
   vibe,
   brandPrimary,
+  brandLogo,
+  brandLogoScale,
   width = 460,
   height = 250,
 }: {
@@ -62,6 +71,8 @@ export function Preview({
   content: Record<string, unknown>;
   vibe: StudioVibe;
   brandPrimary: string | null;
+  brandLogo?: string | null;
+  brandLogoScale?: number | null;
   width?: number;
   height?: number;
 }) {
@@ -73,6 +84,8 @@ export function Preview({
         <Themed
           vibe={vibe}
           brandPrimary={brandPrimary}
+          brandLogo={brandLogo}
+          brandLogoScale={brandLogoScale}
           style={{ position: "absolute", inset: 0, width: 1280, transform: `scale(${scale})`, transformOrigin: "top left", pointerEvents: "none" }}
         >
           <C content={content} skin={{}} />
@@ -622,6 +635,8 @@ export function ReplaceDrawer({
   candidates,
   vibe,
   brandPrimary,
+  brandLogo,
+  brandLogoScale,
   onChoose,
   onBuy,
   onClose,
@@ -633,6 +648,8 @@ export function ReplaceDrawer({
   candidates: CatalogEntry[];
   vibe: StudioVibe;
   brandPrimary: string | null;
+  brandLogo?: string | null;
+  brandLogoScale?: number | null;
   onChoose: (id: string) => void;
   onBuy: (entry: CatalogEntry) => Promise<boolean>;
   onClose: () => void;
@@ -647,6 +664,8 @@ export function ReplaceDrawer({
         index={index}
         vibe={vibe}
         brandPrimary={brandPrimary}
+        brandLogo={brandLogo}
+        brandLogoScale={brandLogoScale}
         onBack={() => setTryOn(null)}
         onBuy={onBuy}
         onConfirm={() => onChoose(tryOn.id)}
@@ -668,7 +687,7 @@ export function ReplaceDrawer({
           {/* Section actuelle, barrée d'un filet rouge */}
           <p className="mb-2 text-[11px] font-bold uppercase tracking-wide text-red-500">Sera remplacée</p>
           <div className="relative mb-7 overflow-hidden rounded-2xl border-2 border-red-300">
-            <Preview id={section.component} content={section.content} vibe={vibe} brandPrimary={brandPrimary} width={600} height={230} />
+            <Preview id={section.component} content={section.content} vibe={vibe} brandPrimary={brandPrimary} brandLogo={brandLogo} brandLogoScale={brandLogoScale} width={600} height={230} />
             <div className="pointer-events-none absolute inset-0" style={{ background: "rgba(239,68,68,0.14)" }} />
             <svg className="pointer-events-none absolute inset-0 h-full w-full" preserveAspectRatio="none" viewBox="0 0 100 100">
               <line x1="0" y1="100" x2="100" y2="0" stroke="rgba(239,68,68,0.55)" strokeWidth="0.8" vectorEffect="non-scaling-stroke" />
@@ -687,7 +706,7 @@ export function ReplaceDrawer({
               return (
                 <div key={c.id} className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">
                   <div className="relative border-b border-neutral-100">
-                    <Preview id={c.id} content={previewContent} vibe={vibe} brandPrimary={brandPrimary} width={600} height={230} />
+                    <Preview id={c.id} content={previewContent} vibe={vibe} brandPrimary={brandPrimary} brandLogo={brandLogo} brandLogoScale={brandLogoScale} width={600} height={230} />
                     {locked && <span className="absolute right-2.5 top-2.5 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-neutral-600 shadow"><Lock size={12} /> {c.price} ✦ pour l'utiliser</span>}
                   </div>
                   <div className="flex items-center justify-between gap-2 p-3">
@@ -734,6 +753,8 @@ function TryOnOverlay({
   index,
   vibe,
   brandPrimary,
+  brandLogo,
+  brandLogoScale,
   onBack,
   onBuy,
   onConfirm,
@@ -744,6 +765,8 @@ function TryOnOverlay({
   index: number;
   vibe: StudioVibe;
   brandPrimary: string | null;
+  brandLogo?: string | null;
+  brandLogoScale?: number | null;
   onBack: () => void;
   onBuy: (entry: CatalogEntry) => Promise<boolean>;
   onConfirm: () => void;
@@ -805,7 +828,7 @@ function TryOnOverlay({
       {/* Le site entier, candidate en place */}
       <div className="flex-1 overflow-y-auto">
         <div className="mx-auto my-6 max-w-[1180px] overflow-hidden rounded-2xl bg-white shadow-[0_8px_40px_rgba(0,0,0,0.08)]">
-          <Themed vibe={vibe} brandPrimary={brandPrimary}>
+          <Themed vibe={vibe} brandPrimary={brandPrimary} brandLogo={brandLogo} brandLogoScale={brandLogoScale}>
             {renderList.map((r, i) => {
               const C = COMPONENTS[r.id];
               if (!C) return null;
@@ -1034,6 +1057,13 @@ export function PalettePanel({
   userChartes,
   activeCharteId,
   charteBusy,
+  brandLogo,
+  brandLogoScale,
+  logoBusy,
+  onUploadLogo,
+  onRemoveLogo,
+  onSyncToLogo,
+  onLogoScale,
   onLive,
   onPersistCharte,
   onPersistPreset,
@@ -1049,6 +1079,13 @@ export function PalettePanel({
   userChartes: SavedCharte[];
   activeCharteId: string | null;
   charteBusy: boolean;
+  brandLogo: string | null;
+  brandLogoScale: number;
+  logoBusy: boolean;
+  onUploadLogo: (file: File) => void;
+  onRemoveLogo: () => void;
+  onSyncToLogo: () => void;
+  onLogoScale: (scale: number) => void;
   onLive: (v: StudioVibe) => void;
   onPersistCharte: (spec: ReturnType<typeof vibeToSpec>) => void;
   onPersistPreset: (vibeId: string) => void;
@@ -1058,6 +1095,7 @@ export function PalettePanel({
   onUpdateActiveCharte: () => void;
   onOpenImport: () => void;
 }) {
+  const logoInputRef = useRef<HTMLInputElement>(null);
   // Saisie du nom lors de l'enregistrement d'une nouvelle charte (charte de base
   // modifiée ou charte importée → on crée une charte de compte nommée).
   const [naming, setNaming] = useState(false);
@@ -1100,6 +1138,86 @@ export function PalettePanel({
 
   return (
     <div className="flex flex-col gap-6">
+      {/* ===== Logo de marque (remplace le nom en haut à gauche partout) ===== */}
+      <div>
+        <p className="mb-2 text-[12px] font-semibold uppercase tracking-wide text-neutral-400">Logo</p>
+        <input
+          ref={logoInputRef}
+          type="file"
+          accept="image/png,image/jpeg,image/webp,image/svg+xml"
+          className="hidden"
+          onChange={(e) => { const f = e.target.files?.[0]; if (f) onUploadLogo(f); e.target.value = ""; }}
+        />
+        {brandLogo ? (
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-3 rounded-xl border border-neutral-200 bg-white p-2.5">
+              <span
+                className="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-lg border border-neutral-200"
+                style={{
+                  backgroundColor: "#fff",
+                  backgroundImage:
+                    "linear-gradient(45deg,#eee 25%,transparent 25%,transparent 75%,#eee 75%,#eee),linear-gradient(45deg,#eee 25%,transparent 25%,transparent 75%,#eee 75%,#eee)",
+                  backgroundSize: "10px 10px",
+                  backgroundPosition: "0 0,5px 5px",
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={brandLogo} alt="Logo" style={{ maxHeight: 40, maxWidth: 40, objectFit: "contain" }} />
+              </span>
+              <div className="flex min-w-0 flex-1 flex-col gap-1">
+                <span className="text-[12.5px] font-semibold text-neutral-700">Votre logo</span>
+                <div className="flex items-center gap-3">
+                  <button type="button" disabled={logoBusy} onClick={() => logoInputRef.current?.click()} className="text-[12px] font-medium text-neutral-500 underline-offset-2 hover:text-neutral-800 hover:underline disabled:opacity-40">Remplacer</button>
+                  <button type="button" disabled={logoBusy} onClick={onRemoveLogo} className="text-[12px] font-medium text-neutral-400 underline-offset-2 hover:text-red-500 hover:underline disabled:opacity-40">Retirer</button>
+                </div>
+              </div>
+            </div>
+            {/* Réglage de la taille du logo (s'applique à la navbar et au footer) */}
+            <div className="rounded-xl border border-neutral-200 bg-white px-3 py-2.5">
+              <div className="mb-1 flex items-center justify-between">
+                <span className="text-[12px] font-semibold text-neutral-600">Taille du logo</span>
+                <span className="text-[11.5px] font-medium tabular-nums text-neutral-400">{Math.round(brandLogoScale * 100)} %</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span aria-hidden className="text-[11px] font-bold text-neutral-300">A</span>
+                <input
+                  type="range"
+                  min={0.5}
+                  max={2.5}
+                  step={0.05}
+                  value={brandLogoScale}
+                  onChange={(e) => onLogoScale(Number(e.target.value))}
+                  className="h-1.5 flex-1 cursor-pointer accent-neutral-900"
+                  aria-label="Taille du logo"
+                />
+                <span aria-hidden className="text-[16px] font-bold text-neutral-400">A</span>
+              </div>
+            </div>
+            {/* Le geste « spectaculaire » : accorder les couleurs du site au logo */}
+            <button
+              type="button"
+              disabled={logoBusy}
+              onClick={onSyncToLogo}
+              className="flex items-center justify-center gap-2 rounded-xl bg-neutral-900 px-3 py-2.5 text-[13px] font-semibold text-white transition hover:bg-neutral-800 disabled:opacity-40"
+            >
+              <span aria-hidden>✨</span>
+              {logoBusy ? "Analyse du logo…" : "Accorder la charte à mon logo"}
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            disabled={logoBusy}
+            onClick={() => logoInputRef.current?.click()}
+            className="flex w-full flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-neutral-300 bg-neutral-50/60 px-3 py-5 text-center transition hover:border-neutral-400 hover:bg-neutral-50 disabled:opacity-40"
+          >
+            <span className="grid h-9 w-9 place-items-center rounded-full bg-white text-neutral-400 shadow-sm"><ImageIcon size={16} /></span>
+            <span className="text-[13px] font-semibold text-neutral-700">{logoBusy ? "Envoi…" : "Ajouter votre logo"}</span>
+            <span className="text-[11.5px] leading-snug text-neutral-400">PNG transparent conseillé — il remplace votre nom en haut du site</span>
+          </button>
+        )}
+      </div>
+
       <div>
         <p className="mb-2 text-[12px] font-semibold uppercase tracking-wide text-neutral-400">Charte graphique</p>
         <div ref={charteRef} className="relative">
@@ -1288,6 +1406,8 @@ export function AddPanel({
   insertIndexFor,
   vibe,
   brandPrimary,
+  brandLogo,
+  brandLogoScale,
   onAdd,
   onBuy,
   onClose,
@@ -1299,6 +1419,8 @@ export function AddPanel({
   insertIndexFor: (entry: CatalogEntry) => number;
   vibe: StudioVibe;
   brandPrimary: string | null;
+  brandLogo?: string | null;
+  brandLogoScale?: number | null;
   onAdd: (entry: CatalogEntry) => void;
   onBuy: (entry: CatalogEntry) => Promise<boolean>;
   onClose: () => void;
@@ -1314,6 +1436,8 @@ export function AddPanel({
         index={insertIndexFor(tryOn)}
         vibe={vibe}
         brandPrimary={brandPrimary}
+        brandLogo={brandLogo}
+        brandLogoScale={brandLogoScale}
         onBack={() => setTryOn(null)}
         onBuy={onBuy}
         onConfirm={() => onAdd(tryOn)}
@@ -1351,7 +1475,7 @@ export function AddPanel({
                         return (
                           <div key={c.id} className="overflow-hidden rounded-xl border border-neutral-200">
                             <div className="relative border-b border-neutral-100">
-                              <Preview id={c.id} content={c.sample} vibe={vibe} brandPrimary={brandPrimary} width={600} height={210} />
+                              <Preview id={c.id} content={c.sample} vibe={vibe} brandPrimary={brandPrimary} brandLogo={brandLogo} brandLogoScale={brandLogoScale} width={600} height={210} />
                               {locked && <span className="absolute right-2.5 top-2.5 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-neutral-600 shadow"><Lock size={12} /> {c.price} ✦</span>}
                             </div>
                             <div className="flex items-center justify-between gap-2 p-2.5">

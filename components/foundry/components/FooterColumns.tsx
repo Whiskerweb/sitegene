@@ -1,6 +1,7 @@
 // components/foundry/components/FooterColumns.tsx
 import { navLabel, navHref } from "@/lib/foundry/nav";
 import type { Skin } from "@/lib/foundry/types";
+import { BrandLogo } from "@/components/foundry/BrandLogo";
 import SocialIcon from "./SocialIcon";
 
 // Un lien de colonne : chaîne simple (texte brut, ex. une adresse) ou objet
@@ -32,7 +33,13 @@ export default function FooterColumns({ content }: { content: FooterContent; ski
     <footer className="px-5 pt-16 pb-8" style={{ background: "var(--c-card)" }}>
       <div className="mx-auto grid max-w-[1280px] gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <span className="text-xl" style={{ fontFamily: "var(--font-heading)", color: "var(--c-ink)" }}>{content.brand}</span>
+          <BrandLogo
+            alt={content.brand}
+            height={36}
+            fallback={
+              <span className="text-xl" style={{ fontFamily: "var(--font-heading)", color: "var(--c-ink)" }}>{content.brand}</span>
+            }
+          />
           <p className="mt-5 max-w-xs" style={{ color: "var(--c-accent)" }}>{content.tagline}</p>
           {socials.length > 0 && (
             <div className="mt-6 flex flex-wrap gap-2">

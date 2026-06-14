@@ -13,6 +13,8 @@ export default function ReorderOverlay({
   sections,
   vibe,
   brandPrimary,
+  brandLogo,
+  brandLogoScale,
   initialHeld,
   onMove,
   onClose,
@@ -20,6 +22,8 @@ export default function ReorderOverlay({
   sections: StudioSection[];
   vibe: StudioVibe;
   brandPrimary: string | null;
+  brandLogo?: string | null;
+  brandLogoScale?: number | null;
   /** Section saisie au démarrage (celle dont on a cliqué la poignée). */
   initialHeld: number;
   /** Déplace from → to (persisté par le parent). */
@@ -101,7 +105,7 @@ export default function ReorderOverlay({
                 >
                   <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg text-neutral-400"><GripVertical size={16} /></span>
                   <div className="pointer-events-none overflow-hidden rounded-lg border border-neutral-100">
-                    <Preview id={s.component} content={s.content} vibe={vibe} brandPrimary={brandPrimary} width={300} height={92} />
+                    <Preview id={s.component} content={s.content} vibe={vibe} brandPrimary={brandPrimary} brandLogo={brandLogo} brandLogoScale={brandLogoScale} width={300} height={92} />
                   </div>
                   <span className="text-[13px] font-semibold text-neutral-700">{s.roleLabel}</span>
                 </div>
@@ -118,7 +122,7 @@ export default function ReorderOverlay({
         <div className="pointer-events-none fixed z-[95] -translate-x-1/2 -translate-y-1/2 rotate-[-2deg]" style={{ left: ghost.x, top: ghost.y }}>
           <div className="flex items-center gap-2 rounded-2xl border border-neutral-300 bg-white p-2 shadow-2xl">
             <div className="overflow-hidden rounded-lg border border-neutral-100">
-              <Preview id={sections[held].component} content={sections[held].content} vibe={vibe} brandPrimary={brandPrimary} width={260} height={80} />
+              <Preview id={sections[held].component} content={sections[held].content} vibe={vibe} brandPrimary={brandPrimary} brandLogo={brandLogo} brandLogoScale={brandLogoScale} width={260} height={80} />
             </div>
             <span className="pr-1 text-[12.5px] font-bold text-neutral-800">{sections[held].roleLabel}</span>
           </div>

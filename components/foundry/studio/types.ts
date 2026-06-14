@@ -48,6 +48,10 @@ export interface StudioData {
   sections: StudioSection[];
   vibe: StudioVibe;
   brandPrimary: string | null;
+  /** Logo de marque du site (recipe.brand.logo) — affiché en navbar/footer. */
+  brandLogo: string | null;
+  /** Échelle du logo (recipe.brand.logoScale), défaut 1. */
+  brandLogoScale: number;
   catalog: CatalogEntry[];
   presets: StudioVibe[];
   /** Chartes graphiques personnelles enregistrées sur le compte (réutilisables). */

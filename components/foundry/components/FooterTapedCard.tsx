@@ -6,6 +6,7 @@
 import type { CSSProperties } from "react";
 import type { Skin } from "@/lib/foundry/types";
 import { navLabel, navHref } from "@/lib/foundry/nav";
+import { BrandLogo } from "@/components/foundry/BrandLogo";
 import SocialIcon from "./SocialIcon";
 
 export default function FooterTapedCard({ content, skin }: { content: any; skin: Skin }) {
@@ -27,7 +28,13 @@ export default function FooterTapedCard({ content, skin }: { content: any; skin:
 
           <div className="flex flex-col gap-8 md:flex-row md:justify-between md:gap-12">
             <div className="md:max-w-xs">
-              <span className="text-2xl font-extrabold" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)" }}>{brand}</span>
+              <BrandLogo
+                alt={brand}
+                height={38}
+                fallback={
+                  <span className="text-2xl font-extrabold" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)" }}>{brand}</span>
+                }
+              />
               {content?.tagline && <p className="mt-2 text-sm leading-relaxed" style={{ color: muted }}>{content.tagline}</p>}
             </div>
 

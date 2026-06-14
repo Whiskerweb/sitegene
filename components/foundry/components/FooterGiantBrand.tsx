@@ -6,6 +6,7 @@
 import type { CSSProperties } from "react";
 import type { Skin } from "@/lib/foundry/types";
 import { navLabel, navHref } from "@/lib/foundry/nav";
+import { BrandLogo } from "@/components/foundry/BrandLogo";
 import SocialIcon from "./SocialIcon";
 
 export default function FooterGiantBrand({ content, skin }: { content: any; skin: Skin }) {
@@ -19,11 +20,20 @@ export default function FooterGiantBrand({ content, skin }: { content: any; skin
   return (
     <footer className="relative min-h-[24rem] overflow-hidden px-5 pt-16" style={{ ...root, background: "var(--c-surface)" }}>
       <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center text-center">
-        {/* Pastille logo (initiale de la marque) */}
-        <span className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-2xl font-black text-white shadow-lg" style={{ background: "linear-gradient(135deg, var(--c-ink), color-mix(in srgb, var(--c-ink) 70%, transparent))" }}>
-          {brand.trim().charAt(0).toUpperCase() || "M"}
-        </span>
-        <span className="text-3xl font-bold" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)" }}>{brand}</span>
+        {/* Pastille logo (initiale de la marque) + wordmark */}
+        <BrandLogo
+          alt={brand}
+          height={72}
+          className="mb-4"
+          fallback={
+            <>
+              <span className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-2xl font-black text-white shadow-lg" style={{ background: "linear-gradient(135deg, var(--c-ink), color-mix(in srgb, var(--c-ink) 70%, transparent))" }}>
+                {brand.trim().charAt(0).toUpperCase() || "M"}
+              </span>
+              <span className="text-3xl font-bold" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)" }}>{brand}</span>
+            </>
+          }
+        />
         {content?.tagline && <p className="mt-2 max-w-sm text-sm font-medium" style={{ color: muted }}>{content.tagline}</p>}
 
         {socials.length > 0 && (

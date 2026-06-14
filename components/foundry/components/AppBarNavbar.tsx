@@ -8,6 +8,7 @@ import { useState } from "react";
 import type { CSSProperties } from "react";
 import type { Skin } from "@/lib/foundry/types";
 import { navLabel, navHref } from "@/lib/foundry/nav";
+import { BrandLogo } from "@/components/foundry/BrandLogo";
 
 const LINKS_FALLBACK = ["Fonctionnalités", "Tarifs", "Avis"];
 
@@ -21,10 +22,18 @@ export default function AppBarNavbar({ content, skin }: { content: any; skin: Sk
     <header style={{ ...root, background: "color-mix(in srgb, var(--c-surface) 90%, transparent)", borderBottom: "1px solid color-mix(in srgb, var(--c-ink) 8%, transparent)", backdropFilter: "blur(8px)" }}>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
         <a href="#" className="flex items-center gap-2 text-xl font-bold" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)" }}>
-          <span className="flex h-8 w-8 items-center justify-center rounded-full" style={{ background: "var(--c-panel)" }}>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5" stroke="var(--c-on-panel)" strokeWidth="2" /><circle cx="8" cy="8" r="2" fill="var(--c-on-panel)" /></svg>
-          </span>
-          {content?.brand ?? "Healix"}
+          <BrandLogo
+            alt={content?.brand}
+            height={32}
+            fallback={
+              <>
+                <span className="flex h-8 w-8 items-center justify-center rounded-full" style={{ background: "var(--c-panel)" }}>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5" stroke="var(--c-on-panel)" strokeWidth="2" /><circle cx="8" cy="8" r="2" fill="var(--c-on-panel)" /></svg>
+                </span>
+                {content?.brand ?? "Healix"}
+              </>
+            }
+          />
         </a>
 
         <nav className="hidden items-center gap-8 text-sm font-medium md:flex" style={{ color: "var(--c-muted)" }}>
