@@ -3,6 +3,7 @@ import { getUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { primarySiteForUser } from "@/lib/primary-site";
 import { hasActiveSubscription } from "@/lib/subscription";
+import { addDomain, removeDomain, getDomainStatus } from "@/lib/vercel";
 
 /** Domaine ou sous-domaine valide (ex : studio.com, www.studio.com). */
 const DOMAIN_RE =
@@ -52,11 +53,27 @@ export async function POST(request: Request) {
     );
   }
 
-  const site = await primarySiteForUser<{ id: string }>(admin, user.id, "id");
+  const site = await primarySiteForUser<{ id: string; custom_domain: string | null }>(
+    admin,
+    user.id,
+    "id, custom_domain",
+  );
   if (!site) {
     return NextResponse.json({ error: "Aucun site." }, { status: 404 });
   }
 
+  const previous = site.custom_domain;
+
+  // 1) Branchement Vercel AVANT l'écriture en base : si Vercel refuse durement,
+  //    on n'enregistre pas un domaine qui ne marchera jamais.
+  if (domain && domain !== previous) {
+    const added = await addDomain(domain);
+    if (!added.ok) {
+      return NextResponse.json({ error: added.error ?? "Échec côté Vercel." }, { status: 502 });
+    }
+  }
+
+  // 2) Écriture en base.
   const { error } = await admin
     .from("sites")
     .update({ custom_domain: domain || null })
@@ -65,5 +82,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Échec de l'enregistrement." }, { status: 500 });
   }
 
-  return NextResponse.json({ ok: true, custom_domain: domain || null });
+  // 3) Nettoyage : retire l'ancien domaine du projet Vercel s'il a changé (best-effort).
+  if (previous && previous !== domain) {
+    await removeDomain(previous);
+  }
+
+  // 4) Statut initial (records DNS à poser) pour affichage immédiat.
+  const status = domain ? await getDomainStatus(domain) : null;
+  return NextResponse.json({ ok: true, custom_domain: domain || null, status });
 }
