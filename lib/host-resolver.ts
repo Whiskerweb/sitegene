@@ -57,7 +57,10 @@ interface SupabaseLike {
     select(cols: string): {
       eq(col: string, val: string): {
         eq(col: string, val: string): {
-          maybeSingle(): Promise<{ data: { slug: string; template_id: string | null } | null }>;
+          maybeSingle(): Promise<{
+            data: { slug: string; template_id: string | null } | null;
+            error?: { message: string } | null;
+          }>;
         };
       };
     };
@@ -70,21 +73,25 @@ export function createSupabaseLookup(supabase: SupabaseLike): SiteLookupSource {
     data ? { slug: data.slug, render: data.template_id === FOUNDRY_TEMPLATE_ID ? "foundry" : "static" } : null;
   return {
     async bySlug(slug) {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("sites")
         .select("slug, template_id")
         .eq("slug", slug)
         .eq("status", "live")
         .maybeSingle();
+      // Une erreur Supabase (RLS, table absente…) ne doit pas crasher un visiteur,
+      // mais un fallback silencieux vers l'app serait indébogable : on la trace.
+      if (error) console.error(`[host-resolver] lookup slug "${slug}":`, error.message);
       return toLookup(data);
     },
     async byCustomDomain(domain) {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("sites")
         .select("slug, template_id")
         .eq("custom_domain", domain)
         .eq("status", "live")
         .maybeSingle();
+      if (error) console.error(`[host-resolver] lookup domaine "${domain}":`, error.message);
       return toLookup(data);
     },
   };
