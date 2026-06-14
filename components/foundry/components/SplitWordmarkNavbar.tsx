@@ -6,6 +6,7 @@
 import type { CSSProperties } from "react";
 import type { Skin } from "@/lib/foundry/types";
 import { navLabel, navHref } from "@/lib/foundry/nav";
+import { BrandLogo } from "@/components/foundry/BrandLogo";
 
 const LINKS_FALLBACK = ["Sorties", "Concerts", "À propos", "Booking"];
 
@@ -26,7 +27,13 @@ export default function SplitWordmarkNavbar({ content, skin }: { content: any; s
             <li key={i}><a href={navHref(l)} className={`swnav-link ${linkCls}`}>{navLabel(l)}</a></li>
           ))}
         </ul>
-        <a href="#" className="text-center text-2xl font-extrabold uppercase tracking-[0.12em]" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)" }}>{content?.brand ?? "Kairo"}</a>
+        <a href="#" className="text-center text-2xl font-extrabold uppercase tracking-[0.12em]" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)" }}>
+          <BrandLogo
+            alt={content?.brand}
+            height={34}
+            fallback={<>{content?.brand ?? "Kairo"}</>}
+          />
+        </a>
         <ul className="hidden items-center justify-end gap-7 md:flex">
           {right.map((l, i) => (
             <li key={i}><a href={navHref(l)} className={`swnav-link ${linkCls}`}>{navLabel(l)}</a></li>

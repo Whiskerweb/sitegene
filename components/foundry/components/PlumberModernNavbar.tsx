@@ -5,6 +5,7 @@
 import type { CSSProperties } from "react";
 import type { Skin } from "@/lib/foundry/types";
 import { navLabel, navHref } from "@/lib/foundry/nav";
+import { BrandLogo } from "@/components/foundry/BrandLogo";
 
 const LINKS_FALLBACK = ["Accueil", "À propos", "Services", "Contact"];
 
@@ -21,10 +22,18 @@ export default function PlumberModernNavbar({ content, skin }: { content: any; s
       `}</style>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
         <a href="#" className="flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full" style={{ background: "var(--c-accent2)" }}>
-            <svg className="h-5 w-5" style={{ color: "var(--c-ink)" }} fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
-          </span>
-          <span className="text-xl font-semibold tracking-tight text-white" style={{ fontFamily: "var(--font-heading)" }}>{content?.brand ?? "BlueDrop"}</span>
+          <BrandLogo
+            alt={content?.brand}
+            height={32}
+            fallback={
+              <>
+                <span className="flex h-9 w-9 items-center justify-center rounded-full" style={{ background: "var(--c-accent2)" }}>
+                  <svg className="h-5 w-5" style={{ color: "var(--c-ink)" }} fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
+                </span>
+                <span className="text-xl font-semibold tracking-tight text-white" style={{ fontFamily: "var(--font-heading)" }}>{content?.brand ?? "BlueDrop"}</span>
+              </>
+            }
+          />
         </a>
         <nav className="hidden items-center gap-9 md:flex">
           {links.map((l, i) => (

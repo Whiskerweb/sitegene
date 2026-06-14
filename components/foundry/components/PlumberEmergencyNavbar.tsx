@@ -3,6 +3,7 @@
 import type { CSSProperties } from "react";
 import type { Skin } from "@/lib/foundry/types";
 import { navLabel, navHref } from "@/lib/foundry/nav";
+import { BrandLogo } from "@/components/foundry/BrandLogo";
 
 const LINKS_FALLBACK = ["Services", "Blog", "Contact"];
 
@@ -21,13 +22,21 @@ export default function PlumberEmergencyNavbar({ content, skin }: { content: any
       `}</style>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <a href="#" className="flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full" style={{ background: "var(--c-accent)" }}>
-            <svg className="h-5 w-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 7l4-4 3 3-2 2 5 5 2-2 3 3-4 4-3-3 1-1-5-5-1 1z"/>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M14 7l3-3 3 3-3 3"/>
-            </svg>
-          </span>
-          <span className="text-xl font-bold tracking-tight" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)" }}>{content?.brand ?? "RapidPlomb"}</span>
+          <BrandLogo
+            alt={content?.brand}
+            height={32}
+            fallback={
+              <>
+                <span className="flex h-9 w-9 items-center justify-center rounded-full" style={{ background: "var(--c-accent)" }}>
+                  <svg className="h-5 w-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 7l4-4 3 3-2 2 5 5 2-2 3 3-4 4-3-3 1-1-5-5-1 1z"/>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 7l3-3 3 3-3 3"/>
+                  </svg>
+                </span>
+                <span className="text-xl font-bold tracking-tight" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)" }}>{content?.brand ?? "RapidPlomb"}</span>
+              </>
+            }
+          />
         </a>
 
         <div className="hidden items-center gap-8 md:flex">

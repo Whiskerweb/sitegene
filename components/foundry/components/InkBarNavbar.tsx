@@ -6,6 +6,7 @@
 import type { CSSProperties } from "react";
 import type { Skin } from "@/lib/foundry/types";
 import { navLabel, navHref } from "@/lib/foundry/nav";
+import { BrandLogo } from "@/components/foundry/BrandLogo";
 
 const LINKS_FALLBACK = ["À propos", "Galerie", "Avis", "Contact"];
 
@@ -22,7 +23,13 @@ export default function InkBarNavbar({ content, skin }: { content: any; skin: Sk
         .inknav-cta:hover { background: var(--c-on-panel); color: var(--c-panel); }
       `}</style>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        <a href="#" className="text-lg font-bold tracking-tight" style={{ color: "var(--c-on-panel)", fontFamily: "var(--font-heading)" }}>{content?.brand ?? "Marina Cole"}</a>
+        <a href="#" className="text-lg font-bold tracking-tight" style={{ color: "var(--c-on-panel)", fontFamily: "var(--font-heading)" }}>
+          <BrandLogo
+            alt={content?.brand}
+            height={28}
+            fallback={<>{content?.brand ?? "Marina Cole"}</>}
+          />
+        </a>
 
         <nav className="hidden items-center gap-8 text-[14px] md:flex">
           {links.map((l, i) => (

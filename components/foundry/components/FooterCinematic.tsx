@@ -9,6 +9,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import type { Skin } from "@/lib/foundry/types";
 import { navLabel, navHref } from "@/lib/foundry/nav";
+import { BrandLogo } from "@/components/foundry/BrandLogo";
 
 export default function FooterCinematic({ content, skin }: { content: any; skin: Skin }) {
   const root: CSSProperties = {};
@@ -47,8 +48,13 @@ export default function FooterCinematic({ content, skin }: { content: any; skin:
       <div className="sgcf-aurora pointer-events-none absolute left-1/2 top-1/2 z-0 h-[55vh] w-[80%] rounded-[50%] blur-[80px]" style={{ background: "radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--c-accent) 28%, transparent) 0%, color-mix(in srgb, var(--c-accent2) 20%, transparent) 45%, transparent 70%)" }} aria-hidden />
 
       {/* Texte géant de la marque en filigrane */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 z-0 select-none text-center font-black leading-[0.7] tracking-tighter" style={{ fontSize: "clamp(4rem, 22vw, 18rem)", color: "transparent", WebkitTextStroke: "1px color-mix(in srgb, var(--c-on-panel) 8%, transparent)", transform: "translateY(28%)" }}>
-        {brand.toUpperCase()}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 z-0 flex select-none justify-center text-center font-black leading-[0.7] tracking-tighter" style={{ fontSize: "clamp(4rem, 22vw, 18rem)", color: "transparent", WebkitTextStroke: "1px color-mix(in srgb, var(--c-on-panel) 8%, transparent)", transform: "translateY(28%)" }}>
+        <BrandLogo
+          alt={brand}
+          height={88}
+          maxWidth={520}
+          fallback={<>{brand.toUpperCase()}</>}
+        />
       </div>
 
       {/* Bandeau marquee incliné */}

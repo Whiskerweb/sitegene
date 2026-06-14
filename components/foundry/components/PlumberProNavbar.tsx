@@ -5,6 +5,7 @@
 import type { CSSProperties } from "react";
 import type { Skin } from "@/lib/foundry/types";
 import { navLabel, navHref } from "@/lib/foundry/nav";
+import { BrandLogo } from "@/components/foundry/BrandLogo";
 
 const LINKS_FALLBACK = ["Accueil", "À propos", "Services", "Blog", "Contact"];
 
@@ -43,10 +44,18 @@ export default function PlumberProNavbar({ content, skin }: { content: any; skin
       <nav className="relative z-10 border-b" style={{ background: "var(--c-surface)", borderColor: "color-mix(in srgb, var(--c-ink) 10%, transparent)" }}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <a href="#" className="flex items-center gap-2">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg" style={{ background: "var(--c-accent)" }}>
-              <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c3 4.5 6 8 6 11a6 6 0 11-12 0c0-3 3-6.5 6-11z"/></svg>
-            </span>
-            <span className="text-xl font-extrabold tracking-tight" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)" }}>{content?.brand ?? "Aqualis"}</span>
+            <BrandLogo
+              alt={content?.brand}
+              height={32}
+              fallback={
+                <>
+                  <span className="flex h-9 w-9 items-center justify-center rounded-lg" style={{ background: "var(--c-accent)" }}>
+                    <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c3 4.5 6 8 6 11a6 6 0 11-12 0c0-3 3-6.5 6-11z"/></svg>
+                  </span>
+                  <span className="text-xl font-extrabold tracking-tight" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)" }}>{content?.brand ?? "Aqualis"}</span>
+                </>
+              }
+            />
           </a>
           <div className="hidden items-center gap-8 lg:flex">
             {links.map((l, i) => (

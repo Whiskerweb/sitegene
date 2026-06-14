@@ -3,6 +3,7 @@
 import type { CSSProperties } from "react";
 import { navLabel, navHref } from "@/lib/foundry/nav";
 import type { Skin } from "@/lib/foundry/types";
+import { BrandLogo } from "@/components/foundry/BrandLogo";
 
 // Un lien de colonne : chaîne simple ou objet {label,target}/{label,href}.
 type FooterLink = string | { label?: string; target?: string; href?: string };
@@ -23,10 +24,18 @@ export default function PlumberProFooter({ content, skin }: { content: any; skin
           {/* Marque */}
           <div className="md:col-span-1">
             <div className="mb-4 flex items-center gap-2">
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg" style={{ background: "var(--c-accent)" }}>
-                <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c3 4.5 6 8 6 11a6 6 0 11-12 0c0-3 3-6.5 6-11z"/></svg>
-              </span>
-              <span className="text-xl font-extrabold text-white">{content?.brand ?? "Aqualis"}</span>
+              <BrandLogo
+                alt={content?.brand ?? "Aqualis"}
+                height={36}
+                fallback={
+                  <>
+                    <span className="flex h-9 w-9 items-center justify-center rounded-lg" style={{ background: "var(--c-accent)" }}>
+                      <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c3 4.5 6 8 6 11a6 6 0 11-12 0c0-3 3-6.5 6-11z"/></svg>
+                    </span>
+                    <span className="text-xl font-extrabold text-white">{content?.brand ?? "Aqualis"}</span>
+                  </>
+                }
+              />
             </div>
             <p className="max-w-xs text-sm leading-relaxed text-white/50">
               {content?.tagline ?? "Une plomberie professionnelle, soignée et fiable au quotidien."}

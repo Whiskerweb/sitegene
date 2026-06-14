@@ -7,6 +7,7 @@ import { heroTreatmentOf } from "@/lib/foundry/treatment";
 import { textureLayerStyle } from "@/lib/foundry/texture";
 import { COMPONENTS } from "./registry";
 import SmartNav from "./SmartNav";
+import { BrandProvider } from "./BrandLogo";
 
 /**
  * Cadre + badge « données d'exemple » autour d'une section que Mistral a remplie
@@ -96,6 +97,7 @@ export default function Assembler({
       {/* `sg-fit-root` : repère mesuré par la vignette du catalogue pour caler la
           carte sur la hauteur RÉELLE des sections (et non celle de la page). */}
       <div id={fit ? "sg-fit-root" : undefined} style={{ position: "relative", zIndex: 1 }}>
+      <BrandProvider logo={recipe.brand?.logo} scale={recipe.brand?.logoScale}>
       {v.resolved.map((s, i) => {
         const C = COMPONENTS[s.manifest.id];
         if (!C) return null;
@@ -139,6 +141,7 @@ export default function Assembler({
         }
         return <C key={i} content={s.content} skin={s.skin} />;
       })}
+      </BrandProvider>
       </div>
       {highlightIndex !== undefined ? (
         <script

@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import { COMPONENTS } from "@/components/foundry/registry";
 import { repairCharte, vibeToSpec } from "@/lib/foundry/charte";
+import { extractLogoColors } from "@/lib/foundry/logo-colors";
 import { heroTreatmentOf } from "@/lib/foundry/treatment";
 import { ROLE_ORDER } from "@/lib/foundry/roles";
 import { publicSiteUrl } from "@/lib/site-url";
@@ -84,6 +85,10 @@ export default function StudioEditor({ data }: { data: StudioData }) {
   const [sections, setSections] = useState<StudioSection[]>(data.sections);
   const [vibe, setVibe] = useState<StudioVibe>(data.vibe);
   const [brandPrimary, setBrandPrimary] = useState<string | null>(data.brandPrimary);
+  // Logo de marque (navbar/footer) + échelle + indicateur d'occupation (upload/sync).
+  const [brandLogo, setBrandLogo] = useState<string | null>(data.brandLogo);
+  const [brandLogoScale, setBrandLogoScale] = useState<number>(data.brandLogoScale);
+  const [logoBusy, setLogoBusy] = useState(false);
   const [balance, setBalance] = useState(data.balance);
   const [owned, setOwned] = useState<Set<string>>(new Set(data.catalog.filter((c) => c.owned).map((c) => c.id)));
   // Chartes graphiques personnelles (compte) + charte active (si la charte custom
@@ -153,9 +158,28 @@ export default function StudioEditor({ data }: { data: StudioData }) {
   // --- Refs synchrones (pour l'historique) + état mutateurs -------------------
   const secRef = useRef(sections); const vibeRef = useRef(vibe); const brandRef = useRef(brandPrimary);
   const activeCharteRef = useRef<string | null>(data.activeUserCharteId);
+  const brandLogoRef = useRef<string | null>(data.brandLogo);
   const setSecs = (next: StudioSection[]) => { secRef.current = next; setSections(next); };
   const setVibeS = (v: StudioVibe) => { vibeRef.current = v; setVibe(v); };
   const setBrandS = (b: string | null) => { brandRef.current = b; setBrandPrimary(b); };
+  const setBrandLogoS = (l: string | null) => { brandLogoRef.current = l; setBrandLogo(l); };
+  // Échelle du logo : sauvegarde différée (le curseur émet en continu), mais
+  // « vidable » avant publication (sinon on publierait l'ancienne taille).
+  const scaleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pendingScale = useRef<number | null>(null);
+  const scaleInFlight = useRef<Promise<unknown> | null>(null);
+  function setLogoScale(scale: number) {
+    setBrandLogoScale(scale); // aperçu live immédiat (via contexte)
+    pendingScale.current = scale;
+    if (scaleTimer.current) clearTimeout(scaleTimer.current);
+    scaleTimer.current = setTimeout(() => { void flushScale(); }, 350);
+  }
+  async function flushScale() {
+    if (scaleTimer.current) { clearTimeout(scaleTimer.current); scaleTimer.current = null; }
+    const s = pendingScale.current;
+    if (s != null) { pendingScale.current = null; scaleInFlight.current = call({ op: "brand", scale: s }); }
+    if (scaleInFlight.current) { await scaleInFlight.current; scaleInFlight.current = null; }
+  }
   const setActiveCharte = (id: string | null) => { activeCharteRef.current = id; setActiveCharteId(id); };
 
   /** Reconstruit des StudioSection depuis les sections renvoyées par le serveur
@@ -419,6 +443,63 @@ export default function StudioEditor({ data }: { data: StudioData }) {
     if (res) { record(); flash("Charte importée ✓"); }
   }
 
+  // --- Logo de marque (navbar/footer) -----------------------------------------
+  /** Envoie un logo, l'enregistre dans la recette (brand.logo) et l'affiche partout. */
+  async function uploadLogo(file: File) {
+    if (logoBusy) return;
+    setLogoBusy(true);
+    try {
+      const form = new FormData();
+      form.append("file", file);
+      form.append("siteId", data.siteId);
+      const res = await fetch("/api/foundry/logo", { method: "POST", body: form });
+      const json = await res.json().catch(() => null);
+      if (!res.ok || !json?.url) { flash(json?.error ?? "Envoi du logo impossible."); return; }
+      const saved = await call({ op: "brand", logo: json.url });
+      if (!saved) return;
+      setBrandLogoS(json.url);
+      flash("Logo ajouté ✓");
+    } finally {
+      setLogoBusy(false);
+    }
+  }
+  /** Retire le logo : on retombe sur la marque par défaut (symbole + nom). */
+  async function removeLogo() {
+    if (logoBusy) return;
+    setLogoBusy(true);
+    try {
+      const saved = await call({ op: "brand", logo: null });
+      if (!saved) return;
+      setBrandLogoS(null);
+      flash("Logo retiré.");
+    } finally {
+      setLogoBusy(false);
+    }
+  }
+  /** « Accorder la charte au logo » : couleurs dominantes du logo → accent/accent2,
+   *  le reste de la charte (fontes, mode, fonds) est conservé puis re-réparé serveur. */
+  async function syncToLogo() {
+    const url = brandLogoRef.current;
+    if (!url || logoBusy) return;
+    setLogoBusy(true);
+    try {
+      const colors = await extractLogoColors(url);
+      if (!colors) { flash("Logo trop uni pour en tirer des couleurs."); return; }
+      const next: StudioVibe = {
+        ...vibeRef.current,
+        id: "custom",
+        palette: { ...vibeRef.current.palette, accent: colors.accent, accent2: colors.accent2 },
+      };
+      setVibeS(next);
+      setBrandS(null);        // l'accent vient désormais de la charte, pas d'une surcharge
+      setActiveCharte(null);  // charte custom autonome
+      const res = await call({ op: "palette", charteSpec: vibeToSpec(next) });
+      if (res) { record(); flash("Charte accordée à votre logo ✨"); }
+    } finally {
+      setLogoBusy(false);
+    }
+  }
+
   // --- Publier ----------------------------------------------------------------
   async function publish() {
     if (data.locked) { router.push("/dashboard?paywall=1"); return; }
@@ -429,6 +510,7 @@ export default function StudioEditor({ data }: { data: StudioData }) {
       // publierait l'ancienne version (charte « pas à jour » en ligne).
       await flushContent();
       await flushPalette();
+      await flushScale();
       const res = await fetch("/api/site/publish", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -680,7 +762,7 @@ export default function StudioEditor({ data }: { data: StudioData }) {
         {/* ===== Canvas central ===== */}
         <div ref={canvasRef} data-tour="studio-canvas" className="flex-1 overflow-y-auto" onClick={() => setSelected(null)}>
           <div className="mx-auto my-6 max-w-[1180px] overflow-hidden rounded-2xl bg-white shadow-[0_8px_40px_rgba(0,0,0,0.08)]">
-            <Themed vibe={vibe} brandPrimary={brandPrimary}>
+            <Themed vibe={vibe} brandPrimary={brandPrimary} brandLogo={brandLogo} brandLogoScale={brandLogoScale}>
               {sections.map((s, i) => {
                 const C = COMPONENTS[s.component];
                 const isSel = selected === i;
@@ -744,6 +826,13 @@ export default function StudioEditor({ data }: { data: StudioData }) {
                   userChartes={userChartes}
                   activeCharteId={activeCharteId}
                   charteBusy={charteBusy}
+                  brandLogo={brandLogo}
+                  brandLogoScale={brandLogoScale}
+                  logoBusy={logoBusy}
+                  onUploadLogo={uploadLogo}
+                  onRemoveLogo={removeLogo}
+                  onSyncToLogo={syncToLogo}
+                  onLogoScale={setLogoScale}
                   onLive={liveVibe}
                   onPersistCharte={persistCharte}
                   onPersistPreset={persistPreset}
@@ -770,6 +859,8 @@ export default function StudioEditor({ data }: { data: StudioData }) {
           candidates={replaceCandidates(replaceAt)}
           vibe={vibe}
           brandPrimary={brandPrimary}
+          brandLogo={brandLogo}
+          brandLogoScale={brandLogoScale}
           onChoose={(id) => doReplace(replaceAt, id)}
           onBuy={buy}
           onClose={() => setReplaceAt(null)}
@@ -782,6 +873,8 @@ export default function StudioEditor({ data }: { data: StudioData }) {
           insertIndexFor={(entry) => canonicalInsertIndex(secRef.current, entry.role)}
           vibe={vibe}
           brandPrimary={brandPrimary}
+          brandLogo={brandLogo}
+          brandLogoScale={brandLogoScale}
           onAdd={doAdd}
           onBuy={buy}
           onClose={() => setAddOpen(false)}
@@ -792,6 +885,8 @@ export default function StudioEditor({ data }: { data: StudioData }) {
           sections={sections}
           vibe={vibe}
           brandPrimary={brandPrimary}
+          brandLogo={brandLogo}
+          brandLogoScale={brandLogoScale}
           initialHeld={reorderFrom}
           onMove={(from, to) => void move(from, to)}
           onClose={() => { setReorderFrom(null); setSelected(null); }}

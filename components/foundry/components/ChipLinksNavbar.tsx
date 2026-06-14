@@ -5,6 +5,7 @@
 import type { CSSProperties } from "react";
 import type { Skin } from "@/lib/foundry/types";
 import { navLabel, navHref } from "@/lib/foundry/nav";
+import { BrandLogo } from "@/components/foundry/BrandLogo";
 
 const LINKS_FALLBACK = ["Accueil", "Destinations", "À propos", "Contact"];
 
@@ -20,8 +21,16 @@ export default function ChipLinksNavbar({ content, skin }: { content: any; skin:
       `}</style>
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
         <a href="#" className="flex items-center gap-2">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="var(--c-accent)" aria-hidden><path d="M12 0l2.2 7L20.7 3.7 17.4 10.2 24.4 12.4l-7 2.2 3.3 6.5-6.5-3.3L12 24l-2.2-7-6.5 3.3 3.3-6.5L0 12.4l7-2.2L3.7 3.7 10.2 7z" /></svg>
-          <span className="text-2xl font-bold" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)" }}>{content?.brand ?? "Voyageo"}</span>
+          <BrandLogo
+            alt={content?.brand}
+            height={32}
+            fallback={
+              <>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="var(--c-accent)" aria-hidden><path d="M12 0l2.2 7L20.7 3.7 17.4 10.2 24.4 12.4l-7 2.2 3.3 6.5-6.5-3.3L12 24l-2.2-7-6.5 3.3 3.3-6.5L0 12.4l7-2.2L3.7 3.7 10.2 7z" /></svg>
+                <span className="text-2xl font-bold" style={{ color: "var(--c-ink)", fontFamily: "var(--font-heading)" }}>{content?.brand ?? "Voyageo"}</span>
+              </>
+            }
+          />
         </a>
 
         <div className="hidden items-center gap-2 lg:flex">
