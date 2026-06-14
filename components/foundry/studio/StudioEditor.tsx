@@ -31,6 +31,7 @@ import { repairCharte, vibeToSpec } from "@/lib/foundry/charte";
 import { extractLogoColors } from "@/lib/foundry/logo-colors";
 import { heroTreatmentOf } from "@/lib/foundry/treatment";
 import { ROLE_ORDER } from "@/lib/foundry/roles";
+import { publicSiteUrl } from "@/lib/site-url";
 import ImportCharte, { type ImportedCharte } from "@/components/creer/ImportCharte";
 import type { StudioData, StudioSection, StudioVibe, CatalogEntry, SavedCharte } from "./types";
 import {
@@ -677,7 +678,7 @@ export default function StudioEditor({ data }: { data: StudioData }) {
           </button>
           <button data-tour="studio-add" onClick={() => setAddOpen(true)} className="inline-flex h-9 items-center gap-1.5 rounded-full border border-neutral-200 px-3.5 text-[13px] font-semibold text-neutral-700 transition hover:border-neutral-400"><Plus size={15} /> Ajouter</button>
           {data.slug && data.isLive && (
-            <a href={`/a/${data.slug}`} target="_blank" rel="noreferrer" className="hidden h-9 items-center gap-1.5 rounded-full border border-neutral-200 px-3.5 text-[13px] font-semibold text-neutral-700 transition hover:border-neutral-400 sm:inline-flex"><ExternalLink size={14} /> Voir</a>
+            <a href={publicSiteUrl(data.slug)} target="_blank" rel="noreferrer" className="hidden h-9 items-center gap-1.5 rounded-full border border-neutral-200 px-3.5 text-[13px] font-semibold text-neutral-700 transition hover:border-neutral-400 sm:inline-flex"><ExternalLink size={14} /> Voir</a>
           )}
           <button data-tour="studio-publish" onClick={publish} disabled={publishing} className="inline-flex h-9 items-center gap-1.5 rounded-full bg-neutral-900 px-4 text-[13px] font-semibold text-white transition hover:bg-neutral-700 disabled:opacity-50">
             <Sparkles size={14} /> {publishing ? "Publication…" : data.locked ? "Mettre en ligne" : data.hasUnpublished ? "Publier" : "En ligne"}
