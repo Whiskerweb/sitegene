@@ -1,7 +1,9 @@
 import { createPublicClient } from "@/lib/supabase/public";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { buildSiteHtml, fetchDefaultContent } from "@/lib/site-server";
-import { contentForTemplate, metaForTemplate } from "@/lib/site-content";
+import { contentForTemplate, metaForTemplate, type AnyContent } from "@/lib/site-content";
 import { isTemplateId } from "@/lib/templates";
+import { hasActiveSubscription } from "@/lib/subscription";
 
 /**
  * Serveur de sites clients multi-pages : /s/<slug>/<...path>.
@@ -20,20 +22,27 @@ export async function GET(
 
   let templateId: string | null = null;
   let rawContent: unknown = null;
+  // Shell bespoke (site sur-mesure généré par l'IA), sinon null → template statique.
+  let generatedHtml: string | null = null;
 
   const { data: site } = await supabase
     .from("sites")
-    .select("id, template_id, status")
+    .select("id, template_id, status, owner_user_id")
     .eq("slug", slug)
     .eq("status", "live")
     .maybeSingle();
+
+  // Site ASSEMBLÉ (fonderie) : rendu React hydraté sur /a/<slug>.
+  if (site?.template_id === "foundry") {
+    return Response.redirect(`${origin}/a/${slug}`, 308);
+  }
 
   if (site && site.template_id) {
     // Le snapshot publié porte SA peau (peut différer de la peau en cours
     // d'édition si l'utilisateur a changé de template sans republier).
     const { data: sc } = await supabase
       .from("site_content")
-      .select("content_json, version, template_id")
+      .select("content_json, version, template_id, generated_html")
       .eq("site_id", site.id)
       .eq("is_published", true)
       .order("version", { ascending: false })
@@ -43,6 +52,7 @@ export async function GET(
       sc?.template_id && isTemplateId(sc.template_id) ? sc.template_id : site.template_id;
     templateId = renderTpl;
     rawContent = sc?.content_json ?? (await fetchDefaultContent(origin, renderTpl));
+    generatedHtml = (sc as { generated_html?: string | null })?.generated_html ?? null;
   } else if (isTemplateId(slug)) {
     // Aperçu démo d'un template (sans site client) — disponible aussi en prod.
     // Réponse noindex ; ne sert que des templateId connus, contenu par défaut.
@@ -57,12 +67,22 @@ export async function GET(
     });
   }
 
-  // Contenu par lignée : v2 (SPA) ou PLAT (HTML clone-site).
-  const content = contentForTemplate(rawContent, templateId);
+  // Shell bespoke → le contenu extrait est PLAT (data-sg) : on n'applique PAS la
+  // normalisation v2/SPA. Sinon, contenu par lignée habituel.
+  const content = generatedHtml
+    ? (rawContent as AnyContent)
+    : contentForTemplate(rawContent, templateId);
   const meta = metaForTemplate(content, templateId, pagePath);
+  // Badge « Propulsé par Akyra » sauf si le propriétaire est abonné « tout compris ».
+  const ownerId = (site as { owner_user_id?: string | null } | null)?.owner_user_id ?? null;
+  const isSubscribed = ownerId
+    ? await hasActiveSubscription(createAdminClient(), ownerId)
+    : false;
   const html = await buildSiteHtml(origin, templateId, content, meta, {
     pagePath,
     basePath: `/s/${slug}`,
+    shellHtml: generatedHtml,
+    showBranding: !isSubscribed,
   });
   if (!html) return new Response("Template indisponible.", { status: 500 });
 

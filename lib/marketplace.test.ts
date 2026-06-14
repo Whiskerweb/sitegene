@@ -1,7 +1,9 @@
 import { describe, it, expect } from "vitest";
 import {
+  COMPONENT_PRICE_CREDITS,
   EFFECT_PRICE_CREDITS,
   TEMPLATE_PRICE_CREDITS,
+  componentPrice,
   genLicenseCode,
   isMarketplaceItemType,
   priceFor,
@@ -14,9 +16,16 @@ describe("marketplace — prix (autorité serveur)", () => {
     expect(priceFor("effect")).toBe(EFFECT_PRICE_CREDITS);
   });
 
+  it("componentPrice tarife à la rareté (common inclus)", () => {
+    expect(componentPrice("common")).toBe(0);
+    expect(componentPrice("rare")).toBe(COMPONENT_PRICE_CREDITS.rare);
+    expect(componentPrice("epic")).toBeGreaterThan(componentPrice("rare"));
+  });
+
   it("isMarketplaceItemType filtre les types inconnus", () => {
     expect(isMarketplaceItemType("template")).toBe(true);
     expect(isMarketplaceItemType("effect")).toBe(true);
+    expect(isMarketplaceItemType("component")).toBe(true);
     expect(isMarketplaceItemType("subscription")).toBe(false);
   });
 });

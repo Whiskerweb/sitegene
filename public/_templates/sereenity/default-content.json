@@ -1,0 +1,139 @@
+{
+  "version": 2,
+  "site": {
+    "brand": "Sereenity",
+    "nav": [
+      { "label": "À propos", "to": "#apropos" },
+      { "label": "Accompagnement", "to": "#accompagnement" },
+      { "label": "Tarifs", "to": "#tarifs" },
+      { "label": "Témoignages", "to": "#temoignages" },
+      { "label": "FAQ", "to": "#faq" }
+    ],
+    "contact": {
+      "email": "bonjour@sereenity.fr",
+      "phone": "+33 1 23 45 67 89",
+      "address": "12 rue des Tilleuls, 75011 Paris"
+    },
+    "footer": {
+      "tagline": "Un accompagnement chaleureux pour retrouver clarté, confiance et sérénité.",
+      "socials": ["Instagram", "LinkedIn", "Facebook"]
+    },
+    "theme": {}
+  },
+  "pages": [
+    {
+      "slug": "/",
+      "type": "home",
+      "title": "Sereenity — Coaching & développement personnel",
+      "meta": {
+        "description": "Un accompagnement chaleureux et personnalisé pour retrouver clarté, confiance et sérénité. Séances individuelles, en présentiel ou en visio."
+      },
+      "content": {
+        "hero": {
+          "badge": "4,9 · noté par mes clients",
+          "titleLead": "Vous méritez de vous sentir mieux.",
+          "titleEmph": "La sérénité",
+          "titleRest": "commence ici.",
+          "subtitle": "Un accompagnement chaleureux et personnalisé pour traverser les défis de la vie avec plus de clarté, de confiance et d’apaisement.",
+          "cta": "Prendre rendez-vous",
+          "proofCount": "300+",
+          "proofLabel": "personnes accompagnées vers plus de sérénité",
+          "image": "/_templates/sereenity/img/hero.png"
+        },
+        "walkthrough": {
+          "eyebrow": "Un espace pour parler",
+          "title": "À quoi ressemble une séance",
+          "body": "Chez Sereenity, tout commence par le sentiment d’être réellement écouté. Pas de jugement, pas de pression — juste un espace sûr où déposer ce qui pèse et avancer à votre rythme.",
+          "image": "/_templates/sereenity/img/session.png",
+          "points": ["Présentiel ou visio", "Premier échange offert", "Objectifs définis ensemble"],
+          "highlight": { "value": "3 séances", "label": "suffisent souvent à ressentir un mieux réel" }
+        },
+        "stats": {
+          "eyebrow": "En quelques chiffres",
+          "title": "Un accompagnement qui change les choses",
+          "items": [
+            { "value": "500+", "label": "personnes ont fait le premier pas vers leur mieux-être" },
+            { "value": "92%", "label": "ressentent une amélioration dès les trois premières séances" },
+            { "value": "12 ans", "label": "à accompagner sur le chemin du changement" },
+            { "value": "2 000+", "label": "séances en visio menées, où que vous soyez" }
+          ]
+        },
+        "servicesIntro": {
+          "eyebrow": "Mon accompagnement",
+          "title": "Comment je vous aide à avancer",
+          "body": "Un soutien chaleureux et personnalisé pour traverser les défis de la vie, à votre rythme.",
+          "cta": "Voir tout l’accompagnement"
+        },
+        "services": [
+          { "n": "01", "name": "Accompagnement individuel", "desc": "Des séances en tête-à-tête pour apprivoiser le stress, l’anxiété ou une période de doute, dans un espace bienveillant et sans jugement.", "img": "/_templates/sereenity/img/svc1.png" },
+          { "n": "02", "name": "Accompagnement de couple", "desc": "Renouer le dialogue, reconstruire la confiance et traverser les tensions, accompagnés par un regard extérieur et bienveillant.", "img": "/_templates/sereenity/img/svc2.png" },
+          { "n": "03", "name": "Famille & parentalité", "desc": "Un soutien pour les familles qui traversent un conflit, un changement ou une épreuve, vers des liens plus sereins et connectés.", "img": "/_templates/sereenity/img/svc3.png" },
+          { "n": "04", "name": "Jeunes & adolescents", "desc": "Un accompagnement adapté aux enfants et ados face au stress scolaire, au manque de confiance ou aux émotions difficiles.", "img": "/_templates/sereenity/img/svc4.png" }
+        ],
+        "process": {
+          "eyebrow": "Le chemin",
+          "title": "Les étapes vers l’apaisement",
+          "steps": [
+            { "n": "01", "title": "Premier échange", "desc": "Un appel offert de 20 minutes pour faire connaissance et cerner votre besoin, sans engagement." },
+            { "n": "02", "title": "La séance", "desc": "En présentiel ou en visio, un cadre calme et confidentiel où vous êtes pleinement entendu." },
+            { "n": "03", "title": "Des progrès concrets", "desc": "Ensemble, on repère vos schémas, on bâtit votre résilience et on avance, pas à pas." }
+          ],
+          "cta": "Prendre rendez-vous",
+          "image": "/_templates/sereenity/img/session2.png"
+        },
+        "valueProps": {
+          "eyebrow": "Ce qui fait la différence",
+          "title": "Pourquoi ça vaut le coup",
+          "items": [
+            { "title": "Vous serez écouté et compris", "desc": "J’écoute avec attention et crée un espace où vous exprimer librement — sans jugement, sans pression." },
+            { "title": "Un cadre sûr et bienveillant", "desc": "Dès la première séance, on met au jour vos schémas, on bâtit votre résilience et on avance durablement." },
+            { "title": "Des changements réels et durables", "desc": "Prendre soin de soi n’est pas un luxe, c’est du respect. Vous méritez le calme, la clarté et la confiance." }
+          ],
+          "closing": "Chez Sereenity, l’accompagnement est bien plus que professionnel — il est profondément humain. Mes valeurs guident chaque séance.",
+          "values": ["Compassion", "Connexion", "Écoute", "Autonomie", "Bienveillance"],
+          "ambianceImage": "/_templates/sereenity/img/ambiance.png",
+          "coachImage": "/_templates/sereenity/img/coach.png"
+        },
+        "testimonialsIntro": {
+          "eyebrow": "Ils en parlent mieux que moi",
+          "title": "Vous n’êtes pas seul — écoutez ceux qui sont passés par là"
+        },
+        "testimonials": [
+          { "text": "L’accompagnement a changé ma vie. Après des années à cacher mon anxiété, j’ai enfin osé en parler — et j’en suis profondément reconnaissant.", "name": "Karim B.", "role": "Accompagnement individuel", "avatar": "/_templates/sereenity/img/av1.png" },
+          { "text": "Les séances en visio m’ont permis d’être aidé sans sortir de ma zone de confort. Je me suis senti tout aussi écouté et accompagné.", "name": "Lucas M.", "role": "Séances en visio", "avatar": "/_templates/sereenity/img/av2.png" },
+          { "text": "Après la perte de mon père, j’étais perdu. Mon accompagnement m’a aidé à faire de la place à la douleur sans la laisser me définir.", "name": "Thomas R.", "role": "Accompagnement du deuil", "avatar": "/_templates/sereenity/img/av3.png" },
+          { "text": "Je traversais une rupture très difficile. L’accompagnement m’a donné les outils pour me reconstruire. Je me suis senti en sécurité dès le premier jour.", "name": "David L.", "role": "Transition de vie", "avatar": "/_templates/sereenity/img/av4.png" }
+        ],
+        "serviceTags": ["Coaching", "Écoute", "Bien-être", "Soutien", "Confiance", "Pleine conscience", "Gestion du stress", "Estime de soi", "Transition de vie", "Relations"],
+        "pricing": {
+          "eyebrow": "Tarifs simples",
+          "title": "Des formules claires, sans surprise",
+          "note": "Toutes les formules incluent un premier échange offert de 20 min et peuvent être suspendues à tout moment. Tarifs dégressifs possibles — demandez-moi.",
+          "toggleMonthly": "Mensuel",
+          "toggleAnnual": "Annuel · -20%",
+          "plans": [
+            { "name": "Découverte", "priceMonthly": "49 €", "priceAnnual": "39 €", "unit": "/séance", "desc": "Idéal pour faire un premier pas et explorer l’accompagnement en douceur.", "features": ["Une séance d’accompagnement", "En visio ou en présentiel", "Définition d’objectifs personnalisés", "Accès à l’espace client"], "cta": "Réserver ma séance" },
+            { "name": "Évolution", "priceMonthly": "89 €", "priceAnnual": "71 €", "unit": "/séance", "featured": true, "desc": "Le rythme idéal pour installer un vrai changement dans la durée.", "features": ["Accompagnement dédié", "En visio ou en présentiel", "Plan de progression sur-mesure", "Messagerie entre les séances"], "cta": "Réserver ma séance" },
+            { "name": "Sérénité", "priceMonthly": "229 €", "priceAnnual": "183 €", "unit": "/mois", "desc": "Pour celles et ceux qui veulent le niveau d’accompagnement le plus complet.", "features": ["Séances illimitées", "Soutien prioritaire", "Messagerie entre les séances", "Ligne d’écoute en cas de besoin"], "cta": "Réserver ma séance" }
+          ]
+        },
+        "faqIntro": {
+          "eyebrow": "Vos questions",
+          "title": "Les questions que l’on me pose souvent",
+          "body": "Tout ce qu’il faut savoir avant de commencer votre cheminement."
+        },
+        "faqs": [
+          { "q": "Quels types d’accompagnement proposez-vous ?", "a": "J’accompagne en individuel, en couple, en famille et auprès des jeunes : gestion du stress et de l’anxiété, confiance en soi, transitions de vie, relations et bien-être au quotidien." },
+          { "q": "Les séances sont-elles confidentielles ?", "a": "Absolument. Tout ce qui se dit en séance reste strictement confidentiel. La confiance et la sécurité sont la base de notre travail ensemble." },
+          { "q": "Ai-je besoin d’une recommandation pour réserver ?", "a": "Aucune recommandation n’est nécessaire. Vous pouvez réserver directement votre premier échange offert et nous verrons ensemble la suite la plus adaptée." },
+          { "q": "Et si je ne suis pas sûr d’avoir besoin d’un accompagnement ?", "a": "C’est tout à fait normal d’hésiter. Le premier échange de 20 minutes est justement là pour ça : sans engagement, on regarde ensemble si je suis la bonne personne pour vous." },
+          { "q": "Proposez-vous des séances en visio ?", "a": "Oui. Les séances se déroulent au choix en présentiel à Paris ou en visio, partout en France, avec le même soin et la même qualité d’écoute." }
+        ],
+        "finalCta": {
+          "title": "Votre cheminement vers le mieux-être commence par un premier pas — celui de tendre la main.",
+          "cta": "Prendre rendez-vous"
+        }
+      }
+    }
+  ]
+}

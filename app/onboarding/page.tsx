@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getUser } from "@/lib/auth";
-import OnboardingClient from "./OnboardingClient";
+import AiOnboardingClient from "./AiOnboardingClient";
 
 export const metadata = {
   title: "Akyra — Construisons votre site",
@@ -10,12 +10,12 @@ export const metadata = {
 export const dynamic = "force-dynamic";
 
 /**
- * Parcours guidé self-serve. Le compte existe déjà (gate landing) ; sinon on
- * renvoie vers la home où la bulle ouvre le gate. Le brief initial est repris
- * côté client depuis sessionStorage.
+ * Parcours self-serve : onboarding conversationnel IA temps réel (questions
+ * improvisées selon le métier, choix de thème adapté, génération sur-mesure).
+ * Remplace l'ancien tunnel scripté (OnboardingClient, conservé pour référence).
  */
 export default async function OnboardingPage() {
   const user = await getUser();
   if (!user) redirect("/");
-  return <OnboardingClient email={user.email ?? ""} />;
+  return <AiOnboardingClient />;
 }

@@ -15,6 +15,8 @@ export type ContentRow = {
   version: number;
   content_json: Record<string, unknown> | null;
   is_published: boolean;
+  /** Shell HTML bespoke généré par l'IA (sinon null → index.html statique). */
+  generated_html?: string | null;
 };
 
 // --- Sélecteurs purs (testables sans DB) ------------------------------------
@@ -42,7 +44,8 @@ export function distinctTemplates(rows: ContentRow[]): string[] {
 
 // --- Accès DB ----------------------------------------------------------------
 
-const COLS = "id, site_id, template_id, version, content_json, is_published";
+const COLS =
+  "id, site_id, template_id, version, content_json, is_published, generated_html";
 
 /** Snapshot éditable (version max) de la peau `templateId` pour ce site. */
 export async function loadEditableSnapshot(
@@ -94,27 +97,51 @@ export async function listSiteTemplates(
  * peau n'est pas publiée, on l'écrase ; sinon on crée une nouvelle version.
  * Retourne la version écrite.
  */
+/**
+ * Prochaine version pour ce SITE : la contrainte `unique (site_id, version)` est
+ * GLOBALE (pas par template). Pour une nouvelle peau on prend donc le max de
+ * TOUTES les peaux du site + 1 (sinon collision v1 avec une peau existante).
+ */
+async function nextSiteVersion(admin: SupabaseClient, siteId: string): Promise<number> {
+  const { data } = await admin
+    .from("site_content")
+    .select("version")
+    .eq("site_id", siteId)
+    .order("version", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  return (((data as { version?: number } | null)?.version ?? 0) as number) + 1;
+}
+
 export async function saveDraftSnapshot(
   admin: SupabaseClient,
   siteId: string,
   templateId: string,
   contentJson: Record<string, unknown>,
   createdBy: "operator" | "client" | "ai" = "client",
+  // Shell HTML bespoke (génération IA). `undefined` = ne pas toucher la colonne
+  // (édition de contenu seule) ; `null`/string = écrire la valeur.
+  generatedHtml?: string | null,
 ): Promise<number> {
   const top = await loadEditableSnapshot(admin, siteId, templateId);
   if (top && !top.is_published) {
-    await admin.from("site_content").update({ content_json: contentJson }).eq("id", top.id);
+    const patch: Record<string, unknown> = { content_json: contentJson };
+    if (generatedHtml !== undefined) patch.generated_html = generatedHtml;
+    const { error } = await admin.from("site_content").update(patch).eq("id", top.id);
+    if (error) throw new Error(`saveDraftSnapshot update: ${error.message}`);
     return top.version;
   }
-  const version = (top?.version ?? 0) + 1;
-  await admin.from("site_content").insert({
+  const version = await nextSiteVersion(admin, siteId);
+  const { error } = await admin.from("site_content").insert({
     site_id: siteId,
     template_id: templateId,
     version,
     content_json: contentJson,
     is_published: false,
     created_by: createdBy,
+    ...(generatedHtml !== undefined ? { generated_html: generatedHtml } : {}),
   });
+  if (error) throw new Error(`saveDraftSnapshot insert: ${error.message}`);
   return version;
 }
 
@@ -130,10 +157,11 @@ export async function ensureSnapshot(
 ): Promise<boolean> {
   const existing = await loadEditableSnapshot(admin, siteId, templateId);
   if (existing) return false;
+  const version = await nextSiteVersion(admin, siteId);
   await admin.from("site_content").insert({
     site_id: siteId,
     template_id: templateId,
-    version: 1,
+    version,
     content_json: contentJson,
     is_published: false,
     created_by: "client",

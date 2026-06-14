@@ -27,6 +27,6 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: "Je peux mettre mon propre nom de domaine ?",
-    a: "Au lancement votre site vit sur vous.akyra.com. Vous pourrez brancher votre domaine ensuite, en quelques clics.",
+    a: "Au lancement votre site vit sur vous.akyra.io. Pour brancher votre propre nom de domaine (ex : votre-studio.com), il suffit de passer à l'abonnement : il inclut votre domaine, le retrait du badge Akyra et toute la boutique offerte. Le branchement se fait en quelques clics.",
   },
 ];

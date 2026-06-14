@@ -15,22 +15,31 @@ import { displayCards, displayCardsDemoConfig } from "./display-cards";
 import { shuffleTestimonials, shuffleTestimonialsDemoConfig } from "./shuffle-testimonials";
 import { circularTestimonials, circularTestimonialsDemoConfig } from "./circular-testimonials";
 import { staggerTestimonials, staggerTestimonialsDemoConfig } from "./stagger-testimonials";
+import { parallaxImage, parallaxImageDemoConfig } from "./parallax-image";
+import { softGlow, softGlowDemoConfig } from "./soft-glow";
+import { floatingTags, floatingTagsDemoConfig } from "./floating-tags";
 
 const ALL: EffectModule[] = [
   containerScroll,
+  parallaxImage,
   displayCards,
   shuffleTestimonials,
   circularTestimonials,
   staggerTestimonials,
+  softGlow,
+  floatingTags,
 ];
 
 /** Surcharges de config pour la page de démo (/api/fx-demo). */
 export const DEMO_CONFIGS: Record<string, EffectConfig> = {
   [containerScroll.id]: containerScrollDemoConfig,
+  [parallaxImage.id]: parallaxImageDemoConfig,
   [displayCards.id]: displayCardsDemoConfig,
   [shuffleTestimonials.id]: shuffleTestimonialsDemoConfig,
   [circularTestimonials.id]: circularTestimonialsDemoConfig,
   [staggerTestimonials.id]: staggerTestimonialsDemoConfig,
+  [softGlow.id]: softGlowDemoConfig,
+  [floatingTags.id]: floatingTagsDemoConfig,
 };
 
 export const EFFECTS: Record<string, EffectModule> = Object.fromEntries(

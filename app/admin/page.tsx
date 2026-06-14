@@ -2,6 +2,8 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { categoryLabel } from "@/lib/crm/categories";
 import { Stat } from "@/app/admin/_components";
+import { HeroBanner } from "@/components/ui/HeroBanner";
+import { MetricsRow } from "@/components/ui/MetricsRow";
 
 export const dynamic = "force-dynamic";
 
@@ -85,57 +87,73 @@ export default async function AdminDashboard() {
 
   return (
     <div>
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h1 className="font-display text-[28px] font-semibold tracking-[-0.02em]">Tableau de bord</h1>
-          <p className="mt-1 text-sm text-muted">Santé de la prospection & du revenu — {monthLabel}</p>
-        </div>
-        <Link href="/admin/prospects" className="btn-violet rounded-full px-5 py-2.5 text-sm font-semibold text-white">
-          Voir les prospects →
-        </Link>
-      </div>
+      {/* Hero sombre — revenu du mois, façon bannière « revenue » Traaaction */}
+      <HeroBanner
+        label={`Revenu net-new · ${monthLabel}`}
+        value={euros(netNew)}
+        badge={{ text: `${nbInitial} ventes initiales`, tone: "violet" }}
+        right={
+          <Link
+            href="/admin/prospects"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-white px-4 py-2 text-xs font-semibold text-gray-900 shadow-[0_1px_2px_rgba(0,0,0,0.3)] transition-colors hover:bg-gray-100"
+          >
+            Voir les prospects →
+          </Link>
+        }
+      />
 
       {migrationsMissing ? (
-        <div className="mt-6 rounded-2xl border border-gold-400/30 bg-ink-800 p-5 text-sm text-gold-400">
+        <div className="mt-4 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-800">
           Les vues/colonnes CRM ne sont pas encore en base. Applique les migrations 0011-0013 pour
           activer le tableau de bord.
         </div>
       ) : null}
 
       {/* North Star + drivers */}
-      <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <Stat
-          label="Revenu net-new (ce mois)"
-          value={euros(netNew)}
-          accent="text-mint-400"
-          hint={`${nbInitial} ventes initiales`}
+      <div className="mt-6">
+        <MetricsRow
+          metrics={[
+            { label: "Abonnés actifs", value: activeSubs.count ?? 0, tone: "violet", hint: "récurrent (MRR)" },
+            { label: "Reveal-vu → payé", value: tauxGlobal != null ? `${tauxGlobal} %` : "—", tone: "amber", hint: "signal fiable" },
+            { label: "Reveals actifs", value: revealsActifs.count ?? 0, tone: "sky", hint: "à relancer" },
+            { label: "Clients", value: clients.count ?? 0, tone: "emerald" },
+          ]}
         />
-        <Stat label="Abonnés actifs" value={activeSubs.count ?? 0} accent="text-violet-400" hint="récurrent (MRR)" />
-        <Stat
-          label="Taux reveal-vu → payé"
-          value={tauxGlobal != null ? `${tauxGlobal} %` : "—"}
-          accent="text-gold-400"
-          hint="signal fiable (hors opens)"
-        />
-        <Stat label="Reveals actifs" value={revealsActifs.count ?? 0} hint="à relancer / suivre" />
       </div>
 
-      <div className="mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <Stat label="Prospects (total)" value={totalProspects.count ?? 0} />
-        <Stat label="Clients" value={clients.count ?? 0} accent="text-mint-400" />
-        <Stat label="Chauds 🔥" value={hot.count ?? 0} accent="text-[#ffcf5c]" hint="score ≥ 40, à attaquer" />
-        <Link href="/admin/prospects?sort=score" className="rounded-2xl border border-line bg-ink-800 p-5 transition-colors hover:border-violet-400/40">
-          <div className="font-display text-[18px] font-semibold text-violet-400">Action du jour →</div>
-          <div className="mt-2 text-[13px] text-faint">Trier par température et attaquer les plus chauds</div>
+      <div className="mt-4 grid gap-4 sm:grid-cols-3">
+        <div className="sm:col-span-2">
+          <MetricsRow
+            metrics={[
+              { label: "Prospects (total)", value: totalProspects.count ?? 0, tone: "indigo" },
+              { label: "Chauds 🔥", value: hot.count ?? 0, tone: "rose", hint: "score ≥ 40, à attaquer" },
+            ]}
+          />
+        </div>
+        <Link
+          href="/admin/prospects?sort=score"
+          className="card-hover flex flex-col justify-center rounded-xl border border-gray-200 bg-white p-5 transition-colors hover:border-violet-300"
+        >
+          <div
+            className="text-[18px] font-semibold text-violet-600"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Action du jour →
+          </div>
+          <div className="mt-1.5 text-[13px] text-gray-400">
+            Trier par température et attaquer les plus chauds
+          </div>
         </Link>
       </div>
 
       {/* Funnel par catégorie */}
       <div className="mt-8">
-        <h2 className="font-display text-lg font-semibold">Entonnoir par catégorie</h2>
-        <div className="mt-3 overflow-x-auto rounded-2xl border border-line">
+        <h2 className="text-lg font-semibold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
+          Entonnoir par catégorie
+        </h2>
+        <div className="mt-3 overflow-x-auto rounded-xl border border-gray-200 bg-white">
           <table className="w-full min-w-[680px] text-sm">
-            <thead className="bg-ink-800 text-left text-faint">
+            <thead className="bg-gray-50 text-left text-gray-400">
               <tr>
                 <th className="px-5 py-3 font-medium">Catégorie</th>
                 <th className="px-4 py-3 text-right font-medium">Total</th>
@@ -175,7 +193,9 @@ export default async function AdminDashboard() {
 
       {/* Délivrabilité */}
       <div className="mt-8">
-        <h2 className="font-display text-lg font-semibold">Santé délivrabilité (30 j)</h2>
+        <h2 className="text-lg font-semibold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
+          Santé délivrabilité (30 j)
+        </h2>
         <div className="mt-3 grid grid-cols-2 gap-4 sm:grid-cols-3">
           <Stat label="Emails envoyés" value={sent} />
           <Stat

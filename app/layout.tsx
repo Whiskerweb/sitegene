@@ -1,12 +1,20 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, Caveat, Archivo } from "next/font/google";
+import { Fraunces, Inter, Caveat, Archivo, Nunito_Sans } from "next/font/google";
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import { SMOOTH_SCROLL_JS } from "@/lib/smooth-scroll-runtime";
 import "./globals.css";
 
 const archivo = Archivo({
   variable: "--ff-archivo",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
+});
+
+// Police d'affichage du dashboard (DA façon Traaaction : titres en Nunito Sans).
+const nunitoSans = Nunito_Sans({
+  variable: "--font-nunito",
+  subsets: ["latin"],
+  weight: ["400", "600", "700", "800"],
 });
 
 const fraunces = Fraunces({
@@ -51,10 +59,12 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${fraunces.variable} ${inter.variable} ${caveat.variable} ${archivo.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${inter.variable} ${caveat.variable} ${archivo.variable} ${nunitoSans.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="grain dotted-grid min-h-full bg-background text-foreground" suppressHydrationWarning>
+        {/* Défilement fluide global (même runtime que les sites clients). */}
+        <script dangerouslySetInnerHTML={{ __html: SMOOTH_SCROLL_JS }} />
         <ScrollReveal />
         {children}
       </body>

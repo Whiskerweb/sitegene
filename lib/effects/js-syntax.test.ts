@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { listEffects } from "./index";
 import { FX_INJECTOR } from "./render";
+import { SMOOTH_SCROLL_JS } from "../smooth-scroll-runtime";
 import { injectEditChrome, injectPreviewRuntime } from "../edit-runtime";
 
 /**
@@ -21,6 +22,10 @@ describe("syntaxe des scripts injectés", () => {
 
   it("FX_INJECTOR", () => {
     expectValidJs(FX_INJECTOR, "FX_INJECTOR");
+  });
+
+  it("runtime de défilement fluide (smooth scroll global)", () => {
+    expectValidJs(SMOOTH_SCROLL_JS, "SMOOTH_SCROLL_JS");
   });
 
   it("runtime d'édition (RUNTIME) et runtime d'aperçu", () => {

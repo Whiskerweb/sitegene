@@ -1,19 +1,25 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { fadeUp, stagger, pop } from "@/lib/motion";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { CheckoutButton } from "./CheckoutButton";
 import { IconSpark, IconCheck, IconCredit } from "@/components/ui/icons";
-import { CREDIT_PACKS, formatEuros, SUBSCRIPTION_PRICE_CENTS } from "@/lib/pricing";
+import {
+  CREDIT_PACKS,
+  formatEuros,
+  SUBSCRIPTION_PRICE_CENTS,
+  SUBSCRIPTION_ANNUAL_PRICE_CENTS,
+} from "@/lib/pricing";
 
 const PERKS = [
+  "Votre nom de domaine (au lieu de vous.akyra.io)",
+  "Badge « Propulsé par Akyra » retiré",
+  "Toute la boutique offerte (templates & effets)",
   "Modifications illimitées (éditeur + IA)",
-  "Publication illimitée de votre site",
-  "Vos crédits restent pour la boutique (templates & effets)",
 ];
 
 export function BillingPanel({
@@ -25,6 +31,7 @@ export function BillingPanel({
   balance: number;
   periodEnd: string | null;
 }) {
+  const [interval, setInterval] = useState<"month" | "year">("month");
   const renew = periodEnd
     ? new Date(periodEnd).toLocaleDateString("fr-FR", {
         day: "2-digit",
@@ -32,6 +39,10 @@ export function BillingPanel({
         year: "numeric",
       })
     : null;
+  // Économie annuelle affichée (mensuel × 12 vs annuel).
+  const annualSavePct = Math.round(
+    (1 - SUBSCRIPTION_ANNUAL_PRICE_CENTS / (SUBSCRIPTION_PRICE_CENTS * 12)) * 100,
+  );
 
   return (
     <motion.div initial="hidden" animate="visible" variants={stagger} className="space-y-6">
@@ -57,10 +68,10 @@ export function BillingPanel({
             {isSub ? (
               <>
                 <p className="mt-3 flex items-center gap-2 font-archivo text-[34px] font-bold leading-none text-night">
-                  <IconSpark size={26} /> Tout illimité
+                  <IconSpark size={26} /> Tout compris
                 </p>
                 <p className="mt-3 text-sm text-slate">
-                  Vos modifications ne consomment plus de crédits.
+                  Domaine custom, boutique offerte et modifications illimitées.
                 </p>
                 {renew && <p className="mt-1 text-sm text-mist">Renouvelé le {renew}</p>}
                 <div className="mt-5">
@@ -87,17 +98,48 @@ export function BillingPanel({
           <div className="relative h-full overflow-hidden rounded-[24px] border border-brand/30 bg-gradient-to-br from-blue via-surface to-lav p-7 shadow-cloud-sm">
             <BorderBeam size={300} duration={9} borderWidth={2} colorFrom="#7c3aed" colorTo="#22d3ee" />
             <div className="flex items-center justify-between">
-              <p className="text-sm font-semibold text-brand">Offre illimitée</p>
+              <p className="text-sm font-semibold text-brand">Offre tout compris</p>
               <Badge tone="brand">Le plus populaire</Badge>
+            </div>
+
+            {/* Toggle cadence — mensuel affiché par défaut, annuel poussé. */}
+            <div className="mt-3 inline-flex rounded-full border border-sky-300 bg-white/70 p-0.5 text-[13px] font-semibold">
+              <button
+                type="button"
+                onClick={() => setInterval("month")}
+                className={`rounded-full px-3 py-1 transition-colors ${
+                  interval === "month" ? "bg-brand text-white" : "text-slate hover:text-night"
+                }`}
+              >
+                Mensuel
+              </button>
+              <button
+                type="button"
+                onClick={() => setInterval("year")}
+                className={`rounded-full px-3 py-1 transition-colors ${
+                  interval === "year" ? "bg-brand text-white" : "text-slate hover:text-night"
+                }`}
+              >
+                Annuel −{annualSavePct}%
+              </button>
             </div>
 
             <motion.p
               variants={pop}
               className="mt-3 font-archivo text-[40px] font-bold leading-none text-night"
             >
-              {formatEuros(SUBSCRIPTION_PRICE_CENTS)}
-              <span className="ml-1 text-base font-semibold text-slate">/ mois</span>
+              {interval === "year"
+                ? formatEuros(SUBSCRIPTION_ANNUAL_PRICE_CENTS)
+                : formatEuros(SUBSCRIPTION_PRICE_CENTS)}
+              <span className="ml-1 text-base font-semibold text-slate">
+                {interval === "year" ? "/ an" : "/ mois"}
+              </span>
             </motion.p>
+            <p className="mt-1 text-[13px] text-mist">
+              {interval === "year"
+                ? `Soit ${formatEuros(Math.round(SUBSCRIPTION_ANNUAL_PRICE_CENTS / 12))}/mois — 2 mois offerts.`
+                : `Passez à l'annuel : 2 mois offerts (−${annualSavePct}%).`}
+            </p>
 
             <ul className="mt-4 space-y-2">
               {PERKS.map((p) => (
@@ -116,8 +158,12 @@ export function BillingPanel({
                   <IconCheck size={13} /> Abonnement actif
                 </Badge>
               ) : (
-                <CheckoutButton endpoint="/api/billing/subscribe" className="w-full">
-                  <IconSpark size={16} /> Passer à l'illimité
+                <CheckoutButton
+                  endpoint="/api/billing/subscribe"
+                  payload={{ interval }}
+                  className="w-full"
+                >
+                  <IconSpark size={16} /> Passer à l'abonnement
                 </CheckoutButton>
               )}
             </div>

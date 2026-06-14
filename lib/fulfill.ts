@@ -1,8 +1,8 @@
 import type Stripe from "stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { grantCredits } from "@/lib/credits-server";
-import { SIGNUP_CREDITS } from "@/lib/stripe";
 import { sendReceipt } from "@/lib/email/send";
+import { generationPending } from "@/lib/generation-status";
 import { isValidSlug, normalizeSlug } from "@/lib/templates";
 
 export type FulfillResult = {
@@ -116,24 +116,19 @@ export async function fulfillPayment(
     return { email, token, siteId, userId, selfServe, slug };
   }
 
-  const { data: payment } = await admin
-    .from("payments")
-    .insert({
-      user_id: userId,
-      prospect_code_id: code?.id ?? null,
-      stripe_session_id: session.id,
-      stripe_payment_intent: (session.payment_intent as string) ?? null,
-      amount_cents: session.amount_total ?? 5000,
-      currency: session.currency ?? "eur",
-      kind: "initial_50",
-      status: "paid",
-    })
-    .select("id")
-    .single();
-
-  await grantCredits(admin, userId, SIGNUP_CREDITS, "signup_grant", {
-    payment_id: payment?.id,
+  await admin.from("payments").insert({
+    user_id: userId,
+    prospect_code_id: code?.id ?? null,
+    stripe_session_id: session.id,
+    stripe_payment_intent: (session.payment_intent as string) ?? null,
+    amount_cents: session.amount_total ?? 5000,
+    currency: session.currency ?? "eur",
+    kind: "initial_50",
+    status: "paid",
   });
+
+  // Crédits de bienvenue : désormais attribués via la roue de la fortune au
+  // 1er accès au dashboard (révélation gamifiée) — voir /api/wheel/spin.
 
   // Reçu / bienvenue — best-effort, ne doit JAMAIS bloquer le fulfillment.
   try {
@@ -165,9 +160,14 @@ export async function fulfillPayment(
   let slug: string | null = null;
   if (siteId) {
     if (selfServe) {
-      // Site déjà finalisé pendant l'onboarding → mise en ligne immédiate.
-      const base = await slugBaseForSite(admin, siteId, code?.prospect_id ?? null);
-      slug = await goLive(admin, siteId, base);
+      if (await generationPending(admin, siteId)) {
+        // Génération pas finie : on NE publie PAS un site partiel. Le worker
+        // (runSiteGenerationJob) met le site en ligne à la fin du job. slug reste null.
+      } else {
+        // Site déjà finalisé pendant l'onboarding → mise en ligne immédiate.
+        const base = await slugBaseForSite(admin, siteId, code?.prospect_id ?? null);
+        slug = await goLive(admin, siteId, base);
+      }
     } else {
       // Outreach : on attribue le site, le slug est choisi sur /welcome/name.
       await admin.from("sites").update({ owner_user_id: userId }).eq("id", siteId);
@@ -178,6 +178,23 @@ export async function fulfillPayment(
       .from("sites")
       .update({ billing_status: "active" })
       .eq("id", siteId);
+
+    // Réconciliation anti-TOCTOU : si on a différé la mise en ligne (génération en
+    // cours au moment du 1er check) mais que le job s'est terminé entre-temps, et
+    // que le worker a lu billing_status AVANT ce passage à "active", le site
+    // resterait payé mais non publié. On retente la mise en ligne maintenant.
+    if (selfServe && !slug && !(await generationPending(admin, siteId))) {
+      const { data: stillDraft } = await admin
+        .from("sites")
+        .select("status")
+        .eq("id", siteId)
+        .maybeSingle();
+      if (stillDraft && stillDraft.status !== "live") {
+        const base = await slugBaseForSite(admin, siteId, code?.prospect_id ?? null);
+        slug = await goLive(admin, siteId, base);
+      }
+    }
+
     await admin.from("events").insert({ token, site_id: siteId, type: "purchased" });
   }
 
