@@ -34,6 +34,7 @@ function teamQuery(prefix: "?" | "&" = "?"): string {
 
 async function vfetch(path: string, init?: RequestInit): Promise<{ ok: boolean; status: number; body: any }> {
   const { token } = cfg();
+  if (!token) return { ok: false, status: 0, body: null };
   const res = await fetch(`${API}${path}`, {
     ...init,
     headers: {
@@ -46,7 +47,7 @@ async function vfetch(path: string, init?: RequestInit): Promise<{ ok: boolean; 
   return { ok: res.ok, status: res.status, body };
 }
 
-/** Apex = 2 labels (ex. entreprise-arelec.fr). Sinon sous-domaine (www.x.fr). */
+/** Apex = 2 labels (ex. entreprise-arelec.fr). Heuristique de repli ; les ccSLD (.co.uk) ne sont pas couverts — on privilégie les valeurs recommandées par Vercel quand elles existent. Sinon sous-domaine (www.x.fr). */
 function isApex(domain: string): boolean {
   return domain.split(".").length === 2;
 }
@@ -56,6 +57,16 @@ function baseRecord(domain: string): DomainRecord {
   return isApex(domain)
     ? { type: "A", name: domain, value: "76.76.21.21" }
     : { type: "CNAME", name: domain, value: "cname.vercel-dns.com" };
+}
+
+function recordsFromConfig(name: string, config: any): DomainRecord[] {
+  const ipv4: string[] = config?.recommendedIPv4?.[0]?.value ?? config?.recommendedIPv4 ?? [];
+  const cname: string[] = config?.recommendedCNAME?.[0]?.value ?? config?.recommendedCNAME ?? [];
+  const ips = Array.isArray(ipv4) ? ipv4 : [];
+  const cnames = Array.isArray(cname) ? cname : [];
+  if (ips.length) return ips.map((value) => ({ type: "A" as const, name, value }));
+  if (cnames.length) return cnames.map((value) => ({ type: "CNAME" as const, name, value }));
+  return [baseRecord(name)]; // repli : heuristique apex/sous-domaine
 }
 
 /** Ajoute le domaine au projet Vercel. Idempotent (déjà dans ce projet → ok). */
@@ -93,7 +104,7 @@ export async function getDomainStatus(name: string): Promise<DomainStatus> {
   ]);
   const verified = Boolean(info.body?.verified);
   const misconfigured = Boolean(config.body?.misconfigured);
-  const records: DomainRecord[] = [baseRecord(name)];
+  const records: DomainRecord[] = recordsFromConfig(name, config.body);
   // Défis de propriété (TXT) si Vercel les réclame (domaine détenu ailleurs).
   for (const v of (info.body?.verification ?? []) as Array<{ type: string; domain: string; value: string }>) {
     if (v?.type && v?.domain && v?.value)
