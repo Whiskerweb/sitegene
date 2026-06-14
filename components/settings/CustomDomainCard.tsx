@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -70,21 +70,29 @@ function CustomDomainBody({ currentDomain }: { currentDomain: string | null }) {
     }
   }, []);
 
+  // Le ref permet à l'intervalle de lire l'état « vérifié » courant sans se ré-abonner
+  // (et donc sans relancer le timer) à chaque fetch. Écrit dans un effet (jamais
+  // pendant le render, interdit par les règles des hooks).
+  const verifiedRef = useRef(false);
+  useEffect(() => {
+    verifiedRef.current = status?.verified ?? false;
+  }, [status]);
+
   // Polling : au montage si un domaine est branché, puis toutes les 5 s tant que non vérifié.
   useEffect(() => {
-    if (!saved) {
-      setStatus(null);
-      return;
-    }
+    // Pas de domaine branché → rien à interroger (status est déjà null : initialisé
+    // ainsi, et remis à null par save() lors d'un débranchement).
+    if (!saved) return;
+    let alive = true;
     fetchStatus();
     const id = setInterval(() => {
-      setStatus((s) => {
-        if (s?.verified) return s; // stop quand vérifié
-        fetchStatus();
-        return s;
-      });
+      if (!alive || verifiedRef.current) return; // stop quand vérifié
+      fetchStatus();
     }, 5000);
-    return () => clearInterval(id);
+    return () => {
+      alive = false;
+      clearInterval(id);
+    };
   }, [saved, fetchStatus]);
 
   const save = async () => {
