@@ -54,11 +54,12 @@ export default function WheelModal() {
   const fallbackRef = useRef<number | null>(null);
 
   const finish = useCallback(() => {
-    // Amorce l'onboarding guidé (si pas déjà fait) puis le déclenche tout de
-    // suite via un événement — indépendant du timing de re-render serveur.
-    if (!window.localStorage.getItem("akyra_tour_v1")) {
-      window.localStorage.setItem("akyra_tour_v1", "pending");
-    }
+    // (Ré)amorce l'onboarding guidé puis le déclenche tout de suite via un
+    // événement — indépendant du timing de re-render serveur. On écrase un
+    // éventuel "done" : la roue ne s'affiche QUE pour un compte neuf ou
+    // réinitialisé (flag serveur wheel_spun_at = null), donc la voir = devoir
+    // (re)voir le tutoriel, même sur un navigateur qui l'a déjà parcouru.
+    window.localStorage.setItem("akyra_tour_v1", "pending");
     window.dispatchEvent(new Event(TOUR_KICK_EVENT));
     setClosed(true);
     router.refresh(); // recharge le solde + masque la roue (flag posé serveur)
