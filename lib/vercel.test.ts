@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
-import { addDomain, getDomainStatus, vercelConfigured } from "./vercel";
+import { addDomain, getDomainStatus, vercelConfigured, removeDomain } from "./vercel";
 
 const ENV = { VERCEL_TOKEN: "tok", VERCEL_PROJECT_ID: "prj", VERCEL_TEAM_ID: "team" };
 
@@ -15,7 +15,9 @@ function mockFetch(map: Record<string, { status: number; body: unknown }>) {
   vi.stubGlobal(
     "fetch",
     vi.fn(async (url: string) => {
-      const key = Object.keys(map).find((k) => url.includes(k));
+      const key = Object.keys(map)
+        .filter((k) => url.includes(k))
+        .sort((a, b) => url.lastIndexOf(b) - url.lastIndexOf(a) || b.length - a.length)[0];
       const r = key ? map[key] : { status: 404, body: { error: { code: "not_found" } } };
       return { ok: r.status >= 200 && r.status < 300, status: r.status, json: async () => r.body } as Response;
     }),
@@ -74,5 +76,29 @@ describe("getDomainStatus", () => {
     const s = await getDomainStatus("x.fr");
     expect(s.configured).toBe(false);
     expect(s.verified).toBe(false);
+  });
+  it("utilise les valeurs recommandées Vercel quand /config les fournit", async () => {
+    mockFetch({
+      "/config": { status: 200, body: { misconfigured: false, recommendedIPv4: ["12.34.56.78"] } },
+      "/domains/x.fr": { status: 200, body: { verified: true, verification: [] } },
+    });
+    const s = await getDomainStatus("x.fr");
+    expect(s.records).toContainEqual({ type: "A", name: "x.fr", value: "12.34.56.78" });
+  });
+});
+
+describe("removeDomain", () => {
+  it("émet un DELETE et ne jette pas si non configuré", async () => {
+    delete process.env.VERCEL_TOKEN;
+    await expect(removeDomain("x.fr")).resolves.toBeUndefined();
+  });
+  it("émet un DELETE quand configuré", async () => {
+    const spy = vi.fn(async () => ({ ok: true, status: 200, json: async () => ({}) }) as Response);
+    vi.stubGlobal("fetch", spy);
+    await removeDomain("x.fr");
+    expect(spy).toHaveBeenCalledOnce();
+    const args = spy.mock.calls[0] as unknown as [string, RequestInit];
+    expect(String(args[0])).toContain("/v9/projects/prj/domains/x.fr");
+    expect(args[1].method).toBe("DELETE");
   });
 });
