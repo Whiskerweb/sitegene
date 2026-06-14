@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
-import { parseHost } from "@/lib/subdomain";
+import { resolveHost, createSupabaseLookup } from "@/lib/host-resolver";
+import { createPublicClient } from "@/lib/supabase/public";
 
 /**
  * Proxy (ex-middleware en Next 16) : (1) réécrit les sous-domaines client
@@ -9,13 +10,23 @@ import { parseHost } from "@/lib/subdomain";
  * Exclut assets, API et bundles de sites publics via le matcher.
  */
 export async function proxy(request: NextRequest) {
-  // 1) Sous-domaine client → route catch-all /s/<slug>
-  const parsed = parseHost(request.headers.get("host"));
-  if (parsed.kind === "site" && !request.nextUrl.pathname.startsWith("/s/")) {
-    const url = request.nextUrl.clone();
-    const p = url.pathname;
-    url.pathname = `/s/${parsed.slug}${p === "/" ? "" : p}`;
-    return NextResponse.rewrite(url);
+  // 1) Sous-domaine client OU domaine personnalisé → /a/<slug> (fonderie) ou /s/<slug> (statique).
+  //    Garde : on ne re-réécrit jamais un chemin déjà routé (/a/ ou /s/) — évite la
+  //    boucle /s/<slug>/a/<slug> qui cassait les sous-domaines fonderie.
+  const path = request.nextUrl.pathname;
+  const alreadyRouted = path.startsWith("/a/") || path.startsWith("/s/");
+  if (!alreadyRouted) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const resolved = await resolveHost(
+      request.headers.get("host"),
+      createSupabaseLookup(createPublicClient() as any),
+    );
+    if (resolved.kind === "site") {
+      const url = request.nextUrl.clone();
+      const base = resolved.render === "foundry" ? "a" : "s";
+      url.pathname = `/${base}/${resolved.slug}${path === "/" ? "" : path}`;
+      return NextResponse.rewrite(url);
+    }
   }
 
   let response = NextResponse.next({ request });
