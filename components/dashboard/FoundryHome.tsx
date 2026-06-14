@@ -13,6 +13,7 @@ import TrialBanner from "@/components/dashboard/TrialBanner";
 import { PublishButton } from "@/components/dashboard/PublishButton";
 import { loadRecipeDraft, recipeCards, pagesFromSnapshot } from "@/lib/foundry/server";
 import { loadPublishedSnapshot } from "@/lib/site-content-store";
+import { publicSiteUrl, prettySiteHost } from "@/lib/site-url";
 
 export interface FoundryHomeProps {
   user: { id: string };
@@ -37,9 +38,9 @@ export default async function FoundryHome({ site, balance, businessName, paywall
   const billing = site.billing_status ?? "none";
   const locked = !isLive && ["none", "canceled", "payment_failed"].includes(billing);
   const hasUnpublished = !!draft && (!published || published.id !== draft.row.id);
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
-  const fullUrl = site.slug ? `${appUrl}/a/${site.slug}` : "";
-  const prettyUrl = fullUrl.replace(/^https?:\/\//, "");
+  // Adresse mise en avant = le SOUS-DOMAINE du client (arelec.akyra.io), jamais /a/<slug>.
+  const fullUrl = publicSiteUrl(site.slug);
+  const prettyUrl = prettySiteHost(site.slug);
 
   const cards = draft ? recipeCards(draft.recipe) : [];
   const rareCount = cards.filter((c) => c.rarity !== "common").length;

@@ -18,6 +18,7 @@ import { PublishButton } from "@/components/dashboard/PublishButton";
 import { primarySiteForUser } from "@/lib/primary-site";
 import { loadOrCreateEditableSnapshot, loadPublishedSnapshot } from "@/lib/site-content-store";
 import FoundryHome from "@/components/dashboard/FoundryHome";
+import { publicSiteUrl, prettySiteHost } from "@/lib/site-url";
 import { FOUNDRY_TEMPLATE_ID } from "@/lib/foundry/server";
 import { redirect } from "next/navigation";
 
@@ -140,7 +141,8 @@ export default async function MonSite({
   // 1 site / N peaux : verrou = site ni en ligne ni débloqué (jamais souscrit).
   const locked = !isLive && ["none", "canceled", "payment_failed"].includes(billing);
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
-  const fullUrl = site.slug ? `${appUrl}/s/${site.slug}` : "";
+  // Adresse mise en avant = le SOUS-DOMAINE du client, jamais le chemin /s/<slug>.
+  const fullUrl = publicSiteUrl(site.slug);
 
   // Peau EN COURS D'ÉDITION (garantie d'avoir un snapshot) vs peau EN LIGNE.
   // L'aperçu du dashboard reflète ce que le client prépare ; un badge signale
@@ -185,7 +187,7 @@ export default async function MonSite({
           <div className="flex flex-col items-start gap-2 sm:items-end">
             {site.slug && (
               <code className="rounded-lg bg-white/10 px-3 py-1.5 text-sm text-gray-200 ring-1 ring-inset ring-white/10">
-                /s/{site.slug}
+                {prettySiteHost(site.slug)}
               </code>
             )}
             {isLive && fullUrl && (
