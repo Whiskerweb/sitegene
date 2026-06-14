@@ -128,7 +128,14 @@ export default function WheelModal() {
       aria-label="Roue de bienvenue"
       className="fixed inset-0 z-[60] flex items-center justify-center bg-night/45 p-4 backdrop-blur-sm"
     >
-      <div className="liquid-glass relative w-full max-w-md rounded-3xl border border-sky-300 bg-white/85 p-8 text-center shadow-2xl">
+      {/* Fond quasi-opaque en style inline : `.liquid-glass` (non-layered) impose
+          un blanc à 42 % qui écrase tout `bg-white/*` utilitaire → sur le voile
+          sombre de la modale le panneau virait au gris et le texte devenait
+          illisible. On garde le liseré/glow de liquid-glass, mais sur du blanc plein. */}
+      <div
+        className="liquid-glass relative w-full max-w-md rounded-3xl border border-sky-300 p-8 text-center shadow-2xl"
+        style={{ background: "rgba(255,255,255,0.97)" }}
+      >
         <AkyraMark size={36} className="mx-auto" />
 
         {phase !== "done" ? (
