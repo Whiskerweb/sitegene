@@ -16,10 +16,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Monitor, Tablet, Smartphone, Maximize2, X } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import AuthGate from "@/components/auth/AuthGate";
 import { AkyraMark } from "@/components/ui/Logo";
 import CollectStep from "@/components/creer/CollectStep";
+import DescriptionQuality from "@/components/creer/DescriptionQuality";
 import ImportCharte, { type ImportedCharte } from "@/components/creer/ImportCharte";
 import { ramp, readableOn } from "@/lib/client/color-preview";
 import { detectTrade } from "@/lib/foundry/suggest";
@@ -43,11 +45,11 @@ type Charte = { vibe: VibeData; spec: Record<string, unknown>; reason: string };
 
 const STATE_KEY = "akyra_creer";
 
-const EXAMPLES = [
-  { label: "Coach", text: "Je suis coach en développement personnel à Lyon. J'accompagne les actifs stressés vers plus de clarté, en cabinet ou en visio." },
-  { label: "Artisan", text: "Plombier chauffagiste à Rennes depuis 12 ans. Dépannage rapide, rénovation de salles de bain, devis gratuit." },
-  { label: "Photographe", text: "Photographe de mariage et de portrait en Bretagne. Une approche naturelle et lumineuse, des souvenirs qui durent." },
-  { label: "Bien-être", text: "Studio de yoga et de méditation au centre de Bordeaux. Cours collectifs doux, ateliers du soir et séances privées." },
+/** Appareils d'aperçu (étape reveal) — largeurs façon TemplatePreview. */
+const REVEAL_DEVICES: { id: "desktop" | "tablet" | "mobile"; label: string; width: string; Icon: typeof Monitor }[] = [
+  { id: "desktop", label: "Ordinateur", width: "100%", Icon: Monitor },
+  { id: "tablet", label: "Tablette", width: "820px", Icon: Tablet },
+  { id: "mobile", label: "Mobile", width: "390px", Icon: Smartphone },
 ];
 
 const RARITY_UI: Record<Card["rarity"], { label: string; ring: string; bg: string; text: string }> = {
@@ -71,6 +73,10 @@ export default function CreerClient() {
   const [phase, setPhase] = useState<Phase>("pitch");
   const [brief, setBrief] = useState("");
   const [name, setName] = useState("");
+
+  // Aperçu de la phase reveal : appareil simulé + plein écran.
+  const [revealDevice, setRevealDevice] = useState<"desktop" | "tablet" | "mobile">("desktop");
+  const [revealFullscreen, setRevealFullscreen] = useState(false);
 
   // Chartes sur mesure (étape DA)
   const [chartes, setChartes] = useState<Charte[] | null>(null);
@@ -223,6 +229,21 @@ export default function CreerClient() {
     chartesAutoRef.current = false; // reset pour forcer un nouveau chargement
     void loadChartes({ reset: true });
   }
+
+  // Aperçu plein écran : Échap pour fermer + on fige le scroll du corps.
+  useEffect(() => {
+    if (!revealFullscreen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setRevealFullscreen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [revealFullscreen]);
 
   // --- Étapes animées pendant l'assemblage ------------------------------------
   useEffect(() => {
@@ -456,18 +477,10 @@ export default function CreerClient() {
               placeholder="Votre métier, pour qui, où, ce qui vous rend différent…"
               className="mt-2 w-full resize-none rounded-2xl border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] px-4 py-3.5 text-[15px] leading-relaxed outline-none transition focus:border-[rgb(var(--m-accent))]"
             />
-            <div className="mt-3 flex flex-wrap gap-2">
-              {EXAMPLES.map((ex) => (
-                <button
-                  key={ex.label}
-                  type="button"
-                  onClick={() => setBrief(ex.text)}
-                  className="rounded-full border border-[rgb(var(--m-line))] px-3 py-1.5 text-[13px] text-[rgb(var(--m-muted))] transition hover:border-[rgb(var(--m-accent))] hover:text-[rgb(var(--m-ink))]"
-                >
-                  {ex.label} ↗
-                </button>
-              ))}
-            </div>
+
+            {/* Retour qualité en temps réel (100 % local, instantané) : jauge +
+                score + questions restantes, à chaque frappe. */}
+            <DescriptionQuality text={brief} />
 
             <button
               type="button"
@@ -800,15 +813,58 @@ export default function CreerClient() {
             </div>
 
             <div className="mx-auto mt-8 max-w-5xl overflow-hidden rounded-3xl border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] shadow-cloud">
-              <div className="flex items-center gap-1.5 border-b border-[rgb(var(--m-line))] bg-[rgb(var(--m-elevated))] px-4 py-2.5">
-                <span className="h-2.5 w-2.5 rounded-full bg-red-300" />
-                <span className="h-2.5 w-2.5 rounded-full bg-amber-300" />
-                <span className="h-2.5 w-2.5 rounded-full bg-green-300" />
-                <span className="ml-3 truncate rounded-md bg-white px-2.5 py-0.5 text-[11px] text-[rgb(var(--m-faint))]">
+              {/* Barre navigateur + contrôles d'aperçu (appareil + plein écran) */}
+              <div className="flex items-center gap-1.5 border-b border-[rgb(var(--m-line))] bg-[rgb(var(--m-elevated))] px-3 py-2 sm:px-4 sm:py-2.5">
+                <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-red-300" />
+                <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-amber-300" />
+                <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-green-300" />
+                <span className="ml-2 hidden min-w-0 truncate rounded-md bg-white px-2.5 py-0.5 text-[11px] text-[rgb(var(--m-faint))] sm:inline">
                   akyra.io/votre-site
                 </span>
+                <div className="ml-auto flex items-center gap-1">
+                  <div className="flex items-center gap-0.5 rounded-full border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] p-0.5">
+                    {REVEAL_DEVICES.map((d) => {
+                      const active = d.id === revealDevice;
+                      return (
+                        <button
+                          key={d.id}
+                          type="button"
+                          onClick={() => setRevealDevice(d.id)}
+                          aria-pressed={active}
+                          title={d.label}
+                          className={
+                            "inline-flex items-center justify-center rounded-full p-1.5 transition-colors " +
+                            (active
+                              ? "bg-[rgb(var(--m-ink))] text-[rgb(var(--m-surface))]"
+                              : "text-[rgb(var(--m-faint))] hover:text-[rgb(var(--m-ink))]")
+                          }
+                        >
+                          <d.Icon size={14} />
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setRevealFullscreen(true)}
+                    title="Plein écran"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-[rgb(var(--m-line))] px-2.5 py-1.5 text-[12px] font-medium text-[rgb(var(--m-muted))] transition-colors hover:text-[rgb(var(--m-ink))]"
+                  >
+                    <Maximize2 size={13} />
+                    <span className="hidden sm:inline">Plein écran</span>
+                  </button>
+                </div>
               </div>
-              <iframe src={`/site-preview/${siteId}`} title="Votre site" className="h-[62vh] w-full" />
+              {/* Scène : iframe centrée, largeur selon l'appareil */}
+              <div className="flex h-[62vh] justify-center overflow-auto bg-[rgb(var(--m-elevated))] sm:p-4">
+                <iframe
+                  key={revealDevice}
+                  src={`/site-preview/${siteId}`}
+                  title="Votre site"
+                  className="h-full border-0 bg-white shadow-sm sm:rounded-xl"
+                  style={{ width: REVEAL_DEVICES.find((d) => d.id === revealDevice)!.width, maxWidth: "100%" }}
+                />
+              </div>
             </div>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -834,6 +890,55 @@ export default function CreerClient() {
           </section>
         )}
       </main>
+
+      {/* Aperçu plein écran — façon TemplatePreview de la landing : bascule
+          appareil + vraie surface d'affichage. */}
+      {revealFullscreen && siteId && (
+        <div className="fixed inset-0 z-[60] flex flex-col bg-neutral-900/95 backdrop-blur-sm">
+          <header className="flex items-center justify-between gap-3 border-b border-white/10 bg-neutral-900 px-4 py-2.5">
+            <span className="min-w-0 flex-1 truncate text-[13px] font-medium text-white/80">
+              {name.trim() || "Votre site"}
+            </span>
+            <div className="flex items-center gap-1 rounded-full border border-white/15 bg-white/5 p-1">
+              {REVEAL_DEVICES.map((d) => {
+                const active = d.id === revealDevice;
+                return (
+                  <button
+                    key={d.id}
+                    type="button"
+                    onClick={() => setRevealDevice(d.id)}
+                    aria-pressed={active}
+                    title={d.label}
+                    className={
+                      "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-medium transition-colors " +
+                      (active ? "bg-white text-neutral-900" : "text-white/60 hover:text-white")
+                    }
+                  >
+                    <d.Icon size={14} />
+                    <span className="hidden sm:inline">{d.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <button
+              type="button"
+              onClick={() => setRevealFullscreen(false)}
+              className="inline-flex flex-1 items-center justify-end gap-1.5 text-[13px] font-medium text-white/70 transition-colors hover:text-white sm:flex-none"
+            >
+              <X size={16} /> <span className="hidden sm:inline">Fermer</span>
+            </button>
+          </header>
+          <div className="flex flex-1 justify-center overflow-auto p-3 md:p-6">
+            <iframe
+              key={revealDevice}
+              src={`/site-preview/${siteId}`}
+              title="Votre site"
+              className="h-full rounded-lg border-0 bg-white shadow-2xl"
+              style={{ width: REVEAL_DEVICES.find((d) => d.id === revealDevice)!.width, maxWidth: "100%" }}
+            />
+          </div>
+        </div>
+      )}
 
       <AuthGate
         open={gateOpen}

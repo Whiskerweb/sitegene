@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { AuthSplit } from "@/components/ui/auth-split";
-import { AkyraMark } from "@/components/ui/Logo";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -44,26 +43,12 @@ export default function LoginPage() {
   return (
     <AuthSplit
       brandName="Akyra"
-      logo={<AkyraMark size={28} tone="dark" />}
       homeHref="/"
       title="Connexion"
       subtitle="Entrez votre email, on vous envoie un code à 6 chiffres."
-      quote="Votre site pro vous attend."
-      quoteAuthor="Akyra"
-      imageSrc="/landing/tpl-alice-r.png"
       onSubmitEmail={sendCode}
       onVerifyCode={verifyCode}
       initialError={initialError}
-      background={
-        <div className="absolute inset-0 bg-ink-900">
-          <div className="glow-violet absolute inset-x-0 top-0 h-[440px] opacity-70" />
-          <div className="absolute -bottom-20 right-[-10%] h-[420px] w-[420px] rounded-full bg-gold-400/10 blur-[130px]" />
-          {/* Quadrillage façon landing */}
-          <div className="absolute inset-0 flex justify-center">
-            <div className="h-full w-full max-w-5xl border-l border-r border-white/[0.04]" />
-          </div>
-        </div>
-      }
     />
   );
 }
