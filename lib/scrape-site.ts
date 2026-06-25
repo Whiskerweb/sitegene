@@ -37,7 +37,7 @@ const SOCIAL_HOSTS = [
 
 const MUSIC_HOSTS = ["spotify.com", "soundcloud.com", "bandcamp.com", "deezer.com", "music.apple.com"];
 
-function decodeEntities(s: string): string {
+export function decodeEntities(s: string): string {
   return s
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
@@ -48,7 +48,7 @@ function decodeEntities(s: string): string {
     .trim();
 }
 
-function metaContent(html: string, name: string): string | undefined {
+export function metaContent(html: string, name: string): string | undefined {
   // <meta name="…" content="…"> ou <meta property="…" content="…"> (ordre libre).
   const re1 = new RegExp(
     `<meta[^>]+(?:name|property)=["']${name}["'][^>]+content=["']([^"']+)["']`,
@@ -123,7 +123,7 @@ export function extractSiteData(html: string): ScrapedSite {
 }
 
 /** Vrai si l'hôte résout vers une cible interdite (anti-SSRF, sans DNS). */
-function isForbiddenHost(hostname: string): boolean {
+export function isForbiddenHost(hostname: string): boolean {
   const h = hostname.toLowerCase();
   if (h === "localhost" || h.endsWith(".local") || h.endsWith(".internal")) return true;
   // IPv4 littérale privée/locale.

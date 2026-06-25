@@ -4,6 +4,7 @@ import { grantCredits } from "@/lib/credits-server";
 import { sendReceipt } from "@/lib/email/send";
 import { generationPending } from "@/lib/generation-status";
 import { isValidSlug, normalizeSlug } from "@/lib/templates";
+import { enqueue } from "@/lib/twenty/sync";
 
 export type FulfillResult = {
   email: string | null;
@@ -68,6 +69,8 @@ async function ensureUser(
     email_confirm: true,
   });
   if (error || !data.user) throw new Error(`createUser: ${error?.message}`);
+  // Nouvel inscrit → synchro Twenty (fiche contact par email).
+  await enqueue(admin, { op: "sync_contact", userId: data.user.id, email });
   return data.user.id;
 }
 
@@ -148,6 +151,13 @@ export async function fulfillPayment(
         .from("outreach")
         .update({ status: "converted", updated_at: new Date().toISOString() })
         .eq("prospect_id", code.prospect_id);
+      // Note de timeline « paiement » (la synchro de la fiche se fait via le
+      // sync_contact posé en fin de fulfillPayment).
+      await enqueue(admin, {
+        op: "append_note",
+        prospectId: code.prospect_id,
+        payload: { signal: "purchased", at: new Date().toISOString(), dedup_key: `pay:${session.id}` },
+      });
     }
   } catch (e) {
     console.error("[fulfill] receipt email failed:", e instanceof Error ? e.message : e);
@@ -197,6 +207,9 @@ export async function fulfillPayment(
 
     await admin.from("events").insert({ token, site_id: siteId, type: "purchased" });
   }
+
+  // Synchro Twenty : conversion (couvre aussi le self-serve sans prospect).
+  await enqueue(admin, { op: "sync_contact", userId, email });
 
   return { email, token, siteId, userId, selfServe, slug };
 }

@@ -37,7 +37,7 @@ export async function POST(request: Request) {
     body?.charteSpec && typeof body.charteSpec === "object"
       ? repairCharte(body.charteSpec)
       : undefined;
-  if (brief.length < 10 || brief.length > 2000) {
+  if (brief.length < 10 || brief.length > 6000) {
     return NextResponse.json({ error: "Décrivez votre activité en quelques phrases (10 caractères minimum)." }, { status: 400 });
   }
   if (!businessName || businessName.length > 80) {

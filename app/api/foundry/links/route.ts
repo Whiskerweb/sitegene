@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { injectContacts } from "@/lib/foundry/inject";
+import { ensurePhotoGallery } from "@/lib/foundry/auto-gallery";
 import { applyReviewsPolicy } from "@/lib/foundry/reviews";
 import { markPlaceholders } from "@/lib/foundry/placeholders";
 import { loadRecipeDraft, saveRecipeDraft } from "@/lib/foundry/server";
@@ -111,6 +112,9 @@ export async function POST(request: Request) {
   let merged = injectContacts(loaded.recipe, safe);
   merged = applyReviewsPolicy(merged, safe);
   merged = markPlaceholders(merged, safe);
+  // Beaucoup de photos fournies → galerie dédiée vers le bas (si pas déjà là),
+  // pour qu'aucune photo ne soit perdue (tous métiers).
+  merged = ensurePhotoGallery(merged, safe.photos);
   // Logo de marque → recipe.brand.logo (affiché dans navbar/footer du site).
   if (safe.brandLogo) {
     merged = { ...merged, brand: { ...merged.brand, logo: safe.brandLogo } };

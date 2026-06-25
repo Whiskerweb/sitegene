@@ -387,16 +387,19 @@ export function repairRecipe(
 // --- Repli déterministe ----------------------------------------------------------
 
 /** Plans de page par métier (repli si l'IA est indisponible — textes des samples). */
+// Un seul id par RÔLE dans chaque plan (repairRecipe déduplique sinon). Pour
+// restaurant/beauté, l'adresse passe par "location-cards" (rôle contact) → pas
+// de "contact-block" en plus, et jamais de "process-steps" (exclu pour eux).
 const FALLBACK_PLANS: Record<TradeId, string[]> = {
   coach:       ["hero-split-asym",        "logo-marquee",    "intro-split", "services-rows", "process-steps", "stats-countup", "reviews-postit-carousel", "pricing-cards", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
-  "bien-etre": ["hero-split-asym",        "intro-split",     "services-rows", "process-steps", "reviews-postit-carousel", "pricing-cards", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
-  photographe: ["studio-portfolio-hero",  "gallery-mosaic",  "intro-split", "stats-countup", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
-  artisan:     ["electrician-pro-hero",   "intro-split",     "services-rows", "process-steps", "stats-countup", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
-  restaurant:  ["hero-split-asym",        "intro-split",     "services-rows", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
-  beaute:      ["hero-split-asym",        "intro-split",     "services-rows", "pricing-cards", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
+  "bien-etre": ["hero-split-asym",        "intro-split",     "services-rows", "fx-floating-tags", "process-steps", "gallery-mosaic", "reviews-postit-carousel", "pricing-cards", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
+  photographe: ["studio-portfolio-hero",  "gallery-mosaic",  "intro-split", "services-rows", "stats-countup", "testimonials-carousel", "pricing-cards", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
+  artisan:     ["electrician-pro-hero",   "intro-split",     "services-rows", "process-steps", "stats-countup", "logo-marquee", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
+  restaurant:  ["hero-split-asym",        "intro-split",     "gallery-mosaic", "services-rows", "location-cards", "testimonials-carousel", "faq-accordion", "cta-banner", "footer-columns"],
+  beaute:      ["hero-split-asym",        "intro-split",     "services-rows", "gallery-mosaic", "pricing-cards", "reviews-postit-carousel", "location-cards", "faq-accordion", "cta-banner", "footer-columns"],
   conseil:     ["hero-split-asym",        "logo-marquee",    "intro-split", "services-rows", "process-steps", "stats-countup", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
   musicien:    ["jazz-vocalist-hero",     "intro-split",     "social-clip-links", "image-marquee", "story-timeline", "stats-countup", "marquee-words", "cta-banner", "footer-columns"],
-  fitness:     ["hero-split-asym",        "intro-split",     "services-rows", "process-steps", "stats-countup", "pricing-cards", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
+  fitness:     ["hero-split-asym",        "intro-split",     "services-rows", "process-steps", "stats-countup", "gallery-mosaic", "pricing-cards", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
   autre:       ["hero-split-asym",        "intro-split",     "services-rows", "process-steps", "testimonials-carousel", "faq-accordion", "contact-block", "cta-banner", "footer-columns"],
 };
 
@@ -442,6 +445,26 @@ function catalogForPrompt(trade: TradeId, vibeId: string): string {
     .join("\n\n");
 }
 
+/**
+ * Squelette de site attendu PAR MÉTIER — injecté dans le prompt pour guider la
+ * SÉLECTION des sections (en plus des indices "→ ADAPTÉ À CE MÉTIER" du catalogue).
+ * Un plombier (zone/urgences/devis/garanties), un coach (méthode/déroulé séance),
+ * un restaurant (carte/adresse/réservation) n'ont pas la même structure. `autre`
+ * reste neutre (chaîne vide → aucune note, comportement par défaut).
+ */
+const TRADE_STRUCTURE_NOTE: Record<TradeId, string> = {
+  musicien: `STRUCTURE ATTENDUE (MUSICIEN / ARTISTE) : un site vitrine centré sur la MUSIQUE et la SCÈNE. Privilégie les sections marquées "→ ADAPTÉ À CE MÉTIER" : la bio (qui il est / le groupe), les liens d'écoute & réseaux, la discographie, les dates de concerts, des photos de scène/presse, et éventuellement des chiffres d'écoute ou les salles & festivals. PAS d'avis clients, PAS de FAQ, PAS de forfaits : un musicien n'en a pas besoin. N'ajoute une billetterie (CTA "réserver des places") QUE si le client la mentionne.`,
+  photographe: `STRUCTURE ATTENDUE (PHOTOGRAPHE) : un site VISUEL où la GALERIE est centrale. Privilégie une grande galerie de réalisations, votre style/univers, vos prestations (mariage, portrait…) et leurs livrables, vos forfaits, des avis clients, et un bloc contact/devis avec votre zone d'intervention.`,
+  artisan: `STRUCTURE ATTENDUE (ARTISAN) : un site de CONFIANCE. Privilégie vos prestations, le déroulé d'une intervention, votre ZONE D'INTERVENTION, le DEVIS GRATUIT, vos garanties/certifications (RGE, décennale), des avis, et un contact qui met le téléphone en avant. Valorise les urgences/délais si pertinents.`,
+  coach: `STRUCTURE ATTENDUE (COACH) : qui vous êtes + votre MÉTHODE, vos accompagnements et pour qui, le DÉROULÉ d'une séance, des résultats/témoignages, vos formules, et un premier appel découverte en contact final.`,
+  "bien-etre": `STRUCTURE ATTENDUE (BIEN-ÊTRE) : ambiance apaisante. Vos pratiques/soins, vos valeurs/bienfaits, votre cadre (studio/domicile/visio), le déroulé d'une séance, vos formules, et un contact pour réserver. Des visuels d'ambiance sont bienvenus.`,
+  fitness: `STRUCTURE ATTENDUE (FITNESS) : énergique, preuve par les RÉSULTATS. Vos programmes, comment démarrer, des chiffres/transformations, vos formules, des témoignages, et une séance d'essai en contact.`,
+  restaurant: `STRUCTURE ATTENDUE (RESTAURANT) : donner faim + dire OÙ VENIR. Une galerie de plats/d'ambiance, votre cuisine/histoire, vos formules avec prix, votre ADRESSE + accès (où vous trouver), des avis, et la RÉSERVATION. PAS de "déroulé d'intervention".`,
+  beaute: `STRUCTURE ATTENDUE (BEAUTÉ) : vos prestations, une galerie de réalisations/avant-après, vos tarifs, votre adresse, des avis, et la PRISE DE RENDEZ-VOUS en contact final.`,
+  conseil: `STRUCTURE ATTENDUE (CONSEIL / B2B) : crédibilité par les PREUVES. Vos expertises, des LOGOS de clients, votre méthode/démarche, des chiffres, des références/études de cas, des témoignages, et un premier rendez-vous en contact.`,
+  autre: ``,
+};
+
 export function buildAgenceurMessages(input: AgenceurInput): Array<{ role: "system" | "user"; content: string }> {
   const vibe = input.customVibe ?? getVibe(input.vibeId);
   const trade = detectTrade(input.brief).trade;
@@ -453,11 +476,9 @@ export function buildAgenceurMessages(input: AgenceurInput): Array<{ role: "syst
     ? `Le traitement visuel du hero imposé par cette DA est "${treatment}" — choisis le hero marqué "← HERO RECOMMANDÉ" ou celui dont la description correspond le mieux à ce traitement.`
     : "Choisis le hero marqué \"← HERO RECOMMANDÉ\" (il a été sélectionné pour ce métier + cette DA).";
 
-  // Squelette attendu par métier (guide la sélection). Pour un musicien, le site
-  // est une VITRINE centrée musique + scène — surtout pas un site de prestataire.
-  const tradeNote = trade === "musicien"
-    ? `\nSTRUCTURE ATTENDUE (MUSICIEN / ARTISTE) : un site vitrine centré sur la MUSIQUE et la SCÈNE. Privilégie les sections marquées "→ ADAPTÉ À CE MÉTIER" : la bio (qui il est / le groupe), les liens d'écoute & réseaux, la discographie, les dates de concerts, des photos de scène/presse, et éventuellement des chiffres d'écoute ou les salles & festivals. PAS d'avis clients, PAS de FAQ, PAS de forfaits : un musicien n'en a pas besoin. N'ajoute une billetterie (CTA "réserver des places") QUE si le client la mentionne.`
-    : "";
+  // Squelette attendu par métier (guide la sélection) — table TRADE_STRUCTURE_NOTE.
+  const structureNote = TRADE_STRUCTURE_NOTE[trade];
+  const tradeNote = structureNote ? `\n${structureNote}` : "";
 
   // Le client a déclaré ne PAS avoir d'avis : on interdit explicitement toute
   // section de témoignages (la preuve sociale passe par stats ou logos).
@@ -489,7 +510,7 @@ SORTIE : JSON STRICT, rien d'autre :
 CATALOGUE :
 ${catalogForPrompt(trade, vibeId)}`;
 
-  const user = `PITCH DU CLIENT : « ${input.brief.trim().slice(0, 1200)} »
+  const user = `PITCH DU CLIENT : « ${input.brief.trim().slice(0, 2500)} »
 NOM DE L'ACTIVITÉ : ${input.businessName.trim().slice(0, 80) || "(non précisé)"}
 MÉTIER DÉTECTÉ : ${trade}
 DIRECTION ARTISTIQUE CHOISIE : ${vibe ? `${vibe.label} (${vibe.mood.join(", ")})` : input.vibeId}

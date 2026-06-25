@@ -3,6 +3,7 @@ import type Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { SUBSCRIPTION_MONTHLY_ALLOWANCE } from "@/lib/pricing";
+import { enqueue } from "@/lib/twenty/sync";
 
 /**
  * Abonnement « tout illimité » actif ?
@@ -100,6 +101,9 @@ export async function syncSubscription(sub: Stripe.Subscription): Promise<void> 
     .update({ stripe_customer_id: customerId })
     .eq("id", userId)
     .is("stripe_customer_id", null);
+
+  // Synchro Twenty : statut d'inscription + MRR (fiche contact unifiée par email).
+  await enqueue(admin, { op: "sync_contact", userId });
 }
 
 /** Passe un abonnement à un statut donné (ex. 'canceled') par son id Stripe. */
@@ -112,4 +116,12 @@ export async function setSubscriptionStatus(
     .from("subscriptions")
     .update({ status })
     .eq("stripe_subscription_id", sub.id);
+
+  // Synchro Twenty : rafraîchit le statut d'inscription (ex. churn → plus client).
+  const { data } = await admin
+    .from("subscriptions")
+    .select("user_id")
+    .eq("stripe_subscription_id", sub.id)
+    .maybeSingle();
+  if (data?.user_id) await enqueue(admin, { op: "sync_contact", userId: data.user_id });
 }
