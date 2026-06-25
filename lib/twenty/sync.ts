@@ -265,7 +265,8 @@ export async function syncProspect(admin: Admin, prospectId: string): Promise<vo
 
 /** Passe une opportunité en « gagné ». Idempotent : ne réécrit pas si déjà gagné. */
 async function closeWon(oppId: string, conversionDate: string | null): Promise<void> {
-  const won = process.env.TWENTY_WON_STAGE || "WON";
+  // Stage « gagné ». Par défaut CUSTOMER (stage final standard de Twenty), overridable.
+  const won = process.env.TWENTY_WON_STAGE || "CUSTOMER";
   const cur = await getOpportunity(oppId);
   if (cur && (cur as { stage?: string }).stage === won) return;
   await updateOpportunity(oppId, {

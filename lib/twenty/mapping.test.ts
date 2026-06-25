@@ -34,16 +34,16 @@ const notClient: ClientContext = {
 
 describe("inscriptionStatusFor", () => {
   it("pas inscrit par défaut", () => {
-    expect(inscriptionStatusFor(notClient)).toBe("pas_inscrit");
+    expect(inscriptionStatusFor(notClient)).toBe("PAS_INSCRIT");
   });
   it("inscrit si compte ou essai", () => {
-    expect(inscriptionStatusFor({ ...notClient, hasAccount: true })).toBe("inscrit");
-    expect(inscriptionStatusFor({ ...notClient, isTrialing: true })).toBe("inscrit");
+    expect(inscriptionStatusFor({ ...notClient, hasAccount: true })).toBe("INSCRIT");
+    expect(inscriptionStatusFor({ ...notClient, isTrialing: true })).toBe("INSCRIT");
   });
   it("client payant prime sur tout", () => {
     expect(
       inscriptionStatusFor({ ...notClient, isClient: true, hasAccount: true, isTrialing: true }),
-    ).toBe("client_payant");
+    ).toBe("CLIENT_PAYANT");
   });
 });
 
@@ -66,7 +66,8 @@ describe("prospectToPersonPatch — propriété des champs", () => {
     expect(patch.emails).toEqual({ primaryEmail: "lea@example.com" });
     expect(patch.phones).toEqual({ primaryPhoneNumber: "+33600000000" });
     expect(patch.akyraProspectId).toBe(prospect.id);
-    expect(patch.inscriptionStatus).toBe("pas_inscrit");
+    expect(patch.inscriptionStatus).toBe("PAS_INSCRIT");
+    expect(patch.category).toBe("MUSICIEN");
   });
   it("omet les champs optionnels absents (pas de clé vide)", () => {
     const bare: ProspectRow = { ...prospect, phone: null, city: null, instagram: null, source: null };

@@ -25,18 +25,19 @@ const PERSON_FIELDS = [
   { name: "akyraSource", label: "Source Akyra", type: "TEXT" },
   { name: "leadScore", label: "Lead score", type: "NUMBER" },
   { name: "mrrCents", label: "MRR (cents)", type: "NUMBER" },
-  { name: "plan", label: "Plan", type: "TEXT" },
+  { name: "akyraPlan", label: "Plan", type: "TEXT" }, // "plan" est réservé dans Twenty
   { name: "conversionDate", label: "Date de conversion", type: "DATE_TIME" },
   {
     name: "category",
     label: "Catégorie",
     type: "SELECT",
+    // Twenty impose des valeurs d'option en MAJUSCULES_SNAKE.
     options: [
-      { label: "Photographe", value: "photographe", color: "pink", position: 0 },
-      { label: "Musicien", value: "musicien", color: "blue", position: 1 },
-      { label: "Artisan", value: "artisan", color: "green", position: 2 },
-      { label: "Portfolio", value: "portfolio", color: "yellow", position: 3 },
-      { label: "SaaS", value: "saas", color: "purple", position: 4 },
+      { label: "Photographe", value: "PHOTOGRAPHE", color: "pink", position: 0 },
+      { label: "Musicien", value: "MUSICIEN", color: "blue", position: 1 },
+      { label: "Artisan", value: "ARTISAN", color: "green", position: 2 },
+      { label: "Portfolio", value: "PORTFOLIO", color: "yellow", position: 3 },
+      { label: "SaaS", value: "SAAS", color: "purple", position: 4 },
     ],
   },
   {
@@ -44,9 +45,9 @@ const PERSON_FIELDS = [
     label: "Statut d'inscription",
     type: "SELECT",
     options: [
-      { label: "Pas inscrit", value: "pas_inscrit", color: "gray", position: 0 },
-      { label: "Inscrit", value: "inscrit", color: "blue", position: 1 },
-      { label: "Client payant", value: "client_payant", color: "green", position: 2 },
+      { label: "Pas inscrit", value: "PAS_INSCRIT", color: "gray", position: 0 },
+      { label: "Inscrit", value: "INSCRIT", color: "blue", position: 1 },
+      { label: "Client payant", value: "CLIENT_PAYANT", color: "green", position: 2 },
     ],
   },
 ];

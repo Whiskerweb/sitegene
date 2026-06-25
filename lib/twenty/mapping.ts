@@ -37,7 +37,11 @@ export type ClientContext = {
   conversionDate: string | null;
 };
 
-export type InscriptionStatus = "pas_inscrit" | "inscrit" | "client_payant";
+// Valeurs en MAJUSCULES_SNAKE : contrainte des champs SELECT de Twenty.
+export type InscriptionStatus = "PAS_INSCRIT" | "INSCRIT" | "CLIENT_PAYANT";
+
+/** Catégories connues (miroir du SELECT créé dans Twenty), en minuscules Akyra. */
+const KNOWN_CATEGORIES = new Set(["photographe", "musicien", "artisan", "portfolio", "saas"]);
 
 /**
  * Clés Twenty que la synchro est AUTORISÉE à écrire. Toute clé hors de cette
@@ -53,7 +57,7 @@ export const AKYRA_OWNED_PERSON_FIELDS = [
   "category",
   "leadScore",
   "inscriptionStatus",
-  "plan",
+  "akyraPlan",
   "mrrCents",
   "conversionDate",
   "akyraProspectId",
@@ -68,9 +72,9 @@ export const AKYRA_OWNED_OPP_FIELDS = [
 
 /** Statut d'inscription dérivé (priorité : payant > inscrit > pas inscrit). */
 export function inscriptionStatusFor(ctx: ClientContext): InscriptionStatus {
-  if (ctx.isClient) return "client_payant";
-  if (ctx.isTrialing || ctx.hasAccount) return "inscrit";
-  return "pas_inscrit";
+  if (ctx.isClient) return "CLIENT_PAYANT";
+  if (ctx.isTrialing || ctx.hasAccount) return "INSCRIT";
+  return "PAS_INSCRIT";
 }
 
 /** Nom affiché dans Twenty (fallback si le prospect n'a pas de prénom). */
@@ -93,11 +97,12 @@ export function prospectToPersonPatch(
   if (p.phone) patch.phones = { primaryPhoneNumber: p.phone };
   if (p.city) patch.city = p.city;
   if (p.instagram) patch.instagram = p.instagram;
-  if (p.category) patch.category = p.category;
+  // SELECT Twenty : valeur en MAJUSCULES, et seulement si catégorie connue.
+  if (p.category && KNOWN_CATEGORIES.has(p.category)) patch.category = p.category.toUpperCase();
   if (p.source) patch.akyraSource = p.source;
   patch.leadScore = p.lead_score ?? 0;
   patch.inscriptionStatus = inscriptionStatusFor(ctx);
-  if (ctx.plan) patch.plan = ctx.plan;
+  if (ctx.plan) patch.akyraPlan = ctx.plan;
   if (ctx.mrrCents != null) patch.mrrCents = ctx.mrrCents;
   if (ctx.conversionDate) patch.conversionDate = ctx.conversionDate;
   return patch;
