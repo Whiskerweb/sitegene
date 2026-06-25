@@ -80,13 +80,27 @@ TWENTY_SYNC_ENABLED=1                 # ou absent (activé par défaut)
   l'enveloppe de réponse diffère selon la version de Twenty.
 - `lib/twenty/mapping.ts` — traduction prospect → Person/Opportunity (fonctions pures,
   allowlist de propriété des champs). Tests : `lib/twenty/mapping.test.ts`.
-- `lib/twenty/sync.ts` — `enqueue` (ne throw jamais), `syncProspect`, `appendSignalNote`,
-  `drainOutbox`, `reconcileStaleProspects`.
-- Migration `supabase/migrations/0029_twenty_sync.sql`.
+- `lib/twenty/sync.ts` — `enqueue` (ne throw jamais), **`syncContact(email)`** (fonction
+  pivot v2 : fusionne prospect + profile en UNE fiche par email), `syncProspect` (délègue),
+  `appendSignalNote`, `drainOutbox`, `reconcileStaleContacts`.
+- Migrations `supabase/migrations/0029_twenty_sync.sql` + `0030_twenty_users.sql`.
+
+### v2 — CRM complet (cycle de vie)
+- **Une fiche Twenty par humain, clé email** : agrège lead (catégorie/score/pipeline) +
+  compte (`signupDate`, `lastConnectionAt`, abonnement/MRR, statut). Champs Person en plus :
+  `akyraUserId`, `signupDate`, `lastConnectionAt`. `profiles.twenty_person_id/...` (idempotence).
+- **Dernière connexion** = `auth.users.last_sign_in_at` (via `getUserById`), PAS `profiles.last_login_at`.
+- **Découverte vs rafraîchissement** : `reconcileStaleContacts` ne fait que RAFRAÎCHIR les
+  contacts déjà synchronisés (>6 h). Les NOUVEAUX entrent via les hooks temps réel (inscription/
+  conversion/engagement) ou le **backfill explicite**. Évite d'aspirer le junk.
+- **Backfill** : prospects réels = `WITH_OUTREACH=1 REQUIRE_EMAIL=1 EXCLUDE_TEST=1` ;
+  inscrits = `ONLY_USERS=1` (à n'utiliser que quand il y aura de vrais inscrits — la base
+  actuelle est surtout du test : emails @yopmail, paiements `cs_test_`).
 - Cron `app/api/cron/twenty-sync/route.ts` (utilisé seulement si on passe à un Twenty
   hébergé ; en mode local on s'appuie sur `npm run twenty:worker`).
 - Hooks `enqueue` : `app/api/track`, `app/api/email/webhook`, `lib/fulfill.ts`
-  (conversion → « gagné »), `lib/trial.ts`, `lib/subscription.ts`.
+  (inscription via `ensureUser` + conversion), `lib/trial.ts`, `lib/subscription.ts`
+  (→ `sync_contact`, couvre les inscrits self-serve jamais prospects).
 
 ## Règles à respecter
 
