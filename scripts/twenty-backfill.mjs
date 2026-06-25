@@ -22,6 +22,8 @@ const EXCLUDE_TEST = process.env.EXCLUDE_TEST === "1";
 const ONLY_STATUS = process.env.ONLY_STATUS || null;
 const ONLY_STAGE = process.env.ONLY_STAGE || null;
 const ONLY_CATEGORY = process.env.ONLY_CATEGORY || null;
+const WITH_OUTREACH = process.env.WITH_OUTREACH === "1"; // seulement les prospects vraiment contactés
+const REQUIRE_EMAIL = process.env.REQUIRE_EMAIL === "1"; // ignore les prospects sans email
 const LIMIT = process.env.LIMIT ? Number.parseInt(process.env.LIMIT, 10) : null;
 const PAGE = 200;
 const TEST_RE = /test|exemple|demo|fake/i;
@@ -44,6 +46,8 @@ const filtersLabel =
     ONLY_STATUS && `status=${ONLY_STATUS}`,
     ONLY_STAGE && `stage=${ONLY_STAGE}`,
     ONLY_CATEGORY && `category=${ONLY_CATEGORY}`,
+    WITH_OUTREACH && "with-outreach",
+    REQUIRE_EMAIL && "require-email",
     EXCLUDE_TEST && "exclude-test",
     LIMIT && `limit=${LIMIT}`,
   ]
@@ -52,6 +56,13 @@ const filtersLabel =
 
 async function run() {
   log(`Backfill (${filtersLabel})${DRY ? " [DRY_RUN]" : ""}.`);
+  // Ensemble des prospects réellement contactés (1 ligne outreach) si demandé.
+  let outreachSet = null;
+  if (WITH_OUTREACH) {
+    const { data: outs } = await admin.from("outreach").select("prospect_id");
+    outreachSet = new Set((outs ?? []).map((o) => o.prospect_id));
+    log(`${outreachSet.size} prospects avec outreach.`);
+  }
   let from = 0;
   let total = 0;
   let synced = 0;
@@ -75,6 +86,8 @@ async function run() {
     from += PAGE;
     for (const p of rows) {
       if (!RESYNC_ALL && p.twenty_person_id) continue; // déjà synchronisé
+      if (outreachSet && !outreachSet.has(p.id)) continue; // pas vraiment contacté
+      if (REQUIRE_EMAIL && !p.email) continue; // sans email
       if (EXCLUDE_TEST && TEST_RE.test(`${p.email ?? ""}${p.first_name ?? ""}`)) continue;
       total++;
       if (DRY) {
