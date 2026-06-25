@@ -38,7 +38,12 @@ export const SMOOTH_SCROLL_JS = String.raw`
     function loop(){
       current += (target - current) * ease;
       if (Math.abs(target - current) < 0.4){ current = target; animating = false; }
-      window.scrollTo(0, Math.round(current));
+      // behavior:'instant' OBLIGATOIRE : la forme positionnelle scrollTo(0,y) hérite
+      // du CSS 'scroll-behavior: smooth', ce qui RE-anime le navigateur vers chaque
+      // cible pendant que ce lerp en pousse déjà une autre → double lissage qui se
+      // bagarre (scroll « qui rame », pire au changement de direction). On force le
+      // positionnement instantané ici ; le smooth CSS reste actif pour les ancres.
+      window.scrollTo({ top: Math.round(current), left: 0, behavior: 'instant' });
       if (animating) requestAnimationFrame(loop);
     }
     function start(){ if (!animating){ animating = true; requestAnimationFrame(loop); } }
