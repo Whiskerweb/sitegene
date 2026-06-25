@@ -44,6 +44,14 @@ export type InscriptionStatus = "PAS_INSCRIT" | "INSCRIT" | "CLIENT_PAYANT";
 const KNOWN_CATEGORIES = new Set(["photographe", "musicien", "artisan", "portfolio", "saas"]);
 
 /**
+ * Formate une date pour les champs DATE_TIME de Twenty : 'YYYY-MM-DDTHH:mm:ssZ'
+ * (Twenty refuse les microsecondes / l'offset +00:00 renvoyés par Postgres).
+ */
+export function twentyDateTime(iso: string): string {
+  return new Date(iso).toISOString().replace(/\.\d+Z$/, "Z");
+}
+
+/**
  * Clés Twenty que la synchro est AUTORISÉE à écrire. Toute clé hors de cette
  * liste (ex. `stage`, `noteTargets`, champs de qualification manuels) ne doit
  * JAMAIS apparaître dans un patch de synchro courant.
@@ -104,7 +112,7 @@ export function prospectToPersonPatch(
   patch.inscriptionStatus = inscriptionStatusFor(ctx);
   if (ctx.plan) patch.akyraPlan = ctx.plan;
   if (ctx.mrrCents != null) patch.mrrCents = ctx.mrrCents;
-  if (ctx.conversionDate) patch.conversionDate = ctx.conversionDate;
+  if (ctx.conversionDate) patch.conversionDate = twentyDateTime(ctx.conversionDate);
   return patch;
 }
 

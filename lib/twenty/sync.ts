@@ -15,6 +15,7 @@ import {
   prospectToPersonPatch,
   opportunityPatchFor,
   signalToNoteBody,
+  twentyDateTime,
   type ProspectRow,
   type ClientContext,
 } from "./mapping";
@@ -269,10 +270,9 @@ async function closeWon(oppId: string, conversionDate: string | null): Promise<v
   const won = process.env.TWENTY_WON_STAGE || "CUSTOMER";
   const cur = await getOpportunity(oppId);
   if (cur && (cur as { stage?: string }).stage === won) return;
-  await updateOpportunity(oppId, {
-    stage: won,
-    closeDate: conversionDate || new Date().toISOString(),
-  });
+  // closeDate : format Twenty (secondes, suffixe Z). Optionnel — on le pose si connu.
+  const closeDate = conversionDate ? twentyDateTime(conversionDate) : undefined;
+  await updateOpportunity(oppId, closeDate ? { stage: won, closeDate } : { stage: won });
 }
 
 /** Ajoute une entrée de timeline (Note) sur la Person du prospect. */

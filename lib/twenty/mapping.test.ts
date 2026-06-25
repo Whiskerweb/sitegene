@@ -109,6 +109,13 @@ describe("displayName", () => {
   });
 });
 
+describe("twentyDateTime", () => {
+  it("retire microsecondes et offset → secondes + Z", async () => {
+    const { twentyDateTime } = await import("./mapping");
+    expect(twentyDateTime("2026-05-29T23:17:22.510114+00:00")).toBe("2026-05-29T23:17:22Z");
+  });
+});
+
 describe("signalToNoteBody", () => {
   it("titre lisible daté", () => {
     expect(signalToNoteBody("reveal_opened", "2026-06-24T10:00:00Z").title).toMatch(/Reveal ouvert/);
