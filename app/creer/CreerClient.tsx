@@ -23,6 +23,7 @@ import { AkyraMark } from "@/components/ui/Logo";
 import CollectStep from "@/components/creer/CollectStep";
 import DescriptionQuality from "@/components/creer/DescriptionQuality";
 import DomainField from "@/components/creer/DomainField";
+import ResalibImport from "@/components/creer/ResalibImport";
 import ImportCharte, { type ImportedCharte } from "@/components/creer/ImportCharte";
 import type { DomainEntry } from "@/lib/foundry/domain-catalog";
 import { ramp, readableOn } from "@/lib/client/color-preview";
@@ -544,6 +545,18 @@ export default function CreerClient() {
                 critères (questions) adaptés au DOMAINE via l'IA. Le nom de
                 l'activité est extrait du brief par l'IA → `setName`. */}
             <DescriptionQuality text={brief} domain={domain} onBusinessName={setName} />
+
+            {/* Coachs & médecine douce : import « profil Resalib » → pré-remplit
+                présentation/nom/avis/adresse/photos + lien « Prendre rendez-vous ». */}
+            {(trade === "coach" || trade === "bien-etre") && (
+              <ResalibImport
+                collected={collected}
+                onChange={setCollected}
+                brief={brief}
+                onBrief={setBrief}
+                onName={setName}
+              />
+            )}
 
             <button
               type="button"
