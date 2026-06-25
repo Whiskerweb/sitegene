@@ -311,10 +311,13 @@ export function withResolvedNav(recipe: Recipe, siteSlug: string): Recipe {
   const sections = recipe.sections.map((s) => {
     const role = getManifest(s.component)?.role;
     if (role === "navbar") {
+      // Lien AVEC cible (page/externe) → href résolu. Lien SANS cible (mono-page,
+      // libellé brut de Mistral) → laissé tel quel : l'Assembler le remplacera par
+      // une ancre dérivée des sections (#galerie, #contact…).
       const links = (Array.isArray(s.content.links) ? s.content.links : [])
         .map(normalizeNavLink)
         .filter((l) => l.label)
-        .map((l) => ({ label: l.label, href: resolveNavHref(l.target, siteSlug) }));
+        .map((l) => (l.target ? { label: l.label, href: resolveNavHref(l.target, siteSlug) } : { label: l.label }));
       return { ...s, content: { ...s.content, links } };
     }
     if (role === "footer") {

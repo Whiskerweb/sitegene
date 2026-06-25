@@ -5,6 +5,8 @@ import { getVibe, vibeToCssVars } from "@/lib/foundry/vibes";
 import { validateRecipe } from "@/lib/foundry/recipe";
 import { heroTreatmentOf } from "@/lib/foundry/treatment";
 import { textureLayerStyle } from "@/lib/foundry/texture";
+import { buildSectionNav, sectionAnchorId, navbarCtaHref } from "@/lib/foundry/section-nav";
+import { navHref } from "@/lib/foundry/nav";
 import { COMPONENTS } from "./registry";
 import SmartNav from "./SmartNav";
 import { BrandProvider } from "./BrandLogo";
@@ -14,9 +16,9 @@ import { BrandProvider } from "./BrandLogo";
  * de contenu à personnaliser (avis, chiffres, galerie). Aperçu/éditeur UNIQUEMENT
  * — jamais sur le site publié (placeholderMode absent côté /a/[slug]).
  */
-function PlaceholderFrame({ reason, children }: { reason: string; children: ReactNode }) {
+function PlaceholderFrame({ reason, children, id }: { reason: string; children: ReactNode; id?: string }) {
   return (
-    <div style={{ position: "relative", outline: "2px dashed var(--c-accent)", outlineOffset: "-2px" }}>
+    <div id={id} style={{ position: "relative", outline: "2px dashed var(--c-accent)", outlineOffset: "-2px", scrollMarginTop: id ? "90px" : undefined }}>
       <span
         style={{
           position: "absolute",
@@ -85,12 +87,30 @@ export default function Assembler({
   const vars = vibeToCssVars(vibe, recipe.brand) as unknown as CSSProperties;
   const tex = textureLayerStyle(vibe.texture);
 
+  // Navigation MONO-PAGE : liens de menu dérivés des sections réelles (ancres
+  // #id). On ne les applique QUE si la navbar n'a pas déjà de vrais liens (vers
+  // d'autres pages / externes) — un site multi-pages garde sa nav telle quelle.
+  const sectionNav = buildSectionNav(recipe);
+  const ctaAnchor = navbarCtaHref(recipe);
+  const navbarContent = (content: Record<string, unknown>): Record<string, unknown> => {
+    const existing = Array.isArray(content.links) ? content.links : [];
+    const hasRealLinks = existing.some((l) => {
+      const h = navHref(l);
+      return h && h !== "#";
+    });
+    if (hasRealLinks || sectionNav.length === 0) return content;
+    const ctaHref = typeof content.ctaHref === "string" && content.ctaHref && content.ctaHref !== "#" ? content.ctaHref : ctaAnchor ?? content.ctaHref;
+    return { ...content, links: sectionNav, ...(ctaHref ? { ctaHref } : {}) };
+  };
+
   return (
     <div style={{ ...vars, fontFamily: "var(--font-body)", background: "var(--c-surface)", color: "var(--c-ink)", minHeight: fit ? undefined : "100vh", position: "relative", isolation: "isolate" }}>
       {/* Atmosphère de fond pilotée par la DA (grain/grille/halo/mesh) — derrière le contenu. */}
       {tex ? (
         <div aria-hidden style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none", ...tex }} />
       ) : null}
+      {/* Défilement fluide vers les ancres de menu (mono-page). */}
+      <style>{"html{scroll-behavior:smooth}"}</style>
       {/* Fonts de la vibe — React hisse et déduplique ces <link> dans le <head>. */}
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link rel="stylesheet" href={vibe.fontHref} precedence="foundry-fonts" />
@@ -102,11 +122,13 @@ export default function Assembler({
         const C = COMPONENTS[s.manifest.id];
         if (!C) return null;
         const heroAttr = s.manifest.role === "hero" ? { "data-hero": heroTreatmentOf(vibe) } : {};
+        // Ancre de section (cible des liens de menu mono-page) — jamais sur la navbar.
+        const anchor = s.manifest.role === "navbar" ? null : sectionAnchorId(s.manifest.id);
         // Section « à personnaliser » (données d'exemple) : cadre + badge en
         // aperçu/éditeur seulement. Ni navbar ni hero ne sont concernés.
         if (placeholderMode && s.meta?.placeholder && i !== highlightIndex && s.manifest.role !== "navbar" && s.manifest.role !== "hero") {
           return (
-            <PlaceholderFrame key={i} reason={s.meta.reason ?? "Données d'exemple — personnalisez en 30 s"}>
+            <PlaceholderFrame key={i} id={anchor ?? undefined} reason={s.meta.reason ?? "Données d'exemple — personnalisez en 30 s"}>
               <C content={s.content} skin={s.skin} />
             </PlaceholderFrame>
           );
@@ -124,17 +146,27 @@ export default function Assembler({
           );
         }
         // Navbar : défile avec la page mais revient dès que le visiteur
-        // remonte — accessible partout sans être collée en permanence.
+        // remonte — accessible partout sans être collée en permanence. Liens
+        // dérivés des sections (mono-page) si la navbar n'a pas de vrais liens.
         if (s.manifest.role === "navbar") {
           return (
             <SmartNav key={i}>
-              <C content={s.content} skin={s.skin} />
+              <C content={navbarContent(s.content)} skin={s.skin} />
             </SmartNav>
           );
         }
         if (s.manifest.role === "hero") {
           return (
             <div key={i} {...heroAttr}>
+              <C content={s.content} skin={s.skin} />
+            </div>
+          );
+        }
+        // Sections ordinaires : enveloppées d'une ancre (#id) quand elles sont
+        // une cible de menu, avec marge de défilement pour la navbar collante.
+        if (anchor) {
+          return (
+            <div key={i} id={anchor} style={{ scrollMarginTop: "90px" }}>
               <C content={s.content} skin={s.skin} />
             </div>
           );

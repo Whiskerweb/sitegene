@@ -91,11 +91,14 @@ describe("résolution des liens + composition de sous-page", () => {
     expect(resolveNavHref("https://x.fr", "monsite")).toBe("https://x.fr");
     expect(resolveNavHref(undefined, "monsite")).toBe("/a/monsite");
   });
-  it("withResolvedNav transforme les liens en {label,href}", () => {
+  it("withResolvedNav résout les liens AVEC cible, laisse bruts ceux SANS cible", () => {
     const r = withResolvedNav(addNavLink(HOME, "Tarifs", "tarifs"), "monsite");
-    const links = r.sections[0].content.links as Array<{ label: string; href: string }>;
+    const links = r.sections[0].content.links as Array<{ label: string; href?: string }>;
+    // Lien de page (cible) → href public résolu.
     expect(links).toContainEqual({ label: "Tarifs", href: "/a/monsite/tarifs" });
-    expect(links).toContainEqual({ label: "Accueil", href: "/a/monsite" });
+    // Lien SANS cible (libellé brut Mistral, mono-page) → laissé brut : l'Assembler
+    // le remplacera par une ancre de section (#…). Plus de résolution vers l'accueil.
+    expect(links).toContainEqual({ label: "Accueil" });
   });
   it("composePageRecipe : navbar accueil + sections page + footer accueil", () => {
     const page: FoundryPage = {
