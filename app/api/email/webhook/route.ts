@@ -6,6 +6,7 @@
  */
 import { Webhook } from "svix";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { enqueue } from "@/lib/twenty/sync";
 import type { EmailEventName } from "@/lib/types/db";
 
 /** type Resend → nom d'event interne (null = ignoré). */
@@ -83,6 +84,20 @@ export async function POST(request: Request) {
       .update({ status: stop, updated_at: new Date().toISOString() })
       .eq("id", outreachId)
       .in("status", ["queued", "active"]);
+  }
+
+  // Synchro Twenty : un clic email est un signal fiable (timeline + refresh score).
+  if (prospectId && event === "clicked") {
+    await enqueue(admin, {
+      op: "append_note",
+      prospectId,
+      payload: {
+        signal: "email_clicked",
+        at: new Date().toISOString(),
+        dedup_key: `email:${providerId ?? toEmail}:clicked`,
+      },
+    });
+    await enqueue(admin, { op: "sync_prospect", prospectId });
   }
 
   return new Response(null, { status: 204 });

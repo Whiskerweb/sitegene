@@ -4,6 +4,7 @@ import { grantCredits } from "@/lib/credits-server";
 import { sendReceipt } from "@/lib/email/send";
 import { generationPending } from "@/lib/generation-status";
 import { isValidSlug, normalizeSlug } from "@/lib/templates";
+import { enqueue } from "@/lib/twenty/sync";
 
 export type FulfillResult = {
   email: string | null;
@@ -148,6 +149,13 @@ export async function fulfillPayment(
         .from("outreach")
         .update({ status: "converted", updated_at: new Date().toISOString() })
         .eq("prospect_id", code.prospect_id);
+      // Synchro Twenty : conversion → opportunité « gagnée » + note paiement.
+      await enqueue(admin, { op: "sync_prospect", prospectId: code.prospect_id });
+      await enqueue(admin, {
+        op: "append_note",
+        prospectId: code.prospect_id,
+        payload: { signal: "purchased", at: new Date().toISOString(), dedup_key: `pay:${session.id}` },
+      });
     }
   } catch (e) {
     console.error("[fulfill] receipt email failed:", e instanceof Error ? e.message : e);

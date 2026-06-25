@@ -10,6 +10,7 @@ import type Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { goLive, slugBaseForSite } from "@/lib/fulfill";
+import { enqueue } from "@/lib/twenty/sync";
 
 type Admin = ReturnType<typeof createAdminClient>;
 
@@ -45,6 +46,13 @@ async function publishAndStartTrial(admin: Admin, siteId: string): Promise<strin
         .from("outreach")
         .update({ status: "converted", updated_at: new Date().toISOString() })
         .eq("prospect_id", code.prospect_id);
+      // Synchro Twenty : début d'essai (statut « inscrit » ; « gagné » au débit J+3).
+      await enqueue(admin, { op: "sync_prospect", prospectId: code.prospect_id });
+      await enqueue(admin, {
+        op: "append_note",
+        prospectId: code.prospect_id,
+        payload: { signal: "trial_started", at: new Date().toISOString(), dedup_key: `trial:${siteId}` },
+      });
     }
   }
 

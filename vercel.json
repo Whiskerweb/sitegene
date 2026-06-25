@@ -3,6 +3,10 @@
     {
       "path": "/api/generation/run",
       "schedule": "*/2 * * * *"
+    },
+    {
+      "path": "/api/cron/twenty-sync",
+      "schedule": "*/5 * * * *"
     }
   ]
 }
