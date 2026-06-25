@@ -30,6 +30,7 @@ export async function POST(request: Request) {
   const origin = new URL(request.url).origin;
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
+    allow_promotion_codes: true, // codes promo au déblocage (ex. -100% → 0 €)
     line_items: [
       {
         quantity: 1,
