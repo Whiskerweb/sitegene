@@ -569,9 +569,12 @@ async function markDone(admin: Admin, id: string): Promise<void> {
 const RECONCILE_STALE_MS = 6 * 60 * 60_000; // 6 h
 
 /**
- * Enfile une synchro pour les contacts jamais synchronisés ou « périmés » (>6 h) :
- * d'un côté les prospects (leads), de l'autre les inscrits (profiles non-opérateur,
- * avec email). Garde la dernière connexion + le statut à jour. Renvoie le nombre enfilé.
+ * RAFRAÎCHISSEUR : re-synchronise les contacts DÉJÀ dans Twenty dont la synchro
+ * date de plus de 6 h (prospects ET inscrits). Garde lead_score / dernière
+ * connexion / statut client à jour. Ne DÉCOUVRE PAS de nouveaux contacts — c'est
+ * volontaire : la découverte passe par les hooks temps réel (vraies inscriptions/
+ * conversions) et le backfill explicite, pour ne jamais aspirer le junk (prospects
+ * sans email, emails jetables, etc.). Renvoie le nombre enfilé.
  */
 export async function reconcileStaleContacts(
   admin: Admin,
@@ -583,12 +586,13 @@ export async function reconcileStaleContacts(
   const cutoff = new Date(Date.now() - RECONCILE_STALE_MS).toISOString();
   let n = 0;
 
-  // Prospects (leads).
+  // Prospects déjà synchronisés et périmés.
   const { data: ps } = await admin
     .from("prospects")
     .select("id, email")
-    .or(`twenty_synced_at.is.null,twenty_synced_at.lt.${cutoff}`)
-    .order("twenty_synced_at", { ascending: true, nullsFirst: true })
+    .not("twenty_synced_at", "is", null)
+    .lt("twenty_synced_at", cutoff)
+    .order("twenty_synced_at", { ascending: true })
     .limit(half);
   for (const r of ps ?? []) {
     if (r.email) await enqueue(admin, { op: "sync_contact", email: r.email as string, prospectId: r.id });
@@ -596,14 +600,15 @@ export async function reconcileStaleContacts(
     n++;
   }
 
-  // Inscrits (profiles), hors opérateurs, avec email.
+  // Inscrits déjà synchronisés et périmés (hors opérateurs).
   const { data: us } = await admin
     .from("profiles")
     .select("id, email")
     .eq("is_operator", false)
     .not("email", "is", null)
-    .or(`twenty_synced_at.is.null,twenty_synced_at.lt.${cutoff}`)
-    .order("twenty_synced_at", { ascending: true, nullsFirst: true })
+    .not("twenty_synced_at", "is", null)
+    .lt("twenty_synced_at", cutoff)
+    .order("twenty_synced_at", { ascending: true })
     .limit(half);
   for (const r of us ?? []) {
     await enqueue(admin, { op: "sync_contact", email: r.email as string, userId: r.id });
