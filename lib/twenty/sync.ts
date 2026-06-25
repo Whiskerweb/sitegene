@@ -136,17 +136,23 @@ async function buildClientContext(admin: Admin, p: ProspectFull): Promise<Client
   const siteIds = (codes ?? []).map((c) => c.site_id).filter(Boolean) as string[];
 
   // Paiement encaissé (initial_50 ou trial_50 passé `paid`) = client payant.
+  // On IGNORE les paiements en mode TEST Stripe (session cs_test_…) : un checkout
+  // de test ne doit jamais marquer quelqu'un « client payant ». Seuls les vrais
+  // paiements (cs_live_… ou hors-Stripe) comptent comme conversion.
   let isClient = false;
   let conversionDate: string | null = null;
   if (codeIds.length) {
-    const { data: pays } = await admin
+    const { data: rawPays } = await admin
       .from("payments")
-      .select("kind, status, created_at")
+      .select("kind, status, created_at, stripe_session_id")
       .in("prospect_code_id", codeIds)
       .in("kind", ["initial_50", "trial_50"])
       .eq("status", "paid")
       .order("created_at", { ascending: true });
-    if (pays?.length) {
+    const pays = (rawPays ?? []).filter(
+      (p) => !String(p.stripe_session_id ?? "").startsWith("cs_test_"),
+    );
+    if (pays.length) {
       isClient = true;
       conversionDate = pays[0].created_at as string;
     }
