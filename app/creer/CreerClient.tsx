@@ -22,7 +22,9 @@ import AuthGate from "@/components/auth/AuthGate";
 import { AkyraMark } from "@/components/ui/Logo";
 import CollectStep from "@/components/creer/CollectStep";
 import DescriptionQuality from "@/components/creer/DescriptionQuality";
+import DomainField from "@/components/creer/DomainField";
 import ImportCharte, { type ImportedCharte } from "@/components/creer/ImportCharte";
+import type { DomainEntry } from "@/lib/foundry/domain-catalog";
 import { ramp, readableOn } from "@/lib/client/color-preview";
 import { detectTrade } from "@/lib/foundry/suggest";
 import type { Collected } from "@/lib/foundry/link-catalog";
@@ -72,7 +74,22 @@ export default function CreerClient() {
   const router = useRouter();
   const [phase, setPhase] = useState<Phase>("pitch");
   const [brief, setBrief] = useState("");
+  // Domaine choisi par le client (ex. « Coach en développement personnel ») :
+  // pilote les questions de qualité. Le NOM de l'activité, lui, n'est plus
+  // demandé — il est extrait du brief par l'IA (→ `name`, via DescriptionQuality).
+  const [domain, setDomain] = useState("");
+  // Entrée de catalogue choisie (tradeId/sub) — purement informatif, invalidé si
+  // l'utilisateur ré-édite le champ. `domain` (string) reste la source de vérité.
+  const [domainEntry, setDomainEntry] = useState<DomainEntry | null>(null);
   const [name, setName] = useState("");
+  const displayName = name.trim() || domain.trim();
+  // Brief enrichi du domaine pour le classement DA + la génération (le label du
+  // domaine contient les mots-clés que detectTrade exploite, même brief vague).
+  const briefForGen = () => {
+    const d = domain.trim();
+    const b = brief.trim();
+    return d ? `${d}. ${b}` : b;
+  };
 
   // Aperçu de la phase reveal : appareil simulé + plein écran.
   const [revealDevice, setRevealDevice] = useState<"desktop" | "tablet" | "mobile">("desktop");
@@ -103,6 +120,11 @@ export default function CreerClient() {
   const [revealed, setRevealed] = useState(0);
   const [siteId, setSiteId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // Une fois le site assemblé (structure + textes figés), tout nouveau choix de
+  // charte ne fait QUE recolorer (op palette) — on ne régénère plus la structure.
+  const [assembled, setAssembled] = useState(false);
+  // Bumpé après une recoloration → force le rechargement de l'aperçu (iframe).
+  const [previewNonce, setPreviewNonce] = useState(0);
   const launchedRef = useRef(false);
   const speculativeRef = useRef<{ siteId: string; cards: Card[] } | null>(null);
   const chartesAutoRef = useRef(false); // debounce chartes : déjà déclenché ?
@@ -110,7 +132,10 @@ export default function CreerClient() {
   // Ids des chartes déjà montrées → exclus du prochain « 3 autres » (rotation
   // sans répétition). Ref : lu dans loadChartes (async), pas besoin de re-render.
   const shownIdsRef = useRef<string[]>([]);
-  const trade = useMemo(() => detectTrade(brief).trade, [brief]);
+  const trade = useMemo(
+    () => detectTrade(domain.trim() ? `${domain.trim()}. ${brief}` : brief).trade,
+    [brief, domain],
+  );
 
   // --- Restauration (retour d'OAuth ou arrivée depuis la landing) --------------
   useEffect(() => {
@@ -119,6 +144,8 @@ export default function CreerClient() {
       if (raw) {
         const s = JSON.parse(raw) as {
           brief?: string;
+          domain?: string;
+          domainEntry?: DomainEntry | null;
           name?: string;
           chartes?: Charte[];
           importedCharte?: Charte | null;
@@ -127,6 +154,8 @@ export default function CreerClient() {
           collected?: Collected;
         };
         if (s.brief) setBrief(s.brief);
+        if (s.domain) setDomain(s.domain);
+        if (s.domainEntry && typeof s.domainEntry === "object") setDomainEntry(s.domainEntry);
         if (s.name) setName(s.name);
         if (Array.isArray(s.chartes) && s.chartes.length > 0) { setChartes(s.chartes); setPages([s.chartes]); setPageIdx(0); }
         if (s.importedCharte && typeof s.importedCharte === "object") setImportedCharte(s.importedCharte);
@@ -149,13 +178,13 @@ export default function CreerClient() {
 
   useEffect(() => {
     try {
-      sessionStorage.setItem(STATE_KEY, JSON.stringify({ brief, name, chartes, importedCharte, selectedIdx, accent, collected }));
+      sessionStorage.setItem(STATE_KEY, JSON.stringify({ brief, domain, domainEntry, name, chartes, importedCharte, selectedIdx, accent, collected }));
     } catch {
       /* non bloquant */
     }
-  }, [brief, name, chartes, importedCharte, selectedIdx, accent, collected]);
+  }, [brief, domain, domainEntry, name, chartes, importedCharte, selectedIdx, accent, collected]);
 
-  const pitchReady = brief.trim().length >= 10 && name.trim().length >= 2;
+  const pitchReady = brief.trim().length >= 10 && domain.trim().length >= 2;
 
   // Auto-charge les chartes dès que le pitch est assez long (sans clic "Continuer").
   useEffect(() => {
@@ -165,7 +194,7 @@ export default function CreerClient() {
       void loadChartes({ reset: true });
     }, 700);
     return () => clearTimeout(t);
-  }, [pitchReady, brief, name]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [pitchReady, brief, domain]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // --- Chartes piochées dans la banque ------------------------------------------
   // reset = nouvelle série (exclude vide) ; sinon « 3 autres » (exclut le déjà-vu).
@@ -181,7 +210,7 @@ export default function CreerClient() {
       const res = await fetch("/api/foundry/charte", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ brief: brief.trim(), businessName: name.trim(), exclude }),
+        body: JSON.stringify({ brief: briefForGen(), businessName: name.trim() || domain.trim(), exclude }),
       });
       const data = await res.json().catch(() => null);
       if (!res.ok || !data?.ok) throw new Error(data?.error ?? "Impossible de composer vos chartes. Réessayez.");
@@ -269,7 +298,9 @@ export default function CreerClient() {
   // Génération spéculative : dès que chartes[0] est disponible, on génère déjà
   // le site avec la première direction. Si l'utilisateur la choisit → reveal quasi-instantané.
   useEffect(() => {
-    if (!chartes || !authed || speculativeRef.current) return;
+    // Plus de pré-génération une fois le site assemblé : un nouveau choix de
+    // charte se contente de recolorer (op palette), on ne régénère plus.
+    if (!chartes || !authed || speculativeRef.current || assembled) return;
     const c0 = chartes[0];
     if (!c0) return;
     void (async () => {
@@ -278,8 +309,8 @@ export default function CreerClient() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            brief: brief.trim(),
-            businessName: name.trim(),
+            brief: briefForGen(),
+            businessName: name.trim() || domain.trim(),
             vibeId: "custom",
             charteSpec: c0.spec,
             hasReviews: collected.hasReviews,
@@ -309,6 +340,37 @@ export default function CreerClient() {
     if (launchedRef.current || !selected) return;
     launchedRef.current = true;
 
+    // Recoloration seule : le site est DÉJÀ assemblé → on n'applique que la charte
+    // (couleurs + typo) sur la recette existante, sans toucher aux sections, aux
+    // textes ni au header. C'est l'op « palette » de l'éditeur (L'Atelier).
+    if (assembled && siteId) {
+      setError(null);
+      setBusy(true);
+      try {
+        const res = await fetch("/api/foundry/recipe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            siteId,
+            op: "palette",
+            charteSpec: selected.vibe.id === "custom" ? selected.spec : undefined,
+            vibeId: selected.vibe.id === "custom" ? undefined : selected.vibe.id,
+            accent: accent ?? undefined,
+          }),
+        });
+        const data = await res.json().catch(() => null);
+        if (!res.ok || !data?.ok) throw new Error(data?.error ?? "Changement de charte impossible. Réessayez.");
+        setPreviewNonce((n) => n + 1); // recharge l'aperçu recoloré
+        setPhase("reveal");
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "Changement de charte impossible. Réessayez.");
+      } finally {
+        setBusy(false);
+        launchedRef.current = false;
+      }
+      return;
+    }
+
     // Cas rapide : l'utilisateur a choisi la charte[0] et la génération spéculative
     // est déjà terminée → pas de nouveau fetch, reveal quasi-instantané.
     if (selectedIdx === 0 && speculativeRef.current) {
@@ -328,6 +390,7 @@ export default function CreerClient() {
           });
         } catch { /* best-effort */ }
         setCards(spec.cards);
+        setAssembled(true); // structure figée → les charges suivantes recolorent
       } catch (e) {
         setError(e instanceof Error ? e.message : "Assemblage impossible. Réessayez.");
         setPhase("vibe");
@@ -349,8 +412,8 @@ export default function CreerClient() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          brief: brief.trim(),
-          businessName: name.trim(),
+          brief: briefForGen(),
+          businessName: name.trim() || domain.trim(),
           vibeId: selected.vibe.id,
           accent: accent ?? undefined,
           charteSpec: selected.vibe.id === "custom" ? selected.spec : undefined,
@@ -370,6 +433,7 @@ export default function CreerClient() {
         });
       } catch { /* best-effort */ }
       setCards(data.cards as Card[]);
+      setAssembled(true); // structure figée → les charges suivantes recolorent
     } catch (e) {
       setError(e instanceof Error ? e.message : "Assemblage impossible. Réessayez.");
       setPhase("vibe");
@@ -459,28 +523,27 @@ export default function CreerClient() {
               assemblé à partir de composants premium — pas de page blanche.
             </p>
 
-            <label className="mt-8 block text-sm font-semibold">Le nom de votre activité</label>
-            <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Ex. Atelier Lumière, Breizh Plomberie…"
-              maxLength={80}
-              className="mt-2 w-full rounded-2xl border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] px-4 py-3.5 text-[15px] outline-none transition focus:border-[rgb(var(--m-accent))]"
+            <label className="mt-8 block text-sm font-semibold">Quel est votre domaine ?</label>
+            <DomainField
+              value={domain}
+              onChange={setDomain}
+              onSelect={setDomainEntry}
             />
 
             <label className="mt-5 block text-sm font-semibold">Ce que vous faites</label>
             <textarea
               value={brief}
               onChange={(e) => setBrief(e.target.value)}
-              rows={4}
-              maxLength={2000}
-              placeholder="Votre métier, pour qui, où, ce qui vous rend différent…"
-              className="mt-2 w-full resize-none rounded-2xl border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] px-4 py-3.5 text-[15px] leading-relaxed outline-none transition focus:border-[rgb(var(--m-accent))]"
+              rows={6}
+              maxLength={6000}
+              placeholder="Présentez-vous : le nom de votre activité, pour qui, où, ce qui vous rend différent… N'hésitez pas à coller une bio ou un texte existant."
+              className="mt-2 max-h-[460px] min-h-[150px] w-full resize-y rounded-2xl border border-[rgb(var(--m-line))] bg-[rgb(var(--m-surface))] px-4 py-3.5 text-[15px] leading-relaxed outline-none transition focus:border-[rgb(var(--m-accent))]"
             />
 
-            {/* Retour qualité en temps réel (100 % local, instantané) : jauge +
-                score + questions restantes, à chaque frappe. */}
-            <DescriptionQuality text={brief} />
+            {/* Retour qualité en temps réel : détection locale instantanée, mais
+                critères (questions) adaptés au DOMAINE via l'IA. Le nom de
+                l'activité est extrait du brief par l'IA → `setName`. */}
+            <DescriptionQuality text={brief} domain={domain} onBusinessName={setName} />
 
             <button
               type="button"
@@ -500,8 +563,8 @@ export default function CreerClient() {
               <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Votre charte graphique</h1>
               <p className="mt-3 text-[15px] text-[rgb(var(--m-muted))]">
                 {chartesLoading
-                  ? `Le directeur artistique compose trois directions pour « ${name.trim() || "votre activité"} »…`
-                  : `Trois directions composées sur mesure pour « ${name.trim() || "votre activité"} ». Tout votre site en découlera.`}
+                  ? `Le directeur artistique compose trois directions pour « ${displayName || "votre activité"} »…`
+                  : `Trois directions composées sur mesure pour « ${displayName || "votre activité"} ». Tout votre site en découlera.`}
               </p>
               <p className="mt-2 text-[13px] text-[rgb(var(--m-faint))]">
                 Rien de définitif : vous pourrez changer de direction plus tard et visualiser le résultat en direct, en un clic.
@@ -557,7 +620,7 @@ export default function CreerClient() {
                       {/* Mini barre de site (carte + pilule contact) */}
                       <div className="flex items-center justify-between rounded-xl px-3 py-2" style={{ background: v.palette.card }}>
                         <span className="text-[11px] font-bold" style={{ color: v.palette.ink, fontFamily: v.fonts.heading }}>
-                          {(name.trim() || "Studio").slice(0, 16)}
+                          {(displayName || "Studio").slice(0, 16)}
                         </span>
                         <span className="px-2 py-0.5 text-[9px] font-semibold" style={{ background: a, color: onA, borderRadius: v.radius.pill }}>
                           Contact
@@ -694,7 +757,7 @@ export default function CreerClient() {
               <div className="flex items-center gap-3">
                 <button
                   type="button"
-                  onClick={() => { setPhase("pitch"); chartesAutoRef.current = false; setChartes(null); setPages([]); setPageIdx(0); shownIdsRef.current = []; }}
+                  onClick={() => { setPhase("pitch"); chartesAutoRef.current = false; setChartes(null); setPages([]); setPageIdx(0); shownIdsRef.current = []; setAssembled(false); }}
                   className="inline-flex h-12 items-center rounded-full border border-[rgb(var(--m-line))] px-5 text-[15px] font-medium text-[rgb(var(--m-muted))] transition hover:text-[rgb(var(--m-ink))]"
                 >
                   ← Modifier mon pitch
@@ -705,7 +768,7 @@ export default function CreerClient() {
                   onClick={onAssembleClick}
                   className="inline-flex h-12 items-center gap-2 rounded-full bg-[rgb(var(--m-accent))] px-6 text-[15px] font-semibold text-[rgb(var(--m-on-accent))] transition enabled:hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
                 >
-                  Assembler mon site ✦
+                  {busy ? "Application…" : assembled ? "Appliquer cette charte ✦" : "Assembler mon site ✦"}
                 </button>
               </div>
             </div>
@@ -804,7 +867,7 @@ export default function CreerClient() {
             </div>
 
             <div className="mx-auto max-w-2xl text-center" style={{ animation: "sg-pop 0.5s ease both" }}>
-              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Voici {name.trim() || "votre site"}.</h1>
+              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Voici {displayName || "votre site"}.</h1>
               <p className="mt-3 text-[15px] text-[rgb(var(--m-muted))]">
                 Voici la première version de votre site{selected ? `, dans votre charte « ${selected.vibe.label} »` : ""}.
                 Vous pourrez changer les textes, les images et les sections en deux clics — en appuyant sur
@@ -858,7 +921,7 @@ export default function CreerClient() {
               {/* Scène : iframe centrée, largeur selon l'appareil */}
               <div className="flex h-[62vh] justify-center overflow-auto bg-[rgb(var(--m-elevated))] sm:p-4">
                 <iframe
-                  key={revealDevice}
+                  key={`${revealDevice}-${previewNonce}`}
                   src={`/site-preview/${siteId}`}
                   title="Votre site"
                   className="h-full border-0 bg-white shadow-sm sm:rounded-xl"
@@ -881,6 +944,12 @@ export default function CreerClient() {
                   setPhase("vibe");
                   setCards(null);
                   setRevealed(0);
+                  // Invalide le raccourci d'assemblage spéculatif (couplé à la
+                  // charte 0) : sans ça, re-choisir une charte resservait le site
+                  // de base déjà pré-généré au lieu de régénérer la nouvelle.
+                  speculativeRef.current = null;
+                  setSelectedIdx(null);
+                  setAccent(null);
                 }}
                 className="inline-flex h-12 items-center rounded-full border border-[rgb(var(--m-line))] px-5 text-[15px] font-medium text-[rgb(var(--m-muted))] transition hover:text-[rgb(var(--m-ink))]"
               >
@@ -897,7 +966,7 @@ export default function CreerClient() {
         <div className="fixed inset-0 z-[60] flex flex-col bg-neutral-900/95 backdrop-blur-sm">
           <header className="flex items-center justify-between gap-3 border-b border-white/10 bg-neutral-900 px-4 py-2.5">
             <span className="min-w-0 flex-1 truncate text-[13px] font-medium text-white/80">
-              {name.trim() || "Votre site"}
+              {displayName || "Votre site"}
             </span>
             <div className="flex items-center gap-1 rounded-full border border-white/15 bg-white/5 p-1">
               {REVEAL_DEVICES.map((d) => {
@@ -930,7 +999,7 @@ export default function CreerClient() {
           </header>
           <div className="flex flex-1 justify-center overflow-auto p-3 md:p-6">
             <iframe
-              key={revealDevice}
+              key={`${revealDevice}-${previewNonce}`}
               src={`/site-preview/${siteId}`}
               title="Votre site"
               className="h-full rounded-lg border-0 bg-white shadow-2xl"

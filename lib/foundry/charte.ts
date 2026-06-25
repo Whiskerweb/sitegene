@@ -294,7 +294,7 @@ SORTIE : JSON STRICT, rien d'autre :
 {"selection":[{"id":"...","reason":"..."}${count > 1 ? ", …" : ""}]}`;
 
   const user = `CLIENT : « ${input.businessName.trim().slice(0, 80)} »
-PITCH : « ${input.brief.trim().slice(0, 1200)} »
+PITCH : « ${input.brief.trim().slice(0, 2500)} »
 
 BIBLIOTHÈQUE DISPONIBLE (${availableIds.length} chartes) :
 ${availableIds.map(catalogLine).join("\n")}

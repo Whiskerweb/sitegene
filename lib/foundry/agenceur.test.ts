@@ -350,3 +350,47 @@ describe("generateSubPage", () => {
     expect(res.sections.length).toBeGreaterThanOrEqual(3);
   });
 });
+
+describe("TRADE_STRUCTURE_NOTE (note de structure par métier dans le prompt)", () => {
+  const CASES: Array<[string, RegExp]> = [
+    ["chanteuse de jazz à Paris, concerts et album", /STRUCTURE ATTENDUE \(MUSICIEN/],
+    ["photographe à Lyon, mariages et portraits", /STRUCTURE ATTENDUE \(PHOTOGRAPHE/i],
+    ["plombier à Rennes, dépannage", /STRUCTURE ATTENDUE \(ARTISAN/i],
+    ["coach en développement personnel en ligne", /STRUCTURE ATTENDUE \(COACH/i],
+    ["restaurant bistrot de saison à Bordeaux", /STRUCTURE ATTENDUE \(RESTAURANT/i],
+    ["consultant en stratégie pour PME", /STRUCTURE ATTENDUE \(CONSEIL/i],
+  ];
+  it("chaque métier reçoit sa note dédiée dans le message utilisateur", () => {
+    for (const [brief, re] of CASES) {
+      const [, user] = buildAgenceurMessages({ ...INPUT, brief });
+      expect(user.content, brief).toMatch(re);
+    }
+  });
+  it("un métier non spécialisé (autre) ne reçoit aucune note de structure", () => {
+    const [, user] = buildAgenceurMessages({ ...INPUT, brief: "xyz activité indéterminée qwerty" });
+    expect(user.content).not.toMatch(/STRUCTURE ATTENDUE/);
+  });
+});
+
+describe("FALLBACK_PLANS affinés par métier", () => {
+  it("restaurant : porte l'adresse (location-cards) + une galerie, SANS process-steps", () => {
+    const ids = fallbackRecipe({ ...INPUT, brief: "restaurant bistrot à Lyon" }).sections.map((s) => s.component);
+    expect(ids).toContain("location-cards");
+    expect(ids).toContain("gallery-mosaic");
+    expect(ids).not.toContain("process-steps");
+  });
+  it("artisan : porte un bandeau de certifications (logo-marquee)", () => {
+    const ids = fallbackRecipe({ ...INPUT, brief: "électricien à Brest" }).sections.map((s) => s.component);
+    expect(ids).toContain("logo-marquee");
+  });
+  it("tous les plans : recette valide, hero en tête, footer en queue, un seul id par rôle", () => {
+    for (const brief of ["photographe mariage", "studio de yoga", "salon de coiffure", "coach sportif", "consultant", "restaurant", "plombier", "chanteuse jazz"]) {
+      const recipe = fallbackRecipe({ ...INPUT, brief });
+      expect(validateRecipe(recipe).ok, brief).toBe(true);
+      const roles = recipe.sections.map((s) => getManifest(s.component)!.role);
+      expect(roles[0], brief).toBe("hero");
+      expect(roles.at(-1), brief).toBe("footer");
+      expect(new Set(roles).size, `rôles uniques ${brief}`).toBe(roles.length);
+    }
+  });
+});

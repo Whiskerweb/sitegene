@@ -1,18 +1,25 @@
 "use client";
 
 /**
- * Retour qualité EN TEMPS RÉEL d'une description, sous le champ texte. À chaque
- * frappe on rejoue `diagnose(text)` (pur, local, instantané — aucun réseau) et
- * on affiche : (a) un badge label + score coloré selon le ton, (b) une jauge à
- * dégradé fixe rouge→vert masquée par un rectangle gris à left:{score}% avec un
- * curseur rond blanc (transition 300 ms ease-out), (c) la liste des questions
- * restantes (icône info ambrée), (d) un message de félicitation quand le ton
- * passe au vert.
+ * Retour qualité EN TEMPS RÉEL d'une description d'activité, sous le champ texte.
+ *
+ * Hybride IA + local :
+ *  - La DÉTECTION est 100 % locale et instantanée : `diagnose(text, criteria)`
+ *    rejoue à chaque frappe (aucun réseau dans la boucle de frappe).
+ *  - Les CRITÈRES sont d'abord génériques (gauge instantanée), puis remplacés
+ *    UNE fois par des critères SUR-MESURE générés par l'IA selon le métier
+ *    (un artiste, un plombier et un coach n'ont pas les mêmes questions).
+ *
+ * Affiche : (a) badge label + score coloré, (b) jauge dégradé rouge→vert masquée
+ * par un rectangle gris à left:{score}% + curseur (transition 300 ms), (c) les
+ * questions restantes (info ambrée), (d) félicitations quand le ton est vert.
  */
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Info, Check } from "lucide-react";
-import { diagnose, type Tone } from "@/lib/foundry/describe-quality";
+import { diagnose, criteriaFromTopics, type Criterion, type Tone } from "@/lib/foundry/describe-quality";
+import { pickFallbackTopics } from "@/lib/foundry/criteria";
+import { detectTrade } from "@/lib/foundry/suggest";
 
 const TONE_UI: Record<Tone, { badge: string; score: string }> = {
   red: { badge: "bg-red-50 text-red-600 ring-red-200", score: "text-red-600" },
@@ -20,10 +27,93 @@ const TONE_UI: Record<Tone, { badge: string; score: string }> = {
   green: { badge: "bg-green-50 text-green-700 ring-green-200", score: "text-green-600" },
 };
 
-export default function DescriptionQuality({ text }: { text: string }) {
-  const { score, label, tone, tips } = useMemo(() => diagnose(text), [text]);
-  if (!text.trim()) return null;
+export default function DescriptionQuality({
+  text,
+  domain = "",
+  onBusinessName,
+}: {
+  text: string;
+  domain?: string;
+  onBusinessName?: (name: string) => void;
+}) {
+  // Critères sur-mesure (null = on tourne sur le générique en attendant l'IA).
+  const [aiCriteria, setAiCriteria] = useState<Criterion[] | null>(null);
+  const gotCriteriaRef = useRef(false); // critères déjà récupérés (stables) ?
+  const nameFoundRef = useRef(false); // nom déjà extrait du brief ?
+  const attemptsRef = useRef(0); // bornage des tentatives d'extraction du nom
+  const lastReqRef = useRef<string>(""); // brief déjà interrogé
+  const loadingRef = useRef(false);
 
+  // Le domaine change → on régénère des critères adaptés au nouveau domaine.
+  useEffect(() => {
+    gotCriteriaRef.current = false;
+    lastReqRef.current = "";
+    setAiCriteria(null);
+  }, [domain]);
+
+  // Personnalisation des critères selon le DOMAINE + extraction du nom de
+  // l'activité depuis le brief. Un appel pour les critères (stables) ; on
+  // retente (borné) tant que le nom n'a pas été trouvé. La jauge, elle, tourne
+  // déjà en local sur le générique — aucun blocage.
+  useEffect(() => {
+    const b = text.trim();
+    const d = domain.trim();
+    const hasDomain = d.length >= 2;
+    // Déclenché par le DOMAINE (dès qu'il est choisi, même brief vide) OU, à
+    // défaut de domaine, par un brief déjà conséquent.
+    if (!hasDomain && b.length < 24) return;
+    const reqKey = `${d}::${b}`;
+    if (loadingRef.current || lastReqRef.current === reqKey) return;
+    if (gotCriteriaRef.current && (nameFoundRef.current || attemptsRef.current >= 4)) return;
+    const t = setTimeout(async () => {
+      lastReqRef.current = reqKey;
+      loadingRef.current = true;
+      attemptsRef.current += 1;
+      try {
+        const res = await fetch("/api/foundry/criteria", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ brief: b, domain: domain.trim() }),
+        });
+        const data = await res.json().catch(() => null);
+        if (data?.ok) {
+          const bn = typeof data.businessName === "string" ? data.businessName.trim() : "";
+          const justFoundName = !!bn && !nameFoundRef.current;
+          // Pose les critères au 1er appel ; les rafraîchit quand le nom vient
+          // d'être trouvé (la question « nom de l'activité » disparaît alors).
+          if (Array.isArray(data.topics) && data.topics.length > 0 && (!gotCriteriaRef.current || justFoundName)) {
+            setAiCriteria(criteriaFromTopics(data.topics));
+            gotCriteriaRef.current = true;
+          }
+          if (justFoundName) {
+            nameFoundRef.current = true;
+            onBusinessName?.(bn);
+          }
+        }
+      } catch {
+        /* best-effort : on reste sur les critères génériques */
+      } finally {
+        loadingRef.current = false;
+      }
+    }, 700);
+    return () => clearTimeout(t);
+  }, [text, domain, onBusinessName]);
+
+  // Repli PAR MÉTIER dès le 1er rendu (avant l'IA) : on dérive le métier du
+  // domaine (puis du brief) côté client et on pose ses sujets — un musicien ne se
+  // voit donc jamais demander « client cible / zone ». L'IA remplace ensuite via
+  // aiCriteria. (criteria → suggest → da-personas = chaîne pure, client-safe.)
+  const localCriteria = useMemo(() => {
+    const trade = detectTrade((domain.trim() ? `${domain.trim()}. ` : "") + text).trade;
+    return criteriaFromTopics(pickFallbackTopics(trade));
+  }, [domain, text]);
+
+  const { score, label, tone, tips } = useMemo(
+    () => diagnose(text, aiCriteria ?? localCriteria),
+    [text, aiCriteria, localCriteria],
+  );
+
+  if (!text.trim()) return null;
   const ui = TONE_UI[tone];
 
   return (
@@ -57,7 +147,7 @@ export default function DescriptionQuality({ text }: { text: string }) {
         />
       </div>
 
-      {/* (c) Questions restantes — aide non obligatoire */}
+      {/* (c) Questions restantes — adaptées au métier, aide non obligatoire */}
       {tips.length > 0 && (
         <ul className="mt-2.5 space-y-1.5">
           {tips.map((tip) => (

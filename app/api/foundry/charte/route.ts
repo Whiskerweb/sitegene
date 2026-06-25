@@ -38,7 +38,7 @@ export async function POST(request: Request) {
   const exclude = Array.isArray(body?.exclude)
     ? body.exclude.filter((x: unknown): x is string => typeof x === "string").slice(0, 64)
     : [];
-  if (brief.length < 10 || brief.length > 2000) {
+  if (brief.length < 10 || brief.length > 6000) {
     return NextResponse.json({ error: "Décrivez votre activité en quelques phrases." }, { status: 400 });
   }
 

@@ -1,7 +1,7 @@
 // lib/foundry/hero-router.test.ts
 import { describe, expect, it } from "vitest";
 import { resolveHero, heroOptionsForTrade, isExcludedForTrade, tradeSectionHint } from "./hero-router";
-import { getManifest } from "./manifests";
+import { getManifest, listManifests } from "./manifests";
 import type { TradeId } from "./da-personas";
 
 const TRADES: TradeId[] = [
@@ -96,9 +96,12 @@ describe("tradeSectionHint", () => {
     expect(tradeSectionHint("story-timeline", "musicien")).toMatch(/concert|tournée/i);
     expect(tradeSectionHint("intro-split", "musicien")).toMatch(/bio|groupe/i);
   });
-  it("aucun indice pour un métier sans affinité déclarée", () => {
+  it("aucun indice pour une section hors-sujet d'un métier", () => {
+    // story-timeline / release-grid = sections d'artiste → pas d'affinité prestataire.
     expect(tradeSectionHint("story-timeline", "artisan")).toBe("");
-    expect(tradeSectionHint("intro-split", "coach")).toBe("");
+    expect(tradeSectionHint("release-grid", "coach")).toBe("");
+    // « autre » reste neutre (aucun hint).
+    expect(tradeSectionHint("intro-split", "autre")).toBe("");
   });
 
   it("chaque métier garde au moins un hero et une navbar non exclus", () => {
@@ -108,6 +111,54 @@ describe("tradeSectionHint", () => {
       const navbarOk = ["glass-pill-navbar", "app-bar-navbar", "ink-bar-navbar", "wordmark-navbar"]
         .some((id) => !isExcludedForTrade(id, "navbar", trade));
       expect(navbarOk, `navbar ${trade}`).toBe(true);
+    }
+  });
+});
+
+describe("TRADE_SECTION_PRIORITY étendu aux métiers prestataires", () => {
+  const TRADES_P: TradeId[] = ["photographe", "artisan", "coach", "bien-etre", "fitness", "restaurant", "beaute", "conseil"];
+
+  it("chaque métier a des indices, et tous pointent vers un id de composant EXISTANT", () => {
+    const known = new Set(listManifests().map((m) => m.id));
+    for (const trade of TRADES_P) {
+      const hinted = listManifests().filter((m) => tradeSectionHint(m.id, trade) !== "");
+      expect(hinted.length, `indices ${trade}`).toBeGreaterThanOrEqual(5);
+      // (le filtre sur listManifests garantit déjà que l'id existe ; on vérifie le set par sécurité)
+      for (const m of hinted) expect(known.has(m.id), `${m.id} (${trade})`).toBe(true);
+    }
+  });
+
+  it("les sections signature de chaque métier sont bien taguées", () => {
+    expect(tradeSectionHint("gallery-mosaic", "photographe")).toMatch(/portfolio|mosa/i);
+    expect(tradeSectionHint("contact-block", "artisan")).toMatch(/devis|zone|urgence/i);
+    expect(tradeSectionHint("logo-marquee", "artisan")).toMatch(/certif|RGE|Qualibat/i);
+    expect(tradeSectionHint("process-steps", "coach")).toMatch(/séance|déroule|parcours/i);
+    expect(tradeSectionHint("location-cards", "restaurant")).toMatch(/adresse|itin/i);
+    expect(tradeSectionHint("sticky-stack-projects", "conseil")).toMatch(/référence|étude/i);
+  });
+
+  it("une section taguée PRIORITY n'est jamais EXCLUE pour le même métier (cohérence)", () => {
+    for (const trade of TRADES_P) {
+      for (const m of listManifests()) {
+        if (tradeSectionHint(m.id, trade) !== "") {
+          expect(isExcludedForTrade(m.id, m.role, trade), `${m.id} priorisé ET exclu pour ${trade}`).toBe(false);
+        }
+      }
+    }
+  });
+});
+
+describe("TRADE_SECTION_EXCLUDE conservateur", () => {
+  it("restaurant & beauté excluent process-steps, mais GARDENT pricing-cards", () => {
+    expect(isExcludedForTrade("process-steps", "process", "restaurant")).toBe(true);
+    expect(isExcludedForTrade("process-steps", "process", "beaute")).toBe(true);
+    expect(isExcludedForTrade("pricing-cards", "pricing", "restaurant")).toBe(false);
+    expect(isExcludedForTrade("pricing-cards", "pricing", "beaute")).toBe(false);
+  });
+
+  it("pricing-cards reste disponible pour tous les métiers à formules", () => {
+    for (const trade of ["coach", "fitness", "conseil", "photographe", "artisan", "bien-etre"] as TradeId[]) {
+      expect(isExcludedForTrade("pricing-cards", "pricing", trade), trade).toBe(false);
     }
   });
 });
