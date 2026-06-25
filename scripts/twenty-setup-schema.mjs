@@ -20,6 +20,9 @@ if (!twentyConfigured()) {
 // Sur Person : identité enrichie + état CRM dérivé d'Akyra.
 const PERSON_FIELDS = [
   { name: "akyraProspectId", label: "Akyra Prospect ID", type: "TEXT" },
+  { name: "akyraUserId", label: "Akyra User ID", type: "TEXT" },
+  { name: "signupDate", label: "Date d'inscription", type: "DATE_TIME" },
+  { name: "lastConnectionAt", label: "Dernière connexion", type: "DATE_TIME" },
   { name: "instagram", label: "Instagram", type: "TEXT" },
   { name: "city", label: "Ville", type: "TEXT" },
   { name: "akyraSource", label: "Source Akyra", type: "TEXT" },

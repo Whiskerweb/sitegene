@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { drainOutbox, reconcileStaleProspects } from "@/lib/twenty/sync";
+import { drainOutbox, reconcileStaleContacts } from "@/lib/twenty/sync";
 import { twentyEnabled } from "@/lib/twenty/client";
 
 // Drain potentiellement long (jusqu'à 80 pushes Twenty throttlés) : durée max.
@@ -25,7 +25,7 @@ async function handle(request: Request) {
   if (!twentyEnabled()) return NextResponse.json({ skipped: "twenty disabled" });
 
   const admin = createAdminClient();
-  const reconciled = await reconcileStaleProspects(admin, { limit: 100 });
+  const reconciled = await reconcileStaleContacts(admin, { limit: 100 });
   const drain = await drainOutbox(admin, { limit: 80 });
   return NextResponse.json({ reconciled, ...drain });
 }

@@ -154,6 +154,9 @@ export async function fulfillTrialStart(session: Stripe.Checkout.Session): Promi
   // Publication immédiate + démarrage de l'essai.
   const slug = await publishAndStartTrial(admin, siteId);
 
+  // Synchro Twenty : couvre aussi l'essai self-serve sans prospect.
+  await enqueue(admin, { op: "sync_contact", userId });
+
   return { siteId, slug };
 }
 

@@ -102,8 +102,8 @@ export async function syncSubscription(sub: Stripe.Subscription): Promise<void> 
     .eq("id", userId)
     .is("stripe_customer_id", null);
 
-  // Synchro Twenty : statut d'inscription + MRR (résolu en prospect par le worker).
-  await enqueue(admin, { op: "sync_prospect", userId });
+  // Synchro Twenty : statut d'inscription + MRR (fiche contact unifiée par email).
+  await enqueue(admin, { op: "sync_contact", userId });
 }
 
 /** Passe un abonnement à un statut donné (ex. 'canceled') par son id Stripe. */
@@ -123,5 +123,5 @@ export async function setSubscriptionStatus(
     .select("user_id")
     .eq("stripe_subscription_id", sub.id)
     .maybeSingle();
-  if (data?.user_id) await enqueue(admin, { op: "sync_prospect", userId: data.user_id });
+  if (data?.user_id) await enqueue(admin, { op: "sync_contact", userId: data.user_id });
 }

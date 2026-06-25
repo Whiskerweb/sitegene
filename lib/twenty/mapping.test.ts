@@ -5,9 +5,11 @@ import {
   inscriptionStatusFor,
   prospectToPersonPatch,
   opportunityPatchFor,
+  contactToPersonPatch,
   signalToNoteBody,
   displayName,
   type ProspectRow,
+  type ContactRow,
   type ClientContext,
 } from "./mapping";
 
@@ -106,6 +108,49 @@ describe("displayName", () => {
     expect(displayName(prospect)).toBe("Léa");
     expect(displayName({ ...prospect, first_name: "  " })).toBe("lea@example.com");
     expect(displayName({ ...prospect, first_name: null, email: null })).toContain("Prospect ");
+  });
+});
+
+describe("contactToPersonPatch — fiche unifiée (lead + compte)", () => {
+  const userContact: ContactRow = {
+    prospectId: null,
+    userId: "u-123",
+    firstName: null,
+    email: "client@example.com",
+    phone: null,
+    instagram: null,
+    city: null,
+    category: null,
+    leadScore: null,
+    source: null,
+    signupDate: "2026-06-01T10:00:00.123456+00:00",
+    lastConnectionAt: "2026-06-24T08:30:00.999+00:00",
+  };
+  it("inscrit self-serve (sans prospect) → akyraUserId, signupDate, lastConnectionAt", () => {
+    const patch = contactToPersonPatch(userContact, {
+      isClient: false,
+      isTrialing: false,
+      hasAccount: true,
+      plan: null,
+      mrrCents: null,
+      conversionDate: null,
+    });
+    expect(patch.akyraUserId).toBe("u-123");
+    expect(patch).not.toHaveProperty("akyraProspectId");
+    expect(patch.signupDate).toBe("2026-06-01T10:00:00Z");
+    expect(patch.lastConnectionAt).toBe("2026-06-24T08:30:00Z");
+    expect(patch.inscriptionStatus).toBe("INSCRIT");
+    expect(patch.name).toEqual({ firstName: "client@example.com", lastName: "" });
+  });
+  it("ne produit QUE des clés Akyra-owned", () => {
+    const patch = contactToPersonPatch(
+      { ...userContact, prospectId: "p-1", category: "musicien" },
+      { isClient: true, isTrialing: false, hasAccount: true, plan: "abonnement", mrrCents: 1499, conversionDate: "2026-06-02T00:00:00Z" },
+    );
+    for (const key of Object.keys(patch)) {
+      expect(AKYRA_OWNED_PERSON_FIELDS).toContain(key);
+    }
+    expect(patch).not.toHaveProperty("stage");
   });
 });
 

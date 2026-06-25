@@ -5,7 +5,7 @@
 //   npm run twenty:worker        → boucle (poll toutes les 20 s)
 //   npm run twenty:worker:once   → draine la file due puis s'arrête
 import { createClient } from "@supabase/supabase-js";
-import { drainOutbox, reconcileStaleProspects } from "../lib/twenty/sync.ts";
+import { drainOutbox, reconcileStaleContacts } from "../lib/twenty/sync.ts";
 import { twentyEnabled } from "../lib/twenty/client.ts";
 
 const ONCE = process.argv.includes("--once");
@@ -26,7 +26,7 @@ if (!twentyEnabled()) {
 }
 
 async function tick() {
-  const reconciled = await reconcileStaleProspects(admin, { limit: 100 });
+  const reconciled = await reconcileStaleContacts(admin, { limit: 100 });
   const res = await drainOutbox(admin, { limit: 80 });
   log(`réconciliés=${reconciled} traités=${res.processed} ok=${res.done} échecs=${res.failed}`);
 }

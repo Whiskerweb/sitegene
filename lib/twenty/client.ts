@@ -137,6 +137,31 @@ export async function findPersonByAkyraId(prospectId: string): Promise<Rec | nul
   return pickList(resp)[0] ?? null;
 }
 
+export async function findPersonByAkyraUserId(userId: string): Promise<Rec | null> {
+  const resp = await request(
+    "GET",
+    `/people?filter=akyraUserId[eq]:${encodeURIComponent(userId)}&limit=1`,
+  );
+  return pickList(resp)[0] ?? null;
+}
+
+/**
+ * Recherche par email (filet de dédup). Le filtre sur champ composite peut varier
+ * selon la version de Twenty ; en cas d'échec on renvoie null (les ids stockés
+ * restent la voie robuste de fusion).
+ */
+export async function findPersonByEmail(email: string): Promise<Rec | null> {
+  try {
+    const resp = await request(
+      "GET",
+      `/people?filter=emails.primaryEmail[eq]:${encodeURIComponent(email)}&limit=1`,
+    );
+    return pickList(resp)[0] ?? null;
+  } catch {
+    return null;
+  }
+}
+
 // =============================================================================
 // Opportunities
 // =============================================================================

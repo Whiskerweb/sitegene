@@ -23,6 +23,27 @@ export type ProspectRow = {
   source: string | null;
 };
 
+/**
+ * Contact unifié = un humain (clé email), agrégeant le côté lead (prospect) et le
+ * côté compte (profile/user). Sert de source au patch Person v2.
+ */
+export type ContactRow = {
+  prospectId: string | null;
+  userId: string | null;
+  firstName: string | null;
+  email: string | null;
+  phone: string | null;
+  instagram: string | null;
+  city: string | null;
+  category: string | null;
+  leadScore: number | null;
+  source: string | null;
+  /** profiles.created_at (date d'inscription). */
+  signupDate: string | null;
+  /** auth.users.last_sign_in_at (dernière connexion). */
+  lastConnectionAt: string | null;
+};
+
 /** Statut de conversion dérivé côté Akyra (faits, jamais saisi à la main). */
 export type ClientContext = {
   /** A payé l'initial 50 € OU a un abonnement actif. */
@@ -69,7 +90,10 @@ export const AKYRA_OWNED_PERSON_FIELDS = [
   "mrrCents",
   "conversionDate",
   "akyraProspectId",
+  "akyraUserId",
   "akyraSource",
+  "signupDate",
+  "lastConnectionAt",
 ] as const;
 
 export const AKYRA_OWNED_OPP_FIELDS = [
@@ -128,6 +152,52 @@ export function opportunityPatchFor(
   const patch: Record<string, unknown> = {};
   patch.name = `${displayName(p)} — Akyra`;
   patch.akyraProspectId = p.id;
+  if (ctx.mrrCents != null) {
+    patch.amount = { amountMicros: ctx.mrrCents * 10_000, currencyCode: "EUR" };
+  }
+  return patch;
+}
+
+/** Nom affiché d'un contact (prénom, sinon email, sinon id court). */
+export function contactDisplayName(c: ContactRow): string {
+  return (
+    (c.firstName && c.firstName.trim()) ||
+    c.email ||
+    `Contact ${(c.prospectId || c.userId || "").slice(0, 8)}`
+  );
+}
+
+/**
+ * Patch Person pour un contact unifié (lead + compte). Construit clé par clé
+ * depuis l'allowlist — jamais de champ Twenty-owned. Une clé absente = champ
+ * laissé intact côté Twenty (PATCH partiel).
+ */
+export function contactToPersonPatch(c: ContactRow, ctx: ClientContext): Record<string, unknown> {
+  const patch: Record<string, unknown> = {};
+  patch.name = { firstName: contactDisplayName(c), lastName: "" };
+  if (c.prospectId) patch.akyraProspectId = c.prospectId;
+  if (c.userId) patch.akyraUserId = c.userId;
+  if (c.email) patch.emails = { primaryEmail: c.email };
+  if (c.phone) patch.phones = { primaryPhoneNumber: c.phone };
+  if (c.city) patch.city = c.city;
+  if (c.instagram) patch.instagram = c.instagram;
+  if (c.category && KNOWN_CATEGORIES.has(c.category)) patch.category = c.category.toUpperCase();
+  if (c.source) patch.akyraSource = c.source;
+  patch.leadScore = c.leadScore ?? 0;
+  patch.inscriptionStatus = inscriptionStatusFor(ctx);
+  if (ctx.plan) patch.akyraPlan = ctx.plan;
+  if (ctx.mrrCents != null) patch.mrrCents = ctx.mrrCents;
+  if (ctx.conversionDate) patch.conversionDate = twentyDateTime(ctx.conversionDate);
+  if (c.signupDate) patch.signupDate = twentyDateTime(c.signupDate);
+  if (c.lastConnectionAt) patch.lastConnectionAt = twentyDateTime(c.lastConnectionAt);
+  return patch;
+}
+
+/** Patch Opportunity pour un contact (hors `stage`, Twenty-owned sauf conversion). */
+export function contactOpportunityPatch(c: ContactRow, ctx: ClientContext): Record<string, unknown> {
+  const patch: Record<string, unknown> = {};
+  patch.name = `${contactDisplayName(c)} — Akyra`;
+  if (c.prospectId) patch.akyraProspectId = c.prospectId;
   if (ctx.mrrCents != null) {
     patch.amount = { amountMicros: ctx.mrrCents * 10_000, currencyCode: "EUR" };
   }

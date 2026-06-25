@@ -69,6 +69,8 @@ async function ensureUser(
     email_confirm: true,
   });
   if (error || !data.user) throw new Error(`createUser: ${error?.message}`);
+  // Nouvel inscrit → synchro Twenty (fiche contact par email).
+  await enqueue(admin, { op: "sync_contact", userId: data.user.id, email });
   return data.user.id;
 }
 
@@ -149,8 +151,8 @@ export async function fulfillPayment(
         .from("outreach")
         .update({ status: "converted", updated_at: new Date().toISOString() })
         .eq("prospect_id", code.prospect_id);
-      // Synchro Twenty : conversion → opportunité « gagnée » + note paiement.
-      await enqueue(admin, { op: "sync_prospect", prospectId: code.prospect_id });
+      // Note de timeline « paiement » (la synchro de la fiche se fait via le
+      // sync_contact posé en fin de fulfillPayment).
       await enqueue(admin, {
         op: "append_note",
         prospectId: code.prospect_id,
@@ -205,6 +207,9 @@ export async function fulfillPayment(
 
     await admin.from("events").insert({ token, site_id: siteId, type: "purchased" });
   }
+
+  // Synchro Twenty : conversion (couvre aussi le self-serve sans prospect).
+  await enqueue(admin, { op: "sync_contact", userId, email });
 
   return { email, token, siteId, userId, selfServe, slug };
 }

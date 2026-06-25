@@ -11,9 +11,10 @@
 //   ONLY_STAGE=REVEAL_VU       → seulement ce pipeline_stage
 //   ONLY_CATEGORY=photographe  → seulement cette catégorie
 //   EXCLUDE_TEST=1             → ignore les lignes test/exemple/demo (email/prénom)
-//   LIMIT=10                   → s'arrête après N prospects synchronisés
+//   ONLY_USERS=1               → backfille les INSCRITS (profiles) au lieu des prospects
+//   LIMIT=10                   → s'arrête après N synchronisés
 import { createClient } from "@supabase/supabase-js";
-import { syncProspect } from "../lib/twenty/sync.ts";
+import { syncProspect, syncContact } from "../lib/twenty/sync.ts";
 import { twentyEnabled } from "../lib/twenty/client.ts";
 
 const DRY = process.env.DRY_RUN === "1";
@@ -24,6 +25,7 @@ const ONLY_STAGE = process.env.ONLY_STAGE || null;
 const ONLY_CATEGORY = process.env.ONLY_CATEGORY || null;
 const WITH_OUTREACH = process.env.WITH_OUTREACH === "1"; // seulement les prospects vraiment contactés
 const REQUIRE_EMAIL = process.env.REQUIRE_EMAIL === "1"; // ignore les prospects sans email
+const ONLY_USERS = process.env.ONLY_USERS === "1"; // backfille les INSCRITS (profiles) au lieu des prospects
 const LIMIT = process.env.LIMIT ? Number.parseInt(process.env.LIMIT, 10) : null;
 const PAGE = 200;
 const TEST_RE = /test|exemple|demo|fake/i;
@@ -54,7 +56,52 @@ const filtersLabel =
     .filter(Boolean)
     .join(", ") || "aucun filtre";
 
+/** Backfill des INSCRITS (profiles → syncContact par email). */
+async function runUsers() {
+  log(`Backfill USERS (${filtersLabel})${DRY ? " [DRY_RUN]" : ""}.`);
+  let from = 0;
+  let total = 0;
+  let synced = 0;
+  for (;;) {
+    const { data: rows, error } = await admin
+      .from("profiles")
+      .select("id, email, is_operator, twenty_person_id")
+      .order("created_at", { ascending: true })
+      .range(from, from + PAGE - 1);
+    if (error) {
+      log("Erreur lecture profiles:", error.message);
+      process.exit(1);
+    }
+    if (!rows?.length) break;
+    from += PAGE;
+    for (const u of rows) {
+      if (u.is_operator) continue;
+      if (!u.email) continue;
+      if (!RESYNC_ALL && u.twenty_person_id) continue;
+      if (EXCLUDE_TEST && TEST_RE.test(u.email)) continue;
+      total++;
+      if (DRY) {
+        log(`[dry] inscrit ${u.email}`);
+      } else {
+        try {
+          await syncContact(admin, u.email);
+          synced++;
+          if (synced % 20 === 0) log(`… ${synced} synchronisés`);
+        } catch (e) {
+          log(`✗ ${u.email}: ${e?.message ?? e}`);
+        }
+      }
+      if (LIMIT && (DRY ? total : synced) >= LIMIT) {
+        log(`Limite ${LIMIT} atteinte — ${total} parcouru(s), ${synced} synchronisé(s).`);
+        return;
+      }
+    }
+  }
+  log(`Terminé — ${total} inscrit(s) parcouru(s), ${synced} synchronisé(s).`);
+}
+
 async function run() {
+  if (ONLY_USERS) return runUsers();
   log(`Backfill (${filtersLabel})${DRY ? " [DRY_RUN]" : ""}.`);
   // Ensemble des prospects réellement contactés (1 ligne outreach) si demandé.
   let outreachSet = null;
